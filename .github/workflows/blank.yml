@@ -1,0 +1,25 @@
+
+name: Basketball Data Updater
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check repository
+        uses: actions/checkout@v4
+
+      - name: Test basketball updater
+        run: |
+          echo "Basketball updater is working!"
+          echo "Current UTC time:"
+          date -u
+          echo "Next step: connect official basketball data."
