@@ -60,13 +60,16 @@ jobs:
                   if not re.search(r"20\d{2}", " ".join(cells)):
                       continue
 
-                  matches.append({
-                      "round": cells[0],
-                      "home": cells[1],
-                      "result": cells[2],
-                      "away": cells[3],
-                      "date": cells[4],
-                      "time": cells[5] if len(cells) > 5 else ""
+                 
+matches.append({
+    "round": cells[0],
+    "home": cells[2],
+    "result": cells[3],
+    "away": cells[4],
+    "date": cells[5] if len(cells) > 5 else "",
+    "time": cells[6] if len(cells) > 6 else ""
+})
+
                   })
 
           if not matches:
