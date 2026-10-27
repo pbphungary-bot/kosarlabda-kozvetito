@@ -17,29 +17,55 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
-      - name: Test official basketball sources
+      - name: Install HTML parser
+        run: pip install beautifulsoup4
+
+      - name: Inspect Hunbasket data structure
         run: |
           python3 - <<'PY'
           import urllib.request
+          from bs4 import BeautifulSoup
 
           sources = {
-              "Men's standings": "https://hunbasket.hu/tabella/ferfi",
-              "Women's fixtures": "https://hunbasket.hu/menetrend/noi/x2627/whun",
-              "Combined fixtures": "https://hunbasket.hu/osszevont-menetrend-teljes/x2627",
+              "MEN STANDINGS": "https://hunbasket.hu/tabella/ferfi",
+              "WOMEN FIXTURES": "https://hunbasket.hu/menetrend/noi/x2627/whun",
+              "COMBINED FIXTURES": "https://hunbasket.hu/osszevont-menetrend-teljes/x2627",
           }
 
           for name, url in sources.items():
-              print(f"\nChecking {name}: {url}")
+              print("\n==========", name, "==========")
               try:
                   request = urllib.request.Request(
-                      url,
-                      headers={"User-Agent": "Mozilla/5.0"}
+                      url, headers={"User-Agent": "Mozilla/5.0"}
                   )
                   with urllib.request.urlopen(request, timeout=30) as response:
-                      content = response.read()
-                      print("HTTP status:", response.status)
-                      print("Downloaded bytes:", len(content))
-                      print("Contains HTML:", b"<html" in content.lower())
+                      html = response.read()
+
+                  soup = BeautifulSoup(html, "html.parser")
+
+                  print("Page title:",
+                        soup.title.get_text(" ", strip=True)
+                        if soup.title else "None")
+
+                  tables = soup.find_all("table")
+                  print("HTML tables found:", len(tables))
+
+                  for i, table in enumerate(tables[:3]):
+                      print("\nTABLE", i + 1)
+                      for row in table.find_all("tr")[:5]:
+                          cells = [
+                              c.get_text(" ", strip=True)
+                              for c in row.find_all(["th", "td"])
+                          ]
+                          print(" | ".join(cells)[:250])
+
+                  if not tables:
+                      print("No HTML tables found.")
+                      print("Page text sample:")
+                      main = soup.find("main") or soup.body
+                      if main:
+                          print(main.get_text(" ", strip=True)[:800])
+
               except Exception as error:
-                  print("FAILED:", error)
+                  print("ERROR:", type(error).__name__, str(error))
           PY
