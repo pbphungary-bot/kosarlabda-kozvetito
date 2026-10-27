@@ -68,8 +68,6 @@ matches.append({
     "away": cells[4],
     "date": cells[5] if len(cells) > 5 else "",
     "time": cells[6] if len(cells) > 6 else ""
-})
-
                   })
 
           if not matches:
