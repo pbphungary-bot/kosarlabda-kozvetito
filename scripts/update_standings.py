@@ -31,8 +31,11 @@ def extract_standings(url):
                 cell.get_text(" ", strip=True)
                 for cell in row.find_all(["th", "td"], recursive=False)
             ]
-            if any("Kecskem" in cell for cell in cells):
-                print("DEBUG KECSKEMET:", repr(cells), flush=True)
+                        if cells and (
+                cells[0].strip().rstrip(".").isdigit()
+                or any("Kecskem" in cell for cell in cells)
+            ):
+                print("DEBUG ROW:", repr(cells), flush=True)
 
             if len(cells) < 9:
                 continue
