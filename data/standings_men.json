@@ -1,7 +1,7 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-10-28T19:19:56.654647+00:00",
+  "updated_at": "2026-10-28T20:08:16.533351+00:00",
   "standings": [
     {
       "rank": 1,
@@ -55,13 +55,13 @@
     },
     {
       "rank": 6,
-      "name": "Endo Plus Service-Honvéd",
-      "played": 5,
-      "points": 8,
+      "name": "OSE Lions",
+      "played": 6,
+      "points": 9,
       "wins": 3,
-      "losses": 2,
-      "scored": 432,
-      "conceded": 452
+      "losses": 3,
+      "scored": 533,
+      "conceded": 560
     },
     {
       "rank": 7,
@@ -75,6 +75,16 @@
     },
     {
       "rank": 8,
+      "name": "Endo Plus Service-Honvéd",
+      "played": 6,
+      "points": 9,
+      "wins": 3,
+      "losses": 3,
+      "scored": 530,
+      "conceded": 552
+    },
+    {
+      "rank": 9,
       "name": "PHOENIX Fóti Tigrisek",
       "played": 6,
       "points": 9,
@@ -84,37 +94,37 @@
       "conceded": 493
     },
     {
-      "rank": 9,
-      "name": "OSE Lions",
-      "played": 5,
-      "points": 7,
-      "wins": 2,
-      "losses": 3,
-      "scored": 433,
-      "conceded": 462
-    },
-    {
       "rank": 10,
       "name": "Sopron KC",
-      "played": 5,
-      "points": 7,
-      "wins": 2,
+      "played": 6,
+      "points": 9,
+      "wins": 3,
       "losses": 3,
-      "scored": 427,
-      "conceded": 452
+      "scored": 505,
+      "conceded": 495
     },
     {
       "rank": 11,
       "name": "NKA Universitas Pécs",
-      "played": 5,
-      "points": 6,
+      "played": 6,
+      "points": 7,
       "wins": 1,
-      "losses": 4,
-      "scored": 397,
-      "conceded": 450
+      "losses": 5,
+      "scored": 440,
+      "conceded": 528
     },
     {
       "rank": 12,
+      "name": "DEAC",
+      "played": 6,
+      "points": 7,
+      "wins": 1,
+      "losses": 5,
+      "scored": 509,
+      "conceded": 543
+    },
+    {
+      "rank": 13,
       "name": "Egis Körmend",
       "played": 6,
       "points": 7,
@@ -124,24 +134,14 @@
       "conceded": 569
     },
     {
-      "rank": 13,
-      "name": "DEAC",
-      "played": 5,
-      "points": 5,
-      "wins": 0,
-      "losses": 5,
-      "scored": 423,
-      "conceded": 467
-    },
-    {
       "rank": 14,
       "name": "Duna Aszfalt-DTKH Kecskemét",
-      "played": 5,
-      "points": 5,
+      "played": 6,
+      "points": 6,
       "wins": 0,
-      "losses": 5,
-      "scored": 334,
-      "conceded": 442
+      "losses": 6,
+      "scored": 410,
+      "conceded": 528
     }
   ]
 }
