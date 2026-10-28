@@ -25,13 +25,15 @@ def extract_standings(url):
     soup = BeautifulSoup(html, "html.parser")
     teams = {}
 
+    
     for table in soup.find_all("table"):
         for row in table.find_all("tr"):
             cells = [
                 cell.get_text(" ", strip=True)
                 for cell in row.find_all(["th", "td"], recursive=False)
             ]
-                        if cells and (
+
+            if cells and (
                 cells[0].strip().rstrip(".").isdigit()
                 or any("Kecskem" in cell for cell in cells)
             ):
@@ -44,6 +46,27 @@ def extract_standings(url):
 
             if not rank_text.isdigit():
                 continue
+
+            try:
+                team = {
+                    "rank": int(rank_text),
+                    "name": cells[1],
+                    "played": int(cells[2]),
+                    "points": int(cells[4]),
+                    "wins": int(cells[5]),
+                    "losses": int(cells[6]),
+                    "scored": int(cells[7]),
+                    "conceded": int(cells[8]),
+                }
+            except (ValueError, IndexError):
+                continue
+
+            if team["played"] != team["wins"] + team["losses"]:
+                continue
+
+            teams[team["rank"]] = team
+
+
 
             try:
                 team = {
