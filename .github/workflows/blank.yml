@@ -52,3 +52,5 @@ jobs:
           path: |
             data/men.json
             data/women.json
+            data/standings_men.json
+            data/standings_women.json
