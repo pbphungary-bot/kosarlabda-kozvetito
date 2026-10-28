@@ -69,7 +69,7 @@ def main():
         standings = extract_standings(url)
 
         print(f"{league}: extracted {len(standings)} teams")
-        print(json.dumps(standings[:3], ensure_ascii=False, indent=2))
+        print(json.dumps(standings, ensure_ascii=False, indent=2))
 
         if len(standings) != EXPECTED_TEAMS[league]:
             raise RuntimeError(
