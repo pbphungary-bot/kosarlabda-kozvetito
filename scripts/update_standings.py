@@ -31,8 +31,9 @@ def extract_standings(url):
                 cell.get_text(" ", strip=True)
                 for cell in row.find_all(["th", "td"], recursive=False)
             ]
-if cells and cells[0].strip().rstrip(".") == "14":
-    print("DEBUG 14TH TEAM:", repr(cells), flush=True)
+            if cells and cells[0].strip().rstrip(".") == "14":
+                print("DEBUG 14TH TEAM:", repr(cells), flush=True)
+
             if len(cells) < 9:
                 continue
 
