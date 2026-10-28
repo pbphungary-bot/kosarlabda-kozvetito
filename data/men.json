@@ -66,15 +66,6 @@
       "status": "finished"
     },
     {
-      "round": "6.",
-      "home": "Sopron KC",
-      "away": "NKA Universitas Pécs",
-      "result": "Előzetes",
-      "date": "2026. 10. 28.",
-      "time": "19:00",
-      "status": "scheduled"
-    },
-    {
       "round": "7.",
       "home": "PHOENIX Fóti Tigrisek",
       "away": "NHSZ-Szolnoki Olajbányász",
@@ -84,5 +75,5 @@
       "status": "scheduled"
     }
   ],
-  "updated_at": "2026-10-28T17:25:57.693124+00:00"
+  "updated_at": "2026-10-28T18:19:38.227271+00:00"
 }
