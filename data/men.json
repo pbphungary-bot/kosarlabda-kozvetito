@@ -1,0 +1,133 @@
+{
+  "competition": "Férfi NB I/A",
+  "source": "https://hunbasket.hu/menetrend/ferfi/x2627/hun",
+  "matches": [
+    {
+      "round": "5.",
+      "home": "PHOENIX Fóti Tigrisek",
+      "away": "Alba Fehérvár",
+      "result": "79–67",
+      "date": "2026. 10. 24.",
+      "time": "17:00",
+      "status": "finished"
+    },
+    {
+      "round": "5.",
+      "home": "Délút-SZTE-Szedeák",
+      "away": "DEAC",
+      "result": "91–82",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "5.",
+      "home": "Falco-Vulcano Energia KC Szombathely",
+      "away": "Duna Aszfalt-DTKH Kecskemét",
+      "result": "85–65",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "5.",
+      "home": "Kometa-KVGY Kaposvári KK",
+      "away": "Atomerőmű SE",
+      "result": "76–95",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "5.",
+      "home": "NKA Universitas Pécs",
+      "away": "Egis Körmend",
+      "result": "88–75",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "5.",
+      "home": "OSE Lions",
+      "away": "Sopron KC",
+      "result": "91–84",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "5.",
+      "home": "NHSZ-Szolnoki Olajbányász",
+      "away": "Endo Plus Service-Honvéd",
+      "result": "99–80",
+      "date": "2026. 10. 25.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "6.",
+      "home": "Alba Fehérvár",
+      "away": "Délút-SZTE-Szedeák",
+      "result": "Előzetes",
+      "date": "2026. 10. 28.",
+      "time": "18:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "6.",
+      "home": "Atomerőmű SE",
+      "away": "PHOENIX Fóti Tigrisek",
+      "result": "Előzetes",
+      "date": "2026. 10. 28.",
+      "time": "18:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "6.",
+      "home": "Egis Körmend",
+      "away": "Falco-Vulcano Energia KC Szombathely",
+      "result": "Előzetes",
+      "date": "2026. 10. 28.",
+      "time": "18:15",
+      "status": "scheduled"
+    },
+    {
+      "round": "6.",
+      "home": "DEAC",
+      "away": "Duna Aszfalt-DTKH Kecskemét",
+      "result": "Előzetes",
+      "date": "2026. 10. 28.",
+      "time": "18:30",
+      "status": "scheduled"
+    },
+    {
+      "round": "6.",
+      "home": "Endo Plus Service-Honvéd",
+      "away": "OSE Lions",
+      "result": "Előzetes",
+      "date": "2026. 10. 28.",
+      "time": "18:30",
+      "status": "scheduled"
+    },
+    {
+      "round": "6.",
+      "home": "Sopron KC",
+      "away": "NKA Universitas Pécs",
+      "result": "Előzetes",
+      "date": "2026. 10. 28.",
+      "time": "19:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "7.",
+      "home": "PHOENIX Fóti Tigrisek",
+      "away": "NHSZ-Szolnoki Olajbányász",
+      "result": "Előzetes",
+      "date": "2026. 10. 31.",
+      "time": "17:00",
+      "status": "scheduled"
+    }
+  ],
+  "updated_at": "2026-10-28T09:38:03.992224+00:00"
+}

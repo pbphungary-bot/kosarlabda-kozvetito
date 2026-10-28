@@ -1,0 +1,115 @@
+{
+  "competition": "Női NB I/A",
+  "source": "https://hunbasket.hu/menetrend/noi/x2627/whun",
+  "matches": [
+    {
+      "round": "5.",
+      "home": "ETO Basket",
+      "away": "NKA Universitas Pécs",
+      "result": "80–65",
+      "date": "2026. 10. 18.",
+      "time": "17:00",
+      "status": "finished"
+    },
+    {
+      "round": "6.",
+      "home": "Sopron Basket",
+      "away": "ELTE BEAC Újbuda",
+      "result": "106–64",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "6.",
+      "home": "VBW CEKK Cegléd",
+      "away": "KSC Szekszárd",
+      "result": "85–105",
+      "date": "2026. 10. 24.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "6.",
+      "home": "TFSE",
+      "away": "Csata TKK",
+      "result": "59–71",
+      "date": "2026. 10. 24.",
+      "time": "19:00",
+      "status": "finished"
+    },
+    {
+      "round": "6.",
+      "home": "DVTK HUNTHERM",
+      "away": "ETO Basket",
+      "result": "50–40",
+      "date": "2026. 10. 25.",
+      "time": "17:00",
+      "status": "finished"
+    },
+    {
+      "round": "6.",
+      "home": "NKA Universitas Pécs",
+      "away": "BKG-PRIMA Szigetszentmiklós",
+      "result": "89–69",
+      "date": "2026. 10. 25.",
+      "time": "17:00",
+      "status": "finished"
+    },
+    {
+      "round": "7.",
+      "home": "ELTE BEAC Újbuda",
+      "away": "DVTK HUNTHERM",
+      "result": "Előzetes",
+      "date": "2026. 10. 31.",
+      "time": "15:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "7.",
+      "home": "Csata TKK",
+      "away": "NKA Universitas Pécs",
+      "result": "Előzetes",
+      "date": "2026. 10. 31.",
+      "time": "17:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "7.",
+      "home": "BKG-PRIMA Szigetszentmiklós",
+      "away": "VBW CEKK Cegléd",
+      "result": "Előzetes",
+      "date": "2026. 10. 31.",
+      "time": "18:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "7.",
+      "home": "KSC Szekszárd",
+      "away": "TFSE",
+      "result": "Előzetes",
+      "date": "2026. 10. 31.",
+      "time": "18:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "7.",
+      "home": "Vasas Akadémia",
+      "away": "Sopron Basket",
+      "result": "Előzetes",
+      "date": "2026. 11. 01.",
+      "time": "18:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "8.",
+      "home": "NKA Universitas Pécs",
+      "away": "ELTE BEAC Újbuda",
+      "result": "Előzetes",
+      "date": "2026. 11. 21.",
+      "time": "18:00",
+      "status": "scheduled"
+    }
+  ],
+  "updated_at": "2026-10-28T09:38:05.620372+00:00"
+}
