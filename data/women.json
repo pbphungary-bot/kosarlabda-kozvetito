@@ -58,24 +58,6 @@
     },
     {
       "round": "7.",
-      "home": "BKG-PRIMA Szigetszentmiklós",
-      "away": "VBW CEKK Cegléd",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
-      "home": "KSC Szekszárd",
-      "away": "TFSE",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
       "home": "Vasas Akadémia",
       "away": "Sopron Basket",
       "result": "Előzetes",
@@ -102,5 +84,5 @@
       "status": "scheduled"
     }
   ],
-  "updated_at": "2026-10-31T16:20:50.527432+00:00"
+  "updated_at": "2026-10-31T17:01:28.598655+00:00"
 }

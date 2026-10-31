@@ -66,51 +66,6 @@
       "status": "finished"
     },
     {
-      "round": "7.",
-      "home": "Duna Aszfalt-DTKH Kecskemét",
-      "away": "Alba Fehérvár",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
-      "home": "Délút-SZTE-Szedeák",
-      "away": "Atomerőmű SE",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
-      "home": "Egis Körmend",
-      "away": "Sopron KC",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
-      "home": "NKA Universitas Pécs",
-      "away": "Endo Plus Service-Honvéd",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
-      "home": "OSE Lions",
-      "away": "Kometa-KVGY Kaposvári KK",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
       "round": "8.",
       "home": "Alba Fehérvár",
       "away": "DEAC",
@@ -120,5 +75,5 @@
       "status": "scheduled"
     }
   ],
-  "updated_at": "2026-10-31T16:20:48.752037+00:00"
+  "updated_at": "2026-10-31T17:01:25.871290+00:00"
 }
