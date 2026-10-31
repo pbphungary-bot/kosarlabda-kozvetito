@@ -58,15 +58,6 @@
     },
     {
       "round": "7.",
-      "home": "ELTE BEAC Újbuda",
-      "away": "DVTK HUNTHERM",
-      "result": "Előzetes",
-      "date": "2026. 10. 31.",
-      "time": "15:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "7.",
       "home": "Csata TKK",
       "away": "NKA Universitas Pécs",
       "result": "Előzetes",
@@ -111,5 +102,5 @@
       "status": "scheduled"
     }
   ],
-  "updated_at": "2026-10-28T09:38:05.620372+00:00"
+  "updated_at": "2026-10-31T14:15:54.471368+00:00"
 }
