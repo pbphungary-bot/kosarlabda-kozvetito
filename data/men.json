@@ -3,15 +3,6 @@
   "source": "https://hunbasket.hu/menetrend/ferfi/x2627/hun",
   "matches": [
     {
-      "round": "5.",
-      "home": "NHSZ-Szolnoki Olajbányász",
-      "away": "Endo Plus Service-Honvéd",
-      "result": "99–80",
-      "date": "2026. 10. 25.",
-      "time": "18:00",
-      "status": "finished"
-    },
-    {
       "round": "6.",
       "home": "Alba Fehérvár",
       "away": "Délút-SZTE-Szedeák",
@@ -66,6 +57,15 @@
       "status": "finished"
     },
     {
+      "round": "7.",
+      "home": "PHOENIX Fóti Tigrisek",
+      "away": "NHSZ-Szolnoki Olajbányász",
+      "result": "63–68",
+      "date": "2026. 10. 31.",
+      "time": "17:00",
+      "status": "finished"
+    },
+    {
       "round": "8.",
       "home": "Alba Fehérvár",
       "away": "DEAC",
@@ -73,7 +73,16 @@
       "date": "2026. 11. 06.",
       "time": "18:00",
       "status": "scheduled"
+    },
+    {
+      "round": "8.",
+      "home": "Kometa-KVGY Kaposvári KK",
+      "away": "NKA Universitas Pécs",
+      "result": "Előzetes",
+      "date": "2026. 11. 06.",
+      "time": "18:00",
+      "status": "scheduled"
     }
   ],
-  "updated_at": "2026-10-31T17:01:25.871290+00:00"
+  "updated_at": "2026-10-31T18:12:35.381204+00:00"
 }

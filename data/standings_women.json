@@ -1,7 +1,7 @@
 {
   "competition": "Női NB I/A",
   "source": "https://hunbasket.hu/tabella/noi",
-  "updated_at": "2026-10-31T16:20:53.447435+00:00",
+  "updated_at": "2026-10-31T18:12:40.363170+00:00",
   "standings": [
     {
       "rank": 1,
@@ -25,22 +25,22 @@
     },
     {
       "rank": 3,
+      "name": "Csata TKK",
+      "played": 7,
+      "points": 12,
+      "wins": 5,
+      "losses": 2,
+      "scored": 523,
+      "conceded": 446
+    },
+    {
+      "rank": 4,
       "name": "ETO Basket",
       "played": 6,
       "points": 10,
       "wins": 4,
       "losses": 2,
       "scored": 407,
-      "conceded": 395
-    },
-    {
-      "rank": 4,
-      "name": "Csata TKK",
-      "played": 6,
-      "points": 10,
-      "wins": 4,
-      "losses": 2,
-      "scored": 451,
       "conceded": 395
     },
     {
@@ -76,12 +76,12 @@
     {
       "rank": 8,
       "name": "NKA Universitas Pécs",
-      "played": 5,
-      "points": 7,
+      "played": 6,
+      "points": 8,
       "wins": 2,
-      "losses": 3,
-      "scored": 359,
-      "conceded": 321
+      "losses": 4,
+      "scored": 410,
+      "conceded": 393
     },
     {
       "rank": 9,

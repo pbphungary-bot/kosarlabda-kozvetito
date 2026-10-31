@@ -1,7 +1,7 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-10-28T20:08:16.533351+00:00",
+  "updated_at": "2026-10-31T18:12:38.852793+00:00",
   "standings": [
     {
       "rank": 1,
@@ -25,6 +25,16 @@
     },
     {
       "rank": 3,
+      "name": "NHSZ-Szolnoki Olajbányász",
+      "played": 7,
+      "points": 12,
+      "wins": 5,
+      "losses": 2,
+      "scored": 610,
+      "conceded": 557
+    },
+    {
+      "rank": 4,
       "name": "Alba Fehérvár",
       "played": 6,
       "points": 10,
@@ -34,7 +44,7 @@
       "conceded": 482
     },
     {
-      "rank": 4,
+      "rank": 5,
       "name": "Kometa-KVGY Kaposvári KK",
       "played": 6,
       "points": 10,
@@ -42,16 +52,6 @@
       "losses": 2,
       "scored": 543,
       "conceded": 542
-    },
-    {
-      "rank": 5,
-      "name": "NHSZ-Szolnoki Olajbányász",
-      "played": 6,
-      "points": 10,
-      "wins": 4,
-      "losses": 2,
-      "scored": 542,
-      "conceded": 494
     },
     {
       "rank": 6,
@@ -85,16 +85,6 @@
     },
     {
       "rank": 9,
-      "name": "PHOENIX Fóti Tigrisek",
-      "played": 6,
-      "points": 9,
-      "wins": 3,
-      "losses": 3,
-      "scored": 489,
-      "conceded": 493
-    },
-    {
-      "rank": 10,
       "name": "Sopron KC",
       "played": 6,
       "points": 9,
@@ -102,6 +92,16 @@
       "losses": 3,
       "scored": 505,
       "conceded": 495
+    },
+    {
+      "rank": 10,
+      "name": "PHOENIX Fóti Tigrisek",
+      "played": 7,
+      "points": 10,
+      "wins": 3,
+      "losses": 4,
+      "scored": 552,
+      "conceded": 561
     },
     {
       "rank": 11,
