@@ -1,7 +1,7 @@
 {
   "competition": "Női NB I/A",
   "source": "https://hunbasket.hu/tabella/noi",
-  "updated_at": "2026-10-31T18:12:40.363170+00:00",
+  "updated_at": "2026-10-31T19:55:17.623266+00:00",
   "standings": [
     {
       "rank": 1,
@@ -35,6 +35,16 @@
     },
     {
       "rank": 4,
+      "name": "KSC Szekszárd",
+      "played": 6,
+      "points": 10,
+      "wins": 4,
+      "losses": 2,
+      "scored": 483,
+      "conceded": 407
+    },
+    {
+      "rank": 5,
       "name": "ETO Basket",
       "played": 6,
       "points": 10,
@@ -44,37 +54,17 @@
       "conceded": 395
     },
     {
-      "rank": 5,
-      "name": "KSC Szekszárd",
-      "played": 5,
-      "points": 8,
-      "wins": 3,
-      "losses": 2,
-      "scored": 395,
-      "conceded": 354
-    },
-    {
       "rank": 6,
       "name": "VBW CEKK Cegléd",
-      "played": 6,
-      "points": 9,
-      "wins": 3,
+      "played": 7,
+      "points": 11,
+      "wins": 4,
       "losses": 3,
-      "scored": 406,
-      "conceded": 435
+      "scored": 483,
+      "conceded": 500
     },
     {
       "rank": 7,
-      "name": "TFSE",
-      "played": 5,
-      "points": 7,
-      "wins": 2,
-      "losses": 3,
-      "scored": 364,
-      "conceded": 326
-    },
-    {
-      "rank": 8,
       "name": "NKA Universitas Pécs",
       "played": 6,
       "points": 8,
@@ -82,6 +72,16 @@
       "losses": 4,
       "scored": 410,
       "conceded": 393
+    },
+    {
+      "rank": 8,
+      "name": "TFSE",
+      "played": 6,
+      "points": 8,
+      "wins": 2,
+      "losses": 4,
+      "scored": 417,
+      "conceded": 414
     },
     {
       "rank": 9,
@@ -106,12 +106,12 @@
     {
       "rank": 11,
       "name": "BKG-PRIMA Szigetszentmiklós",
-      "played": 6,
-      "points": 6,
+      "played": 7,
+      "points": 7,
       "wins": 0,
-      "losses": 6,
-      "scored": 336,
-      "conceded": 593
+      "losses": 7,
+      "scored": 401,
+      "conceded": 670
     }
   ]
 }

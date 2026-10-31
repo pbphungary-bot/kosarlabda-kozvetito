@@ -1,10 +1,20 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-10-31T18:12:38.852793+00:00",
+  "updated_at": "2026-10-31T19:55:15.707687+00:00",
   "standings": [
     {
       "rank": 1,
+      "name": "Atomerőmű SE",
+      "played": 7,
+      "points": 14,
+      "wins": 7,
+      "losses": 0,
+      "scored": 719,
+      "conceded": 552
+    },
+    {
+      "rank": 2,
       "name": "Falco-Vulcano Energia KC Szombathely",
       "played": 6,
       "points": 12,
@@ -14,17 +24,27 @@
       "conceded": 436
     },
     {
-      "rank": 2,
-      "name": "Atomerőmű SE",
-      "played": 6,
+      "rank": 3,
+      "name": "Alba Fehérvár",
+      "played": 7,
       "points": 12,
-      "wins": 6,
-      "losses": 0,
-      "scored": 621,
-      "conceded": 483
+      "wins": 5,
+      "losses": 2,
+      "scored": 624,
+      "conceded": 566
     },
     {
-      "rank": 3,
+      "rank": 4,
+      "name": "Kometa-KVGY Kaposvári KK",
+      "played": 7,
+      "points": 12,
+      "wins": 5,
+      "losses": 2,
+      "scored": 639,
+      "conceded": 633
+    },
+    {
+      "rank": 5,
       "name": "NHSZ-Szolnoki Olajbányász",
       "played": 7,
       "points": 12,
@@ -34,67 +54,37 @@
       "conceded": 557
     },
     {
-      "rank": 4,
-      "name": "Alba Fehérvár",
-      "played": 6,
-      "points": 10,
-      "wins": 4,
-      "losses": 2,
-      "scored": 536,
-      "conceded": 482
-    },
-    {
-      "rank": 5,
-      "name": "Kometa-KVGY Kaposvári KK",
-      "played": 6,
-      "points": 10,
-      "wins": 4,
-      "losses": 2,
-      "scored": 543,
-      "conceded": 542
-    },
-    {
       "rank": 6,
-      "name": "OSE Lions",
-      "played": 6,
-      "points": 9,
-      "wins": 3,
+      "name": "Endo Plus Service-Honvéd",
+      "played": 7,
+      "points": 11,
+      "wins": 4,
       "losses": 3,
-      "scored": 533,
-      "conceded": 560
+      "scored": 650,
+      "conceded": 662
     },
     {
       "rank": 7,
-      "name": "Délút-SZTE-Szedeák",
-      "played": 6,
-      "points": 9,
+      "name": "OSE Lions",
+      "played": 7,
+      "points": 10,
       "wins": 3,
-      "losses": 3,
-      "scored": 481,
-      "conceded": 504
+      "losses": 4,
+      "scored": 624,
+      "conceded": 656
     },
     {
       "rank": 8,
-      "name": "Endo Plus Service-Honvéd",
-      "played": 6,
-      "points": 9,
+      "name": "Délút-SZTE-Szedeák",
+      "played": 7,
+      "points": 10,
       "wins": 3,
-      "losses": 3,
-      "scored": 530,
-      "conceded": 552
+      "losses": 4,
+      "scored": 550,
+      "conceded": 602
     },
     {
       "rank": 9,
-      "name": "Sopron KC",
-      "played": 6,
-      "points": 9,
-      "wins": 3,
-      "losses": 3,
-      "scored": 505,
-      "conceded": 495
-    },
-    {
-      "rank": 10,
       "name": "PHOENIX Fóti Tigrisek",
       "played": 7,
       "points": 10,
@@ -104,14 +94,24 @@
       "conceded": 561
     },
     {
+      "rank": 10,
+      "name": "Sopron KC",
+      "played": 7,
+      "points": 10,
+      "wins": 3,
+      "losses": 4,
+      "scored": 583,
+      "conceded": 576
+    },
+    {
       "rank": 11,
-      "name": "NKA Universitas Pécs",
-      "played": 6,
-      "points": 7,
-      "wins": 1,
+      "name": "Egis Körmend",
+      "played": 7,
+      "points": 9,
+      "wins": 2,
       "losses": 5,
-      "scored": 440,
-      "conceded": 528
+      "scored": 567,
+      "conceded": 647
     },
     {
       "rank": 12,
@@ -125,23 +125,23 @@
     },
     {
       "rank": 13,
-      "name": "Egis Körmend",
-      "played": 6,
-      "points": 7,
+      "name": "NKA Universitas Pécs",
+      "played": 7,
+      "points": 8,
       "wins": 1,
-      "losses": 5,
-      "scored": 486,
-      "conceded": 569
+      "losses": 6,
+      "scored": 550,
+      "conceded": 648
     },
     {
       "rank": 14,
       "name": "Duna Aszfalt-DTKH Kecskemét",
-      "played": 6,
-      "points": 6,
+      "played": 7,
+      "points": 7,
       "wins": 0,
-      "losses": 6,
-      "scored": 410,
-      "conceded": 528
+      "losses": 7,
+      "scored": 494,
+      "conceded": 616
     }
   ]
 }
