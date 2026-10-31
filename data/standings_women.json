@@ -1,7 +1,7 @@
 {
   "competition": "Női NB I/A",
   "source": "https://hunbasket.hu/tabella/noi",
-  "updated_at": "2026-10-28T11:48:32.500990+00:00",
+  "updated_at": "2026-10-31T16:20:53.447435+00:00",
   "standings": [
     {
       "rank": 1,
@@ -16,12 +16,12 @@
     {
       "rank": 2,
       "name": "DVTK HUNTHERM",
-      "played": 5,
-      "points": 10,
-      "wins": 5,
+      "played": 6,
+      "points": 12,
+      "wins": 6,
       "losses": 0,
-      "scored": 382,
-      "conceded": 245
+      "scored": 465,
+      "conceded": 313
     },
     {
       "rank": 3,
@@ -86,12 +86,12 @@
     {
       "rank": 9,
       "name": "ELTE BEAC Újbuda",
-      "played": 6,
-      "points": 8,
+      "played": 7,
+      "points": 9,
       "wins": 2,
-      "losses": 4,
-      "scored": 442,
-      "conceded": 477
+      "losses": 5,
+      "scored": 510,
+      "conceded": 560
     },
     {
       "rank": 10,

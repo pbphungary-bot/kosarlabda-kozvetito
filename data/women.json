@@ -3,15 +3,6 @@
   "source": "https://hunbasket.hu/menetrend/noi/x2627/whun",
   "matches": [
     {
-      "round": "5.",
-      "home": "ETO Basket",
-      "away": "NKA Universitas Pécs",
-      "result": "80–65",
-      "date": "2026. 10. 18.",
-      "time": "17:00",
-      "status": "finished"
-    },
-    {
       "round": "6.",
       "home": "Sopron Basket",
       "away": "ELTE BEAC Újbuda",
@@ -58,12 +49,12 @@
     },
     {
       "round": "7.",
-      "home": "Csata TKK",
-      "away": "NKA Universitas Pécs",
-      "result": "Előzetes",
+      "home": "ELTE BEAC Újbuda",
+      "away": "DVTK HUNTHERM",
+      "result": "68–83",
       "date": "2026. 10. 31.",
-      "time": "17:00",
-      "status": "scheduled"
+      "time": "15:00",
+      "status": "finished"
     },
     {
       "round": "7.",
@@ -100,7 +91,16 @@
       "date": "2026. 11. 21.",
       "time": "18:00",
       "status": "scheduled"
+    },
+    {
+      "round": "8.",
+      "home": "Sopron Basket",
+      "away": "KSC Szekszárd",
+      "result": "Előzetes",
+      "date": "2026. 11. 21.",
+      "time": "18:00",
+      "status": "scheduled"
     }
   ],
-  "updated_at": "2026-10-31T14:15:54.471368+00:00"
+  "updated_at": "2026-10-31T16:20:50.527432+00:00"
 }
