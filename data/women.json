@@ -4,15 +4,6 @@
   "matches": [
     {
       "round": "6.",
-      "home": "DVTK HUNTHERM",
-      "away": "ETO Basket",
-      "result": "50–40",
-      "date": "2026. 10. 25.",
-      "time": "17:00",
-      "status": "finished"
-    },
-    {
-      "round": "6.",
       "home": "NKA Universitas Pécs",
       "away": "BKG-PRIMA Szigetszentmiklós",
       "result": "89–69",
@@ -53,6 +44,15 @@
       "away": "TFSE",
       "result": "88–53",
       "date": "2026. 10. 31.",
+      "time": "18:00",
+      "status": "finished"
+    },
+    {
+      "round": "7.",
+      "home": "Vasas Akadémia",
+      "away": "Sopron Basket",
+      "result": "52–60",
+      "date": "2026. 11. 01.",
       "time": "18:00",
       "status": "finished"
     },
@@ -100,7 +100,16 @@
       "date": "2026. 11. 22.",
       "time": "17:00",
       "status": "scheduled"
+    },
+    {
+      "round": "9.",
+      "home": "TFSE",
+      "away": "NKA Universitas Pécs",
+      "result": "Előzetes",
+      "date": "2026. 11. 27.",
+      "time": "18:00",
+      "status": "scheduled"
     }
   ],
-  "updated_at": "2026-11-01T17:01:54.150083+00:00"
+  "updated_at": "2026-11-01T19:12:31.851700+00:00"
 }
