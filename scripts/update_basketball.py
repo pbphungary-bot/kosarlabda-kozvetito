@@ -42,6 +42,15 @@ def collect(competition):
     print("DATES:", len(soup.select(".data-group.game-date")))
 
     for row in soup.select("table.desktop-only tbody tr"):
+        if row.select_one(".data-group.game-date"):
+            print("SAMPLE ROW:", [
+                cell.get_text(" ", strip=True)[:100]
+                for cell in row.find_all("td", recursive=False)
+            ])
+            print("HOME:", row.select_one(".home-team-name"))
+            print("AWAY:", row.select_one(".away-team-name"))
+            print("SCORE:", row.select_one(".game-cell"))
+            break
         date_group = row.select_one(".data-group.game-date")
 
         if not date_group:
