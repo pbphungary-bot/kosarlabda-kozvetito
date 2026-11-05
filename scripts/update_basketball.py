@@ -35,10 +35,11 @@ def collect(competition):
 
     soup = BeautifulSoup(html, "html.parser")
     matches = []
-print("TABLES:", len(soup.select("table.desktop-only")))
-print("ROWS:", len(soup.select("table.desktop-only tbody tr")))
-print("TEAM GROUPS:", len(soup.select(".data-group-team")))
-print("DATES:", len(soup.select(".data-group.game-date")))
+
+    print("TABLES:", len(soup.select("table.desktop-only")))
+    print("ROWS:", len(soup.select("table.desktop-only tbody tr")))
+    print("TEAM GROUPS:", len(soup.select(".data-group-team")))
+    print("DATES:", len(soup.select(".data-group.game-date")))
 
     for row in soup.select("table.desktop-only tbody tr"):
         team_group = row.select_one(".data-group-team")
