@@ -26,8 +26,8 @@
   {
     "name": "DEAC",
     "urls": [
-      "https://kosarlabda.deac.hu/hirek/",
-      "https://kosarlabda.deac.hu/hirek/uj-fejezet-kezdodik-szegeden-torne-ki-a-godorbol-a-deac/"
+      "https://kosarlabda.deac.hu/",
+      "https://kosarlabda.deac.hu/hirek/"
     ],
     "hosts": [
       "kosarlabda.deac.hu"
@@ -118,8 +118,8 @@
   {
     "name": "Csata TKK",
     "urls": [
-      "https://csatatkk.hu/hirek/",
-      "https://csatatkk.hu/"
+      "https://csatatkk.hu/",
+      "https://csatatkk.hu/hirek/"
     ],
     "hosts": [
       "csatatkk.hu"
@@ -177,10 +177,10 @@
   {
     "name": "Atomerőmű SE",
     "urls": [
-      "https://www.ase.hu/"
+      "https://kosarlabda.ase.hu/"
     ],
     "hosts": [
-      "ase.hu"
+      "kosarlabda.ase.hu"
     ],
     "article_pattern": "^/(?:hirek|hir|kosarlabda|cikk)/[^/]+$",
     "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hirek/\"], a[href*=\"/kosarlabda/\"]"
@@ -199,7 +199,7 @@
   {
     "name": "Endo Plus Service-Honvéd",
     "urls": [
-      "https://honved.hu/kosarlabda"
+      "https://honved.hu/kosarlabda/"
     ],
     "hosts": [
       "honved.hu"
@@ -210,6 +210,7 @@
   {
     "name": "Kometa-KVGY Kaposvári KK",
     "urls": [
+      "https://www.delfinek.hu/",
       "https://www.delfinek.hu/hirek"
     ],
     "hosts": [
@@ -225,7 +226,6 @@
       "https://mvm.oselions.hu/teams/nbi-a/16"
     ],
     "hosts": [
-      "oselions.hu",
       "mvm.oselions.hu"
     ],
     "article_pattern": "^/(?:news|hirek|hir|articles|article)/[^/]+(?:/[^/]+)?$",
@@ -234,6 +234,7 @@
   {
     "name": "ELTE BEAC Újbuda",
     "urls": [
+      "https://kosarlabda.beac.hu/kezdo",
       "https://kosarlabda.beac.hu/"
     ],
     "hosts": [
@@ -257,7 +258,7 @@
   {
     "name": "KSC Szekszárd",
     "urls": [
-      "https://www.kscszekszard.hu/"
+      "https://kscszekszard.hu/"
     ],
     "hosts": [
       "kscszekszard.hu"
@@ -268,6 +269,7 @@
   {
     "name": "Sopron Basket",
     "urls": [
+      "https://sopronbasket.com/",
       "https://sopronbasket.com/home"
     ],
     "hosts": [
@@ -279,6 +281,7 @@
   {
     "name": "TFSE",
     "urls": [
+      "https://tfse.hu/szakosztaly/kosarlabda/",
       "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/"
     ],
     "hosts": [
