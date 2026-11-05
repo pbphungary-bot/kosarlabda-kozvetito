@@ -1,0 +1,70 @@
+name: Basketball News Pilot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: basketball-news-pilot
+  cancel-in-progress: false
+
+jobs:
+  collect-news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install HTML parser
+        run: python -m pip install beautifulsoup4
+
+      - name: Collect news (isolated pilot)
+        run: python scripts/update_news.py
+
+      - name: Show news collection results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('data/news.json')
+          if not p.exists():
+              raise SystemExit('data/news.json was not created')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          print('Total saved articles:', len(d.get('articles', [])))
+          for s in d.get('sources', []):
+              print(s)
+          PY
+
+      - name: Commit news data only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/news.json
+          if git diff --cached --quiet; then
+            echo 'No news data changes'
+            exit 0
+          fi
+          git commit -m 'Update basketball news pilot data'
+          for attempt in 1 2 3; do
+            if git push; then
+              echo 'News data pushed successfully'
+              exit 0
+            fi
+            echo "Push conflicted (attempt $attempt); rebasing and retrying"
+            git fetch origin main
+            git rebase origin/main
+          done
+          echo 'Unable to push news data after three attempts' >&2
+          exit 1
