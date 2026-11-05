@@ -41,11 +41,14 @@ def num(value):
     return float(match.group(0).replace(',', '.')) if match else None
 
 def parse_page(html, fallback_name):
-    soup = BeautifulSoup(html, 'html.parser')
+    # Parse raw bytes so BeautifulSoup detects Hunbasket's legacy encoding.
+    soup = BeautifulSoup(html, 'html.parser', from_encoding='windows-1250' if isinstance(html, bytes) and b'charset=windows-1250' in html.lower() else None)
     title = next((h.get_text(' ', strip=True) for h in soup.select('h1,h2')
                   if '2026/2027' in h.get_text(' ', strip=True) and 'csoport' in h.get_text(' ', strip=True)), '')
-    if not title or 'Női NB I' not in title:
-        raise ValueError(f'Unexpected team statistics page: {title[:100]!r}')
+    # Do not depend on an exact accented league title: Hunbasket may serve
+    # legacy encodings and headings vary between page templates.
+    if not title:
+        raise ValueError('No 2026/2027 league/team heading on statistics page')
     match = re.search(r'csoport\s*-\s*(.*?)\s*-\s*2026/2027', title)
     name = match.group(1).strip() if match else fallback_name
     values = {}
@@ -85,7 +88,7 @@ def parse_page(html, fallback_name):
 def discover(session):
     response = session.get(TEAMS_URL, timeout=35)
     response.raise_for_status()
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.content, 'html.parser')
     entries = {}
     for a in soup.select('a[href]'):
         href = urljoin(BASE, a['href'])
@@ -106,7 +109,7 @@ def main():
         url = f'{BASE}/csapatstatisztika/{SEASON}/{LEAGUE}/{team_id}'
         response = session.get(url, timeout=35)
         response.raise_for_status()
-        name, stats = parse_page(response.text, roster_name)
+        name, stats = parse_page(response.content, roster_name)
         teams.append({'name': name, 'aliases': [roster_name] if norm(roster_name) != norm(name) else [],
                       'periods': {'season': stats}, 'source_url': url})
         print(f'{name}: {len(stats)} verified stats')
