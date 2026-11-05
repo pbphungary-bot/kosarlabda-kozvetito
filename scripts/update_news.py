@@ -8,7 +8,7 @@ import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, urldefrag
+from urllib.parse import urljoin, urlparse, urldefrag, parse_qs
 from bs4 import BeautifulSoup
 
 OUT = Path('data/news.json')
@@ -56,7 +56,11 @@ def metadata(soup, *names):
     return ''
 
 def canonical(url):
-    return urldefrag(url)[0].split('?')[0].rstrip('/') + '/'
+    url = urldefrag(url)[0]
+    p = urlparse(url)
+    if (p.hostname or '').removeprefix('www.') == 'albakosar.hu' and re.fullmatch(r'news_3_\d+', parse_qs(p.query).get('pg', [''])[0]):
+        return 'https://www.albakosar.hu/index.php?pg=' + parse_qs(p.query)['pg'][0]
+    return url.split('?')[0].rstrip('/') + '/'
 
 def valid_url(url, src):
     p = urlparse(url)
@@ -67,7 +71,8 @@ def valid_url(url, src):
     if src['kind'] == 'hunbasket':
         return bool(re.match(r'^/hir/\d+/[^/]+$', path))
     if src['kind'] == 'club' and src.get('article_pattern'):
-        return bool(re.search(src['article_pattern'], path))
+        target = path + ('?' + p.query if p.query and host == 'albakosar.hu' else '')
+        return bool(re.search(src['article_pattern'], target))
     if src['kind'] == 'nso':
         return bool(re.match(r'^/kosarlabda/\d{4}/\d{2}/[^/]+$', path))
     if src['kind'] == 'kezdo5':
