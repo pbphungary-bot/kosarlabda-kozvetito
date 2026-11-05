@@ -42,6 +42,7 @@ jobs:
             echo "No data changes detected."
           else
             git commit -m "Update basketball data"
+            git pull --rebase origin main
             git push
           fi
 
