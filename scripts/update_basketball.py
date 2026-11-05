@@ -22,6 +22,7 @@ TIME_PATTERN = re.compile(r"^\d{1,2}:\d{2}$")
 SCORE_PATTERN = re.compile(r"^\d+\s*[-–:]\s*\d+$")
 
 
+
 def collect(competition):
     url = competition["url"]
     request = urllib.request.Request(
@@ -35,47 +36,54 @@ def collect(competition):
     soup = BeautifulSoup(html, "html.parser")
     matches = []
 
-    for table in soup.find_all("table"):
-        for row in table.find_all("tr"):
-            cells = [
-                cell.get_text(" ", strip=True)
-                for cell in row.find_all(["th", "td"], recursive=False)
-            ]
+    for row in soup.select("table.desktop-only tbody tr"):
+        team_group = row.select_one(".data-group-team")
+        date_group = row.select_one(".data-group.game-date")
 
-            if len(cells) < 8:
-                continue
+        if not team_group or not date_group:
+            continue
 
-            round_text = cells[0]
-            home = cells[2]
-            result = cells[3]
-            away = cells[4]
-            date = cells[6]
-            time = cells[7]
+        home_el = team_group.select_one(".home-team-name")
+        away_el = team_group.select_one(".away-team-name")
+        score_el = team_group.select_one(".game-cell")
 
-            if not re.fullmatch(r"\d+\.?", round_text):
-                continue
+        if not home_el or not away_el or not score_el:
+            continue
 
-            if not home or not away or home == away:
-                continue
+        home = home_el.get_text(" ", strip=True)
+        away = away_el.get_text(" ", strip=True)
+        result = score_el.get_text(" ", strip=True)
 
-            if not DATE_PATTERN.fullmatch(date):
-                continue
+        long_date = date_group.select_one(".long-date")
+        date = long_date.get_text(" ", strip=True) if long_date else ""
 
-            if not TIME_PATTERN.fullmatch(time):
-                continue
+        time_el = date_group.select_one(".shrinkable-text:not(.short-date):not(.long-date)")
+        time = time_el.get_text(" ", strip=True) if time_el else ""
 
-            if result != "Előzetes" and not SCORE_PATTERN.fullmatch(result):
-                continue
+        cells = row.find_all("td", recursive=False)
+        round_text = cells[0].get_text(" ", strip=True) if cells else ""
 
-            matches.append({
-                "round": round_text,
-                "home": home,
-                "away": away,
-                "result": result,
-                "date": date,
-                "time": time,
-                "status": "scheduled" if result == "Előzetes" else "finished",
-            })
+        if not home or not away or home == away:
+            continue
+
+        if not DATE_PATTERN.fullmatch(date):
+            continue
+
+        if not TIME_PATTERN.fullmatch(time):
+            continue
+
+        if result != "Előzetes" and not SCORE_PATTERN.fullmatch(result):
+            continue
+
+        matches.append({
+            "round": round_text,
+            "home": home,
+            "away": away,
+            "result": result,
+            "date": date,
+            "time": time,
+            "status": "scheduled" if result == "Előzetes" else "finished",
+        })
 
     unique = {}
     for match in matches:
@@ -93,6 +101,7 @@ def collect(competition):
         )
 
     return matches
+
 
 
 def main():
