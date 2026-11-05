@@ -42,10 +42,9 @@ def collect(competition):
     print("DATES:", len(soup.select(".data-group.game-date")))
 
     for row in soup.select("table.desktop-only tbody tr"):
-        team_group = row.select_one(".data-group-team")
-        date_group = row.select_one(".data-group.game-date")
+       date_group = row.select_one(".data-group.game-date")
 
-        if not team_group or not date_group:
+        if not date_group:
             continue
 
         home_el = row.select_one(".home-team-name")
