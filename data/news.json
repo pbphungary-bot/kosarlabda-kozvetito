@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-05T16:49:56.715590+00:00",
+  "checked_at": "2026-11-05T16:57:39.786466+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 28,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -54,16 +54,16 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 23,
-      "added": 23,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 23,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: DVTK HUNTHERM",
-      "status": "error",
-      "candidates": 0,
-      "added": 0,
+      "status": "ok",
+      "candidates": 7,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -181,6 +181,14 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/izgalmas-vegjatekban-nyert-a-sopron-es-a-dvtk-is-a-noi-kosarlabda-europa-kupaban/",
       "published_at": "2026-11-04T21:30:05+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Panathlitikos Sykeon – DVTK HUNTHERM 74-77",
+      "summary": "A DVTK HUNTHERM a görögországi Thesszalonikiben játszotta a válogatott szünet előtti utolsó mérkőzését.",
+      "url": "http://dvtk.eu/37574-EK_Panathlitikos_Sykeon_DVTK_HUNTHERM_74_77-cikk-kosarlabda/",
+      "published_at": "2026-11-04T21:30:00+01:00",
+      "summary_method": "source_description"
     },
     {
       "source": "WBasket.hu",
@@ -335,6 +343,22 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyar Gergely: Minden energiánkat a mérkőzésre kell összpontosítanunk",
+      "summary": "November 4-én, szerdán a görögországi Thesszalonikiben, az Eptapyrgio Arénában lép pályára a DVTK HUNTHERM a Panathlitikos Sykeon vendégeként a Női Európa Kupa 2026/2027-es idényének E-csoportjában.",
+      "url": "http://dvtk.eu/37471-Magyar_Gergely_Minden_energiankat_a_merkozesre_kell_osszpontositanunk-cikk-kosarlabda/",
+      "published_at": "2026-11-03T19:20:00+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Hat hazai mérkőzésre biztosíthatod be a helyed",
+      "summary": "Idén ősszel nem kell azon gondolkodnod, melyik mérkőzésen biztatod a lányokat a lelátóról: a DVTK HUNTHERM őszi bérlete a 2026-os év utolsó hat hazai találkozójára biztosít kedvezményes belépést a DVTK Arénába.",
+      "url": "http://dvtk.eu/37572-Hat_hazai_merkozesre_biztosithatod_be_a_helyed-cikk-kosarlabda/",
+      "published_at": "2026-11-03T18:35:00+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Falco-Vulcano Energia KC Szombathely – AEK BC",
       "summary": "A tavalyi döntős látogat Szombathelyre.",
@@ -447,6 +471,14 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 44. hét",
+      "summary": "Győzelemmel zárta nyíregyházi Hepp Kupa-mérkőzését a DVTK U23-as együttese, juniorjaink pedig fölényes sikert arattak az ETO Basket ellen a DVTK Arénában.",
+      "url": "http://dvtk.eu/37566-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_44_het-cikk-kosarlabda/",
+      "published_at": "2026-11-02T13:46:00+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "WBasket.hu",
       "title": "Ők voltak a hétvége legjobbjai",
       "summary": "Hunbasket felületein megválaszthatjuk a hétvége legjobbját.",
@@ -519,6 +551,14 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Szerdán Görögországban játszik a DVTK HUNTHERM",
+      "summary": "November 4-én, szerdán a görögországi Thesszalonikiben, az Eptapyrgio Arénában lép pályára a DVTK HUNTHERM a Panathlitikos Sykeon vendégeként a Női Európa Kupa 2026/2027-es idényének E-csoportjában.",
+      "url": "http://dvtk.eu/37557-EK_Szerdan_Gorogorszagban_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-01T18:17:00+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Nézd vissza a szombati mérkőzések legfontosabb jeleneteit",
       "summary": "Videós összefoglaló a hat mérkőzésről!",
@@ -583,6 +623,14 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "ELTE BEAC Újbuda – DVTK HUNTHERM 68-83",
+      "summary": "A válogatott szünet előtti utolsó magyar bajnokin a Diósgyőr az ELTE BEAC Újbuda csapatához látogatott.",
+      "url": "http://dvtk.eu/37547-ELTE_BEAC_Ujbuda_DVTK_HUNTHERM_68_83-cikk-kosarlabda/",
+      "published_at": "2026-10-31T16:49:00+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Forray Gábor: Ne én akarjam jobban, hanem ők!",
       "summary": "Forray Gábor: Ne én akarjam jobban, hanem ők!",
@@ -629,6 +677,14 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/noi-kosar-ek-csunya-veresegbe-szaladt-bele-murciaban-a-dvtk/",
       "published_at": "2026-10-28T22:31:02+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Hozono Global Jairis - DVTK HUNTHERM 89-48",
+      "summary": "A DVTK HUNTHERM Spanyolországban lépett pályára az Európa Kupa alapszakaszának harmadik fordulójában.",
+      "url": "http://dvtk.eu/37527-EK_Hozono_Global_Jairis_DVTK_HUNTHERM_89_48-cikk-kosarlabda/",
+      "published_at": "2026-10-28T21:44:00+01:00",
+      "summary_method": "source_description"
     },
     {
       "source": "Nemzeti Sport",
