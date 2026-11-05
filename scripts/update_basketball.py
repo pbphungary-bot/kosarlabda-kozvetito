@@ -9,11 +9,11 @@ from bs4 import BeautifulSoup
 SOURCES = {
     "men": {
         "name": "Férfi NB I/A",
-        "url": "https://hunbasket.hu/menetrend/ferfi/x2627/hun",
+        "url": "https://hunbasket.hu/menetrend-teljes/ferfi/x2627/hun",
     },
     "women": {
         "name": "Női NB I/A",
-        "url": "https://hunbasket.hu/menetrend/noi/x2627/whun",
+        "url": "https://hunbasket.hu/menetrend-teljes/noi/x2627/whun",
     },
 }
 
