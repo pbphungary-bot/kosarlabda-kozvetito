@@ -1,6 +1,99 @@
+#!/usr/bin/env python3
+"""News metadata collector. Keeps prior genuine articles and records source failures."""
+import json
+import re
+import sys
+import time
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.parse import urljoin, urlparse, urldefrag
+from bs4 import BeautifulSoup
 
-    
-  
+OUT = Path('data/news.json')
+HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; BasketballNewsCollector/0.2)', 'Accept-Language': 'hu-HU,hu;q=0.9,en;q=0.7'}
+SOURCES = [
+    {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
+    {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
+    {'name': 'Hunbasket', 'urls': ['https://hunbasket.hu/hirek', 'https://hunbasket.hu/hirek/ferfi/', 'https://hunbasket.hu/hirek/noi/'], 'hosts': ('hunbasket.hu',), 'kind': 'hunbasket'},
+]
+
+def clean(value):
+    return re.sub(r'\s+', ' ', value or '').strip()
+
+def fetch(url):
+    request = urllib.request.Request(url, headers=HEADERS)
+    with urllib.request.urlopen(request, timeout=22) as response:
+        final = response.geturl()
+        return BeautifulSoup(response.read(), 'html.parser'), final
+
+def metadata(soup, *names):
+    for name in names:
+        tag = soup.find('meta', attrs={'property': name}) or soup.find('meta', attrs={'name': name})
+        if tag and tag.get('content'):
+            return clean(tag['content'])
+    return ''
+
+def canonical(url):
+    return urldefrag(url)[0].split('?')[0].rstrip('/') + '/'
+
+def valid_url(url, src):
+    p = urlparse(url)
+    host = (p.hostname or '').removeprefix('www.')
+    if p.scheme not in ('http', 'https') or host not in src['hosts']:
+        return False
+    path = p.path.lower().rstrip('/')
+    if src['kind'] == 'hunbasket':
+        return bool(re.match(r'^/hir/\d+/[^/]+$', path))
+    if path in ('', '/hirek', '/latest-news'):
+        return False
+    if any(path.startswith(prefix) for prefix in ('/tag/', '/category/', '/page/', '/author/', '/kereso/', '/search/', '/csapat/', '/jatekos/', '/menetrend/', '/tabella/', '/wp-content/')):
+        return False
+    return len([part for part in path.split('/') if part]) >= 1
+
+def candidates(soup, base, src):
+    links = {}
+    if src['kind'] == 'hunbasket':
+        anchors = soup.select('a[href*="/hir/"]')
+    else:
+        anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]')
+        if not anchors:
+            anchors = soup.select('a[href]')
+    for a in anchors:
+        title = clean(a.get_text(' ', strip=True))
+        if not 12 <= len(title) <= 250:
+            continue
+        url = canonical(urljoin(base, a.get('href', '')))
+        if valid_url(url, src):
+            links.setdefault(url, title)
+    return list(links.items())[:100]
+
+def structured_date(soup):
+    for tag in soup.select('script[type="application/ld+json"]'):
+        try:
+            obj = json.loads(tag.string or tag.get_text())
+        except (ValueError, TypeError):
+            continue
+        stack = [obj]
+        while stack:
+            item = stack.pop()
+            if isinstance(item, list):
+                stack.extend(item)
+            elif isinstance(item, dict):
+                for key in ('datePublished', 'dateCreated'):
+                    if isinstance(item.get(key), str) and item[key].strip():
+                        return clean(item[key])
+                stack.extend(v for v in item.values() if isinstance(v, (list, dict)))
+    return ''
+
+def published_date(soup):
+    result = metadata(soup, 'article:published_time', 'datePublished', 'pubdate', 'date', 'DC.date.issued')
+    if result:
+        return result
+    result = structured_date(soup)
+    if result:
+        return result
     for element in soup.select('time[datetime], .entry-date, .post-date, .article-date, .date, [itemprop="datePublished"]'):
         value = clean(element.get('datetime') or element.get('content') or element.get_text(' ', strip=True))
         if re.search(r'20\d\d', value):
@@ -117,4 +210,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
