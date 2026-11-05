@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-05T17:18:45.653483+00:00",
+  "checked_at": "2026-11-05T17:33:07.406840+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -153,8 +153,8 @@
       "source": "Klub: NKA Universitas Pécs (női)",
       "status": "ok",
       "candidates": 1,
-      "added": 1,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -162,8 +162,8 @@
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "status": "ok",
       "candidates": 18,
-      "added": 18,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -187,6 +187,102 @@
         "https://www.cekk.hu/new/index.php: HTTP Error 406: Not Acceptable",
         "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTP Error 406: Not Acceptable"
       ]
+    },
+    {
+      "source": "Klub: Atomerőmű SE",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "status": "ok",
+      "candidates": 5,
+      "added": 5,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Endo Plus Service-Honvéd",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://honved.hu/kosarlabda: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Klub: Kometa-KVGY Kaposvári KK",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://www.delfinek.hu/hirek: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Klub: OSE Lions",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: ELTE BEAC Újbuda",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "status": "ok",
+      "candidates": 24,
+      "added": 24,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: KSC Szekszárd",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://www.kscszekszard.hu/: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Klub: Sopron Basket",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: TFSE",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
     }
   ],
   "articles": [
@@ -1095,6 +1191,14 @@
       "summary_method": "source_description"
     },
     {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Elvesztettük hazai veretlenségünket",
+      "summary": "Az első negyed után nem tudtuk a tartani a lépést a Pakssal.",
+      "url": "https://szedeak.com/elvesztettuk-hazai-veretlensegunket/",
+      "published_at": "2026-10-31T20:07:56+00:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Kiszenvedte a győzelmet Kecskeméten az Alba",
       "summary": "Kétszámjegyű hátrányból fordított a KTE, de a végjátékot a vendégek bírták jobban.",
@@ -1157,6 +1261,14 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/forray-gabor-ne-en-akarjam-jobban-hanem-ok/",
       "published_at": "2026-10-31T08:55:31+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "A veretlen Paksot fogadjuk szombaton",
+      "summary": "Az idénybeli harmadik hazai meccsünk következik szombaton.",
+      "url": "https://szedeak.com/a-veretlen-paksot-fogadjuk-szombaton/",
+      "published_at": "2026-10-30T20:00:15+00:00",
+      "summary_method": "source_description"
     },
     {
       "source": "Nemzeti Sport",
@@ -1255,6 +1367,14 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Kikaptunk az Alba otthonában",
+      "summary": "A harmadik negyedben összeszedett hátrányunkból már nem volt visszaút.",
+      "url": "https://szedeak.com/kikaptunk-az-alba-otthonaban/",
+      "published_at": "2026-10-28T20:13:56+00:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Férfi kosár Európa-kupa: feléleszteni a továbbjutási reményt tápláló parázs izzását",
       "summary": "Férfi kosár Európa-kupa: feléleszteni a továbbjutási reményt tápláló parázs izzását",
@@ -1268,6 +1388,14 @@
       "summary": "Három győzelemmel és egy vereséggel kezdte az évadot a Női Amatőr NB I.",
       "url": "https://wbasket.hu/jateklehetoseg-es-fejlodesi-perspektiva-interju-aron-krisztiannal-a-soproni-darazsak-sportakademia-u23-as-csapatarol/",
       "published_at": "2026.10.27 20:12",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Az Alba otthonában folytatjuk",
+      "summary": "Három nappal a DEAC elleni győzelem után újból pályára lépünk.",
+      "url": "https://szedeak.com/az-alba-otthonaban-folytatjuk-2/",
+      "published_at": "2026-10-27T19:43:18+00:00",
       "summary_method": "source_description"
     },
     {
@@ -1357,6 +1485,14 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/noi-kosarlabda-nb-i-tovabb-orzi-hibatlan-merleget-a-sopron/",
       "published_at": "2026-10-24T20:13:54+02:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Óriási fordítás a végén, legyőztük a DEAC-ot",
+      "summary": "A szezonbeli második hazai meccsünket is megnyertük.",
+      "url": "https://szedeak.com/oriasi-forditas-a-vegen-legyoztuk-a-deac-ot/",
+      "published_at": "2026-10-24T20:10:34+00:00",
+      "summary_method": "source_description"
     },
     {
       "source": "Nemzeti Sport",
@@ -1556,6 +1692,198 @@
       "summary": "Szeptember 27-én, vasárnap kezdetét veszi a WNBA 2026-os rájátszása.",
       "url": "https://wbasket.hu/207193-2/",
       "published_at": "2026.09.27 11:45",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Változás a felkészülési programban",
+      "summary": "Javában készül a szezonra csapatunk az ETO Basket, mely holnaptól Pöstyénben vesz részt nemzetközi tornán.",
+      "url": "https://etobasket.hu/hu/hirek/valtozas-a-felkeszulesi-programban/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Teljes a keretünk a 2026/27-es szezonra",
+      "summary": "Összeállt csapatunk kerete a 2026/27-es szezonra.",
+      "url": "https://etobasket.hu/hu/hirek/teljes-a-keretunk-a-202627-es-szezonra/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Szeptember legjobbjai: Pusztai Petra és Nováky Fanni",
+      "summary": "Szeptember legjobbjait megválasztottuk.",
+      "url": "https://etobasket.hu/hu/hirek/szeptember-legjobbjai-pusztai-petra-es-novaky-fanni/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Rózsahegyen folytatódik a felkészülés",
+      "summary": "A keddi emlékmeccs után Rózsahegyen folytatjuk a felkészülést: pénteken 15.30 órakor a cseh Ostrava, szombaton 15.30-kor a házigazda Ruzomberok lesz az ellenfelünk a szlovákiai tornán.",
+      "url": "https://etobasket.hu/hu/hirek/rozsahegyen-folytatodik-a-felkeszules/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Nagyszerű siker az utánpótlásban",
+      "summary": "A hétvégén rendezték a selejtezőt a serdülőbajnokságban, ahol az A csapatunk, az ETO Basket Gekkók három győzelemmel a felsőházba jutott.",
+      "url": "https://etobasket.hu/hu/hirek/nagyszeru-siker-az-utanpotlasban/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Megnehezítettük a DVTK dolgát a harcos mérkőzésen",
+      "summary": "DVTK-HUNTHERM–ETO Basket 50–40 (21–13, 11–15, 7–9, 11–3)",
+      "url": "https://etobasket.hu/hu/hirek/megnehezitettuk-a-dvtk-dolgat-a-harcos-merkozesen/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Megkezdtük a felkészülést az új idényre",
+      "summary": "A héten megkezdte a felkészülést csapatunk, az ETO Basket a 2026/27-es szezonra.",
+      "url": "https://etobasket.hu/hu/hirek/megkezdtuk-a-felkeszulest-az-uj-idenyre/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Magabiztos idegenbeli sikerrel javítottuk a szerdai vereséget",
+      "summary": "TFSE–ETO Basket 57–75 (21–23, 14–25, 4–21, 18–6)",
+      "url": "https://etobasket.hu/hu/hirek/magabiztos-idegenbeli-sikerrel-javitottuk-a-szerdai-vereseget-/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Legyőztük a címvédőt",
+      "summary": "ETO Basket–NKA Universitas Pécs 80–65 (23–14, 17–20, 22–12, 18–19)",
+      "url": "https://etobasket.hu/hu/hirek/legyoztuk-a-cimvedot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Két Európa-kupa-induló csapatot fektettünk két vállra",
+      "summary": "ETO Basket–SBS Ostrava 68–63 (17–18, 25–9, 13–18, 13–18)",
+      "url": "https://etobasket.hu/hu/hirek/ket-europa-kupa-indulo-csapatot-fektettunk-ket-vallra/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Információk a jegy- és bérletvásárlásról",
+      "summary": "Kedden az Fűy Ákos-Tapodi Péter-emlékmeccs megtekintése még ingyenes lesz, de már most megosztjuk az információkar a jegy- és bérletvásárlásról.",
+      "url": "https://etobasket.hu/hu/hirek/informaciok-a-jegy--es-berletvasarlasrol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Győzelemmel kezdtük a bajnokságot",
+      "summary": "ETO Basket–ELTE BEAC Újbuda 88–74 (17–16, 20–16, 26–16, 25–23)",
+      "url": "https://etobasket.hu/hu/hirek/gyozelemmel-kezdtuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Fontos két ponttal térhetünk haza a Csata otthonából",
+      "summary": "Csata TKK–ETO Basket 61–71 (17–22, 15–19, 17–9, 12–21)",
+      "url": "https://etobasket.hu/hu/hirek/fontos-ket-ponttal-terhetunk-haza-a-csata-otthonabol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Emlékmeccs új környezetben régi ellenféllel szemben",
+      "summary": "Szeptember 8-án, 18 órakor az Olimpiai Sportpark Multicsarnokában a legutóbbi bajnokság bronzérmese, a Magyar Kupa-győztes Sopron Basket ellen játssza csapatunk első hazai felkészülési meccsét, mely egyben a hagyományos Fűzy Ákos-Tapodi Péter-emlékmérkőzés.",
+      "url": "https://etobasket.hu/hu/hirek/emlekmeccs-uj-kornyezetben-regi-ellenfellel-szemben/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "ETO-bérlettel féláron szurkolhatnak a bajnokcsapat ellen",
+      "summary": "Vasárnap 17 órakor a bajnoki címvédő NKA Universitas Pécs csapatát fogadjuk az Olimpiai Sportparkban.",
+      "url": "https://etobasket.hu/hu/hirek/eto-berlettel-felaron-szurkolhatnak-a-bajnokcsapat-ellen/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Az Olimpia Sportparkba költözik csapatunk",
+      "summary": "Eredményesen zárult a tárgyalás az Olimpiai Sportparkot is üzemeltető Győr Projekt Kft.-vel, ezzel eldőlt, hogy a 2026/27-es szezonban a 2017-es Európai Ifjúsági Olimpiára épült létesítmény multicsarnokában játsszuk hazai mérkőzéseinket a női NB I A csoportjában.",
+      "url": "https://etobasket.hu/hu/hirek/az-olimpia-sportparkba-koltozik-csapatunk/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A még hibátlan DVTK otthonában folytatjuk a bajnokságot",
+      "summary": "Vasárnap 17 órakor a válogatott szünet előtti utolsó bajnoki mérkőzésünkön a DVTK-hoz látogatunk.",
+      "url": "https://etobasket.hu/hu/hirek/a-meg-hibatlan-dvtk-otthonaban-folytatjuk-a-bajnoksagot-/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A címvédő Pécs ellen hazai környezetben folytatjuk a bajnokságot",
+      "summary": "Vasárnap 17 órakor NB I-es mérkőzésen a címvédő NKA Universitas Pécs lesz a vendégünk az Olimpiai Sportparkban.",
+      "url": "https://etobasket.hu/hu/hirek/a-cimvedo-pecs-ellen-hazai-kornyezetben-folytatjuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A bajnoki cím egyik esélyesét fogadjuk",
+      "summary": "Szerdán 18 órakor az Olimpiai Sportparkban a Sopron Basket ellen folytatódik számunkra a bajnokság.",
+      "url": "https://etobasket.hu/hu/hirek/a-bajnoki-cim-egyik-eselyeset-fogadjuk/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A TFSE otthonában javíthatunk",
+      "summary": "Szombaton 18 órakor a TFSE vendégeként folytatjuk a bajnokságot.",
+      "url": "https://etobasket.hu/hu/hirek/a-tfse-otthonaban-javithatunk/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Sopron nyerte a megyei rangadót",
+      "summary": "ETO Basket–Sopron Basket 53–88 (15–20, 16–30, 15–18, 7–20)",
+      "url": "https://etobasket.hu/hu/hirek/a-sopron-nyerte-a-megyei-rangadot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Sopron ellen játszottuk a Fűzy Ákos-Tapodi Péter-emlékmérkőzést",
+      "summary": "ETO Basket–Sopron Basket 62–105 (22–30, 12–21, 16–27, 12–27)",
+      "url": "https://etobasket.hu/hu/hirek/a-sopron-ellen-jatszottuk-a-fuzy-akos-tapodi-peter-emlekmerkozest/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Csata otthonában folytatjuk a bajnokságot",
+      "summary": "Szombaton 17 órakor a Csata TTK otthonában folytatjuk szereplésünket a bajnokságban.",
+      "url": "https://etobasket.hu/hu/hirek/a-csata-otthonaban-folytatjuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A BEAC ellen kezdjük a bajnokságot",
+      "summary": "Csütörtökön 18 órakor az Olimpiai Sportparkban az ELTE BEAC Újbuda együttesét fogadjuk a bajnokság nyitófordulójában.",
+      "url": "https://etobasket.hu/hu/hirek/a-beac-ellen-kezdjuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
       "summary_method": "source_description"
     },
     {
