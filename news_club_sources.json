@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Falco KC Szombathely",
+    "urls": [
+      "https://falcokc.com/"
+    ],
+    "hosts": [
+      "falcokc.com"
+    ],
+    "article_pattern": "^/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]"
+  },
+  {
+    "name": "DVTK HUNTHERM",
+    "urls": [
+      "https://dvtk.eu/2-kosarlabda-sportag"
+    ],
+    "hosts": [
+      "dvtk.eu"
+    ],
+    "article_pattern": "^/\\d+-[^/]+-cikk-kosarlabda$",
+    "listing_selector": "a[href*=\"-cikk-kosarlabda\"]"
+  }
+]
