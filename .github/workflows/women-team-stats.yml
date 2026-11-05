@@ -1,0 +1,24 @@
+name: Women's Hunbasket team statistics
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 6,12,18 * * *'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests pandas lxml beautifulsoup4
+      - name: Collect official women's statistics
+        run: python scripts/update_team_stats.py --league women
+      - name: Commit updated statistics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/team_stats_women.json
+          git diff --cached --quiet || (git commit -m "Update women's Hunbasket team statistics" && git push)
