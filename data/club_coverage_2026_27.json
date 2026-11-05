@@ -1,0 +1,132 @@
+{
+  "season": "2026/2027",
+  "official_roster_source": "https://hunbasket.hu/csapatok",
+  "note": "configured means candidate URLs are sourced from club pages; live GitHub Actions still needs to verify success. Pending teams are not silently mapped to invented sites.",
+  "teams": [
+    {
+      "name": "Alba Fehérvár",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Atomerőmű SE",
+      "league": "Férfi NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "DEAC",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Délút-SZTE-Szedeák",
+      "league": "Férfi NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Egis Körmend",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Endo Plus Service-Honvéd",
+      "league": "Férfi NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "Falco KC Szombathely",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Kometa-KVGY Kaposvári KK",
+      "league": "Férfi NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "NHSZ-Szolnoki Olajbányász",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "NKA Universitas Pécs (férfi)",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "OSE Lions",
+      "league": "Férfi NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "PHOENIX Fóti Tigrisek",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Sopron KC",
+      "league": "Férfi NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "BKG-PRIMA Szigetszentmiklós",
+      "league": "Női NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Csata TKK",
+      "league": "Női NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "DVTK HUNTHERM",
+      "league": "Női NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "ELTE BEAC Újbuda",
+      "league": "Női NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "ETO Basket",
+      "league": "Női NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "KSC Szekszárd",
+      "league": "Női NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "NKA Universitas Pécs (női)",
+      "league": "Női NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "Sopron Basket",
+      "league": "Női NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "TFSE",
+      "league": "Női NB I/A",
+      "status": "pending_official_article_feed_verification"
+    },
+    {
+      "name": "Vasas Akadémia",
+      "league": "Női NB I/A",
+      "status": "configured_unverified_live"
+    },
+    {
+      "name": "VBW CEKK Cegléd",
+      "league": "Női NB I/A",
+      "status": "configured_unverified_live"
+    }
+  ]
+}
