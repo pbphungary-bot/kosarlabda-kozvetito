@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-05T17:33:07.406840+00:00",
+  "checked_at": "2026-11-05T17:45:42.404421+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -46,8 +46,8 @@
       "status": "ok",
       "candidates": 50,
       "added": 0,
-      "repaired": 50,
-      "article_errors": 0,
+      "repaired": 49,
+      "article_errors": 1,
       "listing_errors": []
     },
     {
@@ -184,8 +184,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php: HTTP Error 406: Not Acceptable",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTP Error 406: Not Acceptable"
+        "https://www.cekk.hu/new/index.php: <urlopen error [Errno 101] Network is unreachable>",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: <urlopen error [Errno 101] Network is unreachable>"
       ]
     },
     {
@@ -201,7 +201,7 @@
       "source": "Klub: Délút-SZTE-Szedeák",
       "status": "ok",
       "candidates": 5,
-      "added": 5,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -214,7 +214,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://honved.hu/kosarlabda: HTTP Error 403: Forbidden"
+        "https://honved.hu/kosarlabda/: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -225,6 +225,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
+        "https://www.delfinek.hu/: HTTP Error 403: Forbidden",
         "https://www.delfinek.hu/hirek: HTTP Error 403: Forbidden"
       ]
     },
@@ -249,11 +250,13 @@
     {
       "source": "Klub: ETO Basket",
       "status": "ok",
-      "candidates": 24,
-      "added": 24,
+      "candidates": 12,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: <urlopen error [Errno 101] Network is unreachable>"
+      ]
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -263,7 +266,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.kscszekszard.hu/: HTTP Error 403: Forbidden"
+        "https://kscszekszard.hu/: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -282,7 +285,10 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: <urlopen error [Errno 101] Network is unreachable>",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: <urlopen error [Errno 101] Network is unreachable>"
+      ]
     }
   ],
   "articles": [
@@ -439,6 +445,14 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Villámértékelések a szerdai Európa Kupa mérkőzések után",
+      "summary": "Szerdán a DVTK HUNTHERM Görögországban, a Sopron Basket Szerbiában nyert kulcsfontosságú csoportmeccset az Európa Kupában.",
+      "url": "https://wbasket.hu/villamertekelesek-a-szerdai-europa-kupa-merkozesek-utan/",
+      "published_at": "2026.11.05. 08:22",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Molnár Tamás: A MAFC-ban mindenki megkapja a bizalmat",
       "summary": "Az újbudaiak kulcsjátékosává vált a saját nevelésű bedobó.",
@@ -524,6 +538,14 @@
       "summary": "A szlovák gárda néhány perccel a vége előtt még vezetett, de a végjátékban a mi oldalunkról jöttek a nyerő megoldások.",
       "url": "https://olajofficial.hu/2026/10/22/fiba-ec-kielezett-meccset-nyertunk-a-levice-otthonaban/",
       "published_at": "2026.11.05.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Egy az Egyben 12. rész: Studer Ágnes",
+      "summary": "<p style=text-align:justify>Riportsorozatunk legújabb epizódjában a magyar női válogatottal a 2026-os világbajnokság negyeddöntőjébe jutó irányítóval elevenítettük fel élete és pályafutása fontos mérföldköveit.",
+      "url": "https://hunbasket.hu/hir/77662/egy-az-egyben-12-resz-studer-agnes/",
+      "published_at": "2026. 11. 05.",
       "summary_method": "source_description"
     },
     {
