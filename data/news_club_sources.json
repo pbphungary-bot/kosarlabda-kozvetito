@@ -26,7 +26,8 @@
   {
     "name": "DEAC",
     "urls": [
-      "https://kosarlabda.deac.hu/hirek/"
+      "https://kosarlabda.deac.hu/hirek/",
+      "https://kosarlabda.deac.hu/hirek/uj-fejezet-kezdodik-szegeden-torne-ki-a-godorbol-a-deac/"
     ],
     "hosts": [
       "kosarlabda.deac.hu"
@@ -72,13 +73,14 @@
   {
     "name": "NKA Universitas Pécs (férfi)",
     "urls": [
+      "https://www.nkapecs.hu/hirek",
       "https://www.nkapecs.hu/"
     ],
     "hosts": [
       "nkapecs.hu"
     ],
-    "article_pattern": "^/[^/]+$",
-    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]"
+    "article_pattern": "^/tartalmak/[^/]+$",
+    "listing_selector": "a[href*=\"/tartalmak/\"]"
   },
   {
     "name": "Sopron KC",
@@ -116,18 +118,21 @@
   {
     "name": "Csata TKK",
     "urls": [
+      "https://csatatkk.hu/hirek/",
       "https://csatatkk.hu/"
     ],
     "hosts": [
       "csatatkk.hu"
     ],
-    "article_pattern": "^/[^/]+$",
-    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]"
+    "article_pattern": "^/20\\d\\d/\\d{2}/\\d{2}/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/2026/\"], a[href*=\"/2027/\"]"
   },
   {
     "name": "NKA Universitas Pécs (női)",
     "urls": [
-      "https://www.nkapecswomen.hu/hirek"
+      "https://www.nkapecswomen.hu/",
+      "https://www.nkapecswomen.hu/hirek",
+      "https://www.nkapecswomen.hu/tartalmak/Uj-fejezet-kezdodik--a-pecsi-sziv-marad"
     ],
     "hosts": [
       "nkapecswomen.hu"
@@ -143,8 +148,8 @@
     "hosts": [
       "bkgakademia.hu"
     ],
-    "article_pattern": "^/[^/]+$",
-    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]"
+    "article_pattern": "^/20\\d\\d/\\d{2}/\\d{2}/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/2026/\"], a[href*=\"/2027/\"]"
   },
   {
     "name": "Vasas Akadémia",
@@ -160,12 +165,13 @@
   {
     "name": "VBW CEKK Cegléd",
     "urls": [
+      "https://www.cekk.hu/new/index.php",
       "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek"
     ],
     "hosts": [
       "cekk.hu"
     ],
-    "article_pattern": "^/new/index\\.php/hirek/item/\\d+-[^/]+$",
-    "listing_selector": "a[href*=\"/hirek/item/\"]"
+    "article_pattern": "^/new/index\\.php/(?:hirek/)?item/\\d+-[^/]+$",
+    "listing_selector": "a[href*=\"/item/\"]"
   }
 ]
