@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-05T17:09:08.432137+00:00",
+  "checked_at": "2026-11-05T17:18:45.653483+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -90,7 +90,7 @@
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "status": "ok",
       "candidates": 11,
-      "added": 11,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -99,8 +99,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -117,7 +117,7 @@
       "source": "Klub: Sopron KC",
       "status": "ok",
       "candidates": 4,
-      "added": 4,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -126,8 +126,8 @@
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
       "status": "ok",
       "candidates": 12,
-      "added": 12,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -138,9 +138,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: Csata TKK",
@@ -153,18 +151,18 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
-      "status": "error",
-      "candidates": 0,
-      "added": 0,
+      "status": "ok",
+      "candidates": 1,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "error",
-      "candidates": 0,
-      "added": 0,
+      "status": "ok",
+      "candidates": 18,
+      "added": 18,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -173,8 +171,8 @@
       "source": "Klub: Vasas Akadémia",
       "status": "ok",
       "candidates": 9,
-      "added": 9,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 3,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -186,7 +184,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: <urlopen error [Errno 101] Network is unreachable>"
+        "https://www.cekk.hu/new/index.php: HTTP Error 406: Not Acceptable",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTP Error 406: Not Acceptable"
       ]
     }
   ],
@@ -952,6 +951,150 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Visszatekintés U12-es csapatunk idei szezonjára!",
+      "summary": "Idén sikerült részben normalizálni az edzéslétszámot, így hatékonyabb munkát tudtunk végezni az eddigi évekhez képest.",
+      "url": "https://bkgakademia.hu/2026/06/29/visszatekintes-u12-es-csapatunk-idei-szezonjara/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Vereségek U14-ben",
+      "summary": "BL Basket SE/A-BKGDSE U14F/B 129-12",
+      "url": "https://bkgakademia.hu/2026/10/24/veresegek-u14-ben/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "U19-es győzelem hazai pályán!",
+      "summary": "U19-es győzelem hazai pályán!",
+      "url": "https://bkgakademia.hu/2026/10/24/u19-es-gyozelem-hazai-palyan/",
+      "published_at": "2026.11.01.",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "U14: GYŐZELEM IDEGENBEN!",
+      "summary": "Remekül kezdtünk a Parthus SE otthonában: az első negyedben 19 pontos előnyt építettünk, végül 25 pontos sikerrel zártuk a találkozót! 💪",
+      "url": "https://bkgakademia.hu/2026/10/29/u14-gyozelem-idegenben/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Szép játékkal és remek egyéni teljesítményekkel kiütéses győzelem Debrecenben!",
+      "summary": "Magabiztos, 97–64-es győzelmet arattunk a DEAC U23 otthonában, miután az első negyedtől kezdve végig irányítottuk a találkozót.",
+      "url": "https://bkgakademia.hu/2026/11/01/szep-jatekkal-es-remek-egyeni-teljesitmenyekkel-kiuteses-gyozelem-debrecenben/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Szoros első félidő után a PVSK örülhetett a győzelemnek",
+      "summary": "Az első félidőben végig kiegyenlített mérkőzést játszottunk a PVSK-Panthers ellen, a nagyszünetben mindössze egy pont volt a különbség a csapatok között (31–32).",
+      "url": "https://bkgakademia.hu/2026/10/26/szoros-elso-felido-utan-a-pvsk-orulhetett-a-gyozelemnek/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Szezonzárás a Junioroknál is!",
+      "summary": "A junior csapatunk idén három, később négy „végzőssel” állt föl, de többen is utolsó évükre készültek velünk.",
+      "url": "https://bkgakademia.hu/2026/06/29/szezonzaras-a-junioroknal-is/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Országosan a 34. helyen zárta a szezont az U14A!",
+      "summary": "Az országos főtábla alsóházi rájátszásának lezártával véget ért a szezon Kosok serdülő csapata számára.",
+      "url": "https://bkgakademia.hu/2026/05/31/orszagosan-a-34-helyen-zarta-a-szezont-az-u14a/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hazai pályán lépnénk előre: a Ceglédet fogadjuk szombaton",
+      "summary": "Újra saját közönségünk előtt lépünk pályára: október 31-én, szombaton 18 órától a VBW CEKK Ceglédet fogadjuk a női NB I.",
+      "url": "https://bkgakademia.hu/2026/10/29/hazai-palyan-lepnenk-elore-a-cegledet-fogadjuk-szombaton/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hazai pályán folytatjuk: a veretlen DVTK érkezik Szigetszentmiklósra",
+      "summary": "Három idegenbeli mérkőzés után ismét saját közönségünk előtt lépünk pályára: október 17-én, szombaton 18 órától a DVTK HUNTHERM együttesét fogadjuk a női NB I.",
+      "url": "https://bkgakademia.hu/2026/10/14/hazai-palyan-folytatjuk-a-veretlen-dvtk-erkezik-szigetszentmiklosra/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hatalmas csatában, idegenben győztük le a Jászberényt!",
+      "summary": "Végig kiélezett, fordulatokban gazdag mérkőzésen aratott fontos idegenbeli győzelmet a BKG PRIMA Akadémia a Jászberényi KSE otthonában.",
+      "url": "https://bkgakademia.hu/2026/10/17/hatalmas-csataban-idegenben-gyoztuk-le-a-jaszberenyt/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hatalmas csatában győztük le a Veszprémet!",
+      "summary": "A BKG PRIMA fordulatos, végig kiélezett mérkőzésen 76–73-as győzelmet aratott az Insedo Veszprém KK ellen hazai pályán.",
+      "url": "https://bkgakademia.hu/2026/10/12/hatalmas-csataban-gyoztuk-le-a-veszpremet/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Félidei előny után fájó vereség a Cegléd ellen",
+      "summary": "Az első félidőt előnnyel zártuk, a nagyszünet után azonban a Cegléd fordított, és 77–65-re megnyerte a női NB I.",
+      "url": "https://bkgakademia.hu/2026/11/01/felidei-elony-utan-fajo-vereseg-a-cegled-ellen/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Fordítás az utolsó percben, PRIMA-győzelem a TF-BP ellen!",
+      "summary": "Fordulatos, végletekig kiélezett mérkőzésen felnőttcsapatunk 83–80-ra legyőzte a TF-BP együttesét.",
+      "url": "https://bkgakademia.hu/2026/09/29/forditas-az-utolso-percben-prima-gyozelem-a-tf-bp-ellen/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Ezüstéremmel zárta a szezont a BKG PRIMA",
+      "summary": "A BKG PRIMA Akadémia hatalmas küzdelemben 94–83-as vereséget szenvedett a Phoenix-MT Fót ellen a döntő negyedik mérkőzésén, így ezüstéremmel zárta a 2025/2026-os NB I/B Piros csoportos szezont.",
+      "url": "https://bkgakademia.hu/2026/05/24/ezusteremmel-zarta-a-szezont-a-bkg-prima/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Biztató részletek mellett vereséget szenvedtünk Pécsett",
+      "summary": "Női csapatunk 89–69-es vereséget szenvedett az NKA Universitas Pécs otthonában a bajnokság hatodik fordulójában.",
+      "url": "https://bkgakademia.hu/2026/10/26/biztato-reszletek-mellett-vereseget-szenvedtunk-pecsett/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "A bajnoki címvédő otthonában folytatjuk",
+      "summary": "Újabb idegenbeli feladat vár női csapatunkra: október 25-én, vasárnap 17 órától az NKA Universitas Pécs vendégeként lépünk pályára a női NB I.",
+      "url": "https://bkgakademia.hu/2026/10/24/a-bajnoki-cimvedo-otthonaban-folytatjuk/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "A DVTK érvényesítette fölényét Szigetszentmiklóson",
+      "summary": "A csoport ötödik fordulójában 108–48-as vereséget szenvedtünk hazai pályán a DVTK HUNTHERM együttesétől.",
+      "url": "https://bkgakademia.hu/2026/10/17/a-dvtk-ervenyesitette-folenyet-szigetszentmikloson/",
+      "published_at": "2026.11.01.",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Kiszenvedte a győzelmet Kecskeméten az Alba",
       "summary": "Kétszámjegyű hátrányból fordított a KTE, de a végjátékot a vendégek bírták jobban.",
@@ -1510,6 +1653,14 @@
       "url": "https://vasasbasket.hu/index.php/tao-dokumentumok/",
       "published_at": "2018-05-17T07:43:56+00:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Új fejezet kezdődik, a pécsi szív marad",
+      "summary": "Hétfőn megkezdte a felkészülést a 2026-2027-es idényre az NKA Universitas Pécs női kosárlabdacsapata.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Uj-fejezet-kezdodik--a-pecsi-sziv-marad/",
+      "published_at": null,
+      "summary_method": "source_description"
     },
     {
       "source": "Klub: Falco KC Szombathely",
