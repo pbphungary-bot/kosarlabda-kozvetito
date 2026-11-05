@@ -21,25 +21,23 @@ SOURCES = [
     {'name': 'Nemzeti Sport', 'urls': ['https://www.nemzetisport.hu/rovat/kosarlabda'], 'hosts': ('nemzetisport.hu',), 'kind': 'nso'},
 ]
 
-# Optional, manually verified official club feeds. No unverified domains are assumed.
-# Each record: {"name": "Club name", "urls": ["https://official.club/news"],
-#               "hosts": ["official.club"], "kind": "club"}
 CLUB_CONFIG = Path('data/news_club_sources.json')
 if CLUB_CONFIG.exists():
     try:
-        club_sources = json.loads(CLUB_CONFIG.read_text(encoding='utf-8'))
-        if not isinstance(club_sources, list):
+        clubs = json.loads(CLUB_CONFIG.read_text(encoding='utf-8'))
+        if not isinstance(clubs, list):
             raise ValueError('Club source configuration must be a list')
-        for club in club_sources:
+        for club in clubs:
             if not isinstance(club, dict) or not club.get('name') or not club.get('urls') or not club.get('hosts'):
                 raise ValueError('Invalid club source record')
-            hosts = tuple(str(x).lower().removeprefix('www.') for x in club['hosts'])
+            hosts = tuple(str(h).lower().removeprefix('www.') for h in club['hosts'])
             urls = [str(u) for u in club['urls'] if str(u).startswith('https://')]
-            if not urls or not hosts:
+            if not hosts or not urls:
                 raise ValueError('Invalid club source URL or host')
             SOURCES.append({'name': 'Klub: ' + club['name'], 'urls': urls, 'hosts': hosts, 'kind': 'club', 'article_pattern': club.get('article_pattern', ''), 'listing_selector': club.get('listing_selector', '')})
     except (ValueError, OSError, TypeError) as exc:
         print('CLUB CONFIG ERROR:', exc, file=sys.stderr)
+
 
 def clean(value):
     return re.sub(r'\s+', ' ', value or '').strip()
@@ -71,10 +69,8 @@ def valid_url(url, src):
     if src['kind'] == 'club' and src.get('article_pattern'):
         return bool(re.search(src['article_pattern'], path))
     if src['kind'] == 'nso':
-        # Nemzeti Sport news articles have a category prefix and an article slug.
         return bool(re.match(r'^/kosarlabda/\d{4}/\d{2}/[^/]+$', path))
     if src['kind'] == 'kezdo5':
-        # Kezdő5 articles: /magyar-ferfi/hirek/article-slug or equivalent categories.
         return bool(re.match(r'^/[^/]+/(?:hirek|cikkek|interjuk)/[^/]+$', path))
     if path in ('', '/hirek', '/latest-news'):
         return False
@@ -101,6 +97,13 @@ def candidates(soup, base, src):
         url = canonical(urljoin(base, a.get('href', '')))
         if valid_url(url, src):
             links.setdefault(url, title)
+    # A verified direct article URL can serve as a seed if the club's listing page fails.
+    if src['kind'] == 'club' and valid_url(base, src):
+        heading = soup.select_one('h1')
+        if heading:
+            title = clean(heading.get_text(' ', strip=True))
+            if 12 <= len(title) <= 250:
+                links.setdefault(canonical(base), title)
     return list(links.items())[:100]
 
 def structured_date(soup):
@@ -154,7 +157,7 @@ def article(url, listing_title, src):
     if headline.lower() in ('hírek', 'news', 'kosárlabda'):
         raise ValueError('navigation page, not an article')
     descriptions = [metadata(soup, 'og:description', 'description', 'twitter:description')]
-    for selector in ('article .entry-content p', '.post-content p', '.article-content p', '.article-body p', '[itemprop=articleBody] p', 'article p', '.content p'):
+    for selector in ('article .entry-content p', '.post-content p', '.article-content p', 'article p', '.content p'):
         p = soup.select_one(selector)
         if p:
             descriptions.append(p.get_text(' ', strip=True))
@@ -205,7 +208,7 @@ def main():
                 soup, base = fetch(listing_url)
                 for url, title in candidates(soup, base, src):
                     found.setdefault(url, title)
-                if found and src['kind'] not in ('hunbasket', 'kezdo5'):
+                if found and src['kind'] not in ('hunbasket', 'club'):
                     break
             except Exception as exc:
                 listing_errors.append(f'{listing_url}: {exc}')
