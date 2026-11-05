@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-05T15:56:54.219265+00:00",
+  "checked_at": "2026-11-05T16:49:56.715590+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 28,
       "added": 1,
-      "repaired": 4,
+      "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -45,13 +45,39 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 50,
+      "added": 0,
+      "repaired": 50,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "status": "ok",
+      "candidates": 23,
+      "added": 23,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Alba Fehérvár – DEAC",
+      "summary": "Székesfehérvárra látogat a Debrecen.",
+      "url": "https://bball1.hu/alba-fehervar-deac-9/",
+      "published_at": "2026-11-05T17:14:45+01:00",
+      "summary_method": "source_description"
+    },
     {
       "source": "BB1.hu",
       "title": "Kometa-KVGY Kaposvári KK – NKA Universitas Pécs",
@@ -965,10 +991,74 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "ÉRDEKESSÉGEK A VASI KLASSZIKUS ELŐTT!",
+      "summary": "ÉRDEKESSÉGEK A VASI KLASSZIKUS ELŐTT!",
+      "url": "https://falcokc.com/erdekessegek-a-vasi-klasszikus-elott-2/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Whelan és Váradi szétdobta a hazaiakat: Körmend- Falco 79-105",
+      "summary": "Whelan és Váradi szétdobta a hazaiakat: Körmend- Falco 79-105",
+      "url": "https://falcokc.com/whelan-es-varadi-szetdobta-a-hazaiakat-kormend-falco-79-105/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "TÖRTÉNELMI MÉRFÖLDKŐ: PERL ZOLTÁN ELÉRTE AZ 1000 PONTOT A BAJNOKOK LIGÁJÁBAN!",
+      "summary": "TÖRTÉNELMI MÉRFÖLDKŐ: PERL ZOLTÁN ELÉRTE AZ 1000 PONTOT A BAJNOKOK LIGÁJÁBAN!",
+      "url": "https://falcokc.com/tortenelmi-merfoldko-perl-zoltan-elerte-az-1000-pontot-a-bajnokok-ligajaban/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "TÖBB LEHETŐSÉGÜNK IS VOLT, SAJNOS NEM TUDTUNK ÉLNI EZEKKEL….NÉZD MEG TEGNAPI BL MECCSÜNK SAJTÓTÁJÉKOZTATÓJÁT!",
+      "summary": "TÖBB LEHETŐSÉGÜNK IS VOLT, SAJNOS NEM TUDTUNK ÉLNI EZEKKEL….NÉZD MEG TEGNAPI BL MECCSÜNK SAJTÓTÁJÉKOZTATÓJÁT!",
+      "url": "https://falcokc.com/tobb-lehetosegunk-is-volt-sajnos-nem-tudtunk-elni-ezekkel-nezd-meg-tegnapi-bl-meccsunk-sajtotajekoztatojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Sárga-feketében a hétköznapokon is – Ismerd meg csapatunk merchandise kínálatát!",
+      "summary": "Sárga-feketében a hétköznapokon is – Ismerd meg csapatunk merchandise kínálatát!",
+      "url": "https://falcokc.com/sarga-feketeben-a-hetkoznapokon-is-ismerd-meg-csapatunk-merchandise-kinalatat/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
       "source": "Hunbasket",
       "title": "Szoros meccsen kapott ki a Falco és a Szolnok is",
       "summary": "Szoros meccsen kapott ki a Falco és a Szolnok is",
       "url": "https://hunbasket.hu/hir/77659/szoros-meccsen-kapott-ki-a-falco-es-a-szolnok-is/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Szoros meccsen fájó vereség: Falco – AEK Athén 66-72",
+      "summary": "Szoros meccsen fájó vereség: Falco – AEK Athén 66-72",
+      "url": "https://falcokc.com/szoros-meccsen-fajo-vereseg-falco-aek-athen-66-72/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Sorsolás",
+      "summary": "Sorsolás",
+      "url": "https://falcokc.com/sorsolas-2/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "SZOMBATON 08:00 ÓRAKOR INDUL AZ AEK ATHÉN ELLENI BAJNOKOK LIGÁJA CSOPORTMÉRKŐZÉSÜNK ONLINE JEGYÉRTÉKESÍTÉSE!",
+      "summary": "SZOMBATON 08:00 ÓRAKOR INDUL AZ AEK ATHÉN ELLENI BAJNOKOK LIGÁJA CSOPORTMÉRKŐZÉSÜNK ONLINE JEGYÉRTÉKESÍTÉSE!",
+      "url": "https://falcokc.com/szombaton-0800-orakor-indul-az-aek-athen-elleni-bajnokok-ligaja-csoportmerkozesunk-online-jegyertekesitese/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
@@ -985,6 +1075,38 @@
       "title": "Női EK: Portugáliában szakadt meg a Sopron Basket veretlenségi sorozata",
       "summary": "Női EK: Portugáliában szakadt meg a Sopron Basket veretlenségi sorozata",
       "url": "https://hunbasket.hu/hir/77640/noi-ek-portugaliaban-szakadt-meg-a-sopron-basket-veretlensegi-sorozata/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZZ BE A KULISSZÁK MÖGÉ – FALCO ON TOUR (KÖRMEND)",
+      "summary": "NÉZZ BE A KULISSZÁK MÖGÉ – FALCO ON TOUR (KÖRMEND)",
+      "url": "https://falcokc.com/nezz-be-a-kulisszak-moge-falco-on-tour-kormend/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZD VISSZA A VASI KLASSZIKUST 4 PERCBEN!",
+      "summary": "NÉZD VISSZA A VASI KLASSZIKUST 4 PERCBEN!",
+      "url": "https://falcokc.com/nezd-vissza-a-vasi-klasszikust-4-percben/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
+      "summary": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
+      "url": "https://falcokc.com/nezd-vissza-a-tegnap-aek-athen-elleni-bl-merkozesunk-osszefoglalojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Még több hír",
+      "summary": "Még több hír",
+      "url": "https://falcokc.com/hirek/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
@@ -1013,6 +1135,46 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "JÓ TÁMADÁSSAL ÉS KONCENTRÁLT JÁTÉKKAL TUDTUNK GYŐZNI – ÉRTÉKELÉSEK TEGNAPRÓL!",
+      "summary": "JÓ TÁMADÁSSAL ÉS KONCENTRÁLT JÁTÉKKAL TUDTUNK GYŐZNI – ÉRTÉKELÉSEK TEGNAPRÓL!",
+      "url": "https://falcokc.com/jo-tamadassal-es-koncentralt-jatekkal-tudtunk-gyozni-ertekelesek-tegnaprol/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Injury Report: Tanoh Dez András",
+      "summary": "Injury Report: Tanoh Dez András",
+      "url": "https://falcokc.com/injury-report-tanoh-dez-andras/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "HOLNAP DEBÜTÁL A FALCO CardZONE",
+      "summary": "HOLNAP DEBÜTÁL A FALCO CardZONE",
+      "url": "https://falcokc.com/holnap-debutal-a-falco-cardzone/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "HETI MENET 11.02-08.",
+      "summary": "HETI MENET 11.02-08.",
+      "url": "https://falcokc.com/heti-menet-11-02-08/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "GYEREKKÉNT SZURKOLÓ – FELNŐTTKÉNT CSAPATUNK LEGENDÁJA",
+      "summary": "GYEREKKÉNT SZURKOLÓ – FELNŐTTKÉNT CSAPATUNK LEGENDÁJA",
+      "url": "https://falcokc.com/gyerekkent-szurkolo-felnottkent-csapatunk-legendaja/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
       "source": "Hunbasket",
       "title": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
       "summary": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
@@ -1029,6 +1191,30 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "EGY NAGYON JÓ CSAPAT ELLEN LÉPHETÜNK PÁLYÁRA!",
+      "summary": "EGY NAGYON JÓ CSAPAT ELLEN LÉPHETÜNK PÁLYÁRA!",
+      "url": "https://falcokc.com/egy-nagyon-jo-csapat-ellen-lephetunk-palyara/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "AZ AEK ATHÉN MECCS FÉLIDEJÉBEN LESZ AZ SKC ELLENI MÉRKŐZÉSÜNK JEGYÉRTÉKESÍTÉSE!",
+      "summary": "AZ AEK ATHÉN MECCS FÉLIDEJÉBEN LESZ AZ SKC ELLENI MÉRKŐZÉSÜNK JEGYÉRTÉKESÍTÉSE!",
+      "url": "https://falcokc.com/az-aek-athen-meccs-felidejeben-lesz-az-skc-elleni-merkozesunk-jegyertekesitese/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "ALAPOK ELVÉGZÉSE MAXIMÁLIS PONTOSSÁGGAL, EZ LESZ A KULCS! – PATRICK WHELAN",
+      "summary": "ALAPOK ELVÉGZÉSE MAXIMÁLIS PONTOSSÁGGAL, EZ LESZ A KULCS! – PATRICK WHELAN",
+      "url": "https://falcokc.com/alapok-elvegzese-maximalis-pontossaggal-ez-lesz-a-kulcs-patrick-whelan/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
       "source": "Hunbasket",
       "title": "A biztonságos sportközeg közös ügyünk – ismerd meg az IntegriHUNBasket programot!",
       "summary": "A biztonságos sportközeg közös ügyünk – ismerd meg az IntegriHUNBasket programot!",
@@ -1037,10 +1223,34 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "A TAVALYI DÖNTŐS ÉS MVP ÉRKEZIK SZOMBATHELYRE – 3 ÉRDEKESSÉG AZ IDEI AEK ATHÉN-RÓL!",
+      "summary": "A TAVALYI DÖNTŐS ÉS MVP ÉRKEZIK SZOMBATHELYRE – 3 ÉRDEKESSÉG AZ IDEI AEK ATHÉN-RÓL!",
+      "url": "https://falcokc.com/a-tavalyi-dontos-es-mvp-erkezik-szombathelyre-3-erdekesseg-az-idei-aek-athen-rol/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
       "source": "Hunbasket",
       "title": "A DVTK és a Sopron is győzött a női Európa-kupában",
       "summary": "A DVTK és a Sopron is győzött a női Európa-kupában",
       "url": "https://hunbasket.hu/hir/77660/a-dvtk-es-a-sopron-is-gyozott-a-noi-europa-kupaban/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "5 helyet léptünk előre a Bajnokok Ligája erősorrendjében! – A 16. hely a miénk!",
+      "summary": "5 helyet léptünk előre a Bajnokok Ligája erősorrendjében! – A 16. hely a miénk!",
+      "url": "https://falcokc.com/5-helyet-leptun-elore-a-bajnokok-ligaja-erosorrendjeben-a-16-hely-a-mienk/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "2 FALCO KC 2 SZOMBATHELY A. Tanoh Dez",
+      "summary": "2 FALCO KC 2 SZOMBATHELY A. Tanoh Dez",
+      "url": "https://falcokc.com/bcl-player/",
       "published_at": null,
       "summary_method": "headline_fallback"
     }
