@@ -48,9 +48,9 @@ def collect(competition):
         if not team_group or not date_group:
             continue
 
-        home_el = team_group.select_one(".home-team-name")
-        away_el = team_group.select_one(".away-team-name")
-        score_el = team_group.select_one(".game-cell")
+        home_el = row.select_one(".home-team-name")
+        away_el = row.select_one(".away-team-name")
+        score_el = row.select_one(".game-cell")
 
         if not home_el or not away_el or not score_el:
             continue
