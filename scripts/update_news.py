@@ -1,95 +1,120 @@
-#!/usr/bin/env python3
-"""Conservative pilot: collect article metadata and source-backed one-line descriptions.
-No invented summaries: fallback is the headline. Run with Python 3 and bs4.
-"""
-import json, re, sys, urllib.request
-from datetime import datetime, timezone
-from pathlib import Path
-from urllib.parse import urljoin, urlparse, urldefrag
-from bs4 import BeautifulSoup
 
-SOURCES = [
-    {'name':'BB1.hu','url':'https://bb1.hu/latest-news/','host':'bb1.hu'},
-    {'name':'WBasket.hu','url':'https://wbasket.hu/','host':'wbasket.hu'},
-    {'name':'Hunbasket','url':'https://hunbasket.hu/hirek','host':'hunbasket.hu'},
-]
-OUT = Path('data/news.json')
-HEADERS = {'User-Agent':'BasketballCommentaryNewsPilot/0.1 (metadata only; respectful fetch) Mozilla/5.0'}
+    
+  
+    for element in soup.select('time[datetime], .entry-date, .post-date, .article-date, .date, [itemprop="datePublished"]'):
+        value = clean(element.get('datetime') or element.get('content') or element.get_text(' ', strip=True))
+        if re.search(r'20\d\d', value):
+            return value
+    return None
 
-def get(url):
-    req=urllib.request.Request(url,headers=HEADERS)
-    with urllib.request.urlopen(req,timeout=20) as r:
-        if r.status!=200: raise RuntimeError('HTTP '+str(r.status))
-        return BeautifulSoup(r.read(),'html.parser')
-
-def clean(s): return re.sub(r'\s+',' ',s or '').strip()
-
-def meta(soup, *keys):
-    for key in keys:
-        tag=soup.find('meta',attrs={'property':key}) or soup.find('meta',attrs={'name':key})
-        if tag and tag.get('content'): return clean(tag['content'])
+def sentence(text):
+    text = clean(text)
+    # Split only at sentence boundaries followed by a capital letter; never cut at '4. fordulo'.
+    for part in re.split(r'(?<=[.!?])\s+(?=[A-ZÁÉÍÓÖŐÚÜŰ„“])', text):
+        part = clean(part)
+        if 30 <= len(part) <= 500 and not re.match(r'^(fordulójában|fordulóban|mérkőzésén)\b', part, re.I):
+            return part
     return ''
 
-def canonical(url):
-    url=urldefrag(url)[0]
-    return url.rstrip('/')+'/' if urlparse(url).path not in ('','/') else url
+def article(url, listing_title, src):
+    soup, final_url = fetch(url)
+    if not valid_url(final_url, src):
+        raise ValueError('redirected to a non-article URL')
+    headline_tag = soup.select_one('h1')
+    headline = clean(headline_tag.get_text(' ', strip=True)) if headline_tag else listing_title
+    if headline.lower() in ('hírek', 'news', 'kosárlabda'):
+        headline = listing_title
+    if headline.lower() in ('hírek', 'news', 'kosárlabda'):
+        raise ValueError('navigation page, not an article')
+    descriptions = [metadata(soup, 'og:description', 'description', 'twitter:description')]
+    for selector in ('article .entry-content p', '.post-content p', '.article-content p', 'article p', '.content p'):
+        p = soup.select_one(selector)
+        if p:
+            descriptions.append(p.get_text(' ', strip=True))
+    summary = next((s for description in descriptions if (s := sentence(description))), '')
+    return {'source': src['name'], 'title': headline, 'summary': summary or headline, 'url': canonical(final_url),
+            'published_at': published_date(soup), 'summary_method': 'source_description' if summary else 'headline_fallback'}
 
-def candidates(soup,src):
-    found={}
-    for a in soup.select('article a[href], h2 a[href], h3 a[href], .post-title a[href], .entry-title a[href], a[href]'):
-        href=a.get('href',''); title=clean(a.get_text(' ',strip=True))
-        if not 18<=len(title)<=240: continue
-        url=canonical(urljoin(src['url'],href)); p=urlparse(url)
-        if p.scheme!='https' or not (p.hostname==src['host'] or p.hostname=='www.'+src['host']): continue
-        if p.path in ('','/','/hirek','/hirek/','/latest-news','/latest-news/'): continue
-        if any(x in p.path.lower() for x in ('/tag/','/category/','/page/','/author/','/csapat/','/tipus/','/kereso/')): continue
-        found.setdefault(url,title)
-    return list(found.items())[:80]
-
-def article(url,title,src):
-    soup=get(url)
-    h=soup.find('h1')
-    headline=clean(h.get_text(' ',strip=True)) if h else title
-    description=meta(soup,'og:description','description','twitter:description')
-    if not description:
-        body=soup.select_one('article .entry-content p, article p, .post-content p, .article-content p')
-        description=clean(body.get_text(' ',strip=True)) if body else ''
-    # Do not truncate into a misleading partial sentence. A headline is a safe fallback.
-    sentences=re.split(r'(?<=[.!?])\s+',description)
-    summary=next((s for s in sentences if 25<=len(s)<=360), '')
-    if not summary: summary=headline
-    published=meta(soup,'article:published_time','datePublished','pubdate')
-    time=soup.find('time')
-    if not published and time: published=time.get('datetime') or clean(time.get_text(' ',strip=True))
-    return {'source':src['name'],'title':headline,'summary':summary,'url':url,'published_at':published or None,
-            'summary_method':'source_description' if summary!=headline else 'headline_fallback'}
+def parse_date(value):
+    if not value:
+        return ''
+    try:
+        from datetime import datetime
+        return datetime.fromisoformat(value.replace('Z', '+00:00')).isoformat()
+    except ValueError:
+        pass
+    m = re.search(r'(20\d{2})[.\-/]\s*(\d{1,2})[.\-/]\s*(\d{1,2})(?:\D+(\d{1,2}):(\d{2}))?', value)
+    if m:
+        return f'{m[1]}-{int(m[2]):02d}-{int(m[3]):02d}T{int(m[4] or 0):02d}:{int(m[5] or 0):02d}:00'
+    return ''
 
 def main():
-    old=[]
+    old = []
     if OUT.exists():
-        try: old=json.loads(OUT.read_text(encoding='utf-8')).get('articles',[])
-        except (ValueError,OSError): pass
-    entries={x['url']:x for x in old if isinstance(x,dict) and x.get('url')}
-    checks=[]
-    for src in SOURCES:
-        count=0
         try:
-            links=candidates(get(src['url']),src)
-            for url,title in links:
-                if url in entries: continue
-                try:
-                    item=article(url,title,src)
-                    if not item['title']: continue
-                    entries[url]=item;count+=1
-                except Exception as exc: print(f'ARTICLE ERROR {src["name"]}: {url}: {exc}',file=sys.stderr)
-            checks.append({'source':src['name'],'status':'ok','candidates':len(links),'added':count})
-        except Exception as exc:
-            checks.append({'source':src['name'],'status':'error','message':str(exc)})
-            print(f'SOURCE ERROR {src["name"]}: {exc}',file=sys.stderr)
-    OUT.parent.mkdir(parents=True,exist_ok=True)
-    result={'checked_at':datetime.now(timezone.utc).isoformat(),'sources':checks,'articles':list(entries.values())}
-    OUT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps({'total':len(entries),'sources':checks},ensure_ascii=False,indent=2))
-    if not any(x['status']=='ok' for x in checks): sys.exit(1)
+            old = json.loads(OUT.read_text(encoding='utf-8')).get('articles', [])
+        except (OSError, ValueError):
+            pass
+    by_name = {src['name']: src for src in SOURCES}
+    entries = {}
+    discarded = 0
+    for item in old:
+        if not isinstance(item, dict) or not item.get('url') or item.get('source') not in by_name:
+            discarded += 1
+            continue
+        src = by_name[item['source']]
+        if not valid_url(item['url'], src) :
+            discarded += 1
+            continue
+        url = canonical(item['url'])
+        item['url'] = url
+        entries[url] = item
+    checks = []
+    for src in SOURCES:
+        found = {}
+        listing_errors = []
+        for listing_url in src['urls']:
+            try:
+                soup, base = fetch(listing_url)
+                for url, title in candidates(soup, base, src):
+                    found.setdefault(url, title)
+                if found and src['kind'] != 'hunbasket':
+                    break
+            except Exception as exc:
+                listing_errors.append(f'{listing_url}: {exc}')
+        added, repaired, failed = 0, 0, 0
+        for url, title in list(found.items())[:80]:
+            existing = entries.get(url)
+            needs_repair = existing and (not existing.get('published_at') or existing.get('summary_method') == 'headline_fallback' or clean(existing.get('title', '')).lower() in ('hírek', 'news') or not sentence(existing.get('summary', '')))
+            if existing and not needs_repair:
+                continue
+            try:
+                item = article(url, title, src)
+                if existing:
+                    if not item.get('published_at'):
+                        item['published_at'] = existing.get('published_at')
+                    if item['summary_method'] == 'headline_fallback' and existing.get('summary_method') == 'source_description' and sentence(existing.get('summary', '')):
+                        item['summary'] = existing['summary']
+                        item['summary_method'] = 'source_description'
+                    repaired += 1
+                else:
+                    added += 1
+                entries[url] = item
+            except Exception as exc:
+                failed += 1
+                print(f'ARTICLE ERROR {src["name"]}: {url}: {exc}', file=sys.stderr)
+            time.sleep(0.12)
+        status = 'ok' if found else 'error'
+        checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
+                       'article_errors': failed, 'listing_errors': listing_errors})
+    articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
+    OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps({'total': len(articles), 'discarded_navigation': discarded, 'sources': checks}, ensure_ascii=False, indent=2))
+    if not any(x['status'] == 'ok' for x in checks):
+        sys.exit(1)
 
-if __name__=='__main__': main()
+if __name__ == '__main__':
+    main()
+
