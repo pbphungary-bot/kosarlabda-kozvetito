@@ -823,6 +823,15 @@
     },
     {
       "round": "14.",
+      "home": "Egis Körmend",
+      "away": "Alba Fehérvár",
+      "result": "Előzetes",
+      "date": "2026. 12. 23.",
+      "time": "18:00",
+      "status": "scheduled"
+    },
+    {
+      "round": "14.",
       "home": "PHOENIX Fóti Tigrisek",
       "away": "Falco-Vulcano Energia KC Szombathely",
       "result": "Előzetes",
@@ -834,15 +843,6 @@
       "round": "14.",
       "home": "Délút-SZTE-Szedeák",
       "away": "Kometa-KVGY Kaposvári KK",
-      "result": "Előzetes",
-      "date": "2026. 12. 30.",
-      "time": "18:00",
-      "status": "scheduled"
-    },
-    {
-      "round": "14.",
-      "home": "Egis Körmend",
-      "away": "Alba Fehérvár",
       "result": "Előzetes",
       "date": "2026. 12. 30.",
       "time": "18:00",
@@ -1641,5 +1641,5 @@
       "status": "scheduled"
     }
   ],
-  "updated_at": "2026-11-05T12:44:32.355050+00:00"
+  "updated_at": "2026-11-05T15:00:09.535258+00:00"
 }
