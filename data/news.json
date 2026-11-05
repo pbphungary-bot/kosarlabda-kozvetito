@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-05T19:02:44.284396+00:00",
+  "checked_at": "2026-11-05T20:59:00.925196+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 28,
-      "added": 2,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 7,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -99,8 +99,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -251,7 +251,7 @@
       "source": "Klub: ETO Basket",
       "status": "ok",
       "candidates": 24,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -382,6 +382,22 @@
       "url": "https://ktekosar.hu/hirek/a-cimvedo-otthonaban-jon-a-folytatas/",
       "published_at": "2026. 11. 07., 18:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Újabb 25 millió forintos támogatást kap az OSE Lions",
+      "summary": "Takács Károly, Oroszlány polgármestere hivatalos Facebook-oldalán jelentette be ezt.",
+      "url": "https://bball1.hu/ujabb-25-millio-forintos-tamogatast-kap-az-ose-lions/",
+      "published_at": "2026-11-05T21:30:42+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Hat nap a rajtig – hat kérdés, hat válasz az Eb-selejtező kezdete előtt",
+      "summary": "November 11-én szerdán Németországban megkezdi szerepelését a világbajnoki negyeddöntős válogatottunk a 2027-es női kosárlabda Európa-bajnokság selejtező-sorozatában.",
+      "url": "https://wbasket.hu/hat-nap-a-rajtig-hat-kerdes-hat-valasz-az-eb-selejtezo-kezdete-elott/",
+      "published_at": "2026.11.05. 20:13",
+      "summary_method": "source_description"
     },
     {
       "source": "WBasket.hu",
