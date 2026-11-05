@@ -1,6 +1,239 @@
 {
   "league": "women",
   "source": "hunbasket",
-  "updated_at": null,
-  "teams": []
+  "source_url": "https://hunbasket.hu/csapatok",
+  "updated_at": "2026-11-05T18:37:05.069348+00:00",
+  "teams": [
+    {
+      "name": "BKG-PRIMA Szigetszentmiklós",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 57.3,
+          "fg2_pct": 41.3,
+          "fg3_pct": 26.1,
+          "ft_pct": 73.6,
+          "dreb": 22.4,
+          "oreb": 8.1,
+          "reb": 30.5,
+          "ast": 13.6,
+          "stl": 6.4,
+          "tov": 23.0,
+          "blk": 1.1,
+          "val": 63.6
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/40058"
+    },
+    {
+      "name": "Csata TKK",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 74.7,
+          "fg2_pct": 46.0,
+          "fg3_pct": 30.8,
+          "ft_pct": 71.3,
+          "dreb": 25.4,
+          "oreb": 9.3,
+          "reb": 34.7,
+          "ast": 17.0,
+          "stl": 10.4,
+          "tov": 12.0,
+          "blk": 3.7,
+          "val": 106.6
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/10097"
+    },
+    {
+      "name": "DVTK HUNTHERM",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 77.5,
+          "fg2_pct": 50.2,
+          "fg3_pct": 33.6,
+          "ft_pct": 65.8,
+          "dreb": 30.0,
+          "oreb": 9.8,
+          "reb": 39.8,
+          "ast": 22.0,
+          "stl": 10.8,
+          "tov": 14.0,
+          "blk": 3.3,
+          "val": 117.0
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/10005"
+    },
+    {
+      "name": "ELTE BEAC Újbuda",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 72.9,
+          "fg2_pct": 45.2,
+          "fg3_pct": 26.2,
+          "ft_pct": 69.9,
+          "dreb": 22.9,
+          "oreb": 9.7,
+          "reb": 32.6,
+          "ast": 17.0,
+          "stl": 14.0,
+          "tov": 17.0,
+          "blk": 2.1,
+          "val": 93.3
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51008"
+    },
+    {
+      "name": "ETO Basket",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 67.8,
+          "fg2_pct": 46.5,
+          "fg3_pct": 27.0,
+          "ft_pct": 74.0,
+          "dreb": 26.0,
+          "oreb": 11.2,
+          "reb": 37.2,
+          "ast": 15.8,
+          "stl": 10.7,
+          "tov": 17.0,
+          "blk": 4.2,
+          "val": 92.2
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51119"
+    },
+    {
+      "name": "KSC Szekszárd",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 80.5,
+          "fg2_pct": 51.6,
+          "fg3_pct": 29.3,
+          "ft_pct": 61.9,
+          "dreb": 24.2,
+          "oreb": 11.5,
+          "reb": 35.7,
+          "ast": 18.0,
+          "stl": 14.2,
+          "tov": 15.0,
+          "blk": 2.7,
+          "val": 108.0
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51006"
+    },
+    {
+      "name": "NKA Universitas Pécs",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 68.3,
+          "fg2_pct": 44.1,
+          "fg3_pct": 24.5,
+          "ft_pct": 72.1,
+          "dreb": 22.8,
+          "oreb": 12.3,
+          "reb": 35.1,
+          "ast": 12.8,
+          "stl": 13.0,
+          "tov": 17.0,
+          "blk": 1.5,
+          "val": 89.8
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/19006"
+    },
+    {
+      "name": "Sopron Basket",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 88.0,
+          "fg2_pct": 53.6,
+          "fg3_pct": 38.2,
+          "ft_pct": 68.0,
+          "dreb": 23.5,
+          "oreb": 16.0,
+          "reb": 39.5,
+          "ast": 20.2,
+          "stl": 13.3,
+          "tov": 12.0,
+          "blk": 3.0,
+          "val": 126.8
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51001"
+    },
+    {
+      "name": "TFSE",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 69.5,
+          "fg2_pct": 46.6,
+          "fg3_pct": 31.9,
+          "ft_pct": 53.5,
+          "dreb": 23.2,
+          "oreb": 7.7,
+          "reb": 30.9,
+          "ast": 19.7,
+          "stl": 12.3,
+          "tov": 15.0,
+          "blk": 2.8,
+          "val": 92.5
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51142"
+    },
+    {
+      "name": "Vasas Akadémia",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 53.2,
+          "fg2_pct": 35.8,
+          "fg3_pct": 22.3,
+          "ft_pct": 66.2,
+          "dreb": 21.0,
+          "oreb": 8.2,
+          "reb": 29.2,
+          "ast": 9.5,
+          "stl": 8.3,
+          "tov": 21.0,
+          "blk": 3.3,
+          "val": 60.3
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51149"
+    },
+    {
+      "name": "VBW CEKK Cegléd",
+      "aliases": [],
+      "periods": {
+        "season": {
+          "ppg": 69.0,
+          "fg2_pct": 48.0,
+          "fg3_pct": 33.5,
+          "ft_pct": 66.7,
+          "dreb": 26.9,
+          "oreb": 8.3,
+          "reb": 35.2,
+          "ast": 17.9,
+          "stl": 7.6,
+          "tov": 15.0,
+          "blk": 2.4,
+          "val": 97.4
+        }
+      },
+      "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51150"
+    }
+  ]
 }
