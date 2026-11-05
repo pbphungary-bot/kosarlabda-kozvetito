@@ -173,5 +173,118 @@
     ],
     "article_pattern": "^/new/index\\.php/(?:hirek/)?item/\\d+-[^/]+$",
     "listing_selector": "a[href*=\"/item/\"]"
+  },
+  {
+    "name": "Atomerőmű SE",
+    "urls": [
+      "https://www.ase.hu/"
+    ],
+    "hosts": [
+      "ase.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir|kosarlabda|cikk)/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hirek/\"], a[href*=\"/kosarlabda/\"]"
+  },
+  {
+    "name": "Délút-SZTE-Szedeák",
+    "urls": [
+      "https://szedeak.com/"
+    ],
+    "hosts": [
+      "szedeak.com"
+    ],
+    "article_pattern": "^/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+  },
+  {
+    "name": "Endo Plus Service-Honvéd",
+    "urls": [
+      "https://honved.hu/kosarlabda"
+    ],
+    "hosts": [
+      "honved.hu"
+    ],
+    "article_pattern": "^/kosarlabda/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/kosarlabda/\"]"
+  },
+  {
+    "name": "Kometa-KVGY Kaposvári KK",
+    "urls": [
+      "https://www.delfinek.hu/hirek"
+    ],
+    "hosts": [
+      "delfinek.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir)/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hirek/\"]"
+  },
+  {
+    "name": "OSE Lions",
+    "urls": [
+      "https://mvm.oselions.hu/",
+      "https://mvm.oselions.hu/teams/nbi-a/16"
+    ],
+    "hosts": [
+      "oselions.hu",
+      "mvm.oselions.hu"
+    ],
+    "article_pattern": "^/(?:news|hirek|hir|articles|article)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/news/\"], a[href*=\"/hirek/\"]"
+  },
+  {
+    "name": "ELTE BEAC Újbuda",
+    "urls": [
+      "https://kosarlabda.beac.hu/"
+    ],
+    "hosts": [
+      "kosarlabda.beac.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir|news|20\\d\\d/\\d\\d/\\d\\d)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+  },
+  {
+    "name": "ETO Basket",
+    "urls": [
+      "https://etobasket.hu/hu/hirek/1",
+      "https://etobasket.hu/hu/hirek/2"
+    ],
+    "hosts": [
+      "etobasket.hu"
+    ],
+    "article_pattern": "^/hu/(?:hirek|hir|cikk)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hu/hir\"]"
+  },
+  {
+    "name": "KSC Szekszárd",
+    "urls": [
+      "https://www.kscszekszard.hu/"
+    ],
+    "hosts": [
+      "kscszekszard.hu"
+    ],
+    "article_pattern": "^/(?!wp-content|category|tag|page|author)[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+  },
+  {
+    "name": "Sopron Basket",
+    "urls": [
+      "https://sopronbasket.com/home"
+    ],
+    "hosts": [
+      "sopronbasket.com"
+    ],
+    "article_pattern": "^/(?:news|hirek|article|cikk)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/news/\"]"
+  },
+  {
+    "name": "TFSE",
+    "urls": [
+      "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/"
+    ],
+    "hosts": [
+      "tfse.hu"
+    ],
+    "article_pattern": "^/(?!szakosztaly|wp-content|hirek|category|tag|page)[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
   }
 ]
