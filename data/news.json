@@ -1,31 +1,97 @@
 {
-  "checked_at": "2026-11-05T15:27:47.492738+00:00",
+  "checked_at": "2026-11-05T15:38:17.090275+00:00",
   "sources": [
     {
       "source": "BB1.hu",
-      "status": "error",
-      "message": "HTTP Error 404: Not Found"
+      "status": "ok",
+      "candidates": 28,
+      "added": 28,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
     },
     {
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 33
+      "added": 0,
+      "repaired": 4,
+      "article_errors": 0,
+      "listing_errors": []
     },
     {
       "source": "Hunbasket",
       "status": "ok",
-      "candidates": 21,
-      "added": 20
+      "candidates": 12,
+      "added": 0,
+      "repaired": 12,
+      "article_errors": 0,
+      "listing_errors": []
     }
   ],
   "articles": [
     {
-      "source": "WBasket.hu",
-      "title": "Hatalmas csatában nyert a DVTK Görögországban",
-      "summary": "fordulójában a DVTK HUNTHERM 77-74-es győzelmet aratott a Panathlitikos Sykeon otthonában.",
-      "url": "https://wbasket.hu/nagy-csataban-nyert-a-dvtk-gorogorszagban/",
-      "published_at": "2026.11.04 21:19",
+      "source": "BB1.hu",
+      "title": "Férfi egyetemi bajnokság: óbudai bravúr Egerben",
+      "summary": "Többnyire egyoldalú mérkőzéseket játszottak a csapatok a férfi Nemzeti Egyetemi Kosárlabda Bajnokságban a héten.",
+      "url": "https://bball1.hu/ferfi-egyetemi-bajnoksag-obudai-bravur-egerben/",
+      "published_at": "2026-11-05T16:00:53+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nemzetközi kitekintő: Golomán remekelt a Galata ellen, a Vilpas elvette az Antwerp veretlenségét",
+      "summary": "A Girona és a Góra is nyert a Szolnok csoportjában.",
+      "url": "https://bball1.hu/nemzetkozi-kitekinto-goloman-remekelt-a-galata-ellen-a-vilpas-elvette-az-antwerp-veretlenseget/",
+      "published_at": "2026-11-05T15:32:15+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nézd vissza a nemzetközi mérkőzések legfontosabb jeleneteit",
+      "summary": "Ezúttal a Falco és a Szolnok is vereséget szenvedett.",
+      "url": "https://bball1.hu/nezd-vissza-a-nemzetkozi-merkozesek-legfontosabb-jeleneteit/",
+      "published_at": "2026-11-05T13:45:03+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Milos Konakov: Úgy érzem a legnagyobb probléma ma a kétpontos dobásaink százaléka volt, a 40% nem elég egy ilyen mérkőzésen.",
+      "summary": "Mikko Larkas bízik benne, hogy Madsen és Rudner sérülése nem annyira súlyos, mint amilyennek elsőre tűnt.",
+      "url": "https://bball1.hu/milos-konakov-ugy-erzem-a-legnagyobb-problema-ma-a-ketpontos-dobasaink-szazaleka-volt-a-40-nem-eleg-egy-ilyen-merkozesen/",
+      "published_at": "2026-11-05T13:03:00+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Korábban kezdődik november 14-én, az ASE-Alba mérkőzés",
+      "summary": "Korábban kezdődik november 14-én, az ASE-Alba mérkőzés",
+      "url": "https://bball1.hu/korabban-kezdodik-november-14-en-az-ase-alba-merkozes/",
+      "published_at": "2026-11-05T10:44:13+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Molnár Tamás: A MAFC-ban mindenki megkapja a bizalmat",
+      "summary": "Az újbudaiak kulcsjátékosává vált a saját nevelésű bedobó.",
+      "url": "https://bball1.hu/molnar-tamas-a-mafc-ban-mindenki-megkapja-a-bizalmat/",
+      "published_at": "2026-11-05T08:00:28+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Női NB I: Megizzadt Pasaréten a Sopron Basket",
+      "summary": "Sőt, a folytatásban is a hazaiak akarata érvényesült, nem sokkal az első játékrész vége előtt Szirony találatával már két számjegyűre hízott a Vasas Akadémia előnye (20-10), az utolsó szó azonban Maric révén a soproniaké volt (20-12).",
+      "url": "https://hunbasket.hu/hir/77647/noi-nb-i-megizzadt-pasareten-a-sopron-basket/",
+      "published_at": "2026. 11. 05.",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Női NB I: Legyőzte a Csata a Pécset",
+      "summary": "Újabb egy perccel később Wentzel harcolt ki és értékesített két büntetőt, ezzel a Csata TKK is feliratkozott a táblára, azonban ezután sem talált utat újabb dobás a gyűrűbe, Cvijanovic viszont bedobott kettőből egy büntetőt, Wentzel pedig ziccerből volt eredményes (4-8).",
+      "url": "https://hunbasket.hu/hir/77646/noi-nb-i-legyozte-a-csata-a-pecset/",
+      "published_at": "2026. 11. 05.",
       "summary_method": "source_description"
     },
     {
@@ -34,6 +100,14 @@
       "summary": "Srdjan Radulovic vette át a Soproni Darazsak Sportakadémia junior „A” csapatának irányítását.",
       "url": "https://wbasket.hu/mindig-ugy-jatszol-a-palyan-ahogyan-a-hetkoznapokon-edzel-interju-srdjan-raduloviccsal-a-soproni-darazsak-sportakademia-junior-csapatarol/",
       "published_at": "2026.11.04 22:33",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nagy küzdelemben maradt alul a Szolnok Oostendében",
+      "summary": "Végül nem sikerült ellensúlyozni a 15 belga hárompontost.",
+      "url": "https://bball1.hu/nagy-kuzdelemben-maradt-alul-a-szolnok-oostendeben/",
+      "published_at": "2026-11-04T22:22:44+01:00",
       "summary_method": "source_description"
     },
     {
@@ -46,74 +120,34 @@
     },
     {
       "source": "WBasket.hu",
+      "title": "Hatalmas csatában nyert a DVTK Görögországban",
+      "summary": "Az Európa Kupa 4. fordulójában a DVTK HUNTHERM 77-74-es győzelmet aratott a Panathlitikos Sykeon otthonában.",
+      "url": "https://wbasket.hu/nagy-csataban-nyert-a-dvtk-gorogorszagban/",
+      "published_at": "2026.11.04. 21:19",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Szoros meccsen kapott ki az AEK-tól a Falco",
+      "summary": "A második negyedben ellépett a görög csapat, s bár a Falco többször is egy támadásnyi különbségre zárkózott, nem tudott fordítani.",
+      "url": "https://bball1.hu/szoros-meccsen-kapott-ki-az-aek-tol-a-falco/",
+      "published_at": "2026-11-04T19:40:44+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Amerika légiós érkezett próbajátékra Körmendre",
+      "summary": "Dalan Ancrum már a Honvéd ellen pályára léphet.",
+      "url": "https://bball1.hu/amerika-legios-erkezett-probajatekra-kormendre/",
+      "published_at": "2026-11-04T18:35:04+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
       "title": "Masa Jankovic a Tippmix Hónap Játékosa",
       "summary": "A tavalyi szezontól kezdődően minden hónapban megválasztják a Tippmix Hónap Játékosát.",
       "url": "https://wbasket.hu/masa-jankovic-a-tippmix-honap-jatekosa/",
       "published_at": "2026.11.04 17:47",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "A Golden State Valkyries a WNBA 2026-os bajnoka, Gabby Williams a döntő MVP-je",
-      "summary": "A Golden State Valkyries ülhetett fel a WNBA trónjára 2026-ban.",
-      "url": "https://wbasket.hu/a-golden-state-valkyries-a-wnba-2026-os-bajnoka-gabby-williams-a-donto-mvp-je/",
-      "published_at": "2026.11.02 06:09",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Elrajtolt a WNBA rájátszása, Juhász Dorkáék hátrányba kerültek",
-      "summary": "Vasárnapról hétfőre virradóra elrajtolt a WNBA 2026-os rájátszása.",
-      "url": "https://wbasket.hu/elrajtolt-a-wnba-rajatszasa-juhasz-dorkaek-hatranyba-kerultek/",
-      "published_at": "2026.09.28 09:39",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Kezdődik a WNBA rájátszása",
-      "summary": "Szeptember 27-én, vasárnap kezdetét veszi a WNBA 2026-os rájátszása.",
-      "url": "https://wbasket.hu/207193-2/",
-      "published_at": "2026.09.27 11:45",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Játéklehetőség és fejlődési perspektíva – interjú Áron Krisztiánnal a Soproni Darazsak Sportakadémia U23-as csapatáról",
-      "summary": "Három győzelemmel és egy vereséggel kezdte az évadot a Női Amatőr NB I.",
-      "url": "https://wbasket.hu/jateklehetoseg-es-fejlodesi-perspektiva-interju-aron-krisztiannal-a-soproni-darazsak-sportakademia-u23-as-csapatarol/",
-      "published_at": "2026.10.27 20:12",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Jelentős Vasas különítmény készül a novemberi korosztályos válogatott programokra",
-      "summary": "November a nemzeti csapataink összetartásának az időszaka.",
-      "url": "https://wbasket.hu/jelentos-vasas-kulonitmeny-keszul-a-novemberi-korosztalyos-valogatott-programokra/",
-      "published_at": "2026.10.27 13:54",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Hollandia nyerte a 3×3-as Európa-bajnokságot",
-      "summary": "Vasárnap este lezárult az antwerpeni 3×3-as Európa-bajnokság.",
-      "url": "https://wbasket.hu/hollandia-nyerte-a-3x3-as-europa-bajnoksagot/",
-      "published_at": "2026.09.14 06:38",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Vasárnap Európa-bajnokot avatnak a 3×3-as szakágban",
-      "summary": "Vasárnap lezárul az antwerpeni 3×3-as Európa-bajnokság.",
-      "url": "https://wbasket.hu/vasarnap-europa-bajnokot-avatnak-a-3x3-as-szakagban/",
-      "published_at": "2026.09.13 07:55",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Nem jutott tovább csoportjából női válogatottunk a 3×3-as Európa-bajnokságon",
-      "summary": "Péntektől vasárnapig Antwerpen ad otthont a 3×3-as Európa-bajnokságnak.",
-      "url": "https://wbasket.hu/nem-jutott-tovabb-csoportjabol-noi-valogatottunk-a-3x3-as-europa-bajnoksagon/",
-      "published_at": "2026.09.11 21:01",
       "summary_method": "source_description"
     },
     {
@@ -125,11 +159,43 @@
       "summary_method": "source_description"
     },
     {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "Nemzetközi mérkőzések várnak ma ránk.",
+      "url": "https://bball1.hu/elo-kozvetitesek-910/",
+      "published_at": "2026-11-04T17:00:10+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "WBasket.hu",
       "title": "ÉLŐ: a DVTK-nak és a Sopronnak szurkolhatunk az Európa Kupában",
       "summary": "Szerdán az Európa Kupában a Sopron Basket a Student Nis, a DVTK HUNTHERM a Panathlitikos Sykeon vendége lesz.",
       "url": "https://wbasket.hu/elo-a-dvtk-nak-es-a-sopronnak-szurkolhatunk-az-europa-kupaban/",
       "published_at": "2026.11.04 16:47",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Robert Ford a Tippmix Hónap Játékosa",
+      "summary": "A hölgyeknél is soproni játékos nyert.",
+      "url": "https://bball1.hu/robert-ford-a-tippmix-honap-jatekosa/",
+      "published_at": "2026-11-04T14:53:50+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "PVSK-Panthers – Salgótarjáni KSE",
+      "summary": "B Piros csoport, alapszakasz, 7. forduló.",
+      "url": "https://bball1.hu/pvsk-panthers-salgotarjani-kse/",
+      "published_at": "2026-11-04T12:54:42+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Mindkét kupacsapatunktól fegyelmezettebb, koncentráltabb játékra van szükség – Károlyi Andreával elemeztünk",
+      "summary": "A héten a negyedik forduló küzdelmeivel folytatódik az Európa Kupa.",
+      "url": "https://wbasket.hu/mindket-kupacsapatunktol-fegyelmezettebb-koncentraltabb-jatekra-van-szukseg-karolyi-andreaval-elemeztunk/",
+      "published_at": "2026.11.04 11:44",
       "summary_method": "source_description"
     },
     {
@@ -143,17 +209,81 @@
     {
       "source": "WBasket.hu",
       "title": "A szezon eddigi legnagyobb bravúrja Takács-Kiss Virágéktól",
-      "summary": "fordulójában a Valencia – Takács-Kiss Virággal a soraiban – 73-71-es győzelmet aratott a Fenerbahce otthonában.",
+      "summary": "Az Euroliga 4. fordulójában a Valencia – Takács-Kiss Virággal a soraiban – 73-71-es győzelmet aratott a Fenerbahce otthonában.",
       "url": "https://wbasket.hu/a-szezon-eddigi-legnagyobb-bravurja-takacs-kiss-viragektol/",
-      "published_at": "2026.11.04 11:22",
+      "published_at": "2026.11.04. 11:22",
       "summary_method": "source_description"
     },
     {
       "source": "WBasket.hu",
       "title": "Lelik Rékáék Lengyelországban maradtak alul",
-      "summary": "fordulójában az Emlak Konut – Lelik Rékával a soraiban – 85-79-es vereséget szenvedett a Lublin otthonában.",
+      "summary": "Az Euroliga 4. fordulójában az Emlak Konut – Lelik Rékával a soraiban – 85-79-es vereséget szenvedett a Lublin otthonában.",
       "url": "https://wbasket.hu/lelik-rekaek-lengyelorszagban-maradtak-alul/",
-      "published_at": "2026.11.04 11:21",
+      "published_at": "2026.11.04. 11:21",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Elkezdődött a jegyértékesítés a Szlovénia elleni vb-selejtezőre",
+      "summary": "Szombathelyen fogadjuk a Szlovéniát.",
+      "url": "https://bball1.hu/elkezdodott-a-jegyertekesites-a-szlovenia-elleni-vb-selejtezore/",
+      "published_at": "2026-11-04T10:19:27+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Korábban kezdődik szombaton a Fót-Oroszlány mérkőzés",
+      "summary": "Korábban kezdődik szombaton a Fót-Oroszlány mérkőzés",
+      "url": "https://bball1.hu/korabban-kezdodik-szombaton-a-fot-oroszlany-merkozes/",
+      "published_at": "2026-11-04T09:58:32+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bartik Zalán: Nem fogom azt mondani, hogy elégedett vagyok bármivel is – tovább fogok dolgozni, hogy minél több ilyen meccsem lehessen",
+      "summary": "A Körmend fiatal játékosa nyilatkozott nekünk.",
+      "url": "https://bball1.hu/bartik-zalan-nem-fogom-azt-mondani-hogy-elegedett-vagyok-barmivel-is-tovabb-fogok-dolgozni-hogy-minel-tobb-ilyen-meccsem-lehessen/",
+      "published_at": "2026-11-04T08:00:59+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Falco-Vulcano Energia KC Szombathely – AEK BC",
+      "summary": "A tavalyi döntős látogat Szombathelyre.",
+      "url": "https://bball1.hu/falco-vulcano-energia-kc-szombathely-aek-bc/",
+      "published_at": "2026-11-03T18:00:22+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Coretec Oostende – NHSZ-Szolnoki Olajbányász",
+      "summary": "Belgiumban lép pályára szerdán az Olajbányász.",
+      "url": "https://bball1.hu/coretec-oostende-nhsz-szolnoki-olajbanyasz/",
+      "published_at": "2026-11-03T16:08:40+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Hunbasket Fantasy: Harrison volt a hét legjobbja",
+      "summary": "A szeptember-október havi győztes is kiderült!",
+      "url": "https://bball1.hu/hunbasket-fantasy-harrison-volt-a-het-legjobbja/",
+      "published_at": "2026-11-03T09:31:04+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Légiós körkép: Golománék városi derbit buktak, Somogyiék Badalonában nyertek szoros meccsen",
+      "summary": "Rosco Allen továbbra is remek formában, Maronka és Flasár debütált az NCAA-ben.",
+      "url": "https://bball1.hu/legios-korkep-golomanek-varosi-derbit-buktak-somogyiek-badalonaban-nyertek-szoros-meccsen/",
+      "published_at": "2026-11-03T09:04:35+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Takács-Kiss Virágnak, Lelik Rékának és Juhász Dorkának is szurkolhatunk az Euroliga 4. fordulójában",
+      "summary": "Kedden és szerdán rendezik az Euroliga 4.",
+      "url": "https://wbasket.hu/takacs-kiss-viragnak-lelik-rekanak-es-juhasz-dorkanak-is-szurkolhatunk-az-euroliga-4-fordulojaban/",
+      "published_at": "2026.11.03 08:01",
       "summary_method": "source_description"
     },
     {
@@ -189,6 +319,14 @@
       "summary_method": "source_description"
     },
     {
+      "source": "BB1.hu",
+      "title": "Korábbi pécsi légióst igazolt a Kaposvár",
+      "summary": "Chris Payton újra Magyarországon!",
+      "url": "https://bball1.hu/korabbi-pecsi-legiost-igazolt-a-kaposvar/",
+      "published_at": "2026-11-02T15:25:53+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "WBasket.hu",
       "title": "Takács-Kiss Virág dupla-duplája",
       "summary": "A hétvégén a spanyol élvonal 6.",
@@ -197,20 +335,12 @@
       "summary_method": "source_description"
     },
     {
-      "source": "WBasket.hu",
-      "title": "Mindkét kupacsapatunktól fegyelmezettebb, koncentráltabb játékra van szükség – Károlyi Andreával elemeztünk",
-      "summary": "A héten a negyedik forduló küzdelmeivel folytatódik az Európa Kupa.",
-      "url": "https://wbasket.hu/mindket-kupacsapatunktol-fegyelmezettebb-koncentraltabb-jatekra-van-szukseg-karolyi-andreaval-elemeztunk/",
-      "published_at": "2026.11.04 11:44",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "WBasket.hu",
-      "title": "Takács-Kiss Virágnak, Lelik Rékának és Juhász Dorkának is szurkolhatunk az Euroliga 4. fordulójában",
-      "summary": "Kedden és szerdán rendezik az Euroliga 4.",
-      "url": "https://wbasket.hu/takacs-kiss-viragnak-lelik-rekanak-es-juhasz-dorkanak-is-szurkolhatunk-az-euroliga-4-fordulojaban/",
-      "published_at": "2026.11.03 08:01",
-      "summary_method": "source_description"
+      "source": "BB1.hu",
+      "title": "Heti program: Szerdán játszik nemzetközi meccset a Falco és a Szolnok is",
+      "summary": "Heti program: Szerdán játszik nemzetközi meccset a Falco és a Szolnok is",
+      "url": "https://bball1.hu/heti-program-szerdan-jatszik-nemzetkozi-meccset-a-falco-es-a-szolnok-is/",
+      "published_at": "2026-11-02T14:04:30+01:00",
+      "summary_method": "headline_fallback"
     },
     {
       "source": "WBasket.hu",
@@ -221,11 +351,27 @@
       "summary_method": "source_description"
     },
     {
+      "source": "BB1.hu",
+      "title": "Legkorábban 10 nap múlva térhet vissza Nate Reuvers",
+      "summary": "Spanyol sajtóinformációk szerint azonban erre is csekély az esély.",
+      "url": "https://bball1.hu/legkorabban-10-nap-mulva-terhet-vissza-nate-reuvers/",
+      "published_at": "2026-11-02T09:57:30+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "WBasket.hu",
       "title": "Videós összefoglalók a bajnokság 7. fordulójának mérkőzéseiről",
-      "summary": "A hétvégén a bajnokság 7.",
+      "summary": "A hétvégén a bajnokság 7. fordulóját rendezték.",
       "url": "https://wbasket.hu/videos-osszefoglalok-a-bajnoksag-7-fordulojanak-merkozeseirol/",
-      "published_at": "2026.11.02 09:57",
+      "published_at": "2026.11.02. 09:57",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Tovább menetel a ZTE, a PVSK és a MAFC",
+      "summary": "Egylabdás meccsen maradt alul, így továbbra is nyeretlen a Nyíregyháza.",
+      "url": "https://bball1.hu/tovabb-menetel-a-zte-a-pvsk-es-a-mafc/",
+      "published_at": "2026-11-02T09:00:31+01:00",
       "summary_method": "source_description"
     },
     {
@@ -238,10 +384,90 @@
     },
     {
       "source": "WBasket.hu",
+      "title": "A Golden State Valkyries a WNBA 2026-os bajnoka, Gabby Williams a döntő MVP-je",
+      "summary": "A Golden State Valkyries ülhetett fel a WNBA trónjára 2026-ban.",
+      "url": "https://wbasket.hu/a-golden-state-valkyries-a-wnba-2026-os-bajnoka-gabby-williams-a-donto-mvp-je/",
+      "published_at": "2026.11.02 06:09",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Pásztor István-díjat kapott Sztojan Ivkovics",
+      "summary": "A magyar válogatott korábbi szövetségi kapitánya azt mondta, hogy a Balkánról hozta a gyökereit.",
+      "url": "https://bball1.hu/pasztor-istvan-dijat-kapott-sztojan-ivkovics/",
+      "published_at": "2026-11-01T21:02:06+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
       "title": "Megizzadt Pasaréten a Sopron Basket",
       "summary": "Már két számjegyű előnyben is volt a forduló előtt nyeretlen Vasas Akadémia a veretlen Sopronnal szemben, a nagyszünetre azonban a vendégek meg tudták fordítani a találkozót, onnantól pedig már nem engedték ki a kezükből az irányítást, és továbbra is őrzik hibátlan mérlegüket, míg a Vasas Akadémiának még várnia kell első sikerére a bajnokságban.",
       "url": "https://wbasket.hu/megizzadt-pasareten-a-sopron-basket/",
       "published_at": "2026.11.01 20:41",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nézd vissza a szombati mérkőzések legfontosabb jeleneteit",
+      "summary": "Videós összefoglaló a hat mérkőzésről!",
+      "url": "https://bball1.hu/nezd-vissza-a-szombati-merkozesek-legfontosabb-jeleneteit/",
+      "published_at": "2026-11-01T17:00:13+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Baksa Szabolcs: 34-12 lett a büntetőarány, azzal teljesen mindegy, hogy mi hogyan dobtunk, nem lehetett mérkőzés nyernünk",
+      "summary": "Baksa Szabolcs: 34-12 lett a büntetőarány, azzal teljesen mindegy, hogy mi hogyan dobtunk, nem lehetett mérkőzés nyernünk",
+      "url": "https://bball1.hu/baksa-szabolcs-34-12-lett-a-buntetoarany-azzal-teljesen-mindegy-hogy-mi-hogyan-dobtunk-nem-lehetett-merkozes-nyernunk/",
+      "published_at": "2026-11-01T14:30:22+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Tizenhat egykori kecskeméti akadémista játszik az élvonalban",
+      "summary": "A 2026/27-es idényben tizenhat játékos – nyolc fiú és nyolc leány – szerepel az NB I/A-ban.",
+      "url": "https://bball1.hu/tizenhat-egykori-kecskemeti-akademista-jatszik-az-elvonalban/",
+      "published_at": "2026-11-01T10:00:23+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Kiszenvedte a győzelmet Kecskeméten az Alba",
+      "summary": "Kétszámjegyű hátrányból fordított a KTE, de a végjátékot a vendégek bírták jobban.",
+      "url": "https://bball1.hu/kiszenvedte-a-gyozelmet-kecskemeten-az-alba/",
+      "published_at": "2026-10-31T20:07:23+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Játéklehetőség és fejlődési perspektíva – interjú Áron Krisztiánnal a Soproni Darazsak Sportakadémia U23-as csapatáról",
+      "summary": "Három győzelemmel és egy vereséggel kezdte az évadot a Női Amatőr NB I.",
+      "url": "https://wbasket.hu/jateklehetoseg-es-fejlodesi-perspektiva-interju-aron-krisztiannal-a-soproni-darazsak-sportakademia-u23-as-csapatarol/",
+      "published_at": "2026.10.27 20:12",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Jelentős Vasas különítmény készül a novemberi korosztályos válogatott programokra",
+      "summary": "November a nemzeti csapataink összetartásának az időszaka.",
+      "url": "https://wbasket.hu/jelentos-vasas-kulonitmeny-keszul-a-novemberi-korosztalyos-valogatott-programokra/",
+      "published_at": "2026.10.27 13:54",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Elrajtolt a WNBA rájátszása, Juhász Dorkáék hátrányba kerültek",
+      "summary": "Vasárnapról hétfőre virradóra elrajtolt a WNBA 2026-os rájátszása.",
+      "url": "https://wbasket.hu/elrajtolt-a-wnba-rajatszasa-juhasz-dorkaek-hatranyba-kerultek/",
+      "published_at": "2026.09.28 09:39",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Kezdődik a WNBA rájátszása",
+      "summary": "Szeptember 27-én, vasárnap kezdetét veszi a WNBA 2026-os rájátszása.",
+      "url": "https://wbasket.hu/207193-2/",
+      "published_at": "2026.09.27 11:45",
       "summary_method": "source_description"
     },
     {
@@ -250,6 +476,14 @@
       "summary": "Ahogy arról beszámoltunk, az Egyesült Államok megvédte címét a világbajnokságon, a bronzérmet pedig Spanyolország szerezte meg.",
       "url": "https://wbasket.hu/breanna-stewart-a-vilagbajnoksag-mvp-je/",
       "published_at": "2026.09.14 06:40",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Hollandia nyerte a 3×3-as Európa-bajnokságot",
+      "summary": "Vasárnap este lezárult az antwerpeni 3×3-as Európa-bajnokság.",
+      "url": "https://wbasket.hu/hollandia-nyerte-a-3x3-as-europa-bajnoksagot/",
+      "published_at": "2026.09.14 06:38",
       "summary_method": "source_description"
     },
     {
@@ -285,98 +519,26 @@
       "summary_method": "source_description"
     },
     {
-      "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Az MKOSZ hivatalos honlapja átfogó információt nyújt a szövetségről.",
-      "url": "https://hunbasket.hu/osszevont-menetrend/",
-      "published_at": null,
+      "source": "WBasket.hu",
+      "title": "Vasárnap Európa-bajnokot avatnak a 3×3-as szakágban",
+      "summary": "Vasárnap lezárul az antwerpeni 3×3-as Európa-bajnokság.",
+      "url": "https://wbasket.hu/vasarnap-europa-bajnokot-avatnak-a-3x3-as-szakagban/",
+      "published_at": "2026.09.13 07:55",
       "summary_method": "source_description"
     },
     {
-      "source": "Hunbasket",
-      "title": "A DVTK és a Sopron is győzött a női Európa-kupában",
-      "summary": "A DVTK és a Sopron is győzött a női Európa-kupában",
-      "url": "https://hunbasket.hu/hir/77660/a-dvtk-es-a-sopron-is-gyozott-a-noi-europa-kupaban/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
+      "source": "WBasket.hu",
+      "title": "Nem jutott tovább csoportjából női válogatottunk a 3×3-as Európa-bajnokságon",
+      "summary": "Péntektől vasárnapig Antwerpen ad otthont a 3×3-as Európa-bajnokságnak.",
+      "url": "https://wbasket.hu/nem-jutott-tovabb-csoportjabol-noi-valogatottunk-a-3x3-as-europa-bajnoksagon/",
+      "published_at": "2026.09.11 21:01",
+      "summary_method": "source_description"
     },
     {
       "source": "Hunbasket",
       "title": "Szoros meccsen kapott ki a Falco és a Szolnok is",
       "summary": "Szoros meccsen kapott ki a Falco és a Szolnok is",
       "url": "https://hunbasket.hu/hir/77659/szoros-meccsen-kapott-ki-a-falco-es-a-szolnok-is/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Masa Jankovic és Robert Ford a Tippmix Hónap Játékosa",
-      "summary": "Masa Jankovic és Robert Ford a Tippmix Hónap Játékosa",
-      "url": "https://hunbasket.hu/hir/77656/masa-jankovic-es-robert-ford-a-tippmix-honap-jatekosa/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre",
-      "summary": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre",
-      "url": "https://hunbasket.hu/hir/77617/mar-kaphatoak-a-jegyek-a-szlovenia-elleni-vb-selejtezore/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Kálmán László: Az 54 pontos meccs, a totális kosárlabda és a szombathelyi örökség",
-      "summary": "Kálmán László: Az 54 pontos meccs, a totális kosárlabda és a szombathelyi örökség",
-      "url": "https://hunbasket.hu/hir/77653/kalman-laszlo-az-54-pontos-meccs-a-totalis-kosarlabda-es-a-szombathelyi-orokseg/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Fantasy: Harrison és Kucowski voltak a legjobbak",
-      "summary": "Fantasy: Harrison és Kucowski voltak a legjobbak",
-      "url": "https://hunbasket.hu/hir/77649/fantasy-harrison-es-kucowski-voltak-a-legjobbak/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Sőt, a folytatásban is a hazaiak akarata érvényesült, nem sokkal az első játékrész vége előtt Szirony találatával már két számjegyűre hízott a Vasas Akadémia előnye (20-10), az utolsó szó azonban Maric révén a soproniaké volt (20-12).",
-      "url": "https://hunbasket.hu/hir/77647/noi-nb-i-megizzadt-pasareten-a-sopron-basket/",
-      "published_at": null,
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
-      "summary": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
-      "url": "https://hunbasket.hu/hir/77645/ferfi-nb-i-megorizte-veretlenseget-az-ase-kuzdelmes-meccset-nyert-foton-a-szolnok/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Újabb egy perccel később Wentzel harcolt ki és értékesített két büntetőt, ezzel a Csata TKK is feliratkozott a táblára, azonban ezután sem talált utat újabb dobás a gyűrűbe, Cvijanovic viszont bedobott kettőből egy büntetőt, Wentzel pedig ziccerből volt eredményes (4-8).",
-      "url": "https://hunbasket.hu/hir/77646/noi-nb-i-legyozte-a-csata-a-pecset/",
-      "published_at": null,
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "A biztonságos sportközeg közös ügyünk – ismerd meg az IntegriHUNBasket programot!",
-      "summary": "A biztonságos sportközeg közös ügyünk – ismerd meg az IntegriHUNBasket programot!",
-      "url": "https://hunbasket.hu/hir/77636/a-biztonsagos-sportkozeg-kozos-ugyunk-ismerd-meg-az-integrihunbasket-programot/",
-      "published_at": null,
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Női EK: Portugáliában szakadt meg a Sopron Basket veretlenségi sorozata",
-      "summary": "Női EK: Portugáliában szakadt meg a Sopron Basket veretlenségi sorozata",
-      "url": "https://hunbasket.hu/hir/77640/noi-ek-portugaliaban-szakadt-meg-a-sopron-basket-veretlensegi-sorozata/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
@@ -390,57 +552,65 @@
     },
     {
       "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Hírek",
-      "url": "https://hunbasket.hu/hirek/ferfi/",
+      "title": "Női EK: Portugáliában szakadt meg a Sopron Basket veretlenségi sorozata",
+      "summary": "Női EK: Portugáliában szakadt meg a Sopron Basket veretlenségi sorozata",
+      "url": "https://hunbasket.hu/hir/77640/noi-ek-portugaliaban-szakadt-meg-a-sopron-basket-veretlensegi-sorozata/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
     {
       "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Hírek",
-      "url": "https://hunbasket.hu/hirek/noi/",
+      "title": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre",
+      "summary": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre",
+      "url": "https://hunbasket.hu/hir/77617/mar-kaphatoak-a-jegyek-a-szlovenia-elleni-vb-selejtezore/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
     {
       "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Az MKOSZ hivatalos honlapja átfogó információt nyújt a szövetségről.",
-      "url": "https://hunbasket.hu/menetrend/ferfi/",
-      "published_at": null,
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Az MKOSZ hivatalos honlapja átfogó információt nyújt a szövetségről.",
-      "url": "https://hunbasket.hu/menetrend/noi/",
-      "published_at": null,
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Hírek",
-      "url": "https://hunbasket.hu/csapatok/",
+      "title": "Masa Jankovic és Robert Ford a Tippmix Hónap Játékosa",
+      "summary": "Masa Jankovic és Robert Ford a Tippmix Hónap Játékosa",
+      "url": "https://hunbasket.hu/hir/77656/masa-jankovic-es-robert-ford-a-tippmix-honap-jatekosa/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
     {
       "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Hírek",
-      "url": "https://hunbasket.hu/jatekosok/",
+      "title": "Kálmán László: Az 54 pontos meccs, a totális kosárlabda és a szombathelyi örökség",
+      "summary": "Kálmán László: Az 54 pontos meccs, a totális kosárlabda és a szombathelyi örökség",
+      "url": "https://hunbasket.hu/hir/77653/kalman-laszlo-az-54-pontos-meccs-a-totalis-kosarlabda-es-a-szombathelyi-orokseg/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
     {
       "source": "Hunbasket",
-      "title": "Hírek",
-      "summary": "Hírek",
-      "url": "https://hunbasket.hu/jatekosok/women/",
+      "title": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
+      "summary": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
+      "url": "https://hunbasket.hu/hir/77645/ferfi-nb-i-megorizte-veretlenseget-az-ase-kuzdelmes-meccset-nyert-foton-a-szolnok/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Fantasy: Harrison és Kucowski voltak a legjobbak",
+      "summary": "Fantasy: Harrison és Kucowski voltak a legjobbak",
+      "url": "https://hunbasket.hu/hir/77649/fantasy-harrison-es-kucowski-voltak-a-legjobbak/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "A biztonságos sportközeg közös ügyünk – ismerd meg az IntegriHUNBasket programot!",
+      "summary": "A biztonságos sportközeg közös ügyünk – ismerd meg az IntegriHUNBasket programot!",
+      "url": "https://hunbasket.hu/hir/77636/a-biztonsagos-sportkozeg-kozos-ugyunk-ismerd-meg-az-integrihunbasket-programot/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "A DVTK és a Sopron is győzött a női Európa-kupában",
+      "summary": "A DVTK és a Sopron is győzött a női Európa-kupában",
+      "url": "https://hunbasket.hu/hir/77660/a-dvtk-es-a-sopron-is-gyozott-a-noi-europa-kupaban/",
       "published_at": null,
       "summary_method": "headline_fallback"
     }
