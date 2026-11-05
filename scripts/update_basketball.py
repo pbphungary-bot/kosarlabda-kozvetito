@@ -1,8 +1,3 @@
-
-
-
-    
-  
 import json
 import re
 import urllib.request
@@ -131,4 +126,15 @@ def main():
                 print(f"{key}: unchanged ({len(matches)} matches)")
                 continue
         output = {
+            "competition": competition["name"],
+            "source": competition["url"],
+            "matches": matches,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }
+        path.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"{key}: saved {len(matches)} matches")
+        print("Sample:", json.dumps(matches[:2], ensure_ascii=False))
 
+
+if __name__ == "__main__":
+    main()
