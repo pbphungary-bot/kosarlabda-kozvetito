@@ -17,7 +17,29 @@ SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
     {'name': 'Hunbasket', 'urls': ['https://hunbasket.hu/hirek', 'https://hunbasket.hu/hirek/ferfi/', 'https://hunbasket.hu/hirek/noi/'], 'hosts': ('hunbasket.hu',), 'kind': 'hunbasket'},
+    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/magyar-noi/hirek', 'https://kezdo5.hu/'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
+    {'name': 'Nemzeti Sport', 'urls': ['https://www.nemzetisport.hu/rovat/kosarlabda'], 'hosts': ('nemzetisport.hu',), 'kind': 'nso'},
 ]
+
+# Optional, manually verified official club feeds. No unverified domains are assumed.
+# Each record: {"name": "Club name", "urls": ["https://official.club/news"],
+#               "hosts": ["official.club"], "kind": "club"}
+CLUB_CONFIG = Path('data/news_club_sources.json')
+if CLUB_CONFIG.exists():
+    try:
+        club_sources = json.loads(CLUB_CONFIG.read_text(encoding='utf-8'))
+        if not isinstance(club_sources, list):
+            raise ValueError('Club source configuration must be a list')
+        for club in club_sources:
+            if not isinstance(club, dict) or not club.get('name') or not club.get('urls') or not club.get('hosts'):
+                raise ValueError('Invalid club source record')
+            hosts = tuple(str(x).lower().removeprefix('www.') for x in club['hosts'])
+            urls = [str(u) for u in club['urls'] if str(u).startswith('https://')]
+            if not urls or not hosts:
+                raise ValueError('Invalid club source URL or host')
+            SOURCES.append({'name': 'Klub: ' + club['name'], 'urls': urls, 'hosts': hosts, 'kind': 'club'})
+    except (ValueError, OSError, TypeError) as exc:
+        print('CLUB CONFIG ERROR:', exc, file=sys.stderr)
 
 def clean(value):
     return re.sub(r'\s+', ' ', value or '').strip()
@@ -46,6 +68,12 @@ def valid_url(url, src):
     path = p.path.lower().rstrip('/')
     if src['kind'] == 'hunbasket':
         return bool(re.match(r'^/hir/\d+/[^/]+$', path))
+    if src['kind'] == 'nso':
+        # Nemzeti Sport news articles have a category prefix and an article slug.
+        return bool(re.match(r'^/kosarlabda/\d{4}/\d{2}/[^/]+$', path))
+    if src['kind'] == 'kezdo5':
+        # Kezdő5 articles: /magyar-ferfi/hirek/article-slug or equivalent categories.
+        return bool(re.match(r'^/[^/]+/(?:hirek|cikkek|interjuk)/[^/]+$', path))
     if path in ('', '/hirek', '/latest-news'):
         return False
     if any(path.startswith(prefix) for prefix in ('/tag/', '/category/', '/page/', '/author/', '/kereso/', '/search/', '/csapat/', '/jatekos/', '/menetrend/', '/tabella/', '/wp-content/')):
@@ -56,6 +84,8 @@ def candidates(soup, base, src):
     links = {}
     if src['kind'] == 'hunbasket':
         anchors = soup.select('a[href*="/hir/"]')
+    elif src['kind'] in ('nso', 'kezdo5', 'club'):
+        anchors = soup.select('article a[href], h2 a[href], h3 a[href], h4 a[href], .entry-title a[href], .post-title a[href], a[href]')
     else:
         anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]')
         if not anchors:
@@ -120,7 +150,7 @@ def article(url, listing_title, src):
     if headline.lower() in ('hírek', 'news', 'kosárlabda'):
         raise ValueError('navigation page, not an article')
     descriptions = [metadata(soup, 'og:description', 'description', 'twitter:description')]
-    for selector in ('article .entry-content p', '.post-content p', '.article-content p', 'article p', '.content p'):
+    for selector in ('article .entry-content p', '.post-content p', '.article-content p', '.article-body p', '[itemprop=articleBody] p', 'article p', '.content p'):
         p = soup.select_one(selector)
         if p:
             descriptions.append(p.get_text(' ', strip=True))
@@ -171,7 +201,7 @@ def main():
                 soup, base = fetch(listing_url)
                 for url, title in candidates(soup, base, src):
                     found.setdefault(url, title)
-                if found and src['kind'] != 'hunbasket':
+                if found and src['kind'] not in ('hunbasket', 'kezdo5'):
                     break
             except Exception as exc:
                 listing_errors.append(f'{listing_url}: {exc}')
