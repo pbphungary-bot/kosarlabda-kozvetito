@@ -15,7 +15,7 @@ jobs:
           python-version: '3.11'
       - run: pip install requests pandas lxml beautifulsoup4
       - name: Collect official women's statistics
-        run: python scripts/update_women_team_stats.py
+        run: python scripts/update_women_team_stats.py --league women
       - name: Commit updated statistics
         run: |
           git config user.name "github-actions[bot]"
