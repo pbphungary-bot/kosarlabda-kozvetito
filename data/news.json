@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-05T17:45:42.404421+00:00",
+  "checked_at": "2026-11-05T19:02:44.284396+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 27,
-      "added": 0,
+      "candidates": 28,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 1,
+      "candidates": 34,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,7 +23,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
+      "added": 0,
       "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
@@ -46,8 +46,8 @@
       "status": "ok",
       "candidates": 50,
       "added": 0,
-      "repaired": 49,
-      "article_errors": 1,
+      "repaired": 50,
+      "article_errors": 0,
       "listing_errors": []
     },
     {
@@ -99,8 +99,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -184,8 +184,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php: <urlopen error [Errno 101] Network is unreachable>",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: <urlopen error [Errno 101] Network is unreachable>"
+        "https://www.cekk.hu/new/index.php: HTTP Error 406: Not Acceptable",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTP Error 406: Not Acceptable"
       ]
     },
     {
@@ -250,13 +250,11 @@
     {
       "source": "Klub: ETO Basket",
       "status": "ok",
-      "candidates": 12,
-      "added": 0,
+      "candidates": 24,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: <urlopen error [Errno 101] Network is unreachable>"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -285,10 +283,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: <urlopen error [Errno 101] Network is unreachable>",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: <urlopen error [Errno 101] Network is unreachable>"
-      ]
+      "listing_errors": []
     }
   ],
   "articles": [
@@ -389,6 +384,30 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Egyben az egyben nagyinterjú Studer Ágnessel",
+      "summary": "A Hunbasket riportsorozatának legújabb epizódjában a magyar női válogatottal a 2026-os világbajnokság negyeddöntőjébe jutó irányítóval, Studer Ágnessel elevenítették fel élete és pályafutása fontos mérföldköveit.",
+      "url": "https://wbasket.hu/egyben-az-egyben-nagyinterju-studer-agnessel/",
+      "published_at": "2026.11.05. 19:42",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Déri Csaba szerint az ASE, a Falco és – a sérülések ellenére – a Szolnok is győzni tud a hétvégén",
+      "summary": "Állandó szakértőnk mondta véleményét a 8. forduló mérkőzéseivel kapcsolatban.",
+      "url": "https://bball1.hu/deri-csaba-szerint-az-ase-a-falco-es-a-serulesek-ellenere-a-szolnok-is-gyozni-tud-a-hetvegen/",
+      "published_at": "2026-11-05T19:16:43+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Történelmi mérföldkövet ért el Perl Zoltán a BL-ben: Hatodik játékosként lépte át az 1000 pontos határt",
+      "summary": "Giorgi Shermadini, Marcelinho Hertas, Vojtech Hruban, Levi Randolph és Tim Abromaitis után.",
+      "url": "https://bball1.hu/tortenelmi-merfoldkovet-ert-el-perl-zoltan-a-bl-ben-hatodik-jatekoskent-lepte-at-az-1000-pontos-hatart/",
+      "published_at": "2026-11-05T18:00:51+01:00",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Alba Fehérvár – DEAC",
       "summary": "Székesfehérvárra látogat a Debrecen.",
@@ -403,6 +422,14 @@
       "url": "https://bball1.hu/kometa-kvgy-kaposvari-kk-nka-universitas-pecs-2/",
       "published_at": "2026-11-05T16:42:05+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Alisia Jenkins érkezik Szekszárdra",
+      "summary": "A KSC Szekszárd a hivatalos felületein bejelentette, hogy a nyáron szerződtetett Ugonne Michelle Onyiah nem lesz a csapat tagja, helyére a szezon első heteit Valenciában töltő, hazánkban is jól ismert Alisia Jenkins érkezik. – írja a KSC Szekszárd közleménye.",
+      "url": "https://wbasket.hu/alisia-jenkins-erkezik-szekszardra/",
+      "published_at": "2026.11.05. 16:32",
+      "summary_method": "source_description"
     },
     {
       "source": "BB1.hu",
@@ -421,11 +448,27 @@
       "summary_method": "source_description"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Ezek voltak az elmúlt hétvége legszebb jelenetei",
+      "summary": "Elmúlt hétvégén rendezték a Női NB I.",
+      "url": "https://wbasket.hu/ezek-voltak-az-elmult-hetvege-legszebb-jelenetei-10/",
+      "published_at": "2026.11.05. 15:27",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Nézd vissza a nemzetközi mérkőzések legfontosabb jeleneteit",
       "summary": "Ezúttal a Falco és a Szolnok is vereséget szenvedett.",
       "url": "https://bball1.hu/nezd-vissza-a-nemzetkozi-merkozesek-legfontosabb-jeleneteit/",
       "published_at": "2026-11-05T13:45:03+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Masa Jankovic lett az elmúlt játékhét legjobb",
+      "summary": "A Hunbasket szavazásán a Sopron Basket szerb légiósa Masa Jankovic érdemelte ki a „Hétvége legjobbja” elismerést.",
+      "url": "https://wbasket.hu/masa-jankovic-lett-az-elmult-jatekhet-legjobb/",
+      "published_at": "2026.11.05. 13:22",
       "summary_method": "source_description"
     },
     {
@@ -437,12 +480,36 @@
       "summary_method": "source_description"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Juhász Dorkáék a szezon eddigi legjobbjával nyertek Schióban",
+      "summary": "Az Euroliga 4. fordulójának szerdai játéknapján a Galatasaray Cagdas Faktoring 68-51-re legyőzte a Beretta Famila Schio gárdáját.",
+      "url": "https://wbasket.hu/juhasz-dorkaek-a-szezon-eddigi-legjobbjaval-nyertek-schioban/",
+      "published_at": "2026.11.05. 12:07",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Kennedy Todd-Williams az Európa Kupa forduló legjobb ötösében",
+      "summary": "Kedden és szerdán rendezték az Európa Kupa 4. fordulóját.",
+      "url": "https://wbasket.hu/kennedy-todd-williams-az-europa-kupa-fordulo-legjobb-otoseben/",
+      "published_at": "2026.11.05. 11:07",
+      "summary_method": "source_description"
+    },
+    {
       "source": "BB1.hu",
       "title": "Korábban kezdődik november 14-én, az ASE-Alba mérkőzés",
       "summary": "Korábban kezdődik november 14-én, az ASE-Alba mérkőzés",
       "url": "https://bball1.hu/korabban-kezdodik-november-14-en-az-ase-alba-merkozes/",
       "published_at": "2026-11-05T10:44:13+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Sitku-Varga Alízék megőrizték veretlenségüket az Európa Kupában",
+      "summary": "Az Európa Kupa 4. fordulójában az Autosped BCC Castelnuovo Scrivia – Sitku-Varga Alízzal a soraiban – 82-61-re legyőzte az BCF Elfic Fribourgot.",
+      "url": "https://wbasket.hu/sitku-varga-alizek-megoriztek-veretlenseguket-az-europa-kupaban/",
+      "published_at": "2026.11.05. 09:28",
+      "summary_method": "source_description"
     },
     {
       "source": "WBasket.hu",
@@ -1894,6 +1961,14 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "A Márvány Óvoda kapta az emlékmeccsen összegyűjtött labdákat",
+      "summary": "Szeptemberben rendeztük meg a Fűzy Ákos–Tapodi Péter emlékmérkőzést.",
+      "url": "https://etobasket.hu/hu/hirek/a-marvany-ovoda-kapta-az-emlekmeccsen-osszegyujtott-labdakat/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "A Csata otthonában folytatjuk a bajnokságot",
       "summary": "Szombaton 17 órakor a Csata TTK otthonában folytatjuk szereplésünket a bajnokságban.",
       "url": "https://etobasket.hu/hu/hirek/a-csata-otthonaban-folytatjuk-a-bajnoksagot/",
@@ -2233,6 +2308,14 @@
       "title": "Kapcsolat",
       "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_5993",
+      "published_at": null,
+      "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_6003",
       "published_at": null,
       "summary_method": "source_description"
     },
