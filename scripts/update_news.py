@@ -267,6 +267,15 @@ def main():
         checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
                        'article_errors': failed, 'listing_errors': listing_errors})
     targeted_bb1(entries, checks)
+    # WBasket articles are women's-only, including articles saved in earlier runs.
+    # Retain them for women's teams; never publish a men's team association.
+    for item in entries.values():
+        source = str(item.get('source', '')).casefold()
+        host = urlparse(str(item.get('url', ''))).hostname or ''
+        if source == 'wbasket.hu' or host == 'wbasket.hu' or host.endswith('.wbasket.hu'):
+            item['league'] = 'women'
+            if isinstance(item.get('teams'), list):
+                item['teams'] = [tag for tag in item['teams'] if not str(tag).startswith('men|')]
     articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
