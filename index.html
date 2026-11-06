@@ -228,7 +228,7 @@ const h=info(home),a=info(away);$('matchTitle').textContent=home+' – '+away;$(
  if(agames.length)story.push(away+' legutóbbi eredménye: '+agames[0].own+'–'+agames[0].other+' ('+agames[0].opponent+' ellen, '+agames[0].date+').');
  if(h2h.length)story.push('Legutóbbi egymás elleni találkozó az elérhető adatokban: '+h2h[0].home+' '+h2h[0].result+' '+h2h[0].away+' ('+h2h[0].date+').');
  if(!story.length)story.push('Ehhez a párosításhoz még nincs elegendő befejezett mérkőzés az elérhető adatcsomagban.');
- $('stories').innerHTML=story.map((s,i)=>`<p><span class="tag">${i+1}</span> ${esc(s)}</p>`).join('')+'<p class="source">Forrás: Hunbasket mérkőzésadatok; automatikusan előállított összefoglaló. Játékosstatisztikát és sérülésinformációt nem tartalmaz.</p>';
+ window.matchupStoryFallback=story;renderMatchupStories(story);
  $('notes').innerHTML=`<h3>${esc(home)} – ${esc(away)}</h3><p><strong>Helyzetkép:</strong> ${esc(home)}: ${record(h)}. ${esc(away)}: ${record(a)}.</p>${story.map(s=>`<p>• ${esc(s)}</p>`).join('')}<div class="note"><strong>Közvetítés előtti ellenőrzés:</strong> kezdési időpont, nevezett játékosok, sérülések, kezdőötösök és a legfrissebb hivatalos tabella. Ezeket a rendszer nem ellenőrzi automatikusan.</div>`}
 // News is independent of fixtures and standings; errors here never affect the other tabs.
 let newsArticles=[],newsError='',newsChecked='',newsLimit=30;
@@ -262,6 +262,27 @@ function newsMatchesTeam(article,team,competition){
  const aliases=Object.entries(newsAliases[competition]||{}).find(([k])=>normalizeTeamName(k)===name)?.[1]||[];
  const terms=[...aliases,team].filter(x=>normalizedNewsText(x).length>=4);
  return terms.some(x=>hay.includes(' '+normalizedNewsText(x)+' '));
+}
+function renderMatchupStories(fallback=[]){
+ const container=$('stories');if(!container)return;
+ const relevant=newsArticles.filter(a=>newsMatchesTeam(a,home,league)||newsMatchesTeam(a,away,league));
+ relevant.sort((a,b)=>(newsTime(b.published_at)??-1)-(newsTime(a.published_at)??-1));
+ const unique=[];const seen=new Set();
+ for(const a of relevant){
+  const key=String(a.url||'').trim()||normalizedNewsText(a.title);
+  if(!key||seen.has(key))continue;
+  seen.add(key);unique.push(a);if(unique.length===10)break;
+ }
+ if(unique.length){
+  container.innerHTML=unique.map(a=>{
+   const url=String(a.url||'');const valid=/^https?:\/\//i.test(url);
+   const title=esc(a.title||'Cím nélkül');
+   return '<article class="news-item"><div class="news-meta"><span class="tag">'+esc(a.source||'Hírforrás')+'</span><span>'+esc(newsDate(a.published_at))+'</span></div><h3>'+(valid?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+title+'</a>':title)+'</h3></article>';
+  }).join('')+'<p class="source">Legfeljebb 10, a kiválasztott csapatokhoz kapcsolódó hír a mentett hírfolyamból.</p>';
+ }else{
+  const items=fallback.length?fallback:['A kiválasztott csapatokhoz jelenleg nincs elérhető hír a mentett hírfolyamban.'];
+  container.innerHTML='<p class="muted small">'+(newsError?'A hírek nem tölthetők be: '+esc(newsError):'Nincs azonosítható klubhír; mérkőzésadatokból készített összefoglaló:')+'</p>'+items.map((v,i)=>'<p><span class="tag">'+(i+1)+'</span> '+esc(v)+'</p>').join('');
+ }
 }
 function updateNewsTeamOptions(){
  const select=$('newsTeam');if(!select)return;
@@ -301,7 +322,7 @@ async function loadNews(){
  $('newsStatus').textContent='Hírek frissítése…';
  try{const r=await fetch('data/news.json?refresh='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const p=await r.json();if(!p||!Array.isArray(p.articles))throw new Error('Érvénytelen hír-adatfájl');newsArticles=p.articles.filter(a=>a&&typeof a==='object');newsChecked=p.checked_at||'';newsError='';const previous=$('newsSource').value;const sources=[...new Set(newsArticles.map(a=>a.source).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'hu'));$('newsSource').innerHTML='<option value="">Összes forrás</option>'+sources.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');$('newsSource').value=sources.includes(previous)?previous:'';}
  catch(e){newsError=e.message||String(e);}
- renderNews();
+ renderNews();renderMatchupStories(window.matchupStoryFallback||[]);
 }
 $('newsTeam').addEventListener('change',()=>{newsLimit=30;renderNews()});
 $('newsSearch').addEventListener('input',()=>{newsLimit=30;renderNews()});
