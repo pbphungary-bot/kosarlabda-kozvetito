@@ -267,6 +267,21 @@ def main():
         checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
                        'article_errors': failed, 'listing_errors': listing_errors})
     targeted_bb1(entries, checks)
+    # Club-origin stories are tagged only to their publisher. Opponents in the
+    # headline or summary do not make the article news about the opponent.
+    club_sources = {
+        'BKG-PRIMA Szigetszentmiklós': ('women', 'BKG-PRIMA Szigetszentmiklós'),
+        'Sopron KC': ('men', 'Sopron'),
+        'Sopron Basket': ('women', 'Sopron Basket'),
+    }
+    for item in entries.values():
+        label = str(item.get('source', ''))
+        if label.startswith('Klub: '):
+            publisher = label[6:].strip()
+            if publisher in club_sources:
+                comp, team = club_sources[publisher]
+                item['league'] = comp
+                item['teams'] = [comp + '|' + team]
     # WBasket articles are women's-only, including articles saved in earlier runs.
     # Retain them for women's teams; never publish a men's team association.
     for item in entries.values():
