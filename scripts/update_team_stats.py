@@ -65,8 +65,10 @@ def extract_men(html):
  for index,(table,frame,cols) in enumerate(candidates):
   category,label=category_for(table,index)
   if category in categories:
-   category=f'{category}_{index+1}';label=f'{label} ({index+1})'
+   print(f'WARNING: Skipping duplicate category {label} (table {index+1})')
+   continue
   category_teams={}
+  pending_metrics={}
   for _,row in frame.iterrows():
    name=str(row[cols['csapat']]).strip()
    if not name or name.lower() in ('nan','csapat') or 'ellenfelek' in name.lower():continue
@@ -79,17 +81,24 @@ def extract_men(html):
     metric=canonical.get(norm) or 'ks_'+norm
     if metric in PERCENT and 0<=raw<=1:raw*=100
     values[metric]=round(raw,3)
-    if metric not in metrics:metrics[metric]={'label':original,'group':'KosárStat – további mutatók','unit':'%' if '%' in original else ''}
-   if len(values)<10:raise ValueError(f'Insufficient columns for {name} in {label}')
+    if metric not in metrics:pending_metrics[metric]={'label':original,'group':'KosárStat – további mutatók','unit':'%' if '%' in original else ''}
+   if len(values)<10:
+    print(f'WARNING: Skipping {label}: insufficient numeric fields for {name}')
+    category_teams={}
+    break
    category_teams[clean(name)]=(name,values)
-  if len(category_teams)!=14:raise ValueError(f'Expected 14 teams in {label}, got {len(category_teams)}')
+  if len(category_teams)!=14:
+   print(f'WARNING: Skipping {label}: expected 14 valid teams, got {len(category_teams)}')
+   continue
   if not teams_by_name:
    for norm,(name,_) in category_teams.items():teams_by_name[norm]={'name':name,'aliases':[],'periods':{}}
   if set(category_teams)!=set(teams_by_name):
-   raise ValueError(f'Team list mismatch in {label}; refusing to mix categories')
+   print(f'WARNING: Skipping {label}: team list differs from season table')
+   continue
   for norm,(_,values) in category_teams.items():teams_by_name[norm]['periods'][category]=values
+  metrics.update(pending_metrics)
   categories[category]=label
- if 'season' not in categories:raise ValueError('Overall season category missing')
+ if 'season' not in categories:raise ValueError('Overall season category missing; previous file preserved')
  return list(teams_by_name.values()),categories,metrics
 
 def write(league,source,teams,source_url,categories=None,metrics=None):
