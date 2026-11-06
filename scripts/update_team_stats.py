@@ -28,66 +28,85 @@ def number(v):
  except (ValueError,TypeError): return None
 
 def extract_men(html):
- # Kosarstat publishes several tables (season, opponent, home and away),
- # with /G rather than PG in the column names. Select the season-wide
- # OWN-team table; never combine opponent/home/away statistics.
+ """Read every verified 14-team table, retaining its own source category."""
  from bs4 import BeautifulSoup
  soup=BeautifulSoup(html,'html.parser')
  candidates=[]
+ def category_for(table,index):
+  # Prefer explicit section headings, captions, and table-container attributes.
+  evidence=[]
+  for node in [table,table.parent,table.parent.parent if table.parent else None]:
+   if node:
+    evidence.extend([str(node.get(k,'')) for k in ('id','data-title','aria-label')])
+    evidence.extend(node.get('class',[]))
+  cap=table.find('caption')
+  if cap:evidence.append(cap.get_text(' ',strip=True))
+  previous=table.find_previous(['h1','h2','h3','h4','h5'])
+  if previous:evidence.append(previous.get_text(' ',strip=True))
+  label=' '.join(evidence)
+  key=clean(label)
+  if any(x in key for x in ('ellenfel','opponent')):return 'opponent','Ellenfél statisztikák'
+  if any(x in key for x in ('hazai','home')):return 'home','Hazai pályán'
+  if any(x in key for x in ('idegen','away','vendeg')):return 'away','Idegenben'
+  if any(x in key for x in ('utolso5','last5','recent5')):return 'last5','Utolsó 5 mérkőzés'
+  if any(x in key for x in ('osszes','overall','season','teljes')):return 'season','Összes mérkőzés'
+  return ('season','Összes mérkőzés') if index==0 else (f'table_{index+1}',f'KosárStat – {index+1}. táblázat')
  for table in soup.select('table'):
-  headings=[]
-  for previous in table.find_all_previous(['h1','h2','h3','h4'],limit=3):
-   headings.append(previous.get_text(' ',strip=True).lower())
-  section=' '.join(headings)
-  try: frame=pd.read_html(io.StringIO(str(table)),displayed_only=False)[0]
+  try:frame=pd.read_html(io.StringIO(str(table)),displayed_only=False)[0]
   except (ValueError,ImportError):continue
   frame.columns=[colname(c) for c in frame.columns]
   cols={clean(c):c for c in frame.columns}
-  required=['csapat','ptsg','ortg','3p']
-  if not all(x in cols for x in required) or len(frame)<10:continue
-  # Prefer the overall season team statistics table, not opponents/venue splits.
-  if any(x in section for x in ['ellenfél','hazai pályán','idegenben','utolsó 5']):continue
-  candidates.append((frame,section))
- if not candidates:
-  # Diagnostics useful in the GitHub Actions log, without leaking HTML.
-  print('DEBUG: HTML bytes:',len(html),'tables:',len(soup.select('table')))
-  for t in soup.select('table')[:6]:
-   print('DEBUG: columns:',[th.get_text(' ',strip=True) for th in t.select('th')[:12]])
-  raise ValueError('No season-wide Kosarstat team table found')
- frame,section=candidates[0]
- cols={clean(c):c for c in frame.columns}
- name_col=cols['csapat']
- teams=[]
- for _,row in frame.iterrows():
-  name=str(row[name_col]).strip()
-  if not name or name.lower() in ('nan','csapat') or 'ellenfelek' in name.lower():continue
-  values={}
-  for source,target in FIELDS.items():
-   actual=cols.get(clean(source))
-   if actual is None:continue
-   val=number(row[actual])
-   if val is None:continue
-   if target in PERCENT and 0<=val<=1:val*=100
-   values[target]=round(val,3)
-  if len(values)<10:raise ValueError(f'Insufficient columns for {name}: {len(values)}')
-  alias_col=cols.get('listname')
-  alias=str(row[alias_col]).strip() if alias_col else ''
-  teams.append({'name':name,'aliases':[alias] if alias and alias!=name and alias.lower()!='nan' else [],'periods':{'season':values}})
- if len(teams)!=14:raise ValueError(f'Expected 14 men teams, got {len(teams)}; refusing to publish')
- if len({clean(t['name']) for t in teams})!=14:raise ValueError('Duplicate teams detected')
- return teams
+  if not all(k in cols for k in ('csapat','ptsg','ortg','3p')):continue
+  if len(frame)<10:continue
+  candidates.append((table,frame,cols))
+ if not candidates:raise ValueError('No Kosarstat 14-team statistics tables found')
+ canonical={clean(k):v for k,v in FIELDS.items()}
+ categories={};metrics={};teams_by_name={}
+ for index,(table,frame,cols) in enumerate(candidates):
+  category,label=category_for(table,index)
+  if category in categories:
+   category=f'{category}_{index+1}';label=f'{label} ({index+1})'
+  category_teams={}
+  for _,row in frame.iterrows():
+   name=str(row[cols['csapat']]).strip()
+   if not name or name.lower() in ('nan','csapat') or 'ellenfelek' in name.lower():continue
+   values={}
+   for original in frame.columns:
+    norm=clean(original)
+    if norm in ('csapat','listname','sorszam','rank','helyezes',''):continue
+    raw=number(row[original])
+    if raw is None:continue
+    metric=canonical.get(norm) or 'ks_'+norm
+    if metric in PERCENT and 0<=raw<=1:raw*=100
+    values[metric]=round(raw,3)
+    if metric not in metrics:metrics[metric]={'label':original,'group':'KosárStat – további mutatók','unit':'%' if '%' in original else ''}
+   if len(values)<10:raise ValueError(f'Insufficient columns for {name} in {label}')
+   category_teams[clean(name)]=(name,values)
+  if len(category_teams)!=14:raise ValueError(f'Expected 14 teams in {label}, got {len(category_teams)}')
+  if not teams_by_name:
+   for norm,(name,_) in category_teams.items():teams_by_name[norm]={'name':name,'aliases':[],'periods':{}}
+  if set(category_teams)!=set(teams_by_name):
+   raise ValueError(f'Team list mismatch in {label}; refusing to mix categories')
+  for norm,(_,values) in category_teams.items():teams_by_name[norm]['periods'][category]=values
+  categories[category]=label
+ if 'season' not in categories:raise ValueError('Overall season category missing')
+ return list(teams_by_name.values()),categories,metrics
 
-def write(league,source,teams,source_url):
+def write(league,source,teams,source_url,categories=None,metrics=None):
  if not teams: raise ValueError('No verified team statistics to publish')
  target=ROOT/'data'/f'team_stats_{league}.json';target.parent.mkdir(parents=True,exist_ok=True)
  payload={'league':league,'source':source,'source_url':source_url,'updated_at':dt.datetime.now(dt.timezone.utc).isoformat(),'teams':teams}
+ if categories:payload['categories']=categories
+ if metrics:payload['metrics']=metrics
  temp=target.with_suffix('.tmp');temp.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(target)
  print(f'{league}: saved {len(teams)} teams to {target}')
 
 def men():
  r=requests.get(SOURCE,timeout=35,headers={'User-Agent':'Mozilla/5.0 (compatible; BasketballStatsUpdater/1.0)'})
  r.raise_for_status()
- write('men','kosarstat',extract_men(r.text),SOURCE)
+ teams,categories,metrics=extract_men(r.text)
+ write('men','kosarstat',teams,SOURCE,categories,metrics)
+ print('Kosarstat categories:',categories)
 
 def women(export):
  # The Hunbasket comparison chart endpoint is not publicly verified. Import only
