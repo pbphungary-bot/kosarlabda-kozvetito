@@ -28,35 +28,33 @@ MATCH_LINK_PATTERN = re.compile(
 )
 
 def official_match_link(row, status):
-    """Prefer the score's match link; ignore team, preview-list and external links."""
-    score_cell = row.select_one(".game-cell")
+    """Read official Hunbasket match IDs from anchors or row click metadata."""
     candidates = []
-    if score_cell is not None:
-        candidates.extend(score_cell.select("a[href]"))
-    candidates.extend(row.select("a[href]"))
-    seen = set()
-    candidates_result = []
-    for anchor in candidates:
-        href = (anchor.get("href") or "").strip()
-        if not href or href.startswith(("#", "javascript:", "mailto:")):
-            continue
-        link = urljoin("https://hunbasket.hu", href)
+    score_cell = row.select_one('.game-cell')
+    anchors = (score_cell.select('a[href]') if score_cell else []) + row.select('a[href]')
+    for anchor in anchors:
+        href = (anchor.get('href') or '').strip()
+        if href and not href.startswith(('#', 'javascript:', 'mailto:')):
+            candidates.append(urljoin('https://hunbasket.hu', href))
+
+    # Hunbasket's fixture rows can be clickable via JavaScript rather than <a>.
+    # Search explicit URLs and IDs in markup, but never invent an ID.
+    markup = str(row)
+    for match in re.finditer(r'(?:https?://(?:www\.)?hunbasket\.hu)?/(?:merkozes|merkozesbeharangozo)/x\d{4}/(?:hun|whun)/(?:hun|whun)_\d+', markup, re.I):
+        candidates.append(urljoin('https://hunbasket.hu', match.group(0)))
+    for match in re.finditer(r'\b(?:hun|whun)_\d{5,7}\b', markup, re.I):
+        ident = match.group(0).lower()
+        league = 'whun' if ident.startswith('whun_') else 'hun'
+        candidates.append(f'https://hunbasket.hu/merkozes/x2627/{league}/{ident}')
+
+    valid = []
+    for link in candidates:
         parsed = urlparse(link)
-        if parsed.scheme != "https" or parsed.hostname not in {"hunbasket.hu", "www.hunbasket.hu"}:
-            continue
-        if not MATCH_LINK_PATTERN.search(parsed.path):
-            continue
-        if link in seen:
-            continue
-        seen.add(link)
-        label = anchor.get_text(" ", strip=True).lower()
-        # An actual match result is preferred over a preview link.
-        score_in_anchor = SCORE_PATTERN.search(label) is not None
-        is_preview = "beharangozo" in parsed.path.lower()
-        priority = (0 if status == "finished" and score_in_anchor else 1,
-                    1 if is_preview else 0)
-        candidates_result.append((priority, link))
-    return min(candidates_result)[1] if candidates_result else None
+        if (parsed.scheme == 'https' and parsed.hostname in {'hunbasket.hu', 'www.hunbasket.hu'}
+                and MATCH_LINK_PATTERN.search(parsed.path)):
+            valid.append(link)
+    # Prefer a completed match page to a preview.
+    return sorted(set(valid), key=lambda u: ('/merkozesbeharangozo/' in u, u))[0] if valid else None
 
 
 def collect(competition):
@@ -140,6 +138,8 @@ def collect(competition):
             unique[key] = match
     matches = sorted(unique.values(), key=lambda m: (m["date"], m["time"], m["home"]))
     finished = sum(m["status"] == "finished" for m in matches)
+    linked = sum(bool(m.get("url")) for m in matches)
+    print(f"Official Hunbasket links found: {linked}/{len(matches)}")
     print(f"{competition['name']}: {len(matches)} matches, {finished} finished")
     print("Diagnostics:", counters)
     if examples:
