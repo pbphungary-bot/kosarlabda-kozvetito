@@ -17,14 +17,16 @@ SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
     {'name': 'Hunbasket', 'urls': ['https://hunbasket.hu/hirek', 'https://hunbasket.hu/hirek/ferfi/', 'https://hunbasket.hu/hirek/noi/'], 'hosts': ('hunbasket.hu',), 'kind': 'hunbasket'},
+    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/noi/hirek'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
+    {'name': 'Nemzeti Sport', 'urls': ['https://www.nemzetisport.hu/kosarlabda'], 'hosts': ('nemzetisport.hu',), 'kind': 'ns'},
 ]
 
 def clean(value):
     return re.sub(r'\s+', ' ', value or '').strip()
 
-def fetch(url):
+def fetch(url, timeout=12):
     request = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(request, timeout=22) as response:
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         final = response.geturl()
         return BeautifulSoup(response.read(), 'html.parser'), final
 
@@ -36,7 +38,12 @@ def metadata(soup, *names):
     return ''
 
 def canonical(url):
-    return urldefrag(url)[0].split('?')[0].rstrip('/') + '/'
+    # Preserve query parameters on legacy club websites where the article ID lives in ?pg=.
+    raw = urldefrag(url)[0]
+    parsed = urlparse(raw)
+    if parsed.query and 'pg=news_3_' in parsed.query:
+        return raw
+    return raw.split('?')[0].rstrip('/') + '/'
 
 def valid_url(url, src):
     p = urlparse(url)
@@ -46,6 +53,12 @@ def valid_url(url, src):
     path = p.path.lower().rstrip('/')
     if src['kind'] == 'hunbasket':
         return bool(re.match(r'^/hir/\d+/[^/]+$', path))
+    if src['kind'] == 'kezdo5':
+        return bool(re.match(r'^/(?:magyar-ferfi|noi)/[^/]+/[^/]+', path)) and not path.endswith('/hirek')
+    if src['kind'] == 'ns':
+        return bool(re.match(r'^/[^/]+/20\d{2}/\d{2}/[^/]+', path)) or bool(re.match(r'^/kosarlabda/[^/]+-[a-z0-9]+$', path))
+    if src['kind'] == 'club':
+        return bool(re.search(src['article_pattern'], p.path + ('?' + p.query if p.query else ''), re.I))
     if path in ('', '/hirek', '/latest-news'):
         return False
     if any(path.startswith(prefix) for prefix in ('/tag/', '/category/', '/page/', '/author/', '/kereso/', '/search/', '/csapat/', '/jatekos/', '/menetrend/', '/tabella/', '/wp-content/')):
@@ -56,6 +69,8 @@ def candidates(soup, base, src):
     links = {}
     if src['kind'] == 'hunbasket':
         anchors = soup.select('a[href*="/hir/"]')
+    elif src['kind'] == 'club':
+        anchors = soup.select(src.get('listing_selector') or 'article a[href], h2 a[href], h3 a[href]')
     else:
         anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]')
         if not anchors or src['kind'] == 'bb1':
@@ -120,7 +135,7 @@ def article(url, listing_title, src):
     if headline.lower() in ('hírek', 'news', 'kosárlabda'):
         raise ValueError('navigation page, not an article')
     descriptions = [metadata(soup, 'og:description', 'description', 'twitter:description')]
-    for selector in ('article .entry-content p', '.post-content p', '.article-content p', 'article p', '.content p'):
+    for selector in ('article .entry-content p', '.post-content p', '.article-content p', '.article-body p', '.cikk-szoveg p', 'article p', '.content p'):
         p = soup.select_one(selector)
         if p:
             descriptions.append(p.get_text(' ', strip=True))
@@ -207,6 +222,90 @@ def targeted_bb1(entries, checks):
                    'failures':failures[:12]})
     return successes
 
+def load_club_sources():
+    path = Path('data/news_club_sources.json')
+    if not path.exists():
+        return []
+    result = []
+    for club in json.loads(path.read_text(encoding='utf-8')):
+        if not club.get('hosts') or not club.get('article_pattern'):
+            continue
+        result.append({'name': 'Klub: ' + club['name'], 'urls': club.get('urls', []),
+                       'hosts': tuple(club['hosts']), 'kind': 'club',
+                       'article_pattern': club['article_pattern'],
+                       'listing_selector': club.get('listing_selector', '')})
+    return result
+
+
+def source_league(item):
+    url = item.get('url', '').lower()
+    if item.get('source') == 'WBasket.hu' or '/noi/' in url and item.get('source') == 'Kezdő5.hu':
+        return 'women'
+    if item.get('source') == 'Kezdő5.hu' and '/magyar-ferfi/' in url:
+        return 'men'
+    return None
+
+
+def collect_source(src, entries, checks, max_articles=12):
+    found, listing_errors = {}, []
+    for listing_url in src['urls'][:2]:
+        try:
+            soup, base = fetch(listing_url, timeout=9 if src['kind']=='club' else 12)
+            for url, title in candidates(soup, base, src):
+                found.setdefault(url, title)
+        except Exception as exc:
+            listing_errors.append(f'{listing_url}: {type(exc).__name__}: {exc}')
+    added, repaired, failures = 0, 0, 0
+    for url, title in list(found.items())[:max_articles]:
+        existing = entries.get(url)
+        if existing and existing.get('published_at') and existing.get('summary_method') == 'source_description':
+            continue
+        try:
+            item = article(url, title, src)
+            if src['kind'] == 'club':
+                # A club's own publication is attributable to that club, not its opponent.
+                item['publisher_club'] = src['name'][6:]
+            item['league'] = source_league(item) or item.get('league')
+            if existing and not item.get('published_at'):
+                item['published_at'] = existing.get('published_at')
+            entries[url] = item
+            if existing: repaired += 1
+            else: added += 1
+        except Exception:
+            failures += 1
+        time.sleep(0.1)
+    checks.append({'source': src['name'], 'status': 'ok' if found else 'error',
+                   'candidates': len(found), 'added': added, 'repaired': repaired,
+                   'article_errors': failures, 'listing_errors': listing_errors[:3]})
+
+
+def club_tags(item):
+    publisher = item.get('publisher_club', '')
+    if not publisher:
+        return
+    name = publisher.casefold()
+    men = {'fóti': 'Fót', 'szedeák': 'Szedeák', 'kecskemét': 'Kecskemét',
+           'falco': 'Falco KC', 'körmend': 'Körmend', 'honvéd': 'Bp. Honvéd',
+           'szolnok': 'Szolnok', 'deac': 'DEAC', 'alba': 'Alba Fehérvár',
+           'kaposvár': 'Kaposvár', 'oroszlány': 'Oroszlány',
+           'atomerőmű': 'Atomerőmű SE', 'sopron kc': 'Sopron'}
+    women = {'cekk': 'VBW CEKK Cegléd', 'dvtk': 'DVTK HUNTHERM',
+             'sopron basket': 'Sopron Basket', 'szekszárd': 'TARR KSC Szekszárd',
+             'beac': 'ELTE BEAC Újbuda', 'csata': 'Csata TTK',
+             'bkg': 'BKG-PRIMA Szigetszentmiklós', 'vasas': 'Vasas Akadémia',
+             'tfse': 'TFSE', 'eto basket': 'SERCO UNI Győr'}
+    if 'nka' in name:
+        league, team = ('women', 'NKA Universitas Pécs') if 'női' in name else ('men', 'NKA Pécs')
+    elif any(k in name for k in women):
+        league, team = 'women', next(v for k,v in women.items() if k in name)
+    elif any(k in name for k in men):
+        league, team = 'men', next(v for k,v in men.items() if k in name)
+    else:
+        return
+    item['league'] = league
+    item['teams'] = [league + '|' + team]
+
+
 def main():
     old = []
     if OUT.exists():
@@ -214,7 +313,8 @@ def main():
             old = json.loads(OUT.read_text(encoding='utf-8')).get('articles', [])
         except (OSError, ValueError):
             pass
-    by_name = {src['name']: src for src in SOURCES}
+    all_sources = SOURCES + load_club_sources()
+    by_name = {src['name']: src for src in all_sources}
     entries = {}
     discarded = 0
     for item in old:
@@ -267,6 +367,9 @@ def main():
         checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
                        'article_errors': failed, 'listing_errors': listing_errors})
     targeted_bb1(entries, checks)
+    for src in all_sources:
+        if src['kind'] in ('kezdo5', 'ns', 'club'):
+            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 3)
     # Club-origin stories are tagged only to their publisher. Opponents in the
     # headline or summary do not make the article news about the opponent.
     club_sources = {
@@ -275,6 +378,7 @@ def main():
         'Sopron Basket': ('women', 'Sopron Basket'),
     }
     for item in entries.values():
+        club_tags(item)
         label = str(item.get('source', ''))
         if label.startswith('Klub: '):
             publisher = label[6:].strip()
@@ -291,6 +395,9 @@ def main():
             item['league'] = 'women'
             if isinstance(item.get('teams'), list):
                 item['teams'] = [tag for tag in item['teams'] if not str(tag).startswith('men|')]
+    for item in entries.values():
+        inferred = source_league(item)
+        if inferred: item['league'] = inferred
     articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
