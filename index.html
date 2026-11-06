@@ -11,9 +11,6 @@ const standingsErrors={men:null,women:null};
 // Source-specific files are published by separate verified collectors. Never synthesize advanced metrics.
 const teamStats={men:null,women:null},teamStatsErrors={men:'',women:''};
 const statCatalog=[
- {id:'rank',label:'Helyezés',group:'Alapadat',unit:''},
- {id:'wins',label:'Győzelem',group:'Alapadat',unit:''},
- {id:'losses',label:'Vereség',group:'Alapadat',unit:''},
  {id:'ppg',label:'Dobott pont / meccs',group:'Pontszerzés',unit:''},
  {id:'opp_ppg',label:'Kapott pont / meccs',group:'Pontszerzés',unit:''},
  {id:'fg2_pct',label:'Kétpontos %',group:'Dobás',unit:'%'},
@@ -32,7 +29,7 @@ const statCatalog=[
  {id:'drtg',label:'Defensive rating',group:'Haladó',unit:''},
  {id:'pace',label:'Tempó / 40 perc',group:'Haladó',unit:''}
 ];
-let selectedStats=new Set(['rank','wins','losses','ppg','opp_ppg','fg3_pct','reb','ast','tov']);
+let selectedStats=new Set(['ppg','opp_ppg','fg3_pct','reb','ast','tov']);
 let statPeriod='season';
 let statCategory='season';
 let statSearch='';
