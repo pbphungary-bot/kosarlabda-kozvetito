@@ -257,15 +257,45 @@ const newsAliases={
 };
 function normalizedNewsText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
 function newsMatchesTeam(article,team,competition){
- // WBasket is exclusively a women's basketball news source.
- if(competition==='men' && (/wbasket\.hu/i.test(String(article.source||'')) || /(^|\/)wbasket\.hu(\/|$)/i.test(String(article.url||''))))return false;
- const tags=Array.isArray(article.teams)?article.teams:[];
- if(tags.some(t=>{const parts=String(t).split('|');return parts[0]===competition&&normalizeTeamName(parts.slice(1).join('|'))===normalizeTeamName(team)}))return true;
- const hay=' '+normalizedNewsText([article.title,article.summary].join(' '))+' ';
+ const source=String(article.source||'');
+ const url=String(article.url||'');
+ const sourceText=normalizedNewsText(source);
+ const host=(()=>{try{return new URL(url).hostname.toLowerCase()}catch(e){return ''}})();
+ // A club's own website reports on opponents, but its articles belong to the
+ // publishing club, not to every opponent mentioned in the article.
+ const clubSource=source.match(/^Klub:\s*(.+)$/i);
+ const ownClub=clubSource?clubSource[1]:'';
+ const femaleClubNames=['bkg prima szigetszentmiklos','sopron basket','dvtk huntherm','tfse','csata','vasas akademia','elte beac','ksc szekszard','uni gyor','cekk cegled','david kornel'];
+ const maleClubNames=['sopron kc','falco','egis kormend','szolnoki olaj','alba fehervar','ose lions','kometa kaposvar','deac','atomeromu se','szte szedeak'];
+ const femaleSource=host==='wbasket.hu'||host.endsWith('.wbasket.hu')||sourceText.includes('wbasket')||femaleClubNames.some(x=>normalizedNewsText(ownClub).includes(x));
+ const maleSource=maleClubNames.some(x=>normalizedNewsText(ownClub).includes(x));
+ if(competition==='men'&&(femaleSource||article.league==='women'))return false;
+ if(competition==='women'&&(maleSource||article.league==='men'))return false;
  const name=normalizeTeamName(team);
  const aliases=Object.entries(newsAliases[competition]||{}).find(([k])=>normalizeTeamName(k)===name)?.[1]||[];
  const terms=[...aliases,team].filter(x=>normalizedNewsText(x).length>=4);
- return terms.some(x=>hay.includes(' '+normalizedNewsText(x)+' '));
+ const matches=x=>terms.some(t=>(' '+normalizedNewsText(x)+' ').includes(' '+normalizedNewsText(t)+' '));
+ if(ownClub){
+   // Own-club content: do not credit it to the opponent merely mentioned.
+   return matches(ownClub);
+ }
+ const tags=Array.isArray(article.teams)?article.teams:[];
+ const ownTag=competition+'|'+team;
+ if(tags.some(t=>String(t).startsWith(competition+'|')&&normalizeTeamName(String(t).split('|').slice(1).join('|'))===name))return true;
+ const hay=[article.title,article.summary].join(' ');
+ if(!matches(hay))return false;
+ // Generic team names such as NKA Pécs appear in both competitions. Require
+ // a distinctive competition cue or an explicit association.
+ if(competition==='men'&&name===normalizeTeamName('NKA Pécs')){
+   const n=normalizedNewsText(hay);
+   if(/\b(noi|nok|noi csapat|noi nb|noi bajnoksag)\b/.test(n))return false;
+   if(/\bbkg prima\b/.test(sourceText))return false;
+ }
+ if(competition==='women'&&name===normalizeTeamName('NKA Universitas Pécs')){
+   const n=normalizedNewsText(hay);
+   if(/\b(ferfi|ferfi nb|ferfi csapat)\b/.test(n))return false;
+ }
+ return true;
 }
 function renderMatchupStories(fallback=[]){
  const container=$('stories');if(!container)return;
