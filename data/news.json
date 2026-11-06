@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-06T07:30:45.939669+00:00",
+  "checked_at": "2026-11-06T08:28:34.160323+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 5,
-      "repaired": 4,
+      "added": 0,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -32,7 +32,7 @@
       "source": "BB1.hu team searches",
       "status": "ok",
       "search_pages_ok": 58,
-      "articles_added": 368,
+      "articles_added": 0,
       "failures": []
     }
   ],
@@ -62,7 +62,8 @@
       "summary": "November 11-én szerdán Németországban megkezdi szerepelését a világbajnoki negyeddöntős válogatottunk a 2027-es női kosárlabda Európa-bajnokság selejtező-sorozatában.",
       "url": "https://wbasket.hu/hat-nap-a-rajtig-hat-kerdes-hat-valasz-az-eb-selejtezo-kezdete-elott/",
       "published_at": "2026.11.05. 20:13",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -70,7 +71,8 @@
       "summary": "A Hunbasket riportsorozatának legújabb epizódjában a magyar női válogatottal a 2026-os világbajnokság negyeddöntőjébe jutó irányítóval, Studer Ágnessel elevenítették fel élete és pályafutása fontos mérföldköveit.",
       "url": "https://wbasket.hu/egyben-az-egyben-nagyinterju-studer-agnessel/",
       "published_at": "2026.11.05. 19:42",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -117,7 +119,8 @@
       "summary": "A KSC Szekszárd a hivatalos felületein bejelentette, hogy a nyáron szerződtetett Ugonne Michelle Onyiah nem lesz a csapat tagja, helyére a szezon első heteit Valenciában töltő, hazánkban is jól ismert Alisia Jenkins érkezik. – írja a KSC Szekszárd közleménye.",
       "url": "https://wbasket.hu/alisia-jenkins-erkezik-szekszardra/",
       "published_at": "2026.11.05. 16:32",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -141,7 +144,8 @@
       "summary": "Elmúlt hétvégén rendezték a Női NB I.",
       "url": "https://wbasket.hu/ezek-voltak-az-elmult-hetvege-legszebb-jelenetei-10/",
       "published_at": "2026.11.05. 15:27",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -157,7 +161,8 @@
       "summary": "A Hunbasket szavazásán a Sopron Basket szerb légiósa Masa Jankovic érdemelte ki a „Hétvége legjobbja” elismerést.",
       "url": "https://wbasket.hu/masa-jankovic-lett-az-elmult-jatekhet-legjobb/",
       "published_at": "2026.11.05. 13:22",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -173,7 +178,8 @@
       "summary": "Az Euroliga 4. fordulójának szerdai játéknapján a Galatasaray Cagdas Faktoring 68-51-re legyőzte a Beretta Famila Schio gárdáját.",
       "url": "https://wbasket.hu/juhasz-dorkaek-a-szezon-eddigi-legjobbjaval-nyertek-schioban/",
       "published_at": "2026.11.05. 12:07",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -181,7 +187,8 @@
       "summary": "Kedden és szerdán rendezték az Európa Kupa 4. fordulóját.",
       "url": "https://wbasket.hu/kennedy-todd-williams-az-europa-kupa-fordulo-legjobb-otoseben/",
       "published_at": "2026.11.05. 11:07",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -197,7 +204,8 @@
       "summary": "Az Európa Kupa 4. fordulójában az Autosped BCC Castelnuovo Scrivia – Sitku-Varga Alízzal a soraiban – 82-61-re legyőzte az BCF Elfic Fribourgot.",
       "url": "https://wbasket.hu/sitku-varga-alizek-megoriztek-veretlenseguket-az-europa-kupaban/",
       "published_at": "2026.11.05. 09:28",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -205,7 +213,8 @@
       "summary": "Szerdán a DVTK HUNTHERM Görögországban, a Sopron Basket Szerbiában nyert kulcsfontosságú csoportmeccset az Európa Kupában.",
       "url": "https://wbasket.hu/villamertekelesek-a-szerdai-europa-kupa-merkozesek-utan/",
       "published_at": "2026.11.05. 08:22",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -245,7 +254,8 @@
       "summary": "Srdjan Radulovic vette át a Soproni Darazsak Sportakadémia junior „A” csapatának irányítását.",
       "url": "https://wbasket.hu/mindig-ugy-jatszol-a-palyan-ahogyan-a-hetkoznapokon-edzel-interju-srdjan-raduloviccsal-a-soproni-darazsak-sportakademia-junior-csapatarol/",
       "published_at": "2026.11.04 22:33",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -261,7 +271,8 @@
       "summary": "Bár korán tíz pontos hátrányba került, fokozatosan ledolgozta a különbséget, és fordított a Sopron Basket az Európa Kupa negyedik játéknapján az UZKK Student Nis ellen.",
       "url": "https://wbasket.hu/nagyot-kuzdott-es-nyert-a-sopron-szerbiaban/",
       "published_at": "2026.11.04 21:25",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -269,7 +280,8 @@
       "summary": "Az Európa Kupa 4. fordulójában a DVTK HUNTHERM 77-74-es győzelmet aratott a Panathlitikos Sykeon otthonában.",
       "url": "https://wbasket.hu/nagy-csataban-nyert-a-dvtk-gorogorszagban/",
       "published_at": "2026.11.04. 21:19",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -293,7 +305,8 @@
       "summary": "A tavalyi szezontól kezdődően minden hónapban megválasztják a Tippmix Hónap Játékosát.",
       "url": "https://wbasket.hu/masa-jankovic-a-tippmix-honap-jatekosa/",
       "published_at": "2026.11.04 17:47",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -301,7 +314,8 @@
       "summary": "Az M4 Sport és az M4 Sport+ a novemberi válogatott szünetet követően a hónap végén két bajnoki rangadót is a műsorára tűz.",
       "url": "https://wbasket.hu/ket-bajnoki-rangado-is-kepernyore-kerul-a-valogatott-szunet-utan-valtoznak-az-idopontok/",
       "published_at": "2026.11.04 17:41",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -317,7 +331,8 @@
       "summary": "Szerdán az Európa Kupában a Sopron Basket a Student Nis, a DVTK HUNTHERM a Panathlitikos Sykeon vendége lesz.",
       "url": "https://wbasket.hu/elo-a-dvtk-nak-es-a-sopronnak-szurkolhatunk-az-europa-kupaban/",
       "published_at": "2026.11.04 16:47",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -341,7 +356,8 @@
       "summary": "A héten a negyedik forduló küzdelmeivel folytatódik az Európa Kupa.",
       "url": "https://wbasket.hu/mindket-kupacsapatunktol-fegyelmezettebb-koncentraltabb-jatekra-van-szukseg-karolyi-andreaval-elemeztunk/",
       "published_at": "2026.11.04 11:44",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -349,7 +365,8 @@
       "summary": "Szerdán 19 órától az Európa Kupa 4.",
       "url": "https://wbasket.hu/szerbiaban-szerepel-a-sopron-basket/",
       "published_at": "2026.11.04 11:36",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -357,7 +374,8 @@
       "summary": "Az Euroliga 4. fordulójában a Valencia – Takács-Kiss Virággal a soraiban – 73-71-es győzelmet aratott a Fenerbahce otthonában.",
       "url": "https://wbasket.hu/a-szezon-eddigi-legnagyobb-bravurja-takacs-kiss-viragektol/",
       "published_at": "2026.11.04. 11:22",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -365,7 +383,8 @@
       "summary": "Az Euroliga 4. fordulójában az Emlak Konut – Lelik Rékával a soraiban – 85-79-es vereséget szenvedett a Lublin otthonában.",
       "url": "https://wbasket.hu/lelik-rekaek-lengyelorszagban-maradtak-alul/",
       "published_at": "2026.11.04. 11:21",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -432,7 +451,8 @@
       "summary": "Kedden és szerdán rendezik az Euroliga 4.",
       "url": "https://wbasket.hu/takacs-kiss-viragnak-lelik-rekanak-es-juhasz-dorkanak-is-szurkolhatunk-az-euroliga-4-fordulojaban/",
       "published_at": "2026.11.03 08:01",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -440,7 +460,8 @@
       "summary": "Bár a novemberi Eb-selejtezők előtt még lesz egy Euroliga és Európa Kupa forduló, illetve a hétvégén a topligákban is játszanak, hazánkban beköszöntött az őszi válogatott szünet.",
       "url": "https://wbasket.hu/igy-fest-a-tabella-a-valogatott-szunetre-fordulva/",
       "published_at": "2026.11.02 20:27",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -448,7 +469,8 @@
       "summary": "A hétvégén az olasz élvonal 5, fordulójára került sor.",
       "url": "https://wbasket.hu/sitku-varga-alizek-hazai-palyan-nyertek-borondy-viviek-szoros-velencei-veresege/",
       "published_at": "2026.11.02 19:45",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -456,7 +478,8 @@
       "summary": "A hétvégén a francia bajnokság 7.",
       "url": "https://wbasket.hu/hazai-palyan-nyertek-papp-diaek/",
       "published_at": "2026.11.02 17:50",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -464,7 +487,8 @@
       "summary": "A hétvégén a török bajnokság 6.",
       "url": "https://wbasket.hu/juhasz-dorka-16-lelik-reka-10-pontja/",
       "published_at": "2026.11.02 16:33",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -480,7 +504,8 @@
       "summary": "A hétvégén a spanyol élvonal 6.",
       "url": "https://wbasket.hu/takacs-kiss-virag-dupla-duplaja/",
       "published_at": "2026.11.02 14:22",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -496,7 +521,8 @@
       "summary": "Hunbasket felületein megválaszthatjuk a hétvége legjobbját.",
       "url": "https://wbasket.hu/ok-voltak-a-hetvege-legjobbjai-5/",
       "published_at": "2026.11.02 12:02",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -512,7 +538,8 @@
       "summary": "A hétvégén a bajnokság 7. fordulóját rendezték.",
       "url": "https://wbasket.hu/videos-osszefoglalok-a-bajnoksag-7-fordulojanak-merkozeseirol/",
       "published_at": "2026.11.02. 09:57",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -528,7 +555,8 @@
       "summary": "Vasárnap a Vasas Akadémia – Sopron Basket mérkőzéssel zárult a bajnokság 7.",
       "url": "https://wbasket.hu/ertekelesek-a-vasas-sopron-talalkozo-utan/",
       "published_at": "2026.11.02 07:39",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -536,7 +564,8 @@
       "summary": "A Golden State Valkyries ülhetett fel a WNBA trónjára 2026-ban.",
       "url": "https://wbasket.hu/a-golden-state-valkyries-a-wnba-2026-os-bajnoka-gabby-williams-a-donto-mvp-je/",
       "published_at": "2026.11.02 06:09",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -552,7 +581,8 @@
       "summary": "Már két számjegyű előnyben is volt a forduló előtt nyeretlen Vasas Akadémia a veretlen Sopronnal szemben, a nagyszünetre azonban a vendégek meg tudták fordítani a találkozót, onnantól pedig már nem engedték ki a kezükből az irányítást, és továbbra is őrzik hibátlan mérlegüket, míg a Vasas Akadémiának még várnia kell első sikerére a bajnokságban.",
       "url": "https://wbasket.hu/megizzadt-pasareten-a-sopron-basket/",
       "published_at": "2026.11.01 20:41",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -707,7 +737,8 @@
       "summary": "Három győzelemmel és egy vereséggel kezdte az évadot a Női Amatőr NB I.",
       "url": "https://wbasket.hu/jateklehetoseg-es-fejlodesi-perspektiva-interju-aron-krisztiannal-a-soproni-darazsak-sportakademia-u23-as-csapatarol/",
       "published_at": "2026.10.27 20:12",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -783,7 +814,8 @@
       "summary": "November a nemzeti csapataink összetartásának az időszaka.",
       "url": "https://wbasket.hu/jelentos-vasas-kulonitmeny-keszul-a-novemberi-korosztalyos-valogatott-programokra/",
       "published_at": "2026.10.27 13:54",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -1350,7 +1382,8 @@
       "summary": "Vasárnapról hétfőre virradóra elrajtolt a WNBA 2026-os rájátszása.",
       "url": "https://wbasket.hu/elrajtolt-a-wnba-rajatszasa-juhasz-dorkaek-hatranyba-kerultek/",
       "published_at": "2026.09.28 09:39",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -1366,7 +1399,8 @@
       "summary": "Szeptember 27-én, vasárnap kezdetét veszi a WNBA 2026-os rájátszása.",
       "url": "https://wbasket.hu/207193-2/",
       "published_at": "2026.09.27 11:45",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -1536,7 +1570,8 @@
       "summary": "Ahogy arról beszámoltunk, az Egyesült Államok megvédte címét a világbajnokságon, a bronzérmet pedig Spanyolország szerezte meg.",
       "url": "https://wbasket.hu/breanna-stewart-a-vilagbajnoksag-mvp-je/",
       "published_at": "2026.09.14 06:40",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -1544,7 +1579,8 @@
       "summary": "Vasárnap este lezárult az antwerpeni 3×3-as Európa-bajnokság.",
       "url": "https://wbasket.hu/hollandia-nyerte-a-3x3-as-europa-bajnoksagot/",
       "published_at": "2026.09.14 06:38",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -1552,7 +1588,8 @@
       "summary": "A berlini világbajnokság döntőjében az Egyesült Államok 97-79-re legyőzte Franciaországot.",
       "url": "https://wbasket.hu/franciaorszag-raijesztett-az-amerikaiakra-de-vegul-nem-lehetett-kerdes-a-cimvedes/",
       "published_at": "2026.09.13 22:01",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -1560,7 +1597,8 @@
       "summary": "A berlini világbajnokság bronzcsatáján Spanyolország 81-58-ra legyőzte Németországot.",
       "url": "https://wbasket.hu/spanyolorszag-a-bronzermes-a-2026-os-vilagbajnoksagon/",
       "published_at": "2026.09.13 18:41",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -1568,7 +1606,8 @@
       "summary": "Vasárnap lezárul a berlini világbajnokság.",
       "url": "https://wbasket.hu/elo-vilagbajnoksag-2026-donto-es-bronzmeccs/",
       "published_at": "2026.09.13 15:18",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -1576,7 +1615,8 @@
       "summary": "Vasárnap 20 órától a 2026-os berlini női kosárlabda-világbajnokság döntőjében az Egyesült Államok és Franciaország csap össze egymással.",
       "url": "https://wbasket.hu/206706-2/",
       "published_at": "2026.09.13 15:16",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -1584,7 +1624,8 @@
       "summary": "Vasárnap lezárul az antwerpeni 3×3-as Európa-bajnokság.",
       "url": "https://wbasket.hu/vasarnap-europa-bajnokot-avatnak-a-3x3-as-szakagban/",
       "published_at": "2026.09.13 07:55",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -1619,7 +1660,8 @@
       "summary": "Péntektől vasárnapig Antwerpen ad otthont a 3×3-as Európa-bajnokságnak.",
       "url": "https://wbasket.hu/nem-jutott-tovabb-csoportjabol-noi-valogatottunk-a-3x3-as-europa-bajnoksagon/",
       "published_at": "2026.09.11 21:01",
-      "summary_method": "source_description"
+      "summary_method": "source_description",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
