@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-06T13:10:30.756153+00:00",
+  "checked_at": "2026-11-06T14:58:43.224055+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
       "added": 3,
-      "repaired": 7,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -23,7 +23,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
+      "added": 0,
       "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
@@ -37,6 +37,37 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Perl Zoltán a tizedik a BCL által felállított MVP-ranglistán",
+      "summary": "\"Perl Zoltán maga a Bajnokok Ligája.",
+      "url": "https://bball1.hu/perl-zoltan-a-tizedik-a-bcl-altal-felallitott-mvp-ranglistan/",
+      "published_at": "2026-11-06T15:40:44+01:00",
+      "summary_method": "source_description"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "NHSZ-Szolnoki Olajbányász – Délút-SZTE-Szedeák",
+      "summary": "Sorozatban harmadik bajnoki győzelmére hajt a Szolnok.",
+      "url": "https://bball1.hu/nhsz-szolnoki-olajbanyasz-delut-szte-szedeak/",
+      "published_at": "2026-11-06T15:19:52+01:00",
+      "summary_method": "source_description",
+      "teams": [
+        "men|Szedeák",
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Sopron KC – Falco-Vulcano Energia KC Szombathely",
+      "summary": "Sopronba látogat a veretlen Falco.",
+      "url": "https://bball1.hu/sopron-kc-falco-vulcano-energia-kc-szombathely-7/",
+      "published_at": "2026-11-06T14:47:25+01:00",
+      "summary_method": "source_description",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Atomerőmű SE – Duna Aszfalt-DTKH Kecskemét",
