@@ -1,0 +1,27 @@
+name: KosarStat Historical Head-to-Head
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '22 6 * * 2'
+permissions:
+  contents: write
+jobs:
+  update-kosarstat-h2h:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4
+      - name: Collect verified KosarStat all-time opponent records
+        run: python scripts/update_kosarstat_h2h.py
+      - name: Commit verified records
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/kosarstat_h2h.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update KosarStat all-time H2H records"
+            git push
+          fi
