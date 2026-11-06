@@ -257,6 +257,8 @@ const newsAliases={
 };
 function normalizedNewsText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
 function newsMatchesTeam(article,team,competition){
+ // WBasket is exclusively a women's basketball news source.
+ if(competition==='men' && (/wbasket\.hu/i.test(String(article.source||'')) || /(^|\/)wbasket\.hu(\/|$)/i.test(String(article.url||''))))return false;
  const tags=Array.isArray(article.teams)?article.teams:[];
  if(tags.some(t=>{const parts=String(t).split('|');return parts[0]===competition&&normalizeTeamName(parts.slice(1).join('|'))===normalizeTeamName(team)}))return true;
  const hay=' '+normalizedNewsText([article.title,article.summary].join(' '))+' ';
