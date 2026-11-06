@@ -589,9 +589,50 @@ const clubBranding={
  'tarrkscszekszard':['#b83470','#fff0f7','KSC'], 'sercounigyor':['#247d4e','#e9f8ee','GY'],
  'davidkornelka':['#2467ac','#edf5ff','DKKA']}};
 function clubIdentity(name,key=league){
- const id=normalizeTeamName(name), official=key==='men'?normalizeTeamName(menOfficialNames[id]||name):id;
- const aliases={'falcovulcanoenergiakcszombathely':'falcokc','sopronkc':'sopron','egiskormend':'kormend','oselions':'oroszlany','nhszszolnokiolajbanyasz':'szolnok','endoplusservicehonved':'bphonved','kometakaposvar':'kaposvar','dunaaszfaltdtkkecskemet':'kecskemet','delitszteszedeak':'szedeak','atomeroemuse':'atomermomuse','atomeromuse':'atomermomuse','kometakvgykaposvarikk':'kaposvar','kometakaposvar':'kaposvar','mvm oselions':'oroszlany','mvm oselions':'oroszlany','mvm oselions':'oroszlany'};
- const lookup=clubBranding[key]||{},resolved=lookup[official]?official:(lookup[id]?id:(aliases[id]||official));
+ const id=normalizeTeamName(name);
+ const official=key==='men'?normalizeTeamName(menOfficialNames[id]||name):id;
+ const lookup=clubBranding[key]||{};
+ const aliases=key==='men'?{
+  'sopronkc':'sopron','falcovulcanoenergiakcszombathely':'falcokc',
+  'egiskormend':'kormend','oselions':'oroszlany',
+  'nhszszolnokiolajbanyasz':'szolnok','endoplusservicehonved':'bphonved',
+  'kometakvgykaposvarikk':'kaposvar','kometakaposvarikk':'kaposvar',
+  'dunaaszfaltdtkkecskemet':'kecskemet','delutszteszedeak':'szedeak',
+  'atomeromuse':'atomermomuse','atomeromusepaks':'atomermomuse',
+  'nkauniversitaspecs':'nkapecs','phoenixfotitigrisek':'fot',
+  'albafehervar':'albafehervar','sopron':'sopron','szolnokiolajbanyasz':'szolnok',
+  'budapesthonved':'bphonved','bphonved':'bphonved','falcokcszombathely':'falcokc',
+  'kaposvarikk':'kaposvar','kecskemetiTE':'kecskemet'
+ }:{
+  'csatatkk':'csatattk','csatattkbudapest':'csatattk',
+  'kscszekszard':'tarrkscszekszard','tarrkscszekszard':'tarrkscszekszard',
+  'etobasket':'sercounigyor','sercounigyor':'sercounigyor',
+  'eltebeac':'eltebeacujbuda','beacujbuda':'eltebeacujbuda',
+  'nkapecs':'nkauniversitaspecs','sopronbasket':'sopronbasket',
+  'dvtk':'dvtkhuntherm','bkgprimaakademia':'bkgprimaszigetszentmiklos',
+  'vasas':'vasasakademia'
+ };
+ let resolved=lookup[official]?official:(lookup[id]?id:(aliases[id]||aliases[official]||''));
+ if(!lookup[resolved]){
+  const rules=key==='men'?[
+   [/falco|szombathely/,'falcokc'],[/szolnok|olajbanyasz/,'szolnok'],
+   [/atomerom|paks/,'atomermomuse'],[/kaposvar/,'kaposvar'],
+   [/kecskemet/,'kecskemet'],[/kormend/,'kormend'],[/honved/,'bphonved'],
+   [/szedeak|szeged/,'szedeak'],[/oroszlany|oselions/,'oroszlany'],
+   [/sopron/,'sopron'],[/deac|debrecen/,'deac'],[/alba|fehervar/,'albafehervar'],
+   [/nka|pecs/,'nkapecs'],[/phoenix|foti|fotitigrisek/,'fot']
+  ]:[
+   [/dvtk|diosgyor/,'dvtkhuntherm'],[/sopron/,'sopronbasket'],
+   [/szekszard|ksc/,'tarrkscszekszard'],[/csata/,'csatattk'],
+   [/beac/,'eltebeacujbuda'],[/bkg|szigetszentmiklos/,'bkgprimaszigetszentmiklos'],
+   [/vasas/,'vasasakademia'],[/tfse/,'tfse'],
+   [/gyor|etobasket/,'sercounigyor'],[/cekk|cegled|davidkornel/,'davidkornelka'],
+   [/nka|pecs/,'nkauniversitaspecs']
+  ];
+  const match=rules.find(([rx])=>rx.test(id)||rx.test(official));
+  if(match)resolved=match[1];
+ }
+ if(!lookup[resolved])resolved=official;
  const entry=lookup[resolved]||['#294969','#edf3f8',String(name).slice(0,2).toUpperCase()];
  return {id:resolved,color:entry[0],pale:entry[1],initials:entry[2],key};
 }
@@ -600,7 +641,14 @@ function clubMark(name,key=league){const b=clubIdentity(name,key);const filename
 function clubName(name,key=league){return '<span class="club-name" style="'+clubStyle(name,key)+'">'+clubMark(name,key)+'<span>'+esc(name)+'</span></span>';}
 function matchupBrandHeader(){return '<div class="matchup-brands"><div class="matchup-side" style="'+clubStyle(home)+'">'+clubMark(home)+'<span>'+esc(home)+'</span></div><span class="matchup-versus">VS</span><div class="matchup-side" style="'+clubStyle(away)+'">'+clubMark(away)+'<span>'+esc(away)+'</span></div></div>';}
 
-function updateClubRibbon(){let ribbon=document.getElementById('clubRibbon');if(!ribbon){ribbon=document.createElement('div');ribbon.id='clubRibbon';ribbon.className='club-ribbon';document.querySelector('header').insertAdjacentElement('afterend',ribbon);}const names=league==='women'?['DVTK HUNTHERM','NKA Universitas Pécs','ELTE BEAC Újbuda','TARR KSC Szekszárd','SERCO UNI Győr','Vasas Akadémia','Sopron Basket','Csata TTK','TFSE','BKG-PRIMA Szigetszentmiklós','Dávid Kornél KA']:['Sopron','Falco KC','DEAC','Alba Fehérvár','Kecskemét','Atomerőmű SE','Szolnok','Fót','Bp. Honvéd','Körmend','Szedeák','Kaposvár','Oroszlány','NKA Pécs'];ribbon.style.gridTemplateColumns='repeat('+names.length+',minmax(0,1fr))';ribbon.innerHTML=names.map(n=>'<div class="ribbon-team" title="'+esc(n)+'">'+clubMark(n)+'</div>').join('');}
+function updateClubRibbon(){
+ let ribbon=document.getElementById('clubRibbon');
+ if(!ribbon){ribbon=document.createElement('div');ribbon.id='clubRibbon';ribbon.className='club-ribbon';document.querySelector('header').insertAdjacentElement('afterend',ribbon);}
+ const fallback=league==='women'?['DVTK HUNTHERM','NKA Universitas Pécs','ELTE BEAC Újbuda','KSC Szekszárd','ETO Basket','Vasas Akadémia','Sopron Basket','Csata TKK','TFSE','BKG-PRIMA Szigetszentmiklós','VBW CEKK Cegléd']:['Sopron KC','Falco KC','DEAC','Alba Fehérvár','Duna Aszfalt-DTKH Kecskemét','Atomerőmű SE','Szolnoki Olajbányász','PHOENIX Fóti Tigrisek','Bp. Honvéd','Egis Körmend','Szedeák','Kaposvári KK','OSE Lions','NKA Universitas Pécs'];
+ const names=(data[league]&&data[league].length?data[league].map(t=>t.name):fallback);
+ ribbon.style.gridTemplateColumns='repeat('+names.length+',minmax(0,1fr))';
+ ribbon.innerHTML=names.map(n=>'<div class="ribbon-team" title="'+esc(n)+'">'+clubMark(n)+'</div>').join('');
+}
 
 function render(){updateClubRibbon();sel();drawFixtures();$('leagueName').textContent=league==='men'?'Férfi NB I/A':'Női NB I/A';$('teamCount').textContent=data[league].length;const payload=standingsData[league];$('standingsStatus').textContent=payload?'Hivatalos':data[league].length?'Részleges':'Nincs adat';$('standingsUpdated').innerHTML=payload?('<span>Utolsó sikeres ellenőrzés: '+(payload.checked_at?esc(new Date(payload.checked_at).toLocaleString('hu-HU')):'még nincs rögzítve')+'</span><br><span>Tabella utolsó változása: '+(payload.updated_at?esc(new Date(payload.updated_at).toLocaleString('hu-HU')):'nem ismert')+'</span>'):'Nem hivatalos, mérkőzésekből számított mérleg';$('standings').innerHTML=(!payload?'<div class="note">A hivatalos tabella nem teljes vagy nem érhető el. Az alábbi mérleg csak a letöltött mérkőzésekből számolódik; a sorrend nem hivatalos. '+esc(standingsErrors[league]||'')+'</div>':'')+`<table><thead><tr><th>Hely</th><th>Csapat</th><th>M</th><th>Gy</th><th>V</th><th>Pont</th><th>Dobott</th><th>Kapott</th></tr></thead><tbody>${data[league].map(t=>`<tr><td>${t.rank==null?'—':t.rank+'.'}</td><td><strong class="standings-team">${clubName(t.name)}</strong></td><td>${t.played??'—'}</td><td>${t.w}</td><td>${t.l}</td><td>${t.points??'—'}</td><td>${t.scored??'—'}</td><td>${t.conceded??'—'}</td></tr>`).join('')}</tbody></table>`;
 $('teamCards').innerHTML=data[league].map(t=>`<div class="card club-panel" style="${clubStyle(t.name)}"><h3>${clubMark(t.name)} ${esc(t.name)}</h3><div class="metric">${t.rank===null?'—':t.rank+'.'}</div><p class="muted">${record(t)}</p><div class="recent-heading">Utolsó öt mérkőzés</div>${formBlock(t.name)}</div>`).join('');
