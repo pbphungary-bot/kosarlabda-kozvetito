@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-06T19:01:54.615655+00:00",
+  "checked_at": "2026-11-06T20:58:25.953281+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 2,
+      "added": 1,
       "repaired": 7,
       "article_errors": 0,
       "listing_errors": []
@@ -44,8 +44,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 66,
-      "added": 66,
-      "repaired": 0,
+      "added": 7,
+      "repaired": 59,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -126,8 +126,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 3,
-      "repaired": 0,
+      "added": 1,
+      "repaired": 2,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -211,8 +211,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php: HTTPError: HTTP Error 406: Not Acceptable",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTPError: HTTP Error 406: Not Acceptable"
+        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
       ]
     },
     {
@@ -281,7 +281,10 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://etobasket.hu/hu/hirek/2: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ]
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -310,10 +313,86 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ]
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Antonelli vette át a vezetést Brazíliában, a Ferrari egyelőre hátrányban",
+      "summary": "Antonelli vette át a vezetést Brazíliában, a Ferrari egyelőre hátrányban",
+      "url": "https://www.nemzetisport.hu/f1/2026/11/ujra-teljes-a-mezony-sao-paulo-i-nagydij-2-szabadedzes/",
+      "published_at": "2026-11-06T21:00:48+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Vívás: bronz Dormagenben, nyolcaddöntő Budapesten a kadét kardozóktól",
+      "summary": "Vívás: bronz Dormagenben, nyolcaddöntő Budapesten a kadét kardozóktól",
+      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/vivas-bronz-dormagenben-nyolcaddonto-budapesten-a-kadet-kardozoktol/",
+      "published_at": "2026-11-06T20:47:00+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Hárman a bajnoki címért! – jön a Zemplén rali",
+      "summary": "Hárman a bajnoki címért! – jön a Zemplén rali",
+      "url": "https://www.nemzetisport.hu/egyeb-auto-motor/2026/11/harman-a-bajnoki-cimert-jon-a-zemplen-rali/",
+      "published_at": "2026-11-06T20:21:56+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Márián Blanka: A legfontosabb a belső motiváció kialakítása",
+      "summary": "Márián Blanka: A legfontosabb a belső motiváció kialakítása",
+      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/marian-blanka-a-legfontosabb-a-belso-motivacio-kialakitasa/",
+      "published_at": "2026-11-06T20:20:13+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Simán nyert a Fehérvár a férfi kosárlabda NB I-ben",
+      "summary": "Simán nyert a Fehérvár a férfi kosárlabda NB I-ben",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/siman-nyert-a-fehervar-a-ferfi-kosarlabda-nb-i-ben/",
+      "published_at": "2026-11-06T20:15:22+01:00",
+      "summary_method": "headline_fallback",
+      "league": null
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Huszonhét éves játékvezető mutatkozik be az NB I-ben",
+      "summary": "Huszonhét éves játékvezető mutatkozik be az NB I-ben",
+      "url": "https://www.nemzetisport.hu/labdarugo-nb-i/2026/11/27-eves-jatekvezeto-mutatkozik-be-az-nb-i-ben/",
+      "published_at": "2026-11-06T20:06:43+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Vendégsiker a férfi röplabda Extraliga kelet-magyarországi rangadóján",
+      "summary": "Vendégsiker a férfi röplabda Extraliga kelet-magyarországi rangadóján",
+      "url": "https://www.nemzetisport.hu/roplabda/2026/11/vendegsiker-a-ferfi-roplabda-extraliga-kelet-magyarorszagi-rangadojan/",
+      "published_at": "2026-11-06T20:06:05+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "A Kisvárda és a Mosonmagyaróvár is egy góllal kapott ki otthon a női kézilabda NB I-ben",
+      "summary": "A Kisvárda és a Mosonmagyaróvár is egy góllal kapott ki otthon a női kézilabda NB I-ben",
+      "url": "https://www.nemzetisport.hu/kezilabda/2026/11/a-kisvarda-es-a-mosonmagyarovar-is-egy-gollal-kapott-ki-otthon-a-noi-kezilabda-nb-i-ben/",
+      "published_at": "2026-11-06T19:58:29+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Woolridge kosarával verte a Kaposvár az NKA Pécset",
+      "summary": "Már-már az akadémisták kezében volt a mérkőzés az utolsó perc elején.",
+      "url": "https://bball1.hu/woolridge-kosaraval-verte-a-kaposvar-az-nka-pecset/",
+      "published_at": "2026-11-06T19:57:16+01:00",
+      "summary_method": "source_description"
+    },
     {
       "source": "BB1.hu",
       "title": "Nem volt kérdés: Ötödik hazai meccsét is behúzta az Alba",
@@ -344,14 +423,6 @@
       "summary": "Skribek Alen győztes gólt szerzett a Neftciben – videó",
       "url": "https://www.nemzetisport.hu/legiosok/2026/11/skribek-alen-gyoztes-golt-szerzett-a-neftciben/",
       "published_at": "2026-11-06T19:41:58+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Újra teljes a mezőny – Sao Pauló-i Nagydíj, 2. szabadedzés",
-      "summary": "Újra teljes a mezőny – Sao Pauló-i Nagydíj, 2. szabadedzés",
-      "url": "https://www.nemzetisport.hu/f1/2026/11/ujra-teljes-a-mezony-sao-paulo-i-nagydij-2-szabadedzes/",
-      "published_at": "2026-11-06T19:36:48+01:00",
       "summary_method": "headline_fallback"
     },
     {
@@ -1075,8 +1146,7 @@
       "summary": "Hárman pályáznak a 2029-es női kosárlabda Eb megrendezésére",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/harman-palyaznak-a-2029-es-noi-kosarlabda-eb-megrendezesere/",
       "published_at": "2026-11-02T17:39:20+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "WBasket.hu",
@@ -5264,6 +5334,19 @@
       "title": "Kapcsolat",
       "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_6001",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_6004",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "Alba Fehérvár",
