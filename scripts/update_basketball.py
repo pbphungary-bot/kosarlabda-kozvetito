@@ -1,6 +1,7 @@
 import json
 import re
 import urllib.request
+from urllib.parse import urljoin, urlparse
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -20,6 +21,42 @@ SOURCES = {
 DATE_PATTERN = re.compile(r"20\d{2}\.\s*\d{1,2}\.\s*\d{1,2}\.")
 TIME_PATTERN = re.compile(r"\b\d{1,2}:\d{2}\b")
 SCORE_PATTERN = re.compile(r"\b(\d{1,3})\s*[-–:]\s*(\d{1,3})\b")
+
+# Only official, match-specific Hunbasket URLs are stored.
+MATCH_LINK_PATTERN = re.compile(
+    r"/(?:merkozes|merkozesbeharangozo|merkozes-adatlap|merkozes-adatlapja)/", re.I
+)
+
+def official_match_link(row, status):
+    """Prefer the score's match link; ignore team, preview-list and external links."""
+    score_cell = row.select_one(".game-cell")
+    candidates = []
+    if score_cell is not None:
+        candidates.extend(score_cell.select("a[href]"))
+    candidates.extend(row.select("a[href]"))
+    seen = set()
+    candidates_result = []
+    for anchor in candidates:
+        href = (anchor.get("href") or "").strip()
+        if not href or href.startswith(("#", "javascript:", "mailto:")):
+            continue
+        link = urljoin("https://hunbasket.hu", href)
+        parsed = urlparse(link)
+        if parsed.scheme != "https" or parsed.hostname not in {"hunbasket.hu", "www.hunbasket.hu"}:
+            continue
+        if not MATCH_LINK_PATTERN.search(parsed.path):
+            continue
+        if link in seen:
+            continue
+        seen.add(link)
+        label = anchor.get_text(" ", strip=True).lower()
+        # An actual match result is preferred over a preview link.
+        score_in_anchor = SCORE_PATTERN.search(label) is not None
+        is_preview = "beharangozo" in parsed.path.lower()
+        priority = (0 if status == "finished" and score_in_anchor else 1,
+                    1 if is_preview else 0)
+        candidates_result.append((priority, link))
+    return min(candidates_result)[1] if candidates_result else None
 
 
 def collect(competition):
@@ -83,6 +120,7 @@ def collect(competition):
 
         cells = row.find_all("td", recursive=False)
         round_text = cells[0].get_text(" ", strip=True) if cells else ""
+        match_url = official_match_link(row, status)
         matches.append({
             "round": round_text,
             "home": home,
@@ -91,11 +129,15 @@ def collect(competition):
             "date": date_match.group(0),
             "time": time_match.group(0),
             "status": status,
+            **({"url": match_url} if match_url else {}),
         })
 
     unique = {}
     for match in matches:
-        unique[(match["date"], match["home"], match["away"])] = match
+        key = (match["date"], match["home"], match["away"])
+        previous = unique.get(key)
+        if previous is None or (match.get("url") and not previous.get("url")):
+            unique[key] = match
     matches = sorted(unique.values(), key=lambda m: (m["date"], m["time"], m["home"]))
     finished = sum(m["status"] == "finished" for m in matches)
     print(f"{competition['name']}: {len(matches)} matches, {finished} finished")
@@ -122,6 +164,17 @@ def main():
         path = Path(f"data/{key}.json")
         if path.exists():
             old = json.loads(path.read_text(encoding="utf-8"))
+            # Preserve previously verified official links if the current markup omits them.
+            old_by_key = {(m.get("date"), m.get("home"), m.get("away")): m
+                          for m in old.get("matches", []) if isinstance(m, dict)}
+            for match in matches:
+                previous = old_by_key.get((match["date"], match["home"], match["away"]))
+                if previous and not match.get("url"):
+                    previous_url = previous.get("url", "")
+                    parsed = urlparse(previous_url)
+                    if (parsed.scheme == "https" and parsed.hostname in {"hunbasket.hu", "www.hunbasket.hu"}
+                            and MATCH_LINK_PATTERN.search(parsed.path)):
+                        match["url"] = previous_url
             if old.get("matches") == matches:
                 print(f"{key}: unchanged ({len(matches)} matches)")
                 continue
