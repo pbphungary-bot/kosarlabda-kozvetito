@@ -8,7 +8,7 @@ import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, urldefrag, parse_qs
+from urllib.parse import urljoin, urlparse, urldefrag, urlencode, quote
 from bs4 import BeautifulSoup
 
 OUT = Path('data/news.json')
@@ -17,27 +17,7 @@ SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
     {'name': 'Hunbasket', 'urls': ['https://hunbasket.hu/hirek', 'https://hunbasket.hu/hirek/ferfi/', 'https://hunbasket.hu/hirek/noi/'], 'hosts': ('hunbasket.hu',), 'kind': 'hunbasket'},
-    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/magyar-noi/hirek', 'https://kezdo5.hu/'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
-    {'name': 'Nemzeti Sport', 'urls': ['https://www.nemzetisport.hu/rovat/kosarlabda'], 'hosts': ('nemzetisport.hu',), 'kind': 'nso'},
 ]
-
-CLUB_CONFIG = Path('data/news_club_sources.json')
-if CLUB_CONFIG.exists():
-    try:
-        clubs = json.loads(CLUB_CONFIG.read_text(encoding='utf-8'))
-        if not isinstance(clubs, list):
-            raise ValueError('Club source configuration must be a list')
-        for club in clubs:
-            if not isinstance(club, dict) or not club.get('name') or not club.get('urls') or not club.get('hosts'):
-                raise ValueError('Invalid club source record')
-            hosts = tuple(str(h).lower().removeprefix('www.') for h in club['hosts'])
-            urls = [str(u) for u in club['urls'] if str(u).startswith('https://')]
-            if not hosts or not urls:
-                raise ValueError('Invalid club source URL or host')
-            SOURCES.append({'name': 'Klub: ' + club['name'], 'urls': urls, 'hosts': hosts, 'kind': 'club', 'article_pattern': club.get('article_pattern', ''), 'listing_selector': club.get('listing_selector', '')})
-    except (ValueError, OSError, TypeError) as exc:
-        print('CLUB CONFIG ERROR:', exc, file=sys.stderr)
-
 
 def clean(value):
     return re.sub(r'\s+', ' ', value or '').strip()
@@ -56,11 +36,7 @@ def metadata(soup, *names):
     return ''
 
 def canonical(url):
-    url = urldefrag(url)[0]
-    p = urlparse(url)
-    if (p.hostname or '').removeprefix('www.') == 'albakosar.hu' and re.fullmatch(r'news_3_\d+', parse_qs(p.query).get('pg', [''])[0]):
-        return 'https://www.albakosar.hu/index.php?pg=' + parse_qs(p.query)['pg'][0]
-    return url.split('?')[0].rstrip('/') + '/'
+    return urldefrag(url)[0].split('?')[0].rstrip('/') + '/'
 
 def valid_url(url, src):
     p = urlparse(url)
@@ -70,13 +46,6 @@ def valid_url(url, src):
     path = p.path.lower().rstrip('/')
     if src['kind'] == 'hunbasket':
         return bool(re.match(r'^/hir/\d+/[^/]+$', path))
-    if src['kind'] == 'club' and src.get('article_pattern'):
-        target = path + ('?' + p.query if p.query and host == 'albakosar.hu' else '')
-        return bool(re.search(src['article_pattern'], target))
-    if src['kind'] == 'nso':
-        return bool(re.match(r'^/kosarlabda/\d{4}/\d{2}/[^/]+$', path))
-    if src['kind'] == 'kezdo5':
-        return bool(re.match(r'^/[^/]+/(?:hirek|cikkek|interjuk)/[^/]+$', path))
     if path in ('', '/hirek', '/latest-news'):
         return False
     if any(path.startswith(prefix) for prefix in ('/tag/', '/category/', '/page/', '/author/', '/kereso/', '/search/', '/csapat/', '/jatekos/', '/menetrend/', '/tabella/', '/wp-content/')):
@@ -87,13 +56,9 @@ def candidates(soup, base, src):
     links = {}
     if src['kind'] == 'hunbasket':
         anchors = soup.select('a[href*="/hir/"]')
-    elif src['kind'] == 'club' and src.get('listing_selector'):
-        anchors = soup.select(src['listing_selector'])
-    elif src['kind'] in ('nso', 'kezdo5', 'club'):
-        anchors = soup.select('article a[href], h2 a[href], h3 a[href], h4 a[href], .entry-title a[href], .post-title a[href], a[href]')
     else:
         anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]')
-        if not anchors:
+        if not anchors or src['kind'] == 'bb1':
             anchors = soup.select('a[href]')
     for a in anchors:
         title = clean(a.get_text(' ', strip=True))
@@ -102,13 +67,6 @@ def candidates(soup, base, src):
         url = canonical(urljoin(base, a.get('href', '')))
         if valid_url(url, src):
             links.setdefault(url, title)
-    # A verified direct article URL can serve as a seed if the club's listing page fails.
-    if src['kind'] == 'club' and valid_url(base, src):
-        heading = soup.select_one('h1')
-        if heading:
-            title = clean(heading.get_text(' ', strip=True))
-            if 12 <= len(title) <= 250:
-                links.setdefault(canonical(base), title)
     return list(links.items())[:100]
 
 def structured_date(soup):
@@ -183,6 +141,72 @@ def parse_date(value):
         return f'{m[1]}-{int(m[2]):02d}-{int(m[3]):02d}T{int(m[4] or 0):02d}:{int(m[5] or 0):02d}:00'
     return ''
 
+
+# Targeted search supplements the homepage feed. Search terms are specific to
+# each league to avoid conflating men's Sopron KC with women's Sopron Basket.
+TEAM_SEARCHES = {
+ 'men': {
+  'Alba Fehérvár':['Alba Fehérvár'], 'Atomerőmű SE':['Atomerőmű SE','Paks kosárlabda'],
+  'Bp. Honvéd':['Budapesti Honvéd kosárlabda'], 'DEAC':['DEAC kosárlabda'],
+  'Falco KC':['Falco KC','Falco Szombathely'], 'Kaposvár':['Kaposvári KK'],
+  'Kecskemét':['KTE kosárlabda','Duna Aszfalt Kecskemét'], 'Körmend':['Egis Körmend'],
+  'Oroszlány':['OSE Lions','Oroszlány kosárlabda'], 'Sopron':['Sopron KC'],
+  'Szedeák':['SZTE-Szedeák'], 'Szolnok':['Szolnoki Olajbányász'],
+  'NKA Pécs':['NKA Universitas Pécs'], 'Fót':['Fót kosárlabda']},
+ 'women': {
+  'Sopron Basket':['Sopron Basket'], 'DVTK HUNTHERM':['DVTK HUNTHERM'],
+  'NKA Universitas Pécs':['NKA Universitas Pécs női'], 'TFSE':['TFSE női kosárlabda'],
+  'ELTE BEAC Újbuda':['ELTE BEAC Újbuda'], 'Vasas Akadémia':['Vasas Akadémia női'],
+  'Csata TTK':['Csata TTK'], 'BKG-PRIMA Szigetszentmiklós':['BKG PRIMA női'],
+  'TARR KSC Szekszárd':['KSC Szekszárd'], 'SERCO UNI Győr':['UNI Győr női'],
+  'VBW CEKK Cegléd':['CEKK Cegléd']}}
+
+def targeted_bb1(entries, checks):
+    src = next(x for x in SOURCES if x['kind'] == 'bb1')
+    successes, failures, added = 0, [], 0
+    # Limit to two search phrases per club, first two result pages each.
+    for league, clubs in TEAM_SEARCHES.items():
+        for club, terms in clubs.items():
+            found = {}
+            for term in terms[:2]:
+                for page in (1, 2):
+                    url = 'https://bball1.hu/' + (f'page/{page}/' if page > 1 else '') + '?' + urlencode({'s':term})
+                    try:
+                        soup, base = fetch(url)
+                        successes += 1
+                        for link, title in candidates(soup, base, src):
+                            found.setdefault(link, title)
+                    except Exception as exc:
+                        failures.append(f'{club}: {type(exc).__name__}: {exc}')
+            # Avoid asserting affiliation solely because a search engine returns
+            # an article. Keep search associations as discovery hints, and
+            # validate via the club's full distinctive name in article content.
+            for link, title in list(found.items())[:25]:
+                existing = entries.get(link)
+                if existing:
+                    item = existing
+                else:
+                    try:
+                        item = article(link, title, src)
+                    except Exception:
+                        continue
+                    entries[link] = item
+                    added += 1
+                # Search results can be fuzzy; explicit text match is required.
+                body = clean((item.get('title') or '') + ' ' + (item.get('summary') or '')).casefold()
+                import unicodedata
+                def norm(x):
+                    return ''.join(c for c in unicodedata.normalize('NFD', x.casefold()) if not unicodedata.combining(c))
+                matched = any(norm(t) in norm(body) for t in terms if len(t) >= 5)
+                if matched:
+                    tags = item.setdefault('teams', [])
+                    tag = league + '|' + club
+                    if tag not in tags: tags.append(tag)
+    checks.append({'source':'BB1.hu team searches','status':'ok' if successes else 'error',
+                   'search_pages_ok':successes,'articles_added':added,
+                   'failures':failures[:12]})
+    return successes
+
 def main():
     old = []
     if OUT.exists():
@@ -213,7 +237,7 @@ def main():
                 soup, base = fetch(listing_url)
                 for url, title in candidates(soup, base, src):
                     found.setdefault(url, title)
-                if found and src['kind'] not in ('hunbasket', 'club'):
+                if found and src['kind'] != 'hunbasket':
                     break
             except Exception as exc:
                 listing_errors.append(f'{listing_url}: {exc}')
@@ -242,6 +266,7 @@ def main():
         status = 'ok' if found else 'error'
         checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
                        'article_errors': failed, 'listing_errors': listing_errors})
+    targeted_bb1(entries, checks)
     articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
