@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-06T09:02:58.051307+00:00",
+  "checked_at": "2026-11-06T11:09:31.843391+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
@@ -37,6 +37,14 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "„Szeretnék visszaadni valamit abból, amit korábban én kaptam” – interjú Schöll Richárddal",
+      "summary": "\"Nagyon jó érzés, hogy ennyi ismerős játékossal szerepelhetek egy csapatban!\"",
+      "url": "https://bball1.hu/szeretnek-visszaadni-valamit-abbol-amit-korabban-en-kaptam-interju-scholl-richarddal/",
+      "published_at": "2026-11-06T10:30:11+01:00",
+      "summary_method": "source_description"
+    },
     {
       "source": "BB1.hu",
       "title": "Négy novemberi bajnoki mérkőzést közvetít az M4 Sport",
