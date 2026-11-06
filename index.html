@@ -265,24 +265,27 @@ function newsMatchesTeam(article,team,competition){
 }
 function renderMatchupStories(fallback=[]){
  const container=$('stories');if(!container)return;
- const relevant=newsArticles.filter(a=>newsMatchesTeam(a,home,league)||newsMatchesTeam(a,away,league));
- relevant.sort((a,b)=>(newsTime(b.published_at)??-1)-(newsTime(a.published_at)??-1));
- const unique=[];const seen=new Set();
- for(const a of relevant){
-  const key=String(a.url||'').trim()||normalizedNewsText(a.title);
-  if(!key||seen.has(key))continue;
-  seen.add(key);unique.push(a);if(unique.length===10)break;
- }
- if(unique.length){
-  container.innerHTML=unique.map(a=>{
+ // Separate lists: five articles per club, not five per matchup.
+ // Player stories are included when the feed mentions the club or carries a
+ // verified team reference; a player name alone cannot establish affiliation.
+ const clubs=[home,away];
+ const sections=clubs.map(team=>{
+  const relevant=newsArticles.filter(a=>newsMatchesTeam(a,team,league));
+  relevant.sort((a,b)=>(newsTime(b.published_at)??-1)-(newsTime(a.published_at)??-1));
+  const unique=[],seen=new Set();
+  for(const article of relevant){
+   const key=String(article.url||'').trim()||normalizedNewsText(article.title);
+   if(!key||seen.has(key))continue;
+   seen.add(key);unique.push(article);if(unique.length>=5)break;
+  }
+  const items=unique.map(a=>{
    const url=String(a.url||'');const valid=/^https?:\/\//i.test(url);
    const title=esc(a.title||'Cím nélkül');
    return '<article class="news-item"><div class="news-meta"><span class="tag">'+esc(a.source||'Hírforrás')+'</span><span>'+esc(newsDate(a.published_at))+'</span></div><h3>'+(valid?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+title+'</a>':title)+'</h3></article>';
-  }).join('')+'<p class="source">Legfeljebb 10, a kiválasztott csapatokhoz kapcsolódó hír a mentett hírfolyamból.</p>';
- }else{
-  const items=fallback.length?fallback:['A kiválasztott csapatokhoz jelenleg nincs elérhető hír a mentett hírfolyamban.'];
-  container.innerHTML='<p class="muted small">'+(newsError?'A hírek nem tölthetők be: '+esc(newsError):'Nincs azonosítható klubhír; mérkőzésadatokból készített összefoglaló:')+'</p>'+items.map((v,i)=>'<p><span class="tag">'+(i+1)+'</span> '+esc(v)+'</p>').join('');
- }
+  }).join('');
+  return '<section class="matchup-team-news" style="min-width:0"><h3 style="margin:0 0 10px">'+esc(team)+' <span class="muted small">('+unique.length+'/5 hír)</span></h3>'+(items||'<p class="muted small">Ehhez a csapathoz nincs további azonosítható hír a mentett adatbázisban.</p>')+'</section>';
+ });
+ container.innerHTML='<div class="grid" style="align-items:start">'+sections.join('')+'</div><p class="source" style="margin-top:16px">Csapatonként az 5 legfrissebb azonosítható hír. Játékosokról szóló cikkek akkor jelennek meg, ha a klubhoz köthetők. A hiányzó híreket nem helyettesítjük mérkőzéseredményekkel.</p>';
 }
 function updateNewsTeamOptions(){
  const select=$('newsTeam');if(!select)return;
