@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-06T20:58:25.953281+00:00",
+  "checked_at": "2026-11-06T22:51:13.617066+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 7,
       "article_errors": 0,
       "listing_errors": []
@@ -43,8 +43,8 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 66,
-      "added": 7,
+      "candidates": 67,
+      "added": 8,
       "repaired": 59,
       "article_errors": 0,
       "listing_errors": []
@@ -71,7 +71,7 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 66,
+      "candidates": 67,
       "added": 0,
       "repaired": 14,
       "article_errors": 0,
@@ -126,8 +126,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 1,
-      "repaired": 2,
+      "added": 0,
+      "repaired": 3,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -211,8 +211,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
+        "https://www.cekk.hu/new/index.php: HTTPError: HTTP Error 406: Not Acceptable",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTPError: HTTP Error 406: Not Acceptable"
       ]
     },
     {
@@ -281,10 +281,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://etobasket.hu/hu/hirek/2: URLError: <urlopen error [Errno 101] Network is unreachable>"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -313,13 +310,74 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: URLError: <urlopen error [Errno 101] Network is unreachable>"
-      ]
+      "listing_errors": []
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Szombati sportműsor: három mérkőzés az NB I-ben; Győri ETO KC-meccs a női kézi BL-ben",
+      "summary": "Szombati sportműsor: három mérkőzés az NB I-ben; Győri ETO KC-meccs a női kézi BL-ben",
+      "url": "https://www.nemzetisport.hu/minden-mas-foci/2026/11/szombati-sportmusor-harom-merkozes-az-nb-i-ben-gyori-eto-kc-meccs-a-noi-kezi-bl-ben/",
+      "published_at": "2026-11-06T23:15:46+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Két pontba került a kimaradt tizenegyes, gól nélküli döntetlen született Sevillában",
+      "summary": "Két pontba került a kimaradt tizenegyes, gól nélküli döntetlen született Sevillában",
+      "url": "https://www.nemzetisport.hu/spanyol-labdarugas/2026/11/ket-pontba-kerult-a-kimaradt-tizenegyes-gol-nelkuli-dontetlen-szuletett-sevillaban/",
+      "published_at": "2026-11-06T23:09:45+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Szalai József ragyogóan kezdte az NB I-es bajnokságot; Bajzát Péter koncertfilmben szerepel",
+      "summary": "Szalai József ragyogóan kezdte az NB I-es bajnokságot; Bajzát Péter koncertfilmben szerepel",
+      "url": "https://www.nemzetisport.hu/napilap/2026/11/szalai-jozsef-ragyogoan-kezdte-az-nb-i-es-bajnoksagot-bajzat-peter-koncertfilmben-szerepel/",
+      "published_at": "2026-11-06T23:05:26+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Thierno Barry nagy formában, a duplájával és gólpasszával fordított az Everton",
+      "summary": "Thierno Barry nagy formában, a duplájával és gólpasszával fordított az Everton",
+      "url": "https://www.nemzetisport.hu/angol-labdarugas/2026/11/thierno-barry-nagy-formaban-a-duplajaval-es-golpasszaval-forditott-az-everton/",
+      "published_at": "2026-11-06T23:03:02+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Helycsere a Serie A tabellájának végén, a Venezia az utolsó helyre taszította az Udinesét",
+      "summary": "Helycsere a Serie A tabellájának végén, a Venezia az utolsó helyre taszította az Udinesét",
+      "url": "https://www.nemzetisport.hu/olasz-labdarugas/2026/11/helycsere-a-serie-a-tabellajanak-vegen-a-venezia-az-utolso-helyre-taszitotta-az-udineset/",
+      "published_at": "2026-11-06T22:45:43+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Pontrúgásokkal verte a Strasbourgot a Toulouse a Ligue 1-ben",
+      "summary": "Pontrúgásokkal verte a Strasbourgot a Toulouse a Ligue 1-ben",
+      "url": "https://www.nemzetisport.hu/francia-labdarugas/2026/11/pontrugasokkal-verte-a-strasbourgot-a-toulouse-a-ligue-1-ben/",
+      "published_at": "2026-11-06T22:44:42+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "A Hamburg két góllal győzte le a Mönchengladbachot a Bundesligában",
+      "summary": "A Hamburg két góllal győzte le a Mönchengladbachot a Bundesligában",
+      "url": "https://www.nemzetisport.hu/nemet-labdarugas/2026/11/a-hamburg-ket-gollal-verte-a-monchengladbachot-a-bundesligaban/",
+      "published_at": "2026-11-06T22:27:03+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Jégkorong: két magyar győzelem, négy vereség",
+      "summary": "Jégkorong: két magyar győzelem, négy vereség",
+      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/jegkorong-ket-magyar-gyozelem-negy-vereseg/",
+      "published_at": "2026-11-06T21:54:00+01:00",
+      "summary_method": "headline_fallback"
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Antonelli vette át a vezetést Brazíliában, a Ferrari egyelőre hátrányban",
