@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-05T22:59:20.199361+00:00",
+  "checked_at": "2026-11-06T01:15:27.980811+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -184,8 +184,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php: <urlopen error [Errno 101] Network is unreachable>",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: <urlopen error [Errno 101] Network is unreachable>"
+        "https://www.cekk.hu/new/index.php: HTTP Error 406: Not Acceptable",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTP Error 406: Not Acceptable"
       ]
     },
     {
@@ -283,10 +283,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: <urlopen error [Errno 101] Network is unreachable>",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: <urlopen error [Errno 101] Network is unreachable>"
-      ]
+      "listing_errors": []
     }
   ],
   "articles": [
