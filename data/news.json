@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-06T01:15:27.980811+00:00",
+  "checked_at": "2026-11-06T03:00:18.963210+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -138,7 +138,9 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://www.megyeritigrisek.hu/: <urlopen error timed out>"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
