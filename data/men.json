@@ -486,20 +486,20 @@
       "round": "8.",
       "home": "Alba Fehérvár",
       "away": "DEAC",
-      "result": "Előzetes",
+      "result": "23–11",
       "date": "2026. 11. 06.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134843"
     },
     {
       "round": "8.",
       "home": "Kometa-KVGY Kaposvári KK",
       "away": "NKA Universitas Pécs",
-      "result": "Előzetes",
+      "result": "38–30",
       "date": "2026. 11. 06.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134849"
     },
     {
@@ -1823,5 +1823,5 @@
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_135095"
     }
   ],
-  "updated_at": "2026-11-06T11:21:09.534717+00:00"
+  "updated_at": "2026-11-06T17:28:03.932983+00:00"
 }
