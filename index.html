@@ -257,6 +257,8 @@ const newsAliases={
 };
 function normalizedNewsText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
 function newsMatchesTeam(article,team,competition){
+ const tags=Array.isArray(article.teams)?article.teams:[];
+ if(tags.some(t=>{const parts=String(t).split('|');return parts[0]===competition&&normalizeTeamName(parts.slice(1).join('|'))===normalizeTeamName(team)}))return true;
  const hay=' '+normalizedNewsText([article.title,article.summary].join(' '))+' ';
  const name=normalizeTeamName(team);
  const aliases=Object.entries(newsAliases[competition]||{}).find(([k])=>normalizeTeamName(k)===name)?.[1]||[];
