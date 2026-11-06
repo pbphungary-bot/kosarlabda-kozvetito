@@ -1,0 +1,27 @@
+name: Basketball H2H History
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 4 * * 1'
+permissions:
+  contents: write
+jobs:
+  update-h2h:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install beautifulsoup4
+      - name: Collect historical Hunbasket results
+        run: python scripts/update_h2h.py
+      - name: Commit H2H data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/h2h_hunbasket.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Hunbasket historical H2H"
+            git push
+          fi
