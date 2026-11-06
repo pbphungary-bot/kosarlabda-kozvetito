@@ -68,31 +68,38 @@ function clubTokens(name){
   .replace(/([a-z])([0-9])/g,'$1 $2').replace(/[^a-z0-9]+/g,' ').split(/\s+/)
   .filter(x=>x.length>=3&&!clubStopwords.has(x));
 }
+// Verified 2026/27 Kosarstat names matched to Hunbasket fixture names.
+// Never use fuzzy matching for these official statistics: an incorrect match
+// is worse than showing a missing value.
+const menOfficialNames={
+ 'sopronkc':'Sopron', 'sopron':'Sopron',
+ 'nkauniversitaspecs':'NKA Pécs', 'nkapecs':'NKA Pécs',
+ 'falcovulcanoenergiakcszombathely':'Falco KC', 'falcokc':'Falco KC',
+ 'nhszszolnokiolajbanyasz':'Szolnok', 'szolnokiolajbanyasz':'Szolnok',
+ 'egiskormend':'Körmend', 'kormend':'Körmend',
+ 'oselions':'Oroszlány', 'oroszlany':'Oroszlány',
+ 'atomermomuse':'Atomerőmű SE', 'atomeromuse':'Atomerőmű SE',
+ 'dunaaszfaltdtkkecskemet':'Kecskemét', 'dtkkecskemet':'Kecskemét',
+ 'endoplusservicehonved':'Bp. Honvéd', 'bphonved':'Bp. Honvéd',
+ 'deac':'DEAC', 'alba fehervar':'Alba Fehérvár', 'albafehervar':'Alba Fehérvár',
+ 'kometakap osvar':'Kaposvár', 'kometakap osvar':'Kaposvár',
+ 'kometakaposvar':'Kaposvár', 'kaposvar':'Kaposvár',
+ 'delitszteszedek':'Szedeák', 'delitszteszedeak':'Szedeák',
+ 'szedeak':'Szedeák', 'fot':'Fót'
+};
 function sourceTeam(team){
  const p=teamStats[league];if(!p||!Array.isArray(p.teams))return null;
  const n=normalizeTeamName(team);
- const names=t=>[t.name,...(Array.isArray(t.aliases)?t.aliases:[])].filter(Boolean);
- const exact=p.teams.filter(t=>names(t).some(a=>normalizeTeamName(a)===n));
- if(exact.length===1)return exact[0];
- if(exact.length>1)return null;
- const aliases=clubNameAliases[n]||[];
- // Unique full-name/alias containment (also works when the official name is short).
- const fullMatches=p.teams.filter(t=>names(t).some(a=>{
-  const x=normalizeTeamName(a);
-  return (Math.min(n.length,x.length)>=4&&(n.includes(x)||x.includes(n))) ||
-   aliases.some(alias=>alias.length>=4&&(x===alias||x.includes(alias)||alias.includes(x)&&x.length>=4));
- }));
- if(fullMatches.length===1)return fullMatches[0];
- // Match distinctive club/city words, but only if they identify exactly one team.
- const tokens=[...new Set([...clubTokens(team),...aliases.flatMap(clubTokens)])];
- const scored=p.teams.map(t=>{
-  const words=[...new Set(names(t).flatMap(clubTokens))];
-  const overlap=tokens.filter(w=>words.some(v=>v===w||(w.length>=6&&v.length>=6&&(w.includes(v)||v.includes(w)))));
-  return {t,score:overlap.reduce((sum,w)=>sum+w.length,0),hits:overlap.length};
- }).sort((a,b)=>b.score-a.score);
- if(scored.length&&scored[0].score>=5&&scored[0].score>(scored[1]?.score||0)&&
-    (scored[0].hits>=2||scored[0].score>=6))return scored[0].t;
- return null;
+ const official=(league==='men'?menOfficialNames[n]:null);
+ const wanted=normalizeTeamName(official||team);
+ const matches=p.teams.filter(t=>[t.name,...(Array.isArray(t.aliases)?t.aliases:[])]
+  .some(name=>normalizeTeamName(name)===wanted));
+ if(matches.length===1)return matches[0];
+ // Safe fallback: exact whole normalized official name, optionally with a
+ // generic club suffix (e.g. Sopron KC -> Sopron), only if unique.
+ const stripped=n.replace(/(?:kc|kk|se|sk)$/,'');
+ const safe=p.teams.filter(t=>normalizeTeamName(t.name)===stripped);
+ return safe.length===1?safe[0]:null;
 }
 function getStat(team,id){const t=info(team),s=sourceTeam(team);const sourcePeriod=s?.periods?.[statPeriod]||((statPeriod==='season'&&s?.stats)?s.stats:null);const srcValue=sourcePeriod?.[id];if(typeof srcValue==='number'&&Number.isFinite(srcValue))return {value:srcValue,source:'official'};if(statPeriod==='season'&&['rank','wins','losses'].includes(id)&&t){const key={rank:'rank',wins:'w',losses:'l'}[id],v=t[key];if(typeof v==='number'&&Number.isFinite(v))return {value:v,source:standingsData[league]?'standings':'partial'};}
 // Only points and W/L can be derived from scorelines; no synthetic possession/shooting stats.
