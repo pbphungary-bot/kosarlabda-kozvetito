@@ -27,10 +27,6 @@ jobs:
       - name: Update basketball data
         run: python3 scripts/update_basketball.py
 
-      - name: Test league standings
-        continue-on-error: true
-        run: python3 scripts/update_standings.py
-
       - name: Save updated data to GitHub
         run: |
           git config user.name "github-actions[bot]"

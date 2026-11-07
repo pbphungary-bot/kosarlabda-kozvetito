@@ -18,7 +18,7 @@ SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
     {'name': 'Hunbasket', 'urls': ['https://hunbasket.hu/hirek', 'https://hunbasket.hu/hirek/ferfi/', 'https://hunbasket.hu/hirek/noi/'], 'hosts': ('hunbasket.hu',), 'kind': 'hunbasket'},
-    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi', 'https://kezdo5.hu/noi', 'https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/noi/hirek'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
+    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi', 'https://kezdo5.hu/noi', 'https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/noi/hirek', 'https://kezdo5.hu/europa'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
     {'name': 'Nemzeti Sport', 'urls': ['https://www.nemzetisport.hu/kosarlabda'], 'hosts': ('nemzetisport.hu',), 'kind': 'ns'},
 ]
 
@@ -55,7 +55,7 @@ def valid_url(url, src):
     if src['kind'] == 'hunbasket':
         return bool(re.match(r'^/hir/\d+/[^/]+$', path))
     if src['kind'] == 'kezdo5':
-        return bool(re.match(r'^/(?:magyar-ferfi|noi)/[^/]+/[^/]+', path)) and not path.endswith('/hirek')
+        return bool(re.match(r'^/(?:magyar-ferfi|noi|europa)/(?!hirek$)[^/]+(?:/[^/]+)?$', path)) and not path.endswith('/hirek')
     if src['kind'] == 'ns':
         # Restrict to the basketball section; the listing contains unrelated sports.
         return bool(re.match(r'^/kosarlabda/20\d{2}/\d{2}/[^/]+', path)) or bool(re.match(r'^/kosarlabda/[^/]+-[a-z0-9]+$', path))
@@ -73,7 +73,7 @@ def candidates(soup, base, src):
     if src['kind'] == 'hunbasket':
         anchors = soup.select('a[href*="/hir/"]')
     elif src['kind'] == 'kezdo5':
-        anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], a[href*="/magyar-ferfi/"], a[href*="/noi/"]')
+        anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], a[href*="/magyar-ferfi/"], a[href*="/noi/"], a[href*="/europa/"]')
     elif src['kind'] == 'club':
         anchors = soup.select(src.get('listing_selector') or 'article a[href], h2 a[href], h3 a[href]')
         # Club CMS layouts vary; configured selectors frequently miss real article links.
@@ -286,7 +286,7 @@ def targeted_bb1(entries, checks):
                 def norm(x):
                     return ''.join(c for c in unicodedata.normalize('NFD', x.casefold()) if not unicodedata.combining(c))
                 matched = any(norm(t) in norm(body) for t in terms if len(t) >= 5)
-                if matched:
+                if matched and not (league == 'men' and re.search(r'(?<![a-z])n[oő]i(?![a-z])', norm(body))):
                     tags = item.setdefault('teams', [])
                     tag = league + '|' + club
                     if tag not in tags: tags.append(tag)
@@ -416,7 +416,7 @@ def main():
                 soup, base = fetch(listing_url)
                 for url, title in candidates(soup, base, src):
                     found.setdefault(url, title)
-                if found and src['kind'] != 'hunbasket':
+                if found and src['kind'] not in ('hunbasket', 'kezdo5'):
                     break
             except Exception as exc:
                 listing_errors.append(f'{listing_url}: {exc}')
@@ -468,30 +468,128 @@ def main():
                 comp, team = club_sources[publisher]
                 item['league'] = comp
                 item['teams'] = [comp + '|' + team]
-    # Club affiliation for the confirmed Schöll Richárd interview, whose headline
-    # omits Sopron KC; don't guess affiliations for other player-only headlines.
+    # Rebuild club associations consistently for every club, not just Sopron.
+    # Publisher identity is authoritative for club-origin articles. For independent
+    # publishers, match distinctive club names in title/summary, with strict gender
+    # evidence. Generic city references are intentionally insufficient.
+    import unicodedata
+    def norm(value):
+        value = unicodedata.normalize('NFD', str(value or '').casefold())
+        return re.sub(r'\s+', ' ', ''.join(c for c in value if not unicodedata.combining(c)))
+
+    men_aliases = {
+        'Alba Fehérvár':['alba fehervar','alba fehervar kc'],
+        'Atomerőmű SE':['atomeromu se','ase paks'],
+        'Bp. Honvéd':['budapesti honved','endo plus service honved'],
+        'DEAC':['deac kosarlabda','deac ferfi'],
+        'Falco KC':['falco','falco kc'],
+        'Kaposvár':['kaposvari kk','kometa kaposvar'],
+        'Kecskemét':['duna aszfalt','duna aszfalt-dtkh','kte ferfi kosarlabda'],
+        'Körmend':['egis kormend','kormendi kosarlabda'],
+        'Oroszlány':['ose lions','oroszlanyi se'],
+        'Sopron':['sopron kc','soproni kc'],
+        'Szedeák':['szte-szedeak','delut-szte-szedeak'],
+        'Szolnok':['szolnoki olaj','olajbanyasz'],
+        'NKA Pécs':['nka pecs ferfi','nka universitas pecs ferfi'],
+        'Fót':['foti tigrisek','phoenix foti']}
+    women_aliases = {
+        'Sopron Basket':['sopron basket'],
+        'DVTK HUNTHERM':['dvtk huntherm','dvtk noi kosarlabda'],
+        'NKA Universitas Pécs':['nka universitas pecs noi','nka pecs noi'],
+        'TFSE':['tfse noi','tfse'],
+        'ELTE BEAC Újbuda':['elte beac','beac ujbuda'],
+        'Vasas Akadémia':['vasas akademia noi','vasas noi kosarlabda'],
+        'Csata TTK':['csata ttk','csata tkk'],
+        'BKG-PRIMA Szigetszentmiklós':['bkg-prima','bkg prima'],
+        'TARR KSC Szekszárd':['ksc szekszard','tarr ksc'],
+        'SERCO UNI Győr':['serco uni gyor','eto basket','uni gyor'],
+        'VBW CEKK Cegléd':['cekk cegled','vbw cekk']}
+    def matches(hay, phrase):
+        return bool(re.search(r'(?<![a-z0-9])' + re.escape(norm(phrase)) + r'(?![a-z0-9])', hay))
+    def gender(item):
+        url = norm(item.get('url', ''))
+        source = norm(item.get('source', ''))
+        hay = norm(' '.join(str(item.get(k, '')) for k in ('title','summary')))
+        if 'wbasket' in source or 'wbasket.hu' in url or '/noi/' in url or '/noi-' in url:
+            return 'women'
+        if '/magyar-ferfi/' in url or '/ferfi/' in url:
+            return 'men'
+        # An explicit women's marker is a veto on men's tagging even if a
+        # shared city/team keyword is present (e.g. Sopron, Pécs, DVTK).
+        if re.search(r'(?<![a-z])noi(?![a-z])|noikosarlabda|noi nb|noi bajnoksag|noi csapat|noi keret|noi kupa|noi valogatott', hay):
+            return 'women'
+        if re.search(r'(?<![a-z])ferfi(?![a-z])|ferfi nb|ferfi bajnoksag|ferfi csapat', hay):
+            return 'men'
+        return None
+
     for item in entries.values():
-        if item.get('source') == 'BB1.hu' and re.search(r'sch[oö]ll rich[aá]rd', item.get('title', ''), re.I):
-            tags = item.setdefault('teams', [])
-            if 'men|Sopron' not in tags: tags.append('men|Sopron')
-    # WBasket articles are women's-only, including articles saved in earlier runs.
-    # Retain them for women's teams; never publish a men's team association.
-    for item in entries.values():
-        source = str(item.get('source', '')).casefold()
-        host = urlparse(str(item.get('url', ''))).hostname or ''
-        if source == 'wbasket.hu' or host == 'wbasket.hu' or host.endswith('.wbasket.hu'):
-            item['league'] = 'women'
-            if isinstance(item.get('teams'), list):
-                item['teams'] = [tag for tag in item['teams'] if not str(tag).startswith('men|')]
-    for item in entries.values():
-        inferred = source_league(item)
-        if inferred: item['league'] = inferred
-    # Correct known confirmed player affiliation on previously saved stories too.
-    for item in entries.values():
-        if item.get('source') == 'BB1.hu' and re.search(r'sch[oö]ll rich[aá]rd', item.get('title', ''), re.I):
-            tags = item.setdefault('teams', [])
-            if 'men|Sopron' not in tags:
-                tags.append('men|Sopron')
+        existing = [str(t) for t in item.get('teams', []) if isinstance(t, str)]
+        explicit = gender(item)
+        source = str(item.get('source',''))
+        # Use official club identity as the strongest evidence, but never let
+        # a women's club story leak into the men's team list.
+        publisher = source[6:].strip() if source.startswith('Klub: ') else ''
+        if publisher:
+            known = {
+                'Falco KC Szombathely':('men','Falco KC'),
+                'DVTK HUNTHERM':('women','DVTK HUNTHERM'),
+                'DEAC':('men','DEAC'),
+                'Egis Körmend':('men','Körmend'),
+                'Alba Fehérvár':('men','Alba Fehérvár'),
+                'Atomerőmű SE':('men','Atomerőmű SE'),
+                'OSE Lions':('men','Oroszlány'),
+                'ELTE BEAC Újbuda':('women','ELTE BEAC Újbuda'),
+                'BKG-PRIMA Szigetszentmiklós':('women','BKG-PRIMA Szigetszentmiklós'),
+                'Vasas Akadémia':('women','Vasas Akadémia'),
+                'VBW CEKK Cegléd':('women','VBW CEKK Cegléd'),
+                'TFSE':('women','TFSE'),
+                'NHSZ-Szolnoki Olajbányász':('men','Szolnok'),
+                'Duna Aszfalt-DTKH Kecskemét':('men','Kecskemét'),
+                'PHOENIX Fóti Tigrisek':('men','Fót'),
+                'Délút-SZTE-Szedeák':('men','Szedeák'),
+                'Endo Plus Service-Honvéd':('men','Bp. Honvéd'),
+                'Kometa-KVGY Kaposvári KK':('men','Kaposvár'),
+                'NKA Universitas Pécs (férfi)':('men','NKA Pécs'),
+                'NKA Universitas Pécs (női)':('women','NKA Universitas Pécs'),
+                'Csata TKK':('women','Csata TTK'),
+                'ETO Basket':('women','SERCO UNI Győr'),
+                'KSC Szekszárd':('women','TARR KSC Szekszárd'),
+                'Sopron KC':('men','Sopron'),
+                'Sopron Basket':('women','Sopron Basket'),
+            }
+            owner = known.get(publisher)
+            if not owner:
+                for competition, mapping in [('men',men_aliases),('women',women_aliases)]:
+                    for team, aliases in mapping.items():
+                        if any(matches(norm(publisher), a) for a in aliases):
+                            owner=(competition,team);break
+                    if owner:break
+            if owner:
+                item['teams']=[owner[0]+'|'+owner[1]]
+                item['league']=owner[0]
+                continue
+        hay = norm(' '.join(str(item.get(k,'')) for k in ('title','summary')))
+        tags=[]
+        for competition, mapping in [('men',men_aliases),('women',women_aliases)]:
+            if explicit and competition!=explicit:continue
+            for team, aliases in mapping.items():
+                if any(matches(hay,a) for a in aliases):tags.append(competition+'|'+team)
+        # Named player affiliation requires verified editorial knowledge;
+        # retain the confirmed Schöll interview but don't guess other players.
+        if source=='BB1.hu' and matches(norm(item.get('title','')), 'scholl richard') and explicit!='women':
+            tags.append('men|Sopron')
+        # Retain previously verified explicit team tags when compatible with
+        # gender, but never carry over ambiguous men's tags from older runs.
+        for tag in existing:
+            comp=tag.split('|',1)[0]
+            if explicit and comp!=explicit:continue
+            if tag in tags:continue
+            if comp=='women' and (explicit=='women' or source=='WBasket.hu'):
+                tags.append(tag)
+        item['teams']=list(dict.fromkeys(tags))
+        if explicit:item['league']=explicit
+        elif tags and len({t.split('|')[0] for t in tags})==1:item['league']=tags[0].split('|')[0]
+        else:item.pop('league',None)
     articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
