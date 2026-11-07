@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-07T05:00:38.481139+00:00",
+  "checked_at": "2026-11-07T07:06:04.982899+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 8,
+      "added": 1,
+      "repaired": 7,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -43,9 +43,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 67,
-      "added": 0,
-      "repaired": 67,
+      "candidates": 68,
+      "added": 3,
+      "repaired": 65,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -71,7 +71,7 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 67,
+      "candidates": 68,
       "added": 0,
       "repaired": 14,
       "article_errors": 0,
@@ -314,6 +314,30 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "„Életem legfontosabb versenyén nyugodtabb voltam, mint valaha” – Kropkó Jázmin a dakari ezüstéremről",
+      "summary": "„Életem legfontosabb versenyén nyugodtabb voltam, mint valaha” – Kropkó Jázmin a dakari ezüstéremről",
+      "url": "https://www.nemzetisport.hu/egyeb-egyeni/2026/11/eletem-legfontosabb-versenyen-nyugodtabb-voltam-mint-valaha-kropko-jazmin-a-dakari-ezusteremrol/",
+      "published_at": "2026-11-07T07:42:59+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Nagy ember a kispályán – hetvenéves lett Kozma Mihály",
+      "summary": "Nagy ember a kispályán – hetvenéves lett Kozma Mihály",
+      "url": "https://www.nemzetisport.hu/magyar-valogatott/2026/11/nagy-ember-a-kispalyan-hetveneves-lett-kozma-mihaly/",
+      "published_at": "2026-11-07T07:20:25+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Szalai József: Igyekszem, hogy újra válogatott legyek",
+      "summary": "Szalai József: Igyekszem, hogy újra válogatott legyek",
+      "url": "https://www.nemzetisport.hu/labdarugo-nb-i/2026/11/szalai-jozsef-igyekszem-hogy-ujra-valogatott-legyek/",
+      "published_at": "2026-11-07T06:56:51+01:00",
+      "summary_method": "headline_fallback"
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Szombati sportműsor: három mérkőzés az NB I-ben; Győri ETO KC-meccs a női kézi BL-ben",
@@ -5426,6 +5450,14 @@
       "title": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
       "summary": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
       "url": "https://hunbasket.hu/hir/77645/ferfi-nb-i-megorizte-veretlenseget-az-ase-kuzdelmes-meccset-nyert-foton-a-szolnok/",
+      "published_at": null,
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Férfi NB I: Az utolsó pillanatban nyert a Kaposvár",
+      "summary": "Férfi NB I: Az utolsó pillanatban nyert a Kaposvár",
+      "url": "https://hunbasket.hu/hir/77665/ferfi-nb-i-az-utolso-pillanatban-nyert-a-kaposvar/",
       "published_at": null,
       "summary_method": "headline_fallback"
     },
