@@ -1,19 +1,19 @@
 {
-  "checked_at": "2026-11-07T09:02:26.605790+00:00",
+  "checked_at": "2026-11-07T14:53:27.061448+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
-      "repaired": 7,
+      "added": 2,
+      "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 34,
+      "candidates": 35,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -24,7 +24,7 @@
       "status": "ok",
       "candidates": 12,
       "added": 0,
-      "repaired": 8,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -36,6 +36,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
         "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
         "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden"
       ]
@@ -43,9 +45,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 68,
-      "added": 8,
-      "repaired": 60,
+      "candidates": 50,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -57,40 +59,19 @@
       "failures": []
     },
     {
-      "source": "Kezdő5.hu",
-      "status": "error",
-      "candidates": 0,
-      "added": 0,
-      "repaired": 0,
-      "article_errors": 0,
-      "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi/hirek: HTTPError: HTTP Error 403: Forbidden",
-        "https://kezdo5.hu/noi/hirek: HTTPError: HTTP Error 403: Forbidden"
-      ]
-    },
-    {
-      "source": "Nemzeti Sport",
-      "status": "ok",
-      "candidates": 68,
-      "added": 0,
-      "repaired": 14,
-      "article_errors": 0,
-      "listing_errors": []
-    },
-    {
       "source": "Klub: Falco KC Szombathely",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 24,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: DVTK HUNTHERM",
-      "status": "error",
-      "candidates": 0,
-      "added": 0,
+      "status": "ok",
+      "candidates": 5,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -106,17 +87,17 @@
     },
     {
       "source": "Klub: Egis Körmend",
-      "status": "error",
-      "candidates": 0,
+      "status": "discovered",
+      "candidates": 40,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 10,
       "listing_errors": []
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 11,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -127,32 +108,32 @@
       "status": "ok",
       "candidates": 10,
       "added": 0,
-      "repaired": 3,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 14,
       "added": 0,
-      "repaired": 0,
-      "article_errors": 0,
+      "repaired": 9,
+      "article_errors": 1,
       "listing_errors": []
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 11,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 12,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -178,17 +159,17 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 15,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 18,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -196,10 +177,10 @@
     },
     {
       "source": "Klub: Vasas Akadémia",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 10,
       "added": 0,
-      "repaired": 0,
+      "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -226,10 +207,10 @@
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 6,
       "added": 0,
-      "repaired": 0,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -276,8 +257,8 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 24,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -305,206 +286,212 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 15,
       "added": 0,
-      "repaired": 0,
-      "article_errors": 0,
+      "repaired": 9,
+      "article_errors": 1,
       "listing_errors": []
     }
   ],
   "articles": [
     {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Változás a keretben",
+      "summary": "Családi okok miatt távozik csapatunktól Mihajlo Jovicsics.",
+      "url": "https://ktekosar.hu/hirek/valtozas-a-keretben/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Vereség Debrecenben",
+      "summary": "Szombaton, a Falco elleni bajnokin letöltötte egymeccses eltiltását Ivkovics Sztojan, a szakmai igazgató így már ott lehetett a kispadon Debrecenben, és visszatért a keretbe a csapatkapitány, Wittmann Krisztián, valamint Karahodzsics Kemal is.",
+      "url": "https://ktekosar.hu/hirek/vereseg-debrecenben/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Tisztes helytállás a címvédő otthonában",
+      "summary": "A címvédő és az előző évek legmeghatározóbb hazai csapata, a Falco ellen idegenben a szezon eddigi legnehezebb mérkőzése várt a Duna Aszfalt-DTKH Kecskemétre.",
+      "url": "https://ktekosar.hu/hirek/tisztes-helytallas-a-cimvedo-otthonabann/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Szurkolói információk az ASE elleni meccshez",
+      "summary": "A Duna Aszfalt-DTKH Kecskemét szombaton este 18:00-tól Pakson, a listavezető és eddig még hibátlan Atomerőmű SE vendégeként lép pályára a bajnokság 8. fordulójában.",
+      "url": "https://ktekosar.hu/hirek/szurkoloi-informaciok-az-ase-elleni-meccshez/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Ivkovics Sztojan: szimbiózisban élünk a várossal",
+      "summary": "A Falco elleni tisztes helytállás és a szoros debreceni vereség után Ivkovics Sztojan szakmai igazgató foglalta össze az elmúlt egy hét eseményeit, tapasztalatait, külön megemlékezve a fiatal játékosok teljesítményéről, illetve arról, hogy mit vár csapatától az Alba Fehérvár ellen.",
+      "url": "https://ktekosar.hu/hirek/ivkovics-sztojan-szimbiozisban-elunk-a-varossal/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Ivkovics Sztojan: a csapatban van potenciál",
+      "summary": "Az előző három fordulóban, játékban egyértelmű javulást mutató Duna Aszfalt-DTKH Kecskemétre a hét kör után hibátlan és listavezető, akár még a végső sikerre is esélyes Atomerőmű SE vár Pakson.",
+      "url": "https://ktekosar.hu/hirek/ivkovics-sztojan-a-csapatban-van-potencial/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Hinni kell a munkában",
+      "summary": "„Akinek tetszik az, amit lát a csapatomtól ebben a bajnokságban, hát, azzal biztosan valami baj van.”",
+      "url": "https://ktekosar.hu/hirek/hinni-kell-a-munkaban/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Hatalmas küzdelem, szoros vereség az Alba ellen",
+      "summary": "Szezonbeli legjobb teljesítményét nyújtotta a Duna Aszfalt-DTKH Kecskemét az Alba Fehérvár ellen hazai pályán, nem sokon múlt a bravúr.",
+      "url": "https://ktekosar.hu/hirek/hatalmas-kuzdelem-szoros-vereseg-az-alba-ellen/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Debrecenben jön a folytatás",
+      "summary": "Nincs megállás, egy hét alatt három bajnokit játszik a Duna Aszfalt-DTKH Kecskemét.",
+      "url": "https://ktekosar.hu/hirek/debrecenben-jon-a-folytatas/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "A címvédő otthonában jön a folytatás",
+      "summary": "A szezon eddigi legnehezebb mérkőzése vár a még nyeretlen Duna Aszfalt-DTKH Kecskemétre szombaton este a címvédő, és az utóbbi évek legmeghatározóbb hazai csapata, a Falco vendégeként.",
+      "url": "https://ktekosar.hu/hirek/a-cimvedo-otthonaban-jon-a-folytatas/",
+      "published_at": "2026. 11. 07., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Endo Plus Service-Honvéd – Egis Körmend",
+      "summary": "Budapest, Ludovika Aréna, vasárnap 18:00.",
+      "url": "https://bball1.hu/endo-plus-service-honved-egis-kormend-3/",
+      "published_at": "2026-11-07T15:16:38+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 15 órakor kezdődő PHOENIX Fóti Tigrisek – OSE Lions mérkőzésről Fullcourtért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-912/",
+      "published_at": "2026-11-07T14:00:44+01:00",
+      "summary_method": "article_body"
+    },
+    {
       "source": "BB1.hu",
       "title": "Szőke Balázs: Ami jelenleg hiányzik a játékunkból, hogy nem tudunk olyan tempóban kosárlabdázni, ahogyan szeretnénk",
-      "summary": "Szőke Balázs: Ami jelenleg hiányzik a játékunkból, hogy nem tudunk olyan tempóban kosárlabdázni, ahogyan szeretnénk",
+      "summary": "Zlatko Jovanovics : Elismerésem a DEAC-nak, a debreceniek valós kvalitásait nem mutatja meg a tabella, mi is úgy készültünk erre az összecsapásra, mint egy top 8-ba igyekvő csapat ellen.",
       "url": "https://bball1.hu/szoke-balazs-ami-jelenleg-hianyzik-a-jatekunkbol-hogy-nem-tudunk-olyan-tempoban-kosarlabdazni-ahogyan-szeretnenk/",
       "published_at": "2026-11-07T09:30:15+01:00",
-      "summary_method": "headline_fallback"
+      "summary_method": "article_body"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Tenisz: Alcaraz két meccslabdát hárítva elődöntős Párizsban",
-      "summary": "Tenisz: Alcaraz két meccslabdát hárítva elődöntős Párizsban",
-      "url": "https://www.nemzetisport.hu/tenisz/2026/11/tenisz-alcaraz-ket-meccslabdat-haritva-elodontos-parizsban/",
-      "published_at": "2026-11-07T09:30:12+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Hunbasket",
+      "title": "Női NB I: Megizzadt Pasaréten a Sopron Basket",
+      "summary": "Sőt, a folytatásban is a hazaiak akarata érvényesült, nem sokkal az első játékrész vége előtt Szirony találatával már két számjegyűre hízott a Vasas Akadémia előnye (20-10), az utolsó szó azonban Maric révén a soproniaké volt (20-12).",
+      "url": "https://hunbasket.hu/hir/77647/noi-nb-i-megizzadt-pasareten-a-sopron-basket/",
+      "published_at": "2026. 11. 07.",
+      "summary_method": "source_description"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "NBA: Luka Doncicra elfogynak a jelzők, eddig 40 pont felett átlagol az idényben – videók",
-      "summary": "NBA: Luka Doncicra elfogynak a jelzők, eddig 40 pont felett átlagol az idényben – videók",
-      "url": "https://www.nemzetisport.hu/amerikai-sportok/2026/11/nba-luka-doncicra-elfogynak-a-jelzok-eddig-40-pont-felett-atlagol-az-idenyben-videok/",
-      "published_at": "2026-11-07T09:17:05+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Hunbasket",
+      "title": "Női NB I: Legyőzte a Csata a Pécset",
+      "summary": "Tursics Krisztián együttese a teljes első félidőben futott az eredmény után a jó pécsi kezdés miatt, azonban a nagyszünetben rendezték a sorokat a hazaiak, és végül nagy arányú győzelmet arattak - írja a Wbasket.hu.",
+      "url": "https://hunbasket.hu/hir/77646/noi-nb-i-legyozte-a-csata-a-pecset/",
+      "published_at": "2026. 11. 07.",
+      "summary_method": "article_body"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Előzésre készülnek a barcikaiak az NB II-ben",
-      "summary": "Előzésre készülnek a barcikaiak az NB II-ben",
-      "url": "https://www.nemzetisport.hu/labdarugo-nb-ii/2026/11/elozesre-keszulnek-a-barcikaiak-az-nb-ii-ben/",
-      "published_at": "2026-11-07T09:09:48+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Hunbasket",
+      "title": "Elhunyt Gellér Sándor",
+      "summary": "79 esztendős korában elhunyt Gellér Sándor, 113-szoros válogatott kosárlabdázó, a Budapesti Honvéd klasszis irányítója.",
+      "url": "https://hunbasket.hu/hir/77663/elhunyt-geller-sandor/",
+      "published_at": "2026. 11. 07.",
+      "summary_method": "article_body"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "A hónap utánpótlásedzője: október jelöltjei",
-      "summary": "A hónap utánpótlásedzője: október jelöltjei",
-      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/a-honap-utanpotlasedzoje-oktober-jeloltjei-4/",
-      "published_at": "2026-11-07T09:01:00+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Hunbasket",
+      "title": "Egy az Egyben 12. rész: Studer Ágnes",
+      "summary": "Riportsorozatunk legújabb epizódjában a magyar női válogatottal a 2026-os világbajnokság negyeddöntőjébe jutó irányítóval elevenítettük fel élete és pályafutása fontos mérföldköveit.",
+      "url": "https://hunbasket.hu/hir/77662/egy-az-egyben-12-resz-studer-agnes/",
+      "published_at": "2026. 11. 07.",
+      "summary_method": "article_body"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Szita Zoltán szerint a magyar kézisek esélyt sem adtak Montenegrónak",
-      "summary": "Szita Zoltán szerint a magyar kézisek esélyt sem adtak Montenegrónak",
-      "url": "https://www.nemzetisport.hu/kezilabda/2026/11/szita-zoltan-szerint-a-magyar-kezisek-eselyt-sem-adtak-montenegronak/",
-      "published_at": "2026-11-07T08:56:30+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Már-már zavarta, hogy minden rendben – pályacsúcs lett belőle",
-      "summary": "Már-már zavarta, hogy minden rendben – pályacsúcs lett belőle",
-      "url": "https://www.nemzetisport.hu/csupasport/2026/11/mar-mar-zavarta-hogy-minden-rendben-palyacsucs-lett-belole/",
-      "published_at": "2026-11-07T08:32:21+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Az nyert, aki tudott mit kezdeni a labdával – öt pontban a Ferencváros milánói győzelme",
-      "summary": "Az nyert, aki tudott mit kezdeni a labdával – öt pontban a Ferencváros milánói győzelme",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/az-nyert-aki-tudott-mit-kezdeni-a-labdaval-ot-pontban-a-ferencvaros-milanoi-gyozelme/",
-      "published_at": "2026-11-07T08:21:43+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "NHL: a San Jose Sharksnak sem volt ellenszere Kaprizovra",
-      "summary": "NHL: a San Jose Sharksnak sem volt ellenszere Kaprizovra",
-      "url": "https://www.nemzetisport.hu/amerikai-sportok/2026/11/nhl-a-san-jose-sharksnak-sem-volt-ellenszere-kaprizovra/",
-      "published_at": "2026-11-07T07:59:56+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "„Életem legfontosabb versenyén nyugodtabb voltam, mint valaha” – Kropkó Jázmin a dakari ezüstéremről",
-      "summary": "„Életem legfontosabb versenyén nyugodtabb voltam, mint valaha” – Kropkó Jázmin a dakari ezüstéremről",
-      "url": "https://www.nemzetisport.hu/egyeb-egyeni/2026/11/eletem-legfontosabb-versenyen-nyugodtabb-voltam-mint-valaha-kropko-jazmin-a-dakari-ezusteremrol/",
-      "published_at": "2026-11-07T07:42:59+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Nagy ember a kispályán – hetvenéves lett Kozma Mihály",
-      "summary": "Nagy ember a kispályán – hetvenéves lett Kozma Mihály",
-      "url": "https://www.nemzetisport.hu/magyar-valogatott/2026/11/nagy-ember-a-kispalyan-hetveneves-lett-kozma-mihaly/",
-      "published_at": "2026-11-07T07:20:25+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Szalai József: Igyekszem, hogy újra válogatott legyek",
-      "summary": "Szalai József: Igyekszem, hogy újra válogatott legyek",
-      "url": "https://www.nemzetisport.hu/labdarugo-nb-i/2026/11/szalai-jozsef-igyekszem-hogy-ujra-valogatott-legyek/",
-      "published_at": "2026-11-07T06:56:51+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Szombati sportműsor: három mérkőzés az NB I-ben; Győri ETO KC-meccs a női kézi BL-ben",
-      "summary": "Szombati sportműsor: három mérkőzés az NB I-ben; Győri ETO KC-meccs a női kézi BL-ben",
-      "url": "https://www.nemzetisport.hu/minden-mas-foci/2026/11/szombati-sportmusor-harom-merkozes-az-nb-i-ben-gyori-eto-kc-meccs-a-noi-kezi-bl-ben/",
-      "published_at": "2026-11-06T23:15:46+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Két pontba került a kimaradt tizenegyes, gól nélküli döntetlen született Sevillában",
-      "summary": "Két pontba került a kimaradt tizenegyes, gól nélküli döntetlen született Sevillában",
-      "url": "https://www.nemzetisport.hu/spanyol-labdarugas/2026/11/ket-pontba-kerult-a-kimaradt-tizenegyes-gol-nelkuli-dontetlen-szuletett-sevillaban/",
-      "published_at": "2026-11-06T23:09:45+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Szalai József ragyogóan kezdte az NB I-es bajnokságot; Bajzát Péter koncertfilmben szerepel",
-      "summary": "Szalai József ragyogóan kezdte az NB I-es bajnokságot; Bajzát Péter koncertfilmben szerepel",
-      "url": "https://www.nemzetisport.hu/napilap/2026/11/szalai-jozsef-ragyogoan-kezdte-az-nb-i-es-bajnoksagot-bajzat-peter-koncertfilmben-szerepel/",
-      "published_at": "2026-11-06T23:05:26+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Thierno Barry nagy formában, a duplájával és gólpasszával fordított az Everton",
-      "summary": "Thierno Barry nagy formában, a duplájával és gólpasszával fordított az Everton",
-      "url": "https://www.nemzetisport.hu/angol-labdarugas/2026/11/thierno-barry-nagy-formaban-a-duplajaval-es-golpasszaval-forditott-az-everton/",
-      "published_at": "2026-11-06T23:03:02+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Helycsere a Serie A tabellájának végén, a Venezia az utolsó helyre taszította az Udinesét",
-      "summary": "Helycsere a Serie A tabellájának végén, a Venezia az utolsó helyre taszította az Udinesét",
-      "url": "https://www.nemzetisport.hu/olasz-labdarugas/2026/11/helycsere-a-serie-a-tabellajanak-vegen-a-venezia-az-utolso-helyre-taszitotta-az-udineset/",
-      "published_at": "2026-11-06T22:45:43+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Pontrúgásokkal verte a Strasbourgot a Toulouse a Ligue 1-ben",
-      "summary": "Pontrúgásokkal verte a Strasbourgot a Toulouse a Ligue 1-ben",
-      "url": "https://www.nemzetisport.hu/francia-labdarugas/2026/11/pontrugasokkal-verte-a-strasbourgot-a-toulouse-a-ligue-1-ben/",
-      "published_at": "2026-11-06T22:44:42+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "A Hamburg két góllal győzte le a Mönchengladbachot a Bundesligában",
-      "summary": "A Hamburg két góllal győzte le a Mönchengladbachot a Bundesligában",
-      "url": "https://www.nemzetisport.hu/nemet-labdarugas/2026/11/a-hamburg-ket-gollal-verte-a-monchengladbachot-a-bundesligaban/",
-      "published_at": "2026-11-06T22:27:03+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Jégkorong: két magyar győzelem, négy vereség",
-      "summary": "Jégkorong: két magyar győzelem, négy vereség",
-      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/jegkorong-ket-magyar-gyozelem-negy-vereseg/",
-      "published_at": "2026-11-06T21:54:00+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Antonelli vette át a vezetést Brazíliában, a Ferrari egyelőre hátrányban",
-      "summary": "Antonelli vette át a vezetést Brazíliában, a Ferrari egyelőre hátrányban",
-      "url": "https://www.nemzetisport.hu/f1/2026/11/ujra-teljes-a-mezony-sao-paulo-i-nagydij-2-szabadedzes/",
-      "published_at": "2026-11-06T21:00:48+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Vívás: bronz Dormagenben, nyolcaddöntő Budapesten a kadét kardozóktól",
-      "summary": "Vívás: bronz Dormagenben, nyolcaddöntő Budapesten a kadét kardozóktól",
-      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/vivas-bronz-dormagenben-nyolcaddonto-budapesten-a-kadet-kardozoktol/",
-      "published_at": "2026-11-06T20:47:00+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Hárman a bajnoki címért! – jön a Zemplén rali",
-      "summary": "Hárman a bajnoki címért! – jön a Zemplén rali",
-      "url": "https://www.nemzetisport.hu/egyeb-auto-motor/2026/11/harman-a-bajnoki-cimert-jon-a-zemplen-rali/",
-      "published_at": "2026-11-06T20:21:56+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Márián Blanka: A legfontosabb a belső motiváció kialakítása",
-      "summary": "Márián Blanka: A legfontosabb a belső motiváció kialakítása",
-      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/marian-blanka-a-legfontosabb-a-belso-motivacio-kialakitasa/",
-      "published_at": "2026-11-06T20:20:13+01:00",
-      "summary_method": "headline_fallback"
+      "source": "WBasket.hu",
+      "title": "Hatalmas csatában nyertek Takács-Kiss Virágék",
+      "summary": "Pénteken este teljes fordulót rendeztek a spanyol élvonalban.",
+      "url": "https://wbasket.hu/hatalmas-csataban-nyertek-takacs-kiss-viragek/",
+      "published_at": "2026.11.06. 22:57",
+      "summary_method": "article_body",
+      "league": "women"
     },
     {
       "source": "Nemzeti Sport",
@@ -512,31 +499,6 @@
       "summary": "Simán nyert a Fehérvár a férfi kosárlabda NB I-ben",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/siman-nyert-a-fehervar-a-ferfi-kosarlabda-nb-i-ben/",
       "published_at": "2026-11-06T20:15:22+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Huszonhét éves játékvezető mutatkozik be az NB I-ben",
-      "summary": "Huszonhét éves játékvezető mutatkozik be az NB I-ben",
-      "url": "https://www.nemzetisport.hu/labdarugo-nb-i/2026/11/27-eves-jatekvezeto-mutatkozik-be-az-nb-i-ben/",
-      "published_at": "2026-11-06T20:06:43+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Vendégsiker a férfi röplabda Extraliga kelet-magyarországi rangadóján",
-      "summary": "Vendégsiker a férfi röplabda Extraliga kelet-magyarországi rangadóján",
-      "url": "https://www.nemzetisport.hu/roplabda/2026/11/vendegsiker-a-ferfi-roplabda-extraliga-kelet-magyarorszagi-rangadojan/",
-      "published_at": "2026-11-06T20:06:05+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "A Kisvárda és a Mosonmagyaróvár is egy góllal kapott ki otthon a női kézilabda NB I-ben",
-      "summary": "A Kisvárda és a Mosonmagyaróvár is egy góllal kapott ki otthon a női kézilabda NB I-ben",
-      "url": "https://www.nemzetisport.hu/kezilabda/2026/11/a-kisvarda-es-a-mosonmagyarovar-is-egy-gollal-kapott-ki-otthon-a-noi-kezilabda-nb-i-ben/",
-      "published_at": "2026-11-06T19:58:29+01:00",
       "summary_method": "headline_fallback"
     },
     {
@@ -545,7 +507,7 @@
       "summary": "Már-már az akadémisták kezében volt a mérkőzés az utolsó perc elején.",
       "url": "https://bball1.hu/woolridge-kosaraval-verte-a-kaposvar-az-nka-pecset/",
       "published_at": "2026-11-06T19:57:16+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
@@ -553,55 +515,29 @@
       "summary": "A harmadik negyedben volt egy gyengébb periódusa a hazaiaknak, akik végig vezetve nyertek.",
       "url": "https://bball1.hu/nem-volt-kerdes-otodik-hazai-meccset-is-behuzta-az-alba/",
       "published_at": "2026-11-06T19:54:51+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Piros Zsombor a negyeddöntőben búcsúzott Pozsonyban",
-      "summary": "Piros Zsombor a negyeddöntőben búcsúzott Pozsonyban",
-      "url": "https://www.nemzetisport.hu/tenisz/2026/11/piros-zsombor-a-negyeddontoben-bucsuzott-pozsonyban/",
-      "published_at": "2026-11-06T19:47:48+01:00",
-      "summary_method": "headline_fallback"
+      "source": "WBasket.hu",
+      "title": "Képriport a magyar válogatott sajtónyilvános edzéséről",
+      "summary": "Pénteken sajtónyilvános edzést tartott a 2027-es Európa-bajnokság selejtezőjére készülő magyar válogatott Miskolcon.",
+      "url": "https://wbasket.hu/kepriport-a-magyar-valogatott-sajtonyilvanos-edzeserol-10/",
+      "published_at": "2026.11.06. 19:48",
+      "summary_method": "article_body",
+      "league": "women"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Rövid pályás ob: újabb három győzelemmel Ugrai Panna már tíz aranyat szerzett",
-      "summary": "Rövid pályás ob: újabb három győzelemmel Ugrai Panna már tíz aranyat szerzett",
-      "url": "https://www.nemzetisport.hu/uszas/2026/11/rovid-palyas-ob-ujabb-harom-gyozelemmel-ugrai-panna-mar-tiz-aranyat-szerzett/",
-      "published_at": "2026-11-06T19:47:47+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Skribek Alen győztes gólt szerzett a Neftciben – videó",
-      "summary": "Skribek Alen győztes gólt szerzett a Neftciben – videó",
-      "url": "https://www.nemzetisport.hu/legiosok/2026/11/skribek-alen-gyoztes-golt-szerzett-a-neftciben/",
-      "published_at": "2026-11-06T19:41:58+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Dupla Tízes: a BL-ben visszatért az Álmok Színháza, de vajon meddig?",
-      "summary": "Dupla Tízes: a BL-ben visszatért az Álmok Színháza, de vajon meddig?",
-      "url": "https://www.nemzetisport.hu/bajnokok-ligaja/2026/11/dupla-tizes-a-bl-ben-visszatert-az-almok-szinhaza-de-vajon-meddig/",
-      "published_at": "2026-11-06T19:32:41+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "„A győzelem egy darabját elvettétek a csapattól” – Kubatov Gábor a kirekesztő rigmusokat skandáló fradistáknak üzent",
-      "summary": "„A győzelem egy darabját elvettétek a csapattól” – Kubatov Gábor a kirekesztő rigmusokat skandáló fradistáknak üzent",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/a-gyozelem-egy-darabjat-elvettetek-a-csapattol-kubatov-gabor-a-kirekeszto-rigmusokat-skandalo-fradistaknak-uzent/",
-      "published_at": "2026-11-06T19:27:19+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Junior Davis-kupa: győzelem a helyosztón",
-      "summary": "Junior Davis-kupa: győzelem a helyosztón",
-      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/junior-davis-kupa-gyozelem-a-helyoszton/",
-      "published_at": "2026-11-06T19:10:00+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Újabb élcsapat vár ránk",
+      "summary": "Szombaton a Szolnok otthonában lépünk pályára.",
+      "url": "https://szedeak.com/ujabb-elcsapat-var-rank/",
+      "published_at": "2026-11-06T19:35:57+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
     },
     {
       "source": "Nemzeti Sport",
@@ -609,15 +545,6 @@
       "summary": "Új európai kezdet, fél szemmel már Los Angelesre tekintve",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/uj-europai-kezdet-fel-szemmel-mar-los-angelesre-tekintve/",
       "published_at": "2026-11-06T19:07:41+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Szoros vereség a vb-bronzérmes norvégoktól a jégkorong Nemzetek Európa-kupáján",
-      "summary": "Szoros vereség a vb-bronzérmes norvégoktól a jégkorong Nemzetek Európa-kupáján",
-      "url": "https://www.nemzetisport.hu/jegkorong/2026/11/szoros-vereseg-a-vb-bronzermes-norvegoktol-a-jegkorong-nemzetek-europa-kupajan/",
-      "published_at": "2026-11-06T18:34:05+01:00",
       "summary_method": "headline_fallback"
     },
     {
@@ -626,48 +553,16 @@
       "summary": "„Nem akartam az életemet Magyarország nélkül leélni” – nekrológ Gellér Sándorról",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/nem-akartam-az-eletemet-magyarorszag-nelkul-leelni-nekrolog-geller-sandorrol/",
       "published_at": "2026-11-06T18:31:15+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Amerikából jöttem: megfejthetetlen Broncos – SB-esélyes vagy szerencsés középcsapat?",
-      "summary": "Amerikából jöttem: megfejthetetlen Broncos – SB-esélyes vagy szerencsés középcsapat?",
-      "url": "https://www.nemzetisport.hu/amerikai-sportok/2026/11/amerikabol-jottem-megfejthetetlen-broncos-sb-eselyes-vagy-szerencses-kozepcsapat/",
-      "published_at": "2026-11-06T17:57:11+01:00",
       "summary_method": "headline_fallback"
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "A Ferencváros az Európa-liga-forduló csapata a szurkolóknál",
-      "summary": "A Ferencváros az Európa-liga-forduló csapata a szurkolóknál",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/a-ferencvaros-az-europa-liga-fordulo-csapata-a-szurkoloknal/",
-      "published_at": "2026-11-06T17:53:58+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Dárdai Pál: Én vagyok a rossz zsaru Újpesten",
-      "summary": "Dárdai Pál: Én vagyok a rossz zsaru Újpesten",
-      "url": "https://www.nemzetisport.hu/minden-mas-foci/2026/11/dardai-pal-en-vagyok-a-rossz-zsaru-ujpesten/",
-      "published_at": "2026-11-06T17:39:45+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "A Ferencváros érettebb csapat benyomását keltette, mint a Milan – véli az olasz másodedző",
-      "summary": "A Ferencváros érettebb csapat benyomását keltette, mint a Milan – véli az olasz másodedző",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/a-ferencvaros-erettebb-csapat-benyomasat-keltette-mint-a-milan-veli-az-olasz-masodedzo/",
-      "published_at": "2026-11-06T17:38:14+01:00",
-      "summary_method": "headline_fallback"
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Norris az élen nyitott a továbbfejlesztett McLarennel Brazíliában",
-      "summary": "Norris az élen nyitott a továbbfejlesztett McLarennel Brazíliában",
-      "url": "https://www.nemzetisport.hu/f1/2026/11/camara-bemutatkozik-a-formula-1-ben-sao-paulo-i-nagydij-1-szabadedzes/",
-      "published_at": "2026-11-06T17:35:04+01:00",
-      "summary_method": "headline_fallback"
+      "source": "WBasket.hu",
+      "title": "Hét világbajnoki résztvevő lesz a német keretben a novemberi Eb-selejtezőkön",
+      "summary": "A magyar válogatott szerdán Hamburgban a világbajnoki negyedik helyezett Németország ellen mutatkozik be a 2027-es Európa-bajnokság selejtező-sorozatában.",
+      "url": "https://wbasket.hu/het-vilagbajnoki-resztvevo-lesz-a-nemet-keretben-a-novemberi-eb-selejtezokon/",
+      "published_at": "2026.11.06. 17:20",
+      "summary_method": "article_body",
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -683,15 +578,15 @@
       "summary": "\"Perl Zoltán maga a Bajnokok Ligája.",
       "url": "https://bball1.hu/perl-zoltan-a-tizedik-a-bcl-altal-felallitott-mvp-ranglistan/",
       "published_at": "2026-11-06T15:40:44+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
       "title": "NHSZ-Szolnoki Olajbányász – Délút-SZTE-Szedeák",
-      "summary": "Sorozatban harmadik bajnoki győzelmére hajt a Szolnok.",
+      "summary": "Szolnok, Szolnok Városi Sportcsarnok, szombat 18:00.",
       "url": "https://bball1.hu/nhsz-szolnoki-olajbanyasz-delut-szte-szedeak/",
       "published_at": "2026-11-06T15:19:52+01:00",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "teams": [
         "men|Szedeák",
         "men|Szolnok"
@@ -700,10 +595,10 @@
     {
       "source": "BB1.hu",
       "title": "Sopron KC – Falco-Vulcano Energia KC Szombathely",
-      "summary": "Sopronba látogat a veretlen Falco.",
+      "summary": "Sopron, Novomatic Aréna, szombat 18:00.",
       "url": "https://bball1.hu/sopron-kc-falco-vulcano-energia-kc-szombathely-7/",
       "published_at": "2026-11-06T14:47:25+01:00",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "teams": [
         "men|Sopron"
       ]
@@ -714,35 +609,43 @@
       "summary": "Elhunyt a Honvéd legendás kosárlabdázója, Gellér Sándor",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/elhunyt-a-honved-legendas-kosarlabdazoja-geller-sandor/",
       "published_at": "2026-11-06T14:21:07+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
       "title": "Atomerőmű SE – Duna Aszfalt-DTKH Kecskemét",
-      "summary": "A listavezető a sereghajtót fogadja szombaton.",
+      "summary": "Paks, ASE Sportcsarnok, szombat 18:00.",
       "url": "https://bball1.hu/atomeromu-se-duna-aszfalt-dtkh-kecskemet-9/",
       "published_at": "2026-11-06T14:00:46+01:00",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "teams": [
         "men|Atomerőmű SE"
       ]
     },
     {
+      "source": "WBasket.hu",
+      "title": "Munkába állt az Eb-selejtezőre készülő magyar válogatott",
+      "summary": "Megkezdte a felkészülést a 2027-es Európa-bajnokság selejtezőire nemzeti csapatunk.",
+      "url": "https://wbasket.hu/munkaba-allt-a-magyar-valogatott/",
+      "published_at": "2026.11.06. 13:54",
+      "summary_method": "article_body",
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Gyász: 79 esztendős korában elhunyt Gellér Sándor",
-      "summary": "Gyász: 79 esztendős korában elhunyt Gellér Sándor",
+      "summary": "79 esztendős korában elhunyt Gellér Sándor, 113-szoros válogatott kosárlabdázó, a Budapesti Honvéd klasszis irányítója – jelentette be az MKOSZ hivatalos felületein.",
       "url": "https://bball1.hu/gyasz-79-esztendos-koraban-elhunyt-geller-sandor/",
       "published_at": "2026-11-06T13:26:13+01:00",
-      "summary_method": "headline_fallback"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
       "title": "PHOENIX Fóti Tigrisek – OSE Lions",
-      "summary": "Mindkét csapat szoros vereségből érkezik.",
+      "summary": "Fót, PHOENIX Sportcsarnok Fót, szombat 15:00.",
       "url": "https://bball1.hu/phoenix-foti-tigrisek-ose-lions/",
       "published_at": "2026-11-06T13:02:22+01:00",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "teams": [
         "men|Oroszlány"
       ]
@@ -753,8 +656,7 @@
       "summary": "Rengeteg továbbjutási variáció maradt a Falco négyesében",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/rengeteg-tovabbjutasi-variacio-maradt-a-falco-negyeseben/",
       "published_at": "2026-11-06T11:32:18+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
@@ -762,7 +664,20 @@
       "summary": "\"Nagyon jó érzés, hogy ennyi ismerős játékossal szerepelhetek egy csapatban!\"",
       "url": "https://bball1.hu/szeretnek-visszaadni-valamit-abbol-amit-korabban-en-kaptam-interju-scholl-richarddal/",
       "published_at": "2026-11-06T10:30:11+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "A veretlen Falcót fogadjuk a hétvégén",
+      "summary": "A bajnokság nyolcadik fordulójában a Falco-Vulcano Energia KC Szombathely együttese érkezik a Novomatic Arénába.",
+      "url": "https://sopronkc.hu/a-veretlen-falcot-fogadjuk-a-hetvegen/",
+      "published_at": "2026-11-06T10:16:26+00:00",
       "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
       "teams": [
         "men|Sopron"
       ]
@@ -773,48 +688,145 @@
       "summary": "Női kosárlabda: Studer Ágnes szeretne még az Euroligában játszani",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosarlabda-studer-agnes-szeretne-meg-az-euroligaban-jatszani/",
       "published_at": "2026-11-06T08:58:35+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "Európa-liga: „Katasztrófa, még a Ferencváros is nyerni tud a San Siróban” – olasz lapszemle",
-      "summary": "Európa-liga: „Katasztrófa, még a Ferencváros is nyerni tud a San Siróban” – olasz lapszemle",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/europa-liga-katasztrofa-meg-a-ferencvaros-is-nyerni-tud-a-san-siroban-olasz-lapszemle/",
-      "published_at": "2026-11-06T08:14:04+01:00",
       "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
       "title": "Négy novemberi bajnoki mérkőzést közvetít az M4 Sport",
-      "summary": "Kettőt a férfi, kettőt pedig a női élvonalból.",
+      "summary": "Négy novemberi bajnoki mérkőzést közvetít az M4 Sport, ezek közül kettőt a férfi, kettőt pedig a női élvonalból.",
       "url": "https://bball1.hu/negy-novemberi-bajnoki-merkozest-kozvetit-az-m4-sport/",
       "published_at": "2026-11-06T07:33:27+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
-      "source": "Hunbasket",
-      "title": "Elhunyt Gellér Sándor",
-      "summary": "<p>79 esztendős korában elhunyt Gellér Sándor, 113-szoros válogatott kosárlabdázó, a Budapesti Honvéd klasszis irányítója.</p> <p> </p> <p>Gellér Sándor 1947. július 3-án, Püspökladányban született, édesapja, idősebb Gellér Sándor válogatott labdarúgó, kapus volt az ötvenes évek legendás csapatában.",
-      "url": "https://hunbasket.hu/hir/77663/elhunyt-geller-sandor/",
-      "published_at": "2026. 11. 06.",
-      "summary_method": "source_description"
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Szűk kerettel arattunk győzelmet Fóton",
+      "summary": "Molnár és Goodwin nélkül, nagyot harcolva szereztük meg ötödik sikerünket a bajnokságban.",
+      "url": "https://olajofficial.hu/2026/11/01/szuk-kerettel-arattunk-gyozelmet-foton/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Ruben Amorim: Minősíthetetlen volt a játékunk",
-      "summary": "Ruben Amorim: Minősíthetetlen volt a játékunk",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/ruben-amorim-minosithetetlen-volt-a-jatekunk/",
-      "published_at": "2026-11-05T22:44:53+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Nyári vb-láz – fókuszban a foci és a nagy nyeremények",
+      "summary": "A 2026-os labdarúgó-világbajnoksággal világszerte felpezsdült a fogadási élet is, a pályán zajló izgalmak mellett a szurkolói élmény is új szintre kerül a Nyári Tippmix akcióban.",
+      "url": "https://olajofficial.hu/2026/07/03/nyari-vb-laz-fokuszban-a-foci-es-a-nagy-nyeremenyek/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
-      "source": "Nemzeti Sport",
-      "title": "Borbély Balázs: Egész Európa hallotta a Ferencváros szurkolóit",
-      "summary": "Borbély Balázs: Egész Európa hallotta a Ferencváros szurkolóit",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/borbely-balazs-egesz-europa-hallotta-a-ferencvaros-szurkoloit/",
-      "published_at": "2026-11-05T22:34:48+01:00",
-      "summary_method": "headline_fallback"
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Magabiztos győzelem a Honvéd ellen",
+      "summary": "A vendégek az első negyedben még jól tartották magukat, de a második-harmadik negyedben két nagy futás sima Olaj-sikert eredményezett.",
+      "url": "https://olajofficial.hu/2026/10/26/magabiztos-gyozelem-a-honved-ellen/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Fantasztikus hajrával legyőztük a Gironát",
+      "summary": "A FIBA Europe Cup 4. fordulójában az 1-2-es mérleggel álló NHSZ-Szolnoki Olajbányász a 3-0-s mutatóval listavezető FIATC Gironát fogadta a Tiszaligetben.",
+      "url": "https://olajofficial.hu/2026/10/29/fantasztikus-hajraval-legyoztuk-a-gironat/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "FIBA Europe Cup: két sérülés és vereség az Oostende ellen",
+      "summary": "Három negyeden keresztül egál mérkőzést játszottunk Belgiumban, de Rudner és Madsen sérülése miatt a végjátékra elfogyott a csapat.",
+      "url": "https://olajofficial.hu/2026/11/05/fiba-europe-cup-ket-serules-es-vereseg-az-oostende-ellen/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "FIBA Europe Cup: a belga bajnoki csúcstartó következik",
+      "summary": "Szerda este a belga Coretec Oostendéhez látogatunk, amely szintén 2-2-es mérleggel várja az összecsapást.",
+      "url": "https://olajofficial.hu/2026/11/02/fiba-europe-cup-a-belga-bajnoki-csucstarto-kovetkezik/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Az újonc Fóti Tigrisek ellen folytatjuk",
+      "summary": "Szombaton idegenbeli mérkőzés következik a bajnokságban: a szezont remekül kezdő fóti gárdához látogatunk.",
+      "url": "https://olajofficial.hu/2026/10/29/az-ujonc-foti-tigrisek-ellen-folytatjuk/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "A veretlen csoportelső Gironát fogadjuk",
+      "summary": "Szerdán újabb komoly nemzetközi kihívás vár az NHSZ-Szolnoki Olajbányászra: a FIBA Europe Cup csoportkörének negyedik fordulójában a spanyol FIATC Girona látogat a Tiszaligetbe.",
+      "url": "https://olajofficial.hu/2026/10/27/a-veretlen-csoportelso-gironat-fogadjuk/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "A Szedeák érkezik a Tiszaligetbe",
+      "summary": "Szombaton hazai pályán folytatjuk a bajnokságot a szezont jól kezdő, de azóta több vereséget begyűjtő szegediek ellen.",
+      "url": "https://olajofficial.hu/2026/11/06/a-szedeak-erkezik-a-tiszaligetbe/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "A Honvéd ellen lépünk pályára a Tiszaligetben",
+      "summary": "Vasárnap 18 órától folytatódik a bajnokság, az Endo Plus Service-Honvéd alakulata érkezik hozzánk.",
+      "url": "https://olajofficial.hu/2026/10/24/a-honved-ellen-lepunk-palyara-a-tiszaligetben/",
+      "published_at": "2026.11.06.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -822,18 +834,10 @@
       "summary": "Takács Károly, Oroszlány polgármestere hivatalos Facebook-oldalán jelentette be ezt.",
       "url": "https://bball1.hu/ujabb-25-millio-forintos-tamogatast-kap-az-ose-lions/",
       "published_at": "2026-11-05T21:30:42+01:00",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "teams": [
         "men|Oroszlány"
       ]
-    },
-    {
-      "source": "Nemzeti Sport",
-      "title": "A San Siro sem volt akadály: Joseph duplájával, Yusuf kiállítása ellenére is megverte a Milant a Fradi",
-      "summary": "A San Siro sem volt akadály: Joseph duplájával, Yusuf kiállítása ellenére is megverte a Milant a Fradi",
-      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/a-san-siro-sem-volt-akadaly-joseph-duplajaval-yusuf-kiallitasa-ellenere-is-megverte-a-milant-a-fradi/",
-      "published_at": "2026-11-05T20:39:25+01:00",
-      "summary_method": "headline_fallback"
     },
     {
       "source": "WBasket.hu",
@@ -841,7 +845,7 @@
       "summary": "November 11-én szerdán Németországban megkezdi szerepelését a világbajnoki negyeddöntős válogatottunk a 2027-es női kosárlabda Európa-bajnokság selejtező-sorozatában.",
       "url": "https://wbasket.hu/hat-nap-a-rajtig-hat-kerdes-hat-valasz-az-eb-selejtezo-kezdete-elott/",
       "published_at": "2026.11.05. 20:13",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -850,7 +854,7 @@
       "summary": "A Hunbasket riportsorozatának legújabb epizódjában a magyar női válogatottal a 2026-os világbajnokság negyeddöntőjébe jutó irányítóval, Studer Ágnessel elevenítették fel élete és pályafutása fontos mérföldköveit.",
       "url": "https://wbasket.hu/egyben-az-egyben-nagyinterju-studer-agnessel/",
       "published_at": "2026.11.05. 19:42",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -859,7 +863,7 @@
       "summary": "Állandó szakértőnk mondta véleményét a 8. forduló mérkőzéseivel kapcsolatban.",
       "url": "https://bball1.hu/deri-csaba-szerint-az-ase-a-falco-es-a-serulesek-ellenere-a-szolnok-is-gyozni-tud-a-hetvegen/",
       "published_at": "2026-11-05T19:16:43+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
@@ -867,15 +871,15 @@
       "summary": "Giorgi Shermadini, Marcelinho Hertas, Vojtech Hruban, Levi Randolph és Tim Abromaitis után.",
       "url": "https://bball1.hu/tortenelmi-merfoldkovet-ert-el-perl-zoltan-a-bl-ben-hatodik-jatekoskent-lepte-at-az-1000-pontos-hatart/",
       "published_at": "2026-11-05T18:00:51+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
       "title": "Alba Fehérvár – DEAC",
-      "summary": "Székesfehérvárra látogat a Debrecen.",
+      "summary": "Székesfehérvár, Alba Regia Sportcsarnok, péntek 18:00.",
       "url": "https://bball1.hu/alba-fehervar-deac-9/",
       "published_at": "2026-11-05T17:14:45+01:00",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "teams": [
         "men|Alba Fehérvár"
       ]
@@ -883,10 +887,10 @@
     {
       "source": "BB1.hu",
       "title": "Kometa-KVGY Kaposvári KK – NKA Universitas Pécs",
-      "summary": "Kometa-KVGY Kaposvári KK – NKA Universitas Pécs",
+      "summary": "Kaposvár, Kaposvár Aréna, péntek 18:00.",
       "url": "https://bball1.hu/kometa-kvgy-kaposvari-kk-nka-universitas-pecs-2/",
       "published_at": "2026-11-05T16:42:05+01:00",
-      "summary_method": "headline_fallback",
+      "summary_method": "article_body",
       "teams": [
         "men|Kaposvár",
         "men|NKA Pécs"
@@ -895,10 +899,10 @@
     {
       "source": "WBasket.hu",
       "title": "Alisia Jenkins érkezik Szekszárdra",
-      "summary": "A KSC Szekszárd a hivatalos felületein bejelentette, hogy a nyáron szerződtetett Ugonne Michelle Onyiah nem lesz a csapat tagja, helyére a szezon első heteit Valenciában töltő, hazánkban is jól ismert Alisia Jenkins érkezik. – írja a KSC Szekszárd közleménye.",
+      "summary": "A KSC Szekszárd a hivatalos felületein bejelentette , hogy a nyáron szerződtetett Ugonne Michelle Onyiah nem lesz a csapat tagja, helyére a szezon első heteit Valenciában töltő, hazánkban is jól ismert Alisia Jenkins érkezik.",
       "url": "https://wbasket.hu/alisia-jenkins-erkezik-szekszardra/",
       "published_at": "2026.11.05. 16:32",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -907,15 +911,15 @@
       "summary": "Többnyire egyoldalú mérkőzéseket játszottak a csapatok a férfi Nemzeti Egyetemi Kosárlabda Bajnokságban a héten.",
       "url": "https://bball1.hu/ferfi-egyetemi-bajnoksag-obudai-bravur-egerben/",
       "published_at": "2026-11-05T16:00:53+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
       "title": "Nemzetközi kitekintő: Golomán remekelt a Galata ellen, a Vilpas elvette az Antwerp veretlenségét",
-      "summary": "A Girona és a Góra is nyert a Szolnok csoportjában.",
+      "summary": "A Legia Warszawa és Golomán György a harmadik fordulóban a Galatasarayt fogadta, a melyik szintén 1-1-es mutatóval várta az összecsapást.",
       "url": "https://bball1.hu/nemzetkozi-kitekinto-goloman-remekelt-a-galata-ellen-a-vilpas-elvette-az-antwerp-veretlenseget/",
       "published_at": "2026-11-05T15:32:15+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
@@ -923,24 +927,24 @@
       "summary": "Elmúlt hétvégén rendezték a Női NB I.",
       "url": "https://wbasket.hu/ezek-voltak-az-elmult-hetvege-legszebb-jelenetei-10/",
       "published_at": "2026.11.05. 15:27",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "BB1.hu",
       "title": "Nézd vissza a nemzetközi mérkőzések legfontosabb jeleneteit",
-      "summary": "Ezúttal a Falco és a Szolnok is vereséget szenvedett.",
+      "summary": "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\">﻿</span>",
       "url": "https://bball1.hu/nezd-vissza-a-nemzetkozi-merkozesek-legfontosabb-jeleneteit/",
       "published_at": "2026-11-05T13:45:03+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
-      "title": "Masa Jankovic lett az elmúlt játékhét legjobb",
+      "title": "Masa Jankovic lett az elmúlt játékhét legjobbja",
       "summary": "A Hunbasket szavazásán a Sopron Basket szerb légiósa Masa Jankovic érdemelte ki a „Hétvége legjobbja” elismerést.",
       "url": "https://wbasket.hu/masa-jankovic-lett-az-elmult-jatekhet-legjobb/",
       "published_at": "2026.11.05. 13:22",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -949,7 +953,7 @@
       "summary": "Mikko Larkas bízik benne, hogy Madsen és Rudner sérülése nem annyira súlyos, mint amilyennek elsőre tűnt.",
       "url": "https://bball1.hu/milos-konakov-ugy-erzem-a-legnagyobb-problema-ma-a-ketpontos-dobasaink-szazaleka-volt-a-40-nem-eleg-egy-ilyen-merkozesen/",
       "published_at": "2026-11-05T13:03:00+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
@@ -957,7 +961,7 @@
       "summary": "Az Euroliga 4. fordulójának szerdai játéknapján a Galatasaray Cagdas Faktoring 68-51-re legyőzte a Beretta Famila Schio gárdáját.",
       "url": "https://wbasket.hu/juhasz-dorkaek-a-szezon-eddigi-legjobbjaval-nyertek-schioban/",
       "published_at": "2026.11.05. 12:07",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -966,16 +970,16 @@
       "summary": "Kedden és szerdán rendezték az Európa Kupa 4. fordulóját.",
       "url": "https://wbasket.hu/kennedy-todd-williams-az-europa-kupa-fordulo-legjobb-otoseben/",
       "published_at": "2026.11.05. 11:07",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "BB1.hu",
       "title": "Korábban kezdődik november 14-én, az ASE-Alba mérkőzés",
-      "summary": "Korábban kezdődik november 14-én, az ASE-Alba mérkőzés",
+      "summary": "Az Atomerőmű SE hivatalos honlapján jelentette be, hogy a november 14-én eredetileg 18 órára kiírt, Alba Fehérvár elleni mérkőzése a tervezettnél korábban, 15 órakor kezdődik, mivel az összecsapást az M4 Sport élőben közvetíti.",
       "url": "https://bball1.hu/korabban-kezdodik-november-14-en-az-ase-alba-merkozes/",
       "published_at": "2026-11-05T10:44:13+01:00",
-      "summary_method": "headline_fallback"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
@@ -983,7 +987,7 @@
       "summary": "Az Európa Kupa 4. fordulójában az Autosped BCC Castelnuovo Scrivia – Sitku-Varga Alízzal a soraiban – 82-61-re legyőzte az BCF Elfic Fribourgot.",
       "url": "https://wbasket.hu/sitku-varga-alizek-megoriztek-veretlenseguket-az-europa-kupaban/",
       "published_at": "2026.11.05. 09:28",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -992,7 +996,7 @@
       "summary": "Szerdán a DVTK HUNTHERM Görögországban, a Sopron Basket Szerbiában nyert kulcsfontosságú csoportmeccset az Európa Kupában.",
       "url": "https://wbasket.hu/villamertekelesek-a-szerdai-europa-kupa-merkozesek-utan/",
       "published_at": "2026.11.05. 08:22",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1001,31 +1005,7 @@
       "summary": "Az újbudaiak kulcsjátékosává vált a saját nevelésű bedobó.",
       "url": "https://bball1.hu/molnar-tamas-a-mafc-ban-mindenki-megkapja-a-bizalmat/",
       "published_at": "2026-11-05T08:00:28+01:00",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Női NB I: Megizzadt Pasaréten a Sopron Basket",
-      "summary": "Sőt, a folytatásban is a hazaiak akarata érvényesült, nem sokkal az első játékrész vége előtt Szirony találatával már két számjegyűre hízott a Vasas Akadémia előnye (20-10), az utolsó szó azonban Maric révén a soproniaké volt (20-12).",
-      "url": "https://hunbasket.hu/hir/77647/noi-nb-i-megizzadt-pasareten-a-sopron-basket/",
-      "published_at": "2026. 11. 05.",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Női NB I: Legyőzte a Csata a Pécset",
-      "summary": "Újabb egy perccel később Wentzel harcolt ki és értékesített két büntetőt, ezzel a Csata TKK is feliratkozott a táblára, azonban ezután sem talált utat újabb dobás a gyűrűbe, Cvijanovic viszont bedobott kettőből egy büntetőt, Wentzel pedig ziccerből volt eredményes (4-8).",
-      "url": "https://hunbasket.hu/hir/77646/noi-nb-i-legyozte-a-csata-a-pecset/",
-      "published_at": "2026. 11. 05.",
-      "summary_method": "source_description"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Egy az Egyben 12. rész: Studer Ágnes",
-      "summary": "<p style=text-align:justify>Riportsorozatunk legújabb epizódjában a magyar női válogatottal a 2026-os világbajnokság negyeddöntőjébe jutó irányítóval elevenítettük fel élete és pályafutása fontos mérföldköveit.",
-      "url": "https://hunbasket.hu/hir/77662/egy-az-egyben-12-resz-studer-agnes/",
-      "published_at": "2026. 11. 05.",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "Nemzeti Sport",
@@ -1033,16 +1013,15 @@
       "summary": "Kikapott Belgiumban a Szolnok a férfi kosárlabda Európa-kupában",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/kikapott-belgiumban-a-szolnok-a-ferfi-kosarlabda-europa-kupaban/",
       "published_at": "2026-11-04T22:38:45+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "WBasket.hu",
       "title": "„Mindig úgy játszol a pályán, ahogyan a hétköznapokon edzel” – interjú Srdjan Raduloviccsal a Soproni Darazsak Sportakadémia junior csapatáról",
       "summary": "Srdjan Radulovic vette át a Soproni Darazsak Sportakadémia junior „A” csapatának irányítását.",
       "url": "https://wbasket.hu/mindig-ugy-jatszol-a-palyan-ahogyan-a-hetkoznapokon-edzel-interju-srdjan-raduloviccsal-a-soproni-darazsak-sportakademia-junior-csapatarol/",
-      "published_at": "2026.11.04 22:33",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 22:33",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1051,7 +1030,7 @@
       "summary": "Végül nem sikerült ellensúlyozni a 15 belga hárompontost.",
       "url": "https://bball1.hu/nagy-kuzdelemben-maradt-alul-a-szolnok-oostendeben/",
       "published_at": "2026-11-04T22:22:44+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "Nemzeti Sport",
@@ -1059,25 +1038,50 @@
       "summary": "Izgalmas végjátékban nyert a Sopron és a DVTK is a női kosárlabda Európa-kupában",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/izgalmas-vegjatekban-nyert-a-sopron-es-a-dvtk-is-a-noi-kosarlabda-europa-kupaban/",
       "published_at": "2026-11-04T21:30:05+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Panathlitikos Sykeon – DVTK HUNTHERM 74-77",
+      "summary": "Balayera szerezte a mérkőzés első kosarait, majd egy Kányási-triplával tovább nőtt az előny.",
+      "url": "http://dvtk.eu/37574-EK_Panathlitikos_Sykeon_DVTK_HUNTHERM_74_77-cikk-kosarlabda/",
+      "published_at": "2026-11-04T21:30:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Panathlitikos Sykeon – DVTK HUNTHERM 74-77",
+      "summary": "Balayera szerezte a mérkőzés első kosarait, majd egy Kányási-triplával tovább nőtt az előny.",
+      "url": "http://dvtk.eu/37574-EK_Panathlitikos_Sykeon_DVTK_HUNTHERM_74_77-cikk-kosarlabda/",
+      "published_at": "2026-11-04T21:30:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "WBasket.hu",
       "title": "Nagyot küzdött és nyert a Sopron Szerbiában",
-      "summary": "Bár korán tíz pontos hátrányba került, fokozatosan ledolgozta a különbséget, és fordított a Sopron Basket az Európa Kupa negyedik játéknapján az UZKK Student Nis ellen.",
+      "summary": "Európa Kupa, 4. forduló Nis, Sports Centre Cair MINCHEVA, Monika (BUL) FEREVSKI, Alija (MKD) NIKOCHEVIKJ, Ema (MKD), (RESILOVSKI, Ivaylo (BUL))",
       "url": "https://wbasket.hu/nagyot-kuzdott-es-nyert-a-sopron-szerbiaban/",
-      "published_at": "2026.11.04 21:25",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 21:25",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "WBasket.hu",
       "title": "Hatalmas csatában nyert a DVTK Görögországban",
-      "summary": "Az Európa Kupa 4. fordulójában a DVTK HUNTHERM 77-74-es győzelmet aratott a Panathlitikos Sykeon otthonában.",
+      "summary": "Európa Kupa, 4. forduló Thessaloniki, EPTAPYRGIO ARENA ILIEV, Ivan (BUL) MEIRSON, Nir (ISR) DJEKOVIC, Amar (KOS) - OVED, Gil (ISR)",
       "url": "https://wbasket.hu/nagy-csataban-nyert-a-dvtk-gorogorszagban/",
       "published_at": "2026.11.04. 21:19",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1086,8 +1090,7 @@
       "summary": "Hazai pályán kikapott a Falco az AEK-tól a kosár BL-ben",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/hazai-palyan-kikapott-a-falco-az-aek-tol-a-kosar-bl-ben/",
       "published_at": "2026-11-04T19:51:43+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
@@ -1095,23 +1098,23 @@
       "summary": "A második negyedben ellépett a görög csapat, s bár a Falco többször is egy támadásnyi különbségre zárkózott, nem tudott fordítani.",
       "url": "https://bball1.hu/szoros-meccsen-kapott-ki-az-aek-tol-a-falco/",
       "published_at": "2026-11-04T19:40:44+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
       "title": "Amerika légiós érkezett próbajátékra Körmendre",
-      "summary": "Dalan Ancrum már a Honvéd ellen pályára léphet.",
+      "summary": "Az Egis Körmend hivatalos felületein jelentette be, hogy próbajátékra érkezik a 198 centiméter magas, hátvéd-bedobó Dalan Ancrum.",
       "url": "https://bball1.hu/amerika-legios-erkezett-probajatekra-kormendre/",
       "published_at": "2026-11-04T18:35:04+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
       "title": "Masa Jankovic a Tippmix Hónap Játékosa",
       "summary": "A tavalyi szezontól kezdődően minden hónapban megválasztják a Tippmix Hónap Játékosát.",
       "url": "https://wbasket.hu/masa-jankovic-a-tippmix-honap-jatekosa/",
-      "published_at": "2026.11.04 17:47",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 17:47",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1119,59 +1122,59 @@
       "title": "Két bajnoki rangadó is képernyőre kerül a válogatott szünet után, változnak a kezdési időpontok",
       "summary": "Az M4 Sport és az M4 Sport+ a novemberi válogatott szünetet követően a hónap végén két bajnoki rangadót is a műsorára tűz.",
       "url": "https://wbasket.hu/ket-bajnoki-rangado-is-kepernyore-kerul-a-valogatott-szunet-utan-valtoznak-az-idopontok/",
-      "published_at": "2026.11.04 17:41",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 17:41",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
-      "summary": "Nemzetközi mérkőzések várnak ma ránk.",
+      "summary": "A 18 órakor kezdődő Falco-Vulcano Energia KC Szombathely – AEK BC mérkőzésről elő statisztikáért, klikk ide .",
       "url": "https://bball1.hu/elo-kozvetitesek-910/",
       "published_at": "2026-11-04T17:00:10+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
       "title": "ÉLŐ: a DVTK-nak és a Sopronnak szurkolhatunk az Európa Kupában",
       "summary": "Szerdán az Európa Kupában a Sopron Basket a Student Nis, a DVTK HUNTHERM a Panathlitikos Sykeon vendége lesz.",
       "url": "https://wbasket.hu/elo-a-dvtk-nak-es-a-sopronnak-szurkolhatunk-az-europa-kupaban/",
-      "published_at": "2026.11.04 16:47",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 16:47",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "BB1.hu",
       "title": "Robert Ford a Tippmix Hónap Játékosa",
-      "summary": "A hölgyeknél is soproni játékos nyert.",
+      "summary": "A tavalyi szezontól kezdődően minden hónapban megválasztják a Tippmix Hónap Játékosát.",
       "url": "https://bball1.hu/robert-ford-a-tippmix-honap-jatekosa/",
       "published_at": "2026-11-04T14:53:50+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
       "title": "PVSK-Panthers – Salgótarjáni KSE",
-      "summary": "B Piros csoport, alapszakasz, 7. forduló.",
+      "summary": "B Piros csoport, alapszakasz, 7. forduló Pécs, Lauber Dezső Városi Sportcsarnok, péntek 18:00 Játékvezetők: Kovács Nimród János, Farkas Péter Gábor, Fodor Sándor Balázs (Fekete László)",
       "url": "https://bball1.hu/pvsk-panthers-salgotarjani-kse/",
       "published_at": "2026-11-04T12:54:42+01:00",
-      "summary_method": "source_description"
+      "summary_method": "article_body"
     },
     {
       "source": "WBasket.hu",
       "title": "Mindkét kupacsapatunktól fegyelmezettebb, koncentráltabb játékra van szükség – Károlyi Andreával elemeztünk",
       "summary": "A héten a negyedik forduló küzdelmeivel folytatódik az Európa Kupa.",
       "url": "https://wbasket.hu/mindket-kupacsapatunktol-fegyelmezettebb-koncentraltabb-jatekra-van-szukseg-karolyi-andreaval-elemeztunk/",
-      "published_at": "2026.11.04 11:44",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 11:44",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "WBasket.hu",
       "title": "Szerbiában szerepel a Sopron Basket",
-      "summary": "Szerdán 19 órától az Európa Kupa 4.",
+      "summary": "Szerdán 19 órától az Európa Kupa 4. fordulójában a Sopron Basket a Student Nis vendége lesz.",
       "url": "https://wbasket.hu/szerbiaban-szerepel-a-sopron-basket/",
-      "published_at": "2026.11.04 11:36",
-      "summary_method": "source_description",
+      "published_at": "2026.11.04. 11:36",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1180,7 +1183,7 @@
       "summary": "Az Euroliga 4. fordulójában a Valencia – Takács-Kiss Virággal a soraiban – 73-71-es győzelmet aratott a Fenerbahce otthonában.",
       "url": "https://wbasket.hu/a-szezon-eddigi-legnagyobb-bravurja-takacs-kiss-viragektol/",
       "published_at": "2026.11.04. 11:22",
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1222,8 +1225,33 @@
       "summary": "Női kosárlabda Euroliga: Takács-Kiss csapata legyőzte a címvédőt",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosarlabda-euroliga-takacs-kiss-csapata-legyozte-a-cimvedot/",
       "published_at": "2026-11-03T21:40:52+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyar Gergely: Minden energiánkat a mérkőzésre kell összpontosítanunk",
+      "summary": "Magyar Gergely: - Újabb utazás és újabb mérkőzés vár ránk.",
+      "url": "http://dvtk.eu/37471-Magyar_Gergely_Minden_energiankat_a_merkozesre_kell_osszpontositanunk-cikk-kosarlabda/",
+      "published_at": "2026-11-03T19:20:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyar Gergely: Minden energiánkat a mérkőzésre kell összpontosítanunk",
+      "summary": "Magyar Gergely: - Újabb utazás és újabb mérkőzés vár ránk.",
+      "url": "http://dvtk.eu/37471-Magyar_Gergely_Minden_energiankat_a_merkozesre_kell_osszpontositanunk-cikk-kosarlabda/",
+      "published_at": "2026-11-03T19:20:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1250,8 +1278,7 @@
       "summary": "November végén dől el, hogy Szőke Balázs marad-e a kaposvári kosárcsapat edzője",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/november-vegen-dol-el-hogy-szoke-balazs-marad-e-a-kaposvari-kosarcsapat-edzoje/",
       "published_at": "2026-11-03T13:57:47+01:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
@@ -1348,6 +1375,32 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 44. hét",
+      "summary": "2026. október 27., kedd, Nyíregyháza Zsiráfok Kosársuli - DVTK U23 61 -70 (18-31,14-17,10-15,19-7) Statisztika",
+      "url": "http://dvtk.eu/37566-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_44_het-cikk-kosarlabda/",
+      "published_at": "2026-11-02T13:46:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 44. hét",
+      "summary": "2026. október 27., kedd, Nyíregyháza Zsiráfok Kosársuli - DVTK U23 61 -70 (18-31,14-17,10-15,19-7) Statisztika",
+      "url": "http://dvtk.eu/37566-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_44_het-cikk-kosarlabda/",
+      "published_at": "2026-11-02T13:46:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "WBasket.hu",
       "title": "Ők voltak a hétvége legjobbjai",
       "summary": "Hunbasket felületein megválaszthatjuk a hétvége legjobbját.",
@@ -1395,8 +1448,8 @@
       "title": "A Golden State Valkyries a WNBA 2026-os bajnoka, Gabby Williams a döntő MVP-je",
       "summary": "A Golden State Valkyries ülhetett fel a WNBA trónjára 2026-ban.",
       "url": "https://wbasket.hu/a-golden-state-valkyries-a-wnba-2026-os-bajnoka-gabby-williams-a-donto-mvp-je/",
-      "published_at": "2026.11.02 06:09",
-      "summary_method": "source_description",
+      "published_at": "2026.11.02. 06:09",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -1417,12 +1470,51 @@
       "league": "women"
     },
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Hajszálon múlt a bravúr",
+      "summary": "Heroikus küzdelmet hozott a Női NBI/A 7. fordulójának záró mérkőzése, Nenad Markovic együttese alaposan megnehezítette a sérülések miatt megtizedelt Sopron Basket dolgát.",
+      "url": "https://vasasbasket.hu/index.php/hajszalon-mult-a-bravur-3/",
+      "published_at": "2026-11-01T20:33:12+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Női kosárlabda NB I: nyolc ponttal nyert Pasaréten a Sopron",
       "summary": "Női kosárlabda NB I: nyolc ponttal nyert Pasaréten a Sopron",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosarlabda-nb-i-nyolc-ponttal-nyert-pasareten-a-sopron/",
       "published_at": "2026-11-01T20:21:03+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Szerdán Görögországban játszik a DVTK HUNTHERM",
+      "summary": "2026. november 4., szerda 19:30 – magyar idő szerint (helyi idő szerint 20:30) Thesszaloniki, Eptapyrgio Aréna Panathlitikos Sykeon – DVTK HUNTHERM",
+      "url": "http://dvtk.eu/37557-EK_Szerdan_Gorogorszagban_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-01T18:17:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Szerdán Görögországban játszik a DVTK HUNTHERM",
+      "summary": "2026. november 4., szerda 19:30 – magyar idő szerint (helyi idő szerint 20:30) Thesszaloniki, Eptapyrgio Aréna Panathlitikos Sykeon – DVTK HUNTHERM",
+      "url": "http://dvtk.eu/37557-EK_Szerdan_Gorogorszagban_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-01T18:17:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1465,12 +1557,168 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "U14: GYŐZELEM IDEGENBEN!",
+      "summary": "Remekül kezdtünk a Parthus SE otthonában: az első negyedben 19 pontos előnyt építettünk, végül 25 pontos sikerrel zártuk a találkozót! 💪",
+      "url": "https://bkgakademia.hu/2026/10/29/u14-gyozelem-idegenben/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Szép játékkal és remek egyéni teljesítményekkel kiütéses győzelem Debrecenben!",
+      "summary": "Magabiztos, 97–64-es győzelmet arattunk a DEAC U23 otthonában, miután az első negyedtől kezdve végig irányítottuk a találkozót.",
+      "url": "https://bkgakademia.hu/2026/11/01/szep-jatekkal-es-remek-egyeni-teljesitmenyekkel-kiuteses-gyozelem-debrecenben/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Szoros első félidő után a PVSK örülhetett a győzelemnek",
+      "summary": "Az első félidőben végig kiegyenlített mérkőzést játszottunk a PVSK-Panthers ellen, a nagyszünetben mindössze egy pont volt a különbség a csapatok között (31–32).",
+      "url": "https://bkgakademia.hu/2026/10/26/szoros-elso-felido-utan-a-pvsk-orulhetett-a-gyozelemnek/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hazai pályán lépnénk előre: a Ceglédet fogadjuk szombaton",
+      "summary": "Újra saját közönségünk előtt lépünk pályára: október 31-én, szombaton 18 órától a VBW CEKK Ceglédet fogadjuk a női NB I.",
+      "url": "https://bkgakademia.hu/2026/10/29/hazai-palyan-lepnenk-elore-a-cegledet-fogadjuk-szombaton/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hazai pályán folytatjuk: a veretlen DVTK érkezik Szigetszentmiklósra",
+      "summary": "Három idegenbeli mérkőzés után ismét saját közönségünk előtt lépünk pályára: október 17-én, szombaton 18 órától a DVTK HUNTHERM együttesét fogadjuk a női NB I.",
+      "url": "https://bkgakademia.hu/2026/10/14/hazai-palyan-folytatjuk-a-veretlen-dvtk-erkezik-szigetszentmiklosra/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hatalmas csatában, idegenben győztük le a Jászberényt!",
+      "summary": "Végig kiélezett, fordulatokban gazdag mérkőzésen aratott fontos idegenbeli győzelmet a BKG PRIMA Akadémia a Jászberényi KSE otthonában.",
+      "url": "https://bkgakademia.hu/2026/10/17/hatalmas-csataban-idegenben-gyoztuk-le-a-jaszberenyt/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Félidei előny után fájó vereség a Cegléd ellen",
+      "summary": "Az első félidőt előnnyel zártuk, a nagyszünet után azonban a Cegléd fordított, és 77–65-re megnyerte a női NB I.",
+      "url": "https://bkgakademia.hu/2026/11/01/felidei-elony-utan-fajo-vereseg-a-cegled-ellen/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Biztató részletek mellett vereséget szenvedtünk Pécsett",
+      "summary": "Női csapatunk 89–69-es vereséget szenvedett az NKA Universitas Pécs otthonában a bajnokság hatodik fordulójában.",
+      "url": "https://bkgakademia.hu/2026/10/26/biztato-reszletek-mellett-vereseget-szenvedtunk-pecsett/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "A bajnoki címvédő otthonában folytatjuk",
+      "summary": "Újabb idegenbeli feladat vár női csapatunkra: október 25-én, vasárnap 17 órától az NKA Universitas Pécs vendégeként lépünk pályára a női NB I.",
+      "url": "https://bkgakademia.hu/2026/10/24/a-bajnoki-cimvedo-otthonaban-folytatjuk/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "A DVTK érvényesítette fölényét Szigetszentmiklóson",
+      "summary": "A csoport ötödik fordulójában 108–48-as vereséget szenvedtünk hazai pályán a DVTK HUNTHERM együttesétől.",
+      "url": "https://bkgakademia.hu/2026/10/17/a-dvtk-ervenyesitette-folenyet-szigetszentmikloson/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Elvesztettük hazai veretlenségünket",
+      "summary": "Az első negyed után nem tudtuk a tartani a lépést a Pakssal.",
+      "url": "https://szedeak.com/elvesztettuk-hazai-veretlensegunket/",
+      "published_at": "2026-10-31T20:07:56+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Kiszenvedte a győzelmet Kecskeméten az Alba",
       "summary": "Kétszámjegyű hátrányból fordított a KTE, de a végjátékot a vendégek bírták jobban.",
       "url": "https://bball1.hu/kiszenvedte-a-gyozelmet-kecskemeten-az-alba/",
       "published_at": "2026-10-31T20:07:23+01:00",
       "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Végletekig kiélezett meccsen vereség Körmenden",
+      "summary": "Csapatunk kezdte jobban a rangadót, hiszen vezetett több mint tíz ponttal is, a félidőre azonban ledolgozta hátrányát ellenfelünk, a térfélcsere után pedig már nekünk kellett futni az eredmény után, és […]",
+      "url": "https://sopronkc.hu/vegletekig-kielezett-meccsen-vereseg-kormenden/",
+      "published_at": "2026-10-31T19:12:57+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
     },
     {
       "source": "Nemzeti Sport",
@@ -1489,6 +1737,32 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "ELTE BEAC Újbuda – DVTK HUNTHERM 68-83",
+      "summary": "Fisher közelijével vezetést szerzett a BEAC, amit Kányási sikeres triplája követett (2–3).",
+      "url": "http://dvtk.eu/37547-ELTE_BEAC_Ujbuda_DVTK_HUNTHERM_68_83-cikk-kosarlabda/",
+      "published_at": "2026-10-31T16:49:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "ELTE BEAC Újbuda – DVTK HUNTHERM 68-83",
+      "summary": "Fisher közelijével vezetést szerzett a BEAC, amit Kányási sikeres triplája követett (2–3).",
+      "url": "http://dvtk.eu/37547-ELTE_BEAC_Ujbuda_DVTK_HUNTHERM_68_83-cikk-kosarlabda/",
+      "published_at": "2026-10-31T16:49:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
       "summary": "Hat mérkőzés vár ránk szombaton.",
@@ -1497,12 +1771,38 @@
       "summary_method": "source_description"
     },
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Ismét egy nagyágyú érkezik Pasarétre",
+      "summary": "Fiatal csapatunkra újabb komoly kihívás vár a Női NBI/A 7. fordulóján, hiszen a megszokottól eltérő időpontban, vasárnap 18:00-kor a Sopron Basket együttesét látjuk vendégül.",
+      "url": "https://vasasbasket.hu/index.php/ismet-egy-nagyagyu-erkezik-pasaretre-2/",
+      "published_at": "2026-10-31T11:51:19+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Forray Gábor: Ne én akarjam jobban, hanem ők!",
       "summary": "Forray Gábor: Ne én akarjam jobban, hanem ők!",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/forray-gabor-ne-en-akarjam-jobban-hanem-ok/",
       "published_at": "2026-10-31T08:55:31+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "A veretlen Paksot fogadjuk szombaton",
+      "summary": "Az idénybeli harmadik hazai meccsünk következik szombaton.",
+      "url": "https://szedeak.com/a-veretlen-paksot-fogadjuk-szombaton/",
+      "published_at": "2026-10-30T20:00:15+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1593,6 +1893,19 @@
       ]
     },
     {
+      "source": "Klub: Sopron KC",
+      "title": "Körmendi rangadóval folytatjuk",
+      "summary": "Az NKA Universitas Pécs elleni kiütéses hazai győzelem után Vas vármegye felé vesszük az irányt, ahol az Egis Körmend csapatával mérkőzünk meg a honi pontvadászat következő fordulójában.",
+      "url": "https://sopronkc.hu/kormendi-rangadoval-folytatjuk/",
+      "published_at": "2026-10-30T10:35:45+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Női kosár Ek: váratlan vereséget szenvedett a Sopron Portugáliában",
       "summary": "Női kosár Ek: váratlan vereséget szenvedett a Sopron Portugáliában",
@@ -1607,6 +1920,19 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/juhasz-dorka-kilenc-pontja-ellenere-kikapott-a-galata-az-euroligaban/",
       "published_at": "2026-10-29T20:17:47+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Szoros, tanulságos meccsen maradtunk alul",
+      "summary": "Kadett/B csapatunk Kecskeméten járt a hétvégén, ahol az eddigiekhez képest lányaink egy sokkal bátrabb arcukat mutatták.",
+      "url": "https://vasasbasket.hu/index.php/szoros-tanulsagos-meccsen-maradtunk-alul/",
+      "published_at": "2026-10-29T12:00:31+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "Nemzeti Sport",
@@ -1644,12 +1970,38 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Sopron KC",
+      "title": "Extra védekezéssel őriztük meg hazai veretlenségünket",
+      "summary": "Szoros első félidő után a másodikban jó dobóformát mutattunk, védekezésben pedig teljesen elvettük a pécsiek játékát, így kiütéses sikerrel menetelünk tovább hazai pályán.",
+      "url": "https://sopronkc.hu/extra-vedekezessel-oriztuk-meg-hazai-veretlensegunket/",
+      "published_at": "2026-10-28T20:29:47+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Férfi kosár NB I: a Falco 26 pontos különbséggel nyerte meg a vasi klasszikust",
       "summary": "Férfi kosár NB I: a Falco 26 pontos különbséggel nyerte meg a vasi klasszikust",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/ferfi-kosar-nb-i-a-falco-26-pontos-kulonbseggel-nyerte-meg-a-vasi-klasszikust/",
       "published_at": "2026-10-28T20:22:31+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Kikaptunk az Alba otthonában",
+      "summary": "A harmadik negyedben összeszedett hátrányunkból már nem volt visszaút.",
+      "url": "https://szedeak.com/kikaptunk-az-alba-otthonaban/",
+      "published_at": "2026-10-28T20:13:56+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1680,9 +2032,22 @@
       "title": "Játéklehetőség és fejlődési perspektíva – interjú Áron Krisztiánnal a Soproni Darazsak Sportakadémia U23-as csapatáról",
       "summary": "Három győzelemmel és egy vereséggel kezdte az évadot a Női Amatőr NB I.",
       "url": "https://wbasket.hu/jateklehetoseg-es-fejlodesi-perspektiva-interju-aron-krisztiannal-a-soproni-darazsak-sportakademia-u23-as-csapatarol/",
-      "published_at": "2026.10.27 20:12",
-      "summary_method": "source_description",
+      "published_at": "2026.10.27. 20:12",
+      "summary_method": "article_body",
       "league": "women"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Az Alba otthonában folytatjuk",
+      "summary": "Három nappal a DEAC elleni győzelem után újból pályára lépünk.",
+      "url": "https://szedeak.com/az-alba-otthonaban-folytatjuk-2/",
+      "published_at": "2026-10-27T19:43:18+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1765,9 +2130,22 @@
       "title": "Jelentős Vasas különítmény készül a novemberi korosztályos válogatott programokra",
       "summary": "November a nemzeti csapataink összetartásának az időszaka.",
       "url": "https://wbasket.hu/jelentos-vasas-kulonitmeny-keszul-a-novemberi-korosztalyos-valogatott-programokra/",
-      "published_at": "2026.10.27 13:54",
-      "summary_method": "source_description",
+      "published_at": "2026.10.27. 13:54",
+      "summary_method": "article_body",
       "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Karnyújtásnyira volt az első győzelem, mégis a Pécs örülhetett Pasaréten",
+      "summary": "Bár a bajnokság eleji nehéz sorozat után mindennél jobban vágyott junior/A csapatunk az első bajnoki pontok megszerzésére, a Pécs elleni rangadón ismét meg kellett tapasztalnunk, milyen apróságokon múlik a siker.",
+      "url": "https://vasasbasket.hu/index.php/karnyujtasnyira-volt-az-elso-gyozelem-megis-a-pecs-orulhetett-pasareten/",
+      "published_at": "2026-10-27T12:38:58+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1776,6 +2154,19 @@
       "url": "https://bball1.hu/heti-program-szerdan-es-szombaton-is-hat-bajnoki-var-rank/",
       "published_at": "2026-10-27T12:30:08+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Mindkét korosztályban bezsebelték a győzelmet",
+      "summary": "Kadett/A csapatunk az U16-os és az U18-as korosztályban is pályára lépett a hétvégén.",
+      "url": "https://vasasbasket.hu/index.php/mindket-korosztalyban-bezsebeltek-a-gyozelmet-2/",
+      "published_at": "2026-10-27T10:31:29+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -2007,6 +2398,19 @@
       "summary_method": "source_description",
       "teams": [
         "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Pontgazdag mérkőzést nyertünk Törökbálinton",
+      "summary": "A Vasas Akadémia NBI/B-s csapata hétfőn a 3. fordulóval folytatta a bajnokságot, Raksányi Krisztina tanítványai a Radobasket otthonában léptek pályára.",
+      "url": "https://vasasbasket.hu/index.php/pontgazdag-merkozest-nyertunk-torokbalinton/",
+      "published_at": "2026-10-21T11:17:38+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
       ]
     },
     {
@@ -2490,8 +2894,7 @@
       "summary": "NŐI KOSÁRLABDA NB I, 2026–2027",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/09/noi-kosarlabda-nb-i-2026-2027/",
       "published_at": "2026-09-29T08:00:17+02:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "Nemzeti Sport",
@@ -2499,8 +2902,7 @@
       "summary": "FÉRFI KOSÁRLABDA NB I, 2026–2027",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/09/ferfi-kosarlabda-nb-i-2026-2027/",
       "published_at": "2026-09-29T08:00:15+02:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
@@ -2519,8 +2921,8 @@
       "title": "Elrajtolt a WNBA rájátszása, Juhász Dorkáék hátrányba kerültek",
       "summary": "Vasárnapról hétfőre virradóra elrajtolt a WNBA 2026-os rájátszása.",
       "url": "https://wbasket.hu/elrajtolt-a-wnba-rajatszasa-juhasz-dorkaek-hatranyba-kerultek/",
-      "published_at": "2026.09.28 09:39",
-      "summary_method": "source_description",
+      "published_at": "2026.09.28. 09:39",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2536,8 +2938,8 @@
       "title": "Kezdődik a WNBA rájátszása",
       "summary": "Szeptember 27-én, vasárnap kezdetét veszi a WNBA 2026-os rájátszása.",
       "url": "https://wbasket.hu/207193-2/",
-      "published_at": "2026.09.27 11:45",
-      "summary_method": "source_description",
+      "published_at": "2026.09.27. 11:45",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2589,6 +2991,136 @@
       "teams": [
         "men|Atomerőmű SE",
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Szeptember legjobbjai: Pusztai Petra és Nováky Fanni",
+      "summary": "Szeptember legjobbjait megválasztottuk.",
+      "url": "https://etobasket.hu/hu/hirek/szeptember-legjobbjai-pusztai-petra-es-novaky-fanni/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Október legjobbjai: Dúl Panka és Tóth Kíra Boglárka",
+      "summary": "Dúl Panka lett október hónap legjobbja a felnőtteknél.",
+      "url": "https://etobasket.hu/hu/hirek/oktober-legjobbjai-dul-panka-es-toth-kira-boglarka/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Megnehezítettük a DVTK dolgát a harcos mérkőzésen",
+      "summary": "DVTK-HUNTHERM–ETO Basket 50–40 (21–13, 11–15, 7–9, 11–3)",
+      "url": "https://etobasket.hu/hu/hirek/megnehezitettuk-a-dvtk-dolgat-a-harcos-merkozesen/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Magabiztos idegenbeli sikerrel javítottuk a szerdai vereséget",
+      "summary": "Budapest, NB I-es női mérkőzés, 150 néző.",
+      "url": "https://etobasket.hu/hu/hirek/magabiztos-idegenbeli-sikerrel-javitottuk-a-szerdai-vereseget-/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Legyőztük a címvédőt",
+      "summary": "ETO Basket–NKA Universitas Pécs 80–65 (23–14, 17–20, 22–12, 18–19)",
+      "url": "https://etobasket.hu/hu/hirek/legyoztuk-a-cimvedot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "ETO-bérlettel féláron szurkolhatnak a bajnokcsapat ellen",
+      "summary": "Vasárnap 17 órakor a bajnoki címvédő NKA Universitas Pécs csapatát fogadjuk az Olimpiai Sportparkban.",
+      "url": "https://etobasket.hu/hu/hirek/eto-berlettel-felaron-szurkolhatnak-a-bajnokcsapat-ellen/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A még hibátlan DVTK otthonában folytatjuk a bajnokságot",
+      "summary": "Vasárnap 17 órakor a válogatott szünet előtti utolsó bajnoki mérkőzésünkön a DVTK-hoz látogatunk.",
+      "url": "https://etobasket.hu/hu/hirek/a-meg-hibatlan-dvtk-otthonaban-folytatjuk-a-bajnoksagot-/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A címvédő Pécs ellen hazai környezetben folytatjuk a bajnokságot",
+      "summary": "Vasárnap 17 órakor NB I-es mérkőzésen a címvédő NKA Universitas Pécs lesz a vendégünk az Olimpiai Sportparkban.",
+      "url": "https://etobasket.hu/hu/hirek/a-cimvedo-pecs-ellen-hazai-kornyezetben-folytatjuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A TFSE otthonában javíthatunk",
+      "summary": "Szombaton 18 órakor a TFSE vendégeként folytatjuk a bajnokságot.",
+      "url": "https://etobasket.hu/hu/hirek/a-tfse-otthonaban-javithatunk/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Márvány Óvoda kapta az emlékmeccsen összegyűjtött labdákat",
+      "summary": "Szeptemberben rendeztük meg a Fűzy Ákos–Tapodi Péter emlékmérkőzést.",
+      "url": "https://etobasket.hu/hu/hirek/a-marvany-ovoda-kapta-az-emlekmeccsen-osszegyujtott-labdakat/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
       ]
     },
     {
@@ -2707,8 +3239,8 @@
       "title": "Breanna Stewart a világbajnokság MVP-je",
       "summary": "Ahogy arról beszámoltunk, az Egyesült Államok megvédte címét a világbajnokságon, a bronzérmet pedig Spanyolország szerezte meg.",
       "url": "https://wbasket.hu/breanna-stewart-a-vilagbajnoksag-mvp-je/",
-      "published_at": "2026.09.14 06:40",
-      "summary_method": "source_description",
+      "published_at": "2026.09.14. 06:40",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2716,35 +3248,35 @@
       "title": "Hollandia nyerte a 3×3-as Európa-bajnokságot",
       "summary": "Vasárnap este lezárult az antwerpeni 3×3-as Európa-bajnokság.",
       "url": "https://wbasket.hu/hollandia-nyerte-a-3x3-as-europa-bajnoksagot/",
-      "published_at": "2026.09.14 06:38",
-      "summary_method": "source_description",
+      "published_at": "2026.09.14. 06:38",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "WBasket.hu",
       "title": "Franciaország ráijesztett az amerikaiakra, de végül nem lehetett kérdés a címvédés",
-      "summary": "A berlini világbajnokság döntőjében az Egyesült Államok 97-79-re legyőzte Franciaországot.",
+      "summary": "FIBA Women's Basketball World Cup 2026 Berlin, Berlin Arena - Németország ANAYA, Julio (PAN) CHUECA, Ariadna (ESP) SALINS, Gatis (LAT) - EGLITE, Maruta (LAT)",
       "url": "https://wbasket.hu/franciaorszag-raijesztett-az-amerikaiakra-de-vegul-nem-lehetett-kerdes-a-cimvedes/",
-      "published_at": "2026.09.13 22:01",
-      "summary_method": "source_description",
+      "published_at": "2026.09.13. 22:01",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "WBasket.hu",
       "title": "Spanyolország a bronzérmes a 2026-os világbajnokságon",
-      "summary": "A berlini világbajnokság bronzcsatáján Spanyolország 81-58-ra legyőzte Németországot.",
+      "summary": "FIBA Women's Basketball World Cup 2026 Berlin, Berlin Arena - Németország ROSSO, Yohan (FRA) GUZMAN, Julirys (PUR) BURNS, Blanca (USA) - GULAK-LIPKA, Patrycja (POL)",
       "url": "https://wbasket.hu/spanyolorszag-a-bronzermes-a-2026-os-vilagbajnoksagon/",
-      "published_at": "2026.09.13 18:41",
-      "summary_method": "source_description",
+      "published_at": "2026.09.13. 18:41",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
       "source": "WBasket.hu",
       "title": "ÉLŐ: világbajnokság 2026, döntő és bronzmeccs",
-      "summary": "Vasárnap lezárul a berlini világbajnokság.",
+      "summary": "Az alábbiakban linkeket ajánlunk az élő eseménykövetéshez:",
       "url": "https://wbasket.hu/elo-vilagbajnoksag-2026-donto-es-bronzmeccs/",
-      "published_at": "2026.09.13 15:18",
-      "summary_method": "source_description",
+      "published_at": "2026.09.13. 15:18",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2752,8 +3284,8 @@
       "title": "Jön a világbajnoki döntő, USA – Franciaroszág csúcsmeccs",
       "summary": "Vasárnap 20 órától a 2026-os berlini női kosárlabda-világbajnokság döntőjében az Egyesült Államok és Franciaország csap össze egymással.",
       "url": "https://wbasket.hu/206706-2/",
-      "published_at": "2026.09.13 15:16",
-      "summary_method": "source_description",
+      "published_at": "2026.09.13. 15:16",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2761,8 +3293,8 @@
       "title": "Vasárnap Európa-bajnokot avatnak a 3×3-as szakágban",
       "summary": "Vasárnap lezárul az antwerpeni 3×3-as Európa-bajnokság.",
       "url": "https://wbasket.hu/vasarnap-europa-bajnokot-avatnak-a-3x3-as-szakagban/",
-      "published_at": "2026.09.13 07:55",
-      "summary_method": "source_description",
+      "published_at": "2026.09.13. 07:55",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2797,8 +3329,8 @@
       "title": "Nem jutott tovább csoportjából női válogatottunk a 3×3-as Európa-bajnokságon",
       "summary": "Péntektől vasárnapig Antwerpen ad otthont a 3×3-as Európa-bajnokságnak.",
       "url": "https://wbasket.hu/nem-jutott-tovabb-csoportjabol-noi-valogatottunk-a-3x3-as-europa-bajnoksagon/",
-      "published_at": "2026.09.11 21:01",
-      "summary_method": "source_description",
+      "published_at": "2026.09.11. 21:01",
+      "summary_method": "article_body",
       "league": "women"
     },
     {
@@ -2921,8 +3453,7 @@
       "summary": "NŐI KOSÁRLABDA-VILÁGBAJNOKSÁG 2026 – PROGRAM, EREDMÉNYEK",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/08/noi-kosarlabda-vilagbajnoksag-2026-program-eredmenyek/",
       "published_at": "2026-08-22T07:31:48+02:00",
-      "summary_method": "headline_fallback",
-      "league": null
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
@@ -4558,6 +5089,19 @@
       "summary_method": "source_description"
     },
     {
+      "source": "Klub: Sopron KC",
+      "title": "Jegyinformációk és pályarendszabály",
+      "summary": "BÉRLET- ÉS JEGYVÁSÁRLÁSSAL KAPCSOLATOS INFORMÁCIÓK A 2024/2025-ös szezonra vonatkozó KOSÁRLABDA MÉRKŐZÉSEK PÁLYARENDSZABÁLYAI Novomatic Aréna – Sopron STADIONORDNUNG DES UNGARISCHEN BASKETBALLVERBANDES Novomatic Aréna – Sopron GROUND REGULATIONS OF THE HUNGARIAN BASKETBALL […]",
+      "url": "https://sopronkc.hu/jegyinformaciok-es-palyarendszabaly/",
+      "published_at": "2025-01-30T08:33:20+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Szuperhősökkel ünnepelték a karácsonyt a kecskeméti Kosárlabda Akadémián",
       "summary": "Pontosan egy héttel szenteste előtt, december 17-én rendezte meg szokásos évzáró Karácsonyi Ünnepségét a kecskeméti Mercedes-Benz Gyár Nemzeti Kosárlabda Akadémia.",
@@ -4961,6 +5505,19 @@
       ]
     },
     {
+      "source": "Klub: Sopron KC",
+      "title": "Közérdekű adatok",
+      "summary": "Terem: Novomatic Aréna // Címe: 9400 Sopron, Lackner K. u. 48 Telefon: 06-99/311-250 // Férõhely: 2500 fõ Működtető sportszervezet neve: FKL Sportszolgáltató Kft.",
+      "url": "https://sopronkc.hu/kozerdeku-adatok/",
+      "published_at": "2021-12-09T15:32:50+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Nemzetköziben szerepelnek a női csapataink, rangadók a B-csoportban",
       "summary": "Nemzetköziben szerepelnek a női csapataink, rangadók a B-csoportban",
@@ -5138,6 +5695,19 @@
       "summary_method": "source_description",
       "teams": [
         "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Pályarendszabályok",
+      "summary": "Pályarendszabályok",
+      "url": "https://vasasbasket.hu/index.php/palyarendszabalyok/",
+      "published_at": "2021-10-11T08:18:07+00:00",
+      "summary_method": "headline_fallback",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
       ]
     },
     {
@@ -5397,12 +5967,220 @@
       "summary_method": "source_description"
     },
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Válogatott játékosaink",
+      "summary": "Válogatott játékosaink",
+      "url": "https://vasasbasket.hu/index.php/trophy-room-2/",
+      "published_at": "2018-10-01T08:44:23+00:00",
+      "summary_method": "headline_fallback",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Süti tájékoztató",
+      "summary": "Süti beállítások áttekintés Ez a weboldal cookie-kat használ, hogy a lehető legjobb felhasználói élményt nyújtsuk Önnek.",
+      "url": "https://sopronkc.hu/suti-tajekoztato/",
+      "published_at": "2018-05-29T13:52:38+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Adatvédelmi tájékoztató",
+      "summary": "Bevezetés Jelen tájékoztató a sakc.hu weboldalon keresztül gyűjtött személyes adatok kezelésére vonatkozik.",
+      "url": "https://sopronkc.hu/adatvedelmi-tajekoztato/",
+      "published_at": "2018-05-29T11:38:13+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "TAO dokumentumok",
+      "summary": "TAO dokumentumok",
+      "url": "https://vasasbasket.hu/index.php/tao-dokumentumok/",
+      "published_at": "2018-05-17T07:43:56+00:00",
+      "summary_method": "headline_fallback",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Műsorok / eredmények",
+      "summary": "2026/27. évad alapszakasz menetrend – LETÖLTÉS műsorok eredmények",
+      "url": "https://sopronkc.hu/nbi-a-musorok-eredmenyek/",
+      "published_at": "2017-09-04T21:29:41+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Játékosok / Stáb",
+      "summary": "Kovács Áron #0 poszt: 2-3 szül.: 2007.03.25. magasság: 189 cm súly: 90 kg Trey Wertz poszt: 2 szül.: 1999.12.06. magasság: cm súly: kg #3 Bősze Gergő #4 poszt: 2 szül.: […]",
+      "url": "https://sopronkc.hu/jatekosaink/",
+      "published_at": "2012-10-29T11:08:41+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "„Hiszek a csapatban, remélem, hogy a következő mérkőzés fordulópontot jelent majd számunkra”",
+      "summary": "Csapatunkban sok fiatal játszik, akiknek különösen fontos, hogy legyen mellettük egy példakép, egy olyan társa, akire felnézhetnek, akinek a mentalitása, hozzáállása, küzdeni tudása, és persze teljesítménye példaértékű számukra.",
+      "url": "https://www.nkapecs.hu/tartalmak/Hiszek-a-csapatban--remelem--hogy-a-kovetkezo-merkozes-fordulopontot-jelent-majd-szamunkra/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Újabb élcsapat vár ránk",
+      "summary": "Újabb élcsapat vár ránk",
+      "url": "https://szedeak.com/feed/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Újabb fővárosi párharc: a Csata érkezik a Koltaiba",
+      "summary": "A BEAC otthonában megszerzett győzelem után hazai pályán folytatja a bajnokságot női kosárlabdacsapatunk.",
+      "url": "https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Öt új igazolással vág neki az NB I. B Zöld csoportjának a TFSE férfi kosárcsapata!",
+      "summary": "Boros Zoltán NB II-es bajnok fiai komoly célokkal vágnak neki az új idénynek az NB I.",
+      "url": "https://tfse.hu/ot-uj-igazolassal-vag-neki-az-nb-i-b-zold-csoportjanak-a-tfse-ferfi-kosarcsapata/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Zeljko Djokic: „Nem kell temetni minket”",
+      "summary": "Harcos játékot és a héten elvégzett munka eredményét szeretné látni csapatától Zeljko Djokic a BKG-PRIMA Szigetszentmiklós ellen.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Zeljko-Djokic-Nem-kell-temetni-minket/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "TÖRTÉNELMI MÉRFÖLDKŐ: PERL ZOLTÁN ELÉRTE AZ 1000 PONTOT A BAJNOKOK LIGÁJÁBAN!",
+      "summary": "TÖRTÉNELMI MÉRFÖLDKŐ: PERL ZOLTÁN ELÉRTE AZ 1000 PONTOT A BAJNOKOK LIGÁJÁBAN!",
+      "url": "https://falcokc.com/tortenelmi-merfoldko-perl-zoltan-elerte-az-1000-pontot-a-bajnokok-ligajaban/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "TÖBB LEHETŐSÉGÜNK IS VOLT, SAJNOS NEM TUDTUNK ÉLNI EZEKKEL….NÉZD MEG TEGNAPI BL MECCSÜNK SAJTÓTÁJÉKOZTATÓJÁT!",
+      "summary": "TÖBB LEHETŐSÉGÜNK IS VOLT, SAJNOS NEM TUDTUNK ÉLNI EZEKKEL….NÉZD MEG TEGNAPI BL MECCSÜNK SAJTÓTÁJÉKOZTATÓJÁT!",
+      "url": "https://falcokc.com/tobb-lehetosegunk-is-volt-sajnos-nem-tudtunk-elni-ezekkel-nezd-meg-tegnapi-bl-meccsunk-sajtotajekoztatojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Találkozzunk a Lauberben: szerdán szurkolói ankétot tartunk!",
+      "summary": "Október 14-én, szerdán 18 órától szurkolói ankétre várjuk az NKA Universitas Pécs szimpatizánsait a Lauber Dezső Városi Sportcsarnokban.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Talalkozzunk-a-Lauberben-szerdan-szurkoloi-anketot-tartunk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Százhúsz kapott ponttal rendszerint nem lehet meccset nyerni",
+      "summary": "Nem mindennapi mérkőzésen maradtunk alul hazai pályán a Honvéddal szemben: elképesztő mennyiségű pont született, s bár mi 110-et dobtunk, ezzel sem tudtunk nyerni.",
+      "url": "https://www.nkapecs.hu/tartalmak/Szazhusz-kapott-ponttal-rendszerint-nem-lehet-meccset-nyerni/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Szoros meccsen kapott ki a Falco és a Szolnok is",
       "summary": "Szoros meccsen kapott ki a Falco és a Szolnok is",
       "url": "https://hunbasket.hu/hir/77659/szoros-meccsen-kapott-ki-a-falco-es-a-szolnok-is/",
       "published_at": null,
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Szoros meccsen fájó vereség: Falco – AEK Athén 66-72",
+      "summary": "Szoros meccsen fájó vereség: Falco – AEK Athén 66-72",
+      "url": "https://falcokc.com/szoros-meccsen-fajo-vereseg-falco-aek-athen-66-72/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -5413,12 +6191,51 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Sorsolás",
+      "summary": "Sorsolás",
+      "url": "https://falcokc.com/sorsolas-2/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Sikerszezon 25/26 #2 – férfi kosárlabda",
+      "summary": "Óriási, történelmi bravúrt hajtottak végre az NB II-es férfi kosárlabdázóink, miután elképesztő küzdelemben, több mint 600 lelkes néző előtt, varázslatos hangulatban zsebelték be a bajnoki címet a Dr.",
+      "url": "https://tfse.hu/sikerszezon-25-26-2-ferfi-kosarlabda/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Regisztráció",
       "summary": "Takács Károly, Oroszlány polgármestere hivatalos Facebook-oldalán jelentette be ezt.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "PERL ZOLTÁN TOVÁBBRA IS A BL MVP LISTÁJÁN!",
+      "summary": "PERL ZOLTÁN TOVÁBBRA IS A BL MVP LISTÁJÁN!",
+      "url": "https://falcokc.com/perl-zoltan-tovabbra-is-a-bl-mvp-listajan/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Hunbasket",
@@ -5437,6 +6254,71 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZD VISSZA PERL ZOLTÁN 1000 PONTJÁNAK LEGSZEBBJEIT! – 15 PERCBE SŰRÍTVE",
+      "summary": "NÉZD VISSZA PERL ZOLTÁN 1000 PONTJÁNAK LEGSZEBBJEIT! – 15 PERCBE SŰRÍTVE",
+      "url": "https://falcokc.com/nezd-vissza-perl-zoltan-1000-pontjanak-legszebbjeit-15-percbe-suritve/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
+      "summary": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
+      "url": "https://falcokc.com/nezd-vissza-a-tegnap-aek-athen-elleni-bl-merkozesunk-osszefoglalojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Nem jöhet más: győznünk kell holnap a Honvéd ellen!",
+      "summary": "Szombaton (18.00) hazai mérkőzés vár csapatunkra, és nagyon bízunk benne, hogy szurkolóink segítségével megszerezzük a második győzelmünket.",
+      "url": "https://www.nkapecs.hu/tartalmak/Nem-johet-mas-gyoznunk-kell-holnap-a-Honved-ellen/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Nagyon nehéz elhinni, elfogadni, hogy ezt a meccset nem mi nyertük meg",
+      "summary": "Az utolsó pillanatig megvolt az esélyünk arra, hogy győzelemmel zárjuk a kaposvári bajnokit, sajnos a végén nem úgy alakultak a dolgok, ahogy szerettük volna, így hárompontos vereség lett a vége.",
+      "url": "https://www.nkapecs.hu/tartalmak/Nagyon-nehez-elhinni--elfogadni--hogy-ezt-a-meccset-nem-mi-nyertuk-meg/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Nagyon kemény mérkőzés vár ránk Sopronban",
+      "summary": "Hétközi fordulóval folytatódik a bajnokság, csapatunk ma délután a Sopron otthonában lép pályára.",
+      "url": "https://www.nkapecs.hu/tartalmak/Nagyon-kemeny-merkozes-var-rank-Sopronban/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre",
       "summary": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre",
@@ -5453,12 +6335,64 @@
       "summary_method": "source_description"
     },
     {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Mindent kiadtunk magunkból, óriásit harcoltunk – meg is szereztük az első győzelmünket!",
+      "summary": "A mérkőzés előtti napokban nagyon rossz híreket kaptunk, egészségügyi problémák miatt nem léphetett pályára csapatkapitányunk, Brbaklics Aleksa és Lukácsi Gábor sem, de pont ebben a nehéz helyzetben mutatta meg csapatunk a karakterét.",
+      "url": "https://www.nkapecs.hu/tartalmak/Mindent-kiadtunk-magunkbol--oriasit-harcoltunk-meg-is-szereztuk-az-elso-gyozelmunket/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Meghívó és felhívás – MKOSZ – TF – TFSE Utánpótlás-edzőtovábbképző 2026",
+      "summary": "A Magyar Testnevelési és Sporttudományi Egyetem (TF) és a TFSE idén is büszkén ad otthont a már hagyománnyá vált, évente megrendezésre kerülő kosárlabda utánpótlás-edzőtovábbképzőnek.",
+      "url": "https://tfse.hu/meghivo-es-felhivas-mkosz-tf-tfse-utanpotlas-edzotovabbkepzo-2026/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Masa Jankovic és Robert Ford a Tippmix Hónap Játékosa",
       "summary": "Masa Jankovic és Robert Ford a Tippmix Hónap Játékosa",
       "url": "https://hunbasket.hu/hir/77656/masa-jankovic-es-robert-ford-a-tippmix-honap-jatekosa/",
       "published_at": null,
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Magabiztos győzelem, két élvonalbeli debütálással",
+      "summary": "Nehezen lendültünk játékba a BKG-PRIMA Szigetszentmiklós elleni első hazai bajnokinkon, de az első negyed második felében átvettük az irányítást, majd a nagyszünetig jelentős előnyt építettünk ki.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Magabiztos-gyozelem--ket-elvonalbeli-debutalassal/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Küzdöttünk, de Győrben ez sem volt elég",
+      "summary": "Bár a második és a negyedik negyedet is megnyertük Győrben, az első és a harmadik játékrészben jelentős hátrányt szedtünk össze, így az ETO Basket 80–65-re nyert, azaz ezúttal sem sikerült megszereznünk első idegenbeli győzelmünket.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Kuzdottunk--de-Gyorben-ez-sem-volt-eleg/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
     },
     {
       "source": "Hunbasket",
@@ -5469,12 +6403,38 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Kováts Gabriella 11 év után távozik a TFSE edzői stábjából",
+      "summary": "Jelentős szerkezeti változások előtt áll a TFSE Női Amatőr NB I.-es és MEFOB kosárlabdacsapata. 11 felejthetetlen, sikerekkel teli év után távozik a klubtól Kováts Gabriella.",
+      "url": "https://tfse.hu/kovats-gabriella-11-ev-utan-tavozik-a-tfse-edzoi-stabjabol/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Ki kell harcolnunk a győzelmet a Körmend ellen!",
+      "summary": "Csapatunk az előző fordulókban már megmutatta, hogy tud küzdeni, felszántja a pályát, ha kell, a győzelmek azonban eddig elmaradtak.",
+      "url": "https://www.nkapecs.hu/tartalmak/Ki-kell-harcolnunk-a-gyozelmet-a-Kormend-ellen/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
       "source": "Klub: Alba Fehérvár",
       "title": "Kapcsolat",
-      "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
+      "summary": "Pénteken, 18 órakor egy újabb olyan csapattal találkozik együttesünk az Alba Regia Sportcsarnokban, amelyik a tabella utolsó harmadában helyezkedik el.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_6003",
       "published_at": null,
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "publisher_club": "Alba Fehérvár",
       "league": "men",
       "teams": [
@@ -5484,10 +6444,10 @@
     {
       "source": "Klub: Alba Fehérvár",
       "title": "Kapcsolat",
-      "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
+      "summary": "Hiába vezettünk a harmadik negyedben 13 ponttal is már a sereghajtó Duna Aszfalt-DTKH Kecskemét otthonában, a hazaiak kihasználták megingásainkat, de a végjátékot jobban bírtuk, és fontos győzelmet arattunk.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_6002",
       "published_at": null,
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "publisher_club": "Alba Fehérvár",
       "league": "men",
       "teams": [
@@ -5497,10 +6457,10 @@
     {
       "source": "Klub: Alba Fehérvár",
       "title": "Kapcsolat",
-      "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
+      "summary": "Szombaton szeretnénk megszerezni első idegenbeli győzelmünket az idényben, amire jó esély is adódik, hiszen 18 órától a bajnokságban utolsó, hat vereséggel álló Duna Aszfalt-DTKH Kecskemét otthonában szerepelünk.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_6001",
       "published_at": null,
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "publisher_club": "Alba Fehérvár",
       "league": "men",
       "teams": [
@@ -5510,14 +6470,196 @@
     {
       "source": "Klub: Alba Fehérvár",
       "title": "Kapcsolat",
-      "summary": "Az Arconic-Alba Fehérvár kosárlabda klub hivatalos honlapja.",
+      "summary": "Bár a mérkőzés közepén akadt egy hullámvölgyünk, összességében magabiztosan győztük le pénteken a DEAC együttesét saját csarnokunkban, ezzel háromra nőtt győzelmi sorozatunk.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_6004",
       "published_at": null,
-      "summary_method": "source_description",
+      "summary_method": "article_body",
       "publisher_club": "Alba Fehérvár",
       "league": "men",
       "teams": [
         "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Az első negyed még szoros volt csapatunk szerdai, Délút-SZTE-Szedeák elleni összecsapásán, aztán keményen, eltökélten és nagy lendülettel kosárlabdáztunk, fölényes győzelmet arattunk.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_6000",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Hazai pályán eddig három meccsből három győzelem a mérlegünk, szerdán a sikerek száma négyre nőhet, 18 órakor a Délút-SZTE-Szedeák együttesével játszunk az Alba Regia Sportcsarnokban.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_5999",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Rosszul kezdtük és fejeztük be a PHOENIX Fóti Tigresek elleni szombati bajnoki mérkőzésünket, el is szenvedtük második vereségünket az alapszakaszban.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_5998",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "A múlt héten nagyon fontos rangadót nyertünk meg hazai pályán a Kaposvár ellen, szombaton sem lesz könnyebb dolgunk, hiszen a bajnokságot remekül kezdő újonc, a PHOENIX Fóti Tigrisek otthonába látogatunk.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_5997",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Négy idegenlégióssal folytatjuk a 2026–2027-es idényt, hiszen aláírt csapatunkhoz a 26 éves, 198 centiméter magas, kettes és hármas poszton bevethető amerikai Tray Maddox Jr, aki a hétvégi, Fót elleni bajnokin már be is mutatkozhat.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_5996",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Beragadtunk a rajtnál a Kometa-KVGY Kaposvári KK elleni rangadón, az ellenfél az első negyedben elhúzott, aztán sikerült visszakapaszkodni és végül megnyerni az összecsapást, ez volt idénybeli harmadik győzelmünk.",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_5995",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Jól kezdtünk, de nem tudtuk hazahozni az első idegenbeli győzelmet",
+      "summary": "Félidőben még ötpontos előnyben voltunk a Csata TKK otthonában, a fordulás után azonban teljesen megváltozott a mérkőzés képe.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Jol-kezdtunk--de-nem-tudtuk-hazahozni-az-elso-idegenbeli-gyozelmet/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "JÓ LESZ VISSZATÉRNI SOPRONBA, DE MOST FALCO GYŐZELEMÉRT KÜZDÖK!",
+      "summary": "JÓ LESZ VISSZATÉRNI SOPRONBA, DE MOST FALCO GYŐZELEMÉRT KÜZDÖK!",
+      "url": "https://falcokc.com/jo-lesz-visszaterni-sopronba-de-most-a-falco-gyozelemert-kuzdok/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Jelentkezz a TFSE kosárlabdához!",
+      "summary": "Jelentkezés a kosarlabda@tfse.hu e-mail címen, vagy a +36-20/255-1305 telefonszámon Félix Ákosnál!",
+      "url": "https://tfse.hu/jelentkezz-a-tfse-kosarlabdahoz/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Iványi Dalma: „Vannak problémáink, de ez nem lehet kifogás”",
+      "summary": "A sérülések ellenére is győzelemre készülünk az ETO Basket ellen.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Ivanyi-Dalma-Vannak-problemaink--de-ez-nem-lehet-kifogas/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "IRÁNY SOPRON – 3 ÉRDEKESSÉG A SZOMSZÉDVÁRI RANGADÓNK ELŐTT!",
+      "summary": "IRÁNY SOPRON – 3 ÉRDEKESSÉG A SZOMSZÉDVÁRI RANGADÓNK ELŐTT!",
+      "url": "https://falcokc.com/irany-sopron-3-erdekesseg-a-szomszedvari-rangadonk-elott/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Hengán Hunor: „Azért utazunk Budapestre, hogy nyerjünk”",
+      "summary": "Első idegenbeli győzelmünkért lépünk pályára szombaton a Csata TKK otthonában.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Hengan-Hunor-Azert-utazunk-Budapestre--hogy-nyerjunk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Hajszálon múlt a bravúr",
+      "summary": "Hajszálon múlt a bravúr",
+      "url": "https://vasasbasket.hu/index.php/feed/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Győzelemmel mutatkoztunk be az NB I. B-ben!",
+      "summary": "Győzelemmel indítottuk történetünk első szezonját az NB I.",
+      "url": "https://tfse.hu/gyozelemmel-mutatkoztunk-be-az-nb-i-b-ben/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -5545,12 +6687,103 @@
       "summary_method": "headline_fallback"
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Elérhetőségek",
+      "summary": "Magyar Testnevelési Egyetem Sportegyesülete Iroda ügyfélfogadás: Hétfő-péntek 8:30-16:30 iroda@tfse.hu +36 30 634 0114 1123 Budapest, Alkotás u. 42-48, K2 épület, 2. emelet jobb szárny Mutasd térképen Csapatokhoz tartozó elérhetőségek Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel: Tömegközlekedéssel:",
+      "url": "https://tfse.hu/elerhetosegek/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Első idegenbeli győzelmünkre készülünk Cegléden",
+      "summary": "Szerdán ismét idegenben lép pályára csapatunk: a bajnokság harmadik fordulójában a VBW CEKK Cegléd otthonában folytatjuk a szezont.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Elso-idegenbeli-gyozelmunkre-keszulunk-Cegleden/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "EGY NAGYON JÓ CSAPAT ELLEN LÉPHETÜNK PÁLYÁRA!",
+      "summary": "EGY NAGYON JÓ CSAPAT ELLEN LÉPHETÜNK PÁLYÁRA!",
+      "url": "https://falcokc.com/egy-nagyon-jo-csapat-ellen-lephetunk-palyara/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Dokumentumok",
+      "summary": "Dokumentumok Arculati elemek 100 év nyomában Beszámolók Adók 1%-a Egyéb dokumentumok TAO pályázatok Arculati elemek TFSE logopack Letöltés Arculati kézikönyv Letöltés Image film Letöltés TFSE Bemutató HUN ENG 100 év nyomában A TFSE sporttörténeti krónikája!",
+      "url": "https://tfse.hu/dokumentumok/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
       "url": "https://bball1.hu/wp-login.php/",
       "published_at": null,
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Az első idegenbeli győzelmünkért fogunk küzdeni Kaposváron",
+      "summary": "Nagyon kemény mérkőzés vár ránk ma délután, hiszen az élmezőnyhöz tartozó Kaposvár vendégei leszünk.",
+      "url": "https://www.nkapecs.hu/tartalmak/Az-elso-idegenbeli-gyozelmunkert-fogunk-kuzdeni-Kaposvaron/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Az első félidőben nagyon jól tartottuk a lépést a bajnoki címvédővel",
+      "summary": "A szurkolók kosarakban és szép megoldásokban gazdag mérkőzést láthattak, amelyen az első félidőben még megnehezítettük a Falco dolgát – nem vehetett minket félvállról a bajnoki címvédő.",
+      "url": "https://www.nkapecs.hu/tartalmak/Az-elso-felidoben-nagyon-jol-tartottuk-a-lepest-a-bajnoki-cimvedovel/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "A második negyed döntött Cegléden",
+      "summary": "Jól kezdtük a mérkőzést Cegléden, a második negyedben azonban hosszú percekre megtorpant a támadójátékunk, amit a hazaiak egy 18–0-s rohammal büntettek.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/A-masodik-negyed-dontott-Cegleden/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
     },
     {
       "source": "Hunbasket",
@@ -5567,6 +6800,19 @@
       "url": "https://hunbasket.hu/hir/77660/a-dvtk-es-a-sopron-is-gyozott-a-noi-europa-kupaban/",
       "published_at": null,
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "",
+      "summary": "",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Adatkezelesi-tajekoztato/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
     }
   ]
 }
