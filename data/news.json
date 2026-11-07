@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-07T20:51:03.741010+00:00",
+  "checked_at": "2026-11-07T22:50:54.481311+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 2,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,7 +23,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
+      "added": 1,
       "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
@@ -126,8 +126,8 @@
       "source": "Klub: Sopron KC",
       "status": "ok",
       "candidates": 11,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -135,7 +135,7 @@
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -210,8 +210,8 @@
       "source": "Klub: Délút-SZTE-Szedeák",
       "status": "ok",
       "candidates": 6,
-      "added": 0,
-      "repaired": 6,
+      "added": 1,
+      "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -288,11 +288,13 @@
     {
       "source": "Klub: TFSE",
       "status": "ok",
-      "candidates": 15,
-      "added": 1,
-      "repaired": 8,
-      "article_errors": 1,
-      "listing_errors": []
+      "candidates": 8,
+      "added": 0,
+      "repaired": 5,
+      "article_errors": 3,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
+      ]
     }
   ],
   "articles": [
@@ -307,6 +309,19 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Az utolsó negyedben dőlt el a szolnoki meccsünk",
+      "summary": "Sokáig tartottuk magunkat az Olaj otthonában.",
+      "url": "https://szedeak.com/az-utolso-negyedben-dolt-el-a-szolnoki-meccsunk/",
+      "published_at": "2026-11-07T21:44:12+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
       ]
     },
     {
@@ -586,6 +601,19 @@
       "summary_method": "article_body",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Férfi NB I: Veretlen maradt a Falco és az ASE",
+      "summary": "Igencsak nehéz helyzetből várta a szerdán Belgiumban vendégeskedő Szolnoki Olajbányász a Szedeák elleni találkozót, se Molnár, se Rudner, se Madsen nem volt bevethető, a túloldalon debütálásra készült a sérüléséből felépülő Andrew Henderson - írja a BB1.hu.",
+      "url": "https://hunbasket.hu/hir/77670/ferfi-nb-i-veretlen-maradt-a-falco-es-az-ase/",
+      "published_at": "2026. 11. 07.",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC",
+        "men|Szolnok"
+      ],
+      "league": "men"
     },
     {
       "source": "Hunbasket",
@@ -6860,19 +6888,6 @@
       ]
     },
     {
-      "source": "Klub: Délút-SZTE-Szedeák",
-      "title": "Újabb élcsapat vár ránk",
-      "summary": "Újabb élcsapat vár ránk",
-      "url": "https://szedeak.com/feed/",
-      "published_at": null,
-      "summary_method": "headline_fallback",
-      "publisher_club": "Délút-SZTE-Szedeák",
-      "league": "men",
-      "teams": [
-        "men|Szedeák"
-      ]
-    },
-    {
       "source": "Klub: TFSE",
       "title": "Újabb fővárosi párharc: a Csata érkezik a Koltaiba",
       "summary": "A BEAC otthonában megszerzett győzelem után hazai pályán folytatja a bajnokságot női kosárlabdacsapatunk.",
@@ -7568,6 +7583,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Az utolsó negyedben dőlt el a szolnoki meccsünk",
+      "summary": "Az utolsó negyedben dőlt el a szolnoki meccsünk",
+      "url": "https://szedeak.com/feed/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
