@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """News metadata collector. Keeps prior genuine articles and records source failures."""
 import json
+import html
 import re
 import sys
 import time
@@ -17,7 +18,7 @@ SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
     {'name': 'Hunbasket', 'urls': ['https://hunbasket.hu/hirek', 'https://hunbasket.hu/hirek/ferfi/', 'https://hunbasket.hu/hirek/noi/'], 'hosts': ('hunbasket.hu',), 'kind': 'hunbasket'},
-    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/noi/hirek'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
+    {'name': 'Kezdő5.hu', 'urls': ['https://kezdo5.hu/magyar-ferfi', 'https://kezdo5.hu/noi', 'https://kezdo5.hu/magyar-ferfi/hirek', 'https://kezdo5.hu/noi/hirek'], 'hosts': ('kezdo5.hu',), 'kind': 'kezdo5'},
     {'name': 'Nemzeti Sport', 'urls': ['https://www.nemzetisport.hu/kosarlabda'], 'hosts': ('nemzetisport.hu',), 'kind': 'ns'},
 ]
 
@@ -59,7 +60,8 @@ def valid_url(url, src):
         # Restrict to the basketball section; the listing contains unrelated sports.
         return bool(re.match(r'^/kosarlabda/20\d{2}/\d{2}/[^/]+', path)) or bool(re.match(r'^/kosarlabda/[^/]+-[a-z0-9]+$', path))
     if src['kind'] == 'club':
-        return bool(re.search(src['article_pattern'], p.path + ('?' + p.query if p.query else ''), re.I))
+        path_query = p.path.rstrip('/') + ('?' + p.query if p.query else '')
+        return bool(re.search(src['article_pattern'], path_query, re.I))
     if path in ('', '/hirek', '/latest-news'):
         return False
     if any(path.startswith(prefix) for prefix in ('/tag/', '/category/', '/page/', '/author/', '/kereso/', '/search/', '/csapat/', '/jatekos/', '/menetrend/', '/tabella/', '/wp-content/')):
@@ -70,20 +72,51 @@ def candidates(soup, base, src):
     links = {}
     if src['kind'] == 'hunbasket':
         anchors = soup.select('a[href*="/hir/"]')
+    elif src['kind'] == 'kezdo5':
+        anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], a[href*="/magyar-ferfi/"], a[href*="/noi/"]')
     elif src['kind'] == 'club':
         anchors = soup.select(src.get('listing_selector') or 'article a[href], h2 a[href], h3 a[href]')
+        # Club CMS layouts vary; configured selectors frequently miss real article links.
+        # The source-specific URL rule remains the final gate.
+        if len(anchors) < 7:
+            anchors = soup.select('a[href]')
     else:
         anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]')
         if not anchors or src['kind'] == 'bb1':
             anchors = soup.select('a[href]')
     for a in anchors:
-        title = clean(a.get_text(' ', strip=True))
+        title = clean(a.get_text(' ', strip=True) or a.get('title') or '')
         if not 12 <= len(title) <= 250:
             continue
         url = canonical(urljoin(base, a.get('href', '')))
         if valid_url(url, src):
             links.setdefault(url, title)
     return list(links.items())[:100]
+
+def feed_candidates(soup, base, src):
+    """Read public RSS/Atom feeds when advertised by the publisher."""
+    links = []
+    for tag in soup.select('link[rel="alternate"][type*="rss"], link[rel="alternate"][type*="atom"]'):
+        href = tag.get('href')
+        if href:
+            u = urljoin(base, href)
+            if (urlparse(u).hostname or '').removeprefix('www.') in src['hosts']:
+                links.append(u)
+    found = {}
+    for feed in links[:2]:
+        try:
+            xml, feed_url = fetch(feed, timeout=8)
+            for node in xml.select('item, entry')[:50]:
+                link = node.find('link')
+                href = (link.get('href') or link.get_text(strip=True)) if link else ''
+                title_node = node.find('title')
+                title = clean(title_node.get_text(' ', strip=True)) if title_node else ''
+                u = canonical(urljoin(feed_url, href))
+                if 12 <= len(title) <= 250 and valid_url(u, src):
+                    found.setdefault(u, title)
+        except Exception:
+            continue
+    return found
 
 def structured_date(soup):
     for tag in soup.select('script[type="application/ld+json"]'):
@@ -130,7 +163,9 @@ def article_body_summary(soup, headline):
     containers = (
         'article .entry-content', '.post-content', '.article-content',
         '.article-body', '.cikk-szoveg', '[itemprop="articleBody"]',
-        'main article', 'article', '.content'
+        'main article', 'article', '.content', '.article__content',
+        '.entry__content', '.post__content', '.news-detail', '.news-content',
+        '.article-text', '.cikk-tartalom', '.news-body'
     )
     excluded = re.compile(r'(cookie|hirdet|reklám|feliratkoz|kapcsolódó|'
                           r'olvass|megoszt|kövess|fotó:|forrás:|copyright)', re.I)
@@ -286,11 +321,14 @@ def source_league(item):
 
 def collect_source(src, entries, checks, max_articles=12):
     found, listing_errors = {}, []
-    for listing_url in src['urls'][:2]:
+    for listing_url in src['urls'][:4]:
         try:
             soup, base = fetch(listing_url, timeout=9 if src['kind']=='club' else 12)
             for url, title in candidates(soup, base, src):
                 found.setdefault(url, title)
+            if src['kind'] == 'club':
+                for url, title in feed_candidates(soup, base, src).items():
+                    found.setdefault(url, title)
         except Exception as exc:
             listing_errors.append(f'{listing_url}: {type(exc).__name__}: {exc}')
     added, repaired, failures = 0, 0, 0
@@ -315,7 +353,7 @@ def collect_source(src, entries, checks, max_articles=12):
         except Exception:
             failures += 1
         time.sleep(0.1)
-    checks.append({'source': src['name'], 'status': 'ok' if found else 'error',
+    checks.append({'source': src['name'], 'status': 'ok' if (added or repaired or any(url in entries for url in found)) else ('discovered' if found else 'error'),
                    'candidates': len(found), 'added': added, 'repaired': repaired,
                    'article_errors': failures, 'listing_errors': listing_errors[:3]})
 
@@ -412,8 +450,8 @@ def main():
                        'article_errors': failed, 'listing_errors': listing_errors})
     targeted_bb1(entries, checks)
     for src in all_sources:
-        if src['kind'] in ('kezdo5', 'ns', 'club'):
-            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 3)
+        if src['kind'] == 'club':
+            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 10)
     # Club-origin stories are tagged only to their publisher. Opponents in the
     # headline or summary do not make the article news about the opponent.
     club_sources = {
@@ -433,7 +471,7 @@ def main():
     # Club affiliation for the confirmed Schöll Richárd interview, whose headline
     # omits Sopron KC; don't guess affiliations for other player-only headlines.
     for item in entries.values():
-        if item.get('source') == 'BB1.hu' and 'schöll richárddal' in item.get('title', '').casefold():
+        if item.get('source') == 'BB1.hu' and re.search(r'sch[oö]ll rich[aá]rd', item.get('title', ''), re.I):
             tags = item.setdefault('teams', [])
             if 'men|Sopron' not in tags: tags.append('men|Sopron')
     # WBasket articles are women's-only, including articles saved in earlier runs.
@@ -448,6 +486,12 @@ def main():
     for item in entries.values():
         inferred = source_league(item)
         if inferred: item['league'] = inferred
+    # Correct known confirmed player affiliation on previously saved stories too.
+    for item in entries.values():
+        if item.get('source') == 'BB1.hu' and re.search(r'sch[oö]ll rich[aá]rd', item.get('title', ''), re.I):
+            tags = item.setdefault('teams', [])
+            if 'men|Sopron' not in tags:
+                tags.append('men|Sopron')
     articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
