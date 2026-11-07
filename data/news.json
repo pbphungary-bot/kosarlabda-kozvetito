@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-07T18:56:38.990369+00:00",
+  "checked_at": "2026-11-07T20:51:03.741010+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 2,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -126,8 +126,8 @@
       "source": "Klub: Sopron KC",
       "status": "ok",
       "candidates": 11,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -135,7 +135,7 @@
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -289,13 +289,44 @@
       "source": "Klub: TFSE",
       "status": "ok",
       "candidates": 15,
-      "added": 0,
-      "repaired": 9,
+      "added": 1,
+      "repaired": 8,
       "article_errors": 1,
       "listing_errors": []
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Érvényesítette a papírformát az ASE",
+      "summary": "A nyolcadik fordulóban a bajnokság legjobb formában lévő csapata, a hibátlan és listavezető Atomerőmű SE ellen lépett pályára idegenben a Duna Aszfalt-DTKH Kecskemét.",
+      "url": "https://ktekosar.hu/hirek/ervenyesitette-a-papirformat-az-ase/",
+      "published_at": "2026. 11. 14., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Felőrölte a Szegedet hazai pályán az Olaj",
+      "summary": "Alapszakasz, 8. forduló Szolnok, Szolnok Városi Sportcsarnok Goda László, Györfy Rúben, Pozsonyi László (Hartyáni Zsolt)",
+      "url": "https://bball1.hu/felorolte-a-szegedet-hazai-palyan-az-olaj/",
+      "published_at": "2026-11-07T20:06:21+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Tükörsimán verte az ASE a Kecskemétet",
+      "summary": "Alapszakasz, 8. forduló Paks, ASE Sportcsarnok Benczur Tamás, Dr.",
+      "url": "https://bball1.hu/tukorsiman-verte-az-ase-a-kecskemetet/",
+      "published_at": "2026-11-07T19:56:36+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "BB1.hu",
       "title": "Egy pillanatig sem forgott veszélyben a Falco győzelme Sopronban",
@@ -307,6 +338,19 @@
         "men|Falco KC"
       ],
       "league": "men"
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Nem tudtuk megállítani a Falcót",
+      "summary": "Már az első negyedben tíz pont feletti hátrányt szedtünk össze a szombathelyiek ellen, innentől pedig végig futottunk az eredmény után, és bár a félidő előtt vissza tudtunk kapaszkodni látótávolságba, a […]",
+      "url": "https://sopronkc.hu/nem-tudtuk-megallitani-a-falcot/",
+      "published_at": "2026-11-07T19:17:09+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
     },
     {
       "source": "WBasket.hu",
@@ -6982,7 +7026,7 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Takács Károly, Oroszlány polgármestere hivatalos Facebook-oldalán jelentette be ezt.",
+      "summary": "Hiányzói ellenére is megoldotta a feladatot a Szolnok.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description",
@@ -7562,6 +7606,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "A labdaeladások és a pontatlan befejezések döntöttek a Vásárhely ellen",
+      "summary": "A TFSE férfi kosárlabdacsapata 72–53-as vereséget szenvedett a Vásárhelyi Kosársulitól az NB I.",
+      "url": "https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
