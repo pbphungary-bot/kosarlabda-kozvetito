@@ -516,30 +516,30 @@
       "round": "8.",
       "home": "Atomerőmű SE",
       "away": "Duna Aszfalt-DTKH Kecskemét",
-      "result": "Előzetes",
+      "result": "31–12",
       "date": "2026. 11. 07.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134847"
     },
     {
       "round": "8.",
       "home": "NHSZ-Szolnoki Olajbányász",
       "away": "Délút-SZTE-Szedeák",
-      "result": "Előzetes",
+      "result": "24–22",
       "date": "2026. 11. 07.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134851"
     },
     {
       "round": "8.",
       "home": "Sopron KC",
       "away": "Falco-Vulcano Energia KC Szombathely",
-      "result": "Előzetes",
+      "result": "11–26",
       "date": "2026. 11. 07.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134841"
     },
     {
@@ -1823,5 +1823,5 @@
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_135095"
     }
   ],
-  "updated_at": "2026-11-07T15:57:51.751532+00:00"
+  "updated_at": "2026-11-07T17:22:03.897393+00:00"
 }
