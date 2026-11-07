@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-07T07:06:04.982899+00:00",
+  "checked_at": "2026-11-07T09:02:26.605790+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 7,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 7,
+      "added": 0,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -44,8 +44,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 68,
-      "added": 3,
-      "repaired": 65,
+      "added": 8,
+      "repaired": 60,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -314,6 +314,78 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Szőke Balázs: Ami jelenleg hiányzik a játékunkból, hogy nem tudunk olyan tempóban kosárlabdázni, ahogyan szeretnénk",
+      "summary": "Szőke Balázs: Ami jelenleg hiányzik a játékunkból, hogy nem tudunk olyan tempóban kosárlabdázni, ahogyan szeretnénk",
+      "url": "https://bball1.hu/szoke-balazs-ami-jelenleg-hianyzik-a-jatekunkbol-hogy-nem-tudunk-olyan-tempoban-kosarlabdazni-ahogyan-szeretnenk/",
+      "published_at": "2026-11-07T09:30:15+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Tenisz: Alcaraz két meccslabdát hárítva elődöntős Párizsban",
+      "summary": "Tenisz: Alcaraz két meccslabdát hárítva elődöntős Párizsban",
+      "url": "https://www.nemzetisport.hu/tenisz/2026/11/tenisz-alcaraz-ket-meccslabdat-haritva-elodontos-parizsban/",
+      "published_at": "2026-11-07T09:30:12+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "NBA: Luka Doncicra elfogynak a jelzők, eddig 40 pont felett átlagol az idényben – videók",
+      "summary": "NBA: Luka Doncicra elfogynak a jelzők, eddig 40 pont felett átlagol az idényben – videók",
+      "url": "https://www.nemzetisport.hu/amerikai-sportok/2026/11/nba-luka-doncicra-elfogynak-a-jelzok-eddig-40-pont-felett-atlagol-az-idenyben-videok/",
+      "published_at": "2026-11-07T09:17:05+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Előzésre készülnek a barcikaiak az NB II-ben",
+      "summary": "Előzésre készülnek a barcikaiak az NB II-ben",
+      "url": "https://www.nemzetisport.hu/labdarugo-nb-ii/2026/11/elozesre-keszulnek-a-barcikaiak-az-nb-ii-ben/",
+      "published_at": "2026-11-07T09:09:48+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "A hónap utánpótlásedzője: október jelöltjei",
+      "summary": "A hónap utánpótlásedzője: október jelöltjei",
+      "url": "https://www.nemzetisport.hu/utanpotlassport/2026/11/a-honap-utanpotlasedzoje-oktober-jeloltjei-4/",
+      "published_at": "2026-11-07T09:01:00+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Szita Zoltán szerint a magyar kézisek esélyt sem adtak Montenegrónak",
+      "summary": "Szita Zoltán szerint a magyar kézisek esélyt sem adtak Montenegrónak",
+      "url": "https://www.nemzetisport.hu/kezilabda/2026/11/szita-zoltan-szerint-a-magyar-kezisek-eselyt-sem-adtak-montenegronak/",
+      "published_at": "2026-11-07T08:56:30+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Már-már zavarta, hogy minden rendben – pályacsúcs lett belőle",
+      "summary": "Már-már zavarta, hogy minden rendben – pályacsúcs lett belőle",
+      "url": "https://www.nemzetisport.hu/csupasport/2026/11/mar-mar-zavarta-hogy-minden-rendben-palyacsucs-lett-belole/",
+      "published_at": "2026-11-07T08:32:21+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Az nyert, aki tudott mit kezdeni a labdával – öt pontban a Ferencváros milánói győzelme",
+      "summary": "Az nyert, aki tudott mit kezdeni a labdával – öt pontban a Ferencváros milánói győzelme",
+      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/az-nyert-aki-tudott-mit-kezdeni-a-labdaval-ot-pontban-a-ferencvaros-milanoi-gyozelme/",
+      "published_at": "2026-11-07T08:21:43+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "NHL: a San Jose Sharksnak sem volt ellenszere Kaprizovra",
+      "summary": "NHL: a San Jose Sharksnak sem volt ellenszere Kaprizovra",
+      "url": "https://www.nemzetisport.hu/amerikai-sportok/2026/11/nhl-a-san-jose-sharksnak-sem-volt-ellenszere-kaprizovra/",
+      "published_at": "2026-11-07T07:59:56+01:00",
+      "summary_method": "headline_fallback"
+    },
     {
       "source": "Nemzeti Sport",
       "title": "„Életem legfontosabb versenyén nyugodtabb voltam, mint valaha” – Kropkó Jázmin a dakari ezüstéremről",
