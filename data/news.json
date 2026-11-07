@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-07T14:53:27.061448+00:00",
+  "checked_at": "2026-11-07T16:52:14.850907+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 2,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -45,9 +45,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "candidates": 51,
+      "added": 2,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -146,7 +146,9 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://www.megyeritigrisek.hu/: URLError: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
@@ -424,6 +426,31 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Az ötödik helyre lépett előre a magyar válogatott a FIBA erősorrendjében",
+      "summary": "Jövő héten rajtol a 2027-es női kosárlabda Európa-bajnokság selejtezőinek második szakasza.",
+      "url": "https://wbasket.hu/az-otodik-helyre-lepett-elore-a-magyar-valogatott-a-fiba-erosorrendjeben/",
+      "published_at": "2026.11.07. 17:26",
+      "summary_method": "article_body",
+      "league": "women"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: az újonc Fót megszerezte negyedik győzelmét is",
+      "summary": "Férfi kosár NB I: az újonc Fót megszerezte negyedik győzelmét is",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-az-ujonc-fot-megszerezte-negyedik-gyozelmet-is/",
+      "published_at": "2026-11-07T17:06:35+01:00",
+      "summary_method": "headline_fallback"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Kőkemény meccsen az Oroszlányt is legyűrte a Fót",
+      "summary": "Alapszakasz, 8. forduló Fót, PHOENIX Sportcsarnok Fót Játékvezetők: Földházi Tamás Péter, Makrai Márton, Söjtöry Tamás Ferenc (Vághy Tamás János).",
+      "url": "https://bball1.hu/kokemeny-meccsen-az-oroszlanyt-is-legyurte-a-fot/",
+      "published_at": "2026-11-07T16:54:28+01:00",
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
@@ -1904,6 +1931,14 @@
       "teams": [
         "men|Sopron"
       ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "„Van esélyünk, ha magas szinten játszunk ezután is” – Mikko Larkas, a Szolnoki Olajbányász edzője",
+      "summary": "„Van esélyünk, ha magas szinten játszunk ezután is” – Mikko Larkas, a Szolnoki Olajbányász edzője",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/van-eselyunk-ha-magas-szinten-jatszunk-ezutan-is-mikko-larkas-a-szolnoki-olajbanyasz-edzoje/",
+      "published_at": "2026-10-30T08:22:50+01:00",
+      "summary_method": "headline_fallback"
     },
     {
       "source": "Nemzeti Sport",
