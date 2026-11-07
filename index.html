@@ -558,8 +558,8 @@ function renderBrief(){
   const tokens=new Set(v.canon.split(' ').filter(x=>x.length>=5));
   if(newsSeen.some(old=>{const common=[...tokens].filter(x=>old.has(x)).length;return common>=2&&common/Math.min(tokens.size,old.size)>=.6;}))continue;
   newsSeen.push(tokens);
-  const concise=v.summary.replace(/\s+/g,' ').slice(0,190).replace(/\s+\S*$/,'');
-  const sentence='A '+team(v.team)+' körül friss beszédtéma: „'+esc(v.title)+'”.'+(concise.length>=35?' A hír összefoglalója: '+esc(concise.replace(/[.!?]+$/,''))+'.':'')+(v.url?' '+v.url+'.':'');
+  const concise=articleOneSentence(v.summary,v.title);
+  const sentence=team(v.team)+': '+esc(concise)+(v.url?' '+v.url+'.':'');
   add('news:'+v.canon,5+addedNews*3,sentence,v.source);
   addedNews++;if(addedNews>=5)break;
  }
@@ -688,8 +688,22 @@ const newsAliases={
   'SERCO UNI Győr':['uni győr','serco uni'], 'Dávid Kornél KA':['dávid kornél','dkka']
  }
 };
+function articleOneSentence(summary,title){
+ const raw=String(summary||'').trim();
+ const text=(raw.length>=35&&normalizedNewsText(raw)!==normalizedNewsText(title))?raw:String(title||'').trim();
+ const first=text.split(/(?<=[.!?])\s+(?=[A-ZÁÉÍÓÖŐÚÜŰ„“])/)[0].trim();
+ const short=first.length>230?first.slice(0,230).replace(/\s+\S*$/,'').trim():first;
+ return short.replace(/[.!?]+$/,'')+'.';
+}
 function normalizedNewsText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
 function newsMatchesTeam(article,team,competition){
+ const tags=Array.isArray(article.teams)?article.teams:[];
+ const normalizedTarget=normalizedNewsText(team);
+ if(tags.some(t=>{const [tagLeague,...parts]=String(t).split('|');return tagLeague===competition&&normalizedNewsText(parts.join('|'))===normalizedTarget;}))return true;
+ // A tagged article must not be reassigned to another team from an opponent mention.
+ if(tags.length)return false;
+ // Verified Sopron KC player interview: the title does not mention the club.
+ if(competition==='men'&&normalizedTarget===normalizedNewsText('Sopron')&&article.source==='BB1.hu'&&/sch[oö]ll rich[aá]rd/i.test(String(article.title||'').normalize('NFC')))return true;
  const hay=' '+normalizedNewsText([article.title,article.summary].join(' '))+' ';
  const name=normalizeTeamName(team);
  const aliases=Object.entries(newsAliases[competition]||{}).find(([k])=>normalizeTeamName(k)===name)?.[1]||[];
@@ -709,16 +723,16 @@ function renderMatchupStories(fallback=[]){
   for(const article of relevant){
    const key=String(article.url||'').trim()||normalizedNewsText(article.title);
    if(!key||seen.has(key))continue;
-   seen.add(key);unique.push(article);if(unique.length>=5)break;
+   seen.add(key);unique.push(article);if(unique.length>=7)break;
   }
   const items=unique.map(a=>{
    const url=String(a.url||'');const valid=/^https?:\/\//i.test(url);
    const title=esc(a.title||'Cím nélkül');
-   return '<article class="news-item"><div class="news-meta"><span class="tag">'+esc(a.source||'Hírforrás')+'</span><span>'+esc(newsDate(a.published_at))+'</span></div><h3>'+(valid?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+title+'</a>':title)+'</h3></article>';
+   return '<article class="news-item"><div class="news-meta"><span class="tag">'+esc(a.source||'Hírforrás')+'</span><span>'+esc(newsDate(a.published_at))+'</span></div><h3>'+(valid?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+title+'</a>':title)+'</h3><p>'+esc(articleOneSentence(a.summary,a.title))+'</p></article>';
   }).join('');
-  return '<section class="matchup-team-news" style="min-width:0;'+clubStyle(team)+'"><h3 style="margin:0 0 10px">'+clubName(team)+' <span class="muted small">('+unique.length+'/5 hír)</span></h3>'+(items||'<p class="muted small">Ehhez a csapathoz nincs további azonosítható hír a mentett adatbázisban.</p>')+'</section>';
+  return '<section class="matchup-team-news" style="min-width:0;'+clubStyle(team)+'"><h3 style="margin:0 0 10px">'+clubName(team)+' <span class="muted small">('+unique.length+'/7 hír)</span></h3>'+(items||'<p class="muted small">Ehhez a csapathoz nincs további azonosítható hír a mentett adatbázisban.</p>')+'</section>';
  });
- container.innerHTML='<div class="grid" style="align-items:start">'+sections.join('')+'</div><p class="source" style="margin-top:16px">Csapatonként az 5 legfrissebb azonosítható hír. Játékosokról szóló cikkek akkor jelennek meg, ha a klubhoz köthetők. A hiányzó híreket nem helyettesítjük mérkőzéseredményekkel.</p>';
+ container.innerHTML='<div class="grid" style="align-items:start">'+sections.join('')+'</div><p class="source" style="margin-top:16px">Csapatonként a 7 legfrissebb azonosítható hír. Játékosokról szóló cikkek akkor jelennek meg, ha a klubhoz köthetők. A hiányzó híreket nem helyettesítjük mérkőzéseredményekkel.</p>';
 }
 function updateNewsTeamOptions(){
  const select=$('newsTeam');if(!select)return;
@@ -757,7 +771,7 @@ function renderNews(){
 
 async function loadNews(){
  $('newsStatus').textContent='Hírek frissítése…';
- try{const r=await fetch('data/news.json?refresh='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const p=await r.json();if(!p||!Array.isArray(p.articles))throw new Error('Érvénytelen hír-adatfájl');newsArticles=p.articles.filter(a=>a&&typeof a==='object');newsChecked=p.checked_at||'';newsChecks=Array.isArray(p.sources)?p.sources:[];newsError='';const previous=$('newsSource').value;const sources=[...new Set(newsArticles.map(a=>a.source).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'hu'));$('newsSource').innerHTML='<option value="">Összes forrás</option>'+sources.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');$('newsSource').value=sources.includes(previous)?previous:'';}
+ try{const r=await fetch('data/news.json?refresh='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const p=await r.json();if(!p||!Array.isArray(p.articles))throw new Error('Érvénytelen hír-adatfájl');newsArticles=p.articles.filter(a=>a&&typeof a==='object'&&(a.source!=='Nemzeti Sport'||/^https?:\/\/(?:www\.)?nemzetisport\.hu\/kosarlabda\//i.test(String(a.url||''))));newsChecked=p.checked_at||'';newsChecks=Array.isArray(p.sources)?p.sources:[];newsError='';const previous=$('newsSource').value;const sources=[...new Set(newsArticles.map(a=>a.source).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'hu'));$('newsSource').innerHTML='<option value="">Összes forrás</option>'+sources.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');$('newsSource').value=sources.includes(previous)?previous:'';}
  catch(e){newsError=e.message||String(e);}
  renderNews();renderMatchupStories(window.matchupStoryFallback||[]);renderBrief();if($('notes')&&!$('notes').querySelector('.brief-teamline'))$('notes').insertAdjacentHTML('afterbegin','<div class="brief-teamline">'+clubName(home)+'<strong>–</strong>'+clubName(away)+'</div>');
 }

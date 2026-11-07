@@ -56,7 +56,8 @@ def valid_url(url, src):
     if src['kind'] == 'kezdo5':
         return bool(re.match(r'^/(?:magyar-ferfi|noi)/[^/]+/[^/]+', path)) and not path.endswith('/hirek')
     if src['kind'] == 'ns':
-        return bool(re.match(r'^/[^/]+/20\d{2}/\d{2}/[^/]+', path)) or bool(re.match(r'^/kosarlabda/[^/]+-[a-z0-9]+$', path))
+        # Restrict to the basketball section; the listing contains unrelated sports.
+        return bool(re.match(r'^/kosarlabda/20\d{2}/\d{2}/[^/]+', path)) or bool(re.match(r'^/kosarlabda/[^/]+-[a-z0-9]+$', path))
     if src['kind'] == 'club':
         return bool(re.search(src['article_pattern'], p.path + ('?' + p.query if p.query else ''), re.I))
     if path in ('', '/hirek', '/latest-news'):
@@ -124,6 +125,39 @@ def sentence(text):
             return part
     return ''
 
+def article_body_summary(soup, headline):
+    """Extract a factual sentence from article prose, not menus or headlines."""
+    containers = (
+        'article .entry-content', '.post-content', '.article-content',
+        '.article-body', '.cikk-szoveg', '[itemprop="articleBody"]',
+        'main article', 'article', '.content'
+    )
+    excluded = re.compile(r'(cookie|hirdet|reklám|feliratkoz|kapcsolódó|'
+                          r'olvass|megoszt|kövess|fotó:|forrás:|copyright)', re.I)
+    title_key = clean(headline).casefold().rstrip('.!?')
+    for selector in containers:
+        container = soup.select_one(selector)
+        if container is None:
+            continue
+        paragraphs = container.select('p')
+        choices = []
+        for p in paragraphs[:18]:
+            if p.find_parent(['nav', 'aside', 'footer', 'figcaption', 'blockquote']):
+                continue
+            value = clean(p.get_text(' ', strip=True))
+            if not (55 <= len(value) <= 1800) or excluded.search(value[:100]):
+                continue
+            if value.casefold().rstrip('.!?') == title_key:
+                continue
+            candidate = sentence(value)
+            if candidate and candidate.casefold().rstrip('.!?') != title_key:
+                choices.append(candidate)
+        if choices:
+            # The lead paragraph normally states the most important verifiable fact.
+            return choices[0]
+    return ''
+
+
 def article(url, listing_title, src):
     soup, final_url = fetch(url)
     if not valid_url(final_url, src):
@@ -134,14 +168,18 @@ def article(url, listing_title, src):
         headline = listing_title
     if headline.lower() in ('hírek', 'news', 'kosárlabda'):
         raise ValueError('navigation page, not an article')
-    descriptions = [metadata(soup, 'og:description', 'description', 'twitter:description')]
-    for selector in ('article .entry-content p', '.post-content p', '.article-content p', '.article-body p', '.cikk-szoveg p', 'article p', '.content p'):
-        p = soup.select_one(selector)
-        if p:
-            descriptions.append(p.get_text(' ', strip=True))
-    summary = next((s for description in descriptions if (s := sentence(description))), '')
-    return {'source': src['name'], 'title': headline, 'summary': summary or headline, 'url': canonical(final_url),
-            'published_at': published_date(soup), 'summary_method': 'source_description' if summary else 'headline_fallback'}
+    body_sentence = article_body_summary(soup, headline)
+    description = metadata(soup, 'og:description', 'description', 'twitter:description')
+    description_sentence = sentence(description)
+    if body_sentence:
+        summary, method = body_sentence, 'article_body'
+    elif description_sentence and description_sentence.casefold().rstrip('.!?') != headline.casefold().rstrip('.!?'):
+        summary, method = description_sentence, 'source_description'
+    else:
+        summary, method = headline, 'headline_fallback'
+    return {'source': src['name'], 'title': headline, 'summary': summary,
+            'url': canonical(final_url), 'published_at': published_date(soup),
+            'summary_method': method}
 
 def parse_date(value):
     if not value:
@@ -258,7 +296,7 @@ def collect_source(src, entries, checks, max_articles=12):
     added, repaired, failures = 0, 0, 0
     for url, title in list(found.items())[:max_articles]:
         existing = entries.get(url)
-        if existing and existing.get('published_at') and existing.get('summary_method') == 'source_description':
+        if existing and existing.get('published_at') and existing.get('summary_method') == 'article_body':
             continue
         try:
             item = article(url, title, src)
@@ -266,6 +304,9 @@ def collect_source(src, entries, checks, max_articles=12):
                 # A club's own publication is attributable to that club, not its opponent.
                 item['publisher_club'] = src['name'][6:]
             item['league'] = source_league(item) or item.get('league')
+            if existing and existing.get('summary_method') == 'article_body' and item.get('summary_method') != 'article_body':
+                item['summary'] = existing['summary']
+                item['summary_method'] = 'article_body'
             if existing and not item.get('published_at'):
                 item['published_at'] = existing.get('published_at')
             entries[url] = item
@@ -345,16 +386,19 @@ def main():
         for url, title in list(found.items())[:80]:
             existing = entries.get(url)
             needs_repair = existing and (not existing.get('published_at') or existing.get('summary_method') == 'headline_fallback' or clean(existing.get('title', '')).lower() in ('hírek', 'news') or not sentence(existing.get('summary', '')))
-            if existing and not needs_repair:
+            if existing and not needs_repair and existing.get('summary_method') == 'article_body':
                 continue
             try:
                 item = article(url, title, src)
                 if existing:
+                    if existing.get('summary_method') == 'article_body' and item.get('summary_method') != 'article_body':
+                        item['summary'] = existing['summary']
+                        item['summary_method'] = 'article_body'
                     if not item.get('published_at'):
                         item['published_at'] = existing.get('published_at')
-                    if item['summary_method'] == 'headline_fallback' and existing.get('summary_method') == 'source_description' and sentence(existing.get('summary', '')):
+                    if item['summary_method'] == 'headline_fallback' and existing.get('summary_method') == 'article_body' and sentence(existing.get('summary', '')):
                         item['summary'] = existing['summary']
-                        item['summary_method'] = 'source_description'
+                        item['summary_method'] = existing.get('summary_method', 'source_description')
                     repaired += 1
                 else:
                     added += 1
@@ -386,6 +430,12 @@ def main():
                 comp, team = club_sources[publisher]
                 item['league'] = comp
                 item['teams'] = [comp + '|' + team]
+    # Club affiliation for the confirmed Schöll Richárd interview, whose headline
+    # omits Sopron KC; don't guess affiliations for other player-only headlines.
+    for item in entries.values():
+        if item.get('source') == 'BB1.hu' and 'schöll richárddal' in item.get('title', '').casefold():
+            tags = item.setdefault('teams', [])
+            if 'men|Sopron' not in tags: tags.append('men|Sopron')
     # WBasket articles are women's-only, including articles saved in earlier runs.
     # Retain them for women's teams; never publish a men's team association.
     for item in entries.values():
