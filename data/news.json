@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-06T22:51:13.617066+00:00",
+  "checked_at": "2026-11-07T01:06:43.595330+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -44,8 +44,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 67,
-      "added": 8,
-      "repaired": 59,
+      "added": 1,
+      "repaired": 66,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -676,6 +676,14 @@
       "published_at": "2026-11-06T08:58:35+01:00",
       "summary_method": "headline_fallback",
       "league": null
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Európa-liga: „Katasztrófa, még a Ferencváros is nyerni tud a San Siróban” – olasz lapszemle",
+      "summary": "Európa-liga: „Katasztrófa, még a Ferencváros is nyerni tud a San Siróban” – olasz lapszemle",
+      "url": "https://www.nemzetisport.hu/europa-liga/2026/11/europa-liga-katasztrofa-meg-a-ferencvaros-is-nyerni-tud-a-san-siroban-olasz-lapszemle/",
+      "published_at": "2026-11-06T08:14:04+01:00",
+      "summary_method": "headline_fallback"
     },
     {
       "source": "BB1.hu",
