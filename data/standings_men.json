@@ -1,8 +1,8 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-11-06T19:33:48.856967+00:00",
-  "checked_at": "2026-11-07T15:57:53.320434+00:00",
+  "updated_at": "2026-11-07T16:43:22.665038+00:00",
+  "checked_at": "2026-11-07T16:43:22.665038+00:00",
   "standings": [
     {
       "rank": 1,
@@ -66,16 +66,26 @@
     },
     {
       "rank": 7,
-      "name": "OSE Lions",
+      "name": "PHOENIX Fóti Tigrisek",
+      "played": 8,
+      "points": 12,
+      "wins": 4,
+      "losses": 4,
+      "scored": 634,
+      "conceded": 630
+    },
+    {
+      "rank": 8,
+      "name": "Sopron KC",
       "played": 7,
       "points": 10,
       "wins": 3,
       "losses": 4,
-      "scored": 624,
-      "conceded": 656
+      "scored": 583,
+      "conceded": 576
     },
     {
-      "rank": 8,
+      "rank": 9,
       "name": "Délút-SZTE-Szedeák",
       "played": 7,
       "points": 10,
@@ -85,24 +95,14 @@
       "conceded": 602
     },
     {
-      "rank": 9,
-      "name": "PHOENIX Fóti Tigrisek",
-      "played": 7,
-      "points": 10,
-      "wins": 3,
-      "losses": 4,
-      "scored": 552,
-      "conceded": 561
-    },
-    {
       "rank": 10,
-      "name": "Sopron KC",
-      "played": 7,
-      "points": 10,
+      "name": "OSE Lions",
+      "played": 8,
+      "points": 11,
       "wins": 3,
-      "losses": 4,
-      "scored": 583,
-      "conceded": 576
+      "losses": 5,
+      "scored": 693,
+      "conceded": 738
     },
     {
       "rank": 11,
