@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-07T13:05:19.866976+00:00",
+  "checked_at": "2026-11-07T14:53:27.061448+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
-      "repaired": 32,
+      "added": 2,
+      "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -14,8 +14,8 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 4,
-      "repaired": 31,
+      "added": 0,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -24,7 +24,7 @@
       "status": "ok",
       "candidates": 12,
       "added": 0,
-      "repaired": 12,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -62,8 +62,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -98,7 +98,7 @@
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "status": "ok",
       "candidates": 11,
-      "added": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -107,8 +107,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 6,
-      "repaired": 4,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -116,8 +116,8 @@
       "source": "Klub: NKA Universitas Pécs (férfi)",
       "status": "ok",
       "candidates": 14,
-      "added": 9,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 1,
       "listing_errors": []
     },
@@ -125,8 +125,8 @@
       "source": "Klub: Sopron KC",
       "status": "ok",
       "candidates": 11,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -134,7 +134,7 @@
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
       "status": "ok",
       "candidates": 12,
-      "added": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -161,8 +161,8 @@
       "source": "Klub: NKA Universitas Pécs (női)",
       "status": "ok",
       "candidates": 15,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -170,7 +170,7 @@
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "status": "ok",
       "candidates": 18,
-      "added": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -179,8 +179,8 @@
       "source": "Klub: Vasas Akadémia",
       "status": "ok",
       "candidates": 10,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -209,8 +209,8 @@
       "source": "Klub: Délút-SZTE-Szedeák",
       "status": "ok",
       "candidates": 6,
-      "added": 6,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -259,7 +259,7 @@
       "source": "Klub: ETO Basket",
       "status": "ok",
       "candidates": 24,
-      "added": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -288,8 +288,8 @@
       "source": "Klub: TFSE",
       "status": "ok",
       "candidates": 15,
-      "added": 9,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 1,
       "listing_errors": []
     }
@@ -424,6 +424,25 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Endo Plus Service-Honvéd – Egis Körmend",
+      "summary": "Budapest, Ludovika Aréna, vasárnap 18:00.",
+      "url": "https://bball1.hu/endo-plus-service-honved-egis-kormend-3/",
+      "published_at": "2026-11-07T15:16:38+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 15 órakor kezdődő PHOENIX Fóti Tigrisek – OSE Lions mérkőzésről Fullcourtért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-912/",
+      "published_at": "2026-11-07T14:00:44+01:00",
+      "summary_method": "article_body"
     },
     {
       "source": "BB1.hu",
@@ -1035,6 +1054,19 @@
       ]
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Panathlitikos Sykeon – DVTK HUNTHERM 74-77",
+      "summary": "Balayera szerezte a mérkőzés első kosarait, majd egy Kányási-triplával tovább nőtt az előny.",
+      "url": "http://dvtk.eu/37574-EK_Panathlitikos_Sykeon_DVTK_HUNTHERM_74_77-cikk-kosarlabda/",
+      "published_at": "2026-11-04T21:30:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "WBasket.hu",
       "title": "Nagyot küzdött és nyert a Sopron Szerbiában",
       "summary": "Európa Kupa, 4. forduló Nis, Sports Centre Cair MINCHEVA, Monika (BUL) FEREVSKI, Alija (MKD) NIKOCHEVIKJ, Ema (MKD), (RESILOVSKI, Ivaylo (BUL))",
@@ -1209,6 +1241,19 @@
       ]
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyar Gergely: Minden energiánkat a mérkőzésre kell összpontosítanunk",
+      "summary": "Magyar Gergely: - Újabb utazás és újabb mérkőzés vár ránk.",
+      "url": "http://dvtk.eu/37471-Magyar_Gergely_Minden_energiankat_a_merkozesre_kell_osszpontositanunk-cikk-kosarlabda/",
+      "published_at": "2026-11-03T19:20:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Falco-Vulcano Energia KC Szombathely – AEK BC",
       "summary": "A tavalyi döntős látogat Szombathelyre.",
@@ -1343,6 +1388,19 @@
       ]
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 44. hét",
+      "summary": "2026. október 27., kedd, Nyíregyháza Zsiráfok Kosársuli - DVTK U23 61 -70 (18-31,14-17,10-15,19-7) Statisztika",
+      "url": "http://dvtk.eu/37566-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_44_het-cikk-kosarlabda/",
+      "published_at": "2026-11-02T13:46:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "WBasket.hu",
       "title": "Ők voltak a hétvége legjobbjai",
       "summary": "Hunbasket felületein megválaszthatjuk a hétvége legjobbját.",
@@ -1431,6 +1489,19 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosarlabda-nb-i-nyolc-ponttal-nyert-pasareten-a-sopron/",
       "published_at": "2026-11-01T20:21:03+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: Szerdán Görögországban játszik a DVTK HUNTHERM",
+      "summary": "2026. november 4., szerda 19:30 – magyar idő szerint (helyi idő szerint 20:30) Thesszaloniki, Eptapyrgio Aréna Panathlitikos Sykeon – DVTK HUNTHERM",
+      "url": "http://dvtk.eu/37557-EK_Szerdan_Gorogorszagban_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-01T18:17:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "Klub: DVTK HUNTHERM",
@@ -1664,6 +1735,19 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/hatodik-merkozeset-is-megnyerte-a-dvtk-a-noi-kosarlabda-nb-i-ben/",
       "published_at": "2026-10-31T17:01:25+01:00",
       "summary_method": "headline_fallback"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "ELTE BEAC Újbuda – DVTK HUNTHERM 68-83",
+      "summary": "Fisher közelijével vezetést szerzett a BEAC, amit Kányási sikeres triplája követett (2–3).",
+      "url": "http://dvtk.eu/37547-ELTE_BEAC_Ujbuda_DVTK_HUNTHERM_68_83-cikk-kosarlabda/",
+      "published_at": "2026-10-31T16:49:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "Klub: DVTK HUNTHERM",
