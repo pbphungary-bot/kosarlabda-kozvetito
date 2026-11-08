@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-08T09:02:34.960386+00:00",
+  "checked_at": "2026-11-08T10:55:43.071950+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 51,
-      "added": 1,
-      "repaired": 50,
+      "added": 0,
+      "repaired": 51,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -99,7 +99,7 @@
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "status": "ok",
       "candidates": 11,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -147,7 +147,9 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
@@ -326,6 +328,19 @@
       "published_at": "2026-11-08T08:16:48+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Szűk rotációval arattunk fontos győzelmet a Szedeák ellen",
+      "summary": "Három sérültünk hiányát is sikerült megoldani, a negyedik negyedben a magunk javára fordítottuk a mérkőzést.",
+      "url": "https://olajofficial.hu/2026/11/08/szuk-rotacioval-arattunk-fontos-gyozelmet-a-szedeak-ellen/",
+      "published_at": "2026.11.08.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
