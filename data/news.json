@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-08T18:57:53.107143+00:00",
+  "checked_at": "2026-11-08T20:52:02.191477+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 9,
+      "added": 1,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -46,9 +46,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 51,
-      "added": 0,
-      "repaired": 51,
+      "candidates": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -289,9 +289,9 @@
       "source": "Klub: TFSE",
       "status": "ok",
       "candidates": 15,
-      "added": 1,
+      "added": 0,
       "repaired": 9,
-      "article_errors": 0,
+      "article_errors": 1,
       "listing_errors": []
     }
   ],
@@ -308,6 +308,25 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosárlabda NB I: a Honvéd 21 pontos hátrányból fordított a Körmend ellen",
+      "summary": "Férfi kosárlabda NB I: a Honvéd 21 pontos hátrányból fordított a Körmend ellen",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosarlabda-nb-i-a-honved-21-pontos-hatranybol-forditott-a-kormend-ellen/",
+      "published_at": "2026-11-08T20:36:47+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Újabb óriási Honvéd-fordítás: 21 pontos hátrányból verte a Körmendet Lakits András csapata",
+      "summary": "20-3-mal kezdte a negyedik negyedet a fővárosi alakulat.",
+      "url": "https://bball1.hu/ujabb-oriasi-honved-forditas-21-pontos-hatranybol-verte-a-kormendet-lakits-andras-csapata/",
+      "published_at": "2026-11-08T20:00:30+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -7627,6 +7646,16 @@
       "title": "Férfi NB I: Az utolsó pillanatban nyert a Kaposvár",
       "summary": "Férfi NB I: Az utolsó pillanatban nyert a Kaposvár",
       "url": "https://hunbasket.hu/hir/77665/ferfi-nb-i-az-utolso-pillanatban-nyert-a-kaposvar/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Férfi NB I: 21 pontos hátrányból verte a Körmendet a Honvéd",
+      "summary": "Férfi NB I: 21 pontos hátrányból verte a Körmendet a Honvéd",
+      "url": "https://hunbasket.hu/hir/77672/ferfi-nb-i-21-pontos-hatranybol-verte-a-kormendet-a-honved/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": [],
