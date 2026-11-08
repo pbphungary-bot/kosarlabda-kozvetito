@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-08T07:10:46.496964+00:00",
+  "checked_at": "2026-11-08T09:02:34.960386+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 51,
-      "added": 0,
-      "repaired": 51,
+      "added": 1,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 3,
-      "repaired": 7,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -308,6 +308,24 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Forray Gábor: Ez egy teljesen szubjektív sporttá vált és megmondom őszintén, én most annyira el vagyok keseredve",
+      "summary": "Baksa Szabolcs : Gratulálok a Falcónak, megérdemelten győzött, a különbség is teljesen reális.",
+      "url": "https://bball1.hu/forray-gabor-ez-egy-teljesen-szubjektiv-sportta-valt-es-megmondom-oszinten-en-most-annyira-el-vagyok-keseredve/",
+      "published_at": "2026-11-08T09:30:07+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "A kosárlabda-vb-ről lemaradó Dombai Réka mer nagyot álmodni",
+      "summary": "A kosárlabda-vb-ről lemaradó Dombai Réka mer nagyot álmodni",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/a-kosarlabda-vb-rol-lemarado-dombai-reka-mer-nagyot-almodni/",
+      "published_at": "2026-11-08T08:16:48+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
