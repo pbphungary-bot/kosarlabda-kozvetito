@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-08T14:52:47.013348+00:00",
+  "checked_at": "2026-11-08T16:51:54.309956+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -124,10 +124,10 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 11,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -169,8 +169,8 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 18,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -258,12 +258,15 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "candidates": 24,
+      "status": "error",
+      "candidates": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: RemoteDisconnected: Remote end closed connection without response",
+        "https://etobasket.hu/hu/hirek/2: RemoteDisconnected: Remote end closed connection without response"
+      ]
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -308,6 +311,18 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 18 órakor kezdődő Endo Plus Service-Honvéd – Egis Körmend mérkőzésről Fullcourtért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-913/",
+      "published_at": "2026-11-08T17:00:28+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Körmend"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
