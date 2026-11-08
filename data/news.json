@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-07T22:50:54.481311+00:00",
+  "checked_at": "2026-11-08T01:14:55.522644+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,7 +23,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
+      "added": 0,
       "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
@@ -210,8 +210,8 @@
       "source": "Klub: Délút-SZTE-Szedeák",
       "status": "ok",
       "candidates": 6,
-      "added": 1,
-      "repaired": 5,
+      "added": 0,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -288,13 +288,11 @@
     {
       "source": "Klub: TFSE",
       "status": "ok",
-      "candidates": 8,
+      "candidates": 15,
       "added": 0,
-      "repaired": 5,
-      "article_errors": 3,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
-      ]
+      "repaired": 9,
+      "article_errors": 1,
+      "listing_errors": []
     }
   ],
   "articles": [
