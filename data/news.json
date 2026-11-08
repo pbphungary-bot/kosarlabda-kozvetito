@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-08T13:02:42.761524+00:00",
+  "checked_at": "2026-11-08T14:52:47.013348+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 9,
+      "added": 1,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -124,10 +124,10 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "candidates": 11,
+      "status": "error",
+      "candidates": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -169,8 +169,8 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "ok",
-      "candidates": 18,
+      "status": "error",
+      "candidates": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
@@ -311,6 +311,18 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Súlyos vírusfertőzéssel küzd Bartik Zalán, bizonytalan ideig nem játszhat",
+      "summary": "Súlyos vírusfertőzéssel küzd Bartik Zalán , ezért bizonytalan ideig nem számíthat rá csapata – derült ki az Egis Körmend tájékoztatásából.",
+      "url": "https://bball1.hu/sulyos-virusfertozessel-kuzd-bartik-zalan-bizonytalan-ideig-nem-jatszhat/",
+      "published_at": "2026-11-08T13:54:50+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Körmend"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "Forray Gábor: Ez egy teljesen szubjektív sporttá vált és megmondom őszintén, én most annyira el vagyok keseredve",
       "summary": "Baksa Szabolcs : Gratulálok a Falcónak, megérdemelten győzött, a különbség is teljesen reális.",
       "url": "https://bball1.hu/forray-gabor-ez-egy-teljesen-szubjektiv-sportta-valt-es-megmondom-oszinten-en-most-annyira-el-vagyok-keseredve/",
@@ -339,6 +351,18 @@
       "teams": [
         "men|Szolnok"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Női NB I: Megizzadt Pasaréten a Sopron Basket",
+      "summary": "Sőt, a folytatásban is a hazaiak akarata érvényesült, nem sokkal az első játékrész vége előtt Szirony találatával már két számjegyűre hízott a Vasas Akadémia előnye (20-10), az utolsó szó azonban Maric révén a soproniaké volt (20-12).",
+      "url": "https://hunbasket.hu/hir/77647/noi-nb-i-megizzadt-pasareten-a-sopron-basket/",
+      "published_at": "2026. 11. 08.",
+      "summary_method": "source_description",
+      "teams": [
+        "women|Sopron Basket"
+      ],
+      "league": "women"
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
@@ -608,18 +632,6 @@
       "published_at": "2026-11-07T09:30:15+01:00",
       "summary_method": "article_body",
       "teams": []
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Női NB I: Megizzadt Pasaréten a Sopron Basket",
-      "summary": "Sőt, a folytatásban is a hazaiak akarata érvényesült, nem sokkal az első játékrész vége előtt Szirony találatával már két számjegyűre hízott a Vasas Akadémia előnye (20-10), az utolsó szó azonban Maric révén a soproniaké volt (20-12).",
-      "url": "https://hunbasket.hu/hir/77647/noi-nb-i-megizzadt-pasareten-a-sopron-basket/",
-      "published_at": "2026. 11. 07.",
-      "summary_method": "source_description",
-      "teams": [
-        "women|Sopron Basket"
-      ],
-      "league": "women"
     },
     {
       "source": "Hunbasket",
@@ -7125,6 +7137,19 @@
     },
     {
       "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZZ BE A KULISSZÁK MÖGÉ – FALCO ON TOUR (SOPRONBAN JÁRTUNK!)",
+      "summary": "NÉZZ BE A KULISSZÁK MÖGÉ – FALCO ON TOUR (SOPRONBAN JÁRTUNK!)",
+      "url": "https://falcokc.com/nezz-be-a-kulisszak-moge-falco-on-tour-sopronban-jartunk/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
       "title": "NÉZD VISSZA PERL ZOLTÁN 1000 PONTJÁNAK LEGSZEBBJEIT! – 15 PERCBE SŰRÍTVE",
       "summary": "NÉZD VISSZA PERL ZOLTÁN 1000 PONTJÁNAK LEGSZEBBJEIT! – 15 PERCBE SŰRÍTVE",
       "url": "https://falcokc.com/nezd-vissza-perl-zoltan-1000-pontjanak-legszebbjeit-15-percbe-suritve/",
@@ -7690,6 +7715,15 @@
       "teams": [
         "men|NKA Pécs"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "A vb házigazdája ezúttal Eb-selejtezőn lát minket vendégül",
+      "summary": "A vb házigazdája ezúttal Eb-selejtezőn lát minket vendégül",
+      "url": "https://hunbasket.hu/hir/77671/a-vb-hazigazdaja-ezuttal-eb-selejtezon-lat-minket-vendegul/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
