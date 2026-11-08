@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-08T16:51:54.309956+00:00",
+  "checked_at": "2026-11-08T18:57:53.107143+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -258,15 +258,12 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 24,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: RemoteDisconnected: Remote end closed connection without response",
-        "https://etobasket.hu/hu/hirek/2: RemoteDisconnected: Remote end closed connection without response"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -292,9 +289,9 @@
       "source": "Klub: TFSE",
       "status": "ok",
       "candidates": 15,
-      "added": 0,
+      "added": 1,
       "repaired": 9,
-      "article_errors": 1,
+      "article_errors": 0,
       "listing_errors": []
     }
   ],
@@ -7151,6 +7148,19 @@
       "league": "women"
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Négy játékosunk kapott meghívót az U20-as válogatott első edzőtáborába",
+      "summary": "Völgyi Lili, Szauter Petra, Babay-Bognár Kinga és Janzsó Alíz is meghívást kapott a 2027-es Európa-bajnokságra készülő U20-as női kosárlabda-válogatott első összetartására.",
+      "url": "https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "NÉZZ BE A KULISSZÁK MÖGÉ – FALCO ON TOUR (SOPRONBAN JÁRTUNK!)",
       "summary": "NÉZZ BE A KULISSZÁK MÖGÉ – FALCO ON TOUR (SOPRONBAN JÁRTUNK!)",
@@ -7496,6 +7506,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "JÖN A 7 ÉRDEKESSÉG RÓLAM SOROZATUNK LEGÚJABB RÉSZE! – Rosic Uros hozott 7 érdekességet magáról!",
+      "summary": "JÖN A 7 ÉRDEKESSÉG RÓLAM SOROZATUNK LEGÚJABB RÉSZE! – Rosic Uros hozott 7 érdekességet magáról!",
+      "url": "https://falcokc.com/jon-a-7-erdekesseg-rolam-sorozatunk-legujabb-resze-rosic-uros-hozott-7-erdekesseget-magarol/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
