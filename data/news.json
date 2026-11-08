@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-08T10:55:43.071950+00:00",
+  "checked_at": "2026-11-08T13:02:42.761524+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -99,7 +99,7 @@
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "status": "ok",
       "candidates": 11,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -147,9 +147,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: Csata TKK",
