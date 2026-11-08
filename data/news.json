@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-08T05:03:21.096618+00:00",
+  "checked_at": "2026-11-08T07:10:46.496964+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 0,
-      "repaired": 10,
+      "added": 3,
+      "repaired": 7,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -6926,6 +6926,19 @@
     },
     {
       "source": "Klub: Falco KC Szombathely",
+      "title": "Volt egy 5 perces periódusunk, ami nem tetszett, de összességében elégedettek lehetünk! – Hallgasd meg a tegnapi mérkőzésünk sajtótájékoztatóját!",
+      "summary": "Volt egy 5 perces periódusunk, ami nem tetszett, de összességében elégedettek lehetünk! – Hallgasd meg a tegnapi mérkőzésünk sajtótájékoztatóját!",
+      "url": "https://falcokc.com/volt-egy-5-perces-periodusunk-ami-nem-tetszett-de-osszessegeben-elegedettek-lehetunk-hallgasd-meg-a-tegnapi-merkozesunk-sajtotajekoztatojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
       "title": "TÖRTÉNELMI MÉRFÖLDKŐ: PERL ZOLTÁN ELÉRTE AZ 1000 PONTOT A BAJNOKOK LIGÁJÁBAN!",
       "summary": "TÖRTÉNELMI MÉRFÖLDKŐ: PERL ZOLTÁN ELÉRTE AZ 1000 PONTOT A BAJNOKOK LIGÁJÁBAN!",
       "url": "https://falcokc.com/tortenelmi-merfoldko-perl-zoltan-elerte-az-1000-pontot-a-bajnokok-ligajaban/",
@@ -7097,6 +7110,19 @@
       "title": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
       "summary": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
       "url": "https://falcokc.com/nezd-vissza-a-tegnap-aek-athen-elleni-bl-merkozesunk-osszefoglalojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Nem okozott problémát a hibátlan mérleg megőrzése: Sopron – Falco 56-82",
+      "summary": "Nem okozott problémát a hibátlan mérleg megőrzése: Sopron – Falco 56-82",
+      "url": "https://falcokc.com/nem-okozott-problemat-a-hibatlan-merleg-megorzese-sopron-falco-56-82/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
@@ -7545,6 +7571,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "ELINDULT AZ ONLINE JEGYÉRTÉKESÍTÉS AZ ALBA FEHÉRVÁR ELLENI MÉRKŐZÉSRE!",
+      "summary": "ELINDULT AZ ONLINE JEGYÉRTÉKESÍTÉS AZ ALBA FEHÉRVÁR ELLENI MÉRKŐZÉSRE!",
+      "url": "https://falcokc.com/elindult-az-online-jegyertekesites-az-alba-fehervar-elleni-merkozesre/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
