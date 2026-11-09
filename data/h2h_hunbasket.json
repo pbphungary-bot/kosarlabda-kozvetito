@@ -1,11 +1,11 @@
 {
   "source": "Hunbasket",
-  "updated_at": "2026-11-06T11:33:58.880871+00:00",
+  "updated_at": "2026-11-09T05:34:08.658971+00:00",
   "coverage": [
     {
       "league": "men",
       "season": "2627",
-      "count": 48,
+      "count": 55,
       "url": "https://hunbasket.hu/menetrend-teljes/ferfi/x2627/hun"
     },
     {
@@ -88,6 +88,76 @@
     }
   ],
   "matches": [
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Endo Plus Service-Honvéd",
+      "away": "Egis Körmend",
+      "date": "2026-11-08",
+      "score": "90–78",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134845",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "PHOENIX Fóti Tigrisek",
+      "away": "OSE Lions",
+      "date": "2026-11-07",
+      "score": "82–69",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134853",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Sopron KC",
+      "away": "Falco-Vulcano Energia KC Szombathely",
+      "date": "2026-11-07",
+      "score": "56–82",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134841",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Atomerőmű SE",
+      "away": "Duna Aszfalt-DTKH Kecskemét",
+      "date": "2026-11-07",
+      "score": "112–66",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134847",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "NHSZ-Szolnoki Olajbányász",
+      "away": "Délút-SZTE-Szedeák",
+      "date": "2026-11-07",
+      "score": "88–79",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134851",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Alba Fehérvár",
+      "away": "DEAC",
+      "date": "2026-11-06",
+      "score": "93–74",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134843",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Kometa-KVGY Kaposvári KK",
+      "away": "NKA Universitas Pécs",
+      "date": "2026-11-06",
+      "score": "97–94",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134849",
+      "source": "Hunbasket"
+    },
     {
       "league": "women",
       "season": "2026/2027",
