@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-09T19:06:05.392968+00:00",
+  "checked_at": "2026-11-09T21:04:17.547397+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 2,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -308,6 +308,15 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Májgyulladással küzd Bartik Zalán",
+      "summary": "A diagnózist a legutóbbi vérvizsgálatok is megerősítették.",
+      "url": "https://bball1.hu/majgyulladassal-kuzd-bartik-zalan/",
+      "published_at": "2026-11-09T20:09:16+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -7303,10 +7312,10 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Regisztráció",
+      "summary": "A diagnózist a legutóbbi vérvizsgálatok is megerősítették.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
-      "summary_method": "headline_fallback",
+      "summary_method": "source_description",
       "teams": []
     },
     {
