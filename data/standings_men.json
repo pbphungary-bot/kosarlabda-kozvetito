@@ -1,28 +1,28 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-11-09T14:03:07.064944+00:00",
-  "checked_at": "2026-11-09T15:28:12.746997+00:00",
+  "updated_at": "2026-11-07T16:43:22.665038+00:00",
+  "checked_at": "2026-11-07T16:43:22.665038+00:00",
   "standings": [
     {
       "rank": 1,
       "name": "Atomerőmű SE",
-      "played": 8,
-      "points": 16,
-      "wins": 8,
-      "losses": 0,
-      "scored": 831,
-      "conceded": 618
-    },
-    {
-      "rank": 2,
-      "name": "Falco-Vulcano Energia KC Szombathely",
       "played": 7,
       "points": 14,
       "wins": 7,
       "losses": 0,
-      "scored": 666,
-      "conceded": 492
+      "scored": 719,
+      "conceded": 552
+    },
+    {
+      "rank": 2,
+      "name": "Falco-Vulcano Energia KC Szombathely",
+      "played": 6,
+      "points": 12,
+      "wins": 6,
+      "losses": 0,
+      "scored": 584,
+      "conceded": 436
     },
     {
       "rank": 3,
@@ -47,22 +47,22 @@
     {
       "rank": 5,
       "name": "NHSZ-Szolnoki Olajbányász",
-      "played": 8,
-      "points": 14,
-      "wins": 6,
+      "played": 7,
+      "points": 12,
+      "wins": 5,
       "losses": 2,
-      "scored": 698,
-      "conceded": 636
+      "scored": 610,
+      "conceded": 557
     },
     {
       "rank": 6,
       "name": "Endo Plus Service-Honvéd",
-      "played": 8,
-      "points": 13,
-      "wins": 5,
+      "played": 7,
+      "points": 11,
+      "wins": 4,
       "losses": 3,
-      "scored": 740,
-      "conceded": 740
+      "scored": 650,
+      "conceded": 662
     },
     {
       "rank": 7,
@@ -76,6 +76,26 @@
     },
     {
       "rank": 8,
+      "name": "Sopron KC",
+      "played": 7,
+      "points": 10,
+      "wins": 3,
+      "losses": 4,
+      "scored": 583,
+      "conceded": 576
+    },
+    {
+      "rank": 9,
+      "name": "Délút-SZTE-Szedeák",
+      "played": 7,
+      "points": 10,
+      "wins": 3,
+      "losses": 4,
+      "scored": 550,
+      "conceded": 602
+    },
+    {
+      "rank": 10,
       "name": "OSE Lions",
       "played": 8,
       "points": 11,
@@ -85,34 +105,14 @@
       "conceded": 738
     },
     {
-      "rank": 9,
-      "name": "Délút-SZTE-Szedeák",
-      "played": 8,
-      "points": 11,
-      "wins": 3,
-      "losses": 5,
-      "scored": 629,
-      "conceded": 690
-    },
-    {
-      "rank": 10,
-      "name": "Sopron KC",
-      "played": 8,
-      "points": 11,
-      "wins": 3,
-      "losses": 5,
-      "scored": 639,
-      "conceded": 658
-    },
-    {
       "rank": 11,
       "name": "Egis Körmend",
-      "played": 8,
-      "points": 10,
+      "played": 7,
+      "points": 9,
       "wins": 2,
-      "losses": 6,
-      "scored": 645,
-      "conceded": 737
+      "losses": 5,
+      "scored": 567,
+      "conceded": 647
     },
     {
       "rank": 12,
@@ -137,12 +137,12 @@
     {
       "rank": 14,
       "name": "Duna Aszfalt-DTKH Kecskemét",
-      "played": 8,
-      "points": 8,
+      "played": 7,
+      "points": 7,
       "wins": 0,
-      "losses": 8,
-      "scored": 560,
-      "conceded": 728
+      "losses": 7,
+      "scored": 494,
+      "conceded": 616
     }
   ]
 }
