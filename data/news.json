@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-09T05:18:21.416954+00:00",
+  "checked_at": "2026-11-09T07:38:26.846239+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -147,9 +147,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: Csata TKK",
@@ -7618,6 +7616,19 @@
       "league": "women",
       "teams": [
         "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "HETI MENET 11.09-15.",
+      "summary": "HETI MENET 11.09-15.",
+      "url": "https://falcokc.com/heti-menet-11-09-15/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
