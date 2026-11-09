@@ -696,8 +696,32 @@ function articleOneSentence(summary,title){
  return short.replace(/[.!?]+$/,'')+'.';
 }
 function normalizedNewsText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
+// Official Hunbasket names must resolve to the same IDs used by news tags.
+// Keep men's and women's maps separate, especially for Sopron and NKA Pecs.
+const officialNewsTeams={
+ men:{
+  'Falco-Vulcano Energia KC Szombathely':'Falco KC',
+  'Kometa-KVGY Kaposvári KK':'Kaposvár',
+  'NHSZ-Szolnoki Olajbányász':'Szolnok',
+  'Endo Plus Service-Honvéd':'Bp. Honvéd',
+  'PHOENIX Fóti Tigrisek':'Fót',
+  'Délút-SZTE-Szedeák':'Szedeák',
+  'NKA Universitas Pécs':'NKA Pécs',
+  'Duna Aszfalt-DTKH Kecskemét':'Kecskemét'
+ },
+ women:{
+  'Csata TKK':'Csata TTK',
+  'KSC Szekszárd':'TARR KSC Szekszárd',
+  'ETO Basket':'SERCO UNI Győr',
+  'VBW CEKK Cegléd':'VBW CEKK Cegléd'
+ }
+};
 function canonicalNewsTeam(team,competition){
+ const official=officialNewsTeams[competition]||{};
  const target=normalizedNewsText(normalizeTeamName(team));
+ for(const [name,key] of Object.entries(official)){
+  if(normalizedNewsText(normalizeTeamName(name))===target)return key;
+ }
  for(const [key,aliases] of Object.entries(newsAliases[competition]||{})){
   if([key,...aliases].some(v=>normalizedNewsText(normalizeTeamName(v))===target))return key;
  }
