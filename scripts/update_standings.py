@@ -66,9 +66,25 @@ def extract_standings_html(html, league):
         if not all(x in text for x in ('csapat', 'dob', 'kap')):
             continue
         rows = [r for tr in table.find_all('tr') if (r := parse_row(tr)) is not None]
-        # Only the complete top-flight standings qualify; do not use partial or youth tables.
-        if len(rows) == expected and sorted(r['rank'] for r in rows) == list(range(1, expected + 1)):
-            candidates.append(sorted(rows, key=lambda r: r['rank']))
+        # Hunbasket renders each team twice (desktop/mobile rows). Collapse only
+        # exact duplicates, never conflicting entries for the same rank.
+        by_rank = {}
+        conflicts = set()
+        for row in rows:
+            rank = row['rank']
+            if rank in by_rank and by_rank[rank] != row:
+                conflicts.add(rank)
+            else:
+                by_rank[rank] = row
+        if conflicts:
+            print(f'{league}: rejecting conflicting repeated ranks {sorted(conflicts)}', flush=True)
+            continue
+        if len(by_rank) == expected and sorted(by_rank) == list(range(1, expected + 1)):
+            names = [clean(r['name']).casefold() for r in by_rank.values()]
+            if len(set(names)) != expected:
+                print(f'{league}: rejecting duplicate team names', flush=True)
+                continue
+            candidates.append([by_rank[i] for i in range(1, expected + 1)])
     if not candidates:
         sizes = [len([1 for tr in t.find_all('tr') if parse_row(tr)]) for t in soup.find_all('table')]
         raise ValueError(f'No complete {league} standings ({expected} teams); table row counts={sizes}; '
