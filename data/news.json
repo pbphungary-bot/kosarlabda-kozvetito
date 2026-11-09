@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-09T17:22:47.660055+00:00",
+  "checked_at": "2026-11-09T19:06:05.392968+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 6,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -99,8 +99,8 @@
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "status": "ok",
       "candidates": 11,
-      "added": 2,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -180,7 +180,7 @@
       "source": "Klub: Vasas Akadémia",
       "status": "ok",
       "candidates": 10,
-      "added": 2,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -308,6 +308,31 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Egy héttel korábban rendezik a Körmend-Alba mérkőzést",
+      "summary": "Az Egis Körmend hivatalos felületein bejelentette, hogy az eredetileg 2026. december 30-án 18:00 órára kiírt Alba Fehérvár elleni hazai mérkőzés új időpontban, 2026. december 23-án 18:00 órakor kerül megrendezésre, a bajnokság 14. fordulójából.",
+      "url": "https://bball1.hu/egy-hettel-korabban-rendezik-a-kormend-alba-merkozest/",
+      "published_at": "2026-11-09T18:49:06+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Alba Fehérvár",
+        "men|Körmend"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Közös megegyezéssel távozott a Kaposvár légiósa",
+      "summary": "Közös megegyezéssel szerződést bontott a Kometa-KVGY Kaposvári KK és Bonke Maring.",
+      "url": "https://bball1.hu/kozos-megegyezessel-tavozott-a-kaposvar-legiosa/",
+      "published_at": "2026-11-09T18:27:33+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kaposvár"
+      ],
+      "league": "men"
     },
     {
       "source": "Nemzeti Sport",
@@ -7278,12 +7303,11 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "A Szolnok szerdán a Góra vendége lesz, női válogatottunk Németországgal és Portugáliával találkozik.",
+      "summary": "Regisztráció",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: Falco KC Szombathely",
