@@ -671,12 +671,12 @@ const newsAliases={
  'men':{
   'Alba Fehérvár':['alba fehérvár','alba fehervar'],
   'Atomerőmű SE':['atomerőmű','atomeromu','ase paks'],
-  'Bp. Honvéd':['budapesti honvéd','bp. honvéd','honvéd kosárlabda'],
-  'DEAC':['deac'], 'Falco KC':['falco'], 'Kaposvár':['kaposvári kk','kaposvári kosárlabda','kometa kaposvár'],
-  'Kecskemét':['kecskeméti te','duna aszfalt','kecskeméti kosárlabda'],
+  'Bp. Honvéd':['budapesti honvéd','bp. honvéd','honvéd kosárlabda','endo plus service-honvéd'],
+  'DEAC':['deac'], 'Falco KC':['falco','falco-vulcano energia kc szombathely'], 'Kaposvár':['kaposvári kk','kaposvári kosárlabda','kometa kaposvár','kometa-kvgy kaposvári kk'],
+  'Kecskemét':['kecskeméti te','duna aszfalt','kecskeméti kosárlabda','duna aszfalt-dtkh kecskemét'],
   'Körmend':['egis körmend','körmendi'], 'Oroszlány':['ose lions','oroszlányi'],
-  'Sopron':['sopron kc','soproni kc'], 'Szedeák':['szedeák','szte-szedeák'],
-  'Szolnok':['szolnoki olaj','olajbányász'], 'NKA Pécs':['nka pécs férfi','nka universitas pécs férfi'], 'Fót':['fóti se','fóti kosárlabda']
+  'Sopron':['sopron kc','soproni kc'], 'Szedeák':['szedeák','szte-szedeák','délút-szte-szedeák'],
+  'Szolnok':['szolnoki olaj','olajbányász','nhsz-szolnoki olajbányász'], 'NKA Pécs':['nka pécs férfi','nka universitas pécs férfi','nka universitas pécs'], 'Fót':['fóti se','fóti kosárlabda','phoenix fóti tigrisek']
  },
  'women':{
   'DVTK HUNTHERM':['dvtk huntherm','dvtk'], 'Sopron Basket':['sopron basket'],
@@ -685,7 +685,7 @@ const newsAliases={
   'Vasas Akadémia':['vasas akadémia','vasas akademia'],
   'ELTE BEAC Újbuda':['beac','elte beac'], 'BKG-PRIMA Szigetszentmiklós':['bkg-prima','bkg prima'],
   'TARR KSC Szekszárd':['ksc szekszárd','szekszárdi'],
-  'SERCO UNI Győr':['uni győr','serco uni'], 'Dávid Kornél KA':['dávid kornél','dkka']
+  'SERCO UNI Győr':['uni győr','serco uni','eto basket'], 'Dávid Kornél KA':['dávid kornél','dkka'], 'VBW CEKK Cegléd':['cekk cegléd','vbw cekk']
  }
 };
 function articleOneSentence(summary,title){
@@ -696,32 +696,8 @@ function articleOneSentence(summary,title){
  return short.replace(/[.!?]+$/,'')+'.';
 }
 function normalizedNewsText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
-// Official Hunbasket names must resolve to the same IDs used by news tags.
-// Keep men's and women's maps separate, especially for Sopron and NKA Pecs.
-const officialNewsTeams={
- men:{
-  'Falco-Vulcano Energia KC Szombathely':'Falco KC',
-  'Kometa-KVGY Kaposvári KK':'Kaposvár',
-  'NHSZ-Szolnoki Olajbányász':'Szolnok',
-  'Endo Plus Service-Honvéd':'Bp. Honvéd',
-  'PHOENIX Fóti Tigrisek':'Fót',
-  'Délút-SZTE-Szedeák':'Szedeák',
-  'NKA Universitas Pécs':'NKA Pécs',
-  'Duna Aszfalt-DTKH Kecskemét':'Kecskemét'
- },
- women:{
-  'Csata TKK':'Csata TTK',
-  'KSC Szekszárd':'TARR KSC Szekszárd',
-  'ETO Basket':'SERCO UNI Győr',
-  'VBW CEKK Cegléd':'VBW CEKK Cegléd'
- }
-};
 function canonicalNewsTeam(team,competition){
- const official=officialNewsTeams[competition]||{};
  const target=normalizedNewsText(normalizeTeamName(team));
- for(const [name,key] of Object.entries(official)){
-  if(normalizedNewsText(normalizeTeamName(name))===target)return key;
- }
  for(const [key,aliases] of Object.entries(newsAliases[competition]||{})){
   if([key,...aliases].some(v=>normalizedNewsText(normalizeTeamName(v))===target))return key;
  }
