@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-09T09:23:04.246814+00:00",
+  "checked_at": "2026-11-09T11:08:53.251615+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 9,
+      "added": 1,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -99,7 +99,7 @@
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "status": "ok",
       "candidates": 11,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -108,8 +108,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -180,7 +180,7 @@
       "source": "Klub: Vasas Akadémia",
       "status": "ok",
       "candidates": 10,
-      "added": 0,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -310,6 +310,32 @@
       ]
     },
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Továbbra sincs meg az első győzelem",
+      "summary": "Junior csapatunk hétvégén Sopronban járt, ahol a Darazsa Akadémia ellen mérkőzött meg.",
+      "url": "https://vasasbasket.hu/index.php/tovabbra-sincs-meg-az-elso-gyozelem/",
+      "published_at": "2026-11-09T10:57:29+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Szoros rajtot követően begyújtották a rakétákat az Amazonok",
+      "summary": "A Vasas Amazonok U12-es csapata a MAFC Heisler ellen mérkőzött meg szombaton, a gyermek bajnokság 2. fordulóján.",
+      "url": "https://vasasbasket.hu/index.php/szoros-rajtot-kovetoen-begyujtottak-a-raketakat-az-amazonok/",
+      "published_at": "2026-11-09T10:31:39+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Kocsis Tamás: Az elsőben félidőben megmutattuk, hogyan kell kosárlabdázni, a másodikban sajnos a zónavédekezés ellen teljesen csődöt mondtunk",
       "summary": "Lakits András : Gratulálok a csapatnak a győzelemhez, de azzal szeretném kezdeni, hogy a Honvéd és a teljes magyar kosárlabdázás egy nagyon értékes embert veszített el Gellér Sándor személyében.",
@@ -317,6 +343,19 @@
       "published_at": "2026-11-09T09:35:59+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "FIBA Europe Cup: Lengyelországba utazunk hét közben",
+      "summary": "Szerdán a Zielona Gora otthonában folytatjuk nemzetközi szereplésünket.",
+      "url": "https://olajofficial.hu/2026/11/09/fiba-europe-cup-lengyelorszagba-utazunk-het-kozben/",
+      "published_at": "2026.11.09.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
       "source": "Nemzeti Sport",
@@ -7056,6 +7095,19 @@
       ]
     },
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Továbbra sincs meg az első győzelem",
+      "summary": "Továbbra sincs meg az első győzelem",
+      "url": "https://vasasbasket.hu/index.php/feed/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Találkozzunk a Lauberben: szerdán szurkolói ankétot tartunk!",
       "summary": "Október 14-én, szerdán 18 órától szurkolói ankétre várjuk az NKA Universitas Pécs szimpatizánsait a Lauber Dezső Városi Sportcsarnokban.",
@@ -7637,19 +7689,6 @@
       ]
     },
     {
-      "source": "Klub: Vasas Akadémia",
-      "title": "Hajszálon múlt a bravúr",
-      "summary": "Hajszálon múlt a bravúr",
-      "url": "https://vasasbasket.hu/index.php/feed/",
-      "published_at": null,
-      "summary_method": "headline_fallback",
-      "publisher_club": "Vasas Akadémia",
-      "league": "women",
-      "teams": [
-        "women|Vasas Akadémia"
-      ]
-    },
-    {
       "source": "Klub: Falco KC Szombathely",
       "title": "HETI MENET 11.09-15.",
       "summary": "HETI MENET 11.09-15.",
@@ -7704,6 +7743,15 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "men"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Fantasy: James Moors volt a legjobb a múlt héten",
+      "summary": "Fantasy: James Moors volt a legjobb a múlt héten",
+      "url": "https://hunbasket.hu/hir/77675/fantasy-james-moors-volt-a-legjobb-a-mult-heten/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Hunbasket",
