@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-09T07:38:26.846239+00:00",
+  "checked_at": "2026-11-09T09:23:04.246814+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -108,8 +108,8 @@
       "source": "Klub: Alba Fehérvár",
       "status": "ok",
       "candidates": 10,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -308,6 +308,24 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Kocsis Tamás: Az elsőben félidőben megmutattuk, hogyan kell kosárlabdázni, a másodikban sajnos a zónavédekezés ellen teljesen csődöt mondtunk",
+      "summary": "Lakits András : Gratulálok a csapatnak a győzelemhez, de azzal szeretném kezdeni, hogy a Honvéd és a teljes magyar kosárlabdázás egy nagyon értékes embert veszített el Gellér Sándor személyében.",
+      "url": "https://bball1.hu/kocsis-tamas-az-elsoben-felidoben-megmutattuk-hogyan-kell-kosarlabdazni-a-masodikban-sajnos-a-zonavedekezes-ellen-teljesen-csodot-mondtunk/",
+      "published_at": "2026-11-09T09:35:59+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "NYEREMÉNYJÁTÉK JÁTÉKSZABÁLYZATA",
+      "summary": "NYEREMÉNYJÁTÉK JÁTÉKSZABÁLYZATA",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/nyeremenyjatek-jatekszabalyzata/",
+      "published_at": "2026-11-08T22:40:43+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Nemzeti Sport",
@@ -7506,6 +7524,19 @@
       "title": "Kapcsolat",
       "summary": "Beragadtunk a rajtnál a Kometa-KVGY Kaposvári KK elleni rangadón, az ellenfél az első negyedben elhúzott, aztán sikerült visszakapaszkodni és végül megnyerni az összecsapást, ez volt idénybeli harmadik győzelmünk.",
       "url": "https://www.albakosar.hu/index.php?pg=news_3_5995",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Alba Fehérvár",
+      "league": "men",
+      "teams": [
+        "men|Alba Fehérvár"
+      ]
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "title": "Kapcsolat",
+      "summary": "Ma 10:00 órától hivatalosan is elindult az Alba Fehérvár férfi kosárlabda- és női kézilabdacsapatának új, közös weboldala, az albafehervar.hu!",
+      "url": "https://www.albakosar.hu/index.php?pg=news_3_6005",
       "published_at": null,
       "summary_method": "article_body",
       "publisher_club": "Alba Fehérvár",
