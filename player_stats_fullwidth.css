@@ -1,0 +1,43 @@
+/* Player statistics: desktop full-width, complete stat line */
+@media screen and (min-width: 1000px) {
+  .player-modal { padding: 8px !important; }
+  .player-modal > .player-report {
+    box-sizing: border-box !important;
+    width: calc(100vw - 16px) !important;
+    max-width: none !important;
+    margin: 8px auto !important;
+    padding: 14px 12px !important;
+  }
+  .player-modal .player-report .tablewrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  .player-modal .player-report table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+    font-size: clamp(8px, .68vw, 11px) !important;
+  }
+  .player-modal .player-report th,
+  .player-modal .player-report td {
+    padding: 5px 2px !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    letter-spacing: -.15px !important;
+  }
+  .player-modal .player-report th:nth-child(1),
+  .player-modal .player-report td:nth-child(1) { width: 2.5% !important; }
+  .player-modal .player-report th:nth-child(2),
+  .player-modal .player-report td:nth-child(2) {
+    text-align: left !important;
+    width: 12% !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+}
+/* Retain horizontal scrolling on narrow screens rather than losing columns. */
+@media screen and (max-width: 999px) {
+  .player-modal { padding: 8px !important; }
+  .player-modal > .player-report { max-width: none !important; margin: 8px auto !important; }
+}
