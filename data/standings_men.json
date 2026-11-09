@@ -1,13 +1,7 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-<<<<<<< HEAD
-  "updated_at": "2026-11-07T16:43:22.665038+00:00",
-  "checked_at": "2026-11-07T16:43:22.665038+00:00",
-=======
-  "updated_at": "2026-11-09T14:03:07.064944+00:00",
-  "checked_at": "2026-11-09T16:36:08.827978+00:00",
->>>>>>> 509346cad17448ad04a73d8aace70747b235234e
+  "checked_at": "2026-11-09T16:36:10.845465+00:00",
   "standings": [
     {
       "rank": 1,
