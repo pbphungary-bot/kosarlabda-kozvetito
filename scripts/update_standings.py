@@ -110,14 +110,10 @@ def main():
             old = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
             now = datetime.now(timezone.utc).isoformat()
             unchanged = old.get('standings') == standings
-            if unchanged:
-                print(f'{league}: {len(standings)} official teams; unchanged (no file write)', flush=True)
-                continue
             output = {'competition': 'Férfi NB I/A' if league == 'men' else 'Női NB I/A',
-                'source': url, 'updated_at': now, 'standings': standings}
-            tmp = path.with_suffix('.json.tmp')
-            tmp.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-            tmp.replace(path)
+                'source': url, 'updated_at': old.get('updated_at', now) if unchanged else now,
+                'checked_at': now, 'standings': standings}
+            path.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
             print(f'{league}: {len(standings)} official teams; {"unchanged" if unchanged else "updated"}', flush=True)
         except Exception as exc:
             failures.append(f'{league}: {exc}')

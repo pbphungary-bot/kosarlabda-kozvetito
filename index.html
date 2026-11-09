@@ -674,7 +674,7 @@ function formTeamPanel(name){const t=info(name);return '<div class="form-team" s
 function showPlayerReport(name,key=league){
  const report=document.createElement('div');report.className='player-modal';report.id='playerModal';report.setAttribute('role','dialog');report.setAttribute('aria-modal','true');
  const payload=playerData[key];const id=clubIdentity(name,key).id;
- const club=payload?.teams?.find(t=>t.club_id===id||t.name===name||t.aliases?.includes(name));
+ const club=payload?.teams?.find(t=>t.club_id===id||t.name===name||t.aliases?.includes(name)||clubIdentity(t.name,key).id===id);
  const source=club?.source_url||'';
  let body='';
  if(club?.players?.length){const cols=club.columns||[];body='<div class="tablewrap"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+club.players.map(row=>'<tr>'+cols.map((_,i)=>'<td>'+esc(row[i]??'—')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
