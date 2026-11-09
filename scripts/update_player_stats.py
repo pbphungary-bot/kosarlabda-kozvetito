@@ -10,7 +10,30 @@ ROOT=Path(__file__).resolve().parents[1]
 SEASON='x2627'
 LEAGUES={'men':('hun',14,'ferfi'),'women':('whun',11,'noi')}
 COLS=['#','Játékos','M.','K.','P.','Idő','2P S','2P K','2P %','Középtáv S','Középtáv K','Középtáv %','3P S','3P K','3P %','BT S','BT K','BT %','VLP','TLP','ÖLP','SZL','EL','Fault','Kih. fault','GP','Blokk','Kapott blokk','VAL','O.RTG','D.RTG','TS%','ES%']
-ROSTER={'men': ['Alba Fehérvár', 'Atomerőmű SE', 'Bp. Honvéd', 'DEAC', 'Falco KC', 'Kaposvár', 'Kecskemét', 'Körmend', 'Oroszlány', 'Sopron', 'Szedeák', 'Szolnok', 'NKA Pécs', 'Fót'], 'women': ['BKG-PRIMA Szigetszentmiklós', 'Csata TKK', 'DVTK HUNTHERM', 'ELTE BEAC Újbuda', 'ETO Basket', 'KSC Szekszárd', 'NKA Universitas Pécs', 'Sopron Basket', 'TFSE', 'Vasas Akadémia', 'VBW CEKK Cegléd']}
+ROSTER={
+ 'men':['Alba Fehérvár','Atomerőmű SE','Endo Plus Service-Honvéd','DEAC','Falco-Vulcano Energia KC Szombathely','Kometa-KVGY Kaposvári KK','Duna Aszfalt-DTKH Kecskemét','Egis Körmend','OSE Lions','Sopron KC','Délút-SZTE-Szedeák','NHSZ-Szolnoki Olajbányász','NKA Universitas Pécs','PHOENIX Fóti Tigrisek'],
+ 'women':['BKG-PRIMA Szigetszentmiklós','Csata TKK','DVTK HUNTHERM','ELTE BEAC Újbuda','ETO Basket','KSC Szekszárd','NKA Universitas Pécs','Sopron Basket','TFSE','Vasas Akadémia','VBW CEKK Cegléd']
+}
+ALIASES={
+ 'men':{
+  'Alba Fehérvár':['Alba','Alba Fehérvár'],
+  'Atomerőmű SE':['Atomerőmű','ASE','Atomerőmű SE'],
+  'Endo Plus Service-Honvéd':['Bp. Honvéd','Budapesti Honvéd','Honvéd','Endo Plus Service-Honvéd'],
+  'DEAC':['Debreceni EAC','DEAC'],
+  'Falco-Vulcano Energia KC Szombathely':['Falco','Falco KC','Falco KC Szombathely','Falco-Vulcano Energia KC Szombathely'],
+  'Kometa-KVGY Kaposvári KK':['Kaposvár','Kaposvári KK','Kometa Kaposvár','Kometa-KVGY Kaposvári KK'],
+  'Duna Aszfalt-DTKH Kecskemét':['Kecskemét','KTE','Duna Aszfalt-DTKH Kecskemét'],
+  'Egis Körmend':['Körmend','Egis Körmend'],
+  'OSE Lions':['Oroszlány','OSE','OSE Lions'],
+  'Sopron KC':['Sopron KC','SKC'],
+  'Délút-SZTE-Szedeák':['Szedeák','SZTE-Szedeák','Délút-SZTE-Szedeák'],
+  'NHSZ-Szolnoki Olajbányász':['Szolnok','Szolnoki Olaj','NHSZ-Szolnoki Olajbányász'],
+  'NKA Universitas Pécs':['NKA Pécs','NKA Universitas Pécs'],
+  'PHOENIX Fóti Tigrisek':['Fót','Fóti Tigrisek','PHOENIX Fóti Tigrisek'],
+ },
+ 'women':{}
+}
+
 SEEDS={'men': {'9002': 'Falco-Vulcano Energia KC Szombathely', '9006': 'Sopron KC', '40000': 'DEAC', '9800': 'Duna Aszfalt-DTKH Kecskemét', '40067': 'PHOENIX Fóti Tigrisek'}, 'women': {'40058': 'BKG-PRIMA Szigetszentmiklós', '10097': 'Csata TKK', '10005': 'DVTK HUNTHERM', '51008': 'ELTE BEAC Újbuda', '51119': 'ETO Basket', '51006': 'KSC Szekszárd', '19006': 'NKA Universitas Pécs', '51001': 'Sopron Basket', '51142': 'TFSE', '51149': 'Vasas Akadémia', '51150': 'VBW CEKK Cegléd'}}
 
 def norm(s):
@@ -57,11 +80,21 @@ def extract_team_id(href, league):
  return None
 
 def resolve_roster_name(label, league):
- """Only accept a name from the current 2026/27 competition roster."""
+ """Resolve both short competition labels and full sponsor names."""
  key=norm(label)
+ if not key:return None
  for name in ROSTER[league]:
-  if key==norm(name):return name
- return None
+  if key==norm(name) or any(key==norm(alias) for alias in ALIASES[league].get(name,[])):
+   return name
+ # Safe sponsor-name variations: require one unique match, never guess between clubs.
+ matches=[]
+ for name in ROSTER[league]:
+  options=[name]+ALIASES[league].get(name,[])
+  for alias in options:
+   token=norm(alias)
+   if len(token)>=7 and (token in key or key in token and len(key)>=7):
+    matches.append(name);break
+ return matches[0] if len(matches)==1 else None
 
 def extract_links(html, league, base_url):
  soup=BeautifulSoup(html,'html.parser')
@@ -69,14 +102,19 @@ def extract_links(html, league, base_url):
  for a in soup.find_all('a',href=True):
   team_id=extract_team_id(urljoin(base_url,a['href']),league)
   if not team_id:continue
-  name=resolve_roster_name(a.get_text(' ',strip=True),league)
-  if name:found[team_id]=name
+  # Some Hunbasket links wrap a logo and have no text: inspect image alt/title.
+  labels=[a.get_text(' ',strip=True),a.get('title','')]
+  labels += [img.get('alt','') for img in a.select('img')]
+  names={n for label in labels if (n:=resolve_roster_name(label,league))}
+  if len(names)==1:
+   found[team_id]=names.pop()
  return found
 
 def discover(league):
  code,expected,division=LEAGUES[league]
- ids=dict(SEEDS[league])
+ ids={k:resolve_roster_name(v,league) or v for k,v in SEEDS[league].items()}
  urls=[f'https://hunbasket.hu/csapatok?year={SEASON}',
+       f'https://hunbasket.hu/csapatok/{SEASON}/{code}',
        'https://hunbasket.hu/csapatok',
        f'https://hunbasket.hu/tabella/{division}',
        f'https://hunbasket.hu/menetrend-teljes/{division}/{SEASON}/{code}',
@@ -94,7 +132,7 @@ def discover(league):
    ids[team_id]=name
   if len(ids)>=expected:break
  # No stale-season teams or extra clubs may enter the dataset.
- ids={key:name for key,name in ids.items() if resolve_roster_name(name,league)}
+ ids={key:resolve_roster_name(name,league) for key,name in ids.items() if resolve_roster_name(name,league)}
  print(f'{league} discovered {len(ids)}/{expected} roster IDs',flush=True)
  return ids
 
@@ -108,9 +146,9 @@ def main():
   try:old=json.loads(path.read_text(encoding='utf-8'))
   except Exception:old={'league':league,'teams':[]}
   previous={t['club_id']:t for t in old.get('teams',[]) if t.get('club_id')}
-  ids=dict(SEEDS[league]) if args.offline else discover(league)
+  ids={k:resolve_roster_name(v,league) or v for k,v in SEEDS[league].items()} if args.offline else discover(league)
   # Preserve previously identified clubs across runs.
-  ids.update({key:value.get('name','') for key,value in previous.items() if resolve_roster_name(value.get('name',''),league)})
+  ids.update({key:resolve_roster_name(value.get('name',''),league) for key,value in previous.items() if resolve_roster_name(value.get('name',''),league)})
   new={key:value for key,value in previous.items() if resolve_roster_name(value.get('name',''),league)};errors=[]
   for team_id in ids:
    sample=args.sample_men if league=='men' else args.sample_women
@@ -120,7 +158,7 @@ def main():
     club=parse(html,league,team_id)
     expected_name=resolve_roster_name(ids[team_id],league)
     actual_name=resolve_roster_name(club['name'],league)
-    if not expected_name or not actual_name or norm(expected_name)!=norm(actual_name):
+    if not expected_name or not actual_name or expected_name!=actual_name:
      raise ValueError(f'Team identity mismatch: expected {ids[team_id]}, got {club["name"]}')
     new[team_id]=club
     print(league,team_id,club['name'],len(club['players']),'players',flush=True)
