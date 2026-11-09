@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-08T22:49:09.530906+00:00",
+  "checked_at": "2026-11-09T01:19:13.715631+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -147,7 +147,9 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
@@ -245,7 +247,10 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://mvm.oselions.hu/: URLError: <urlopen error _ssl.c:1001: The handshake operation timed out>",
+        "https://mvm.oselions.hu/teams/nbi-a/16: URLError: <urlopen error _ssl.c:1001: The handshake operation timed out>"
+      ]
     },
     {
       "source": "Klub: ELTE BEAC Újbuda",
@@ -288,10 +293,10 @@
     {
       "source": "Klub: TFSE",
       "status": "ok",
-      "candidates": 15,
+      "candidates": 14,
       "added": 0,
-      "repaired": 9,
-      "article_errors": 1,
+      "repaired": 10,
+      "article_errors": 0,
       "listing_errors": []
     }
   ],
