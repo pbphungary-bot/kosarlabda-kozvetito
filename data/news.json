@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-10T11:03:34.829629+00:00",
+  "checked_at": "2026-11-10T13:14:28.774349+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -71,8 +71,8 @@
     {
       "source": "Klub: DVTK HUNTHERM",
       "status": "ok",
-      "candidates": 5,
-      "added": 5,
+      "candidates": 6,
+      "added": 6,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -126,8 +126,8 @@
       "source": "Klub: Sopron KC",
       "status": "ok",
       "candidates": 11,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -210,8 +210,8 @@
       "source": "Klub: Délút-SZTE-Szedeák",
       "status": "ok",
       "candidates": 6,
-      "added": 1,
-      "repaired": 5,
+      "added": 0,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -288,10 +288,10 @@
     {
       "source": "Klub: TFSE",
       "status": "ok",
-      "candidates": 15,
+      "candidates": 14,
       "added": 0,
-      "repaired": 9,
-      "article_errors": 1,
+      "repaired": 10,
+      "article_errors": 0,
       "listing_errors": []
     }
   ],
@@ -307,6 +307,44 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Zastal Zielona Góra – NHSZ-Szolnoki Olajbányász",
+      "summary": "FIBA Europe Cup, csoportkör, 6. forduló.",
+      "url": "https://bball1.hu/zastal-zielona-gora-nhsz-szolnoki-olajbanyasz/",
+      "published_at": "2026-11-10T13:43:58+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szolnok"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 45. hét",
+      "summary": "2026. november 8, vasárnap, Budapest Óbudai Kaszások/A-Cellect - DVTK Akadémia/A 76 -88 (18-30,19-19,18-26,21-13) Statisztika",
+      "url": "http://dvtk.eu/37602-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_45_het-cikk-kosarlabda/",
+      "published_at": "2026-11-10T13:04:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "A jó formában lévő Honvédot fogadjuk",
+      "summary": "Hétközi fordulót rendeznek a bajnokságban, amelyen szerdán 18 órai kezdettel az Endo Plus Service-Honvéd gárdája látogat a Novomatic Arénába.",
+      "url": "https://sopronkc.hu/a-jo-formaban-levo-honvedot-fogadjuk/",
+      "published_at": "2026-11-10T11:26:32+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
       ]
     },
     {
