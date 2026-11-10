@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-10T20:59:10.891053+00:00",
+  "checked_at": "2026-11-10T22:57:08.155562+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 2,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -337,8 +337,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -465,20 +465,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 32,
       "attempted": 10,
       "already_saved": 0,
       "added": 2,
-      "repaired": 7,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://tfse.hu/dokumentumok/: RemoteDisconnected: Remote end closed connection without response"
-      ],
-      "usable_articles": 9,
+      "repaired": 8,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
@@ -495,6 +493,16 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Maximálisan saját magunkra és a saját játékunkra kell koncentrálnunk – interjú Takács-Kiss Virággal",
+      "summary": "Szerdán Németországban bemutatkozik a 2027-es Európa-bajnokság selejtező-sorozatában a magyar válogatott.",
+      "url": "https://wbasket.hu/maximalisan-sajat-magunkra-es-a-sajat-jatekunkra-kell-koncentralnunk-interju-takacs-kiss-viraggal/",
+      "published_at": "2026.11.10. 21:56",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -7883,6 +7891,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Újabb nehéz hétvége",
+      "summary": "Mindkét csapatunk szombaton vívta meg a maga mérkőzését, a hölgyek hazai pályán fogadták az Érd U22-es csapatát, míg az urak a Pénzügyőr otthonába látogattak.",
+      "url": "https://tfse.hu/ujabb-nehez-hetvege/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: VBW CEKK Cegléd",
       "title": "Újabb győzelem idegenben",
       "summary": "Vasas Akadémia–VBW CEKK Cegléd 55–69 (7–16, 9–15, 18–25, 21–13) Pasaréti út, 93 néző.",
@@ -8010,6 +8031,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Szünetig vezettünk, a második félidőben fordított a Nagykőrös",
+      "summary": "Férfi kosárlabdacsapatunk 71–56-os vereséget szenvedett az SMTPlus-Nagykőrösi Sólymok KE otthonában az NB I.",
+      "url": "https://tfse.hu/szunetig-vezettunk-a-masodik-felidoben-forditott-a-nagykoros/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
