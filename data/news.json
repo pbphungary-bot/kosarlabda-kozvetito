@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-09T22:57:36.506697+00:00",
+  "checked_at": "2026-11-10T01:12:49.535596+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -169,8 +169,8 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "ok",
-      "candidates": 18,
+      "status": "error",
+      "candidates": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
