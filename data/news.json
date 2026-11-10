@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-10T19:06:04.457340+00:00",
+  "checked_at": "2026-11-10T20:59:10.891053+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 6,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -175,8 +175,8 @@
       "candidates": 14,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 1,
       "listing_errors": [
         "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
@@ -241,8 +241,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 10,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -337,8 +337,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 3,
-      "repaired": 7,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -467,22 +467,18 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 32,
+      "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 4,
-      "article_errors": 4,
+      "added": 2,
+      "repaired": 7,
+      "article_errors": 1,
       "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/jelentkezz-a-tfse-kosarlabdahoz/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/kovats-gabriella-11-ev-utan-tavozik-a-tfse-edzoi-stabjabol/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/meghivo-es-felhivas-mkosz-tf-tfse-utanpotlas-edzotovabbkepzo-2026/: TimeoutError: The read operation timed out"
+        "article https://tfse.hu/dokumentumok/: RemoteDisconnected: Remote end closed connection without response"
       ],
-      "usable_articles": 4,
+      "usable_articles": 9,
       "source_coverage": true
     }
   ],
@@ -498,6 +494,37 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Légiós körkép: Golománék felemás hetet zártak, Somogyiék vereséget szenvedtek Gironában",
+      "summary": "Legutóbbi cikkünk óta a Valencia mindkét meccsén megnyerte: az Euroligában a Milanót (73-84), a bajnokságban pedig a Burgost (93-100) verte.",
+      "url": "https://bball1.hu/legios-korkep-golomanek-felemas-hetet-zartak-somogyiek-vereseget-szenvedtek-gironaban/",
+      "published_at": "2026-11-10T20:52:27+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Kálmán László szerint a két éllovas nem hibázik, a Fót és a Honvéd pedig idegenben is nyer",
+      "summary": "Állandó szakértőnk mondta el véleményét a 9. fordulóval kapcsolatban.",
+      "url": "https://bball1.hu/kalman-laszlo-szerint-a-ket-ellovas-nem-hibazik-a-fot-es-a-honved-pedig-idegenben-is-nyer/",
+      "published_at": "2026-11-10T20:01:01+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Fontos hétközi bajnoki hazai pályán",
+      "summary": "Szerdán 18 órától az Oroszlányt fogadjuk.",
+      "url": "https://szedeak.com/fontos-hetkozi-bajnoki-hazai-palyan/",
+      "published_at": "2026-11-10T19:39:52+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
       ]
     },
     {
@@ -8323,6 +8350,19 @@
       ]
     },
     {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Nadija Smailbegovic Belgrádban, Tina Cvijanovic Terniben kezdi az Eb-selejtezőt",
+      "summary": "Az NKA Universitas Pécs két játékosa, Nadija Smailbegovic és Tina Cvijanovic is válogatott meghívót kapott a 2027-es Európa-bajnokság novemberi selejtezőire.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Nadija-Smailbegovic-Belgradban--Tina-Cvijanovic-Terniben-kezdi-az-Eb-selejtezot/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "NB I. B: Nem hagyott esélyt a PRIMA",
       "summary": "U23-as csapatunk ezúttal csak asszisztálni tudott a helyenként örömkosárlabdát bemutató BKG játékához.",
@@ -8438,6 +8478,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Labdarúgóink továbbra is kiváló formában!",
+      "summary": "Labdarúgócsapatunk továbbra is nagy elszántsággal és küzdeni akarással menetel a bajnokságban!",
+      "url": "https://tfse.hu/labdarugoink-tovabbra-is-kivalo-formaban/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -8816,6 +8869,19 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "men"
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Futsal: Újabb mérkőzések és küzdelmes fordulók a TFSE háztáján!",
+      "summary": "Mindkét felnőtt futsalcsapatunk számára mozgalmas és kihívásokkal teli időszak következett az elmúlt hetekben.",
+      "url": "https://tfse.hu/futsal-ujabb-merkozesek-es-kuzdelmes-fordulok-a-tfse-haztajan/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
     },
     {
       "source": "Hunbasket",
