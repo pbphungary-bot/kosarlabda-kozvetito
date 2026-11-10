@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-10T13:14:28.774349+00:00",
+  "checked_at": "2026-11-10T14:06:21.133521+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
-      "repaired": 4,
+      "added": 2,
+      "repaired": 3,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -55,14 +55,14 @@
     {
       "source": "BB1.hu team searches",
       "status": "ok",
-      "search_pages_ok": 58,
-      "articles_added": 0,
+      "search_pages_ok": 29,
+      "articles_added": 42,
       "failures": []
     },
     {
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
-      "candidates": 24,
+      "candidates": 36,
       "added": 0,
       "repaired": 10,
       "article_errors": 0,
@@ -79,7 +79,7 @@
     },
     {
       "source": "Klub: DEAC",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -88,12 +88,21 @@
     },
     {
       "source": "Klub: Egis Körmend",
-      "status": "discovered",
+      "status": "error",
       "candidates": 40,
       "added": 0,
       "repaired": 0,
       "article_errors": 10,
-      "listing_errors": []
+      "listing_errors": [
+        "article https://www.egiskormend.hu/Hirek/Pazar_elso_felido_utan_bosszanto_vereseg_Budapesten.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/uj_jatekossal_gyozelmi_remenyekkel_utazunk_Budapestre.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Dalan_Ancrum_probajatekra_erkezik_az_Egis_Kormendhez.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Fordulatos_merkozesen_gyozelem_a_Sopron_ellen.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Kulcsfontossagu_merkozes_elott_a_Sopront_fogadjuk_Kormenden.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Tavozik_Xavier_Cork.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Nem_volt_esely_a_cimvedo_ellen_az_elso_vasi_klasszikuson.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Kovetkezik_az_elso_vasi_klasszikus.html/: HTTPError: HTTP Error 404: Not Found"
+      ]
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -115,19 +124,21 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
-      "status": "ok",
+      "status": "partial",
       "candidates": 14,
       "added": 0,
       "repaired": 9,
       "article_errors": 1,
-      "listing_errors": []
+      "listing_errors": [
+        "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
+      ]
     },
     {
       "source": "Klub: Sopron KC",
       "status": "ok",
       "candidates": 11,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -142,7 +153,7 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -151,7 +162,7 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -180,26 +191,23 @@
       "source": "Klub: Vasas Akadémia",
       "status": "ok",
       "candidates": 10,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "error",
-      "candidates": 0,
-      "added": 0,
+      "status": "ok",
+      "candidates": 10,
+      "added": 10,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.cekk.hu/new/index.php: HTTPError: HTTP Error 406: Not Acceptable",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTPError: HTTP Error 406: Not Acceptable"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: Atomerőmű SE",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -240,7 +248,7 @@
     },
     {
       "source": "Klub: OSE Lions",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -249,7 +257,7 @@
     },
     {
       "source": "Klub: ELTE BEAC Újbuda",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -278,7 +286,7 @@
     },
     {
       "source": "Klub: Sopron Basket",
-      "status": "error",
+      "status": "empty",
       "candidates": 0,
       "added": 0,
       "repaired": 0,
@@ -287,12 +295,15 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "candidates": 14,
+      "status": "error",
+      "candidates": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected"
+      ]
     }
   ],
   "articles": [
@@ -311,6 +322,19 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Délút-SZTE-Szedeák – OSE Lions",
+      "summary": "Szeged, Városi Sportcsarnok, szerda 18:00.",
+      "url": "https://bball1.hu/delut-szte-szedeak-ose-lions/",
+      "published_at": "2026-11-10T14:33:02+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Oroszlány",
+        "men|Szedeák"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "Zastal Zielona Góra – NHSZ-Szolnoki Olajbányász",
       "summary": "FIBA Europe Cup, csoportkör, 6. forduló.",
       "url": "https://bball1.hu/zastal-zielona-gora-nhsz-szolnoki-olajbanyasz/",
@@ -320,6 +344,19 @@
         "men|Szolnok"
       ],
       "league": "men"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Bent ragadtunk az öltözőben",
+      "summary": "Kadett/B csapatunk a Kiss Lenke KS/A otthonában járt, ahol fiatal csapatunk nem tudott kellően felpörögni az első percekben.",
+      "url": "https://vasasbasket.hu/index.php/bent-ragadtunk-az-oltozoben/",
+      "published_at": "2026-11-10T13:22:53+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "Klub: DVTK HUNTHERM",
@@ -1674,19 +1711,6 @@
       ]
     },
     {
-      "source": "Klub: DVTK HUNTHERM",
-      "title": "EK: Panathlitikos Sykeon – DVTK HUNTHERM 74-77",
-      "summary": "Balayera szerezte a mérkőzés első kosarait, majd egy Kányási-triplával tovább nőtt az előny.",
-      "url": "http://dvtk.eu/37574-EK_Panathlitikos_Sykeon_DVTK_HUNTHERM_74_77-cikk-kosarlabda/",
-      "published_at": "2026-11-04T21:30:00+01:00",
-      "summary_method": "article_body",
-      "publisher_club": "DVTK HUNTHERM",
-      "league": "women",
-      "teams": [
-        "women|DVTK HUNTHERM"
-      ]
-    },
-    {
       "source": "WBasket.hu",
       "title": "Nagyot küzdött és nyert a Sopron Szerbiában",
       "summary": "Európa Kupa, 4. forduló Nis, Sports Centre Cair MINCHEVA, Monika (BUL) FEREVSKI, Alija (MKD) NIKOCHEVIKJ, Ema (MKD), (RESILOVSKI, Ivaylo (BUL))",
@@ -1898,19 +1922,6 @@
       ]
     },
     {
-      "source": "Klub: DVTK HUNTHERM",
-      "title": "Magyar Gergely: Minden energiánkat a mérkőzésre kell összpontosítanunk",
-      "summary": "Magyar Gergely: - Újabb utazás és újabb mérkőzés vár ránk.",
-      "url": "http://dvtk.eu/37471-Magyar_Gergely_Minden_energiankat_a_merkozesre_kell_osszpontositanunk-cikk-kosarlabda/",
-      "published_at": "2026-11-03T19:20:00+01:00",
-      "summary_method": "article_body",
-      "publisher_club": "DVTK HUNTHERM",
-      "league": "women",
-      "teams": [
-        "women|DVTK HUNTHERM"
-      ]
-    },
-    {
       "source": "BB1.hu",
       "title": "Falco-Vulcano Energia KC Szombathely – AEK BC",
       "summary": "A tavalyi döntős látogat Szombathelyre.",
@@ -2066,19 +2077,6 @@
       ]
     },
     {
-      "source": "Klub: DVTK HUNTHERM",
-      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 44. hét",
-      "summary": "2026. október 27., kedd, Nyíregyháza Zsiráfok Kosársuli - DVTK U23 61 -70 (18-31,14-17,10-15,19-7) Statisztika",
-      "url": "http://dvtk.eu/37566-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_44_het-cikk-kosarlabda/",
-      "published_at": "2026-11-02T13:46:00+01:00",
-      "summary_method": "article_body",
-      "publisher_club": "DVTK HUNTHERM",
-      "league": "women",
-      "teams": [
-        "women|DVTK HUNTHERM"
-      ]
-    },
-    {
       "source": "WBasket.hu",
       "title": "Ők voltak a hétvége legjobbjai",
       "summary": "Hunbasket felületein megválaszthatjuk a hétvége legjobbját.",
@@ -2181,19 +2179,6 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "women"
-    },
-    {
-      "source": "Klub: DVTK HUNTHERM",
-      "title": "EK: Szerdán Görögországban játszik a DVTK HUNTHERM",
-      "summary": "2026. november 4., szerda 19:30 – magyar idő szerint (helyi idő szerint 20:30) Thesszaloniki, Eptapyrgio Aréna Panathlitikos Sykeon – DVTK HUNTHERM",
-      "url": "http://dvtk.eu/37557-EK_Szerdan_Gorogorszagban_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
-      "published_at": "2026-11-01T18:17:00+01:00",
-      "summary_method": "article_body",
-      "publisher_club": "DVTK HUNTHERM",
-      "league": "women",
-      "teams": [
-        "women|DVTK HUNTHERM"
-      ]
     },
     {
       "source": "Klub: DVTK HUNTHERM",
@@ -2437,19 +2422,6 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "women"
-    },
-    {
-      "source": "Klub: DVTK HUNTHERM",
-      "title": "ELTE BEAC Újbuda – DVTK HUNTHERM 68-83",
-      "summary": "Fisher közelijével vezetést szerzett a BEAC, amit Kányási sikeres triplája követett (2–3).",
-      "url": "http://dvtk.eu/37547-ELTE_BEAC_Ujbuda_DVTK_HUNTHERM_68_83-cikk-kosarlabda/",
-      "published_at": "2026-10-31T16:49:00+01:00",
-      "summary_method": "article_body",
-      "publisher_club": "DVTK HUNTHERM",
-      "league": "women",
-      "teams": [
-        "women|DVTK HUNTHERM"
-      ]
     },
     {
       "source": "Klub: DVTK HUNTHERM",
@@ -2807,6 +2779,15 @@
     },
     {
       "source": "BB1.hu",
+      "title": "DEAC – Duna-Aszfalt-DTKH Kecskemét",
+      "summary": "Debrecen, Oláh Gábor utcai Sportcsarnok, szerda 18:30.",
+      "url": "https://bball1.hu/deac-duna-aszfalt-dtkh-kecskemet-6/",
+      "published_at": "2026-10-27T19:00:01+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "NHSZ-Szolnoki Olajbányász – FIATC Girona",
       "summary": "Az eddig hibátlan Girona látogat Szolnokra.",
       "url": "https://bball1.hu/nhsz-szolnoki-olajbanyasz-fiatc-girona/",
@@ -3086,6 +3067,19 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Falco-Vulcano Energia KC Szombathely – Duna Aszfalt-DTKH Kecskemét",
+      "summary": "Szombathely, Arena Savaria, szombat 18:00.",
+      "url": "https://bball1.hu/falco-vulcano-energia-kc-szombathely-duna-aszfalt-dtkh-kecskemet-7/",
+      "published_at": "2026-10-23T15:51:23+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC",
+        "men|Kecskemét"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "OSE Lions – Sopron KC",
       "summary": "Emlékezetes győzelme után Oroszlányba utazik a Sopron.",
       "url": "https://bball1.hu/ose-lions-sopron-kc-3/",
@@ -3273,6 +3267,18 @@
       "league": "men"
     },
     {
+      "source": "BB1.hu",
+      "title": "Falco-Vulcano Energia KC Szombathely – Salon Vilpas",
+      "summary": "Bajnokok Ligája, csoportkör, 2. forduló.",
+      "url": "https://bball1.hu/falco-vulcano-energia-kc-szombathely-salon-vilpas/",
+      "published_at": "2026-10-19T15:50:48+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Férfi kosárlabda NB I: távozik a DEAC vezetőedzője",
       "summary": "Férfi kosárlabda NB I: távozik a DEAC vezetőedzője",
@@ -3411,6 +3417,18 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Magyar játékost igazolt az Oroszlány",
+      "summary": "Az OSE Lions bejelentette, hogy szerződtette Simon Benedek et.",
+      "url": "https://bball1.hu/magyar-jatekost-igazolt-az-oroszlany/",
+      "published_at": "2026-10-16T08:03:50+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Oroszlány"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "Súlyos krízisben a Sopron KC, a klub életben maradása a tét",
       "summary": "Súlyos krízisben a Sopron KC, a klub életben maradása a tét",
       "url": "https://bball1.hu/sopron-kc-penzugy-pojbics-szabolcs/",
@@ -3501,6 +3519,19 @@
     },
     {
       "source": "BB1.hu",
+      "title": "PHOENIX Fóti Tigrisek – Duna Aszfalt-DTKH Kecskemét",
+      "summary": "Fót, PHOENIX Sportcsarnok Fót, vasárnap 17:00.",
+      "url": "https://bball1.hu/phoenix-foti-tigrisek-duna-aszfalt-dtkh-kecskemet/",
+      "published_at": "2026-10-10T13:35:38+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kecskemét",
+        "men|Fót"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "OSE Lions – NKA Universitas Pécs",
       "summary": "Mindkét csapat első győzelmére hajt.",
       "url": "https://bball1.hu/ose-lions-nka-universitas-pecs/",
@@ -3570,6 +3601,18 @@
       "published_at": "2026-10-07T17:20:39+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Windrose Giants Antwerp – Falco-Vulcano Energia KC Szombathely",
+      "summary": "Bajnokok Ligája, csoportkör, 1. forduló.",
+      "url": "https://bball1.hu/windrose-giants-antwerp-falco-vulcano-energia-kc-szombathely/",
+      "published_at": "2026-10-06T14:43:31+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -3853,6 +3896,18 @@
       "teams": [
         "men|Falco KC",
         "men|Fót"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Endo Plus Service-Honvéd – Duna Aszfalt-DTKH Kecskemét",
+      "summary": "Budapest, Ludovika Aréna, szombat 18:00.",
+      "url": "https://bball1.hu/endo-plus-service-honved-duna-aszfalt-dtkh-kecskemet-3/",
+      "published_at": "2026-09-25T13:09:38+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kecskemét"
       ],
       "league": "men"
     },
@@ -4326,6 +4381,15 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Közleményt adott ki a Kaposvár: Egy játékos távozott, sérülések miatt nem utazik Paksra a csapat",
+      "summary": "A kialakult helyzet miatt első öt edzőmeccsét lemondta a tavalyi bronzérmes.",
+      "url": "https://bball1.hu/kozlemenyt-adott-ki-a-kaposvar-egy-jatekos-tavozott-serulesek-miatt-nem-utazik-paksra-a-csapat/",
+      "published_at": "2026-09-03T15:04:22+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "Profi szerződést kötött fiatal játékosával a DEAC",
       "summary": "Egy évre írt alá Szász-Veres Márk.",
       "url": "https://bball1.hu/profi-szerzodest-kotott-fiatal-jatekosaval-a-deac/",
@@ -4400,6 +4464,18 @@
       "summary_method": "source_description",
       "teams": [
         "men|Sopron"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Korábbi oroszlányi játékos a Kecskemét harmadik légiósa",
+      "summary": "Hétfőn sikeresen átesett az orvosi vizsgálatokon Shaun Doss , így a Duna Aszfalt-DTKH Kecskemét hivatalosan is bejelentette harmadik légiósát!",
+      "url": "https://bball1.hu/korabbi-oroszlanyi-jatekos-a-kecskemet-harmadik-legiosa/",
+      "published_at": "2026-08-17T17:57:59+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kecskemét"
       ],
       "league": "men"
     },
@@ -4543,6 +4619,15 @@
         "men|Atomerőmű SE"
       ],
       "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Visszatérő légióst jelentett be a Paks",
+      "summary": "Yasiin Joseph korábban 12 mérkőzésen lepett pályára a csapatban.",
+      "url": "https://bball1.hu/visszatero-legiost-jelentett-be-a-paks/",
+      "published_at": "2026-07-31T17:26:35+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -5357,6 +5442,15 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Hiába vezetett sokáig a végén elfogyott a Paks, döntős a Szolnok",
+      "summary": "Rájátszás, elődöntő, 3. mérkőzés.",
+      "url": "https://bball1.hu/hiaba-vezetett-sokaig-a-vegen-elfogyott-a-paks-dontos-a-szolnok/",
+      "published_at": "2026-05-08T19:11:37+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "DEAC – Sopron KC",
       "summary": "Debrecenben kezdődik a párharc.",
       "url": "https://bball1.hu/deac-sopron-kc-12/",
@@ -5583,6 +5677,15 @@
         "men|Kaposvár"
       ],
       "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Oliver Vidin: Úgy érzem, mintha négy játékosunk játszott volna nyolc-kilenc paksi ellen az egész párharc során",
+      "summary": "Vedran Bosnic : Jó mérkőzést játszottunk, különösen az első félidőben voltunk nagyon élesek.",
+      "url": "https://bball1.hu/oliver-vidin-ugy-erzem-mintha-negy-jatekosunk-jatszott-volna-nyolc-kilenc-paksi-ellen-az-egesz-parharc-soran/",
+      "published_at": "2026-04-25T08:44:46+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -6274,6 +6377,15 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Gyászol a magyar kosárlabda, gyászban Oroszlány",
+      "summary": "Életének 84. évében elhunyt Jugovics József , korábbi NB I-es, válogatott játékos, vezető és utánpótlásedző, az oroszlányi kosárlabda meghatározó alakja.",
+      "url": "https://bball1.hu/gyaszol-a-magyar-kosarlabda-gyaszban-oroszlany/",
+      "published_at": "2024-04-03T14:35:44+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "A célok teljesítése felé halad a Mercedes-Benz Gyár Nemzeti Kosárlabda Akadémia junior csapata",
       "summary": "A kecskemétiek junior csapatának az edzője, Dusan Markovic nyilatkozott.",
       "url": "https://bball1.hu/a-celok-teljesitese-fele-halad-az-akademia-junior-csapata/",
@@ -6527,6 +6639,15 @@
       "url": "https://bball1.hu/fegyverneky-zsofiaval-zarta-az-evet-a-mercedes-benz-gyar-nemzeti-kosarlabda-akademia/",
       "published_at": "2022-06-08T16:07:36+01:00",
       "summary_method": "source_description",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Adód 1%-val segítheted az oroszlányi kosárlabdát",
+      "summary": "Kérjük, hogy adód 1%-ával támogasd egyesületünket, hogy az elkövetkezendő években is saját nevelésű játékosokkal, minél szélesebb utánpótlásbázissal építhessük tovább az oroszlányi kosárlabdát!",
+      "url": "https://bball1.hu/adod-1-val-segitheted-az-oroszlanyi-kosarlabdat/",
+      "published_at": "2022-05-02T14:34:20+01:00",
+      "summary_method": "article_body",
       "teams": []
     },
     {
@@ -7011,6 +7132,33 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Elhunyt a paksi kosárlabdázás egyik meghatározó alakja",
+      "summary": "Schmidt Ferenc hosszan tartó betegség után hagyott itt bennünket.",
+      "url": "https://bball1.hu/elhunyt-a-paksi-kosarlabdazas-egyik-meghatarozo-alakja/",
+      "published_at": "2020-04-22T20:47:04+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Közel harminc éve a paksi kosárlabda szolgálatában",
+      "summary": "Hermann Jánosra különösen a „három M-betűs” volt nagy hatással, de nem feledkezett el a „litván csomagról”, illetve „Kompiról” és „Szellőről” sem.",
+      "url": "https://bball1.hu/kozel-harminc-eve-a-paksi-kosarlabda-szolgalataban/",
+      "published_at": "2019-12-03T15:07:07+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "„Abban sem vagyunk biztosak, hogy Oroszlányban valaha is lesz kosárlabda”",
+      "summary": "Huszonkilenc év után tér vissza az első osztályba az bányászváros csapata.",
+      "url": "https://bball1.hu/abban-sem-vagyunk-biztosak-hogy-oroszlanyban-valaha-is-lesz-kosarlabda/",
+      "published_at": "2019-09-28T12:00:01+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "Vereséggel nyitott a Cegléd",
       "summary": "Lengyelországi tornával kezdtek Kobolákék.",
       "url": "https://bball1.hu/vereseggel-nyitott-a-cegled/",
@@ -7285,6 +7433,19 @@
       ]
     },
     {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Újabb győzelem idegenben",
+      "summary": "Vasas Akadémia–VBW CEKK Cegléd 55–69 (7–16, 9–15, 18–25, 21–13) Pasaréti út, 93 néző.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/390-ujabb-gyozelem-idegenben/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Újabb fővárosi párharc: a Csata érkezik a Koltaiba",
       "summary": "A BEAC otthonában megszerzett győzelem után hazai pályán folytatja a bajnokságot női kosárlabdacsapatunk.",
@@ -7363,19 +7524,6 @@
       ]
     },
     {
-      "source": "Klub: Vasas Akadémia",
-      "title": "Továbbra sincs meg az első győzelem",
-      "summary": "Továbbra sincs meg az első győzelem",
-      "url": "https://vasasbasket.hu/index.php/feed/",
-      "published_at": null,
-      "summary_method": "headline_fallback",
-      "publisher_club": "Vasas Akadémia",
-      "league": "women",
-      "teams": [
-        "women|Vasas Akadémia"
-      ]
-    },
-    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Találkozzunk a Lauberben: szerdán szurkolói ankétot tartunk!",
       "summary": "Október 14-én, szerdán 18 órától szurkolói ankétre várjuk az NKA Universitas Pécs szimpatizánsait a Lauber Dezső Városi Sportcsarnokban.",
@@ -7427,6 +7575,45 @@
       ]
     },
     {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Szombaton a Szekszárdot fogadjuk",
+      "summary": "Szombaton este 6-kor ismét hazai csarnokban játszunk, ellenfelünk a KSC Szekszárd csapata lesz.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/391-szombaton-a-szekszardot-fogadjuk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Szombaton a Pasaréten folytatjuk",
+      "summary": "Szombaton este 6-kor Budán, a Pasaréten folytatjuk bajnoki szereplésünket a Vasas Akadémia vendégeként.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/389-szombaton-a-pasareten-folytatjuk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Szombaton Szigetszentmikósra utazunk",
+      "summary": "Szombaton este 6-kor a BKG vendégeként lépünk pályára Szigetszentmiklóson.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/393-szombaton-szigetszentmikosra-utazunk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Szerzői jogok",
       "summary": "Szerzői jogok",
@@ -7434,6 +7621,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Szenvedős első félidő, de újabb győzelem",
+      "summary": "BKG-Prima Szigetszentmiklós–VBW CEKK Cegléd 65–77 (21–20, 17–15, 13–28, 14–14) Szigetszentmiklós, 99 néző.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/394-szenvedos-elso-felido-de-ujabb-gyozelem/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -7557,6 +7757,19 @@
       ]
     },
     {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Nincs megállás, szombaton már Miskolcon játszunk",
+      "summary": "Igazán még ki sem élvezhettük, hogy szerdán legyőztük a bajnoki címvédő pécsieket, hiszen szombaton már újabb mérkőzés vár ránk.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/387-nincs-megallas-szombaton-mar-miskolcon-jatszunk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "Nem okozott problémát a hibátlan mérleg megőrzése: Sopron – Falco 56-82",
       "summary": "Nem okozott problémát a hibátlan mérleg megőrzése: Sopron – Falco 56-82",
@@ -7583,6 +7796,19 @@
       ]
     },
     {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Nagyot küzdve győztük le a pécsieket",
+      "summary": "VBW CEKK Cegléd–NKA Universitas Pécs 56–50 (7–11, 25–13, 13–13, 11–13) Cegléd, 292 néző.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/386-nagyot-kuzdve-gyoztuk-le-a-pecsieket/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (férfi)",
       "title": "Nagyon nehéz elhinni, elfogadni, hogy ezt a meccset nem mi nyertük meg",
       "summary": "Az utolsó pillanatig megvolt az esélyünk arra, hogy győzelemmel zárjuk a kaposvári bajnokit, sajnos a végén nem úgy alakultak a dolgok, ahogy szerettük volna, így hárompontos vereség lett a vége.",
@@ -7606,6 +7832,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Nagy csatában, de végül szoros vereség Miskolcon",
+      "summary": "DVTK HUN-THERM–VBW CEKK CEGLÉD 66–60 (10–15, 20–15, 19–12, 17–18) Miskolc, 1100 néző.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/388-nagy-csataban-de-vegul-szoros-vereseg-miskolcon/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
       ]
     },
     {
@@ -8122,10 +8361,257 @@
       ]
     },
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Bent ragadtunk az öltözőben",
+      "summary": "Bent ragadtunk az öltözőben",
+      "url": "https://vasasbasket.hu/index.php/feed/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
       "url": "https://bball1.hu/wp-login.php/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DAlba%2BFeh%25C3%25A9rv%25C3%25A1r",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DAtomer%25C5%2591m%25C5%25B1%2BSE",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DBudapesti%2BHonv%25C3%25A9d%2Bkos%25C3%25A1rlabda",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DDEAC%2Bkos%25C3%25A1rlabda",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DFalco%2BKC",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKaposv%25C3%25A1ri%2BKK",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKTE%2Bkos%25C3%25A1rlabda",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DEgis%2BK%25C3%25B6rmend",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DOSE%2BLions",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSopron%2BKC",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSZTE-Szede%25C3%25A1k",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSzolnoki%2BOlajb%25C3%25A1ny%25C3%25A1sz",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DF%25C3%25B3t%2Bkos%25C3%25A1rlabda",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSopron%2BBasket",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DDVTK%2BHUNTHERM",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs%2Bn%25C5%2591i",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DTFSE%2Bn%25C5%2591i%2Bkos%25C3%25A1rlabda",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DELTE%2BBEAC%2B%25C3%259Ajbuda",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DVasas%2BAkad%25C3%25A9mia%2Bn%25C5%2591i",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCsata%2BTTK",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DBKG%2BPRIMA%2Bn%25C5%2591i",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKSC%2BSzeksz%25C3%25A1rd",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DUNI%2BGy%25C5%2591r%2Bn%25C5%2591i",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCEKK%2BCegl%25C3%25A9d",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -8199,6 +8685,32 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "A bajnoki címvédőt fogadjuk szerdán",
+      "summary": "Szerda este 6 órakor a bajnoki címvédő Pécs csapatát fogadjuk a szezon első hazai mérkőzésén.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/385-a-bajnoki-cimvedot-fogadjuk-szerdan/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "A Szekszárdot nem tudtuk legyőzni",
+      "summary": "VBW CEKK Cegléd–KSC Szekszárd 85–105 (22–30, 26–29, 9–22, 28–24) Cegléd, 425 néző.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/392-a-szekszardot-nem-tudtuk-legyozni/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ]
     },
     {
       "source": "Hunbasket",
