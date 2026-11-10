@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-10T07:21:07.060774+00:00",
+  "checked_at": "2026-11-10T09:05:36.437415+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 8,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -8000,6 +8000,19 @@
       "title": "ELINDULT AZ ONLINE JEGYÉRTÉKESÍTÉS AZ ALBA FEHÉRVÁR ELLENI MÉRKŐZÉSRE!",
       "summary": "ELINDULT AZ ONLINE JEGYÉRTÉKESÍTÉS AZ ALBA FEHÉRVÁR ELLENI MÉRKŐZÉSRE!",
       "url": "https://falcokc.com/elindult-az-online-jegyertekesites-az-alba-fehervar-elleni-merkozesre/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "ELINDULT A HONVÉD ELLENI, IDEGENBELI MÉRKŐZÉSÜNK ONLINE JEGYÉRTÉKESÍTÉSE!",
+      "summary": "ELINDULT A HONVÉD ELLENI, IDEGENBELI MÉRKŐZÉSÜNK ONLINE JEGYÉRTÉKESÍTÉSE!",
+      "url": "https://falcokc.com/elindult-a-honved-elleni-idegenbeli-merkozesunk-online-jegyertekesitese/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
