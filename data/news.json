@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-10T03:02:33.396407+00:00",
+  "checked_at": "2026-11-10T05:04:17.399162+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -147,7 +147,9 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": []
+      "listing_errors": [
+        "https://www.megyeritigrisek.hu/: URLError: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
@@ -169,8 +171,8 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "error",
-      "candidates": 0,
+      "status": "ok",
+      "candidates": 18,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
