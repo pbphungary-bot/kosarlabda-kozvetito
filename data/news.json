@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-10T09:05:36.437415+00:00",
+  "checked_at": "2026-11-10T11:03:34.829629+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -210,8 +210,8 @@
       "source": "Klub: Délút-SZTE-Szedeák",
       "status": "ok",
       "candidates": 6,
-      "added": 0,
-      "repaired": 6,
+      "added": 1,
+      "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -307,6 +307,29 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Már Hamburgban készül a női kosárlabda-válogatott",
+      "summary": "Már Hamburgban készül a női kosárlabda-válogatott",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/mar-hamburgban-keszul-a-noi-kosarlabda-valogatott/",
+      "published_at": "2026-11-10T11:06:30+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Mandics: A közösség ereje",
+      "summary": "Szerdán 18 órától újabb fontos bajnoki vár csapatunkra, az ellenfél az újszegedi sportcsarnokban az az Oroszlány lesz, amellyel az elmúlt évek során rendre nagy csatákat vívtunk.",
+      "url": "https://szedeak.com/mandics-a-kozosseg-ereje/",
+      "published_at": "2026-11-10T09:24:05+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
       ]
     },
     {
@@ -7601,6 +7624,19 @@
       "teams": []
     },
     {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Mandics: A közösség ereje",
+      "summary": "Mandics: A közösség ereje",
+      "url": "https://szedeak.com/feed/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Magabiztos győzelem, két élvonalbeli debütálással",
       "summary": "Nehezen lendültünk játékba a BKG-PRIMA Szigetszentmiklós elleni első hazai bajnokinkon, de az első negyed második felében átvettük az irányítást, majd a nagyszünetig jelentős előnyt építettünk ki.",
@@ -8055,19 +8091,6 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
-    },
-    {
-      "source": "Klub: Délút-SZTE-Szedeák",
-      "title": "Az utolsó negyedben dőlt el a szolnoki meccsünk",
-      "summary": "Az utolsó negyedben dőlt el a szolnoki meccsünk",
-      "url": "https://szedeak.com/feed/",
-      "published_at": null,
-      "summary_method": "headline_fallback",
-      "publisher_club": "Délút-SZTE-Szedeák",
-      "league": "men",
-      "teams": [
-        "men|Szedeák"
-      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
