@@ -19,7 +19,7 @@ OUT = Path('data/news.json')
 HEALTH = Path('data/news_health.json')
 MAX_AGE_DAYS = 45
 MIN_SUMMARY_LENGTH = 55
-HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', 'Accept-Language': 'hu-HU,hu;q=0.9,en;q=0.7'}
+HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', 'Accept-Language': 'hu-HU,hu;q=0.9,en;q=0.7', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
 SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
@@ -35,7 +35,10 @@ def fetch(url, timeout=12):
     request = urllib.request.Request(url, headers=HEADERS)
     with urllib.request.urlopen(request, timeout=timeout) as response:
         final = response.geturl()
-        return BeautifulSoup(response.read(), 'html.parser'), final
+        payload = response.read()
+        content_type = response.headers.get('Content-Type', '').lower()
+        is_xml = ('xml' in content_type or payload.lstrip().startswith((b'<?xml', b'<rss', b'<feed')))
+        return BeautifulSoup(payload, 'xml' if is_xml else 'html.parser'), final
 
 def metadata(soup, *names):
     for name in names:
@@ -105,18 +108,24 @@ def candidates(soup, base, src):
     return list(links.items())[:100]
 
 def feed_candidates(soup, base, src):
-    """Read public RSS/Atom feeds when advertised by the publisher."""
-    links = []
+    """Discover public RSS/Atom links, plus standard WordPress feeds.
+
+    Only publisher-hosted article URLs passing valid_url are accepted.
+    """
+    feeds = []
     for tag in soup.select('link[rel="alternate"][type*="rss"], link[rel="alternate"][type*="atom"]'):
         href = tag.get('href')
         if href:
-            u = urljoin(base, href)
-            if (urlparse(u).hostname or '').removeprefix('www.') in src['hosts']:
-                links.append(u)
+            feeds.append(urljoin(base, href))
+    if src['kind'] == 'club':
+        parsed = urlparse(base)
+        feeds.append(f'{parsed.scheme}://{parsed.netloc}/feed/')
     found = {}
-    for feed in links[:2]:
+    for feed in dict.fromkeys(feeds):
+        if (urlparse(feed).hostname or '').removeprefix('www.') not in src['hosts']:
+            continue
         try:
-            xml, feed_url = fetch(feed, timeout=8)
+            xml, feed_url = fetch(feed, timeout=6)
             for node in xml.select('item, entry')[:50]:
                 link = node.find('link')
                 href = (link.get('href') or link.get_text(strip=True)) if link else ''
@@ -125,9 +134,10 @@ def feed_candidates(soup, base, src):
                 u = canonical(urljoin(feed_url, href))
                 if 12 <= len(title) <= 250 and valid_url(u, src):
                     found.setdefault(u, title)
-        except Exception:
+        except (OSError, ValueError, urllib.error.URLError):
             continue
     return found
+
 
 def structured_date(soup):
     for tag in soup.select('script[type="application/ld+json"]'):
@@ -272,7 +282,7 @@ def parse_date(value):
         pass
     m = re.search(r'(20\d{2})[.\-/]\s*(\d{1,2})[.\-/]\s*(\d{1,2})(?:\D+(\d{1,2}):(\d{2}))?', value)
     if m:
-        return f'{m[1]}-{int(m[2]):02d}-{int(m[3]):02d}T{int(m[4] or 0):02d}:{int(m[5] or 0):02d}:00'
+        return f'{m[1]}-{int(m[2]):02d}-{int(m[3]):02d}T{int(m[4] or 0):02d}:{int(m[5] or 0):02d}:00+01:00'
     return ''
 
 
@@ -367,20 +377,26 @@ def source_league(item):
 
 def collect_source(src, entries, checks, max_articles=12):
     found, listing_errors = {}, []
+    listings_ok = 0
     for listing_url in src['urls'][:4]:
         try:
             soup, base = fetch(listing_url, timeout=9 if src['kind']=='club' else 12)
+            listings_ok += 1
             for url, title in candidates(soup, base, src):
                 found.setdefault(url, title)
             if src['kind'] == 'club':
-                for url, title in feed_candidates(soup, base, src).items():
-                    found.setdefault(url, title)
+                try:
+                    for url, title in feed_candidates(soup, base, src).items():
+                        found.setdefault(url, title)
+                except Exception as feed_exc:
+                    pass  # Optional feeds must not downgrade a successful HTML listing
         except Exception as exc:
             listing_errors.append(f'{listing_url}: {type(exc).__name__}: {exc}')
-    added, repaired, failures = 0, 0, 0
+    added, repaired, failures, already_saved = 0, 0, 0, 0
     for url, title in list(found.items())[:max_articles]:
         existing = entries.get(url)
         if existing and existing.get('published_at') and existing.get('summary_method') == 'article_body':
+            already_saved += 1
             continue
         try:
             item = article(url, title, src)
@@ -400,9 +416,25 @@ def collect_source(src, entries, checks, max_articles=12):
             failures += 1
             listing_errors.append(f'article {url}: {type(exc).__name__}: {exc}')
         time.sleep(0.1)
-    checks.append({'source': src['name'], 'status': ('partial' if (listing_errors or failures) and (added or repaired or any(url in entries for url in found)) else 'ok') if (added or repaired or any(url in entries for url in found)) else ('error' if (listing_errors or failures) else 'empty'),
-                   'candidates': len(found), 'added': added, 'repaired': repaired,
-                   'article_errors': failures, 'listing_errors': listing_errors[:8]})
+    # A listing with 40 links but zero extracted articles is NOT a healthy source.
+    usable = added + repaired + already_saved
+    if not listings_ok:
+        status, reason = 'error', 'listing_unreachable'
+    elif not found:
+        status, reason = 'empty', 'no_article_links'
+    elif not usable and failures:
+        status, reason = 'error', 'all_article_extractions_failed'
+    elif listing_errors or failures:
+        status, reason = 'partial', 'partial_extraction_or_listing_failure'
+    else:
+        status, reason = 'ok', 'articles_available'
+    checks.append({'source': src['name'], 'status': status, 'reason': reason,
+                   'listing_pages_ok': listings_ok, 'listing_pages_failed': len(src['urls'][:4]) - listings_ok,
+                   'candidates': len(found), 'attempted': min(len(found), max_articles),
+                   'already_saved': already_saved, 'added': added, 'repaired': repaired,
+                   'article_errors': failures, 'listing_errors': listing_errors[:12],
+                   'usable_articles': usable, 'source_coverage': bool(usable)})
+
 
 
 def club_tags(item):
@@ -444,13 +476,14 @@ def main():
     entries = {}
     discarded = 0
     for item in old:
-        if not isinstance(item, dict) or not item.get('url') or item.get('source') not in by_name:
+        if not isinstance(item, dict) or not item.get('url'):
             discarded += 1
             continue
-        src = by_name[item['source']]
-        if not valid_url(item['url'], src) :
-            discarded += 1
-            continue
+        src = by_name.get(item.get('source'))
+        if src and not valid_url(item['url'], src):
+            # Historical records remain available, but are not considered fresh
+            # unless their date and metadata pass the current quality gates.
+            item['legacy_source_url'] = True
         url = canonical(item['url'])
         item['url'] = url
         entries[url] = item
@@ -660,8 +693,13 @@ def main():
              'untagged': sum(not x.get('teams') for x in articles),
              'sources_ok': sum(x['status']=='ok' for x in checks),
              'sources_partial': sum(x['status']=='partial' for x in checks),
-             'sources_failed': sum(x['status'] in ('error','empty','discovered') for x in checks)}
-    health = {'checked_at': now.isoformat(), 'statistics': stats, 'sources': checks}
+             'sources_failed': sum(x['status'] in ('error','empty','discovered') for x in checks),
+             'new_articles': sum(x.get('added',x.get('articles_added',0)) for x in checks),
+             'sources_total': len(checks)}
+    stats['clubs_with_direct_source_coverage'] = sum(1 for x in checks if x['source'].startswith('Klub: ') and x.get('source_coverage'))
+    stats['clubs_configured'] = sum(1 for x in checks if x['source'].startswith('Klub: '))
+    health = {'checked_at': now.isoformat(), 'statistics': stats, 'sources': checks,
+              'failed_sources': [x['source'] for x in checks if x['status'] in ('error','empty')]} 
     print(json.dumps(health, ensure_ascii=False, indent=2))
     # Never replace a good database with empty or implausibly reduced results.
     if not healthy or (old and len(articles) < max(10, int(len(old) * .8))):
