@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-10T05:04:17.399162+00:00",
+  "checked_at": "2026-11-10T07:21:07.060774+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 35,
-      "added": 0,
+      "candidates": 34,
+      "added": 8,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -63,8 +63,8 @@
       "source": "Klub: Falco KC Szombathely",
       "status": "ok",
       "candidates": 24,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -147,9 +147,7 @@
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
-      ]
+      "listing_errors": []
     },
     {
       "source": "Klub: Csata TKK",
@@ -313,6 +311,15 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Hepp Kupa: A legjobb 32 között kapcsolódik be a Piros csoport mezőnye",
+      "summary": "A ZTE Mosonmagyaróváron, a címvédő MAFC Budafokon kezd.",
+      "url": "https://bball1.hu/hepp-kupa-a-legjobb-32-kozott-kapcsolodik-be-a-piros-csoport-mezonye/",
+      "published_at": "2026-11-10T08:00:28+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "Májgyulladással küzd Bartik Zalán",
       "summary": "A diagnózist a legutóbbi vérvizsgálatok is megerősítették.",
       "url": "https://bball1.hu/majgyulladassal-kuzd-bartik-zalan/",
@@ -365,6 +372,16 @@
       "teams": []
     },
     {
+      "source": "WBasket.hu",
+      "title": "Kedden rajtol a Bajnokok Tornája Sopronban",
+      "summary": "Immár 13. alkalommal kerül megrendezésre nyolc csapat részvételével a Bajnokok Tornája a kadett korosztály részére a soproni Novomatic Arénában.",
+      "url": "https://wbasket.hu/kedden-rajtol-a-bajnokok-tornaja-sopronban/",
+      "published_at": "2026.11.09. 17:58",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Vasas-bravúr Szigetszentmiklóson",
       "summary": "A Salgótarjánt is legyőzte a PVSK, nem hibázott a ZTE és a MAFC.",
@@ -415,6 +432,16 @@
       "league": "men"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Gáspár Dávid irányításával munkában a szlovén válogatott",
+      "summary": "Gáspár Dávid szövetségi kapitány irányításával vasárnap este megkezdte a felkészülést a szlovén női kosárlabda-válogatott a 2027-es Európa-bajnoki selejtezősorozat második szakaszára.",
+      "url": "https://wbasket.hu/gaspar-david-iranyitasaval-munkaban-a-szloven-valogatott/",
+      "published_at": "2026.11.09. 12:01",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Klub: Vasas Akadémia",
       "title": "Továbbra sincs meg az első győzelem",
       "summary": "Junior csapatunk hétvégén Sopronban járt, ahol a Darazsa Akadémia ellen mérkőzött meg.",
@@ -448,6 +475,16 @@
       "published_at": "2026-11-09T09:35:59+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A világbajnokságon megteremtett közös értékeket kell továbbvinni",
+      "summary": "A magyar válogatott csütörtök óta készül a 2027-es Európa-bajnokság selejtező-sorozatára, melyben szerdán Hamburgban mutatkozik be.",
+      "url": "https://wbasket.hu/a-vilagbajnoksagon-megteremtett-kozos-ertekeket-kell-tovabbvinni/",
+      "published_at": "2026.11.09. 08:24",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -504,6 +541,16 @@
       "teams": []
     },
     {
+      "source": "WBasket.hu",
+      "title": "Dominique Darius váltja India Johnstont a Vasasnál",
+      "summary": "A Vasas Akadémia a napokban változást jelentette be a keretében.",
+      "url": "https://wbasket.hu/dominique-darius-valtja-india-johnstont-a-vasasnal/",
+      "published_at": "2026.11.08. 17:59",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
       "summary": "A 18 órakor kezdődő Endo Plus Service-Honvéd – Egis Körmend mérkőzésről Fullcourtért, klikk ide .",
@@ -514,6 +561,16 @@
         "men|Körmend"
       ],
       "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Juhász Dorka dupla-duplája és a Galata hatodik bajnoki sikere",
+      "summary": "A magyar érdekeltségű csapatok közül az Emalk Konut szünnapos volt.",
+      "url": "https://wbasket.hu/juhasz-dorka-dupla-duplaja-es-a-galata-hatodik-bajnoki-sikere/",
+      "published_at": "2026.11.08. 14:57",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -528,6 +585,16 @@
       "league": "men"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Böröndy Viviék rangadót nyertek, Sitku-Varga Alízék Velencében maradtak alul",
+      "summary": "A hétvégén a 6. forduló mérkőzéseit rendezték az olasz élvonalban.",
+      "url": "https://wbasket.hu/borondy-viviek-rangadot-nyertek-sitku-varga-alizek-velenceben-maradtak-alul/",
+      "published_at": "2026.11.08. 11:32",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Forray Gábor: Ez egy teljesen szubjektív sporttá vált és megmondom őszintén, én most annyira el vagyok keseredve",
       "summary": "Baksa Szabolcs : Gratulálok a Falcónak, megérdemelten győzött, a különbség is teljesen reális.",
@@ -537,6 +604,16 @@
       "teams": []
     },
     {
+      "source": "WBasket.hu",
+      "title": "Papp Diáék idegenben nyertek",
+      "summary": "A hétvégén a 8. fordulót rendezték a francia élvonalban.",
+      "url": "https://wbasket.hu/papp-diaek-idegenben-nyertek/",
+      "published_at": "2026.11.08. 09:15",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "A kosárlabda-vb-ről lemaradó Dombai Réka mer nagyot álmodni",
       "summary": "A kosárlabda-vb-ről lemaradó Dombai Réka mer nagyot álmodni",
@@ -544,6 +621,18 @@
       "published_at": "2026-11-08T08:16:48+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A kemény munkának meglesz az eredménye a Vasasnál",
+      "summary": "Húsz szerzett ponttal és 22-es VAL-értékkel hívta fel magára a figyelmet Czirkos Panka, a Vasas Akadémia játékosa a Sopron Basket elleni bajnoki mérkőzésen a válogatott szünetet megelőzően.",
+      "url": "https://wbasket.hu/a-kemeny-munkanak-meglesz-az-eredmenye-a-vasasnal/",
+      "published_at": "2026.11.08. 06:44",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket"
+      ],
+      "league": "women"
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -8046,6 +8135,19 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "3 ÉRDEKESSÉG A FORDULÓ RANGADÓJA ELŐTT!",
+      "summary": "3 ÉRDEKESSÉG A FORDULÓ RANGADÓJA ELŐTT!",
+      "url": "https://falcokc.com/3-erdekesseg-a-fordulo-rangadoja-elott/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
