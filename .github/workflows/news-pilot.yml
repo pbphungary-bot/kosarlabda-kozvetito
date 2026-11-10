@@ -15,7 +15,7 @@ concurrency:
 jobs:
   collect-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -43,15 +43,27 @@ jobs:
               raise SystemExit('data/news.json was not created')
           d = json.loads(p.read_text(encoding='utf-8'))
           print('Total saved articles:', len(d.get('articles', [])))
-          for s in d.get('sources', []):
-              print(s)
+          h = json.loads(Path('data/news_health.json').read_text(encoding='utf-8'))
+          print('News health:', h['status'])
+          print('Statistics:', h['statistics'])
+          for s in h.get('sources', []):
+              print(s['source'], s['status'], 'candidates:', s.get('candidates', 0), 'errors:', s.get('article_errors', 0))
+          with open(__import__('os').environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+              f.write('## Basketball news collector\n\n')
+              f.write('Status: **' + h['status'] + '**\n\n')
+              f.write('| Source | Status | Candidates | Article errors |\n|---|---|---:|---:|\n')
+              for s in h.get('sources', []):
+                  f.write(f"| {s['source']} | {s['status']} | {s.get('candidates', 0)} | {s.get('article_errors', 0)} |\n")
+              f.write('\n### Quality metrics\n')
+              for key, value in h['statistics'].items():
+                  f.write(f'- {key}: {value}\n')
           PY
 
-      - name: Commit news data only
+      - name: Commit news data and health diagnostics only
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/news.json
+          git add data/news.json data/news_health.json
           if git diff --cached --quiet; then
             echo 'No news data changes'
             exit 0

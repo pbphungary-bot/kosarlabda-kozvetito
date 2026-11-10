@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """News metadata collector. Keeps prior genuine articles and records source failures."""
 import json
+import os
+import tempfile
+from collections import Counter
 import html
 import re
 import sys
@@ -13,7 +16,10 @@ from urllib.parse import urljoin, urlparse, urldefrag, urlencode, quote
 from bs4 import BeautifulSoup
 
 OUT = Path('data/news.json')
-HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; BasketballNewsCollector/0.2)', 'Accept-Language': 'hu-HU,hu;q=0.9,en;q=0.7'}
+HEALTH = Path('data/news_health.json')
+MAX_AGE_DAYS = 45
+MIN_SUMMARY_LENGTH = 55
+HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', 'Accept-Language': 'hu-HU,hu;q=0.9,en;q=0.7'}
 SOURCES = [
     {'name': 'BB1.hu', 'urls': ['https://bball1.hu/', 'https://bball1.hu/hirek/', 'https://bb1.hu/'], 'hosts': ('bball1.hu', 'bb1.hu'), 'kind': 'bb1'},
     {'name': 'WBasket.hu', 'urls': ['https://wbasket.hu/'], 'hosts': ('wbasket.hu',), 'kind': 'wbasket'},
@@ -44,7 +50,12 @@ def canonical(url):
     parsed = urlparse(raw)
     if parsed.query and 'pg=news_3_' in parsed.query:
         return raw
-    return raw.split('?')[0].rstrip('/') + '/'
+    # Keep meaningful article identifiers in query strings; discard only tracking keys.
+    from urllib.parse import parse_qsl, urlunparse
+    pairs = [(k, v) for k, v in parse_qsl(parsed.query, keep_blank_values=True)
+             if not (k.lower().startswith('utm_') or k.lower() in ('fbclid','gclid','ref','source'))]
+    from urllib.parse import urlencode
+    return urlunparse((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path.rstrip('/') + '/', '', urlencode(sorted(pairs)), ''))
 
 def valid_url(url, src):
     p = urlparse(url)
@@ -216,6 +227,41 @@ def article(url, listing_title, src):
             'url': canonical(final_url), 'published_at': published_date(soup),
             'summary_method': method}
 
+def summary_usable(item):
+    title = clean(item.get('title', '')).casefold().rstrip('.!?')
+    summary = clean(item.get('summary', ''))
+    return (len(summary) >= MIN_SUMMARY_LENGTH and summary.casefold().rstrip('.!?') != title
+            and item.get('summary_method') != 'headline_fallback')
+
+def valid_publication(item, now=None):
+    from datetime import timedelta
+    stamp = parse_date(item.get('published_at'))
+    if not stamp:
+        return False
+    try:
+        dt = datetime.fromisoformat(stamp)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        now = now or datetime.now(timezone.utc)
+        return now - timedelta(days=MAX_AGE_DAYS) <= dt <= now + timedelta(days=1)
+    except ValueError:
+        return False
+
+def atomic_json(path, payload):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile('w', encoding='utf-8', dir=path.parent,
+                                     prefix='.' + path.name + '.', suffix='.tmp', delete=False) as f:
+        tmp = Path(f.name)
+        try:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+            f.write('\n')
+            f.flush()
+            os.fsync(f.fileno())
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
+    os.replace(tmp, path)
+
 def parse_date(value):
     if not value:
         return ''
@@ -252,12 +298,12 @@ TEAM_SEARCHES = {
 def targeted_bb1(entries, checks):
     src = next(x for x in SOURCES if x['kind'] == 'bb1')
     successes, failures, added = 0, [], 0
-    # Limit to two search phrases per club, first two result pages each.
+    # One targeted search page per phrase to stay within workflow time budget.
     for league, clubs in TEAM_SEARCHES.items():
         for club, terms in clubs.items():
             found = {}
             for term in terms[:2]:
-                for page in (1, 2):
+                for page in (1,):
                     url = 'https://bball1.hu/' + (f'page/{page}/' if page > 1 else '') + '?' + urlencode({'s':term})
                     try:
                         soup, base = fetch(url)
@@ -290,7 +336,7 @@ def targeted_bb1(entries, checks):
                     tags = item.setdefault('teams', [])
                     tag = league + '|' + club
                     if tag not in tags: tags.append(tag)
-    checks.append({'source':'BB1.hu team searches','status':'ok' if successes else 'error',
+    checks.append({'source':'BB1.hu team searches','status':('partial' if failures else 'ok') if successes else 'error',
                    'search_pages_ok':successes,'articles_added':added,
                    'failures':failures[:12]})
     return successes
@@ -350,12 +396,13 @@ def collect_source(src, entries, checks, max_articles=12):
             entries[url] = item
             if existing: repaired += 1
             else: added += 1
-        except Exception:
+        except Exception as exc:
             failures += 1
+            listing_errors.append(f'article {url}: {type(exc).__name__}: {exc}')
         time.sleep(0.1)
-    checks.append({'source': src['name'], 'status': 'ok' if (added or repaired or any(url in entries for url in found)) else ('discovered' if found else 'error'),
+    checks.append({'source': src['name'], 'status': ('partial' if (listing_errors or failures) and (added or repaired or any(url in entries for url in found)) else 'ok') if (added or repaired or any(url in entries for url in found)) else ('error' if (listing_errors or failures) else 'empty'),
                    'candidates': len(found), 'added': added, 'repaired': repaired,
-                   'article_errors': failures, 'listing_errors': listing_errors[:3]})
+                   'article_errors': failures, 'listing_errors': listing_errors[:8]})
 
 
 def club_tags(item):
@@ -445,7 +492,7 @@ def main():
                 failed += 1
                 print(f'ARTICLE ERROR {src["name"]}: {url}: {exc}', file=sys.stderr)
             time.sleep(0.12)
-        status = 'ok' if found else 'error'
+        status = ('partial' if (listing_errors or failed) else 'ok') if found else ('error' if listing_errors else 'empty')
         checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
                        'article_errors': failed, 'listing_errors': listing_errors})
     targeted_bb1(entries, checks)
@@ -590,13 +637,39 @@ def main():
         if explicit:item['league']=explicit
         elif tags and len({t.split('|')[0] for t in tags})==1:item['league']=tags[0].split('|')[0]
         else:item.pop('league',None)
-    articles = sorted(entries.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'sources': checks, 'articles': articles}
-    OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps({'total': len(articles), 'discarded_navigation': discarded, 'sources': checks}, ensure_ascii=False, indent=2))
-    if not any(x['status'] == 'ok' for x in checks):
-        sys.exit(1)
+    # Re-key by canonical URL and preserve the highest-quality article on collisions.
+    deduplicated = {}
+    for item in entries.values():
+        url = canonical(item['url'])
+        item['url'] = url
+        previous = deduplicated.get(url)
+        quality = lambda a: (int(valid_publication(a)), int(summary_usable(a)), int(bool(a.get('published_at'))), len(a.get('summary','')))
+        if previous is None or quality(item) > quality(previous):
+            if previous is not None:
+                item['teams'] = sorted(set(item.get('teams', [])) | set(previous.get('teams', [])))
+            deduplicated[url] = item
+        elif previous is not None:
+            previous['teams'] = sorted(set(previous.get('teams', [])) | set(item.get('teams', [])))
+    articles = sorted(deduplicated.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
+    now = datetime.now(timezone.utc)
+    healthy = [x for x in checks if x['status'] in ('ok', 'partial') and x.get('candidates', x.get('search_pages_ok', 0))]
+    stats = {'total': len(articles), 'fresh': sum(valid_publication(x, now) for x in articles),
+             'fresh_with_summary': sum(valid_publication(x, now) and summary_usable(x) for x in articles),
+             'missing_dates': sum(not parse_date(x.get('published_at')) for x in articles),
+             'headline_only': sum(not summary_usable(x) for x in articles),
+             'untagged': sum(not x.get('teams') for x in articles),
+             'sources_ok': sum(x['status']=='ok' for x in checks),
+             'sources_partial': sum(x['status']=='partial' for x in checks),
+             'sources_failed': sum(x['status'] in ('error','empty','discovered') for x in checks)}
+    health = {'checked_at': now.isoformat(), 'statistics': stats, 'sources': checks}
+    print(json.dumps(health, ensure_ascii=False, indent=2))
+    # Never replace a good database with empty or implausibly reduced results.
+    if not healthy or (old and len(articles) < max(10, int(len(old) * .8))):
+        atomic_json(HEALTH, {**health, 'status':'failed', 'reason':'No healthy source or unsafe article count reduction'})
+        raise SystemExit('Unsafe news update; existing news.json preserved')
+    result = {'checked_at': now.isoformat(), 'sources': checks, 'articles': articles}
+    atomic_json(OUT, result)
+    atomic_json(HEALTH, {**health, 'status':'partial' if stats['sources_failed'] or stats['sources_partial'] else 'ok'})
 
 if __name__ == '__main__':
     main()
