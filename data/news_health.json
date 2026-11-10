@@ -1,0 +1,321 @@
+{
+  "checked_at": "2026-11-10T14:06:21.133521+00:00",
+  "statistics": {
+    "total": 769,
+    "fresh": 319,
+    "fresh_with_summary": 166,
+    "missing_dates": 115,
+    "headline_only": 431,
+    "untagged": 379,
+    "sources_ok": 17,
+    "sources_partial": 1,
+    "sources_failed": 13
+  },
+  "sources": [
+    {
+      "source": "BB1.hu",
+      "status": "ok",
+      "candidates": 32,
+      "added": 2,
+      "repaired": 3,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "WBasket.hu",
+      "status": "ok",
+      "candidates": 34,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Hunbasket",
+      "status": "ok",
+      "candidates": 12,
+      "added": 0,
+      "repaired": 9,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Kezdő5.hu",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "status": "ok",
+      "candidates": 50,
+      "added": 0,
+      "repaired": 50,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "BB1.hu team searches",
+      "status": "ok",
+      "search_pages_ok": 29,
+      "articles_added": 42,
+      "failures": []
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "status": "ok",
+      "candidates": 36,
+      "added": 0,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "status": "ok",
+      "candidates": 6,
+      "added": 6,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: DEAC",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "status": "error",
+      "candidates": 40,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 10,
+      "listing_errors": [
+        "article https://www.egiskormend.hu/Hirek/Pazar_elso_felido_utan_bosszanto_vereseg_Budapesten.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/uj_jatekossal_gyozelmi_remenyekkel_utazunk_Budapestre.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Dalan_Ancrum_probajatekra_erkezik_az_Egis_Kormendhez.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Fordulatos_merkozesen_gyozelem_a_Sopron_ellen.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Kulcsfontossagu_merkozes_elott_a_Sopront_fogadjuk_Kormenden.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Tavozik_Xavier_Cork.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Nem_volt_esely_a_cimvedo_ellen_az_elso_vasi_klasszikuson.html/: HTTPError: HTTP Error 404: Not Found",
+        "article https://www.egiskormend.hu/Hirek/Kovetkezik_az_elso_vasi_klasszikus.html/: HTTPError: HTTP Error 404: Not Found"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "status": "ok",
+      "candidates": 11,
+      "added": 0,
+      "repaired": 1,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Alba Fehérvár",
+      "status": "ok",
+      "candidates": 10,
+      "added": 0,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "status": "partial",
+      "candidates": 14,
+      "added": 0,
+      "repaired": 9,
+      "article_errors": 1,
+      "listing_errors": [
+        "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "status": "ok",
+      "candidates": 11,
+      "added": 0,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "status": "ok",
+      "candidates": 12,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: PHOENIX Fóti Tigrisek",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Csata TKK",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "status": "ok",
+      "candidates": 15,
+      "added": 0,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "status": "ok",
+      "candidates": 18,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "status": "ok",
+      "candidates": 10,
+      "added": 1,
+      "repaired": 4,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "status": "ok",
+      "candidates": 10,
+      "added": 10,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Atomerőmű SE",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "status": "ok",
+      "candidates": 6,
+      "added": 0,
+      "repaired": 6,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: Endo Plus Service-Honvéd",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Klub: Kometa-KVGY Kaposvári KK",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Klub: OSE Lions",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: ELTE BEAC Újbuda",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "status": "ok",
+      "candidates": 24,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: KSC Szekszárd",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
+      ]
+    },
+    {
+      "source": "Klub: Sopron Basket",
+      "status": "empty",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": []
+    },
+    {
+      "source": "Klub: TFSE",
+      "status": "error",
+      "candidates": 0,
+      "added": 0,
+      "repaired": 0,
+      "article_errors": 0,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected"
+      ]
+    }
+  ],
+  "status": "partial"
+}
