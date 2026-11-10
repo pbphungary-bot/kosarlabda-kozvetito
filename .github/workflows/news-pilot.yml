@@ -28,7 +28,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install HTML parser
-        run: python -m pip install beautifulsoup4
+        run: python -m pip install beautifulsoup4 lxml
 
       - name: Run news collector regression tests
         run: |
