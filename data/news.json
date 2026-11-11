@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T07:25:02.572439+00:00",
+  "checked_at": "2026-11-11T09:10:06.006143+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -272,8 +272,8 @@
       "listing_pages_failed": 0,
       "candidates": 10,
       "attempted": 10,
-      "already_saved": 8,
-      "added": 2,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -465,17 +465,19 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 32,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 23,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 4,
+      "repaired": 6,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out"
+      ],
       "usable_articles": 10,
       "source_coverage": true
     }
@@ -493,6 +495,38 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Hivatalos a magyar válogatott kerete a németek elleni női Európa-bajnoki selejtezőre",
+      "summary": "Szerdán 19 órától Hamburgban Németországgal mérkőzik a magyar válogatott a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://wbasket.hu/hivatalos-a-magyar-valogatott-kerete-a-nemetek-elleni-noi-europa-bajnoki-selejtezore/",
+      "published_at": "2026.11.11. 09:38",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Képriport a válogatott keddi hamburgi edzéséről",
+      "summary": "A magyar válogatott kedden Hamburgban két edzéssel hangolódott a németek elleni Európa-bajnoki selejtezőre.",
+      "url": "https://wbasket.hu/kepriport-2/",
+      "published_at": "2026.11.11. 09:37",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Fél órával később kezdődik a Szedeák–NKA Pécs mérkőzés szombaton",
+      "summary": "A Délút-SZTE-Szedeák tájékoztatása szerint a szombati, NKA Universitas Pécs elleni bajnoki mérkőzés az eredetileg tervezett 18:00 helyett 18:30-kor kezdődik.",
+      "url": "https://bball1.hu/fel-oraval-kesobb-kezdodik-a-szedeak-nka-pecs-merkozes-szombaton/",
+      "published_at": "2026-11-11T08:30:10+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szedeák"
+      ],
+      "league": "men"
     },
     {
       "source": "WBasket.hu",
@@ -8684,6 +8718,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Labdabiztonság és lepattanózás: fontos feladatok a BEAC elleni fővárosi rangadón",
+      "summary": "Szombaton az ELTE BEAC Újbuda otthonában folytatja a bajnokságot női kosárlabdacsapatunk.",
+      "url": "https://tfse.hu/labdabiztonsag-es-lepattanozas-fontos-feladatok-a-beac-elleni-fovarosi-rangadon/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Küzdöttünk, de Győrben ez sem volt elég",
       "summary": "Bár a második és a negyedik negyedet is megnyertük Győrben, az első és a harmadik játékrészben jelentős hátrányt szedtünk össze, így az ETO Basket 80–65-re nyert, azaz ezúttal sem sikerült megszereznünk első idegenbeli győzelmünket.",
@@ -8914,6 +8961,32 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Jó kezdés és eredményes hajrá: fontos győzelmet arattunk a BEAC otthonában",
+      "summary": "Női kosárlabdacsapatunk 67–59-re nyert az ELTE BEAC Újbuda vendégeként az NB I/A ötödik fordulójában.",
+      "url": "https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Jó kezdés után az ETO Basket nyerte a hazai bajnokit",
+      "summary": "A TFSE női kosárlabdacsapata 75–57-es vereséget szenvedett az ETO Basket ellen az NB I/A 4. fordulójában.",
+      "url": "https://tfse.hu/jo-kezdes-utan-az-eto-basket-nyerte-a-hazai-bajnokit/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "JÖN A 7 ÉRDEKESSÉG RÓLAM SOROZATUNK LEGÚJABB RÉSZE! – Rosic Uros hozott 7 érdekességet magáról!",
       "summary": "JÖN A 7 ÉRDEKESSÉG RÓLAM SOROZATUNK LEGÚJABB RÉSZE! – Rosic Uros hozott 7 érdekességet magáról!",
@@ -8963,6 +9036,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Ismerős ellenfél érkezik: az ETO Basketet fogadja a TFSE",
+      "summary": "A BKG elleni győzelem után szombaton az ETO Basket ellen folytatja a bajnokságot női kosárlabdacsapatunk.",
+      "url": "https://tfse.hu/ismeros-ellenfel-erkezik-az-eto-basketet-fogadja-a-tfse/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
