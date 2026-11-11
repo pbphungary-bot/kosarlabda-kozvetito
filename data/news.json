@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T18:36:44.456471+00:00",
+  "checked_at": "2026-11-11T19:38:04.706867+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 7,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -193,8 +193,8 @@
       "candidates": 16,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -494,6 +494,100 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nagyot küzdött a DEAC, de az Atomerőmű SE hozta a kötelezőt",
+      "summary": "Alapszakasz 9. forduló Debrecen, Oláh Gábor utcai Sportcsarnok Makrai Márton, Jakab László Imre, Dr.",
+      "url": "https://bball1.hu/nagyot-kuzdott-a-deac-de-az-atomeromu-se-hozta-a-kotelezot/",
+      "published_at": "2026-11-11T20:28:27+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Atomerőmű SE"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "A második félidőben lelépte ellenfele a sérülésekkel küzdő Szolnokot",
+      "summary": "FIBA Europe Cup, csoportkör, 6. forduló Zielona Góra, Centrum Rekreacyjno-Sportowe Zielona Góra Roko Hordov (horvát), Gabrielius Simonavicius (litván), Hendrik Laas (észt)",
+      "url": "https://bball1.hu/a-masodik-felidoben-lelepte-ellenfele-a-serulesekkel-kuzdo-szolnokot/",
+      "published_at": "2026-11-11T20:14:28+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: a Falco megverte az Albát a rangadón",
+      "summary": "Férfi kosár NB I: a Falco megverte az Albát a rangadón",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-a-falco-megverte-az-albat-a-rangadon/",
+      "published_at": "2026-11-11T20:01:27+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Tizenöt másodpercnyi vezetés is elég volt a Sopronnak a Honvéd ellen",
+      "summary": "Újabb nagy fordításból érkezett Sopronba Lakits András Honvédja, az SKC nem igazán tudta megnehezíteni a Falco dolgát az előző fordulőóban.",
+      "url": "https://bball1.hu/tizenot-masodpercnyi-vezetes-is-eleg-volt-a-sopronnak-a-honved-ellen/",
+      "published_at": "2026-11-11T19:58:23+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Pécsett is bezsebelte a két pontot a Fót",
+      "summary": "Alapszakasz 9. forduló Pécs, Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya.",
+      "url": "https://bball1.hu/pecsett-is-bezsebelte-a-ket-pontot-a-fot/",
+      "published_at": "2026-11-11T19:56:39+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Esélyt sem adott a Kaposvárnak a Körmend",
+      "summary": "Ezúttal a remek második negyed után végig kitartott a piros-feketék lendülete.",
+      "url": "https://bball1.hu/eselyt-sem-adott-a-kaposvarnak-a-kormend/",
+      "published_at": "2026-11-11T19:55:28+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nagyot hajrázott az Alba, de kikapott Szombathelyen",
+      "summary": "Bár a páratlan negyedeket uralta a címvédő, alaposan megszenvedett a Fehérvár ellen.",
+      "url": "https://bball1.hu/nagyot-hajrazott-az-alba-de-kikapott-szombathelyen/",
+      "published_at": "2026-11-11T19:53:46+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Kulcsmeccset nyert otthon a Szeged az OSE ellen",
+      "summary": "Alapszakasz, 9. forduló Szeged, Városi Sportcsarnok Játékvezetők: Kapitány Gellért, Kovács Nimród János, Téczely Roland Balázs (Ádám József)",
+      "url": "https://bball1.hu/kulcsmeccset-nyert-otthon-a-szeged-az-ose-ellen/",
+      "published_at": "2026-11-11T19:45:53+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Hatalmas fordítással siker a Honvéd ellen!",
+      "summary": "Csapatunk korán nagy hátrányt szedett össze a Novomatic Arénában rendezett találkozón, de fokozatosan ledolgozta azt, és szoros végjátékban megszerezte a győzelmet!",
+      "url": "https://sopronkc.hu/hatalmas-forditassal-siker-a-honved-ellen/",
+      "published_at": "2026-11-11T19:18:33+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
       ]
     },
     {
