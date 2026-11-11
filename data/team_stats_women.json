@@ -2,7 +2,7 @@
   "league": "women",
   "source": "hunbasket",
   "source_url": "https://hunbasket.hu/csapatok",
-  "updated_at": "2026-11-11T13:24:44.274345+00:00",
+  "updated_at": "2026-11-11T19:12:46.270080+00:00",
   "teams": [
     {
       "name": "BKG-PRIMA Szigetszentmiklós",
@@ -13,14 +13,14 @@
           "fg2_pct": 41.3,
           "fg3_pct": 26.1,
           "ft_pct": 73.6,
-          "dreb": 22.4,
-          "oreb": 8.1,
-          "reb": 30.5,
+          "dreb": 24.6,
+          "oreb": 9.9,
+          "reb": 34.4,
           "ast": 13.6,
           "stl": 6.4,
-          "tov": 23.0,
+          "tov": 24.0,
           "blk": 1.1,
-          "val": 63.6
+          "val": 65.7
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/40058"
@@ -34,14 +34,14 @@
           "fg2_pct": 46.0,
           "fg3_pct": 30.8,
           "ft_pct": 71.3,
-          "dreb": 25.4,
-          "oreb": 9.3,
-          "reb": 34.7,
+          "dreb": 27.7,
+          "oreb": 11.4,
+          "reb": 39.1,
           "ast": 17.0,
           "stl": 10.4,
-          "tov": 12.0,
+          "tov": 14.0,
           "blk": 3.7,
-          "val": 106.6
+          "val": 109.3
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/10097"
@@ -55,14 +55,14 @@
           "fg2_pct": 50.2,
           "fg3_pct": 33.6,
           "ft_pct": 65.8,
-          "dreb": 30.0,
-          "oreb": 9.8,
-          "reb": 39.8,
+          "dreb": 34.0,
+          "oreb": 12.3,
+          "reb": 46.3,
           "ast": 22.0,
           "stl": 10.8,
-          "tov": 14.0,
+          "tov": 15.0,
           "blk": 3.3,
-          "val": 117.0
+          "val": 122.5
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/10005"
@@ -76,14 +76,14 @@
           "fg2_pct": 45.2,
           "fg3_pct": 26.2,
           "ft_pct": 69.9,
-          "dreb": 22.9,
-          "oreb": 9.7,
-          "reb": 32.6,
+          "dreb": 25.0,
+          "oreb": 13.3,
+          "reb": 38.3,
           "ast": 17.0,
           "stl": 14.0,
-          "tov": 17.0,
+          "tov": 18.0,
           "blk": 2.1,
-          "val": 93.3
+          "val": 98.4
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51008"
@@ -97,14 +97,14 @@
           "fg2_pct": 46.5,
           "fg3_pct": 27.0,
           "ft_pct": 74.0,
-          "dreb": 26.0,
-          "oreb": 11.2,
-          "reb": 37.2,
+          "dreb": 27.5,
+          "oreb": 13.8,
+          "reb": 41.3,
           "ast": 15.8,
           "stl": 10.7,
-          "tov": 17.0,
+          "tov": 19.0,
           "blk": 4.2,
-          "val": 92.2
+          "val": 94.2
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51119"
@@ -118,14 +118,14 @@
           "fg2_pct": 51.6,
           "fg3_pct": 29.3,
           "ft_pct": 61.9,
-          "dreb": 24.2,
-          "oreb": 11.5,
-          "reb": 35.7,
+          "dreb": 26.8,
+          "oreb": 14.5,
+          "reb": 41.3,
           "ast": 18.0,
           "stl": 14.2,
           "tov": 15.0,
           "blk": 2.7,
-          "val": 108.0
+          "val": 113.2
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51006"
@@ -139,14 +139,14 @@
           "fg2_pct": 44.1,
           "fg3_pct": 24.5,
           "ft_pct": 72.1,
-          "dreb": 22.8,
-          "oreb": 12.3,
-          "reb": 35.1,
+          "dreb": 25.2,
+          "oreb": 14.2,
+          "reb": 39.3,
           "ast": 12.8,
           "stl": 13.0,
-          "tov": 17.0,
+          "tov": 18.0,
           "blk": 1.5,
-          "val": 89.8
+          "val": 93.0
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/19006"
@@ -160,14 +160,14 @@
           "fg2_pct": 53.6,
           "fg3_pct": 38.2,
           "ft_pct": 68.0,
-          "dreb": 23.5,
-          "oreb": 16.0,
-          "reb": 39.5,
+          "dreb": 25.7,
+          "oreb": 19.0,
+          "reb": 44.7,
           "ast": 20.2,
           "stl": 13.3,
-          "tov": 12.0,
+          "tov": 14.0,
           "blk": 3.0,
-          "val": 126.8
+          "val": 130.7
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51001"
@@ -181,14 +181,14 @@
           "fg2_pct": 46.6,
           "fg3_pct": 31.9,
           "ft_pct": 53.5,
-          "dreb": 23.2,
-          "oreb": 7.7,
-          "reb": 30.9,
+          "dreb": 26.3,
+          "oreb": 10.0,
+          "reb": 36.3,
           "ast": 19.7,
           "stl": 12.3,
-          "tov": 15.0,
+          "tov": 16.0,
           "blk": 2.8,
-          "val": 92.5
+          "val": 97.2
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51142"
@@ -202,14 +202,14 @@
           "fg2_pct": 35.8,
           "fg3_pct": 22.3,
           "ft_pct": 66.2,
-          "dreb": 21.0,
-          "oreb": 8.2,
-          "reb": 29.2,
+          "dreb": 23.8,
+          "oreb": 10.7,
+          "reb": 34.5,
           "ast": 9.5,
           "stl": 8.3,
-          "tov": 21.0,
+          "tov": 23.0,
           "blk": 3.3,
-          "val": 60.3
+          "val": 63.8
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51149"
@@ -223,14 +223,14 @@
           "fg2_pct": 48.0,
           "fg3_pct": 33.5,
           "ft_pct": 66.7,
-          "dreb": 26.9,
-          "oreb": 8.3,
-          "reb": 35.2,
+          "dreb": 28.1,
+          "oreb": 10.1,
+          "reb": 38.3,
           "ast": 17.9,
           "stl": 7.6,
-          "tov": 15.0,
+          "tov": 17.0,
           "blk": 2.4,
-          "val": 97.4
+          "val": 98.7
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51150"
