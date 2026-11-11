@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T15:50:13.638723+00:00",
+  "checked_at": "2026-11-11T16:42:03.448537+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 32,
-      "added": 0,
+      "candidates": 33,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -495,6 +495,29 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 18 órakor kezdődő Falco-Vulcano Energia KC Szombathely – Alba Fehérvár mérkőzésről Fullcourtért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-914/",
+      "published_at": "2026-11-11T17:09:33+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Alba Fehérvár",
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "ÉLŐ: Németország – Magyarország Eb-selejtező",
+      "summary": "Szerdán 19 órától Hamburgban Németországgal mérkőzik a magyar válogatott a 2027-es Európa-bajnokság selejtező-sorozatában.",
+      "url": "https://wbasket.hu/elo-nemetorszag-magyarorszag-eb-selejtezo/",
+      "published_at": "2026.11.11. 16:45",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
