@@ -65,22 +65,48 @@ jobs:
                   f.write(f'- {key}: {value}\n')
           PY
 
-      - name: Commit news data and health diagnostics only
+      - name: Publish news data without rerunning collection
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          mkdir -p /tmp/news-pilot-output
+          cp data/news.json data/news_health.json /tmp/news-pilot-output/
 
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
             echo "Publishing attempt $attempt"
             git fetch origin main
-            # Start from the newest remote state, never rebase generated JSON.
             git reset --hard origin/main
-            # Recollect against the latest published articles so no concurrent
-            # news additions are silently overwritten by stale output.
-            python scripts/update_news.py
-            git add -- data/news.json data/news_health.json
+
+            # Never overwrite a newer news snapshot published by another job.
+            set +e
+            python - <<'PY_CHECK'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          def timestamp(path):
+              try:
+                  d = json.loads(Path(path).read_text(encoding='utf-8'))
+                  v = d.get('checked_at')
+                  if not v:
+                      return None
+                  return datetime.fromisoformat(v.replace('Z', '+00:00')).astimezone(timezone.utc)
+              except (OSError, ValueError, TypeError, AttributeError):
+                  return None
+          incoming = timestamp('/tmp/news-pilot-output/news_health.json')
+          current = timestamp('data/news_health.json')
+          if current and incoming and current > incoming:
+              print('A newer news update is already published; not overwriting it.')
+              raise SystemExit(10)
+          PY_CHECK
+            status=$?
+            set -e
+            if [ "$status" -eq 10 ]; then exit 0; fi
+            if [ "$status" -ne 0 ]; then exit "$status"; fi
+
+            cp /tmp/news-pilot-output/news.json /tmp/news-pilot-output/news_health.json data/
+            git add data/news.json data/news_health.json
             if git diff --cached --quiet; then
               echo 'No news data changes to publish'
               exit 0
@@ -90,7 +116,8 @@ jobs:
               echo 'News data pushed successfully'
               exit 0
             fi
-            echo 'Remote changed during collection; retrying from latest main'
+            echo 'Another workflow pushed first; retrying publication only'
+            sleep 2
           done
-          echo 'Unable to publish news after three attempts' >&2
+          echo 'Publishing failed after 10 attempts; collector was not rerun' >&2
           exit 1
