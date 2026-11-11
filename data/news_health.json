@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T17:44:55.802695+00:00",
+  "checked_at": "2026-11-11T18:36:44.456471+00:00",
   "statistics": {
     "total": 823,
     "fresh": 353,
     "fresh_with_summary": 196,
     "missing_dates": 133,
-    "headline_only": 436,
+    "headline_only": 437,
     "untagged": 390,
     "sources_ok": 19,
     "sources_partial": 1,
