@@ -1,0 +1,135 @@
+{
+  "updated_at": "2026-11-11",
+  "note": "Official Facebook pages verified from club or credible independent sources; other clubs retain Facebook search links. No Facebook post collection is claimed.",
+  "clubs": [
+    {
+      "club": "Falco KC Szombathely",
+      "official_page": "https://www.facebook.com/falcokc.hivataloshonlap/",
+      "verification": "verified",
+      "verification_source": "https://falcokc.com/adatok/"
+    },
+    {
+      "club": "DVTK HUNTHERM",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "DEAC",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Egis Körmend",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "NHSZ-Szolnoki Olajbányász",
+      "official_page": "https://www.facebook.com/olajofficial",
+      "verification": "verified",
+      "verification_source": "https://shop.olajofficial.hu/elerhetoseg/"
+    },
+    {
+      "club": "Alba Fehérvár",
+      "official_page": "https://www.facebook.com/albakosar/",
+      "verification": "verified",
+      "verification_source": "https://www.szekesfehervar.hu/kosarlabda?parent=37742"
+    },
+    {
+      "club": "NKA Universitas Pécs (férfi)",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Sopron KC",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Duna Aszfalt-DTKH Kecskemét",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "PHOENIX Fóti Tigrisek",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Csata TKK",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "NKA Universitas Pécs (női)",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "BKG-PRIMA Szigetszentmiklós",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Vasas Akadémia",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "VBW CEKK Cegléd",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Atomerőmű SE",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Délút-SZTE-Szedeák",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Endo Plus Service-Honvéd",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Kometa-KVGY Kaposvári KK",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "OSE Lions",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "ELTE BEAC Újbuda",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "ETO Basket",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "KSC Szekszárd",
+      "official_page": "",
+      "verification": "unverified"
+    },
+    {
+      "club": "Sopron Basket",
+      "official_page": "https://www.facebook.com/sopronbasket",
+      "verification": "verified",
+      "verification_source": "https://wbasket.hu/uj-elerhetosege-van-a-sopron-basket-facebook-oldalanak/"
+    },
+    {
+      "club": "TFSE",
+      "official_page": "",
+      "verification": "unverified"
+    }
+  ]
+}
