@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T19:38:04.706867+00:00",
+  "checked_at": "2026-11-11T22:04:40.570278+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 32,
-      "added": 7,
+      "candidates": 31,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 3,
+      "repaired": 47,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 0,
+      "already_saved": 8,
+      "added": 1,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -175,8 +175,8 @@
       "candidates": 14,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 9,
+      "added": 1,
+      "repaired": 8,
       "article_errors": 1,
       "listing_errors": [
         "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
@@ -193,8 +193,8 @@
       "candidates": 16,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 2,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -339,8 +339,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -497,6 +497,36 @@
       ]
     },
     {
+      "source": "WBasket.hu",
+      "title": "Kulcsfontosságú idegenbeli sikerrel kezdte az Eb-selejtezőt válogatottunk",
+      "summary": "FIBA Women's EuroBasket 2027 Qualifiers Hamburg, Inselpark Arena TOMIC, Jelena (CRO) PETKOVIC, Danilo (SRB) DORI, Giacomo (ITA) - AYDOGDU, Borga (TUR)",
+      "url": "https://wbasket.hu/kulcsfontossagu-idegenbeli-sikerrel-kezdte-az-eb-selejtezot-valogatottunk/",
+      "published_at": "2026.11.11. 21:15",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár Eb-selejtező: hatalmas győzelem a vb-negyedik otthonában",
+      "summary": "Női kosár Eb-selejtező: hatalmas győzelem a vb-negyedik otthonában",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-eb-selejtezo-hatalmas-gyozelem-a-vb-negyedik-otthonaban/",
+      "published_at": "2026-11-11T20:58:22+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár Ek: súlyos vereség, sok hiányzó az Olajnál",
+      "summary": "Férfi kosár Ek: súlyos vereség, sok hiányzó az Olajnál",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-ek-sulyos-vereseg-sok-hianyzo-az-olajnal/",
+      "published_at": "2026-11-11T20:41:45+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
       "source": "BB1.hu",
       "title": "Nagyot küzdött a DEAC, de az Atomerőmű SE hozta a kötelezőt",
       "summary": "Alapszakasz 9. forduló Debrecen, Oláh Gábor utcai Sportcsarnok Makrai Márton, Jakab László Imre, Dr.",
@@ -516,6 +546,31 @@
       "published_at": "2026-11-11T20:14:28+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Az Oroszlányt is legyőztük itthon",
+      "summary": "Bár szinte végig vezettünk, az utolsó negyedben döntöttünk az OSE ellen.",
+      "url": "https://szedeak.com/az-oroszlanyt-is-legyoztuk-itthon/",
+      "published_at": "2026-11-11T20:11:20+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: első vérbeli rangadója után is hibátlan maradt a Falco",
+      "summary": "Férfi kosár NB I: első vérbeli rangadója után is hibátlan maradt a Falco",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-elso-verbeli-rangadoja-utan-is-hibatlan-maradt-a-falco/",
+      "published_at": "2026-11-11T20:01:27+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
     },
     {
       "source": "Nemzeti Sport",
@@ -745,6 +800,32 @@
         "men|Bp. Honvéd"
       ],
       "league": "men"
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "FIBA Europe Cup: mindent megtettünk, amíg bírtuk erővel",
+      "summary": "A Gora ellen két és fél negyed után még egálra álltunk, de utána kijött a két csapat mélysége közötti különbség.",
+      "url": "https://olajofficial.hu/2026/11/11/fiba-europe-cup-mindent-megtettunk-amig-birtuk-erovel/",
+      "published_at": "2026.11.11.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
+      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
+      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
+      "published_at": "2026.11.11.",
+      "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
       "source": "WBasket.hu",
@@ -1132,19 +1213,6 @@
       "url": "https://olajofficial.hu/2026/11/09/fiba-europe-cup-lengyelorszagba-utazunk-het-kozben/",
       "published_at": "2026.11.09.",
       "summary_method": "article_body",
-      "publisher_club": "NHSZ-Szolnoki Olajbányász",
-      "league": "men",
-      "teams": [
-        "men|Szolnok"
-      ]
-    },
-    {
-      "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
-      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
-      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
-      "published_at": "2026.11.09.",
-      "summary_method": "source_description",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
       "league": "men",
       "teams": [
@@ -8400,7 +8468,7 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Eseménydús szerda este vár ránk!",
+      "summary": "Németországban nyert Völgyi Péter csapata.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description",
@@ -8607,6 +8675,19 @@
       "league": "women",
       "teams": [
         "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Nadija Smailbegovic győzelemmel kezdett, Tina Cvijanovic 12 pontot dobott az Eb-selejtezőn",
+      "summary": "Nadija Smailbegovic a szerb válogatottal Görögország ellen nyert Belgrádban a 2027-es Európa-bajnokság selejtezőjének novemberi nyitányán.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Nadija-Smailbegovic-gyozelemmel-kezdett--Tina-Cvijanovic-12-pontot-dobott-az-Eb-selejtezon/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
       ]
     },
     {
@@ -9114,6 +9195,19 @@
       ]
     },
     {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Győzelemmel kezdte az Eb-selejtezőt a magyar válogatott",
+      "summary": "A magyar női kosárlabda-válogatott 70–64-re győzött Németország ellen a 2027-es Európa-bajnokság selejtezőjének nyitányán.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Gyozelemmel-kezdte-az-Eb-selejtezot-a-magyar-valogatott/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
       "summary": "Férfi NB I: Megőrizte veretlenségét az ASE, küzdelmes meccset nyert Fóton a Szolnok",
@@ -9160,6 +9254,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Ennél mindenki többet várt – szurkolóink nem ezt érdemelték",
+      "summary": "A mezőny újonca ellen hazai pályán még akkor is győzni kell, ha az ellenfelünk eddig jól szerepelt – a győzelem helyett azonban kiadós vereségbe futottunk bele.",
+      "url": "https://www.nkapecs.hu/tartalmak/Ennel-mindenki-tobbet-vart-szurkoloink-nem-ezt-erdemeltek/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
     },
     {
       "source": "Klub: TFSE",
@@ -9237,6 +9344,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: DEAC",
+      "title": "Csak megszorongatni sikerült a listavezetőt",
+      "summary": "Közel volt a bravúrhoz a DEAC kosárlabdacsapata a listavezető Atomerőmű SE ellen, de hiába késztették nagy csatára a bajnokságban eddig százszázalékos vendégeket, végül 83-74 arányú vereséget szenvedtek.",
+      "url": "https://kosarlabda.deac.hu/hirek/csak-megszorongatni-sikerult-a-listavezetot/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "DEAC",
+      "league": "men",
+      "teams": [
+        "men|DEAC"
       ]
     },
     {
