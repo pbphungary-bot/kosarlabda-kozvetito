@@ -66,23 +66,31 @@ jobs:
           PY
 
       - name: Commit news data and health diagnostics only
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/news.json data/news_health.json
-          if git diff --cached --quiet; then
-            echo 'No news data changes'
-            exit 0
-          fi
-          git commit -m 'Update basketball news pilot data'
+
           for attempt in 1 2 3; do
-            if git push; then
+            echo "Publishing attempt $attempt"
+            git fetch origin main
+            # Start from the newest remote state, never rebase generated JSON.
+            git reset --hard origin/main
+            # Recollect against the latest published articles so no concurrent
+            # news additions are silently overwritten by stale output.
+            python scripts/update_news.py
+            git add -- data/news.json data/news_health.json
+            if git diff --cached --quiet; then
+              echo 'No news data changes to publish'
+              exit 0
+            fi
+            git commit -m 'Update basketball news pilot data'
+            if git push origin HEAD:main; then
               echo 'News data pushed successfully'
               exit 0
             fi
-            echo "Push conflicted (attempt $attempt); rebasing and retrying"
-            git fetch origin main
-            git rebase origin/main
+            echo 'Remote changed during collection; retrying from latest main'
           done
-          echo 'Unable to push news data after three attempts' >&2
+          echo 'Unable to publish news after three attempts' >&2
           exit 1
