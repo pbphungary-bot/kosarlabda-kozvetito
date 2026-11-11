@@ -3,7 +3,7 @@ name: Basketball News Pilot
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 */2 * * *'
+    - cron: '*/15 * * * *'
 
 permissions:
   contents: write
@@ -65,59 +65,24 @@ jobs:
                   f.write(f'- {key}: {value}\n')
           PY
 
-      - name: Publish news data without rerunning collection
-        shell: bash
+      - name: Commit news data and health diagnostics only
         run: |
-          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          mkdir -p /tmp/news-pilot-output
-          cp data/news.json data/news_health.json /tmp/news-pilot-output/
-
-          for attempt in 1 2 3 4 5 6 7 8 9 10; do
-            echo "Publishing attempt $attempt"
-            git fetch origin main
-            git reset --hard origin/main
-
-            # Never overwrite a newer news snapshot published by another job.
-            set +e
-            python - <<'PY_CHECK'
-          import json
-          from datetime import datetime, timezone
-          from pathlib import Path
-          def timestamp(path):
-              try:
-                  d = json.loads(Path(path).read_text(encoding='utf-8'))
-                  v = d.get('checked_at')
-                  if not v:
-                      return None
-                  return datetime.fromisoformat(v.replace('Z', '+00:00')).astimezone(timezone.utc)
-              except (OSError, ValueError, TypeError, AttributeError):
-                  return None
-          incoming = timestamp('/tmp/news-pilot-output/news_health.json')
-          current = timestamp('data/news_health.json')
-          if current and incoming and current > incoming:
-              print('A newer news update is already published; not overwriting it.')
-              raise SystemExit(10)
-          PY_CHECK
-            status=$?
-            set -e
-            if [ "$status" -eq 10 ]; then exit 0; fi
-            if [ "$status" -ne 0 ]; then exit "$status"; fi
-
-            cp /tmp/news-pilot-output/news.json /tmp/news-pilot-output/news_health.json data/
-            git add data/news.json data/news_health.json
-            if git diff --cached --quiet; then
-              echo 'No news data changes to publish'
-              exit 0
-            fi
-            git commit -m 'Update basketball news pilot data'
-            if git push origin HEAD:main; then
+          git add data/news.json data/news_health.json
+          if git diff --cached --quiet; then
+            echo 'No news data changes'
+            exit 0
+          fi
+          git commit -m 'Update basketball news pilot data'
+          for attempt in 1 2 3; do
+            if git push; then
               echo 'News data pushed successfully'
               exit 0
             fi
-            echo 'Another workflow pushed first; retrying publication only'
-            sleep 2
+            echo "Push conflicted (attempt $attempt); rebasing and retrying"
+            git fetch origin main
+            git rebase origin/main
           done
-          echo 'Publishing failed after 10 attempts; collector was not rerun' >&2
+          echo 'Unable to push news data after three attempts' >&2
           exit 1
