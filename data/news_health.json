@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T03:03:30.285382+00:00",
+  "checked_at": "2026-11-11T05:13:03.977296+00:00",
   "statistics": {
     "total": 819,
     "fresh": 341,
@@ -7,10 +7,10 @@
     "missing_dates": 132,
     "headline_only": 437,
     "untagged": 382,
-    "sources_ok": 19,
-    "sources_partial": 2,
+    "sources_ok": 20,
+    "sources_partial": 1,
     "sources_failed": 10,
-    "new_articles": 16,
+    "new_articles": 6,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 16,
     "clubs_configured": 25
@@ -430,19 +430,17 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 12,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 24,
       "attempted": 10,
-      "already_saved": 0,
-      "added": 10,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: RemoteDisconnected: Remote end closed connection without response"
-      ],
+      "listing_errors": [],
       "usable_articles": 10,
       "source_coverage": true
     },
