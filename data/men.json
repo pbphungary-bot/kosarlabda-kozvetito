@@ -556,60 +556,60 @@
       "round": "9.",
       "home": "Délút-SZTE-Szedeák",
       "away": "OSE Lions",
-      "result": "Előzetes",
+      "result": "36–32",
       "date": "2026. 11. 11.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134867"
     },
     {
       "round": "9.",
       "home": "Egis Körmend",
       "away": "Kometa-KVGY Kaposvári KK",
-      "result": "Előzetes",
+      "result": "36–27",
       "date": "2026. 11. 11.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134861"
     },
     {
       "round": "9.",
       "home": "Falco-Vulcano Energia KC Szombathely",
       "away": "Alba Fehérvár",
-      "result": "Előzetes",
+      "result": "32–17",
       "date": "2026. 11. 11.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134855"
     },
     {
       "round": "9.",
       "home": "NKA Universitas Pécs",
       "away": "PHOENIX Fóti Tigrisek",
-      "result": "Előzetes",
+      "result": "21–30",
       "date": "2026. 11. 11.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134865"
     },
     {
       "round": "9.",
       "home": "Sopron KC",
       "away": "Endo Plus Service-Honvéd",
-      "result": "Előzetes",
+      "result": "18–33",
       "date": "2026. 11. 11.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134857"
     },
     {
       "round": "9.",
       "home": "DEAC",
       "away": "Atomerőmű SE",
-      "result": "Előzetes",
+      "result": "1–5",
       "date": "2026. 11. 11.",
       "time": "18:30",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134859"
     },
     {
@@ -1823,5 +1823,5 @@
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_135095"
     }
   ],
-  "updated_at": "2026-11-08T19:27:55.975856+00:00"
+  "updated_at": "2026-11-11T17:35:16.430842+00:00"
 }
