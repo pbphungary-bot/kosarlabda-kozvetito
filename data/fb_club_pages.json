@@ -1,12 +1,11 @@
 {
-  "updated_at": "2026-11-11",
-  "note": "Official Facebook pages verified from club or credible independent sources; other clubs retain Facebook search links. No Facebook post collection is claimed.",
+  "updated_at": null,
+  "note": "Only add independently verified official Facebook URLs. No post scraping without authorization.",
   "clubs": [
     {
       "club": "Falco KC Szombathely",
-      "official_page": "https://www.facebook.com/falcokc.hivataloshonlap/",
-      "verification": "verified",
-      "verification_source": "https://falcokc.com/adatok/"
+      "official_page": "",
+      "verification": "unverified"
     },
     {
       "club": "DVTK HUNTHERM",
@@ -25,15 +24,13 @@
     },
     {
       "club": "NHSZ-Szolnoki Olajbányász",
-      "official_page": "https://www.facebook.com/olajofficial",
-      "verification": "verified",
-      "verification_source": "https://shop.olajofficial.hu/elerhetoseg/"
+      "official_page": "",
+      "verification": "unverified"
     },
     {
       "club": "Alba Fehérvár",
-      "official_page": "https://www.facebook.com/albakosar/",
-      "verification": "verified",
-      "verification_source": "https://www.szekesfehervar.hu/kosarlabda?parent=37742"
+      "official_page": "",
+      "verification": "unverified"
     },
     {
       "club": "NKA Universitas Pécs (férfi)",
@@ -122,9 +119,8 @@
     },
     {
       "club": "Sopron Basket",
-      "official_page": "https://www.facebook.com/sopronbasket",
-      "verification": "verified",
-      "verification_source": "https://wbasket.hu/uj-elerhetosege-van-a-sopron-basket-facebook-oldalanak/"
+      "official_page": "",
+      "verification": "unverified"
     },
     {
       "club": "TFSE",
