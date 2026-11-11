@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T01:15:28.451674+00:00",
+  "checked_at": "2026-11-11T03:03:30.285382+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -415,17 +415,19 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 24,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 12,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 0,
+      "added": 10,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: RemoteDisconnected: Remote end closed connection without response"
+      ],
       "usable_articles": 10,
       "source_coverage": true
     },
@@ -4396,9 +4398,35 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Rózsahegyen folytatódik a felkészülés",
+      "summary": "A keddi emlékmeccs után Rózsahegyen folytatjuk a felkészülést: pénteken 15.30 órakor a cseh Ostrava, szombaton 15.30-kor a házigazda Ruzomberok lesz az ellenfelünk a szlovákiai tornán.",
+      "url": "https://etobasket.hu/hu/hirek/rozsahegyen-folytatodik-a-felkeszules/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "Október legjobbjai: Dúl Panka és Tóth Kíra Boglárka",
       "summary": "Dúl Panka lett október hónap legjobbja a felnőtteknél.",
       "url": "https://etobasket.hu/hu/hirek/oktober-legjobbjai-dul-panka-es-toth-kira-boglarka/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Nagyszerű siker az utánpótlásban",
+      "summary": "A hétvégén rendezték a selejtezőt a serdülőbajnokságban, ahol az A csapatunk, az ETO Basket Gekkók három győzelemmel a felsőházba jutott.",
+      "url": "https://etobasket.hu/hu/hirek/nagyszeru-siker-az-utanpotlasban/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
@@ -4438,6 +4466,71 @@
       "title": "Legyőztük a címvédőt",
       "summary": "ETO Basket–NKA Universitas Pécs 80–65 (23–14, 17–20, 22–12, 18–19)",
       "url": "https://etobasket.hu/hu/hirek/legyoztuk-a-cimvedot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Két Európa-kupa-induló csapatot fektettünk két vállra",
+      "summary": "ETO Basket–SBS Ostrava 68–63 (17–18, 25–9, 13–18, 13–18)",
+      "url": "https://etobasket.hu/hu/hirek/ket-europa-kupa-indulo-csapatot-fektettunk-ket-vallra/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Információk a jegy- és bérletvásárlásról",
+      "summary": "Ami még lényeges: most már lehet bankkártyával is fizetni.",
+      "url": "https://etobasket.hu/hu/hirek/informaciok-a-jegy--es-berletvasarlasrol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Győzelemmel kezdtük a bajnokságot",
+      "summary": "ETO Basket–ELTE BEAC Újbuda 88–74 (17–16, 20–16, 26–16, 25–23)",
+      "url": "https://etobasket.hu/hu/hirek/gyozelemmel-kezdtuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Fontos két ponttal térhetünk haza a Csata otthonából",
+      "summary": "Budapest, NB I-es női mérkőzés, 200 néző.",
+      "url": "https://etobasket.hu/hu/hirek/fontos-ket-ponttal-terhetunk-haza-a-csata-otthonabol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Emlékmeccs új környezetben régi ellenféllel szemben",
+      "summary": "Szeptember 8-án, 18 órakor az Olimpiai Sportpark Multicsarnokában a legutóbbi bajnokság bronzérmese, a Magyar Kupa-győztes Sopron Basket ellen játssza csapatunk első hazai felkészülési meccsét, mely egyben a hagyományos Fűzy Ákos-Tapodi Péter-emlékmérkőzés.",
+      "url": "https://etobasket.hu/hu/hirek/emlekmeccs-uj-kornyezetben-regi-ellenfellel-szemben/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
@@ -4500,9 +4593,48 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "A Sopron ellen játszottuk a Fűzy Ákos-Tapodi Péter-emlékmérkőzést",
+      "summary": "ETO Basket–Sopron Basket 62–105 (22–30, 12–21, 16–27, 12–27)",
+      "url": "https://etobasket.hu/hu/hirek/a-sopron-ellen-jatszottuk-a-fuzy-akos-tapodi-peter-emlekmerkozest/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "A Márvány Óvoda kapta az emlékmeccsen összegyűjtött labdákat",
       "summary": "Szeptemberben rendeztük meg a Fűzy Ákos–Tapodi Péter emlékmérkőzést.",
       "url": "https://etobasket.hu/hu/hirek/a-marvany-ovoda-kapta-az-emlekmeccsen-osszegyujtott-labdakat/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Csata otthonában folytatjuk a bajnokságot",
+      "summary": "Szombaton 17 órakor a Csata TTK otthonában folytatjuk szereplésünket a bajnokságban.",
+      "url": "https://etobasket.hu/hu/hirek/a-csata-otthonaban-folytatjuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A BEAC ellen kezdjük a bajnokságot",
+      "summary": "Csütörtökön 18 órakor az Olimpiai Sportparkban az ELTE BEAC Újbuda együttesét fogadjuk a bajnokság nyitófordulójában.",
+      "url": "https://etobasket.hu/hu/hirek/a-beac-ellen-kezdjuk-a-bajnoksagot/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
