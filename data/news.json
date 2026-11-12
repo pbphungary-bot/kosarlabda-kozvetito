@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-12T07:56:05.555746+00:00",
+  "checked_at": "2026-11-12T08:54:55.511463+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 2,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -495,6 +495,15 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Lakits András: Hogy egy friss klasszikust idézzek, itt a harmadik negyedben bőven volt szubjektivitás",
+      "summary": "Andjelko Mandics : – Gratulálok a srácoknak!",
+      "url": "https://bball1.hu/lakits-andras-hogy-egy-friss-klasszikust-idezzek-itt-a-harmadik-negyedben-boven-volt-szubjektivitas/",
+      "published_at": "2026-11-12T08:51:47+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
