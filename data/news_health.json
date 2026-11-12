@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-12T12:44:03.252269+00:00",
+  "checked_at": "2026-11-12T14:01:54.214625+00:00",
   "statistics": {
-    "total": 872,
-    "fresh": 372,
-    "fresh_with_summary": 210,
-    "missing_dates": 149,
-    "headline_only": 448,
-    "untagged": 387,
+    "total": 874,
+    "fresh": 373,
+    "fresh_with_summary": 211,
+    "missing_dates": 150,
+    "headline_only": 449,
+    "untagged": 389,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 7,
+    "new_articles": 9,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -38,8 +38,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 8,
+      "added": 1,
+      "repaired": 7,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -135,6 +135,7 @@
       "repaired": 0,
       "article_errors": 10,
       "listing_errors": [
+        "article https://www.egiskormend.hu/Hirek/Magabiztos_hazai_gyozelemmel_folytatta_a_bajnoksagot_az_Egis_Kormend.html/: HTTPError: HTTP Error 404: Not Found",
         "article https://www.egiskormend.hu/Hirek/Hazai_palyan_javitana_az_Egis_Kormend_a_Kaposvar_erkezik_a_Rabap.html/: HTTPError: HTTP Error 404: Not Found",
         "article https://www.egiskormend.hu/Hirek/Pazar_elso_felido_utan_bosszanto_vereseg_Budapesten.html/: HTTPError: HTTP Error 404: Not Found",
         "article https://www.egiskormend.hu/Hirek/uj_jatekossal_gyozelmi_remenyekkel_utazunk_Budapestre.html/: HTTPError: HTTP Error 404: Not Found",
@@ -143,8 +144,7 @@
         "article https://www.egiskormend.hu/Hirek/Kulcsfontossagu_merkozes_elott_a_Sopront_fogadjuk_Kormenden.html/: HTTPError: HTTP Error 404: Not Found",
         "article https://www.egiskormend.hu/Hirek/HIVATALOS_Tavozik_Xavier_Cork.html/: HTTPError: HTTP Error 404: Not Found",
         "article https://www.egiskormend.hu/Hirek/Nem_volt_esely_a_cimvedo_ellen_az_elso_vasi_klasszikuson.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Kovetkezik_az_elso_vasi_klasszikus.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Nem_sikerult_az_ujabb_gyozelem_Pecsett_maradt_alul_az_Egis_Kormend.html/: HTTPError: HTTP Error 404: Not Found"
+        "article https://www.egiskormend.hu/Hirek/Kovetkezik_az_elso_vasi_klasszikus.html/: HTTPError: HTTP Error 404: Not Found"
       ],
       "usable_articles": 0,
       "source_coverage": false
