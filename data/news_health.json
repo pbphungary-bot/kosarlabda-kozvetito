@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-12T04:35:11.478106+00:00",
+  "checked_at": "2026-11-12T05:36:23.912901+00:00",
   "statistics": {
-    "total": 848,
+    "total": 850,
     "fresh": 368,
     "fresh_with_summary": 207,
-    "missing_dates": 143,
-    "headline_only": 441,
-    "untagged": 398,
+    "missing_dates": 145,
+    "headline_only": 443,
+    "untagged": 400,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 7,
+    "new_articles": 9,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -38,8 +38,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 8,
+      "added": 2,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },

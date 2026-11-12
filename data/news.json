@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-12T04:35:11.478106+00:00",
+  "checked_at": "2026-11-12T05:36:23.912901+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 8,
+      "added": 2,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -8896,6 +8896,16 @@
       "teams": []
     },
     {
+      "source": "Hunbasket",
+      "title": "Kulcsfontosságú idegenbeli sikerrel kezdte az Eb-selejtezőt női válogatottunk",
+      "summary": "Kulcsfontosságú idegenbeli sikerrel kezdte az Eb-selejtezőt női válogatottunk",
+      "url": "https://hunbasket.hu/hir/77687/kulcsfontossagu-idegenbeli-sikerrel-kezdte-az-eb-selejtezot-noi-valogatottunk/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Kováts Gabriella 11 év után távozik a TFSE edzői stábjából",
       "summary": "Jelentős szerkezeti változások előtt áll a TFSE Női Amatőr NB I.-es és MEFOB kosárlabdacsapata. 11 felejthetetlen, sikerekkel teli év után távozik a klubtól Kováts Gabriella.",
@@ -9329,6 +9339,15 @@
       "title": "Fantasy: Harrison és Kucowski voltak a legjobbak",
       "summary": "Fantasy: Harrison és Kucowski voltak a legjobbak",
       "url": "https://hunbasket.hu/hir/77649/fantasy-harrison-es-kucowski-voltak-a-legjobbak/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "Hunbasket",
+      "title": "FIBA EC: Kikapott Lengyelországban a tartalékos Szolnok",
+      "summary": "FIBA EC: Kikapott Lengyelországban a tartalékos Szolnok",
+      "url": "https://hunbasket.hu/hir/77686/fiba-ec-kikapott-lengyelorszagban-a-tartalekos-szolnok/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
