@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-12T17:38:33.832767+00:00",
+  "checked_at": "2026-11-12T18:37:32.733486+00:00",
   "statistics": {
-    "total": 880,
-    "fresh": 377,
+    "total": 881,
+    "fresh": 378,
     "fresh_with_summary": 216,
     "missing_dates": 151,
-    "headline_only": 449,
-    "untagged": 391,
+    "headline_only": 450,
+    "untagged": 392,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 6,
+    "new_articles": 7,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -233,19 +233,17 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
