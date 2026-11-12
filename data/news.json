@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-12T00:38:50.662711+00:00",
+  "checked_at": "2026-11-12T02:03:06.690117+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -467,17 +467,19 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 32,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 13,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 6,
+      "repaired": 4,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: RemoteDisconnected: Remote end closed connection without response"
+      ],
       "usable_articles": 10,
       "source_coverage": true
     }
@@ -8198,6 +8200,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Újabb nehéz hétvége",
+      "summary": "Mindkét csapatunk szombaton vívta meg a maga mérkőzését, a hölgyek hazai pályán fogadták az Érd U22-es csapatát, míg az urak a Pénzügyőr otthonába látogattak.",
+      "url": "https://tfse.hu/ujabb-nehez-hetvege/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: VBW CEKK Cegléd",
       "title": "Újabb győzelem idegenben",
       "summary": "Vasas Akadémia–VBW CEKK Cegléd 55–69 (7–16, 9–15, 18–25, 21–13) Pasaréti út, 93 néző.",
@@ -8587,6 +8602,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Nem találtuk a ritmust Szekszárdon",
+      "summary": "Női kosárlabdacsapatunk 88–53-as vereséget szenvedett a KSC Szekszárd otthonában a női NB I.",
+      "url": "https://tfse.hu/nem-talaltuk-a-ritmust-szekszardon/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Nem sikerült a bravúr Fehérváron",
       "summary": "Tizenkilenc pontos vereséget szenvedett a DEAC kosárlabdacsapata az NB I.",
@@ -8819,6 +8847,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Labdabiztonság és lepattanózás: fontos feladatok a BEAC elleni fővárosi rangadón",
+      "summary": "Szombaton az ELTE BEAC Újbuda otthonában folytatja a bajnokságot női kosárlabdacsapatunk.",
+      "url": "https://tfse.hu/labdabiztonsag-es-lepattanozas-fontos-feladatok-a-beac-elleni-fovarosi-rangadon/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -9065,6 +9106,32 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Jó kezdés és eredményes hajrá: fontos győzelmet arattunk a BEAC otthonában",
+      "summary": "Női kosárlabdacsapatunk 67–59-re nyert az ELTE BEAC Újbuda vendégeként az NB I/A ötödik fordulójában.",
+      "url": "https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Jó kezdés után az ETO Basket nyerte a hazai bajnokit",
+      "summary": "A TFSE női kosárlabdacsapata 75–57-es vereséget szenvedett az ETO Basket ellen az NB I/A 4. fordulójában.",
+      "url": "https://tfse.hu/jo-kezdes-utan-az-eto-basket-nyerte-a-hazai-bajnokit/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "JÖN A 7 ÉRDEKESSÉG RÓLAM SOROZATUNK LEGÚJABB RÉSZE! – Rosic Uros hozott 7 érdekességet magáról!",
       "summary": "JÖN A 7 ÉRDEKESSÉG RÓLAM SOROZATUNK LEGÚJABB RÉSZE! – Rosic Uros hozott 7 érdekességet magáról!",
@@ -9127,6 +9194,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Ismerős ellenfél érkezik: az ETO Basketet fogadja a TFSE",
+      "summary": "A BKG elleni győzelem után szombaton az ETO Basket ellen folytatja a bajnokságot női kosárlabdacsapatunk.",
+      "url": "https://tfse.hu/ismeros-ellenfel-erkezik-az-eto-basketet-fogadja-a-tfse/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
