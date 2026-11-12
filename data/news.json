@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-12T10:51:44.043569+00:00",
+  "checked_at": "2026-11-12T11:02:38.260678+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -55,8 +55,8 @@
     {
       "source": "BB1.hu team searches",
       "status": "ok",
-      "search_pages_ok": 29,
-      "articles_added": 0,
+      "search_pages_ok": 30,
+      "articles_added": 14,
       "failures": []
     },
     {
@@ -623,6 +623,7 @@
       "published_at": "2026-11-11T19:58:23+01:00",
       "summary_method": "article_body",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Falco KC"
       ],
       "league": "men"
@@ -897,7 +898,10 @@
       "url": "https://bball1.hu/kalman-laszlo-szerint-a-ket-ellovas-nem-hibazik-a-fot-es-a-honved-pedig-idegenben-is-nyer/",
       "published_at": "2026-11-10T20:01:01+01:00",
       "summary_method": "article_body",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
@@ -969,6 +973,7 @@
       "published_at": "2026-11-10T16:10:45+01:00",
       "summary_method": "article_body",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Sopron"
       ],
       "league": "men"
@@ -1238,7 +1243,10 @@
       "url": "https://bball1.hu/kocsis-tamas-az-elsoben-felidoben-megmutattuk-hogyan-kell-kosarlabdazni-a-masodikban-sajnos-a-zonavedekezes-ellen-teljesen-csodot-mondtunk/",
       "published_at": "2026-11-09T09:35:59+01:00",
       "summary_method": "article_body",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "WBasket.hu",
@@ -1279,7 +1287,9 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosarlabda-nb-i-a-honved-21-pontos-hatranybol-forditott-a-kormend-ellen/",
       "published_at": "2026-11-08T20:36:47+01:00",
       "summary_method": "headline_fallback",
-      "teams": [],
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
       "league": "men"
     },
     {
@@ -1289,7 +1299,10 @@
       "url": "https://bball1.hu/ujabb-oriasi-honved-forditas-21-pontos-hatranybol-verte-a-kormendet-lakits-andras-csapata/",
       "published_at": "2026-11-08T20:00:30+01:00",
       "summary_method": "article_body",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "WBasket.hu",
@@ -1309,6 +1322,7 @@
       "published_at": "2026-11-08T17:00:28+01:00",
       "summary_method": "article_body",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Körmend"
       ],
       "league": "men"
@@ -1653,6 +1667,7 @@
       "published_at": "2026-11-07T15:16:38+01:00",
       "summary_method": "article_body",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Körmend"
       ],
       "league": "men"
@@ -1864,7 +1879,10 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/elhunyt-a-honved-legendas-kosarlabdazoja-geller-sandor/",
       "published_at": "2026-11-06T14:21:07+01:00",
       "summary_method": "headline_fallback",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -2329,7 +2347,9 @@
       "published_at": "2026.11.04. 22:33",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|Sopron Basket"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -3192,7 +3212,10 @@
       "url": "https://bball1.hu/nka-universitas-pecs-endo-plus-service-honved-4/",
       "published_at": "2026-10-30T17:12:06+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -3429,7 +3452,9 @@
       "published_at": "2026.10.27. 20:12",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|Sopron Basket"
+      ]
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
@@ -3452,6 +3477,7 @@
       "published_at": "2026-10-27T19:30:33+01:00",
       "summary_method": "source_description",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Oroszlány"
       ],
       "league": "men"
@@ -3620,7 +3646,9 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/10/ferfi-kosar-nb-i-otthon-nyert-a-szolnok-a-honved-ellen/",
       "published_at": "2026-10-25T20:08:46+01:00",
       "summary_method": "headline_fallback",
-      "teams": [],
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
       "league": "men"
     },
     {
@@ -3719,6 +3747,7 @@
       "published_at": "2026-10-24T14:37:32+01:00",
       "summary_method": "source_description",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Szolnok"
       ],
       "league": "men"
@@ -4124,6 +4153,18 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Közös megegyezéssel szerződést bontott az Endo Plus Service-Honvéd, nyáron igazolt légiósával",
+      "summary": "Jamari Smith még a felkészülés során lábközépcsont-törést szenvedett.",
+      "url": "https://bball1.hu/kozos-megegyezessel-szerzodest-bontott-az-endo-plus-service-honved-nyaron-igazolt-legiosaval/",
+      "published_at": "2026-10-16T18:16:31+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "Alba Fehérvár – Kometa-KVGY Kaposvári KK",
       "summary": "Veretlenként látogat Székesfehérvárra a Kaposvár.",
       "url": "https://bball1.hu/alba-fehervar-kometa-kvgy-kaposvari-kk-2/",
@@ -4168,7 +4209,8 @@
       "published_at": "2026-10-16T13:45:10+01:00",
       "summary_method": "source_description",
       "teams": [
-        "men|Atomerőmű SE"
+        "men|Atomerőmű SE",
+        "men|Bp. Honvéd"
       ],
       "league": "men"
     },
@@ -4263,7 +4305,8 @@
       "published_at": "2026-10-12T09:47:06+01:00",
       "summary_method": "source_description",
       "teams": [
-        "men|Atomerőmű SE"
+        "men|Atomerőmű SE",
+        "men|Bp. Honvéd"
       ],
       "league": "men"
     },
@@ -4309,7 +4352,8 @@
       "published_at": "2026-10-10T15:20:43+01:00",
       "summary_method": "source_description",
       "teams": [
-        "men|Alba Fehérvár"
+        "men|Alba Fehérvár",
+        "men|Bp. Honvéd"
       ],
       "league": "men"
     },
@@ -4466,7 +4510,10 @@
       "url": "https://bball1.hu/legiossal-bovult-a-honved-kerete/",
       "published_at": "2026-10-03T17:05:13+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -4716,6 +4763,7 @@
       "published_at": "2026-09-25T13:09:38+01:00",
       "summary_method": "article_body",
       "teams": [
+        "men|Bp. Honvéd",
         "men|Kecskemét"
       ],
       "league": "men"
@@ -4931,7 +4979,10 @@
       "url": "https://bball1.hu/teljesen-uj-lapokkal-valtozatlan-koncepcioval-vag-neki-az-uj-idenynek-a-honved/",
       "published_at": "2026-09-23T14:34:03+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5102,7 +5153,10 @@
       "url": "https://bball1.hu/egylabdas-meccset-nyerve-jutott-dontobe-a-honved-kaposvaron/",
       "published_at": "2026-09-11T19:15:48+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5174,7 +5228,10 @@
       "url": "https://bball1.hu/megtalalta-uj-centeret-a-honved/",
       "published_at": "2026-09-04T12:36:24+01:00",
       "summary_method": "headline_fallback",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5257,12 +5314,34 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Győzött a PVSK a foghíjas Honvéd otthonában",
+      "summary": "Győzelemmel kezdtük meg felkészülési meccseink sorát – tudósított hivatalos oldalán a Piros csoport előző idényének bronzérmese, a PVSK.",
+      "url": "https://bball1.hu/gyozott-a-pvsk-a-foghijas-honved-otthonaban/",
+      "published_at": "2026-08-19T20:12:14+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "Az előző szezon legjobbjait díjazta az MKOSZ",
       "summary": "Összesen 16 kategóriában hirdettek győztest.",
       "url": "https://bball1.hu/az-elozo-szezon-legjobbjait-dijazta-az-mkosz/",
       "published_at": "2026-08-19T15:18:42+01:00",
       "summary_method": "source_description",
       "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Hivatalos a férfi élvonal 2026/2027-es sorsolása is",
+      "summary": "Az MKOSZ Versenyirodája elkészítette a férfi első osztály 2026/2027-es alapszakaszának menetrendjét is.",
+      "url": "https://bball1.hu/hivatalos-a-ferfi-elvonal-2026-2027-es-sorsolasa-is/",
+      "published_at": "2026-08-18T15:01:26+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5415,7 +5494,10 @@
       "url": "https://bball1.hu/korabbi-paksi-legiost-igazolt-a-honved/",
       "published_at": "2026-08-03T13:06:28+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5551,7 +5633,10 @@
       "url": "https://bball1.hu/evertekelo-endo-plus-service-honved-2/",
       "published_at": "2026-07-09T09:11:52+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5894,7 +5979,10 @@
       "url": "https://bball1.hu/bejelentette-uj-vezetoedzojet-kulcsjatekosaval-pedig-hosszabbitott-a-honved/",
       "published_at": "2026-05-29T09:05:30+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -5907,6 +5995,15 @@
         "men|Alba Fehérvár"
       ],
       "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "U21: Nincs egyértelmű esélyese a pécsi országos döntőnek",
+      "summary": "Az U20-as válogatott segédedzőjét, Kertész Dánielt szólaltattuk meg felvezetőnkben.",
+      "url": "https://bball1.hu/u21-nincs-egyertelmu-eselyese-a-pecsi-orszagos-dontonek/",
+      "published_at": "2026-05-29T00:17:52+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -6126,7 +6223,8 @@
       "published_at": "2026-05-14T15:40:38+01:00",
       "summary_method": "source_description",
       "teams": [
-        "men|Alba Fehérvár"
+        "men|Alba Fehérvár",
+        "men|Bp. Honvéd"
       ],
       "league": "men"
     },
@@ -6212,7 +6310,8 @@
       "published_at": "2026-05-12T13:59:29+01:00",
       "summary_method": "source_description",
       "teams": [
-        "men|Alba Fehérvár"
+        "men|Alba Fehérvár",
+        "men|Bp. Honvéd"
       ],
       "league": "men"
     },
@@ -6236,7 +6335,8 @@
       "published_at": "2026-05-10T15:54:42+01:00",
       "summary_method": "source_description",
       "teams": [
-        "men|Alba Fehérvár"
+        "men|Alba Fehérvár",
+        "men|Bp. Honvéd"
       ],
       "league": "men"
     },
@@ -6591,7 +6691,10 @@
       "url": "https://bball1.hu/csaladi-okok-miatt-tavozik-a-honved-legiosa/",
       "published_at": "2026-04-08T12:51:41+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6662,6 +6765,15 @@
       "url": "https://bball1.hu/elo-kozvetitesek-856/",
       "published_at": "2026-02-21T16:25:24+01:00",
       "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Gasper Potocnik: El kell döntenünk, hogy férfiakként akarunk kosárlabdázni, kemények lenni, vagy folyton sírunk valamilyen problémák miatt",
+      "summary": "Oliver Vidin : Gratulálok a Szolnoknak, megérdemelten nyerte meg a mérkőzést.",
+      "url": "https://bball1.hu/gasper-potocnik-el-kell-dontenunk-hogy-ferfiakkent-akarunk-kosarlabdazni-kemenyek-lenni-vagy-folyton-sirunk-valamilyen-problemak-miatt/",
+      "published_at": "2026-02-15T10:12:38+01:00",
+      "summary_method": "article_body",
       "teams": []
     },
     {
@@ -6744,7 +6856,10 @@
       "url": "https://bball1.hu/meggyozo-jatekkal-verte-a-honved-a-deacot/",
       "published_at": "2025-12-28T19:05:10+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6891,7 +7006,10 @@
       "url": "https://bball1.hu/magabiztosan-szinte-vegig-vezetve-nyert-meccset-a-honved-a-deac-otthonaban/",
       "published_at": "2025-09-27T19:03:11+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6900,6 +7018,15 @@
       "url": "https://bball1.hu/az-obszcen-megjegyzesek-a-sportszerutlen-beszolasok-sajnos-a-kosarlabda-palyat-sem-kerulik-el/",
       "published_at": "2025-09-26T08:01:32+01:00",
       "summary_method": "source_description",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Heti program: Kezdődik a bajnokság a nőknek és a férfiaknak is",
+      "summary": "18:00 Tiszaújvárosi Termálfürdő Phoenix Kosárlabda Klub – HÜBNER Nyíregyháza BS 18:00 Salgótarjáni KSE – MEAFC-Peka Bau",
+      "url": "https://bball1.hu/heti-program-kezdodik-a-bajnoksag-a-noknek-es-a-ferfiaknak-is/",
+      "published_at": "2025-09-22T10:25:27+01:00",
+      "summary_method": "article_body",
       "teams": []
     },
     {
@@ -6931,12 +7058,25 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Elkészült a férfi élvonal 2025/26-os alapszakaszának sorsolása",
+      "summary": "Az MKOSZ Versenyirodája elkészítette a Férfi NB I A csoport 2025/2026-os alapszakaszának sorsolását.",
+      "url": "https://bball1.hu/elkeszult-a-ferfi-elvonal-2025-26-os-alapszakaszanak-sorsolasa/",
+      "published_at": "2025-08-01T13:59:13+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
       "title": "Amerikai centerrel teljes a Honvéd kerete",
       "summary": "Amerikai centerrel teljes a Honvéd kerete",
       "url": "https://bball1.hu/amerikai-centerrel-teljes-a-honved-kerete/",
       "published_at": "2025-08-01T10:04:24+01:00",
       "summary_method": "headline_fallback",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6946,6 +7086,16 @@
       "published_at": "2025-07-24T09:11:21+01:00",
       "summary_method": "source_description",
       "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "15 főre szűkült férfi válogatottunk kerete a vb-selejtezőre",
+      "summary": "Mint ismert, a magyar férfi kosárlabda-válogatott augusztusban világbajnoki előselejtezőt játszik majd Észak-Macedónia és Románia ellen.",
+      "url": "https://bball1.hu/15-fore-szukult-ferfi-valogatottunk-kerete-a-vb-selejtezore/",
+      "published_at": "2025-07-07T10:07:33+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6963,7 +7113,10 @@
       "url": "https://bball1.hu/amerikai-erocsatart-igazolt-a-honved/",
       "published_at": "2025-07-03T16:04:20+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6972,7 +7125,10 @@
       "url": "https://bball1.hu/iranyitot-igazolt-a-honved/",
       "published_at": "2025-06-28T13:16:36+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -6995,11 +7151,29 @@
     },
     {
       "source": "BB1.hu",
+      "title": "Távozik az NKA Universitas Pécs csapatkapitánya",
+      "summary": "A klub nagyobb lehetőséget szeretne biztosítani Lukácsi Gábornak.",
+      "url": "https://bball1.hu/tavozik-az-nka-universitas-pecs-csapatkapitanya/",
+      "published_at": "2025-06-18T12:29:39+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
       "title": "Bronzérmes a Vasas, 5. a BKG, 9. a Kaszások",
       "summary": "Befejeződtek a Piros csoport küzdelmei.",
       "url": "https://bball1.hu/bronzermes-a-vasas-5-a-bkg-9-a-kaszasok/",
       "published_at": "2025-05-22T12:21:30+01:00",
       "summary_method": "source_description",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Az NKA Universitas Pécs két évvel meghosszabbította Bojan Szalatics szerződését",
+      "summary": "Az NKA Universitas Pécs hivatalos oldalán jelentette be, hogy két évvel meghosszabbította Bojan Szalatics szerződését.",
+      "url": "https://bball1.hu/az-nka-universitas-pecs-ket-evvel-meghosszabbitotta-bojan-szalatics-szerzodeset/",
+      "published_at": "2025-05-08T19:05:24+01:00",
+      "summary_method": "article_body",
       "teams": []
     },
     {
@@ -7028,7 +7202,10 @@
       "url": "https://bball1.hu/a-honved-legyuresevel-nyolc-kozott-a-kormend/",
       "published_at": "2025-04-12T19:04:25+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -7060,6 +7237,25 @@
       "published_at": "2025-03-19T08:35:17+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Heti program: Hétközben csak a Falco lép pályára, hétvégén teljes forduló jön a férfiaknál, Magyar Kupa négyes döntő a nőknél",
+      "summary": "17:00 NKA Universitas Pécs – Zalakerámia ZTE KK 18:00 Falco-Vulcano Energia KC Szombathely – Endo Plus Service-Honvéd 18:00 DEAC – NHSZ-Szolnoki Olajbányász 18:00 MVM-OSE Lions – Pécsi VSK-VEOLIA 18:00 Atomerőmű SE – Duna Aszfalt-DTKH Kecskemét 18:00 SZTE-Szedeák – Egis Körmend",
+      "url": "https://bball1.hu/heti-program-hetkozben-csak-a-falco-lep-palyara-hetvegen-teljes-fordulo-jon-a-ferfiaknal-magyar-kupa-negyes-donto-a-noknel/",
+      "published_at": "2025-03-17T14:21:23+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Atomerőmű SE",
+        "men|Bp. Honvéd",
+        "men|Falco KC",
+        "men|Kecskemét",
+        "men|Körmend",
+        "men|Oroszlány",
+        "men|Szedeák",
+        "men|Szolnok"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -7137,6 +7333,37 @@
       "published_at": "2024-12-04T13:56:54+01:00",
       "summary_method": "source_description",
       "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Heti program: Nagyüzem a férfiaknál és a nőknél is",
+      "summary": "17:00 SERCO UNI Győr – Sopron Basket 18:00 DVTK HUNTHERM – TARR KSC Szekszárd 18:00 BKG-PRIMA NATURA Szigetszentmiklós – NKA Universitas Pécs 18:00 Darazsak Sportakadémia – Vasas Akadémia 19:00 TFSE-MTK – VBW CEKK Cegléd",
+      "url": "https://bball1.hu/heti-program-nagyuzem-a-ferfiaknal-es-a-noknel-is/",
+      "published_at": "2024-12-02T13:26:50+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket",
+        "women|DVTK HUNTHERM",
+        "women|TFSE",
+        "women|BKG-PRIMA Szigetszentmiklós",
+        "women|TARR KSC Szekszárd",
+        "women|SERCO UNI Győr",
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Heti program: Jön az utolsó férfi forduló a válogatott szünet előtt",
+      "summary": "18:00 Alba Fehérvár – Le Portel 20:30 Limburg – NHSZ-Szolnoki Olajbányász",
+      "url": "https://bball1.hu/heti-program-jon-az-utolso-ferfi-fordulo-a-valogatott-szunet-elott/",
+      "published_at": "2024-11-04T16:42:18+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Alba Fehérvár",
+        "men|Szolnok"
+      ],
       "league": "men"
     },
     {
@@ -7516,7 +7743,10 @@
       "url": "https://bball1.hu/b-csoport-2021-2022-17-fordulo/",
       "published_at": "2022-01-24T09:01:59+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
@@ -9404,7 +9634,9 @@
       "url": "https://hunbasket.hu/hir/77672/ferfi-nb-i-21-pontos-hatranybol-verte-a-kormendet-a-honved/",
       "published_at": null,
       "summary_method": "headline_fallback",
-      "teams": [],
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
       "league": "men"
     },
     {
@@ -9803,6 +10035,15 @@
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
       "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCEKK%2BCegl%25C3%25A9d",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentkezés",
+      "summary": "Bejelentkezés",
+      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs%2Bf%25C3%25A9rfi",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
