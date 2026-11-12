@@ -845,7 +845,23 @@ async function saveSharedMatchupNotes(){
 }
 for(const side of ['home','away']){
  const field=notesField(side);
- field.addEventListener('input',()=>{if(!matchupReady()||!notesConfigured())return;notesUpdateBullets(field);sharedNotesState.dirty=true;notesStatus('Nem mentett változások…');clearTimeout(sharedNotesState.timer);sharedNotesState.timer=setTimeout(saveSharedMatchupNotes,900);});
+ field.addEventListener('keydown',e=>{
+  if(e.key!=='Enter'||e.isComposing)return;
+  e.preventDefault();
+  const start=field.selectionStart,end=field.selectionEnd;
+  field.setRangeText('\n• ',start,end,'end');
+  field.dispatchEvent(new Event('input',{bubbles:true}));
+ });
+ field.addEventListener('input',()=>{
+  if(!matchupReady()||!notesConfigured())return;
+  // Add the first bullet once; never rebuild/trim text while typing.
+  if(field.value&&!field.value.startsWith('• ')){
+   const pos=field.selectionStart;
+   field.value='• '+field.value;
+   field.setSelectionRange(pos+2,pos+2);
+  }
+  sharedNotesState.dirty=true;notesStatus('Nem mentett változások…');clearTimeout(sharedNotesState.timer);sharedNotesState.timer=setTimeout(saveSharedMatchupNotes,900);
+ });
  field.addEventListener('blur',()=>{if(sharedNotesState.dirty&&!sharedNotesState.saving){clearTimeout(sharedNotesState.timer);saveSharedMatchupNotes();}});
 }
 document.getElementById('sharedNotesReload').addEventListener('click',()=>{if(sharedNotesState.dirty&&!confirm('Nem mentett változások elveszhetnek. Újratöltöd?'))return;loadSharedMatchupNotes();});
