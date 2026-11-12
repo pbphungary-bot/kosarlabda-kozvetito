@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-12T11:02:38.260678+00:00",
+  "checked_at": "2026-11-12T11:31:56.265803+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 0,
+      "candidates": 32,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -56,7 +56,7 @@
       "source": "BB1.hu team searches",
       "status": "ok",
       "search_pages_ok": 30,
-      "articles_added": 14,
+      "articles_added": 0,
       "failures": []
     },
     {
@@ -495,6 +495,16 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Közel állt a bravúrhoz Szlovénia",
+      "summary": "A 2027-es Európa-bajnokság selejtezőjének K-csoportjában Szlovénia végig kiélezett mérkőzésen 67-62-re maradt alul Olaszországban.",
+      "url": "https://wbasket.hu/kozel-allt-a-bravurhoz-szlovenia/",
+      "published_at": "2026.11.12. 12:08",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
