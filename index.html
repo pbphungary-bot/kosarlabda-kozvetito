@@ -579,7 +579,7 @@ async function loadEredmenyekH2H(){try{const r=await fetch('data/h2h_hunbasket.j
 function renderBrief(){
  const box=$('notes');if(!box)return;
  if(!matchupReady()){box.innerHTML='<div class="empty">Válassz két csapatot a közvetítői jegyzethez.</div>';return;}
- const now=Date.now(),maxAge=150*86400000;
+ const now=Date.now(),day=86400000,maxAge=90*day;
  const categories=[
   ['Sérülés és visszatérés',/sérül|műtét|rehabilit|felépül|visszatér|kihagy|hiányz|beteg|kórház|bok[aá]|térd/i,8],
   ['Átigazolás és keret',/igazol|szerződ|távoz|érkez|kölcsön|légiós|honosít|keret|új játékos|próbajáték/i,7],
@@ -599,6 +599,7 @@ function renderBrief(){
  for(const article of newsArticles){
   const teams=[home,away].filter(t=>newsMatchesTeam(article,t,league));if(!teams.length)continue;
   const date=newsTime(article.published_at);if(!Number.isFinite(date)||date>now+5*60000||now-date>maxAge)continue;
+  const ageDays=(now-date)/day;
   const title=String(article.title||'').trim(),summary=String(article.summary||'').trim();
   const url=safeUrl(article.url);if(!url||title.length<20||summary.length<85||bad.test(title))continue;
   if(norm(title)===norm(summary)||/^(?:gratulálok|köszönöm|szép volt)/i.test(summary))continue;
@@ -607,9 +608,14 @@ function renderBrief(){
   // Exclude previews, match reports, and generic competition summaries unless the headline itself signals a real story.
   if(/\b(győz|vereség|nyert|legyőz|kikap|rangadó|forduló|ponttal|negyedben|papírforma)\b/i.test(title)&&!categories.some(c=>c[2]>=7&&c[1].test(title)))continue;
   const primary=found.sort((x,y)=>y[2]-x[2])[0];
+  // After 30 days, only durable human-interest or injury/return stories qualify.
+  // Preseason announcements and old roster/coaching press conferences are not live news.
+  const evergreen=primary[0]==='Emberi történet'||primary[0]==='Sérülés és visszatérés';
+  if(ageDays>30&&!evergreen)continue;
+  if(ageDays>60)continue;
   const content=summary.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
   if(content.length<85)continue;
-  entries.push({title,content,source:String(article.source||'Forrás'),url,date,teams,category:primary[0],score:primary[2]+Math.min(content.length/200,2)+(now-date<30*86400000?2:0)});
+  entries.push({title,content,source:String(article.source||'Forrás'),url,date,teams,category:primary[0],ageDays,score:primary[2]+Math.min(content.length/200,2)+(ageDays<=7?8:ageDays<=14?5:ageDays<=30?2:0)});
  }
  entries.sort((a,b)=>b.score-a.score||b.date-a.date);
  const unique=[];
@@ -619,13 +625,15 @@ function renderBrief(){
   if(existing){existing.teams=[...new Set([...existing.teams,...e.teams])];if(e.content.length>existing.content.length&&e.score>=existing.score-2){existing.content=e.content;existing.url=e.url;existing.source=e.source;}continue;}
   unique.push({...e});
  }
- unique.sort((a,b)=>b.date-a.date);
+ // Current reporting takes precedence; older context is clearly separated.
+ unique.sort((a,b)=>((a.ageDays<=7?0:a.ageDays<=14?1:a.ageDays<=30?2:3)-(b.ageDays<=7?0:b.ageDays<=14?1:b.ageDays<=30?2:3))||b.score-a.score||b.date-a.date);
  const items=unique.map(e=>{
   const date=new Date(e.date).toLocaleDateString('hu-HU',{year:'numeric',month:'short',day:'numeric'});
   const desc=e.content.length>550?e.content.slice(0,550).replace(/\s+\S*$/,'')+'…':e.content;
+  const ageLabel=e.ageDays>30?' · Korábbi háttértörténet':e.ageDays>14?' · Háttéranyag':'';
   return '<li><div class="brief-category">'+esc(e.category)+'</div><p><strong>'+esc(e.title)+'</strong></p><p>'+esc(desc)+'</p><div class="brief-meta">'+e.teams.map(t=>esc(t)).join(' · ')+' · '+esc(e.source)+' · '+date+' · <a href="'+esc(e.url)+'" target="_blank" rel="noopener noreferrer">Eredeti forrás ↗</a></div></li>';
  }).join('');
- box.innerHTML='<div class="brief-head"><h2>'+esc(home)+' <span class="brief-versus">–</span> '+esc(away)+'</h2><p class="muted">Ellenőrizhető háttértörténetek és nyilatkozatok · '+(league==='men'?'Férfi':'Női')+' NB I/A</p><p class="brief-count">'+unique.length+' forrásalapú háttértörténet</p></div>'+
+ box.innerHTML='<div class="brief-head"><h2>'+esc(home)+' <span class="brief-versus">–</span> '+esc(away)+'</h2><p class="muted">Friss, ellenőrizhető történetek és releváns háttéranyagok · '+(league==='men'?'Férfi':'Női')+' NB I/A</p><p class="brief-count">'+unique.length+' forrásalapú háttértörténet</p></div>'+
  (unique.length?'<ol class="brief-bulletin">'+items+'</ol>':'<p class="muted">A jelenlegi forrásadatokban nincs elegendő részletes, ellenőrizhető háttértörténet ehhez a párosításhoz. Nem töltjük fel statisztikai közhelyekkel.</p>')+
  '<p class="source">A szövegek forráskivonatok, nem teljes cikkek. A részleteket az eredeti cikkben ellenőrizd.</p>';
 }
