@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-12T14:01:54.214625+00:00",
+  "checked_at": "2026-11-12T14:50:36.060149+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 7,
+      "added": 0,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -290,8 +290,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 7,
-      "added": 0,
+      "already_saved": 6,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -494,6 +494,28 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "TF-BP – Peka Bau-MEAFC Wolves",
+      "summary": "B Piros csoport, alapszakasz, 8. forduló Budapest, Ludovika Aréna, vasárnap 16:30 Játékvezetők: Rózsavölgyi Alexandra, Hervay Tibor, Kéri István (Nagy János).",
+      "url": "https://bball1.hu/tf-bp-peka-bau-meafc-wolves/",
+      "published_at": "2026-11-12T15:19:49+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Két vereség is becsúszott a Bolháknak",
+      "summary": "A Vasas Bolhák U12-es csapat a Kölökös Lányok és a Kőbányai Darazsak/B ellen léptek pályára a második fordulón.",
+      "url": "https://vasasbasket.hu/index.php/ket-vereseg-is-becsuszott-a-bolhaknak/",
+      "published_at": "2026-11-12T14:25:40+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
       ]
     },
     {
