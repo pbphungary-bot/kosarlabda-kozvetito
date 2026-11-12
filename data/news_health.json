@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-12T09:53:31.272433+00:00",
+  "checked_at": "2026-11-12T10:51:44.043569+00:00",
   "statistics": {
     "total": 857,
     "fresh": 370,
@@ -10,7 +10,7 @@
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 8,
+    "new_articles": 7,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -96,14 +96,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 8,
-      "attempted": 8,
+      "candidates": 7,
+      "attempted": 7,
       "already_saved": 0,
-      "added": 8,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 8,
+      "usable_articles": 7,
       "source_coverage": true
     },
     {
