@@ -790,8 +790,8 @@ const h=info(home),a=info(away);if(!renderMatchupEmpty()){renderBrief();return;}
 // Shared matchup notes. Set ONLY the public Supabase project URL and anon/publishable key.
 // Never put a service_role or secret key into this public HTML.
 const SHARED_NOTES_CONFIG = {
-  url: '', // e.g. https://YOUR_PROJECT.supabase.co
-  publishableKey: '' // Supabase anon / publishable key (NOT secret key)
+  url: 'https://afsdmcycmufiibsraspv.supabase.co', // Supabase project URL
+  publishableKey: 'sb_publishable_s9JTEL59wzkWHhFqhzwUGQ_kSRmWCqw' // public publishable key
 };
 const sharedNotesState={key:'',version:null,timer:null,loading:0,saving:false,dirty:false};
 const notesField=(side)=>document.getElementById(side==='home'?'sharedNotesHome':'sharedNotesAway');
