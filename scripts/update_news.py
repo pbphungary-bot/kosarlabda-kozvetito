@@ -291,12 +291,12 @@ def parse_date(value):
 TEAM_SEARCHES = {
  'men': {
   'Alba Fehérvár':['Alba Fehérvár'], 'Atomerőmű SE':['Atomerőmű SE','Paks kosárlabda'],
-  'Bp. Honvéd':['Budapesti Honvéd kosárlabda'], 'DEAC':['DEAC kosárlabda'],
+  'Bp. Honvéd':['Budapesti Honvéd kosárlabda','Honvéd kosárlabda'], 'DEAC':['DEAC kosárlabda'],
   'Falco KC':['Falco KC','Falco Szombathely'], 'Kaposvár':['Kaposvári KK'],
   'Kecskemét':['KTE kosárlabda','Duna Aszfalt Kecskemét'], 'Körmend':['Egis Körmend'],
   'Oroszlány':['OSE Lions','Oroszlány kosárlabda'], 'Sopron':['Sopron KC'],
   'Szedeák':['SZTE-Szedeák'], 'Szolnok':['Szolnoki Olajbányász'],
-  'NKA Pécs':['NKA Universitas Pécs'], 'Fót':['Fót kosárlabda']},
+  'NKA Pécs':['NKA Universitas Pécs férfi'], 'Fót':['Fót kosárlabda']},
  'women': {
   'Sopron Basket':['Sopron Basket'], 'DVTK HUNTHERM':['DVTK HUNTHERM'],
   'NKA Universitas Pécs':['NKA Universitas Pécs női'], 'TFSE':['TFSE női kosárlabda'],
@@ -336,16 +336,8 @@ def targeted_bb1(entries, checks):
                         continue
                     entries[link] = item
                     added += 1
-                # Search results can be fuzzy; explicit text match is required.
-                body = clean((item.get('title') or '') + ' ' + (item.get('summary') or '')).casefold()
-                import unicodedata
-                def norm(x):
-                    return ''.join(c for c in unicodedata.normalize('NFD', x.casefold()) if not unicodedata.combining(c))
-                matched = any(norm(t) in norm(body) for t in terms if len(t) >= 5)
-                if matched and not (league == 'men' and re.search(r'(?<![a-z])n[oő]i(?![a-z])', norm(body))):
-                    tags = item.setdefault('teams', [])
-                    tag = league + '|' + club
-                    if tag not in tags: tags.append(tag)
+                # Discovery only: centralized tagging below applies the same
+                # strict men's/women's and ambiguous-name rules to every article.
     checks.append({'source':'BB1.hu team searches','status':('partial' if failures else 'ok') if successes else 'error',
                    'search_pages_ok':successes,'articles_added':added,
                    'failures':failures[:12]})
@@ -464,74 +456,7 @@ def club_tags(item):
     item['teams'] = [league + '|' + team]
 
 
-def main():
-    old = []
-    if OUT.exists():
-        try:
-            old = json.loads(OUT.read_text(encoding='utf-8')).get('articles', [])
-        except (OSError, ValueError):
-            pass
-    all_sources = SOURCES + load_club_sources()
-    by_name = {src['name']: src for src in all_sources}
-    entries = {}
-    discarded = 0
-    for item in old:
-        if not isinstance(item, dict) or not item.get('url'):
-            discarded += 1
-            continue
-        src = by_name.get(item.get('source'))
-        if src and not valid_url(item['url'], src):
-            # Historical records remain available, but are not considered fresh
-            # unless their date and metadata pass the current quality gates.
-            item['legacy_source_url'] = True
-        url = canonical(item['url'])
-        item['url'] = url
-        entries[url] = item
-    checks = []
-    for src in SOURCES:
-        found = {}
-        listing_errors = []
-        for listing_url in src['urls']:
-            try:
-                soup, base = fetch(listing_url)
-                for url, title in candidates(soup, base, src):
-                    found.setdefault(url, title)
-                if found and src['kind'] not in ('hunbasket', 'kezdo5'):
-                    break
-            except Exception as exc:
-                listing_errors.append(f'{listing_url}: {exc}')
-        added, repaired, failed = 0, 0, 0
-        for url, title in list(found.items())[:80]:
-            existing = entries.get(url)
-            needs_repair = existing and (not existing.get('published_at') or existing.get('summary_method') == 'headline_fallback' or clean(existing.get('title', '')).lower() in ('hírek', 'news') or not sentence(existing.get('summary', '')))
-            if existing and not needs_repair and existing.get('summary_method') == 'article_body':
-                continue
-            try:
-                item = article(url, title, src)
-                if existing:
-                    if existing.get('summary_method') == 'article_body' and item.get('summary_method') != 'article_body':
-                        item['summary'] = existing['summary']
-                        item['summary_method'] = 'article_body'
-                    if not item.get('published_at'):
-                        item['published_at'] = existing.get('published_at')
-                    if item['summary_method'] == 'headline_fallback' and existing.get('summary_method') == 'article_body' and sentence(existing.get('summary', '')):
-                        item['summary'] = existing['summary']
-                        item['summary_method'] = existing.get('summary_method', 'source_description')
-                    repaired += 1
-                else:
-                    added += 1
-                entries[url] = item
-            except Exception as exc:
-                failed += 1
-                print(f'ARTICLE ERROR {src["name"]}: {url}: {exc}', file=sys.stderr)
-            time.sleep(0.12)
-        status = ('partial' if (listing_errors or failed) else 'ok') if found else ('error' if listing_errors else 'empty')
-        checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
-                       'article_errors': failed, 'listing_errors': listing_errors})
-    targeted_bb1(entries, checks)
-    for src in all_sources:
-        if src['kind'] == 'club':
-            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 10)
+def assign_team_tags(entries):
     # Club-origin stories are tagged only to their publisher. Opponents in the
     # headline or summary do not make the article news about the opponent.
     club_sources = {
@@ -560,20 +485,20 @@ def main():
     men_aliases = {
         'Alba Fehérvár':['alba fehervar','alba fehervar kc'],
         'Atomerőmű SE':['atomeromu se','ase paks'],
-        'Bp. Honvéd':['budapesti honved','endo plus service honved'],
+        'Bp. Honvéd':['budapesti honved','endo plus service honved','honved'],
         'DEAC':['deac kosarlabda','deac ferfi'],
         'Falco KC':['falco','falco kc'],
         'Kaposvár':['kaposvari kk','kometa kaposvar'],
         'Kecskemét':['duna aszfalt','duna aszfalt-dtkh','kte ferfi kosarlabda'],
         'Körmend':['egis kormend','kormendi kosarlabda'],
         'Oroszlány':['ose lions','oroszlanyi se'],
-        'Sopron':['sopron kc','soproni kc'],
+        'Sopron':['sopron kc','soproni kc','soproni sörördögök'],
         'Szedeák':['szte-szedeak','delut-szte-szedeak'],
         'Szolnok':['szolnoki olaj','olajbanyasz'],
         'NKA Pécs':['nka pecs ferfi','nka universitas pecs ferfi'],
         'Fót':['foti tigrisek','phoenix foti']}
     women_aliases = {
-        'Sopron Basket':['sopron basket'],
+        'Sopron Basket':['sopron basket','soproni darazsak'],
         'DVTK HUNTHERM':['dvtk huntherm','dvtk noi kosarlabda'],
         'NKA Universitas Pécs':['nka universitas pecs noi','nka pecs noi'],
         'TFSE':['tfse noi','tfse'],
@@ -654,22 +579,98 @@ def main():
             if explicit and competition!=explicit:continue
             for team, aliases in mapping.items():
                 if any(matches(hay,a) for a in aliases):tags.append(competition+'|'+team)
+        # The NKA Universitas Pécs name is shared by men's and women's teams.
+        # Only classify the unqualified name when article/source context establishes gender.
+        if explicit and (matches(hay,'nka universitas pecs') or matches(hay,'nka pecs')):
+            nka = 'women|NKA Universitas Pécs' if explicit=='women' else 'men|NKA Pécs'
+            if nka not in tags:tags.append(nka)
+        # 'Sopron' alone is a city, not a club identifier. Never infer either team
+        # from an unqualified city reference.
+
         # Named player affiliation requires verified editorial knowledge;
         # retain the confirmed Schöll interview but don't guess other players.
         if source=='BB1.hu' and matches(norm(item.get('title','')), 'scholl richard') and explicit!='women':
             tags.append('men|Sopron')
         # Retain previously verified explicit team tags when compatible with
         # gender, but never carry over ambiguous men's tags from older runs.
-        for tag in existing:
-            comp=tag.split('|',1)[0]
-            if explicit and comp!=explicit:continue
-            if tag in tags:continue
-            if comp=='women' and (explicit=='women' or source=='WBasket.hu'):
-                tags.append(tag)
+        # Recompute tags from evidence rather than carrying stale associations
+        # from earlier collector versions. Verified publisher identity is handled above.
+
         item['teams']=list(dict.fromkeys(tags))
         if explicit:item['league']=explicit
         elif tags and len({t.split('|')[0] for t in tags})==1:item['league']=tags[0].split('|')[0]
         else:item.pop('league',None)
+
+
+def main():
+    old = []
+    if OUT.exists():
+        try:
+            old = json.loads(OUT.read_text(encoding='utf-8')).get('articles', [])
+        except (OSError, ValueError):
+            pass
+    all_sources = SOURCES + load_club_sources()
+    by_name = {src['name']: src for src in all_sources}
+    entries = {}
+    discarded = 0
+    for item in old:
+        if not isinstance(item, dict) or not item.get('url'):
+            discarded += 1
+            continue
+        src = by_name.get(item.get('source'))
+        if src and not valid_url(item['url'], src):
+            # Historical records remain available, but are not considered fresh
+            # unless their date and metadata pass the current quality gates.
+            item['legacy_source_url'] = True
+        url = canonical(item['url'])
+        item['url'] = url
+        entries[url] = item
+    checks = []
+    for src in SOURCES:
+        found = {}
+        listing_errors = []
+        for listing_url in src['urls']:
+            try:
+                soup, base = fetch(listing_url)
+                for url, title in candidates(soup, base, src):
+                    found.setdefault(url, title)
+                if found and src['kind'] not in ('hunbasket', 'kezdo5'):
+                    break
+            except Exception as exc:
+                listing_errors.append(f'{listing_url}: {exc}')
+        added, repaired, failed = 0, 0, 0
+        for url, title in list(found.items())[:80]:
+            existing = entries.get(url)
+            needs_repair = existing and (not existing.get('published_at') or existing.get('summary_method') == 'headline_fallback' or clean(existing.get('title', '')).lower() in ('hírek', 'news') or not sentence(existing.get('summary', '')))
+            if existing and not needs_repair and existing.get('summary_method') == 'article_body':
+                continue
+            try:
+                item = article(url, title, src)
+                if existing:
+                    if existing.get('summary_method') == 'article_body' and item.get('summary_method') != 'article_body':
+                        item['summary'] = existing['summary']
+                        item['summary_method'] = 'article_body'
+                    if not item.get('published_at'):
+                        item['published_at'] = existing.get('published_at')
+                    if item['summary_method'] == 'headline_fallback' and existing.get('summary_method') == 'article_body' and sentence(existing.get('summary', '')):
+                        item['summary'] = existing['summary']
+                        item['summary_method'] = existing.get('summary_method', 'source_description')
+                    repaired += 1
+                else:
+                    added += 1
+                entries[url] = item
+            except Exception as exc:
+                failed += 1
+                print(f'ARTICLE ERROR {src["name"]}: {url}: {exc}', file=sys.stderr)
+            time.sleep(0.12)
+        status = ('partial' if (listing_errors or failed) else 'ok') if found else ('error' if listing_errors else 'empty')
+        checks.append({'source': src['name'], 'status': status, 'candidates': len(found), 'added': added, 'repaired': repaired,
+                       'article_errors': failed, 'listing_errors': listing_errors})
+    targeted_bb1(entries, checks)
+    for src in all_sources:
+        if src['kind'] == 'club':
+            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 10)
+    assign_team_tags(entries)
     # Re-key by canonical URL and preserve the highest-quality article on collisions.
     deduplicated = {}
     for item in entries.values():
