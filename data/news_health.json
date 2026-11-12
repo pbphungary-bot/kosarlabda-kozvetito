@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-12T18:37:32.733486+00:00",
+  "checked_at": "2026-11-12T19:33:05.920601+00:00",
   "statistics": {
-    "total": 881,
-    "fresh": 378,
-    "fresh_with_summary": 216,
-    "missing_dates": 151,
+    "total": 883,
+    "fresh": 379,
+    "fresh_with_summary": 217,
+    "missing_dates": 152,
     "headline_only": 450,
-    "untagged": 392,
+    "untagged": 393,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 7,
+    "new_articles": 8,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -21,7 +21,7 @@
       "status": "ok",
       "candidates": 31,
       "added": 1,
-      "repaired": 4,
+      "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -190,8 +190,8 @@
       "candidates": 14,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 9,
+      "added": 1,
+      "repaired": 8,
       "article_errors": 1,
       "listing_errors": [
         "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
