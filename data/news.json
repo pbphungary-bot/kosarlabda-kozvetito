@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-13T18:18:37.420646+00:00",
+  "checked_at": "2026-11-13T19:06:47.417921+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 2,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -175,8 +175,8 @@
       "candidates": 14,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 1,
       "listing_errors": [
         "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
