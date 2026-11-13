@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-13T16:27:22.232341+00:00",
+  "checked_at": "2026-11-13T17:28:31.729310+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 2,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -300,19 +300,22 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -417,19 +420,22 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 24,
-      "attempted": 10,
-      "already_saved": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
+      "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://etobasket.hu/hu/hirek/2: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -467,19 +473,22 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     }
   ],
   "articles": [
@@ -521,6 +530,31 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "PHOENIX Fóti Tigrisek – Egis Körmend",
+      "summary": "Fót, PHOENIX Sportcsarnok Fót, szombat 17:00.",
+      "url": "https://bball1.hu/phoenix-foti-tigrisek-egis-kormend/",
+      "published_at": "2026-11-13T18:15:53+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Körmend",
+        "men|Fót"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Délút-SZTE-Szedeák – NKA Universitas Pécs",
+      "summary": "Szeged, Városi Sportcsarnok, szombat 18.30.",
+      "url": "https://bball1.hu/delut-szte-szedeak-nka-universitas-pecs/",
+      "published_at": "2026-11-13T17:30:26+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szedeák"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
