@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T11:50:48.411872+00:00",
+  "checked_at": "2026-11-13T12:46:56.692820+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 8,
-      "added": 1,
+      "already_saved": 9,
+      "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -510,6 +510,16 @@
       ]
     },
     {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: szerb légióssal erősített a sereghajtó Kecskemét",
+      "summary": "Férfi kosár NB I: szerb légióssal erősített a sereghajtó Kecskemét",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-szerb-legiossal-erositett-a-sereghajto-kecskemet/",
+      "published_at": "2026-11-13T13:33:16+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
       "source": "BB1.hu",
       "title": "Rutinos légióst igazolt a Kecskemét",
       "summary": "Luka Mitrovics személyében új játékost igazolt a Duna Aszfalt-DTKH Kecskemét .",
@@ -524,7 +534,7 @@
     {
       "source": "Klub: Sopron KC",
       "title": "Az utolsó kihívás jön a szünet előtt",
-      "summary": "A bajnokság 9. fordulójában csapatunk a jó formában lévő Kometa-KVGY Kaposvári KK együtteséhez látogat a válogatott szünet előtti utolsó találkozón.",
+      "summary": "A bajnokság 10. fordulójában csapatunk a jó formában lévő Kometa-KVGY Kaposvári KK együtteséhez látogat a válogatott szünet előtti utolsó találkozón.",
       "url": "https://sopronkc.hu/az-utolso-kihivas-jon-a-szunet-elott/",
       "published_at": "2026-11-13T10:43:40+00:00",
       "summary_method": "source_description",
