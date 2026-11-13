@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T08:02:47.324745+00:00",
+  "checked_at": "2026-11-13T08:53:42.865342+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -471,7 +471,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 32,
+      "candidates": 28,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
@@ -8586,6 +8586,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: DEAC",
+      "title": "Újabb nehéz erőpróba: Szolnokra látogat a DEAC",
+      "summary": "Vasárnap 18 órától a tabella harmadik helyén álló Szolnoki Olajbányász vendége lesz a válogatott szünet előtti utolsó bajnoki mérkőzésén a DEAC kosárlabdacsapata.",
+      "url": "https://kosarlabda.deac.hu/hirek/ujabb-nehez-eroproba-szolnokra-latogat-a-deac/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "DEAC",
+      "league": "men",
+      "teams": [
+        "men|DEAC"
       ]
     },
     {
