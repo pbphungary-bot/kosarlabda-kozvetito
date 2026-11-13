@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T22:19:26.823353+00:00",
+  "checked_at": "2026-11-13T22:58:30.110699+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -512,6 +512,19 @@
       "league": "men",
       "teams": [
         "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Hazai bajnoki a szünet előtt",
+      "summary": "Szombaton az NKA Pécset fogadjuk.",
+      "url": "https://szedeak.com/hazai-bajnoki-a-szunet-elott/",
+      "published_at": "2026-11-13T22:32:26+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
       ]
     },
     {
