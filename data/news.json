@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-13T14:00:48.206233+00:00",
+  "checked_at": "2026-11-13T14:48:50.114266+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 2,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -208,8 +208,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -508,6 +508,32 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Fontos bajnoki Oroszlányban",
+      "summary": "Fontos mérkőzés vár szombaton este a Duna Aszfalt-DTKH Kecskemétre Oroszlányban.",
+      "url": "https://ktekosar.hu/hirek/fontos-bajnoki-oroszlanyban/",
+      "published_at": "2026. 11. 14., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Endo Plus Service-Honvéd – Falco-Vulcano Energia KC Szombathely",
+      "summary": "Ludovika Aréna, Budapest, szombat18:00.",
+      "url": "https://bball1.hu/endo-plus-service-honved-falco-vulcano-energia-kc-szombathely-5/",
+      "published_at": "2026-11-13T15:15:12+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Bp. Honvéd",
+        "men|Falco KC"
+      ],
+      "league": "men"
     },
     {
       "source": "BB1.hu",
