@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T20:48:00.855570+00:00",
+  "checked_at": "2026-11-13T21:35:21.252343+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 5,
+      "candidates": 34,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -521,6 +521,28 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Végleges keret a portugálok ellen",
+      "summary": "A magyar válogatott szombaton 18 órától Miskolcon Portugáliával mérkőzik a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://wbasket.hu/vegleges-keret-a-portugalok-ellen/",
+      "published_at": "2026.11.13. 21:44",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Veretlenül csoportgyőztes a Soproni Darazsak Sportakadémia a Bajnokok Tornáján, az Alba Berlin lesz a rivális az elődöntőben",
+      "summary": "Csütörtökön lezárult a Bajnokok Tornája csoportköre Sopronban.",
+      "url": "https://wbasket.hu/veretlenul-csoportgyoztes-a-soproni-darazsak-sportakademia-a-bajnokok-tornajan-az-alba-berlin-lesz-a-rivalis-az-elodontoben/",
+      "published_at": "2026.11.13. 20:45",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket"
+      ],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
