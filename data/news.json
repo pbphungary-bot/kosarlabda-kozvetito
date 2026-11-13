@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-13T10:56:24.563344+00:00",
+  "checked_at": "2026-11-13T11:50:48.411872+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 0,
+      "already_saved": 8,
+      "added": 1,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -193,8 +193,8 @@
       "candidates": 16,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -208,8 +208,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -300,22 +300,19 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -420,22 +417,19 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
-      "already_saved": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 24,
+      "attempted": 10,
+      "already_saved": 10,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://etobasket.hu/hu/hirek/2: URLError: <urlopen error [Errno 101] Network is unreachable>"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -473,22 +467,19 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 30,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: URLError: <urlopen error [Errno 101] Network is unreachable>"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     }
   ],
   "articles": [
@@ -555,8 +546,8 @@
     },
     {
       "source": "Nemzeti Sport",
-      "title": "Juhász Dorka: Lesz még energia!",
-      "summary": "Juhász Dorka: Lesz még energia!",
+      "title": "Juhász Dorka: Bizonyítottuk, hogy a vb-szereplésünk nem kifutott eredmény volt",
+      "summary": "Juhász Dorka: Bizonyítottuk, hogy a vb-szereplésünk nem kifutott eredmény volt",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/juhasz-dorka-lesz-meg-energia/",
       "published_at": "2026-11-13T08:52:35+01:00",
       "summary_method": "headline_fallback",
@@ -571,6 +562,32 @@
       "summary_method": "source_description",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
+      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
+      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
+      "published_at": "2026.11.13.",
+      "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "A DEAC-ot fogadjuk a Tiszaligetben",
+      "summary": "Vasárnap ismét hazai környezetben lép pályára az NHSZ-Szolnoki Olajbányász: a férfi NB I/A csoport 10. fordulójában a DEAC együttese látogat a Tiszaligetbe.",
+      "url": "https://olajofficial.hu/2026/11/13/a-deac-ot-fogadjuk-a-tiszaligetben-2/",
+      "published_at": "2026.11.13.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -1024,19 +1041,6 @@
       "url": "https://olajofficial.hu/2026/11/11/fiba-europe-cup-mindent-megtettunk-amig-birtuk-erovel/",
       "published_at": "2026.11.11.",
       "summary_method": "article_body",
-      "publisher_club": "NHSZ-Szolnoki Olajbányász",
-      "league": "men",
-      "teams": [
-        "men|Szolnok"
-      ]
-    },
-    {
-      "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
-      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
-      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
-      "published_at": "2026.11.11.",
-      "summary_method": "source_description",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
       "league": "men",
       "teams": [
