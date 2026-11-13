@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-13T09:52:55.592917+00:00",
+  "checked_at": "2026-11-13T10:56:24.563344+00:00",
   "statistics": {
-    "total": 892,
-    "fresh": 380,
-    "fresh_with_summary": 218,
+    "total": 895,
+    "fresh": 382,
+    "fresh_with_summary": 220,
     "missing_dates": 158,
     "headline_only": 453,
     "untagged": 396,
-    "sources_ok": 19,
+    "sources_ok": 16,
     "sources_partial": 1,
-    "sources_failed": 11,
-    "new_articles": 12,
+    "sources_failed": 14,
+    "new_articles": 9,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 15,
+    "clubs_with_direct_source_coverage": 12,
     "clubs_configured": 25
   },
   "sources": [
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -38,8 +38,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -208,8 +208,8 @@
       "candidates": 16,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -223,8 +223,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -315,19 +315,22 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -432,19 +435,22 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 24,
-      "attempted": 10,
-      "already_saved": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
+      "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://etobasket.hu/hu/hirek/2: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -482,19 +488,22 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
-      "added": 4,
-      "repaired": 6,
+      "added": 0,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     }
   ],
   "failed_sources": [
@@ -502,13 +511,16 @@
     "Klub: Egis Körmend",
     "Klub: PHOENIX Fóti Tigrisek",
     "Klub: BKG-PRIMA Szigetszentmiklós",
+    "Klub: VBW CEKK Cegléd",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
     "Klub: OSE Lions",
     "Klub: ELTE BEAC Újbuda",
+    "Klub: ETO Basket",
     "Klub: KSC Szekszárd",
-    "Klub: Sopron Basket"
+    "Klub: Sopron Basket",
+    "Klub: TFSE"
   ],
   "status": "partial"
 }
