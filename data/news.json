@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T05:46:03.433183+00:00",
+  "checked_at": "2026-11-13T06:45:28.301497+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -467,17 +467,19 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 32,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 23,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
       "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: IncompleteRead: IncompleteRead(163840 bytes read)"
+      ],
       "usable_articles": 10,
       "source_coverage": true
     }
@@ -8720,6 +8722,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "TUDJ MEG TÖBBET A HOLNAPI ELLENFELÜNKRŐL!",
+      "summary": "TUDJ MEG TÖBBET A HOLNAPI ELLENFELÜNKRŐL!",
+      "url": "https://falcokc.com/tudj-meg-tobbet-a-holnapi-ellenfelunkrol/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
