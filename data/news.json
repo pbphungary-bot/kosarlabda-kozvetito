@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T19:55:48.484684+00:00",
+  "checked_at": "2026-11-13T20:48:00.855570+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 32,
-      "added": 0,
+      "candidates": 33,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -523,6 +523,16 @@
       ]
     },
     {
+      "source": "WBasket.hu",
+      "title": "Ajánló: videós interjú Takács-Kiss Virággal",
+      "summary": "A Hunbasket új interjús videó sorozatának a „Hunbasket Calling” legfrissebb epizódjában a spanyol élvonalban és az Euroligában szereplő Valencia magyar légiósa Takács-Kiss Virág volt a vendég.",
+      "url": "https://wbasket.hu/ajanlo-videos-interju-takacs-kiss-viraggal/",
+      "published_at": "2026.11.13. 19:18",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Zsivera Gábor szerint benne van a meglepetés az ASE–Alba rangadóban, az OSE–KTE és a Szeged–NKA mérkőzéseken pedig magabiztos hazai győzelmeket vár",
       "summary": "Állandó szakértőnk mondta el a véleményét a 10. forduló mérkőzéseivel kapcsolatban.",
@@ -619,6 +629,16 @@
       "league": "men"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Lelik Réka a legjobbak között",
+      "summary": "Ahogy arról beszámoltunk , keddtől csütörtökig rendezték a 2027-es női kosárlabda Európa-bajnokság selejtezőjében a második szakasz első fordulóját.",
+      "url": "https://wbasket.hu/lelik-reka-a-legjobbak-kozott/",
+      "published_at": "2026.11.13. 14:10",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Férfi kosár NB I: szerb légióssal erősített a sereghajtó Kecskemét",
       "summary": "Férfi kosár NB I: szerb légióssal erősített a sereghajtó Kecskemét",
@@ -627,6 +647,16 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Ezek voltak Lelik Réka legszebb megmozdulásai",
+      "summary": "A magyar válogatott 70-64-es sikert aratott Európa-bajnoki selejtezőn Németországban.",
+      "url": "https://wbasket.hu/ezek-voltak-lelik-reka-legszebb-megmozdulasai/",
+      "published_at": "2026.11.13. 12:16",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -671,6 +701,26 @@
       "published_at": "2026-11-13T08:52:35+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Teljes eredménylista az Eb-selejtezők első fordulójáról",
+      "summary": "Keddtől csütörtökig rendezték a 2027-es női kosárlabda Európa-bajnokság selejtezőjében a második szakasz első fordulóját.",
+      "url": "https://wbasket.hu/teljes-eredmenylista-az-eb-selejtezok-elso-fordulojarol/",
+      "published_at": "2026.11.13. 08:10",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A védekezésünk volt a kulcs Németországban",
+      "summary": "A magyar válogatott 70-64-es sikert aratott Németországban a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://wbasket.hu/a-vedekezesunk-volt-a-kulcs-nemetorszagban/",
+      "published_at": "2026.11.13. 07:18",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Hunbasket",

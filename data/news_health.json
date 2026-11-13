@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-13T19:55:48.484684+00:00",
+  "checked_at": "2026-11-13T20:48:00.855570+00:00",
   "statistics": {
-    "total": 907,
-    "fresh": 394,
-    "fresh_with_summary": 227,
+    "total": 912,
+    "fresh": 399,
+    "fresh_with_summary": 232,
     "missing_dates": 159,
     "headline_only": 459,
-    "untagged": 399,
+    "untagged": 404,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 6,
+    "new_articles": 11,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -28,8 +28,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 32,
-      "added": 0,
+      "candidates": 33,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
