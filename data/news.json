@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-13T08:53:42.865342+00:00",
+  "checked_at": "2026-11-13T09:52:55.592917+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,7 +23,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
+      "added": 1,
       "repaired": 8,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -471,11 +471,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 28,
+      "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 4,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -498,12 +498,32 @@
     },
     {
       "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: az újonctól elszenvedett vereség már nem fért bele, edzőt váltott a Pécs",
+      "summary": "Férfi kosár NB I: az újonctól elszenvedett vereség már nem fért bele, edzőt váltott a Pécs",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-az-ujonctol-elszenvedett-vereseg-mar-nem-fert-bele-edzot-valtott-a-pecs/",
+      "published_at": "2026-11-13T10:11:30+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "Nemzeti Sport",
       "title": "Juhász Dorka: Lesz még energia!",
       "summary": "Juhász Dorka: Lesz még energia!",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/juhasz-dorka-lesz-meg-energia/",
       "published_at": "2026-11-13T08:52:35+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 13.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -9696,6 +9716,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Hétből hét győzelemmel rajtoltak a TFSE egyetemi kosárcsapatai a MEFOB-on",
+      "summary": "A 2026/27-es egyetemi kosárlabda-bajnokság (MEFOB) első hónapjában mindkét csapatunk megnyerte valamennyi mérkőzését.",
+      "url": "https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Három negyed át remekelt a DEAC, az utolsóban összeomlott",
       "summary": "Hiába vezetett és játszott szinte tökéletesen a DEAC három negyeden keresztül, a 18 ponttal elvesztett utolsó tíz percnek köszönhetően végül 91-82 arányú vereséget szenvedett a Délút-SZTE-Szedeák otthonában.",
@@ -9868,6 +9901,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Egy ponttal maradtunk alul a Budapesti Bikák ellen",
+      "summary": "Tizenkét pontos előnyt is felépítettünk, és még az utolsó támadásunknál is megvolt az esélyünk a győzelemre, végül azonban 53–52-re alulmaradtunk a Budapesti Bikákkal szemben az NB I.",
+      "url": "https://tfse.hu/egy-ponttal-maradtunk-alul-a-budapesti-bikak-ellen/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -10240,6 +10286,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "A záró negyed döntött Békéscsabán",
+      "summary": "A félidőben még vezettünk, harminc perc után pedig mindössze négy pont volt a hátrányunk, végül azonban 95–67-es vereséget szenvedtünk a Békéscsabai KK otthonában az NB I.",
+      "url": "https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "A vb házigazdája ezúttal Eb-selejtezőn lát minket vendégül",
       "summary": "A vb házigazdája ezúttal Eb-selejtezőn lát minket vendégül",
@@ -10346,6 +10405,19 @@
       "league": "women",
       "teams": [
         "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "A Győr nyert a Koltaiban, a TFSE a hajrában zárkózott",
+      "summary": "Férfi kosárlabdacsapatunk 74–85-re kikapott a GYKC UNI Győrtől az NB I.",
+      "url": "https://tfse.hu/44474-2/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
