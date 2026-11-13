@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-13T12:46:56.692820+00:00",
+  "checked_at": "2026-11-13T14:00:48.206233+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 2,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -508,6 +508,32 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Atomerőmű SE – Alba Fehérvár",
+      "summary": "Paks, ASE Sportcsarnok, szombat 15:00.",
+      "url": "https://bball1.hu/atomeromu-se-alba-fehervar-10/",
+      "published_at": "2026-11-13T14:46:00+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Alba Fehérvár",
+        "men|Atomerőmű SE"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Kometa-KVGY Kaposvári KK – Sopron KC",
+      "summary": "Kaposvár Aréna, Kaposvár, szombat 18:00.",
+      "url": "https://bball1.hu/kometa-kvgy-kaposvari-kk-sopron-kc-2/",
+      "published_at": "2026-11-13T14:40:09+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kaposvár",
+        "men|Sopron"
+      ],
+      "league": "men"
     },
     {
       "source": "Nemzeti Sport",

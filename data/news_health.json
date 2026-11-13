@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-13T12:46:56.692820+00:00",
+  "checked_at": "2026-11-13T14:00:48.206233+00:00",
   "statistics": {
-    "total": 897,
-    "fresh": 384,
+    "total": 899,
+    "fresh": 386,
     "fresh_with_summary": 221,
     "missing_dates": 158,
-    "headline_only": 454,
+    "headline_only": 456,
     "untagged": 397,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 7,
+    "new_articles": 8,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 2,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
