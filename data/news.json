@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T05:37:06.127777+00:00",
+  "checked_at": "2026-11-14T06:26:06.672562+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -65,7 +65,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 36,
+      "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
       "added": 1,
@@ -9288,6 +9288,19 @@
       "title": "NÉZD VISSZA PERL ZOLTÁN 1000 PONTJÁNAK LEGSZEBBJEIT! – 15 PERCBE SŰRÍTVE",
       "summary": "NÉZD VISSZA PERL ZOLTÁN 1000 PONTJÁNAK LEGSZEBBJEIT! – 15 PERCBE SŰRÍTVE",
       "url": "https://falcokc.com/nezd-vissza-perl-zoltan-1000-pontjanak-legszebbjeit-15-percbe-suritve/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZD VISSZA AZ ALBA ELLENI BAJNOKINK VISSZAVÁGÓJÁT!",
+      "summary": "NÉZD VISSZA AZ ALBA ELLENI BAJNOKINK VISSZAVÁGÓJÁT!",
+      "url": "https://falcokc.com/nezd-vissza-az-alba-elleni-bajnokink-visszavagojat/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
