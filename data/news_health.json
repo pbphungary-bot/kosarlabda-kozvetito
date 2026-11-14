@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T16:54:25.705075+00:00",
+  "checked_at": "2026-11-14T17:33:15.938605+00:00",
   "statistics": {
     "total": 928,
     "fresh": 410,
@@ -7,10 +7,10 @@
     "missing_dates": 163,
     "headline_only": 468,
     "untagged": 411,
-    "sources_ok": 19,
-    "sources_partial": 1,
+    "sources_ok": 18,
+    "sources_partial": 2,
     "sources_failed": 11,
-    "new_articles": 9,
+    "new_articles": 6,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -482,18 +482,21 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 8,
+      "article_errors": 2,
+      "listing_errors": [
+        "article https://tfse.hu/egy-ponttal-maradtunk-alul-a-budapesti-bikak-ellen/: RemoteDisconnected: Remote end closed connection without response",
+        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: RemoteDisconnected: Remote end closed connection without response"
+      ],
+      "usable_articles": 8,
       "source_coverage": true
     }
   ],
