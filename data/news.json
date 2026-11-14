@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T14:56:23.395357+00:00",
+  "checked_at": "2026-11-14T15:34:51.084058+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -10270,6 +10270,19 @@
       "title": "ELINDULT AZ ONLINE JEGYÉRTÉKESÍTÉS AZ ALBA FEHÉRVÁR ELLENI MÉRKŐZÉSRE!",
       "summary": "ELINDULT AZ ONLINE JEGYÉRTÉKESÍTÉS AZ ALBA FEHÉRVÁR ELLENI MÉRKŐZÉSRE!",
       "url": "https://falcokc.com/elindult-az-online-jegyertekesites-az-alba-fehervar-elleni-merkozesre/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "ELINDULT AZ AEK ATHÉN ELLENI, IDEGENBELI BL MÉRKŐZÉSÜNK JEGYÉRTÉKESÍTÉSE!",
+      "summary": "ELINDULT AZ AEK ATHÉN ELLENI, IDEGENBELI BL MÉRKŐZÉSÜNK JEGYÉRTÉKESÍTÉSE!",
+      "url": "https://falcokc.com/elindult-az-aek-athen-elleni-idegenbeli-bl-merkozesunk-jegyertekesitese/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
