@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T07:40:09.282219+00:00",
+  "checked_at": "2026-11-14T08:34:57.505468+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -120,8 +120,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.egiskormend.hu/: URLError: <urlopen error [Errno 113] No route to host>",
-        "https://www.egiskormend.hu/Hirek.html: URLError: <urlopen error [Errno 113] No route to host>"
+        "https://www.egiskormend.hu/: HTTPError: HTTP Error 500: Internal Server Error",
+        "https://www.egiskormend.hu/Hirek.html: HTTPError: HTTP Error 500: Internal Server Error"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -461,24 +461,21 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 14,
-      "attempted": 10,
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
       "added": 0,
-      "repaired": 3,
-      "article_errors": 7,
+      "repaired": 5,
+      "article_errors": 3,
       "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected",
         "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/egy-ponttal-maradtunk-alul-a-budapesti-bikak-ellen/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/gyozelemmel-mutatkoztunk-be-az-nb-i-b-ben/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage"
+        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: RemoteDisconnected: Remote end closed connection without response",
+        "article https://tfse.hu/gyozelemmel-mutatkoztunk-be-az-nb-i-b-ben/: IncompleteRead: IncompleteRead(0 bytes read)"
       ],
-      "usable_articles": 3,
+      "usable_articles": 5,
       "source_coverage": true
     }
   ],
