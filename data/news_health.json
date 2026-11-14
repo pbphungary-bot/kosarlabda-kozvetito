@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T02:13:35.420577+00:00",
+  "checked_at": "2026-11-14T03:02:55.929717+00:00",
   "statistics": {
     "total": 916,
     "fresh": 403,
@@ -7,8 +7,8 @@
     "missing_dates": 159,
     "headline_only": 460,
     "untagged": 405,
-    "sources_ok": 19,
-    "sources_partial": 1,
+    "sources_ok": 18,
+    "sources_partial": 2,
     "sources_failed": 11,
     "new_articles": 6,
     "sources_total": 31,
@@ -51,20 +51,20 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: <urlopen error [Errno 104] Connection reset by peer>",
-        "https://kezdo5.hu/noi: <urlopen error [Errno 111] Connection refused>",
-        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error [Errno 111] Connection refused>",
-        "https://kezdo5.hu/noi/hirek: <urlopen error [Errno 111] Connection refused>",
-        "https://kezdo5.hu/europa: <urlopen error [Errno 111] Connection refused>"
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
       ]
     },
     {
       "source": "Nemzeti Sport",
-      "status": "ok",
+      "status": "partial",
       "candidates": 50,
       "added": 0,
-      "repaired": 50,
-      "article_errors": 0,
+      "repaired": 49,
+      "article_errors": 1,
       "listing_errors": []
     },
     {
