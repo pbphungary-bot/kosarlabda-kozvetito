@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T11:52:15.863879+00:00",
+  "checked_at": "2026-11-14T12:28:01.445008+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -269,7 +269,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
+        "https://bkgakademia.hu/: URLError: <urlopen error timed out>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -459,18 +459,25 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 10,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 3,
+      "article_errors": 5,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/labdabiztonsag-es-lepattanozas-fontos-feladatok-a-beac-elleni-fovarosi-rangadon/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/jo-kezdes-utan-az-eto-basket-nyerte-a-hazai-bajnokit/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 3,
       "source_coverage": true
     }
   ],
