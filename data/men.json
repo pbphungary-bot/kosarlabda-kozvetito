@@ -626,7 +626,7 @@
       "round": "10.",
       "home": "PHOENIX Fóti Tigrisek",
       "away": "Egis Körmend",
-      "result": "17–14",
+      "result": "36–50",
       "date": "2026. 11. 14.",
       "time": "17:00",
       "status": "finished",
@@ -636,30 +636,30 @@
       "round": "10.",
       "home": "Endo Plus Service-Honvéd",
       "away": "Falco-Vulcano Energia KC Szombathely",
-      "result": "Előzetes",
+      "result": "0–0",
       "date": "2026. 11. 14.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134869"
     },
     {
       "round": "10.",
       "home": "Kometa-KVGY Kaposvári KK",
       "away": "Sopron KC",
-      "result": "Előzetes",
+      "result": "0–0",
       "date": "2026. 11. 14.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134873"
     },
     {
       "round": "10.",
       "home": "OSE Lions",
       "away": "Duna Aszfalt-DTKH Kecskemét",
-      "result": "Előzetes",
+      "result": "0–0",
       "date": "2026. 11. 14.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134879"
     },
     {
@@ -1823,5 +1823,5 @@
       "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_135095"
     }
   ],
-  "updated_at": "2026-11-14T16:15:39.545819+00:00"
+  "updated_at": "2026-11-14T16:59:38.448650+00:00"
 }
