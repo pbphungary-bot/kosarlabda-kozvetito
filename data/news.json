@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T11:18:41.373332+00:00",
+  "checked_at": "2026-11-14T11:52:15.863879+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -269,7 +269,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error timed out>"
+        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
       ],
       "usable_articles": 0,
       "source_coverage": false
