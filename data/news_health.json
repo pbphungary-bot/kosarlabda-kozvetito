@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T10:36:51.557337+00:00",
+  "checked_at": "2026-11-14T11:18:41.373332+00:00",
   "statistics": {
     "total": 920,
     "fresh": 404,
@@ -7,12 +7,12 @@
     "missing_dates": 162,
     "headline_only": 464,
     "untagged": 406,
-    "sources_ok": 17,
-    "sources_partial": 2,
-    "sources_failed": 12,
-    "new_articles": 7,
+    "sources_ok": 19,
+    "sources_partial": 1,
+    "sources_failed": 11,
+    "new_articles": 6,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 14,
+    "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
   },
   "sources": [
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -159,20 +159,18 @@
     },
     {
       "source": "Klub: Alba Fehérvár",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 9,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://www.albakosar.hu/index.php?pg=news_3_6004: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 9,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     },
     {
@@ -476,22 +474,19 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 30,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     }
   ],
   "failed_sources": [
@@ -505,8 +500,7 @@
     "Klub: OSE Lions",
     "Klub: ELTE BEAC Újbuda",
     "Klub: KSC Szekszárd",
-    "Klub: Sopron Basket",
-    "Klub: TFSE"
+    "Klub: Sopron Basket"
   ],
   "status": "partial"
 }
