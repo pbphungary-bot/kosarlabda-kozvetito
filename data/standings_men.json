@@ -1,28 +1,28 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-11-11T19:56:44.093746+00:00",
-  "checked_at": "2026-11-14T19:19:48.464457+00:00",
+  "updated_at": "2026-11-14T20:09:58.646763+00:00",
+  "checked_at": "2026-11-14T20:09:58.646763+00:00",
   "standings": [
     {
       "rank": 1,
       "name": "Atomerőmű SE",
-      "played": 9,
-      "points": 18,
-      "wins": 9,
+      "played": 10,
+      "points": 20,
+      "wins": 10,
       "losses": 0,
-      "scored": 914,
-      "conceded": 692
+      "scored": 1016,
+      "conceded": 783
     },
     {
       "rank": 2,
       "name": "Falco-Vulcano Energia KC Szombathely",
-      "played": 8,
-      "points": 16,
+      "played": 9,
+      "points": 17,
       "wins": 8,
-      "losses": 0,
-      "scored": 753,
-      "conceded": 568
+      "losses": 1,
+      "scored": 840,
+      "conceded": 664
     },
     {
       "rank": 3,
@@ -36,83 +36,83 @@
     },
     {
       "rank": 4,
-      "name": "Alba Fehérvár",
-      "played": 9,
-      "points": 15,
+      "name": "Endo Plus Service-Honvéd",
+      "played": 10,
+      "points": 16,
       "wins": 6,
-      "losses": 3,
-      "scored": 793,
-      "conceded": 727
+      "losses": 4,
+      "scored": 908,
+      "conceded": 901
     },
     {
       "rank": 5,
-      "name": "Kometa-KVGY Kaposvári KK",
-      "played": 9,
-      "points": 15,
+      "name": "Alba Fehérvár",
+      "played": 10,
+      "points": 16,
       "wins": 6,
-      "losses": 3,
-      "scored": 827,
-      "conceded": 837
+      "losses": 4,
+      "scored": 884,
+      "conceded": 829
     },
     {
       "rank": 6,
-      "name": "PHOENIX Fóti Tigrisek",
-      "played": 9,
-      "points": 14,
-      "wins": 5,
+      "name": "Kometa-KVGY Kaposvári KK",
+      "played": 10,
+      "points": 16,
+      "wins": 6,
       "losses": 4,
-      "scored": 724,
-      "conceded": 706
+      "scored": 939,
+      "conceded": 956
     },
     {
       "rank": 7,
-      "name": "Endo Plus Service-Honvéd",
-      "played": 9,
-      "points": 14,
+      "name": "Délút-SZTE-Szedeák",
+      "played": 10,
+      "points": 15,
       "wins": 5,
-      "losses": 4,
-      "scored": 812,
-      "conceded": 814
+      "losses": 5,
+      "scored": 794,
+      "conceded": 833
     },
     {
       "rank": 8,
       "name": "Sopron KC",
-      "played": 9,
-      "points": 13,
-      "wins": 4,
+      "played": 10,
+      "points": 15,
+      "wins": 5,
       "losses": 5,
-      "scored": 713,
-      "conceded": 730
+      "scored": 832,
+      "conceded": 842
     },
     {
       "rank": 9,
-      "name": "Délút-SZTE-Szedeák",
-      "played": 9,
-      "points": 13,
-      "wins": 4,
+      "name": "PHOENIX Fóti Tigrisek",
+      "played": 10,
+      "points": 15,
+      "wins": 5,
       "losses": 5,
-      "scored": 710,
-      "conceded": 755
+      "scored": 820,
+      "conceded": 814
     },
     {
       "rank": 10,
       "name": "Egis Körmend",
-      "played": 9,
-      "points": 12,
-      "wins": 3,
+      "played": 10,
+      "points": 14,
+      "wins": 4,
       "losses": 6,
-      "scored": 755,
-      "conceded": 828
+      "scored": 863,
+      "conceded": 924
     },
     {
       "rank": 11,
       "name": "OSE Lions",
-      "played": 9,
-      "points": 12,
+      "played": 10,
+      "points": 13,
       "wins": 3,
-      "losses": 6,
-      "scored": 758,
-      "conceded": 819
+      "losses": 7,
+      "scored": 834,
+      "conceded": 903
     },
     {
       "rank": 12,
@@ -126,23 +126,23 @@
     },
     {
       "rank": 13,
-      "name": "NKA Universitas Pécs",
+      "name": "Duna Aszfalt-DTKH Kecskemét",
       "played": 9,
       "points": 10,
       "wins": 1,
       "losses": 8,
-      "scored": 720,
-      "conceded": 835
+      "scored": 644,
+      "conceded": 804
     },
     {
       "rank": 14,
-      "name": "Duna Aszfalt-DTKH Kecskemét",
-      "played": 8,
-      "points": 8,
-      "wins": 0,
-      "losses": 8,
-      "scored": 560,
-      "conceded": 728
+      "name": "NKA Universitas Pécs",
+      "played": 10,
+      "points": 11,
+      "wins": 1,
+      "losses": 9,
+      "scored": 798,
+      "conceded": 919
     }
   ]
 }
