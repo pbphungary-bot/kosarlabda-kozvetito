@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-14T12:28:01.445008+00:00",
+  "checked_at": "2026-11-14T13:28:01.305301+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -459,25 +459,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 30,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 3,
-      "article_errors": 5,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/labdabiztonsag-es-lepattanozas-fontos-feladatok-a-beac-elleni-fovarosi-rangadon/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/jo-kezdes-utan-az-eto-basket-nyerte-a-hazai-bajnokit/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 3,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
@@ -520,6 +513,26 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "Hat mérkőzést rendeznek a bajnokságban, pályán a női válogatott is!",
+      "url": "https://bball1.hu/elo-kozvetitesek-915/",
+      "published_at": "2026-11-14T14:00:34+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Fontos visszajelzés a hamburgi siker válogatottunk érési folyamatában – Károlyi Andreával elemeztünk",
+      "summary": "A hamburgi siker után szombaton Miskolcon Portugália ellen folytatja a 2027-es Európa-bajnokság selejtező-sorozatát a magyar válogatott.",
+      "url": "https://wbasket.hu/fontos-visszajelzes-a-hamburgi-siker-valogatottunk-eresi-folyamataban-karolyi-andreaval-elemeztunk/",
+      "published_at": "2026.11.14. 13:22",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Nemzeti Sport",
