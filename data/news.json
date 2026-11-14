@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-14T18:07:13.084344+00:00",
+  "checked_at": "2026-11-14T18:36:58.707071+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -36,11 +36,11 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: <urlopen error timed out>",
-        "https://kezdo5.hu/noi: <urlopen error timed out>",
-        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/noi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/europa: <urlopen error timed out>"
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -277,7 +277,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error timed out>"
+        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -359,7 +359,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://honved.hu/kosarlabda/: URLError: <urlopen error timed out>"
+        "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -377,8 +377,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.delfinek.hu/: URLError: <urlopen error timed out>",
-        "https://www.delfinek.hu/hirek: URLError: <urlopen error timed out>"
+        "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -444,7 +444,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: URLError: <urlopen error timed out>"
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -467,21 +467,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
+      "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 8,
-      "article_errors": 2,
-      "listing_errors": [
-        "article https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/: RemoteDisconnected: Remote end closed connection without response",
-        "article https://tfse.hu/44474-2/: RemoteDisconnected: Remote end closed connection without response"
-      ],
-      "usable_articles": 8,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
