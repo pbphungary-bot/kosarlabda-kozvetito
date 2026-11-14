@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-14T18:36:58.707071+00:00",
+  "checked_at": "2026-11-14T19:25:40.963000+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 3,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -208,8 +208,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -471,7 +471,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 15,
+      "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
@@ -483,6 +483,37 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Nagy előnyt adott le, de túlórában legyűrte a Kaposvárt a Sopron",
+      "summary": "Alapszakasz, 10. forduló Kaposvár, Kaposvár Aréna Földházi Tamás Péter, Rácz Zsolt Róbert, Lengyel Ádám József (Balogh László György)",
+      "url": "https://bball1.hu/nagy-elonyt-adott-le-de-tuloraban-legyurte-a-kaposvart-a-sopron/",
+      "published_at": "2026-11-14T20:14:23+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Oroszlányban szerezte meg első idei győzelmét a Kecskemét",
+      "summary": "Oroszlány, Krajnyik „Akác” András Sportcsarnok.",
+      "url": "https://bball1.hu/oroszlanyban-szerezte-meg-elso-idei-gyozelmet-a-kecskemet/",
+      "published_at": "2026-11-14T19:53:33+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Elvette a Falco veretlenségét a Honvéd",
+      "summary": "Hatalmasat játszott Lakits András csapata a címvédő ellen.",
+      "url": "https://bball1.hu/elvette-a-falco-veretlenseget-a-honved/",
+      "published_at": "2026-11-14T19:49:08+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Bp. Honvéd",
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Száz fölé jutva győzött Fóton a Körmend",
@@ -523,6 +554,19 @@
       "title": "Luka Mitrovics csatlakozott a kerethez",
       "summary": "Luka Mitrovics személyében új játékost igazolt a Duna Aszfalt-DTKH Kecskemét.",
       "url": "https://ktekosar.hu/hirek/luka-mitrovics-csatlakozott-a-kerethez/",
+      "published_at": "2026. 11. 14., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Győzelem Oroszlányban",
+      "summary": "Oroszlányban, a szezon eddigi talán legfontosabb mérkőzésén Pavle Djurisics sérülés miatt nem állt rendelkezésre, ott volt viszont a kezdő ötösben a Duna Aszfalt-DTKH Kecskemét friss igazolása, Luka Mitrovics.",
+      "url": "https://ktekosar.hu/hirek/gyozelem-oroszlanyban/",
       "published_at": "2026. 11. 14., 18:00",
       "summary_method": "article_body",
       "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
@@ -8983,6 +9027,19 @@
       ]
     },
     {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Újabb magyar győzelem az Eb-selejtezőn, 13 pontot szereztek a pécsiek",
+      "summary": "A németországi siker után Miskolcon is nyert a magyar női kosárlabda-válogatott, amely 65–56-ra győzött Portugália ellen a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Ujabb-magyar-gyozelem-az-Eb-selejtezon--13-pontot-szereztek-a-pecsiek/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
       "source": "Klub: VBW CEKK Cegléd",
       "title": "Újabb győzelem idegenben",
       "summary": "Vasas Akadémia–VBW CEKK Cegléd 55–69 (7–16, 9–15, 18–25, 21–13) Pasaréti út, 93 néző.",
@@ -10288,6 +10345,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Elvesztettük veretlenségünket: Honvéd – Falco 96-87",
+      "summary": "Elvesztettük veretlenségünket: Honvéd – Falco 96-87",
+      "url": "https://falcokc.com/elvesztettuk-veretlensegunket-honved-falco-96-87/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
