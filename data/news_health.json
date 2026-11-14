@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T01:12:23.990152+00:00",
+  "checked_at": "2026-11-14T02:13:35.420577+00:00",
   "statistics": {
     "total": 916,
     "fresh": 403,
@@ -51,11 +51,11 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
-        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
-        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
-        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
-        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
+        "https://kezdo5.hu/magyar-ferfi: <urlopen error [Errno 104] Connection reset by peer>",
+        "https://kezdo5.hu/noi: <urlopen error [Errno 111] Connection refused>",
+        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error [Errno 111] Connection refused>",
+        "https://kezdo5.hu/noi/hirek: <urlopen error [Errno 111] Connection refused>",
+        "https://kezdo5.hu/europa: <urlopen error [Errno 111] Connection refused>"
       ]
     },
     {
@@ -135,8 +135,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.egiskormend.hu/: URLError: <urlopen error [Errno 111] Connection refused>",
-        "https://www.egiskormend.hu/Hirek.html: URLError: <urlopen error [Errno 111] Connection refused>"
+        "https://www.egiskormend.hu/: URLError: <urlopen error timed out>",
+        "https://www.egiskormend.hu/Hirek.html: URLError: <urlopen error timed out>"
       ],
       "usable_articles": 0,
       "source_coverage": false
