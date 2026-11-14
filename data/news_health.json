@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T06:26:06.672562+00:00",
+  "checked_at": "2026-11-14T07:40:09.282219+00:00",
   "statistics": {
     "total": 919,
     "fresh": 403,
@@ -7,10 +7,10 @@
     "missing_dates": 162,
     "headline_only": 463,
     "untagged": 405,
-    "sources_ok": 19,
-    "sources_partial": 1,
+    "sources_ok": 18,
+    "sources_partial": 2,
     "sources_failed": 11,
-    "new_articles": 7,
+    "new_articles": 6,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -83,8 +83,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -135,8 +135,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.egiskormend.hu/: URLError: <urlopen error timed out>",
-        "https://www.egiskormend.hu/Hirek.html: URLError: <urlopen error timed out>"
+        "https://www.egiskormend.hu/: URLError: <urlopen error [Errno 113] No route to host>",
+        "https://www.egiskormend.hu/Hirek.html: URLError: <urlopen error [Errno 113] No route to host>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -474,18 +474,26 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
+      "candidates": 14,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 3,
+      "article_errors": 7,
+      "listing_errors": [
+        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/egy-ponttal-maradtunk-alul-a-budapesti-bikak-ellen/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/gyozelemmel-mutatkoztunk-be-az-nb-i-b-ben/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage"
+      ],
+      "usable_articles": 3,
       "source_coverage": true
     }
   ],
