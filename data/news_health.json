@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-14T20:07:04.834731+00:00",
+  "checked_at": "2026-11-14T20:40:52.559110+00:00",
   "statistics": {
-    "total": 939,
-    "fresh": 418,
-    "fresh_with_summary": 245,
-    "missing_dates": 165,
-    "headline_only": 471,
-    "untagged": 417,
+    "total": 941,
+    "fresh": 419,
+    "fresh_with_summary": 246,
+    "missing_dates": 166,
+    "headline_only": 472,
+    "untagged": 418,
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 10,
+    "new_articles": 8,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -38,7 +38,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
+      "added": 1,
       "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -208,8 +208,8 @@
       "candidates": 16,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -292,7 +292,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error timed out>"
+        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
       ],
       "usable_articles": 0,
       "source_coverage": false

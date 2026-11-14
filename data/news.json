@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-14T20:07:04.834731+00:00",
+  "checked_at": "2026-11-14T20:40:52.559110+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -23,7 +23,7 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
+      "added": 1,
       "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -193,8 +193,8 @@
       "candidates": 16,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -277,7 +277,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error timed out>"
+        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -483,6 +483,16 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "„A rendkívül gyors ellenféllel szemben alaposan meggyűlt a bajunk”",
+      "summary": "A magyar válogatott kiélezett, küzdelmes meccsen 65-56-ra múlta felül Portugáliát a 2027-es Európa-bajnokság selejtező-sorozatának második fordulójában.",
+      "url": "https://wbasket.hu/a-rendkivul-gyors-ellenfellel-szemben-alaposan-meggyult-a-bajunk/",
+      "published_at": "2026.11.14. 21:07",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "Alaposan ráijesztett a végén a Pécs, de otthon tartotta a győzelmet a Szeged",
@@ -698,6 +708,16 @@
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/a-portugalok-elleni-eb-selejtezon-is-hibatlan-maradna-a-magyar-noi-kosarvalogatott/",
       "published_at": "2026-11-14T11:24:16+01:00",
       "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 14.",
+      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -946,16 +966,6 @@
       "url": "https://wbasket.hu/a-vedekezesunk-volt-a-kulcs-nemetorszagban/",
       "published_at": "2026.11.13. 07:18",
       "summary_method": "article_body",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
-      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
-      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
-      "published_at": "2026. 11. 13.",
-      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -10322,6 +10332,18 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Férfi NB I: Az Albát is legyőzte az ASE, kikapott a Honvédtól a Falco",
+      "summary": "Férfi NB I: Az Albát is legyőzte az ASE, kikapott a Honvédtól a Falco",
+      "url": "https://hunbasket.hu/hir/77698/ferfi-nb-i-az-albat-is-legyozte-az-ase-kikapott-a-honvedtol-a-falco/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [
+        "men|Falco KC"
+      ],
       "league": "men"
     },
     {
