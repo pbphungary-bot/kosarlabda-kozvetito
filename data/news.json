@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T04:37:53.040155+00:00",
+  "checked_at": "2026-11-14T05:37:06.127777+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -65,11 +65,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 35,
+      "candidates": 36,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -10032,6 +10032,19 @@
       "title": "HETI MENET 11.09-15.",
       "summary": "HETI MENET 11.09-15.",
       "url": "https://falcokc.com/heti-menet-11-09-15/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "HAJTÓS MECCS VÁR RÁNK!",
+      "summary": "HAJTÓS MECCS VÁR RÁNK!",
+      "url": "https://falcokc.com/hajtos-meccs-var-rank/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
