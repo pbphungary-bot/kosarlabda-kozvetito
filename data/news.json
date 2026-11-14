@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-14T16:13:03.641697+00:00",
+  "checked_at": "2026-11-14T16:54:25.705075+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -208,8 +208,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -467,21 +467,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 8,
-      "article_errors": 2,
-      "listing_errors": [
-        "article https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/: RemoteDisconnected: Remote end closed connection without response",
-        "article https://tfse.hu/44474-2/: RemoteDisconnected: Remote end closed connection without response"
-      ],
-      "usable_articles": 8,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
@@ -537,6 +534,35 @@
       "teams": [
         "men|Kecskemét"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "ÉLŐ: Magyarország – Portugália Eb-selejtező",
+      "summary": "Szombaton 18 órától Miskolcon Portugáliával mérkőzik a magyar válogatott a 2027-es Európa-bajnokság selejtező-sorozatában.",
+      "url": "https://wbasket.hu/elo-magyarorszag-portugalia-eb-selejtezo/",
+      "published_at": "2026.11.14. 17:44",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: 102 pontig jutott, 10 meccs után is hibátlan az Atomerőmű",
+      "summary": "Férfi kosár NB I: 102 pontig jutott, 10 meccs után is hibátlan az Atomerőmű",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-102-pontig-jutott-10-meccs-utan-is-hibatlan-az-atomeromu/",
+      "published_at": "2026-11-14T17:13:33+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Hatodik alkalommal is 100 pont felett termelt az ASE hazai pályán",
+      "summary": "Játékvezetők: Praksch Péter Árpád, Dr.",
+      "url": "https://bball1.hu/hatodik-alkalommal-is-100-pont-felett-termelt-az-ase-hazai-palyan/",
+      "published_at": "2026-11-14T17:11:49+01:00",
+      "summary_method": "article_body",
+      "teams": []
     },
     {
       "source": "BB1.hu",
