@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-14T15:34:51.084058+00:00",
+  "checked_at": "2026-11-14T16:13:03.641697+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -208,8 +208,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -467,18 +467,21 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 8,
+      "article_errors": 2,
+      "listing_errors": [
+        "article https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/: RemoteDisconnected: Remote end closed connection without response",
+        "article https://tfse.hu/44474-2/: RemoteDisconnected: Remote end closed connection without response"
+      ],
+      "usable_articles": 8,
       "source_coverage": true
     }
   ],
@@ -488,6 +491,19 @@
       "title": "Érvényesítette a papírformát az ASE",
       "summary": "A nyolcadik fordulóban a bajnokság legjobb formában lévő csapata, a hibátlan és listavezető Atomerőmű SE ellen lépett pályára idegenben a Duna Aszfalt-DTKH Kecskemét.",
       "url": "https://ktekosar.hu/hirek/ervenyesitette-a-papirformat-az-ase/",
+      "published_at": "2026. 11. 14., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Pavle Djurisics nem lép pályára az OSE ellen",
+      "summary": "A Duna Aszfalt-DTKH Kecskemét új igazolása, Luka Mitrovics az OSE Lions ellen 18:00-kor kezdődő idegenbeli mérkőzésen mutatkozik be, ugyanakkor Pavle Djurisics sérülés miatt kihagyja a meccset.",
+      "url": "https://ktekosar.hu/hirek/pavle-djurisics-nem-lep-palyara-az-ose-ellen/",
       "published_at": "2026. 11. 14., 18:00",
       "summary_method": "article_body",
       "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
