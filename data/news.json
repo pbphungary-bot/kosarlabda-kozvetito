@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-15T07:54:32.718805+00:00",
+  "checked_at": "2026-11-15T08:47:19.393324+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -277,7 +277,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
+        "https://bkgakademia.hu/: URLError: <urlopen error timed out>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -483,6 +483,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Zlatko Jovanovics: Túl sok furcsa szituáció volt a meccsen, de erről nem beszélhetünk",
+      "summary": "Ivica Skelin : Gratulálok a csapatomnak, nagyon jó munkát végeztünk ma este.",
+      "url": "https://bball1.hu/zlatko-jovanovics-tul-sok-furcsa-szituacio-volt-a-meccsen-de-errol-nem-beszelhetunk/",
+      "published_at": "2026-11-15T08:49:24+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "WBasket.hu",
       "title": "Szerb győzelem Hollandiában",
@@ -9427,6 +9436,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Szerbia Hollandiában nyert, Tina Cvijanovic 7 pontot szerzett a szlovén győzelem során",
+      "summary": "Szerbia és Szlovénia is győzött a 2027-es női kosárlabda Európa-bajnokság selejtezőjének szombati játéknapján.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Szerbia-Hollandiaban-nyert--Tina-Cvijanovic-7-pontot-szerzett-a-szloven-gyozelem-soran/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
