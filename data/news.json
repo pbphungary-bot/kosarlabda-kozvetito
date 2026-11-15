@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T06:38:26.916155+00:00",
+  "checked_at": "2026-11-15T07:54:32.718805+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -518,6 +518,19 @@
       "title": "Portugáliát is legyőzte a magyar női kosárlabda-válogatott",
       "summary": "A Németországban aratott 70–64-es bravúr után egészen más jellegű feladat várt válogatottunkra.",
       "url": "http://dvtk.eu/37637-Portugaliat_is_legyozte_a_magyar_noi_kosarlabda_valogatott-cikk-kosarlabda/",
+      "published_at": "2026-11-14T21:21:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyarország - Portugália: 65 - 56",
+      "summary": "A Németországban aratott 70–64-es bravúr után egészen más jellegű feladat várt válogatottunkra.",
+      "url": "http://dvtk.eu/37637-Magyarorszag_Portugalia_65_56-cikk-kosarlabda/",
       "published_at": "2026-11-14T21:21:00+01:00",
       "summary_method": "article_body",
       "publisher_club": "DVTK HUNTHERM",
@@ -10019,6 +10032,16 @@
       "teams": [
         "men|NKA Pécs"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Kemény csatában múlta felül Portugáliát női válogatottunk",
+      "summary": "Kemény csatában múlta felül Portugáliát női válogatottunk",
+      "url": "https://hunbasket.hu/hir/77699/kemeny-csataban-multa-felul-portugaliat-noi-valogatottunk/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Klub: Alba Fehérvár",
