@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T20:34:10.073423+00:00",
+  "checked_at": "2026-11-15T21:10:28.492550+00:00",
   "statistics": {
     "total": 959,
     "fresh": 430,
@@ -10,7 +10,7 @@
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 7,
+    "new_articles": 6,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
