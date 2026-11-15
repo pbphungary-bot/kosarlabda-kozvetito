@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-15T18:23:38.853917+00:00",
+  "checked_at": "2026-11-15T19:20:51.254702+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -483,6 +483,25 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosárlabda: Underwood 28 pontot szerzett, de a DEAC kikapott Szolnokon",
+      "summary": "Férfi kosárlabda: Underwood 28 pontot szerzett, de a DEAC kikapott Szolnokon",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosarlabda-underwood-28-pontot-szerzett-de-a-deac-kikapott-szolnokon/",
+      "published_at": "2026-11-15T20:03:57+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Sorozatban negyedik győzelmét aratta a bajnokságban az Olaj",
+      "summary": "Szoros első félidőt követően a DEAC-ot verte 9 ponttal a Szolnok.",
+      "url": "https://bball1.hu/sorozatban-negyedik-gyozelmet-aratta-a-bajnoksagban-az-olaj/",
+      "published_at": "2026-11-15T19:51:19+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
