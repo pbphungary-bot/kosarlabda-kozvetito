@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-11-15T19:58:07.798590+00:00",
+  "checked_at": "2026-11-15T20:34:10.073423+00:00",
   "statistics": {
-    "total": 958,
-    "fresh": 429,
-    "fresh_with_summary": 257,
+    "total": 959,
+    "fresh": 430,
+    "fresh_with_summary": 258,
     "missing_dates": 171,
     "headline_only": 476,
     "untagged": 427,
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -115,8 +115,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -233,19 +233,17 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
