@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-15T15:16:30.466510+00:00",
+  "checked_at": "2026-11-15T15:53:22.815533+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -316,17 +316,19 @@
     },
     {
       "source": "Klub: Atomerőmű SE",
-      "status": "empty",
-      "reason": "no_article_links",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 0,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 1,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://kosarlabda.ase.hu/: TimeoutError: The read operation timed out"
+      ],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -417,19 +419,22 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 24,
-      "attempted": 10,
-      "already_saved": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
+      "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: RemoteDisconnected: Remote end closed connection without response",
+        "https://etobasket.hu/hu/hirek/2: RemoteDisconnected: Remote end closed connection without response"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -483,6 +488,18 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 18 órakor kezdődő NHSZ-Szolnoki Olajbányász – DEAC mérkőzésről Fullcourtért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-916/",
+      "published_at": "2026-11-15T16:30:51+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szolnok"
+      ],
+      "league": "men"
+    },
     {
       "source": "WBasket.hu",
       "title": "Képriport a portugálok elleni sikerről",
