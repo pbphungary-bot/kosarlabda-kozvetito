@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T05:48:29.016500+00:00",
+  "checked_at": "2026-11-15T06:38:26.916155+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
