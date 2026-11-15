@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T23:06:08.092428+00:00",
+  "checked_at": "2026-11-15T23:45:59.990239+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -513,6 +513,16 @@
       "published_at": "2026-11-15T19:51:19+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Bemutatkozott az U20-as vasasos vezetés",
+      "summary": "A Vasas Akadémia élvonalbeli női együttesének vezetőedzőjét, Nenad Markovicsot bízták meg az U20-as leányválogatott irányításával.",
+      "url": "https://wbasket.hu/bemutatkozott-az-u20-as-vasasos-vezetes/",
+      "published_at": "2026.11.15. 18:12",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
