@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T03:20:45.704557+00:00",
+  "checked_at": "2026-11-15T04:06:53.682852+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 34,
-      "added": 0,
+      "candidates": 32,
+      "added": 3,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -483,6 +483,36 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Szerb győzelem Hollandiában",
+      "summary": "A 2027-es Európa-bajnokság L-csoportjában Szerbia 89-72-re nyert Hollandiában.",
+      "url": "https://wbasket.hu/szerb-gyozelem-hollandiaban/",
+      "published_at": "2026.11.15. 04:40",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Zala Friskovec 33 pontja és Szlovénia hazai sikere",
+      "summary": "A 2027-es Európa-bajnokság selejtezőjének K-csoportjában Szlovénia 70-64-re legyőzte Lettországot,",
+      "url": "https://wbasket.hu/zala-friskovec-33-pontja-es-szlovenia-hazai-sikere/",
+      "published_at": "2026.11.15. 04:31",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A bronzéremért játszhat a Sopron a Bajnokok Tornáján",
+      "summary": "Szombaton került sor a Sopronban zajló U16-os Bajnokok Tornája keresztjátékára.",
+      "url": "https://wbasket.hu/a-bronzeremert-jatszhat-a-sopron-a-bajnokok-tornajan/",
+      "published_at": "2026.11.15. 04:24",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Portugáliát is legyőzte a magyar női kosárlabda-válogatott",
