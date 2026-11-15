@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T21:51:35.786865+00:00",
+  "checked_at": "2026-11-15T22:27:15.496162+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 32,
-      "added": 0,
+      "candidates": 33,
+      "added": 3,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -515,6 +515,16 @@
       "teams": []
     },
     {
+      "source": "WBasket.hu",
+      "title": "A válogatottságtól visszavonuló Dubei Debórát köszöntötték Miskolcon",
+      "summary": "Szombaton Miskolcon a portugálok elleni találkozó előtt köszöntötték a válogatottságtól visszavonuló Dubei Debórát.",
+      "url": "https://wbasket.hu/a-valogatottsagtol-visszavonulo-dubei-deborat-koszontottek-miskolcon/",
+      "published_at": "2026.11.15. 17:06",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
       "summary": "A 18 órakor kezdődő NHSZ-Szolnoki Olajbányász – DEAC mérkőzésről Fullcourtért, klikk ide .",
@@ -525,6 +535,26 @@
         "men|Szolnok"
       ],
       "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Völgyi Péter és Studer Ági villámértékelése Portugália legyőzése után",
+      "summary": "A magyar válogatott szombaton Miskolcon 65-56-ra múlta felül Portugáliát a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://wbasket.hu/volgyi-peter-es-studer-agi-villamertekelese-portugalia-legyozese-utan/",
+      "published_at": "2026.11.15. 15:02",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Videós összefoglaló a portugálok elleni sikerről",
+      "summary": "A magyar válogatott szombaton Miskolcon 65-56-ra múlta felül Portugáliát a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://wbasket.hu/videos-osszefoglalo-a-portugalok-elleni-sikerrol/",
+      "published_at": "2026.11.15. 13:42",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
