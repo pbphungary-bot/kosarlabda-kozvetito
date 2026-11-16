@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T20:35:30.247874+00:00",
+  "checked_at": "2026-11-16T21:23:57.912417+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -483,6 +483,29 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Heti program 47. hét",
+      "summary": "2026. november 22., vasárnap, Fót, Phoenix Sportcsarnok 13.00 Fót SE - DVTK U23",
+      "url": "http://dvtk.eu/37649-Palyan_a_kosarlabda_utanpotlas_Heti_program_47_het-cikk-kosarlabda/",
+      "published_at": "2026-11-16T22:07:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Megvan a keret Dánia ellen",
+      "summary": "A 2027-es Európa-bajnokság selejtező-sorozatában kedden este a magyar válogatott Dániával mérkőzik Miskolcon.",
+      "url": "https://wbasket.hu/megvan-a-keret-dania-ellen/",
+      "published_at": "2026.11.16. 21:59",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "A 10. forduló csapata",
