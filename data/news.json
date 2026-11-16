@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-16T11:07:53.448460+00:00",
+  "checked_at": "2026-11-16T12:24:37.777089+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 30,
-      "added": 0,
+      "candidates": 31,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -65,7 +65,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 35,
+      "candidates": 36,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -290,8 +290,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 6,
-      "added": 1,
+      "already_saved": 7,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -474,8 +474,8 @@
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentette új vezetőedzőjét a DEAC",
+      "summary": "Berényi Sándor harmadik regnálását kezdi meg a cívisvárosi alakulatánál.",
+      "url": "https://bball1.hu/bejelentette-uj-vezetoedzojet-a-deac/",
+      "published_at": "2026-11-16T12:57:13+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "Klub: Vasas Akadémia",
       "title": "Vegyes mérleggel zárták a hétvégi fordulót",
@@ -9343,6 +9352,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: DEAC",
+      "title": "Újra Berényi Sándor irányítja a DEAC-ot",
+      "summary": "A DEAC kosárlabdacsapatának vezetősége az A-csoportos feljutást egykoron kiharcoló, majd később Magyar Kupa-bronzérmet szerző Berényi Sándort nevezte ki a gárda élére.",
+      "url": "https://kosarlabda.deac.hu/hirek/ujra-berenyi-sandor-iranyitja-a-deac-ot1/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "DEAC",
+      "league": "men",
+      "teams": [
+        "men|DEAC"
       ]
     },
     {
