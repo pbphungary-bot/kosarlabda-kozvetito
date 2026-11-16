@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-16T15:40:11.182879+00:00",
+  "checked_at": "2026-11-16T17:03:17.077760+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 2,
-      "repaired": 5,
+      "added": 1,
+      "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -186,19 +186,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -234,19 +234,19 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -474,8 +474,8 @@
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,16 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "A 10. forduló csapata",
+      "summary": "Lezárult a tizedik forduló a férfi élvonalban , így posztok és VAL-értékek alapján ismét összeállítottuk a kör legjobb ötösét, illetve magyar és U23-as ötösét.",
+      "url": "https://bball1.hu/a-10-fordulo-csapata-4/",
+      "published_at": "2026-11-16T17:42:07+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Nézd vissza a 10. forduló legfontosabb jeleneteit",
