@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T21:23:57.912417+00:00",
+  "checked_at": "2026-11-16T22:20:14.748641+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -483,6 +483,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Négy diósgyőri tehetség is meghívót kapott",
+      "summary": "A Magyar Kosárlabdázók Országos Szövetsége november 16-án küldte meg hivatalos meghívóit a decemberi válogatott programra.",
+      "url": "http://dvtk.eu/37650-Negy_diosgyori_tehetseg_is_meghivot_kapott-cikk-kosarlabda/",
+      "published_at": "2026-11-16T22:36:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Pályán a kosárlabda utánpótlás - Heti program 47. hét",
