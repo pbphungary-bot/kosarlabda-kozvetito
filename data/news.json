@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-16T07:06:22.755350+00:00",
+  "checked_at": "2026-11-16T09:40:35.431250+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 2,
+      "repaired": 47,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 0,
+      "already_saved": 8,
+      "added": 1,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -423,8 +423,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -483,6 +483,79 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Takács-Kiss Virág: A magyar válogatott erős csapat, ott a helye a világversenyeken",
+      "summary": "Takács-Kiss Virág: A magyar válogatott erős csapat, ott a helye a világversenyeken",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/takacs-kiss-virag-a-magyar-valogatott-eros-csapat-ott-a-helye-a-vilagversenyeken/",
+      "published_at": "2026-11-16T09:32:58+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Három-három szombathelyi és szolnoki kosaras a vb-selejtezőre készülő férfiválogatott keretében",
+      "summary": "Három-három szombathelyi és szolnoki kosaras a vb-selejtezőre készülő férfiválogatott keretében",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/harom-harom-szombathelyi-es-szolnoki-kosaras-a-vb-selejtezore-keszulo-ferfivalogatott-kereteben/",
+      "published_at": "2026-11-16T08:40:55+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Gasper Okron 14 fős keretet hirdetett a novemberi selejtezőkre",
+      "summary": "Aki nem veszi a fáradságot, hogy utánna nézzen, Simon Kristófról van szó.",
+      "url": "https://bball1.hu/gasper-okron-14-fos-keretet-hirdetett-a-novemberi-selejtezokre/",
+      "published_at": "2026-11-16T08:24:51+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 16.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Meggyőző második félidei játékkal múltuk felül a DEAC-ot",
+      "summary": "Az egy győzelem mellett 7 vereséget számláló DEAC-ot látta vendégül a 6-2-es mutatóval a tabella 3. helyén álló NHSZ-Szolnoki Olajbányász a bajnokság 10. fordulójában, a cívisvárosiak 12 próbálkozásból egyszer sem tudtak eddig győzni tétmeccsen a Tiszaligetben.",
+      "url": "https://olajofficial.hu/2026/11/16/meggyozo-masodik-felidei-jatekkal-multuk-felul-a-deac-ot/",
+      "published_at": "2026.11.16.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
+      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
+      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
+      "published_at": "2026. 11. 16.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
+      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
+      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
+      "published_at": "2026.11.16.",
+      "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Dalan Ancrum marad Körmenden",
@@ -632,26 +705,6 @@
       "url": "https://wbasket.hu/a-bronzeremert-jatszhat-a-sopron-a-bajnokok-tornajan/",
       "published_at": "2026.11.15. 04:24",
       "summary_method": "article_body",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
-      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
-      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
-      "published_at": "2026. 11. 15.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
-      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
-      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
-      "published_at": "2026. 11. 15.",
-      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -1169,19 +1222,6 @@
       "summary_method": "article_body",
       "teams": [],
       "league": "women"
-    },
-    {
-      "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
-      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
-      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
-      "published_at": "2026.11.13.",
-      "summary_method": "source_description",
-      "publisher_club": "NHSZ-Szolnoki Olajbányász",
-      "league": "men",
-      "teams": [
-        "men|Szolnok"
-      ]
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -9675,6 +9715,19 @@
     },
     {
       "source": "Klub: Falco KC Szombathely",
+      "title": "PERL, TANOH ÉS VÁRADI IS MEGHÍVÓT KAPOTT A VÁLOGATOTTBA",
+      "summary": "PERL, TANOH ÉS VÁRADI IS MEGHÍVÓT KAPOTT A VÁLOGATOTTBA",
+      "url": "https://falcokc.com/perl-tanoh-es-varadi-is-meghivot-kapott-a-valogatottba/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
       "title": "PERL ZOLTÁN TOVÁBBRA IS A BL MVP LISTÁJÁN!",
       "summary": "PERL ZOLTÁN TOVÁBBRA IS A BL MVP LISTÁJÁN!",
       "url": "https://falcokc.com/perl-zoltan-tovabbra-is-a-bl-mvp-listajan/",
@@ -11156,6 +11209,15 @@
       "teams": [
         "women|TFSE"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "A válogatott sikeréből meríthetnek erőt a jövő kosaras palántái",
+      "summary": "A válogatott sikeréből meríthetnek erőt a jövő kosaras palántái",
+      "url": "https://hunbasket.hu/hir/77701/a-valogatott-sikerebol-merithetnek-erot-a-jovo-kosaras-palantai/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Hunbasket",
