@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T05:27:19.983493+00:00",
+  "checked_at": "2026-11-16T07:06:22.755350+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 11,
+      "added": 1,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -423,8 +423,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -467,21 +467,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 8,
-      "article_errors": 2,
-      "listing_errors": [
-        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/44474-2/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 8,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
@@ -516,6 +513,16 @@
       "published_at": "2026-11-15T19:51:19+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Ők voltak az XIII. U16 Leány Bajnokok Tornája legjobbjai",
+      "summary": "Ahogy arról beszámoltunk , vasárnap lezárult az XIII.",
+      "url": "https://wbasket.hu/ok-voltak-az-xiii-u16-leany-bajnokok-tornaja-legjobbjai/",
+      "published_at": "2026.11.15. 19:13",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -5622,6 +5629,19 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Közlemény: klubunk segít a nehéz helyzetben lévő Audi ETO-nak",
+      "summary": "Az ETO Basket az „ETO Család” talán legfiatalabb tagjaként az elmúlt hetekben többször is igyekezett bizonyítani (és ígérjük a jövőben is így teszünk), hogy büszke arra, hogy ide tartozhat és tesz azért, hogy a győriek kedvenc sportklubja minél sikeresebb legyen.",
+      "url": "https://etobasket.hu/hu/hirek/kozlemeny-klubunk-segit-a-nehez-helyzetben-levo-audi-eto-nak/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "ETO-bérlettel féláron szurkolhatnak a bajnokcsapat ellen",
       "summary": "Vasárnap 17 órakor a bajnoki címvédő NKA Universitas Pécs csapatát fogadjuk az Olimpiai Sportparkban.",
       "url": "https://etobasket.hu/hu/hirek/eto-berlettel-felaron-szurkolhatnak-a-bajnokcsapat-ellen/",
@@ -10508,6 +10528,19 @@
     },
     {
       "source": "Klub: Falco KC Szombathely",
+      "title": "HETI MENET 11.16-22.",
+      "summary": "HETI MENET 11.16-22.",
+      "url": "https://falcokc.com/heti-menet-11-16-22/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
       "title": "HETI MENET 11.09-15.",
       "summary": "HETI MENET 11.09-15.",
       "url": "https://falcokc.com/heti-menet-11-09-15/",
@@ -10568,6 +10601,16 @@
       "teams": [
         "men|Falco KC"
       ],
+      "league": "men"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Férfi NB I: Sorozatban negyedik győzelmét aratta a bajnokságban a Szolnok",
+      "summary": "Férfi NB I: Sorozatban negyedik győzelmét aratta a bajnokságban a Szolnok",
+      "url": "https://hunbasket.hu/hir/77700/ferfi-nb-i-sorozatban-negyedik-gyozelmet-aratta-a-bajnoksagban-a-szolnok/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
       "league": "men"
     },
     {
