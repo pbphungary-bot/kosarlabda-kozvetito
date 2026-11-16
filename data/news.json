@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-16T12:24:37.777089+00:00",
+  "checked_at": "2026-11-16T15:40:11.182879+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 2,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 7,
-      "attempted": 7,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
-      "added": 7,
+      "added": 8,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 7,
+      "usable_articles": 8,
       "source_coverage": true
     },
     {
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -277,7 +277,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error [Errno 111] Connection refused>"
+        "https://bkgakademia.hu/: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'bkgakademia.hu'. (_ssl.c:1018)>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -474,8 +474,8 @@
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,47 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Nézd vissza a 10. forduló legfontosabb jeleneteit",
+      "summary": "Videós összefoglaló az összes mérkőzésről.",
+      "url": "https://bball1.hu/250821-2/",
+      "published_at": "2026-11-16T16:00:14+01:00",
+      "summary_method": "source_description",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Mikko Larkas: Az utolsó 15 percben mutatott játékkal elégedett vagyok, ezt kell továbbvinnünk",
+      "summary": "Mikko Larkas : Gratulálok a játékosoknak, nem könnyű körbeutazni Európát, majd játszani csapatok ellen, akiknek egy hetük van készülni ellenünk.",
+      "url": "https://bball1.hu/mikko-larkas-az-utolso-15-percben-mutatott-jatekkal-elegedett-vagyok-ezt-kell-tovabbvinnunk/",
+      "published_at": "2026-11-16T14:19:13+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Utánpótlás játékosaink nemzeti mezben",
+      "summary": "A magyar női kosárlabda-válogatott 2026-ban huszonnyolc év után harcolta ki ismét a világbajnoki részvételt.",
+      "url": "http://dvtk.eu/37646-Utanpotlas_jatekosaink_nemzeti_mezben-cikk-kosarlabda/",
+      "published_at": "2026-11-16T13:51:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Ismét Berényi Sándor a Debrecen férfi kosárcsapatának vezetőedzője",
+      "summary": "Ismét Berényi Sándor a Debrecen férfi kosárcsapatának vezetőedzője",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ismet-berenyi-sandor-a-debrecen-ferfi-kosarcsapatanak-vezetoedzoje/",
+      "published_at": "2026-11-16T13:41:25+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Bejelentette új vezetőedzőjét a DEAC",
@@ -9781,10 +9822,10 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Németországban nyert Völgyi Péter csapata.",
+      "summary": "Regisztráció",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
-      "summary_method": "source_description",
+      "summary_method": "headline_fallback",
       "teams": []
     },
     {
@@ -10965,6 +11006,19 @@
       "league": "men",
       "teams": [
         "men|DEAC"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Bravúros hajrával szereztünk pontot Balatonfüreden",
+      "summary": "Férfi csapatunk ötgólos hátrányból kapaszkodott vissza a Balatonfüred KA U21 otthonában, és végül 28–28-as döntetlennel zárta a találkozót.",
+      "url": "https://tfse.hu/bravuros-hajraval-szereztunk-pontot-balatonfureden/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
