@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-16T09:40:35.431250+00:00",
+  "checked_at": "2026-11-16T11:07:53.448460+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 10,
+      "added": 0,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 2,
-      "repaired": 47,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 6,
-      "attempted": 6,
+      "candidates": 7,
+      "attempted": 7,
       "already_saved": 0,
-      "added": 6,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 6,
+      "usable_articles": 7,
       "source_coverage": true
     },
     {
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 8,
-      "added": 1,
+      "already_saved": 9,
+      "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -290,8 +290,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 7,
-      "added": 0,
+      "already_saved": 6,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -474,8 +474,8 @@
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -484,6 +484,32 @@
   ],
   "articles": [
     {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Vegyes mérleggel zárták a hétvégi fordulót",
+      "summary": "Serdülő/B csapatunk hétvégén két mérkőzést játszott, és bár a pályán töltött idő nagy részében meg volt a lányokban az akaraterő, a BEAC-Újbuda KA/C ellen a második félidőben nem tudtuk tartani az elvárt színvonalat.",
+      "url": "https://vasasbasket.hu/index.php/vegyes-merleggel-zartak-a-hetvegi-fordulot/",
+      "published_at": "2026-11-16T10:15:18+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Harmadik győzelmére készül a magyar válogatott",
+      "summary": "A szeptemberi világbajnokságon elért történelmi nyolcadik hely után a magyar válogatott az Európa-bajnoki selejtezőkön is bizonyítja, hogy komoly célokért küzdhet a nemzetközi mezőnyben.",
+      "url": "http://dvtk.eu/37643-Harmadik_gyozelmere_keszul_a_magyar_valogatott-cikk-kosarlabda/",
+      "published_at": "2026-11-16T09:57:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Takács-Kiss Virág: A magyar válogatott erős csapat, ott a helye a világversenyeken",
       "summary": "Takács-Kiss Virág: A magyar válogatott erős csapat, ott a helye a világversenyeken",
@@ -491,6 +517,19 @@
       "published_at": "2026-11-16T09:32:58+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 46. hét",
+      "summary": "2026. november 15., vasárnap, DVTK Aréna DVTK U23 - Csata DSE 51 -79 (13-22, 13-15, 11-24, 14-18) Statisztika",
+      "url": "http://dvtk.eu/37642-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_46_het-cikk-kosarlabda/",
+      "published_at": "2026-11-16T09:31:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "Nemzeti Sport",
@@ -9402,6 +9441,19 @@
       "title": "Öt új igazolással vág neki az NB I. B Zöld csoportjának a TFSE férfi kosárcsapata!",
       "summary": "Boros Zoltán NB II-es bajnok fiai komoly célokkal vágnak neki az új idénynek az NB I.",
       "url": "https://tfse.hu/ot-uj-igazolassal-vag-neki-az-nb-i-b-zold-csoportjanak-a-tfse-ferfi-kosarcsapata/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Értékes győzelmet arattunk Debrecenben!",
+      "summary": "Női csapatunk négygólos győzelmet aratott a DVSC SKYLINE U20 otthonában.",
+      "url": "https://tfse.hu/ertekes-gyozelmet-arattunk-debrecenben/",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "TFSE",
