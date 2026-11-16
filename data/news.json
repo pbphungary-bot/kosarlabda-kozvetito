@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-16T17:03:17.077760+00:00",
+  "checked_at": "2026-11-16T17:57:57.356901+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 6,
       "article_errors": 0,
       "listing_errors": []
@@ -186,19 +186,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 16,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -234,19 +234,19 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
