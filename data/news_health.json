@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-16T03:53:12.785251+00:00",
+  "checked_at": "2026-11-16T05:27:19.983493+00:00",
   "statistics": {
-    "total": 963,
-    "fresh": 434,
+    "total": 964,
+    "fresh": 435,
     "fresh_with_summary": 262,
     "missing_dates": 171,
-    "headline_only": 476,
-    "untagged": 431,
-    "sources_ok": 19,
-    "sources_partial": 1,
+    "headline_only": 477,
+    "untagged": 432,
+    "sources_ok": 18,
+    "sources_partial": 2,
     "sources_failed": 11,
-    "new_articles": 6,
+    "new_articles": 7,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -28,8 +28,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 0,
+      "candidates": 34,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -482,18 +482,21 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 8,
+      "article_errors": 2,
+      "listing_errors": [
+        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/44474-2/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 8,
       "source_coverage": true
     }
   ],

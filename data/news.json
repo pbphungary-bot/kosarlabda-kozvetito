@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T03:53:12.785251+00:00",
+  "checked_at": "2026-11-16T05:27:19.983493+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 0,
+      "candidates": 34,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -467,18 +467,21 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 8,
+      "article_errors": 2,
+      "listing_errors": [
+        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/44474-2/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 8,
       "source_coverage": true
     }
   ],
@@ -513,6 +516,16 @@
       "published_at": "2026-11-15T19:51:19+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Soproni bronzérem az XIII. U16 Leány Bajnokok Tornáján",
+      "summary": "U16 Leány Bajnokok Tornája Sopronban.",
+      "url": "https://wbasket.hu/soproni-bronzerem-az-xiii-u16-leany-bajnokok-tornajan/",
+      "published_at": "2026.11.15. 19:01",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
