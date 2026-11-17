@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T19:49:39.014864+00:00",
+  "checked_at": "2026-11-17T20:38:35.157446+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyarország - Dánia: 85 - 60",
+      "summary": "Az esélyesebb németek ellen aratott 70 - 64-es bravúr és a Portugália felett Miskolcon megszerzett 65 - 56-os siker után a magyar válogatott immár esélyesként várta a dánok elleni összecsapást.",
+      "url": "http://dvtk.eu/37655-Magyarorszag_Dania_85_60-cikk-kosarlabda/",
+      "published_at": "2026-11-17T20:21:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Női kosár Eb-selejtező: Lelikék meggyőző játékkal lemosták a dánokat",
