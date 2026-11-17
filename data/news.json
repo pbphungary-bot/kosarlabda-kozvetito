@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T16:49:24.466470+00:00",
+  "checked_at": "2026-11-17T17:48:41.730361+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,18 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "AEK BC – Falco-Vulcano Energia KC Szombathely",
+      "summary": "Bajnokok Ligája, csoportkör, 4. forduló.",
+      "url": "https://bball1.hu/aek-bc-falco-vulcano-energia-kc-szombathely/",
+      "published_at": "2026-11-17T18:14:43+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Amerikai centert igazolt a Honvéd",
@@ -10090,7 +10102,7 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "A portugál bajnokság alapszakaszának MVP-je érkezik a fővárosba.",
+      "summary": "Ismét összecsap a két csapat, ezúttal Görögországban.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description",
