@@ -1,6 +1,6 @@
 {
   "source": "kosarstat",
-  "updated_at": "2026-11-10T07:38:14.716224+00:00",
+  "updated_at": "2026-11-17T07:44:27.614674+00:00",
   "team_ids": {
     "sopron": 163,
     "falco": 127,
@@ -35,11 +35,11 @@
         "honved",
         "sopron"
       ],
-      "games": 35,
+      "games": 36,
       "first": "1979-02-03",
-      "last": "2026-04-11",
+      "last": "2026-11-11",
       "wins": {
-        "sopron": 12,
+        "sopron": 13,
         "honved": 23
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=163"
@@ -119,11 +119,11 @@
         "alba",
         "falco"
       ],
-      "games": 131,
+      "games": 132,
       "first": "1992-11-28",
-      "last": "2026-03-21",
+      "last": "2026-11-11",
       "wins": {
-        "falco": 63,
+        "falco": 64,
         "alba": 68
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=127"
@@ -147,12 +147,12 @@
         "falco",
         "honved"
       ],
-      "games": 36,
+      "games": 37,
       "first": "1994-02-27",
-      "last": "2026-04-24",
+      "last": "2026-11-14",
       "wins": {
         "falco": 21,
-        "honved": 15
+        "honved": 16
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=127"
     },
@@ -259,12 +259,12 @@
         "alba",
         "atomeromu"
       ],
-      "games": 121,
+      "games": 122,
       "first": "1991-09-22",
-      "last": "2026-04-24",
+      "last": "2026-11-14",
       "wins": {
         "alba": 64,
-        "atomeromu": 57
+        "atomeromu": 58
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=101"
     },
@@ -511,12 +511,12 @@
         "kaposvar",
         "kormend"
       ],
-      "games": 77,
+      "games": 78,
       "first": "1983-10-09",
-      "last": "2026-01-31",
+      "last": "2026-11-11",
       "wins": {
         "kaposvar": 26,
-        "kormend": 51
+        "kormend": 52
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=136"
     },
@@ -637,12 +637,12 @@
         "nka",
         "szedeak"
       ],
-      "games": 10,
+      "games": 11,
       "first": "2023-11-23",
-      "last": "2026-05-16",
+      "last": "2026-11-14",
       "wins": {
         "nka": 5,
-        "szedeak": 5
+        "szedeak": 6
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=180"
     },
@@ -665,12 +665,12 @@
         "oroszlany",
         "szedeak"
       ],
-      "games": 23,
+      "games": 24,
       "first": "2019-12-12",
-      "last": "2026-05-20",
+      "last": "2026-11-11",
       "wins": {
         "oroszlany": 13,
-        "szedeak": 10
+        "szedeak": 11
       },
       "source_url": "https://kosarstat.hu/teams/team/opponent/?team=155"
     },
