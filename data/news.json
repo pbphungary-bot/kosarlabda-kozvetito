@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-17T15:48:49.032929+00:00",
+  "checked_at": "2026-11-17T16:49:24.466470+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -65,11 +65,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 36,
+      "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -339,8 +339,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,28 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Amerikai centert igazolt a Honvéd",
+      "summary": "A portugál bajnokság alapszakaszának MVP-je érkezik a fővárosba.",
+      "url": "https://bball1.hu/amerikai-centert-igazolt-a-honved/",
+      "published_at": "2026-11-17T17:06:34+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "ÉLŐ: Magyarország – Dánia Európa-bajnoki selejtező",
+      "summary": "A 2027-es Európa-bajnokság selejtezőjében a magyar válogatott Dániával mérkőzik Miskolcon.",
+      "url": "https://wbasket.hu/elo-magyarorszag-dania-europa-bajnoki-selejtezo/",
+      "published_at": "2026.11.17. 16:53",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
       "title": "Távozik Ethan Wright",
@@ -9759,6 +9781,19 @@
       ]
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "VERESÉG A FŐVÁROSBAN – NÉZD VISSZA A HÉTVÉGI BAJNOKINK ÖSSZEFOGLALÓJÁT!",
+      "summary": "VERESÉG A FŐVÁROSBAN – NÉZD VISSZA A HÉTVÉGI BAJNOKINK ÖSSZEFOGLALÓJÁT!",
+      "url": "https://falcokc.com/vereseg-a-fovarosban-nezd-vissza-a-hetvegi-bajnokink-osszefoglalojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Török Ágnes: „Egyértelműen a kijutás a cél”",
       "summary": "Szerdán Hamburgban kezdi meg a 2027-es Európa-bajnokság selejtezőjét a magyar női kosárlabda-válogatott, majd Miskolcon Portugáliát és Dániát fogadja.",
@@ -10055,7 +10090,7 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Hivatalos oldalán számolt be erről a csapat.",
+      "summary": "A portugál bajnokság alapszakaszának MVP-je érkezik a fővárosba.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description",
