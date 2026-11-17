@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-17T07:55:14.157510+00:00",
+  "checked_at": "2026-11-17T08:53:44.065453+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
-      "repaired": 6,
+      "added": 1,
+      "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 3,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -218,17 +218,19 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "empty",
-      "reason": "no_article_links",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 0,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 1,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://www.megyeritigrisek.hu/: URLError: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
+      ],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -474,8 +476,8 @@
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +485,25 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Újabb fotógalériánk a portugálok elleni sikerről",
+      "summary": "Küzdelmes, nagy harcot hozó mérkőzésen sikerült legyőzni a nagy ellenállást kifejtő portugál csapatot a miskolci DVTK Arénában a hétvégén.",
+      "url": "https://wbasket.hu/ujabb-fotogaleriank-a-portugalok-elleni-sikerrol/",
+      "published_at": "2026.11.17. 09:39",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bodnár Péter: Külön kell kezelni a válogatottak és a klubok sikereit",
+      "summary": "A Merre tovább, magyar sport? konferencián vett részt pódiumbeszélgetésen az MKOSZ főtitkára.",
+      "url": "https://bball1.hu/bodnar-peter-kulon-kell-kezelni-a-valogatottak-es-a-klubok-sikereit/",
+      "published_at": "2026-11-17T09:00:52+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "WBasket.hu",
       "title": "Videó: Dubei Debóra legszebb pillanatai a válogatottban",
@@ -9638,6 +9659,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Tóth Bertalan szépen menetelt a kairói világkupán",
+      "summary": "Tóth Bertalan nagyszerű teljesítménnyel a 64-es főtábláig jutott a kairói férfi kard egyéni világkupa-versenyen!",
+      "url": "https://tfse.hu/toth-bertalan-szepen-menetelt-a-kairoi-vilagkupan/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
