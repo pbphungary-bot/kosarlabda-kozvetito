@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T06:33:55.128845+00:00",
+  "checked_at": "2026-11-17T07:55:14.157510+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 34,
-      "added": 0,
+      "candidates": 33,
+      "added": 3,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -68,8 +68,8 @@
       "candidates": 36,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,36 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Videó: Dubei Debóra legszebb pillanatai a válogatottban",
+      "summary": "Dubei Debóra éveken át volt a magyar válogatott meghatározó tagja, és számtalan szép pillanattal gazdagította a hazai kosárlabdát.",
+      "url": "https://wbasket.hu/video-dubei-debora-legszebb-pillanatai-a-valogatottban/",
+      "published_at": "2026.11.17. 07:55",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Így állnak a 2027-es Eb-selejtező csoportok a keddi játéknap előtt",
+      "summary": "Szombaton és vasárnap rendezték a 2027-es Európa-bajnokság selejtező-sorozatának második fordulóját.",
+      "url": "https://wbasket.hu/igy-allnak-a-2027-es-eb-selejtezo-csoportok-a-keddi-jateknap-elott/",
+      "published_at": "2026.11.17. 07:53",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Zala Friskovec a hétvégi Eb-selejtezők legjobb ötösében",
+      "summary": "Szombaton és vasárnap rendezték a 2027-es Európa-bajnokság selejtező-sorozatának második fordulóját.",
+      "url": "https://wbasket.hu/zala-friskovec-a-hetvegi-eb-selejtezok-legjobb-otoseben/",
+      "published_at": "2026.11.17. 07:53",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Négy diósgyőri tehetség is meghívót kapott",
