@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T05:33:41.000239+00:00",
+  "checked_at": "2026-11-17T06:33:55.128845+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -11524,6 +11524,19 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "8 helyet csúsztunk a BL erősorrendjében (a 24. hely a miénk)",
+      "summary": "8 helyet csúsztunk a BL erősorrendjében (a 24. hely a miénk)",
+      "url": "https://falcokc.com/8-helyet-csusztunk-a-bl-erosorrendjeben-a-24-hely-a-mienk/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
