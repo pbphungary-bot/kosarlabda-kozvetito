@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T22:26:32.373161+00:00",
+  "checked_at": "2026-11-17T23:23:33.666955+00:00",
   "statistics": {
     "total": 1021,
     "fresh": 467,
@@ -7,12 +7,12 @@
     "missing_dates": 188,
     "headline_only": 496,
     "untagged": 459,
-    "sources_ok": 19,
+    "sources_ok": 17,
     "sources_partial": 1,
-    "sources_failed": 11,
+    "sources_failed": 13,
     "new_articles": 8,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 15,
+    "clubs_with_direct_source_coverage": 13,
     "clubs_configured": 25
   },
   "sources": [
@@ -201,19 +201,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -249,19 +249,19 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -500,7 +500,9 @@
   "failed_sources": [
     "Kezdő5.hu",
     "Klub: Egis Körmend",
+    "Klub: Sopron KC",
     "Klub: PHOENIX Fóti Tigrisek",
+    "Klub: Csata TKK",
     "Klub: BKG-PRIMA Szigetszentmiklós",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
