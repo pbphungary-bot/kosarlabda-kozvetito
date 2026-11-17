@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-17T12:41:29.203597+00:00",
+  "checked_at": "2026-11-17T14:00:48.601361+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -186,19 +186,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -234,19 +234,19 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -471,11 +471,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
+      "candidates": 31,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 2,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,30 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentette a Szeged, hogy Ethan Wright távozik",
+      "summary": "A Délút-SZTE-Szedeák bejelentette, hogy Ethan Wright szerződése lejártával távozott a csapattól.",
+      "url": "https://bball1.hu/bejelentette-a-szeged-hogy-ethan-wright-tavozik/",
+      "published_at": "2026-11-17T14:41:44+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szedeák"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Heti program: Szerdán a Falco és a Szolnok is nemzetközi meccset játszik",
+      "summary": "Szombaton összecsap a KTE és az Olaj, a hölgyeknél folytatódik a bajnokság.",
+      "url": "https://bball1.hu/heti-program-szerdan-a-falco-es-a-szolnok-is-nemzetkozi-meccset-jatszik/",
+      "published_at": "2026-11-17T14:18:29+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
     {
       "source": "WBasket.hu",
       "title": "Pacsik, szelfik és ölelések – a szurkolók nagy örömmel fogadták a lányokat",
@@ -9903,6 +9927,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Szettet nyertünk Debrecenben",
+      "summary": "Férfi csapatunk a DEAC otthonában, a debreceni DESOK Sportcsarnokban lépett pályára a TippmixPro Férfi Extraliga alapszakaszában.",
+      "url": "https://tfse.hu/szettet-nyertunk-debrecenben/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "BB1.hu",
       "title": "Szerzői jogok",
       "summary": "Szerzői jogok",
@@ -10147,6 +10184,19 @@
       "league": "women",
       "teams": [
         "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Nerpel Gergely olimpiai pontjai a zágrábi Judo Grand Prix-ről",
+      "summary": "Óriási mezőny és hatalmas harc jellemezte a Zágrábban megrendezett olimpiai kvalifikációs Judo Grand Prix-viadalt, ahol 66 ország 462 judósa csapott össze a ranglistapontokért és az érmekért.",
+      "url": "https://tfse.hu/nerpel-gergely-olimpiai-pontjai-a-zagrabi-judo-grand-prix-rol/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
