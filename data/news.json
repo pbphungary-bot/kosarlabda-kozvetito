@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T11:45:21.447875+00:00",
+  "checked_at": "2026-11-17T12:41:29.203597+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 8,
-      "added": 1,
+      "already_saved": 9,
+      "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -474,8 +474,8 @@
       "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -9661,6 +9661,19 @@
       "title": "Öt új igazolással vág neki az NB I. B Zöld csoportjának a TFSE férfi kosárcsapata!",
       "summary": "Boros Zoltán NB II-es bajnok fiai komoly célokkal vágnak neki az új idénynek az NB I.",
       "url": "https://tfse.hu/ot-uj-igazolassal-vag-neki-az-nb-i-b-zold-csoportjanak-a-tfse-ferfi-kosarcsapata/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Óriási győzelem Nyíregyházán",
+      "summary": "Hatalmas győzelmet aratott női csapatunk: a TippmixPro Női Extraliga alapszakaszában öt játszmás csatában, 3:2-re nyertünk a FATUM Nyíregyháza otthonában, ezzel megszereztük a szezon első idegenbeli győzelmét.",
+      "url": "https://tfse.hu/oriasi-gyozelem-nyiregyhazan/",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "TFSE",
