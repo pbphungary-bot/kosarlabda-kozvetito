@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T04:34:32.297163+00:00",
+  "checked_at": "2026-11-17T05:33:41.000239+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 36,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -11524,6 +11524,19 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "3 ÉRDEKESSÉG AZ AEK ATHÉN CSAPATÁRÓL!",
+      "summary": "3 ÉRDEKESSÉG AZ AEK ATHÉN CSAPATÁRÓL!",
+      "url": "https://falcokc.com/3-erdekesseg-az-aek-athen-csapatarol/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
