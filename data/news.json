@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T14:54:23.790360+00:00",
+  "checked_at": "2026-11-17T15:48:49.032929+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -339,8 +339,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Délút-SZTE-Szedeák",
+      "title": "Távozik Ethan Wright",
+      "summary": "Lejárt a két hónapos szerződése.",
+      "url": "https://szedeak.com/tavozik-ethan-wright/",
+      "published_at": "2026-11-17T15:34:30+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Délút-SZTE-Szedeák",
+      "league": "men",
+      "teams": [
+        "men|Szedeák"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Bejelentette a Szeged, hogy Ethan Wright távozik",
@@ -10042,10 +10055,10 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Regisztráció",
+      "summary": "Hivatalos oldalán számolt be erről a csapat.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
-      "summary_method": "headline_fallback",
+      "summary_method": "source_description",
       "teams": []
     },
     {
