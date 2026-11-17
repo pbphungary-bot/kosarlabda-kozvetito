@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-17T09:57:48.490799+00:00",
+  "checked_at": "2026-11-17T10:58:28.413816+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
       "added": 0,
-      "repaired": 5,
+      "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 2,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 11,
+      "added": 1,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 2,
-      "repaired": 47,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -484,6 +484,16 @@
   ],
   "articles": [
     {
+      "source": "WBasket.hu",
+      "title": "Pacsik, szelfik és ölelések – a szurkolók nagy örömmel fogadták a lányokat",
+      "summary": "A portugálok elleni meccs lefújása után még közel fél óráig nem jutottak be az öltözőbe a lányok és a stábtagok.",
+      "url": "https://wbasket.hu/pacsik-szelfik-es-olelesek-a-szurkolok-nagy-orommel-fogadtak-a-lanyokat/",
+      "published_at": "2026.11.17. 11:21",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Különleges bevonulással kezdődik a magyar–dán női kosárlabda Eb-selejtező",
       "summary": "Különleges bevonulással kezdődik a magyar–dán női kosárlabda Eb-selejtező",
@@ -568,6 +578,26 @@
       "url": "https://wbasket.hu/zala-friskovec-a-hetvegi-eb-selejtezok-legjobb-otoseben/",
       "published_at": "2026.11.17. 07:53",
       "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 17.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
+      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
+      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
+      "published_at": "2026. 11. 17.",
+      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -734,16 +764,6 @@
       "teams": []
     },
     {
-      "source": "Hunbasket",
-      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
-      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
-      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
-      "published_at": "2026. 11. 16.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
-    },
-    {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "title": "Meggyőző második félidei játékkal múltuk felül a DEAC-ot",
       "summary": "Az egy győzelem mellett 7 vereséget számláló DEAC-ot látta vendégül a 6-2-es mutatóval a tabella 3. helyén álló NHSZ-Szolnoki Olajbányász a bajnokság 10. fordulójában, a cívisvárosiak 12 próbálkozásból egyszer sem tudtak eddig győzni tétmeccsen a Tiszaligetben.",
@@ -755,16 +775,6 @@
       "teams": [
         "men|Szolnok"
       ]
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
-      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
-      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
-      "published_at": "2026. 11. 16.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -10986,6 +10996,15 @@
       "title": "Fantasy: Harrison és Kucowski voltak a legjobbak",
       "summary": "Fantasy: Harrison és Kucowski voltak a legjobbak",
       "url": "https://hunbasket.hu/hir/77649/fantasy-harrison-es-kucowski-voltak-a-legjobbak/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Fantasy: Ford nyújtotta a legjobb teljesítményt",
+      "summary": "Fantasy: Ford nyújtotta a legjobb teljesítményt",
+      "url": "https://hunbasket.hu/hir/77724/fantasy-ford-nyujtotta-a-legjobb-teljesitmenyt/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
