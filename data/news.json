@@ -1,13 +1,13 @@
 {
-  "checked_at": "2026-11-17T20:38:35.157446+00:00",
+  "checked_at": "2026-11-17T21:29:42.359786+00:00",
   "sources": [
     {
       "source": "BB1.hu",
-      "status": "partial",
-      "candidates": 31,
+      "status": "ok",
+      "candidates": 30,
       "added": 0,
       "repaired": 4,
-      "article_errors": 1,
+      "article_errors": 0,
       "listing_errors": []
     },
     {

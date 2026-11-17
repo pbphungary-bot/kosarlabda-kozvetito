@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T20:38:35.157446+00:00",
+  "checked_at": "2026-11-17T21:29:42.359786+00:00",
   "statistics": {
     "total": 1021,
     "fresh": 467,
@@ -7,8 +7,8 @@
     "missing_dates": 188,
     "headline_only": 496,
     "untagged": 459,
-    "sources_ok": 18,
-    "sources_partial": 2,
+    "sources_ok": 19,
+    "sources_partial": 1,
     "sources_failed": 11,
     "new_articles": 8,
     "sources_total": 31,
@@ -18,11 +18,11 @@
   "sources": [
     {
       "source": "BB1.hu",
-      "status": "partial",
-      "candidates": 31,
+      "status": "ok",
+      "candidates": 30,
       "added": 0,
       "repaired": 4,
-      "article_errors": 1,
+      "article_errors": 0,
       "listing_errors": []
     },
     {
