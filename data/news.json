@@ -1,20 +1,20 @@
 {
-  "checked_at": "2026-11-17T18:39:24.541094+00:00",
+  "checked_at": "2026-11-17T19:49:39.014864+00:00",
   "sources": [
     {
       "source": "BB1.hu",
-      "status": "ok",
+      "status": "partial",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
-      "article_errors": 0,
+      "article_errors": 1,
       "listing_errors": []
     },
     {
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,26 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár Eb-selejtező: Lelikék meggyőző játékkal lemosták a dánokat",
+      "summary": "Női kosár Eb-selejtező: Lelikék meggyőző játékkal lemosták a dánokat",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-eb-selejtezo-lelikek-meggyozo-jatekkal-lemostak-a-danokat/",
+      "published_at": "2026-11-17T19:50:22+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Háromból három: Dániát is legyőzte a magyar válogatott",
+      "summary": "FIBA Women's EuroBasket 2027 Qualifiers Miskolc, DVTK Aréna COANUS, Laure (FRA) STOYANOVA, Svetlana (BUL) STOJANOVIĆ, Romana (CRO) - BRZIAK, Milan (SVK)",
+      "url": "https://wbasket.hu/harombol-harom-daniat-is-legyozte-a-magyar-valogatott/",
+      "published_at": "2026.11.17. 19:43",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "NHSZ-Szolnoki Olajbányász – CS Dinamo Bucuresti",
@@ -10994,6 +11014,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Háromból három: a pécsiek is hozzátették a magukét a válogatott hibátlan szerepléséhez",
+      "summary": "Dánia ellen 85–60-ra győzött, így három győzelemmel, csoportelsőként zárta a novemberi Eb-selejtezőket a magyar női kosárlabda-válogatott.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Harombol-harom-a-pecsiek-is-hozzatettek-a-maguket-a-valogatott-hibatlan-szereplesehez/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
       ]
     },
     {
