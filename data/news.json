@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T10:58:28.413816+00:00",
+  "checked_at": "2026-11-17T11:45:21.447875+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 10,
+      "added": 0,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 0,
+      "already_saved": 8,
+      "added": 1,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -602,6 +602,32 @@
       "league": "women"
     },
     {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
+      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
+      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
+      "published_at": "2026.11.17.",
+      "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "A Dinamo Bucharest érkezik a Tiszaligetbe",
+      "summary": "A vasárnapi, DEAC elleni bajnoki győzelmet követően máris itt az újabb megmérettetés, a román rekordbajnok Dinamo Bukarest látogat a Tiszaligetbe.",
+      "url": "https://olajofficial.hu/2026/11/17/a-dinamo-bucharest-erkezik-a-tiszaligetbe/",
+      "published_at": "2026.11.17.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Négy diósgyőri tehetség is meghívót kapott",
       "summary": "A Magyar Kosárlabdázók Országos Szövetsége november 16-án küldte meg hivatalos meghívóit a decemberi válogatott programra.",
@@ -770,19 +796,6 @@
       "url": "https://olajofficial.hu/2026/11/16/meggyozo-masodik-felidei-jatekkal-multuk-felul-a-deac-ot/",
       "published_at": "2026.11.16.",
       "summary_method": "article_body",
-      "publisher_club": "NHSZ-Szolnoki Olajbányász",
-      "league": "men",
-      "teams": [
-        "men|Szolnok"
-      ]
-    },
-    {
-      "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
-      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
-      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
-      "published_at": "2026.11.16.",
-      "summary_method": "source_description",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
       "league": "men",
       "teams": [
@@ -10765,6 +10778,19 @@
       "title": "Iványi Dalma: „Vannak problémáink, de ez nem lehet kifogás”",
       "summary": "A sérülések ellenére is győzelemre készülünk az ETO Basket ellen.",
       "url": "https://www.nkapecswomen.hu/tartalmak/Ivanyi-Dalma-Vannak-problemaink--de-ez-nem-lehet-kifogas/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Iványi Dalma: „Nagyon fontos lesz, hogy mi diktáljuk a ritmust”",
+      "summary": "A németországi győzelem és a Portugália elleni hazai siker után Dánia ellen zárja a novemberi Eb-selejtezőket a magyar női kosárlabda-válogatott.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Ivanyi-Dalma-Nagyon-fontos-lesz--hogy-mi-diktaljuk-a-ritmust/",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "NKA Universitas Pécs (női)",
