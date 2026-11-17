@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T17:48:41.730361+00:00",
+  "checked_at": "2026-11-17T18:39:24.541094+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -483,6 +483,28 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "NHSZ-Szolnoki Olajbányász – CS Dinamo Bucuresti",
+      "summary": "FIBA Europe Cup, csoportkör, 7. forduló.",
+      "url": "https://bball1.hu/nhsz-szolnoki-olajbanyasz-cs-dinamo-bucuresti/",
+      "published_at": "2026-11-17T19:16:31+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szolnok"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "A múltja jeles, de most fogható az AEK a férfi kosárlabda Bajnokok Ligájában",
+      "summary": "A múltja jeles, de most fogható az AEK a férfi kosárlabda Bajnokok Ligájában",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/a-multja-jeles-de-most-foghato-az-aek-a-ferfi-kosarlabda-bajnokok-ligajaban/",
+      "published_at": "2026-11-17T18:42:13+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "AEK BC – Falco-Vulcano Energia KC Szombathely",
