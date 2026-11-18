@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-18T21:41:39.653219+00:00",
+  "checked_at": "2026-11-18T22:37:55.327351+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -46,8 +46,8 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 49,
-      "added": 0,
+      "candidates": 50,
+      "added": 1,
       "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
@@ -483,6 +483,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Messze már a bolgár trauma – Győri Ferenc jegyzete",
+      "summary": "Messze már a bolgár trauma – Győri Ferenc jegyzete",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/messze-mar-a-bolgar-trauma-gyori-ferenc-jegyzete/",
+      "published_at": "2026-11-18T23:10:34+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
     {
       "source": "BB1.hu",
       "title": "A PVSK ellen nyert először a Nyíregyháza",
