@@ -865,7 +865,7 @@ async function saveSharedMatchupNotes(){
 for(const side of ['home','away']){
  const field=notesField(side);
  field.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing)return;e.preventDefault();const a=field.selectionStart,b=field.selectionEnd,v=field.value;const prefix=v.slice(0,a);const line=prefix.slice(prefix.lastIndexOf('\n')+1);const bullet=line.trim()?'\n• ':'\n';field.setRangeText(bullet,a,b,'end');field.dispatchEvent(new Event('input',{bubbles:true}));});
- field.addEventListener('input',()=>{if(!matchupReady()||!notesConfigured())return;/* Preserve spaces and partially typed lines; never rewrite the textarea on each keystroke. */sharedNotesState.dirty=true;notesStatus('Nem mentett változások…');clearTimeout(sharedNotesState.timer);sharedNotesState.timer=setTimeout(saveSharedMatchupNotes,900);});
+ field.addEventListener('input',()=>{if(!matchupReady()||!notesConfigured())return;/* Prefix the first note once, without rewriting text or deleting spaces. */if(field.value.trim()&&!/^\s*[•*]\s/.test(field.value)){const a=field.selectionStart,b=field.selectionEnd;field.value='• '+field.value;field.setSelectionRange(a+2,b+2);}sharedNotesState.dirty=true;notesStatus('Nem mentett változások…');clearTimeout(sharedNotesState.timer);sharedNotesState.timer=setTimeout(saveSharedMatchupNotes,900);});
  field.addEventListener('blur',()=>{if(sharedNotesState.dirty&&!sharedNotesState.saving){clearTimeout(sharedNotesState.timer);saveSharedMatchupNotes();}});
 }
 document.getElementById('sharedNotesReload').addEventListener('click',()=>{if(sharedNotesState.dirty&&!confirm('Nem mentett változások elveszhetnek. Újratöltöd?'))return;loadSharedMatchupNotes();});
