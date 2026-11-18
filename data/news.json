@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-18T20:50:30.743725+00:00",
+  "checked_at": "2026-11-18T21:41:39.653219+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -444,7 +444,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: URLError: <urlopen error [Errno 104] Connection reset by peer>"
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -483,6 +483,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "A PVSK ellen nyert először a Nyíregyháza",
+      "summary": "A Vasas Salgótarjánban, a MEAFC és a DEAC a fővárosban győzött nagy csatában.",
+      "url": "https://bball1.hu/a-pvsk-ellen-nyert-eloszor-a-nyiregyhaza/",
+      "published_at": "2026-11-18T21:51:36+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "WBasket.hu",
       "title": "Josepovits Kinga a Duke Egyetemen folytatja",
