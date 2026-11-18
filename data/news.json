@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-18T19:54:07.852620+00:00",
+  "checked_at": "2026-11-18T20:50:30.743725+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 2,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 0,
+      "candidates": 34,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 2,
-      "repaired": 47,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -444,7 +444,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
+        "https://kscszekszard.hu/: URLError: <urlopen error [Errno 104] Connection reset by peer>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -483,6 +483,18 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Josepovits Kinga a Duke Egyetemen folytatja",
+      "summary": "Az NKA Pécs bejelentette, hogy Josepovits Kinga a Duke Egyetemen folytatja tanulmányait és kosárlabda pályafutását.",
+      "url": "https://wbasket.hu/josepovits-kinga-a-duke-egyetemen-folytatja/",
+      "published_at": "2026.11.18. 21:04",
+      "summary_method": "article_body",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ],
+      "league": "women"
+    },
     {
       "source": "Nemzeti Sport",
       "title": "A Szolnok visszavágott a bukaresti vereségért az Európa-kupában",
