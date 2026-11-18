@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T05:34:37.771013+00:00",
+  "checked_at": "2026-11-18T06:36:09.305457+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -11225,6 +11225,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "FIZIKÁLIS, GYORS MECCS LESZ AZ ATHÉN ELLENI!",
+      "summary": "FIZIKÁLIS, GYORS MECCS LESZ AZ ATHÉN ELLENI!",
+      "url": "https://falcokc.com/fizikalis-gyors-meccs-lesz-az-athen-elleni/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Hunbasket",
