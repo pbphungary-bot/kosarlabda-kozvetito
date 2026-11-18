@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T18:08:00.674273+00:00",
+  "checked_at": "2026-11-18T18:55:28.383095+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -483,6 +483,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Josepovits Kinga az Egyesült Államokban kosárlabdázik a következő szezontól",
+      "summary": "Josepovits Kinga az Egyesült Államokban kosárlabdázik a következő szezontól",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/josepovits-kinga-az-egyesult-allamokban-kosarlabdazik-a-kovetkezo-szezontol/",
+      "published_at": "2026-11-18T19:08:25+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
     {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
@@ -10298,7 +10307,7 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Ismét összecsap a két csapat, ezúttal Görögországban.",
+      "summary": "Nemzetközi meccsek várnak ránk szerdán.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description",
