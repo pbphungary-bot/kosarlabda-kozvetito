@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T09:55:07.005352+00:00",
+  "checked_at": "2026-11-18T10:57:20.380758+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 33,
-      "added": 0,
+      "candidates": 32,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -483,6 +483,26 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Szlovénia kiütötte Ausztriát",
+      "summary": "A 2027-es Európa-bajnokság selejtezőjének harmadik fordulójában Szlovénia 93-50-re múlta felül Ausztriát.",
+      "url": "https://wbasket.hu/szlovenia-kiutotte-ausztriat/",
+      "published_at": "2026.11.18. 11:47",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Szlovákiában is nyertek a szerbek, Masa Jankovic ismét remekelt",
+      "summary": "A 2027-es Európa-bajnokság selejtezőjének harmadik fordulójában Szerbia 90-71-re legyőzte Szlovákiát.",
+      "url": "https://wbasket.hu/szlovakiaban-is-nyertek-a-szerbek-masa-jankovic-ismet-remekelt/",
+      "published_at": "2026.11.18. 11:28",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Magyarország - Dánia: 85 - 60",
