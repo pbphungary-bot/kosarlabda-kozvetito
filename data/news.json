@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T07:55:01.513455+00:00",
+  "checked_at": "2026-11-18T08:58:15.092840+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -417,22 +417,19 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
-      "already_saved": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 24,
+      "attempted": 10,
+      "already_saved": 10,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: TimeoutError: The read operation timed out",
-        "https://etobasket.hu/hu/hirek/2: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -470,22 +467,19 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 31,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     }
   ],
   "articles": [
@@ -9929,6 +9923,19 @@
       "league": "men",
       "teams": [
         "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Tina Cvijanovic 9 ponttal segítette Szlovéniát, Szerbia hibátlanul zárt",
+      "summary": "Tina Cvijanovic kezdőként 9 pontot szerzett az Ausztria ellen 93–50-re győző szlovén válogatottban a novemberi Eb-selejtezők keddi zárónapján.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Tina-Cvijanovic-9-ponttal-segitette-Szloveniat--Szerbia-hibatlanul-zart/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
       ]
     },
     {
