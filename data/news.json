@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-18T16:13:02.850326+00:00",
+  "checked_at": "2026-11-18T17:19:23.008854+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -45,11 +45,11 @@
     },
     {
       "source": "Nemzeti Sport",
-      "status": "partial",
+      "status": "ok",
       "candidates": 49,
       "added": 0,
-      "repaired": 48,
-      "article_errors": 1,
+      "repaired": 49,
+      "article_errors": 0,
       "listing_errors": []
     },
     {
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
