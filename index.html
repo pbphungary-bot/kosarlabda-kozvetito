@@ -126,7 +126,7 @@ a{color:#74c9ff}#h2hHistory a{color:#73d5e2!important}
 .hero{background:linear-gradient(105deg,#a81922 0%,#bd2430 33%,#142a43 49%,#172e43 56%,#c9ad06 78%,#f3d816 100%)!important;color:#fff!important;border:1px solid #42516a!important;border-bottom:4px solid var(--orange)!important;box-shadow:0 12px 35px #0005!important;padding:20px 25px!important}
 .hero .small,.hero .history-label,.hero .history-detail{color:#fff!important}.hero .historical-header{border-top-color:#ffffff77!important}.hero .history-numbers strong{color:#fff!important}.hero a{color:#fff!important}
 .matchup-brands{margin:12px 0!important}.matchup-brands .matchup-side{background:linear-gradient(110deg,color-mix(in srgb,var(--club),#101e31 40%),#172b40 95%)!important;color:#fff!important;border:1px solid #ffffff44!important;border-left:5px solid var(--club)!important;min-height:100px}.matchup-brands .matchup-side:last-child{border-left:1px solid #ffffff44!important;border-right:5px solid var(--club)!important}.matchup-brands .club-mark{width:78px!important;height:78px!important}.matchup-versus{color:#fff!important}
-.club-mark{background:transparent!important;border:0!important;border-radius:0!important;overflow:visible!important}.club-mark img{background:transparent!important;padding:0!important;filter:drop-shadow(0 2px 3px #0005)}
+.club-mark{background:transparent!important;border:0!important;border-radius:0!important;overflow:visible!important}.club-mark img{background:transparent!important;padding:0!important;filter:none}
 .club-panel{background:linear-gradient(120deg,color-mix(in srgb,var(--club),#16283f 75%),#17293f 55%)!important;border-left:5px solid var(--club)!important}
 .form-team{background:linear-gradient(105deg,color-mix(in srgb,var(--club),#14263b 75%),#14263b 80%)!important;color:#f5f9ff!important}
 .matchup-team-news{border-top-color:var(--club)!important}
@@ -179,7 +179,7 @@ a,#h2hHistory a{color:#075aa4!important}
 .matchup-brands .club-mark{width:94px!important;height:94px!important;flex-shrink:0}
 .matchup-versus{background:#fff!important;color:#10213b!important;padding:9px 7px;border-radius:9px;font-weight:950!important}
 .club-mark>span:has(+ img){display:none!important}
-.club-mark img{filter:drop-shadow(0 2px 2px #14243b25)!important}
+.club-mark img{filter:none!important}
 .club-panel{background:linear-gradient(110deg,var(--club-secondary),#fff 52%)!important}
 .form-team{background:linear-gradient(100deg,var(--club-secondary),#fff 70%)!important;color:#162c47!important}
 #comparison .statrow:nth-child(even){background:#f1f6fb!important}
@@ -310,6 +310,8 @@ a,#h2hHistory a{color:#075aa4!important}
 #matchupTab #comparison .statrow>*:last-child{text-align:center!important}
 #matchupTab #comparison .statrow .stat-value{font-weight:850!important}
 @media(max-width:720px){#matchupTab #form{grid-template-columns:1fr!important}}
+
+.club-mark,.club-mark img{background:transparent!important;box-shadow:none!important;filter:none!important}
 </style><style id="navigation-below-logos-20261112">
 /* Horizontal, centered navigation directly below the club-logo ribbon. */
 @media screen{
