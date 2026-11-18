@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T10:57:20.380758+00:00",
+  "checked_at": "2026-11-18T11:55:46.379999+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 32,
-      "added": 2,
+      "candidates": 33,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -54,10 +54,12 @@
     },
     {
       "source": "BB1.hu team searches",
-      "status": "ok",
-      "search_pages_ok": 30,
+      "status": "partial",
+      "search_pages_ok": 29,
       "articles_added": 0,
-      "failures": []
+      "failures": [
+        "Kaposvár: TimeoutError: The read operation timed out"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -483,6 +485,76 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Takács-Kiss Virág és Völgyi Péter értékelése a dánok legyőzése után",
+      "summary": "A magyar válogatott kedden 85-60-ra legyőzte Dániát és ezzel veretlenül zárt a novemberi FIBA-ablakot.",
+      "url": "https://wbasket.hu/takacs-kiss-virag-es-volgyi-peter-ertekelese-a-danok-legyozese-utan/",
+      "published_at": "2026.11.18. 12:43",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Lelik Réka a keddi játéknap legjobbjai között",
+      "summary": "Kedden rendezték a 2027-es Európa-bajnokság selejtező-sorozatában a harmadik fordulót.",
+      "url": "https://wbasket.hu/lelik-reka-a-keddi-jateknap-legjobbjai-kozott/",
+      "published_at": "2026.11.18. 12:34",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Lezárult a novemberi FIBA-ablak: eredmények, csoportok állása",
+      "summary": "A 2027-es Európa-bajnokság selejtezőjében kedden este lezárult a novemberi FIBA-ablak.",
+      "url": "https://wbasket.hu/lezarult-a-novemberi-fiba-ablak-eredmenyek-csoportok-allasa/",
+      "published_at": "2026.11.18. 12:21",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Videós összefoglaló Dánia legyőzéséről",
+      "summary": "A magyar válogatott kedden a 2027-es Európa-bajnokság selejtezőjében 85-60-ra győzte le Dániát.",
+      "url": "https://wbasket.hu/videos-osszefoglalo-dania-legyozeserol/",
+      "published_at": "2026.11.18. 12:14",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Képriport a dánok elleni sikerről",
+      "summary": "A magyar válogatott kedden a 2027-es Európa-bajnokság selejtezőjében 85-60-ra győzte le Dániát.",
+      "url": "https://wbasket.hu/kepriport-a-danok-elleni-sikerrol/",
+      "published_at": "2026.11.18. 12:10",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "„A második félidőben felőröltük a dánokat”",
+      "summary": "A magyar válogatott 85-60-ra múlta felül Dániát a 2027-es Európa-bajnokság selejtező-sorozatában.",
+      "url": "https://wbasket.hu/a-masodik-felidoben-feloroltuk-a-danokat/",
+      "published_at": "2026.11.18. 12:04",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Végig vezetve nyert Németország Portugáliában",
+      "summary": "A 2027-es Európa-bajnokság selejtező-sorozatában a novemberi FIBA-ablak utolsó mérkőzését kedden a késő esti órákban csoportunkban rendezték.",
+      "url": "https://wbasket.hu/vegig-vezetve-nyert-nemetorszag-portugaliaban/",
+      "published_at": "2026.11.18. 11:55",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "WBasket.hu",
       "title": "Szlovénia kiütötte Ausztriát",
