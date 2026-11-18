@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T14:13:32.920578+00:00",
+  "checked_at": "2026-11-18T15:08:32.511297+00:00",
   "statistics": {
     "total": 1035,
     "fresh": 478,
@@ -10,7 +10,7 @@
     "sources_ok": 19,
     "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 9,
+    "new_articles": 8,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -305,8 +305,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 6,
-      "added": 1,
+      "already_saved": 7,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -416,20 +416,17 @@
     },
     {
       "source": "Klub: ELTE BEAC Újbuda",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://kosarlabda.beac.hu/kezdo: TimeoutError: The read operation timed out",
-        "https://kosarlabda.beac.hu/: HTTPError: HTTP Error 520: <none>"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
