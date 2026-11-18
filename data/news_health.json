@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-18T11:55:46.379999+00:00",
+  "checked_at": "2026-11-18T12:58:37.018769+00:00",
   "statistics": {
-    "total": 1033,
-    "fresh": 476,
-    "fresh_with_summary": 297,
+    "total": 1034,
+    "fresh": 477,
+    "fresh_with_summary": 298,
     "missing_dates": 191,
     "headline_only": 498,
     "untagged": 469,
-    "sources_ok": 18,
-    "sources_partial": 2,
+    "sources_ok": 19,
+    "sources_partial": 1,
     "sources_failed": 11,
-    "new_articles": 15,
+    "new_articles": 9,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 7,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -69,12 +69,10 @@
     },
     {
       "source": "BB1.hu team searches",
-      "status": "partial",
-      "search_pages_ok": 29,
+      "status": "ok",
+      "search_pages_ok": 30,
       "articles_added": 0,
-      "failures": [
-        "Kaposvár: TimeoutError: The read operation timed out"
-      ]
+      "failures": []
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -307,8 +305,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 7,
-      "added": 0,
+      "already_saved": 6,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],

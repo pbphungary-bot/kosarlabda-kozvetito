@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T11:55:46.379999+00:00",
+  "checked_at": "2026-11-18T12:58:37.018769+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 33,
-      "added": 7,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -54,12 +54,10 @@
     },
     {
       "source": "BB1.hu team searches",
-      "status": "partial",
-      "search_pages_ok": 29,
+      "status": "ok",
+      "search_pages_ok": 30,
       "articles_added": 0,
-      "failures": [
-        "Kaposvár: TimeoutError: The read operation timed out"
-      ]
+      "failures": []
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -292,8 +290,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 7,
-      "added": 0,
+      "already_saved": 6,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -534,6 +532,19 @@
       "summary_method": "article_body",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "A munka meghozta gyümölcsét",
+      "summary": "Győzelmet aratott hazai pályán kadett/B csapatunk a KWBC Körmend ellen a bajnokság 5. fordulóján.",
+      "url": "https://vasasbasket.hu/index.php/a-munka-meghozta-gyumolcset/",
+      "published_at": "2026-11-18T12:04:39+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "WBasket.hu",
