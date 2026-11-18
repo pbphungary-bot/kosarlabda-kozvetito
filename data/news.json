@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-18T15:08:32.511297+00:00",
+  "checked_at": "2026-11-18T16:13:02.850326+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -45,11 +45,11 @@
     },
     {
       "source": "Nemzeti Sport",
-      "status": "ok",
+      "status": "partial",
       "candidates": 49,
       "added": 0,
-      "repaired": 49,
-      "article_errors": 0,
+      "repaired": 48,
+      "article_errors": 1,
       "listing_errors": []
     },
     {
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,18 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 18 órakor kezdődő AEK BC – Falco-Vulcano Energia KC Szombathely mérkőzésről elő statisztikáért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-917/",
+      "published_at": "2026-11-18T16:39:45+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
     {
       "source": "Klub: Vasas Akadémia",
       "title": "Nem fért bele a gyenge rajt",
@@ -11363,6 +11375,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "FONTOS INFORMÁCIÓK SZURKOLÓINKNAK, AKIK ELKÍSÉRTEK MINKET ATHÉNBA!",
+      "summary": "FONTOS INFORMÁCIÓK SZURKOLÓINKNAK, AKIK ELKÍSÉRTEK MINKET ATHÉNBA!",
+      "url": "https://falcokc.com/fontos-informaciok-szurkoloinknak-akik-elkisertek-minket-athenba/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
