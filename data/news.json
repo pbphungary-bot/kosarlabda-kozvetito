@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-18T18:55:28.383095+00:00",
+  "checked_at": "2026-11-18T19:54:07.852620+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 2,
+      "repaired": 47,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -485,6 +485,51 @@
   "articles": [
     {
       "source": "Nemzeti Sport",
+      "title": "A Szolnok visszavágott a bukaresti vereségért az Európa-kupában",
+      "summary": "A Szolnok visszavágott a bukaresti vereségért az Európa-kupában",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/a-szolnok-visszavagott-a-bukaresti-veresegert-az-europa-kupaban/",
+      "published_at": "2026-11-18T20:05:00+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Magabiztos győzelmet aratott az Olajbányász",
+      "summary": "FIBA Európa Kupa 7.forduló Szolnok Városi Sportcsarnok, Szerda 18:00 Sakaci (török), Borusas (litván), Gaudel (francia)",
+      "url": "https://bball1.hu/magabiztos-gyozelmet-aratott-az-olajbanyasz/",
+      "published_at": "2026-11-18T20:00:38+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Szolnok"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "25 ponttal is vezetett, mégis kikapott Athénban a Falco",
+      "summary": "25 ponttal is vezetett, mégis kikapott Athénban a Falco",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/25-ponttal-is-vezetett-megis-kikapott-athenban-a-falco/",
+      "published_at": "2026-11-18T19:50:00+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Elképesztő meccsen, fájó vereséget szenvedett a Falco az AEK otthonában",
+      "summary": "Az első félidőben 25, 46 másodperccel a vége előtt pedig négy ponttal vezetett még a magyar bajnok.",
+      "url": "https://bball1.hu/elkepeszto-meccsen-fajo-vereseget-szenvedett-a-falco-az-aek-otthonaban/",
+      "published_at": "2026-11-18T19:49:03+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "Nemzeti Sport",
       "title": "Josepovits Kinga az Egyesült Államokban kosárlabdázik a következő szezontól",
       "summary": "Josepovits Kinga az Egyesült Államokban kosárlabdázik a következő szezontól",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/josepovits-kinga-az-egyesult-allamokban-kosarlabdazik-a-kovetkezo-szezontol/",
@@ -617,6 +662,26 @@
       "url": "https://wbasket.hu/szlovakiaban-is-nyertek-a-szerbek-masa-jankovic-ismet-remekelt/",
       "published_at": "2026.11.18. 11:28",
       "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 18.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
+      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
+      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
+      "published_at": "2026. 11. 18.",
+      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -841,26 +906,6 @@
       "url": "https://wbasket.hu/zala-friskovec-a-hetvegi-eb-selejtezok-legjobb-otoseben/",
       "published_at": "2026.11.17. 07:53",
       "summary_method": "article_body",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
-      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
-      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
-      "published_at": "2026. 11. 17.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
-      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
-      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
-      "published_at": "2026. 11. 17.",
-      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -10192,6 +10237,19 @@
       ]
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Szinte végig vezettünk, de a hajrában elfogytunk: AEK Athén – Falco 90-89",
+      "summary": "Szinte végig vezettünk, de a hajrában elfogytunk: AEK Athén – Falco 90-89",
+      "url": "https://falcokc.com/szinte-vegig-vezettunk-de-a-hajraban-elfogytunk-aek-athen-falco-90-89/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Szettet nyertünk Debrecenben",
       "summary": "Férfi csapatunk a DEAC otthonában, a debreceni DESOK Sportcsarnokban lépett pályára a TippmixPro Férfi Extraliga alapszakaszában.",
@@ -10307,7 +10365,7 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Nemzetközi meccsek várnak ránk szerdán.",
+      "summary": "Végig vezetve nyert hazai pályán a Szolnok.",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
       "summary_method": "source_description",
@@ -10567,6 +10625,18 @@
       "teams": [
         "men|NKA Pécs"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Nagy győzelmet aratott a Szolnok, egy ponttal kapott ki a Falco",
+      "summary": "Nagy győzelmet aratott a Szolnok, egy ponttal kapott ki a Falco",
+      "url": "https://hunbasket.hu/hir/77734/nagy-gyozelmet-aratott-a-szolnok-egy-ponttal-kapott-ki-a-falco/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
