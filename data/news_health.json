@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T03:26:21.952497+00:00",
+  "checked_at": "2026-11-19T04:35:28.013247+00:00",
   "statistics": {
     "total": 1047,
     "fresh": 487,
@@ -7,12 +7,12 @@
     "missing_dates": 194,
     "headline_only": 505,
     "untagged": 473,
-    "sources_ok": 18,
+    "sources_ok": 19,
     "sources_partial": 1,
-    "sources_failed": 12,
+    "sources_failed": 11,
     "new_articles": 8,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 14,
+    "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
   },
   "sources": [
@@ -315,10 +315,26 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 10,
+      "attempted": 10,
+      "already_saved": 0,
+      "added": 0,
+      "repaired": 10,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
+    },
+    {
+      "source": "Klub: Atomerőmű SE",
       "status": "error",
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
+      "listing_pages_failed": 1,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
@@ -326,25 +342,8 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
+        "https://kosarlabda.ase.hu/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 0,
-      "source_coverage": false
-    },
-    {
-      "source": "Klub: Atomerőmű SE",
-      "status": "empty",
-      "reason": "no_article_links",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
-      "already_saved": 0,
-      "added": 0,
-      "repaired": 0,
-      "article_errors": 0,
-      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -505,7 +504,6 @@
     "Klub: Egis Körmend",
     "Klub: PHOENIX Fóti Tigrisek",
     "Klub: BKG-PRIMA Szigetszentmiklós",
-    "Klub: VBW CEKK Cegléd",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
