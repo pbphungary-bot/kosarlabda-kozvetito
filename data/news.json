@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-19T20:03:38.431848+00:00",
+  "checked_at": "2026-11-19T20:52:11.185866+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 5,
       "article_errors": 0,
       "listing_errors": []
@@ -314,19 +314,17 @@
     },
     {
       "source": "Klub: Atomerőmű SE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://kosarlabda.ase.hu/: TimeoutError: The read operation timed out"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -469,18 +467,18 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 15,
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 18,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 8,
-      "article_errors": 1,
+      "added": 0,
+      "repaired": 10,
+      "article_errors": 0,
       "listing_errors": [
-        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: TimeoutError: The read operation timed out"
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 9,
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
