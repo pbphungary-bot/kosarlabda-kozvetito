@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T05:36:46.973387+00:00",
+  "checked_at": "2026-11-19T06:35:25.136946+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -10051,6 +10051,19 @@
       "title": "Volt egy 5 perces periódusunk, ami nem tetszett, de összességében elégedettek lehetünk! – Hallgasd meg a tegnapi mérkőzésünk sajtótájékoztatóját!",
       "summary": "Volt egy 5 perces periódusunk, ami nem tetszett, de összességében elégedettek lehetünk! – Hallgasd meg a tegnapi mérkőzésünk sajtótájékoztatóját!",
       "url": "https://falcokc.com/volt-egy-5-perces-periodusunk-ami-nem-tetszett-de-osszessegeben-elegedettek-lehetunk-hallgasd-meg-a-tegnapi-merkozesunk-sajtotajekoztatojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "VERESÉG ATHÉNBAN – NÉZD VISSZA A TAVALYI BL DÖNTŐS ELLENI ÖSSZECSAPÁSUNK RÖVID (4 PERCES) ÖSSZEFOGLALÓJÁT!",
+      "summary": "VERESÉG ATHÉNBAN – NÉZD VISSZA A TAVALYI BL DÖNTŐS ELLENI ÖSSZECSAPÁSUNK RÖVID (4 PERCES) ÖSSZEFOGLALÓJÁT!",
+      "url": "https://falcokc.com/vereseg-athenban-nezd-vissza-a-tavalyi-bl-dontos-elleni-osszecsapasunk-rovid-4-perces-osszefoglalojat/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
