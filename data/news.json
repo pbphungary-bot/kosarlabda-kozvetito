@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-19T08:58:35.578965+00:00",
+  "checked_at": "2026-11-19T09:57:56.291609+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 8,
-      "attempted": 8,
+      "candidates": 7,
+      "attempted": 7,
       "already_saved": 0,
-      "added": 8,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 8,
+      "usable_articles": 7,
       "source_coverage": true
     },
     {
@@ -186,19 +186,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -234,19 +234,19 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -290,8 +290,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 7,
-      "added": 0,
+      "already_saved": 6,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -484,6 +484,31 @@
   ],
   "articles": [
     {
+      "source": "BB1.hu",
+      "title": "BKG PRIMA Akadémia – Salgótarjáni KSE",
+      "summary": "B Piros csoport, alapszakasz, 9. forduló Szigetszentmiklós, Városi Sport- és Rendezvénycsarnok, vasárnap 17:00 Játékvezetők: Téczely Roland Balázs, Nagy Bence László, Dr.",
+      "url": "https://bball1.hu/bkg-prima-akademia-salgotarjani-kse/",
+      "published_at": "2026-11-19T10:05:25+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Megérdemelt győzelem az idősebbek között",
+      "summary": "Junior/B csapatunk Kecskeméten járt szerdán, ahol a tabellát vezető Kecskeméti KC ellen léptünk pályára.",
+      "url": "https://vasasbasket.hu/index.php/megerdemelt-gyozelem-az-idosebbek-kozott/",
+      "published_at": "2026-11-19T09:52:28+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Völgyi Péter: Nagyon nagy céljaink vannak",
       "summary": "Völgyi Péter: Nagyon nagy céljaink vannak",
@@ -491,6 +516,39 @@
       "published_at": "2026-11-19T07:39:16+01:00",
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Jegyek a DVTK HUNTHERM – Csata TKK mérkőzésre",
+      "summary": "2026. november 22., vasárnap 17:00 (Miskolc, DVTK Aréna) DVTK HUNTHERM – Csata TKK",
+      "url": "http://dvtk.eu/37664-Jegyek_a_DVTK_HUNTHERM_Csata_TKK_merkozesre-cikk-kosarlabda/",
+      "published_at": "2026-11-19T07:39:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 19.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
+      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
+      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
+      "published_at": "2026. 11. 19.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Nemzeti Sport",
@@ -701,26 +759,6 @@
       "url": "https://wbasket.hu/szlovakiaban-is-nyertek-a-szerbek-masa-jankovic-ismet-remekelt/",
       "published_at": "2026.11.18. 11:28",
       "summary_method": "article_body",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
-      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
-      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
-      "published_at": "2026. 11. 18.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
-      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
-      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
-      "published_at": "2026. 11. 18.",
-      "summary_method": "source_description",
       "teams": [],
       "league": "women"
     },
@@ -12158,6 +12196,15 @@
       "teams": [
         "women|VBW CEKK Cegléd"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "A Magyar Kosárlabdázók Országos Szövetsége ismét a Cipősdoboz jótékonysági akció mellé áll!",
+      "summary": "A Magyar Kosárlabdázók Országos Szövetsége ismét a Cipősdoboz jótékonysági akció mellé áll!",
+      "url": "https://hunbasket.hu/hir/77736/a-magyar-kosarlabdazok-orszagos-szovetsege-ismet-a-ciposdoboz-jotekonysagi-akcio-melle-all/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: TFSE",
