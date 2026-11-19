@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T07:56:31.153841+00:00",
+  "checked_at": "2026-11-19T08:58:35.578965+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -423,8 +423,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
