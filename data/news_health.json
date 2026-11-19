@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-18T23:29:33.740865+00:00",
+  "checked_at": "2026-11-19T00:20:07.718583+00:00",
   "statistics": {
     "total": 1047,
     "fresh": 487,
@@ -233,19 +233,17 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
