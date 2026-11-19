@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T06:35:25.136946+00:00",
+  "checked_at": "2026-11-19T07:56:31.153841+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -423,8 +423,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -485,10 +485,19 @@
   "articles": [
     {
       "source": "Nemzeti Sport",
+      "title": "Völgyi Péter: Nagyon nagy céljaink vannak",
+      "summary": "Völgyi Péter: Nagyon nagy céljaink vannak",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/volgyi-peter-nagyon-nagy-celjaink-vannak/",
+      "published_at": "2026-11-19T07:39:16+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
       "title": "Messze már a bolgár trauma – Győri Ferenc jegyzete",
       "summary": "Messze már a bolgár trauma – Győri Ferenc jegyzete",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/messze-mar-a-bolgar-trauma-gyori-ferenc-jegyzete/",
-      "published_at": "2026-11-18T23:10:34+01:00",
+      "published_at": "2026-11-18T23:56:09+01:00",
       "summary_method": "headline_fallback",
       "teams": []
     },
@@ -6185,6 +6194,19 @@
         "men|Atomerőmű SE"
       ],
       "league": "men"
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Új kezdeményezés: megvehető a mérkőzések előtti feldobás",
+      "summary": "Klubunk új és izgalmas támogatási lehetőséget vezet be hazai mérkőzéseink során.",
+      "url": "https://etobasket.hu/hu/hirek/uj-kezdemenyezes-megveheto-a-merkozesek-elotti-feldobas/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
     },
     {
       "source": "Klub: ETO Basket",
