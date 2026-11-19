@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-19T09:57:56.291609+00:00",
+  "checked_at": "2026-11-19T10:54:59.856201+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -186,19 +186,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 16,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -234,19 +234,19 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -290,8 +290,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 10,
-      "already_saved": 6,
-      "added": 1,
+      "already_saved": 7,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -471,11 +471,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 31,
+      "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -483,6 +483,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Új kosárlabda-nagyhatalom az Eiffel-torony árnyékában",
+      "summary": "Új kosárlabda-nagyhatalom az Eiffel-torony árnyékában",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/uj-kosarlabda-nagyhatalom-az-eiffel-torony-arnyekaban/",
+      "published_at": "2026-11-19T11:46:09+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
     {
       "source": "BB1.hu",
       "title": "BKG PRIMA Akadémia – Salgótarjáni KSE",
@@ -12169,6 +12178,19 @@
       "league": "women",
       "teams": [
         "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "A Vasas érkezik a Koltaiba, az 1971-es bajnokcsapatot köszöntjük",
+      "summary": "Hazai pályán, fővárosi rangadóval folytatja a női NB I.",
+      "url": "https://tfse.hu/a-vasas-erkezik-a-koltaiba-az-1971-es-bajnokcsapatot-koszontjuk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
