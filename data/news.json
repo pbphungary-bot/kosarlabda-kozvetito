@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-19T11:53:38.700177+00:00",
+  "checked_at": "2026-11-19T12:59:43.177891+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -100,8 +100,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 8,
-      "added": 1,
+      "already_saved": 9,
+      "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -266,21 +266,19 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
-      "candidates": 0,
-      "attempted": 0,
-      "already_saved": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
+      "candidates": 18,
+      "attempted": 10,
+      "already_saved": 10,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://bkgakademia.hu/: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'bkgakademia.hu'. (_ssl.c:1018)>"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -483,6 +481,31 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentette légiósának távozását a Fót",
+      "summary": "Szeretnénk tájékoztatni a közvéleményt és kedves szurkolóinkat hogy Devon Ellis és a klub útjai elválnak egymástól közös megegyezést követően – írta közleményében a PHOENIX Fóti Tigrisek.",
+      "url": "https://bball1.hu/bejelentette-legiosanak-tavozasat-a-fot/",
+      "published_at": "2026-11-19T13:30:26+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Fót"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "programblokk",
+      "summary": "Amatőr NBI, U23 bajnokság DVTK U23 Amatőr NBI, U23 Hepp Kupa DVTK U23 Junior bajnokság DVTK Akadémia/A DVTK Akadémia/B Kadet bajnokság DVTK Akadémia/A DVTK Akadémia/B Serdülő bajnokság DVTK Akadémia/A DVTK Akadémia/B DVTK Akadémia/C DVTK Tiszaújváros DVTK Encs-Szerencs Gyermek bajnokság DVTK Akadémia/A DVTK Akadémia/B DVTK Tiszaújváros Kenguru bajnokság DVTK Akadémia/A DVTK Akadémia/B DVTK Szerencs",
+      "url": "http://dvtk.eu/37666-programblokk-cikk-kosarlabda/",
+      "published_at": "2026-11-19T12:29:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Új kosárlabda-nagyhatalom az Eiffel-torony árnyékában",
@@ -10829,6 +10852,19 @@
       ]
     },
     {
+      "source": "Klub: DEAC",
+      "title": "NB I. B: Hatalmas skalpot gyűjtöttünk be!",
+      "summary": "Ifjoncaink a másodosztályú pontvadászat 8. körének egyik legnagyobb meglepetését produkálták azzal, hogy többnyire kontrollált és érett játékot bemutatva teljesen megérdemelt győzelmet arattak az Újbuda MAFC otthonában.",
+      "url": "https://kosarlabda.deac.hu/hirek/nb-i-b-hatalmas-skalpot-gyujtottunk-be/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "DEAC",
+      "league": "men",
+      "teams": [
+        "men|DEAC"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (férfi)",
       "title": "Mínusz tizennyolcról feljöttünk mínusz egyre – a fiúk megmutatták, hogy nincs itt még veszve semmi",
       "summary": "Új vezetőedző, Miljan Rakics irányításával vágtunk neki a szegedi bajnokinak, amelyen sérülés miatt nem számíthattunk Lawrence és Bor játékára sem.",
@@ -12240,6 +12276,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "A JÁTÉKOSAIM MEGÉRDEMELTÉK VOLNA A GYŐZELMET – NAGYOT KÜZDÖTTEK ÉRTE, DE A KOSÁRLABDA ILYEN…",
+      "summary": "A JÁTÉKOSAIM MEGÉRDEMELTÉK VOLNA A GYŐZELMET – NAGYOT KÜZDÖTTEK ÉRTE, DE A KOSÁRLABDA ILYEN…",
+      "url": "https://falcokc.com/a-jatekosaim-megerdemeltek-volna-a-gyozelmet-nagyot-kuzdottek-erte-de-a-kosarlabda-ilyen/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Klub: TFSE",
