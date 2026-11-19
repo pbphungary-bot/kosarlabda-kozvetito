@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T14:16:52.098180+00:00",
+  "checked_at": "2026-11-19T15:07:34.094051+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -481,6 +481,15 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Robert Ford lett a hétvége játékosa az MKOSZ szavazásán",
+      "summary": "A Sopron hosszabbításban verte a Kaposvárt szombaton.",
+      "url": "https://bball1.hu/robert-ford-lett-a-hetvege-jatekosa-az-mkosz-szavazasan/",
+      "published_at": "2026-11-19T15:55:47+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "BB1.hu",
       "title": "Milos Konakov: Hiába lepattanóztunk jobban, mint az AEK, a legfontosabb Larentzakis kezében landolt",
@@ -12132,6 +12141,15 @@
       "teams": [
         "men|NKA Pécs"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Az MKOSZ is ott lesz a New Universe eseményén!",
+      "summary": "Az MKOSZ is ott lesz a New Universe eseményén!",
+      "url": "https://hunbasket.hu/hir/77706/az-mkosz-is-ott-lesz-a-new-universe-esemenyen/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
