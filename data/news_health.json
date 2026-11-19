@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T16:12:09.172759+00:00",
+  "checked_at": "2026-11-19T17:19:27.602321+00:00",
   "statistics": {
     "total": 1065,
     "fresh": 495,
@@ -7,8 +7,8 @@
     "missing_dates": 201,
     "headline_only": 512,
     "untagged": 479,
-    "sources_ok": 19,
-    "sources_partial": 2,
+    "sources_ok": 20,
+    "sources_partial": 1,
     "sources_failed": 10,
     "new_articles": 7,
     "sources_total": 31,
@@ -244,7 +244,7 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error [SSL] record layer failure (_ssl.c:1018)>"
+        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
       ],
       "usable_articles": 0,
       "source_coverage": false
@@ -418,15 +418,17 @@
       "source": "Klub: ELTE BEAC Újbuda",
       "status": "empty",
       "reason": "no_article_links",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://kosarlabda.beac.hu/: TimeoutError: The read operation timed out"
+      ],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -482,19 +484,17 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 21,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
       "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
-      ],
+      "listing_errors": [],
       "usable_articles": 10,
       "source_coverage": true
     }
