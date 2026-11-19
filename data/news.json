@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-19T17:19:27.602321+00:00",
+  "checked_at": "2026-11-19T18:07:56.765172+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -54,10 +54,12 @@
     },
     {
       "source": "BB1.hu team searches",
-      "status": "ok",
-      "search_pages_ok": 30,
+      "status": "partial",
+      "search_pages_ok": 29,
       "articles_added": 0,
-      "failures": []
+      "failures": [
+        "SERCO UNI Győr: HTTPError: HTTP Error 503: Service Unavailable"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -100,8 +102,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -218,19 +220,17 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -403,17 +403,15 @@
       "source": "Klub: ELTE BEAC Újbuda",
       "status": "empty",
       "reason": "no_article_links",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://kosarlabda.beac.hu/: TimeoutError: The read operation timed out"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -485,6 +483,18 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Nézd vissza a szerdai kupamérkőzések legfontosabb jeleneteit",
+      "summary": "A Szolnok simán nyert, a Falco egy ponttal kikapott.",
+      "url": "https://bball1.hu/nezd-vissza-a-szerdai-kupamerkozesek-legfontosabb-jeleneteit/",
+      "published_at": "2026-11-19T18:14:01+01:00",
+      "summary_method": "source_description",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Robert Ford lett a hétvége játékosa az MKOSZ szavazásán",
@@ -10530,6 +10540,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: DEAC",
+      "title": "Régi-új játékossal erősít a DEAC",
+      "summary": "Berényi Sándor vezetőedző kinevezését követően a játékoskeretben is változtat a DEAC vezetősége: visszatér a csapathoz az előző szezonban Debrecenben pattogtató Trey Wade.",
+      "url": "https://kosarlabda.deac.hu/hirek/regi-uj-jatekossal-erosit-a-deac1/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "DEAC",
+      "league": "men",
+      "teams": [
+        "men|DEAC"
       ]
     },
     {

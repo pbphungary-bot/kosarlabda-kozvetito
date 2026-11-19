@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-19T17:19:27.602321+00:00",
+  "checked_at": "2026-11-19T18:07:56.765172+00:00",
   "statistics": {
-    "total": 1065,
+    "total": 1067,
     "fresh": 495,
-    "fresh_with_summary": 311,
-    "missing_dates": 201,
-    "headline_only": 512,
+    "fresh_with_summary": 310,
+    "missing_dates": 202,
+    "headline_only": 513,
     "untagged": 479,
-    "sources_ok": 20,
-    "sources_partial": 1,
+    "sources_ok": 19,
+    "sources_partial": 2,
     "sources_failed": 10,
-    "new_articles": 7,
+    "new_articles": 9,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 16,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -69,10 +69,12 @@
     },
     {
       "source": "BB1.hu team searches",
-      "status": "ok",
-      "search_pages_ok": 30,
+      "status": "partial",
+      "search_pages_ok": 29,
       "articles_added": 0,
-      "failures": []
+      "failures": [
+        "SERCO UNI Győr: HTTPError: HTTP Error 503: Service Unavailable"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -115,8 +117,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -233,19 +235,17 @@
     },
     {
       "source": "Klub: PHOENIX Fóti Tigrisek",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
+      "status": "empty",
+      "reason": "no_article_links",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.megyeritigrisek.hu/: URLError: <urlopen error timed out>"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
@@ -418,17 +418,15 @@
       "source": "Klub: ELTE BEAC Újbuda",
       "status": "empty",
       "reason": "no_article_links",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://kosarlabda.beac.hu/: TimeoutError: The read operation timed out"
-      ],
+      "listing_errors": [],
       "usable_articles": 0,
       "source_coverage": false
     },
