@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T13:03:37.356500+00:00",
+  "checked_at": "2026-11-20T14:16:32.234622+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -36,11 +36,11 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: <urlopen error timed out>",
-        "https://kezdo5.hu/noi: <urlopen error timed out>",
-        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/noi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/europa: <urlopen error timed out>"
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -195,8 +195,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 12,
-      "added": 0,
+      "already_saved": 11,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -384,15 +384,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://honved.hu/kosarlabda/: URLError: <urlopen error timed out>"
+        "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -402,24 +402,26 @@
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
       "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 3,
+      "attempted": 3,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 3,
       "listing_errors": [
-        "https://www.delfinek.hu/: URLError: <urlopen error timed out>",
-        "https://www.delfinek.hu/hirek: URLError: <urlopen error timed out>"
+        "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/szurkoloi-hirek/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/news-in-english/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/felkeszulesi-merkozesek/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:0"
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:3"
       ]
     },
     {
@@ -463,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -509,15 +513,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: URLError: <urlopen error timed out>"
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -547,11 +551,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
+      "candidates": 31,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 2,
+      "repaired": 28,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -11680,6 +11684,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Minden út a TF-re vezet!",
+      "summary": "MINDEN ÚT A TF-RE VEZET – Húsz év után találkoztak újra az egykori óvodástársak!",
+      "url": "https://tfse.hu/minden-ut-a-tf-re-vezet/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Megvan az első!",
       "summary": "Öt vereség után megszerezte első győzelmét a bajnokságban a DEAC kosárlabdacsapata, Kovács Márk együttese tízpontos hátrányból felállva 86–76-ra múlta felül a továbbra is nyeretlen Duna Aszfalt-DTKH Kecskemétet.",
@@ -11738,6 +11755,19 @@
       "league": "men",
       "teams": [
         "men|Szedeák"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Magabiztos továbbjutás Kunhegyesről",
+      "summary": "Férfi NB I Liga-csapatunk Kunhegyesen kezdte a Férfi Magyar Kupa-sorozatot, és a selejtezőben 3:0-ra nyert a Kunhegyes ESE vendégeként.",
+      "url": "https://tfse.hu/magabiztos-tovabbjutas-kunhegyesrol/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -13271,6 +13301,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "A kupagyőztes Szolnokot fogadjuk",
+      "summary": "A Duna Aszfalt-DTKH Kecskemét múlt szombaton Oroszlányban megszerezte szezonbeli első győzelmét.",
+      "url": "https://ktekosar.hu/hirek/a-kupagyoztes-szolnokot-fogadjuk/",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
       ]
     },
     {
