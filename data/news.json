@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T06:44:33.926511+00:00",
+  "checked_at": "2026-11-20T08:04:01.907508+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 7,
-      "attempted": 7,
+      "candidates": 6,
+      "attempted": 6,
       "already_saved": 0,
-      "added": 7,
+      "added": 6,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 7,
+      "usable_articles": 6,
       "source_coverage": true
     },
     {
@@ -257,8 +257,8 @@
       "candidates": 15,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -465,24 +465,55 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 21,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
       "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
-      ],
+      "listing_errors": [],
       "usable_articles": 10,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Női NB I. 8. forduló - Ellenfélleső",
+      "summary": "A piros-fehérek hat mérkőzés után hibátlan mérleggel állnak a tabella második helyén, a fővárosiak pedig öt győzelemmel és két vereséggel követik őket.",
+      "url": "http://dvtk.eu/37669-Noi_NB_I_8_fordulo_Ellenfelleso-cikk-kosarlabda/",
+      "published_at": "2026-11-20T08:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
+      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
+      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
+      "published_at": "2026. 11. 20.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
+      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
+      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
+      "published_at": "2026. 11. 20.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "Fóton folytatja a héten Szegedről távozó amerikai légiós",
@@ -621,26 +652,6 @@
       "teams": [
         "men|Szolnok"
       ]
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Második Eb-selejtezős ellenfelünk: Portugália",
-      "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
-      "url": "https://hunbasket.hu/hir/77694/masodik-eb-selejtezos-ellenfelunk-portugalia/",
-      "published_at": "2026. 11. 19.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
-      "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
-      "url": "https://hunbasket.hu/hir/77697/harmadik-eb-selejtezos-ellenfelunk-dania/",
-      "published_at": "2026. 11. 19.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -10251,6 +10262,15 @@
       ]
     },
     {
+      "source": "Hunbasket",
+      "title": "Valerij Szizov: Örülök, ha a nevem része a történelemnek, de őszintén remélem, hogy egyszer egy fiatal magyar megdönti az 55 pontos rekordomat",
+      "summary": "Valerij Szizov: Örülök, ha a nevem része a történelemnek, de őszintén remélem, hogy egyszer egy fiatal magyar megdönti az 55 pontos rekordomat",
+      "url": "https://hunbasket.hu/hir/77738/valerij-szizov-orulok-ha-a-nevem-resze-a-tortenelemnek-de-oszinten-remelem-hogy-egyszer-egy-fiatal-magyar-megdonti-az-55-pontos-rekordomat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "VERESÉG ATHÉNBAN – NÉZD VISSZA A TAVALYI BL DÖNTŐS ELLENI ÖSSZECSAPÁSUNK RÖVID (4 PERCES) ÖSSZEFOGLALÓJÁT!",
       "summary": "VERESÉG ATHÉNBAN – NÉZD VISSZA A TAVALYI BL DÖNTŐS ELLENI ÖSSZECSAPÁSUNK RÖVID (4 PERCES) ÖSSZEFOGLALÓJÁT!",
@@ -11468,6 +11488,19 @@
       "league": "men",
       "teams": [
         "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Josepovits Kinga a jövő díjazottjai között, a Duke felé tartva",
+      "summary": "Josepovits Kinga csütörtökön vehette át a Sport Forum Awards 2026 „A jövő legértékesebb sportolója” kategóriájának harmadik helyezéséért járó elismerést.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Josepovits-Kinga-a-jovo-dijazottjai-kozott--a-Duke-fele-tartva/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
       ]
     },
     {
