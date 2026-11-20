@@ -39,6 +39,7 @@ export class Store {
     this.now = now;
     this.errors = raw.errors || [];
     this.unresolved = [];
+    this.excel = { men: null, women: null }; // imported Excel/CSV data, see importer.js
     this.leagues = {};
     for (const lg of Object.keys(LEAGUES)) this.leagues[lg] = this.#index(lg, raw[lg] || {});
   }
@@ -135,7 +136,33 @@ export class Store {
 
   standing(lg, id) { return this.leagues[lg].standings[id] || null; }
 
-  stat(lg, id, key) { return num(this.leagues[lg].teamStats[id]?.season?.[key]); }
+  /** Attach an Excel import: { team: {id: {key: value}}, players: {id: [row]}, meta: {file, modified, importedAt}, enabled } */
+  setExcel(lg, data) { this.excel[lg] = data; }
+
+  /** Merge one imported file into the league's Excel data (team stats per field, players per team). */
+  mergeExcel(lg, imp, file) {
+    const x = this.excel[lg] || { team: {}, players: {}, enabled: true, meta: { files: [] } };
+    for (const [id, v] of Object.entries(imp.team || {})) x.team[id] = { ...(x.team[id] || {}), ...v };
+    Object.assign(x.players, imp.players || {});
+    x.meta = x.meta || { files: [] };
+    x.meta.files = [...(x.meta.files || []).filter(f => f.name !== file.name), { name: file.name, modified: file.modified || null, importedAt: new Date().toISOString() }];
+    x.enabled = true;
+    this.excel[lg] = x;
+  }
+
+  #excelOn(lg) { const x = this.excel[lg]; return x && x.enabled !== false ? x : null; }
+
+  stat(lg, id, key) {
+    const x = this.#excelOn(lg)?.team?.[id]?.[key];
+    if (x !== undefined && x !== null) return num(x);
+    return num(this.leagues[lg].teamStats[id]?.season?.[key]);
+  }
+
+  /** 'excel' when the value comes from the imported file, 'dashboard' otherwise. */
+  statSource(lg, id, key) {
+    const x = this.#excelOn(lg)?.team?.[id]?.[key];
+    return x !== undefined && x !== null ? 'excel' : 'dashboard';
+  }
 
   /** Competition rank (1 = best) of a team within its league for one stat. */
   statRank(lg, id, key, lowerIsBetter = false) {
@@ -145,7 +172,24 @@ export class Store {
     return 1 + all.filter(v => (lowerIsBetter ? v < mine : v > mine)).length;
   }
 
-  players(lg, id) { return this.leagues[lg].players[id] || null; }
+  players(lg, id) {
+    const x = this.#excelOn(lg)?.players?.[id];
+    if (x && x.length) return { name: club(lg, id)?.official, sourceUrl: null, source: 'excel', players: x };
+    const d = this.leagues[lg].players[id];
+    return d ? { ...d, source: 'dashboard' } : null;
+  }
+
+  excelInfo(lg) {
+    const x = this.excel[lg];
+    if (!x) return null;
+    const m = x.meta || {};
+    const files = m.files || (m.file ? [{ name: m.file, modified: m.modified }] : []);
+    const times = files.map(f => f.modified).filter(Boolean).sort();
+    return {
+      enabled: x.enabled !== false, files, file: files.map(f => f.name).join(', ') || '—', modified: times.at(-1) || null,
+      teams: Object.keys(x.team || {}).length, playerTeams: Object.keys(x.players || {}).length,
+    };
+  }
 
   /** Age in hours of each dataset, plus a stale flag. */
   freshness(lg) {

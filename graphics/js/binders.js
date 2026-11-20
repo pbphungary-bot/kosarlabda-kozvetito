@@ -48,13 +48,15 @@ const logo = (lg, id) => ({ src: `${lg}/${id}`, source: 'Logó a "logók 26-27" 
 // ───────────────────────── comparison ─────────────────────────
 export function bindComparison(store, lg, homeId, awayId) {
   const L = store.league(lg);
+  const fromExcel = STAT_ROWS.some(s => store.statSource(lg, homeId, s.key) === 'excel' || store.statSource(lg, awayId, s.key) === 'excel');
   const srcName = L.statSource === 'kosarstat' ? 'KosárStat' : 'Hunbasket';
+  const site = fromExcel ? 'FULLFIELD.INFO' : (L.statSource === 'kosarstat' ? 'KOSARSTAT.HU' : 'HUNBASKET.HU');
   const v = {
     subtitle: {
-      runs: [{ text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' },
-        { text: L.statSource === 'kosarstat' ? 'KOSARSTAT.HU' : 'HUNBASKET.HU', color: '#37b3fd' }],
-      text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' + (L.statSource === 'kosarstat' ? 'KOSARSTAT.HU' : 'HUNBASKET.HU'),
-      source: 'Adatforrás: ' + srcName,
+      runs: [{ text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' }, { text: site, color: '#37b3fd' }],
+      text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' + site,
+      source: fromExcel ? 'Feltöltött Excel (a PSD mintában is FULLFIELD.INFO szerepel)' : 'Adatforrás: ' + srcName,
+      note: fromExcel ? 'Az adatok a feltöltött Excelből jönnek – ha nem a FullField a forrás, írd át a feliratot.' : undefined,
     },
     'home.logo': logo(lg, homeId),
     'away.logo': logo(lg, awayId),
@@ -68,11 +70,11 @@ export function bindComparison(store, lg, homeId, awayId) {
       hc = hb ? GREEN : RED; ac = ab ? GREEN : RED;
     }
     const note = s.key === 'val' ? (lg === 'women'
-      ? 'EFF = Hunbasket csapat-VAL (a PSD mintában a FullField EFF szerepelt, más képlettel)'
-      : 'A KosárStat adatcsomagban nincs EFF/VAL mutató – kézzel kell megadni') : undefined;
-    const label = `${srcName} – ${s.key}`;
-    v[`home.${s.key}`] = field(f(h), label, { color: hc, note });
-    v[`away.${s.key}`] = field(f(a), label, { color: ac, note });
+      ? 'EFF = Hunbasket csapat-VAL (a PSD mintában a FullField EFF szerepelt, más képlettel) – Excelből felülírható'
+      : 'A KosárStat adatcsomagban nincs EFF/VAL mutató – töltsd fel Excelből, vagy írd be kézzel') : undefined;
+    const lab = id => (store.statSource(lg, id, s.key) === 'excel' ? `Excel – ${s.label}` : `${srcName} – ${s.label}`);
+    v[`home.${s.key}`] = field(f(h), lab(homeId), { color: hc, note });
+    v[`away.${s.key}`] = field(f(a), lab(awayId), { color: ac, note });
     const hr = store.statRank(lg, homeId, s.key, s.lowerIsBetter), ar = store.statRank(lg, awayId, s.key, s.lowerIsBetter);
     const rankSrc = `Ligahelyezés ${Object.keys(L.teamStats).length} csapatból${s.lowerIsBetter ? ' (kevesebb = jobb)' : ''}`;
     v[`home.rank.${s.key}`] = field(hr === null ? null : `(${hr}.)`, rankSrc);
@@ -117,7 +119,8 @@ export function bindTeamstats(store, lg, teamId, tpl, measure, selected) {
   v['team.name'].geom = { x: start + lw + g.logoGap };
   for (const e of tpl.elements) if (e.defaultText) v[e.id] = { text: e.defaultText, source: 'Fix felirat a PSD-ből' };
 
-  const src = 'Hunbasket játékosstatisztika (meccsenkénti átlag)';
+  const P0 = store.players(lg, teamId);
+  const src = P0?.source === 'excel' ? 'Excel – játékosstatisztika (meccsenkénti átlag)' : 'Hunbasket játékosstatisztika (meccsenkénti átlag)';
   const best = {};
   for (const col of cols) {
     const vals = shown.map(x => num(x.p[col.key])).filter(x => x !== null);

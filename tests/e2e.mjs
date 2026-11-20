@@ -143,6 +143,71 @@ try {
     assert.equal(await page.locator('.players input:checked').count(), 13);
     await page.screenshot({ path: path.join(out, 'ui-teamstats-men.png') });
   });
+  await check('excel import: several files at once, league auto-detected, graphic uses Excel values, persists, can be switched off', async () => {
+    await page.click('.league-toggle button[data-league="men"]'); // wrong league selected on purpose
+    await page.click('#templateList button[data-id="comparison-men"]');
+    await page.waitForTimeout(300);
+    await page.locator('#importBox summary').click();
+    await page.setInputFiles('#excelFile', [
+      path.join(ROOT, 'tests/fixtures/boxscore_team_avg_women.xlsx'),
+      path.join(ROOT, 'tests/fixtures/boxscore_team_avg_men.xlsx'),
+      path.join(ROOT, 'tests/fixtures/statalap-layout.xlsx'),
+    ]);
+    await page.waitForSelector('#applyImport');
+    const prev = await page.locator('#importPreview').innerText();
+    assert.match(prev, /Női NB I\/A/);
+    assert.match(prev, /Férfi NB I\/A/);
+    assert.match(prev, /csapatstatisztika/);
+    assert.match(prev, /játékosstatisztika/);
+    assert.match(prev, /Munka1/);
+    await page.screenshot({ path: path.join(out, 'ui-import-preview.png') });
+    await page.click('#applyImport');
+    await page.waitForTimeout(600);
+    // men league: Falco EFF now present from the Excel
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="comparison-men"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#matchSel', '__custom');
+    await page.selectOption('#customHome', 'falcokc');
+    await page.selectOption('#customAway', 'albafehervar');
+    await page.waitForTimeout(400);
+    let v = await page.evaluate(() => window.__studio.current().values);
+    assert.equal(v['home.val'].text, '118.0');
+    assert.match(v['home.val'].source, /^Excel/);
+    await page.screenshot({ path: path.join(out, 'ui-comparison-men-excel.png') });
+    // women league: DVTK – Csata reproduces the PSD
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="comparison-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#matchSel', '__custom');
+    await page.selectOption('#customHome', 'dvtkhuntherm');
+    await page.selectOption('#customAway', 'csatattk');
+    await page.waitForTimeout(400);
+    v = await page.evaluate(() => window.__studio.current().values);
+    assert.equal(v['home.val'].text, '102.8');
+    assert.equal(v['home.rank.ppg'].text, '(3.)');
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'comparison-women-excel.png'));
+    assert.equal(pngInfo(readFileSync(path.join(out, 'comparison-women-excel.png'))).width, 1920);
+    await page.screenshot({ path: path.join(out, 'ui-comparison-women-excel.png') });
+    // persists across reload
+    await page.reload();
+    await page.waitForSelector('body[data-ready="1"]');
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.waitForTimeout(300);
+    assert.match(await page.locator('#freshness').innerText(), /Excel:/);
+    const x = await page.evaluate(() => window.__studio.store.excelInfo('women'));
+    assert.equal(x.files.length, 2);
+    // switch off → dashboard values return; clear removes it
+    await page.locator('#importBox summary').click();
+    await page.uncheck('#excelOn');
+    await page.waitForTimeout(300);
+    assert.equal((await page.evaluate(() => window.__studio.store.excelInfo('women'))).enabled, false);
+    await page.check('#excelOn'); await page.click('#excelClear');
+    await page.waitForTimeout(300);
+    assert.equal(await page.evaluate(() => window.__studio.store.excelInfo('women')), null);
+    assert.notEqual(await page.evaluate(() => window.__studio.store.excelInfo('men')), null, 'men data untouched by clearing women');
+  });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

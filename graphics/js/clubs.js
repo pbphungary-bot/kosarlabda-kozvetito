@@ -59,7 +59,13 @@ const EXACT = {
     albafehervar: 'albafehervar',
     kaposvar: 'kaposvar', kometakvgykaposvarikk: 'kaposvar', kometakaposvarikk: 'kaposvar', kaposvarikk: 'kaposvar',
     szedeak: 'szedeak', delutszteszedeak: 'szedeak',
-    fot: 'fot', phoenixfotitigrisek: 'fot', fotitigrisek: 'fot',
+    fot: 'fot', phoenixfotitigrisek: 'fot', fotitigrisek: 'fot', foti: 'fot', tigrisek: 'fot',
+    falco: 'falcokc', falcovulcano: 'falcokc', falcovulcanokc: 'falcokc', falcoszombathely: 'falcokc', szombathely: 'falcokc',
+    alba: 'albafehervar', honved: 'bphonved', szeged: 'szedeak', lions: 'oroszlany', oroszlanyoselions: 'oroszlany',
+    atomeromu: 'atomermomuse', paks: 'atomermomuse', pecs: 'nkapecs', debrecen: 'deac', kaposvari: 'kaposvar',
+    szolnoki: 'szolnok', szolnokiolajbanyasz: 'szolnok', olajbanyasz: 'szolnok', egis: 'kormend',
+    skc: 'sopron', olaj: 'szolnok', ose: 'oroszlany', nka: 'nkapecs',
+    budapestihonvedsportegyesulet: 'bphonved', phoenixmtfot: 'fot', szteszedeak: 'szedeak',
   },
   women: {
     bkgprimaszigetszentmiklos: 'bkgprimaszigetszentmiklos', bkgprima: 'bkgprimaszigetszentmiklos',
@@ -72,9 +78,32 @@ const EXACT = {
     sopronbasket: 'sopronbasket',
     tfse: 'tfse',
     vasasakademia: 'vasasakademia', vasas: 'vasasakademia',
-    vbwcekkcegled: 'davidkornelka', cekkcegled: 'davidkornelka', vbwcegled: 'davidkornelka',
+    vbwcekkcegled: 'davidkornelka', cekkcegled: 'davidkornelka', vbwcegled: 'davidkornelka', cegled: 'davidkornelka', dkka: 'davidkornelka',
+    csata: 'csatattk', csatatkkbudapest: 'csatattk', eto: 'sercounigyor', etogyor: 'sercounigyor', gyor: 'sercounigyor',
+    beac: 'eltebeacujbuda', ujbuda: 'eltebeacujbuda', szekszard: 'tarrkscszekszard', ksc: 'tarrkscszekszard',
+    diosgyor: 'dvtkhuntherm', huntherm: 'dvtkhuntherm', pecs: 'nkauniversitaspecs', bkg: 'bkgprimaszigetszentmiklos',
+    szigetszentmiklos: 'bkgprimaszigetszentmiklos', akademia: 'vasasakademia',
+    sopron: 'sopronbasket', nka: 'nkauniversitaspecs',
   },
 };
+
+/** Exact match only: known name variants, official or short name. No fuzzy rules. */
+export function clubIdStrict(league, name) {
+  const clubs = CLUBS[league];
+  if (!clubs) throw new Error('Unknown league ' + league);
+  const n = normalizeTeamName(name);
+  if (!n) return null;
+  if (EXACT[league][n]) return EXACT[league][n];
+  if (clubs[n]) return n;
+  const hit = Object.entries(clubs).find(([, c]) => [c.official, c.short, c.intro].filter(Boolean).some(x => normalizeTeamName(x) === n));
+  return hit ? hit[0] : null;
+}
+
+/** Which league an exact name belongs to (for warnings), or null. */
+export function leagueOfName(name) {
+  const inLeagues = Object.keys(CLUBS).filter(lg => clubIdStrict(lg, name));
+  return inLeagues.length === 1 ? inLeagues[0] : null;
+}
 
 /** Resolve a team name to a club id within one league. Returns null when unknown. */
 export function clubId(league, name) {
@@ -82,8 +111,11 @@ export function clubId(league, name) {
   if (!clubs) throw new Error('Unknown league ' + league);
   const n = normalizeTeamName(name);
   if (!n) return null;
-  if (EXACT[league][n]) return EXACT[league][n];
-  if (clubs[n]) return n;
+  const exact = clubIdStrict(league, name);
+  if (exact) return exact;
+  // an exact club of the other league is never fuzzy-matched into this one
+  // (e.g. "Sopron Basket" must not become the men's "Sopron KC")
+  if (Object.keys(CLUBS).some(lg => lg !== league && clubIdStrict(lg, name))) return null;
   const hits = Object.entries(clubs).filter(([, c]) => c.match.some(rx => rx.test(n)));
   return hits.length === 1 ? hits[0][0] : null; // ambiguous → unresolved, never guessed
 }

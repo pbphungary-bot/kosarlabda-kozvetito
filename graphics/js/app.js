@@ -1,4 +1,6 @@
 import { loadDashboard, LEAGUES, SOURCES } from './data.js';
+import { readFile } from './xlsx.js';
+import { importWorkbook, detectLeague, clubLabel } from './importer.js';
 import { club, CLUBS } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
@@ -8,7 +10,7 @@ import {
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const LS = { state: 'nbia.studio.state.v1', presets: 'nbia.studio.presets.v1', venues: 'nbia.studio.venues.v1' };
+const LS = { state: 'nbia.studio.state.v1', presets: 'nbia.studio.presets.v1', venues: 'nbia.studio.venues.v1', excel: 'nbia.studio.excel.v1' };
 const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ } };
 
@@ -68,6 +70,8 @@ function renderFreshness() {
     const age = x.hours === null ? '?' : x.hours < 1 ? '<1 ó' : x.hours < 48 ? `${Math.round(x.hours)} ó` : `${Math.round(x.hours / 24)} nap`;
     return `<span class="${x.stale ? 'stale' : ''}" title="Frissítve: ${esc(x.updated_at)}">${names[k]}: ${fmt(x.updated_at)} (${age})</span>`;
   });
+  const xi = store.excelInfo(lg);
+  if (xi) parts.push(`<span class="${xi.enabled ? '' : 'stale'}" title="${esc(xi.file)} – módosítva: ${esc(xi.modified || '?')}">Excel: ${esc(xi.file)} (${xi.modified ? fmt(xi.modified) : 'ismeretlen dátum'})${xi.enabled ? '' : ' – kikapcsolva'}</span>`);
   for (const e of store.errors.filter(e => e.league === lg)) parts.push(`<span class="err">${esc(e.file)}: ${esc(e.error)}</span>`);
   $('freshness').innerHTML = parts.join('');
 }
@@ -366,6 +370,55 @@ function loadPreset(p) {
   toast('Betöltve: ' + p.name);
 }
 
+// ───────────────────────── Excel / CSV import ─────────────────────────
+let pendingImports = [];
+
+function restoreExcel() {
+  const saved = lsGet(LS.excel, {});
+  for (const lg of Object.keys(LEAGUES)) if (saved[lg]) store.setExcel(lg, saved[lg]);
+}
+
+function persistExcel() {
+  const out = {};
+  for (const lg of Object.keys(LEAGUES)) if (store.excel[lg]) out[lg] = store.excel[lg];
+  lsSet(LS.excel, out);
+}
+
+function renderImportState() {
+  const xi = store.excelInfo(state.league);
+  $('importState').textContent = xi ? `– ${xi.teams} csapat, ${xi.playerTeams} csapat játékosai (${xi.files.length} fájl)` : '';
+  $('excelOn').checked = xi ? xi.enabled : true;
+  $('excelOn').disabled = !xi;
+  $('excelClear').disabled = !xi;
+}
+
+function previewImports() {
+  const html = pendingImports.map(({ file, league, imp, certain }) => {
+    const rows = imp.report.map(r => `<tr><td>${esc(r.sheet)}</td><td>${esc(r.status)}${r.club ? ' → ' + esc(clubLabel(league, r.club)) : ''}</td><td>${r.rows ?? ''}</td><td>${esc(r.note || (r.columns || []).join(', '))}</td></tr>`).join('');
+    const useful = imp.teamCount + imp.playerTeamCount;
+    return `<div><b>${esc(file.name)}</b> → <b>${esc(LEAGUES[league]?.label || '?')}</b>${certain ? '' : ' <span class="warn">(a bajnokság nem volt egyértelmű – a most kiválasztottat használom)</span>'}</div>
+      <table><tr><th>Munkalap</th><th>Felismerve</th><th>Sor</th><th>Oszlopok / megjegyzés</th></tr>${rows}</table>
+      ${imp.teamCount ? `<div class="ok">Csapatstatisztika: ${imp.teamCount} csapat</div>` : ''}
+      ${imp.playerCount ? `<div class="ok">Játékosok: ${imp.playerCount} játékos, ${imp.playerTeamCount} csapat</div>` : ''}
+      ${imp.scaled.length ? `<div class="warn">Törtként tárolt százalék szorozva 100-zal: ${esc(imp.scaled.join(', '))}</div>` : ''}
+      ${imp.unmatched.length ? `<div class="warn">Nem egyeztethető (kihagyva, nem találgatok):<ul>${imp.unmatched.slice(0, 8).map(u => `<li>${esc(u)}</li>`).join('')}</ul></div>` : ''}
+      ${imp.ignoredColumns.length ? `<div class="hint">Nem használt oszlopok: ${imp.ignoredColumns.length} db (${esc(imp.ignoredColumns.slice(0, 6).join(', '))}…)</div>` : ''}
+      ${useful === 0 ? '<div class="warn">Nem találtam használható adatot ebben a fájlban.</div>' : ''}`;
+  }).join('<hr>');
+  const any = pendingImports.some(p => p.imp.teamCount + p.imp.playerTeamCount > 0);
+  $('importPreview').innerHTML = html + (any ? '<div class="import-row"><button id="applyImport" class="primary">Alkalmazás</button><button id="cancelImport" class="ghost">Mégse</button></div>' : '<div class="import-row"><button id="cancelImport" class="ghost">Bezárás</button></div>');
+  const ap = $('applyImport');
+  if (ap) ap.onclick = async () => {
+    for (const { file, league, imp } of pendingImports) if (imp.teamCount + imp.playerTeamCount > 0) store.mergeExcel(league, imp, file);
+    const first = pendingImports.find(p => p.imp.teamCount + p.imp.playerTeamCount > 0);
+    persistExcel(); pendingImports = []; $('importPreview').innerHTML = '';
+    toast('Excel adatok betöltve');
+    if (first && first.league !== state.league) await switchLeague(first.league); else { renderImportState(); renderFreshness(); update(true); }
+  };
+  const ca = $('cancelImport');
+  if (ca) ca.onclick = () => { pendingImports = []; $('importPreview').innerHTML = ''; };
+}
+
 // ───────────────────────── wiring ─────────────────────────
 async function switchLeague(lg, keep) {
   state.league = lg;
@@ -373,6 +426,7 @@ async function switchLeague(lg, keep) {
   await loadLeagueImages(lg);
   if (!keep) ensureSelection(); else ensureSelection();
   renderFreshness();
+  renderImportState();
   renderTemplateList();
   await update(true);
 }
@@ -415,6 +469,23 @@ async function main() {
     } catch (err) { toast('Hibás fájl: ' + err.message); }
     e.target.value = '';
   };
+  $('excelFile').onchange = async e => {
+    const files = [...e.target.files];
+    pendingImports = [];
+    for (const f of files) {
+      try {
+        const parsed = await readFile(f);
+        const d = detectLeague(parsed, state.league);
+        pendingImports.push({ file: { name: f.name, modified: parsed.modified }, league: d.league, certain: d.certain, imp: importWorkbook(parsed, d.league) });
+      } catch (err) {
+        pendingImports.push({ file: { name: f.name }, league: state.league, certain: false, imp: { report: [{ sheet: f.name, status: 'hiba', note: err.message }], teamCount: 0, playerTeamCount: 0, playerCount: 0, scaled: [], unmatched: [], ignoredColumns: [] } });
+      }
+    }
+    if (files.length) previewImports();
+    e.target.value = '';
+  };
+  $('excelOn').onchange = e => { const x = store.excel[state.league]; if (x) { x.enabled = e.target.checked; persistExcel(); renderImportState(); renderFreshness(); update(true); } };
+  $('excelClear').onclick = () => { if (confirm('Törlöd a feltöltött Excel adatokat ennél a bajnokságnál?')) { store.setExcel(state.league, null); persistExcel(); renderImportState(); renderFreshness(); update(true); } };
   $('stage').classList.add('checker');
   applyZoom();
   renderPresets();
@@ -428,6 +499,7 @@ async function main() {
     return r.json();
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
+  restoreExcel();
   window.__studio = { state, store, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
