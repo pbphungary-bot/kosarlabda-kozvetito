@@ -258,6 +258,12 @@ function onFieldEvent(e) {
   else if (e.target.classList.contains('reset')) { delete o[id]; update(true); return; }
   else return;
   if (!Object.keys(cur).length) delete o[id];
+  // live state of the field row while typing
+  const v = current.auto?.[id] || {};
+  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined));
+  f.classList.toggle('missing', !!v.missing && !(o[id] && o[id].text !== undefined));
+  const flag = f.querySelector('.flag');
+  if (flag) flag.hidden = !f.classList.contains('missing');
   // remember venues per home team
   if (id === 'venue' && tpl().type === 'intro' && e.type === 'change') {
     const m = currentMatch();

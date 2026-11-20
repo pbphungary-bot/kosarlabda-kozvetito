@@ -155,7 +155,7 @@ function rowList(id, league, type, psd, label, g) {
 
 // ───────────────────────── Intro ─────────────────────────
 function intro(id, league, psd, g) {
-  const name = { type: 'text', y: 809.5, size: 100, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 400, lineHeight: 120, wrap: { maxLines: 2, anchor: 'middle' }, minScale: 0.6 };
+  const name = { type: 'text', y: 809.5, size: 100, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 440, lineHeight: 120, wrap: { maxLines: 2, anchor: 'middle' }, minScale: 0.5 };
   const rank = { type: 'text', y: 909.5, size: 58.333, tracking: -20, color: '#ef4036', outline: ol(2, '#ffffff'), align: 'center', maxWidth: 420, visible: false };
   const els = [
     { id: 'round', type: 'text', label: 'Forduló, dátum, időpont', group: 'Mérkőzés', x: g.roundX, y: g.roundY, font: g.roundFont, size: 50, tracking: 10, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 900 },
