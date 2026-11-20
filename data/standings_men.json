@@ -1,8 +1,8 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-11-14T20:09:58.646763+00:00",
-  "checked_at": "2026-11-18T15:27:11.223188+00:00",
+  "updated_at": "2026-11-19T13:10:48.232598+00:00",
+  "checked_at": "2026-11-20T10:58:51.048308+00:00",
   "standings": [
     {
       "rank": 1,
@@ -27,12 +27,12 @@
     {
       "rank": 3,
       "name": "NHSZ-Szolnoki Olajbányász",
-      "played": 8,
-      "points": 14,
-      "wins": 6,
+      "played": 9,
+      "points": 16,
+      "wins": 7,
       "losses": 2,
-      "scored": 698,
-      "conceded": 636
+      "scored": 794,
+      "conceded": 723
     },
     {
       "rank": 4,
@@ -117,12 +117,12 @@
     {
       "rank": 12,
       "name": "DEAC",
-      "played": 8,
-      "points": 9,
+      "played": 9,
+      "points": 10,
       "wins": 1,
-      "losses": 7,
-      "scored": 657,
-      "conceded": 719
+      "losses": 8,
+      "scored": 744,
+      "conceded": 815
     },
     {
       "rank": 13,

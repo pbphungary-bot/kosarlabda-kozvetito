@@ -5,6 +5,8 @@ import update_news as n
 from bs4 import BeautifulSoup
 assert n.canonical('https://site.hu/article/?utm_source=foo&id=12')=='https://site.hu/article/?id=12'
 assert n.canonical('https://site.hu/article/?id=12&fbclid=123')=='https://site.hu/article/?id=12'
+assert n.canonical('https://www.egiskormend.hu/Hirek/Hazai_meccs.html/')=='https://www.egiskormend.hu/Hirek/Hazai_meccs.html'
+assert '%E2%80%A6' in n.canonical('https://www.nkapecs.hu/tartalmak/Remeljuk…/')
 assert n.canonical('https://site.hu/article/?id=13') != n.canonical('https://site.hu/article/?id=12')
 assert not n.summary_usable({'title':'Example','summary':'Example','summary_method':'headline_fallback'})
 assert n.summary_usable({'title':'Example','summary':'This is a sufficiently detailed summary of a basketball game with verified scores.','summary_method':'article_body'})

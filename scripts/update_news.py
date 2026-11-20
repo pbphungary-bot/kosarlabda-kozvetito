@@ -12,7 +12,7 @@ import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, urldefrag, urlencode, quote, urlsplit, urlunsplit
+from urllib.parse import urljoin, urlparse, urldefrag, urlencode, quote, urlsplit, urlunsplit, urlunparse
 from bs4 import BeautifulSoup
 
 OUT = Path('data/news.json')
@@ -76,12 +76,12 @@ def canonical(url):
     if parsed.query and 'pg=news_3_' in parsed.query:
         return raw
     # Keep meaningful article identifiers in query strings; discard only tracking keys.
-    from urllib.parse import parse_qsl, urlunparse
+    from urllib.parse import parse_qsl
     pairs = [(k, v) for k, v in parse_qsl(parsed.query, keep_blank_values=True)
              if not (k.lower().startswith('utm_') or k.lower() in ('fbclid','gclid','ref','source'))]
     from urllib.parse import urlencode
     path = parsed.path.rstrip('/')
-    if not re.search(r'\.(?:html?|php|aspx?)$', path.rsplit('/', 1)[-1], re.I):
+    if not re.search(r'\.(?:html?|php|aspx?|pdf)$', path.rsplit('/', 1)[-1], re.I):
         path += '/'   # file-style URLs (e.g. Egis Körmend *.html) 404 with a trailing slash
     path = quote(path, safe=PATH_SAFE)
     return urlunparse((parsed.scheme.lower(), parsed.netloc.lower(), path, '', urlencode(sorted(pairs)), ''))
@@ -122,7 +122,7 @@ def candidates(soup, base, src):
             anchors = soup.select('a[href]')
     else:
         anchors = soup.select('article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]')
-        if not anchors or src['kind'] == 'bb1':
+        if not anchors or src['kind'] in ('bb1','wbasket'):
             anchors = soup.select('a[href]')
     for a in anchors:
         title = clean(a.get_text(' ', strip=True) or a.get('title') or '')
@@ -143,7 +143,7 @@ def feed_candidates(soup, base, src):
         href = tag.get('href')
         if href:
             feeds.append(urljoin(base, href))
-    if src['kind'] == 'club':
+    if src['kind'] in ('club','wbasket'):
         parsed = urlparse(base)
         feeds.append(f'{parsed.scheme}://{parsed.netloc}/feed/')
     found = {}
@@ -459,7 +459,7 @@ def collect_source(src, entries, checks, max_articles=12):
                 host = (urlparse(base).hostname or '').removeprefix('www.')
                 sample_links = [f"{clean(a.get_text(' ', strip=True))[:60]} -> {a.get('href')}" for a in soup.select('a[href]')
                                 if clean(a.get_text(' ', strip=True)) and host in (urlparse(urljoin(base, a.get('href'))).hostname or '')][:12]
-            if src['kind'] == 'club':
+            if src['kind'] in ('club','wbasket'):
                 try:
                     for url, title in feed_candidates(soup, base, src).items():
                         found.setdefault(url, title)
@@ -474,6 +474,15 @@ def collect_source(src, entries, checks, max_articles=12):
                 found.setdefault(url, title)
         except Exception as exc:
             fallback_notes = [f'fallback:{type(exc).__name__}']
+    # WordPress feeds can work even when the site's homepage blocks automated requests.
+    if src['kind']=='wbasket' and not found:
+        try:
+            feed_src={'hosts':src['hosts'],'kind':'wbasket'}
+            for url, title in feed_candidates(BeautifulSoup('', 'html.parser'), 'https://wbasket.hu/', feed_src).items():
+                found.setdefault(url,title)
+            if found: listings_ok += 1
+        except Exception as exc:
+            listing_errors.append('RSS fallback: '+str(exc))
     added, repaired, failures, already_saved = 0, 0, 0, 0
     for url, title in list(found.items())[:max_articles]:
         existing = entries.get(url)
@@ -602,8 +611,8 @@ def assign_team_tags(entries):
         'Csata TTK':['csata ttk','csata tkk'],
         'BKG-PRIMA Szigetszentmiklós':['bkg-prima','bkg prima'],
         'TARR KSC Szekszárd':['ksc szekszard','tarr ksc'],
-        'SERCO UNI Győr':['serco uni gyor','eto basket','uni gyor'],
-        'VBW CEKK Cegléd':['cekk cegled','vbw cekk']}
+        'SERCO UNI Győr':['serco uni gyor','eto basket','uni gyor','gyori kosarlabda'],
+        'VBW CEKK Cegléd':['cekk cegled','vbw cekk','cegled']}
     def matches(hay, phrase):
         return bool(re.search(r'(?<![a-z0-9])' + re.escape(norm(phrase)) + r'(?![a-z0-9])', hay))
     def gender(item):
@@ -779,6 +788,18 @@ def main():
             deduplicated[url] = item
         elif previous is not None:
             previous['teams'] = sorted(set(previous.get('teams', [])) | set(item.get('teams', [])))
+    # A fixture's scheduled tip-off must never masquerade as a news publication date.
+    # Keep the article but clear implausible future dates, including old saved entries.
+    from datetime import timedelta
+    future_limit = datetime.now(timezone.utc) + timedelta(minutes=5)
+    for item in deduplicated.values():
+        stamp = parse_date(item.get('published_at'))
+        if stamp:
+            dt = datetime.fromisoformat(stamp)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            if dt.astimezone(timezone.utc) > future_limit:
+                item['published_at'] = None
     articles = sorted(deduplicated.values(), key=lambda x: (parse_date(x.get('published_at')), x.get('title', '')), reverse=True)
     now = datetime.now(timezone.utc)
     healthy = [x for x in checks if x['status'] in ('ok', 'partial') and x.get('candidates', x.get('search_pages_ok', 0))]
