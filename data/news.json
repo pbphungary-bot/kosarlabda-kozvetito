@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T02:48:01.332337+00:00",
+  "checked_at": "2026-11-20T03:41:37.156764+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -415,18 +415,27 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 24,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 12,
       "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 0,
+      "added": 3,
       "repaired": 0,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "article_errors": 7,
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/a-sopron-nyerte-a-megyei-rangadot/: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/gyozelemmel-kezdtuk-a-bajnoksagot/: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/a-beac-ellen-kezdjuk-a-bajnoksagot/: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/nagyszeru-siker-az-utanpotlasban/: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/ket-europa-kupa-indulo-csapatot-fektettunk-ket-vallra/: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/rozsahegyen-folytatodik-a-felkeszules/: TimeoutError: The read operation timed out",
+        "article https://etobasket.hu/hu/hirek/a-sopron-ellen-jatszottuk-a-fuzy-akos-tapodi-peter-emlekmerkozest/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 3,
       "source_coverage": true
     },
     {
@@ -465,19 +474,22 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false
     }
   ],
   "articles": [
@@ -6416,6 +6428,19 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Fontos két ponttal térhetünk haza a Csata otthonából",
+      "summary": "Budapest, NB I-es női mérkőzés, 200 néző.",
+      "url": "https://etobasket.hu/hu/hirek/fontos-ket-ponttal-terhetunk-haza-a-csata-otthonabol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "ETO-bérlettel féláron szurkolhatnak a bajnokcsapat ellen",
       "summary": "Vasárnap 17 órakor a bajnoki címvédő NKA Universitas Pécs csapatát fogadjuk az Olimpiai Sportparkban.",
       "url": "https://etobasket.hu/hu/hirek/eto-berlettel-felaron-szurkolhatnak-a-bajnokcsapat-ellen/",
@@ -6455,6 +6480,19 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "A bajnoki cím egyik esélyesét fogadjuk",
+      "summary": "Szerdán 18 órakor az Olimpiai Sportparkban a Sopron Basket ellen folytatódik számunkra a bajnokság.",
+      "url": "https://etobasket.hu/hu/hirek/a-bajnoki-cim-egyik-eselyeset-fogadjuk/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "A TFSE otthonában javíthatunk",
       "summary": "Szombaton 18 órakor a TFSE vendégeként folytatjuk a bajnokságot.",
       "url": "https://etobasket.hu/hu/hirek/a-tfse-otthonaban-javithatunk/",
@@ -6471,6 +6509,19 @@
       "title": "A Márvány Óvoda kapta az emlékmeccsen összegyűjtött labdákat",
       "summary": "Szeptemberben rendeztük meg a Fűzy Ákos–Tapodi Péter emlékmérkőzést.",
       "url": "https://etobasket.hu/hu/hirek/a-marvany-ovoda-kapta-az-emlekmeccsen-osszegyujtott-labdakat/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Csata otthonában folytatjuk a bajnokságot",
+      "summary": "Szombaton 17 órakor a Csata TTK otthonában folytatjuk szereplésünket a bajnokságban.",
+      "url": "https://etobasket.hu/hu/hirek/a-csata-otthonaban-folytatjuk-a-bajnoksagot/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
