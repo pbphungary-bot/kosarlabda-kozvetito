@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T02:00:29.095310+00:00",
+  "checked_at": "2026-11-20T02:48:01.332337+00:00",
   "statistics": {
     "total": 1070,
     "fresh": 497,
@@ -484,7 +484,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 27,
+      "candidates": 30,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
