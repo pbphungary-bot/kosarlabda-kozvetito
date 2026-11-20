@@ -1,0 +1,342 @@
+{
+ "source_psd": "DVTK csapatstat 7. ford után 1122.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    176,
+    8,
+    1743,
+    914
+   ],
+   "opacity": 0.949,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    160,
+    11,
+    1758,
+    910
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1069,
+    983,
+    1185,
+    1043
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    738,
+    983,
+    791,
+    1043
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": " #                   Játékos        M      P/M       L/M     GP",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    214,
+    150,
+    1706,
+    889
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": " # \t\t\t               Játékos\t\t\t\t\t  \tM\t    \tP/M\t \t    L/M\t   \tGP/M          SZ/M \t\tEL/M\t  VAL/M \t \tIDŐ/M\r 0\t  AHO Tyra Nolwenn\t\t\t\t6\t\t7.2\t  3.7\t\t4.2\t  1.5\t\t1.3\t\t 13.5\t\t21.5\r 6\t  POCZKODI Zsófia\t\t\t\t\t6\t\t2.5\t  0.7\t\t0.7\t  0.3\t\t0.5\t  3.0\t\t10.5\r 7\t  KáNYáSI Veronika\t\t\t\t6\t    11.8\t  4.8\t\t3.8\t  2.7\t\t2.3\t 15.7\t\t25.7\r 8\t  Váralljai Viola\t\t\t\t\t2\t\t 0\t\t  1.0\t\t0.5\t   0\t\t 0\t\t   0\t\t 9.0\r10\t  AHO Nina Daniella\t\t\t\t6\t\t6.8\t  3.7\t\t3.5\t  0.5\t\t1.2\t\t 13.2\t\t22.3\r15\t  SZABó Fanni\t\t\t\t\t\t\t6\t\t4.8\t  1.7\t\t1.3\t\t  1.0\t\t1.3\t\t  5.0\t\t17.0\r16\t  FáRBáS Eliza\t\t\t\t\t\t6\t\t4.8\t  3.3\t\t1.3\t\t  1.5\t\t1.0\t\t  8.8\t\t15.2\r23\t  TELEGDY Zsófia\t\t\t\t\t\t6\t\t5.2\t  1.5\t\t1.2\t\t  0.3\t\t0.5\t  6.5\t\t 9.8\r24\t  BOROS Júlia\t\t\t\t\t\t\t6\t\t7.8\t  2.0\t\t2.2\t  0.3\t\t1.2\t\t  9.0\t\t19.2\r31\t  Isabella SMUDA\t\t\t\t\t6\t\t7.8\t  6.0\t\t1.0\t\t  0.3\t\t1.3\t\t 13.7\t\t17.8\r33\t  Nicole Enabosi\t\t\t\t\t6\t   12.8\t  8.0\t\t2.0\t  2.2\t\t2.8\t 20.2\t\t24.7\r77\t  Diana Balayera\t\t\t\t\t5\t\t7.0\t  5.0\t\t0.8\t  0.2\t\t0.6\t 10.2\t\t16.0\r\r",
+    "runs": [
+     {
+      "text": " ",
+      "font": "LeagueGothic-Regular",
+      "size": 33.33333,
+      "color": "#ffffff",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "# \t\t\t               Játékos\t\t\t\t\t  \tM\t    \tP/M\t \t    L/M\t   \tGP/M          SZ/M \t\tEL/M\t  VAL/M \t \tIDŐ/M\r",
+      "font": "LeagueGothic-Regular",
+      "size": 30.662,
+      "color": "#dba234",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": " 0\t  AHO Tyra Nolwenn\t\t\t\t6\t\t7.2\t  3.7\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "4.2",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t  1.5\t\t1.3\t\t 13.5\t\t21.5\r 6\t  POCZKODI Zsófia\t\t\t\t\t6\t\t2.5\t  0.7\t\t0.7\t  0.3\t\t0.5\t  3.0\t\t10.5\r 7\t  KáNYáSI Veronika\t\t\t\t6\t    11.8\t  4.8\t\t3.8\t  ",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "2.7",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t\t2.3\t 15.7\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "25.7\r",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": " 8\t  Váralljai Viola\t\t\t\t\t2\t\t 0\t\t  1.0\t\t0.5\t   0\t\t 0\t\t   0\t\t 9.0\r10\t  AHO Nina Daniella\t\t\t\t6\t\t6.8\t  3.7\t\t3.5\t  0.5\t\t1.2\t\t 13.2\t\t22.3\r15\t  SZABó Fanni\t\t\t\t\t\t\t6\t\t4.8\t  1.7\t\t1.3\t\t  1.0\t\t1.3\t\t  5.0\t\t17.0\r16\t  FáRBáS Eliza\t\t\t\t\t\t6\t\t4.8\t  3.3\t\t1.3\t\t  1.5\t\t1.0\t\t  8.8\t\t15.2\r23\t  TELEGDY Zsófia\t\t\t\t\t\t6\t\t5.2\t  1.5\t\t1.2\t\t  0.3\t\t0.5\t  6.5\t\t 9.8\r24\t  BOROS Júlia\t\t\t\t\t\t\t6\t\t7.8\t  2.0\t\t2.2\t  0.3\t\t1.2\t\t  9.0\t\t19.2\r31\t  Isabella SMUDA\t\t\t\t\t6\t\t7.8\t  6.0\t\t1.0\t\t  0.3\t\t1.3\t\t 13.7\t\t17.8\r33\t  Nicole Enabosi\t\t\t\t\t6\t   ",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "12.8\t  8.0",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t\t2.0\t  2.2\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "2.8",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": " 20.2",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t\t24.7\r77\t  Diana Balayera\t\t\t\t\t5\t\t7.0\t  5.0\t\t0.8\t  0.2\t\t0.6\t 10.2\t\t16.0\r\r",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.3589023256951007,
+     -6.174576297520035e-17,
+     0.0,
+     1.3589023256951005,
+     214.0960154665132,
+     187.632402562634
+    ],
+    "scale": 1.3589023256951007
+   }
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    611,
+    32,
+    703,
+    132
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "DVTK HUNTHERM",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    754,
+    45,
+    1262,
+    120
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "DVTK HUNTHERM",
+    "runs": [
+     {
+      "text": "DVTK HUNTHERM",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#ca0001",
+      "tracking": 50.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     750.0,
+     118.49999999999997
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    841,
+    993,
+    1019,
+    1033
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  }
+ ]
+}

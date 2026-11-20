@@ -1,0 +1,277 @@
+{
+ "source_psd": "DVTK Next Games - 1025.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    131,
+    8,
+    1426,
+    802
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    80,
+    13,
+    1472,
+    797
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    913,
+    1017,
+    1011,
+    1067
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "  2026.11.04. - 19:15   PANATHLITIKOS - DVTK HUNTHERM  2026.11.",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    152,
+    312,
+    1405,
+    744
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "\r\r2026.11.04. - 19:15\t\t\tPANATHLITIKOS - DVTK HUNTHERM\r\r2026.11.22. - 17:00\t\t\tDVTK HUNTHERM - CSATA TKK\r\r2026.11.25. - 20:00\t\t\tDVTK HUNTHERM - BROD NA SAVI\r\r2026.11.28. - 18:00\t\t\tSopron Basket - DVTK HUNTHERM\r",
+    "runs": [
+     {
+      "text": "\r\r2026.11.04. - 19:15\t\t\tPANATHLITIKOS - DVTK HUNTHERM\r\r2026.11.22. - 17:00\t\t\tDVTK HUNTHERM - CSATA TKK\r\r2026.11.25. - 20:00\t\t\tDVTK HUNTHERM - BROD NA SAVI\r\r2026.11.28. - 18:00\t\t\tSopron Basket - DVTK HUNTHERM\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.1783051679209184,
+     0.0,
+     1.309290043344339e-16,
+     1.1783051679209184,
+     148.5328348402266,
+     242.94805949699554
+    ],
+    "scale": 1.1783051679209184
+   }
+  },
+  {
+   "name": "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    581,
+    306,
+    637,
+    373
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    581,
+    555,
+    637,
+    622
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    226,
+    57,
+    364,
+    207
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1185,
+    57,
+    1323,
+    207
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    583,
+    1012,
+    635,
+    1072
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    685,
+    1022,
+    863,
+    1062
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "A DVTK HUNTHERM Következő MÉRKŐZÉSEI ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    450,
+    35,
+    1099,
+    230
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "A DVTK HUNTHERM\rKövetkező MÉRKŐZÉSEI\r",
+    "runs": [
+     {
+      "text": "A DVTK HUNTHERM\rKövetkező MÉRKŐZÉSEI\r",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#000000",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     774.0,
+     108.5
+    ],
+    "scale": 1.0
+   }
+  }
+ ]
+}

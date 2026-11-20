@@ -1,0 +1,567 @@
+{
+ "source_psd": "DVTK - CSATA statösszevetés 1122 előtt.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    59,
+    0,
+    1241,
+    1001
+   ],
+   "opacity": 0.949,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    -296,
+    -33,
+    1598,
+    1033
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    739,
+    1017,
+    837,
+    1067
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "CSAPATOK ÖSSZEVETÉSE",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    337,
+    18,
+    969,
+    105
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 6.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "CSAPATOK ÖSSZEVETÉSE",
+    "runs": [
+     {
+      "text": "CSAPATOK ÖSSZEVETÉSE",
+      "font": "LeagueGothic-Regular",
+      "size": 96.0,
+      "color": "#fefefe",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     651.4999999999995,
+     103.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "A mérkőző felek idei teljesítménye, statisztikai átlagszámokban",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    97,
+    127,
+    1206,
+    173
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via FULLFIELD.INFO",
+    "runs": [
+     {
+      "text": "A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ",
+      "font": "LeagueGothic-Italic",
+      "size": 48.0,
+      "color": "#000000",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "FULLFIELD.INFO",
+      "font": "LeagueGothic-Italic",
+      "size": 48.0,
+      "color": "#37b3fd",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     648.25,
+     163.19970703125
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "csata tkk logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    717,
+    397,
+    1117,
+    775
+   ],
+   "opacity": 0.702,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 7.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    207,
+    389,
+    575,
+    789
+   ],
+   "opacity": 0.702,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "77.5 50.2% 33.6% 65.8% 46.3 22.0 10.8 15.3 102.8 ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    326,
+    199,
+    453,
+    980
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "77.5\r50.2%\r33.6%\r65.8%\r46.3\r22.0\r10.8\r15.3\r102.8\r",
+    "runs": [
+     {
+      "text": "77.5\r50.2%\r33.6%\r",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#0b9444",
+      "tracking": 25.0,
+      "leading": 90.66666,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "65.8%\r",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 90.66666,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "46.3\r22.0\r10.8\r",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#0b9444",
+      "tracking": 25.0,
+      "leading": 90.66666,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "15.3\r",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 90.66666,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "102.8\r",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#0b9444",
+      "tracking": 25.0,
+      "leading": 90.66666,
+      "autoLeading": false,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     388.0,
+     253.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "(3.) (3.) (2.) (9.) (1.) (1.) (6.) (3.) (2.)",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    123,
+    194,
+    187,
+    979
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "(3.)\r(3.)\r(2.)\r(9.)\r(1.)\r(1.)\r(6.)\r(3.)\r(2.)",
+    "runs": [
+     {
+      "text": "(3.)\r(3.)\r(2.)\r(9.)\r(1.)\r(1.)\r(6.)\r(3.)\r(2.)",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#383838",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     156.0,
+     251.49999999999994
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "(4.) (7.) (5.) (4.) (6.) (6.) (8.) (2.) (4.)",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    1089,
+    194,
+    1153,
+    979
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "(4.)\r(7.)\r(5.)\r(4.)\r(6.)\r(6.)\r(8.)\r(2.)\r(4.)",
+    "runs": [
+     {
+      "text": "(4.)\r(7.)\r(5.)\r(4.)\r(6.)\r(6.)\r(8.)\r(2.)\r(4.)",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#373737",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     1122.0,
+     251.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "74.7 46.0% 30.8% 71.3% 39.1 17.2 10.4 14.9 86.1 ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    851,
+    199,
+    980,
+    980
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "74.7\r46.0%\r30.8%\r71.3%\r39.1\r17.2\r10.4\r14.9\r86.1\r",
+    "runs": [
+     {
+      "text": "74.7\r46.0%\r30.8%\r",
+      "font": "LeagueGothic-Regular",
+      "size": 59.75364,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 72.55799,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "71.3%\r",
+      "font": "LeagueGothic-Regular",
+      "size": 59.75364,
+      "color": "#0b9444",
+      "tracking": 25.0,
+      "leading": 72.55799,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "39.1\r17.2\r10.4\r",
+      "font": "LeagueGothic-Regular",
+      "size": 59.75364,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 72.55799,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "14.9\r",
+      "font": "LeagueGothic-Regular",
+      "size": 59.75364,
+      "color": "#0b9444",
+      "tracking": 25.0,
+      "leading": 72.55799,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "86.1\r",
+      "font": "LeagueGothic-Regular",
+      "size": 59.75364,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 72.55799,
+      "autoLeading": false,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.2495751612353547,
+     0.0,
+     0.0,
+     1.249575161235355,
+     914.8194387647577,
+     253.73415513257032
+    ],
+    "scale": 1.2495751612353547
+   }
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    428,
+    1012,
+    481,
+    1072
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    521,
+    1022,
+    699,
+    1062
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "PTS 2P% 3P% FT% REB AST STL TOV EFF ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    607,
+    198,
+    695,
+    979
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "PTS\r2P%\r3P%\rFT%\rREB\rAST\rSTL\rTOV\rEFF\r",
+    "runs": [
+     {
+      "text": "PTS\r2P%\r3P%\rFT%\rREB\rAST\rSTL\rTOV\rEFF\r",
+      "font": "LeagueGothic-Regular",
+      "size": 74.66666,
+      "color": "#000000",
+      "tracking": 25.0,
+      "leading": 90.66666,
+      "autoLeading": false,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     650.0,
+     253.5
+    ],
+    "scale": 1.0
+   }
+  }
+ ]
+}

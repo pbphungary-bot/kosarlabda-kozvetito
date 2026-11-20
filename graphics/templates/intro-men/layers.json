@@ -1,0 +1,566 @@
+{
+ "source_psd": "Férfi Intro Graph 26-27.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Screenshot 2024-11-20 06-31-47",
+   "kind": "smartobject",
+   "visible": false,
+   "bbox": [
+    0,
+    0,
+    1920,
+    1080
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    320,
+    2,
+    1600,
+    948
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    16,
+    -58,
+    1910,
+    1008
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Novomatic Aréna",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    855,
+    208,
+    1066,
+    246
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "Novomatic Aréna",
+    "runs": [
+     {
+      "text": "Novomatic Aréna",
+      "font": "LeagueGothic-Regular",
+      "size": 50.0,
+      "color": "#fefefe",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     960.67138671875,
+     244.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "Layer 3",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [],
+   "typography": {
+    "text": "",
+    "runs": [
+     {
+      "text": "",
+      "font": "Poppins-Medium",
+      "size": 125.00046,
+      "color": "#26262c",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     768.0,
+     106.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "SOPRON KC",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    472,
+    736,
+    779,
+    811
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "SOPRON KC",
+    "runs": [
+     {
+      "text": "SOPRON KC",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#fefefe",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     625.0,
+     809.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "Alapszakasz - 1. forduló - 2026.09.25. - 19.00",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    654,
+    148,
+    1272,
+    194
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "Alapszakasz - 1. forduló - 2026.09.25. - 19.00",
+    "runs": [
+     {
+      "text": "Alapszakasz - 1. forduló - 2026.09.25. - 19.00",
+      "font": "LeagueGothic-Italic",
+      "size": 50.0,
+      "color": "#fefefe",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     960.6713867187497,
+     184.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "(9. hely - 6-16)",
+   "kind": "type",
+   "visible": false,
+   "bbox": [
+    1109,
+    864,
+    1479,
+    925
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "(9. hely - 6-16)",
+    "runs": [
+     {
+      "text": "(9. hely - 6-16)",
+      "font": "Satoshi-Black",
+      "size": 58.33333,
+      "color": "#ef4036",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     1294.7995147705078,
+     909.4999999999997
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "734488838_1327264879025947_6430803759669777128_n",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    454,
+    300,
+    802,
+    650
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "(11. hely - 3-19)",
+   "kind": "type",
+   "visible": false,
+   "bbox": [
+    435,
+    864,
+    820,
+    925
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "(11. hely - 3-19)",
+    "runs": [
+     {
+      "text": "(11. hely - 3-19)",
+      "font": "Satoshi-Black",
+      "size": 58.33333,
+      "color": "#ef4036",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     627.7995147705078,
+     909.4999999999997
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "FÉRFI NB I. A CSOPORT",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    641,
+    26,
+    1281,
+    124
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#fcfcfc"
+    }
+   ],
+   "typography": {
+    "text": "FÉRFI NB I. A CSOPORT",
+    "runs": [
+     {
+      "text": "FÉRFI NB I. A CSOPORT",
+      "font": "LeagueGothic-Regular",
+      "size": 108.33334,
+      "color": "#0b9444",
+      "tracking": 5.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     958.7791748046875,
+     122.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "DEAC",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    1227,
+    736,
+    1363,
+    811
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "DEAC",
+    "runs": [
+     {
+      "text": "DEAC",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#fefefe",
+      "tracking": 10.0,
+      "leading": 50.0,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     1294.0,
+     809.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "BEAC Logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1103,
+    302,
+    1487,
+    645
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "Réteg 1",
+   "kind": "pixel",
+   "visible": true,
+   "bbox": [
+    905,
+    375,
+    1019,
+    575
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 1.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    },
+    {
+     "type": "ColorOverlay",
+     "opacity": 100.0,
+     "color": "#0b9444"
+    }
+   ]
+  },
+  {
+   "name": "pbp_logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1062,
+    992,
+    1199,
+    1052
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    },
+    {
+     "type": "BevelEmboss",
+     "size": 8.0,
+     "angle": 90.0,
+     "useGlobalAngle": true
+    }
+   ]
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    804,
+    992,
+    1028,
+    1042
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    724,
+    992,
+    777,
+    1052
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  }
+ ]
+}

@@ -1,0 +1,371 @@
+{
+ "source_psd": "Falco csapatstat 9. ford után 1114.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    174,
+    7,
+    1677,
+    918
+   ],
+   "opacity": 0.949,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    116,
+    4,
+    1732,
+    914
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1033,
+    965,
+    1149,
+    1025
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    702,
+    965,
+    755,
+    1025
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": " #                   Játékos        M      P/M    L/M GP/M     ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    200,
+    135,
+    1650,
+    900
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": " # \t\t\t               Játékos\t\t\t\t\t  \tM\t    \tP/M\t \t L/M\tGP/M          SZ/M\t    EL/M\t     BL/M           VAL/M       IDŐ/M\r 2\t  TANOH DEZ András\t\t\t\t8\t    10.3\t2.9\t1.5\t\t  0.8\t  1.4\t   0.4\t\t 11.8\t  17.8\r 4\t  Darrion TRAMMELL\t\t\t\t8\t\t6.8\t2.1\t\t2.8\t  2.1\t  1.5\t   0.3\t\t 9.8\t  19.1\r 5\t  HORVáTH Roland Péter\t\t\t3\t\t 0\t\t0.3\t  0\t\t  0.3\t    0\t   \t0\t\t 0.3\t   1.7\r 6\t  KELLER Ákos\t\t\t\t\t\t\t8\t\t6.3\t5.4\t1.3\t\t  0.8\t  0.3\t   0.5\t\t12.9\t  18.0\r 9\t  PERL Zoltán ©\t\t\t\t\t8\t    14.9\t3.9\t4.9\t  0.8\t  1.6\t   0.1\t\t22.5\t  21.0\r10\t  VáRADI Benedek\t\t\t\t\t8\t    12.4\t4.1\t\t4.6\t  1.3\t  2.1\t\t0\t\t16.3\t  19.9\r11\t  ROSIC Uros\t\t\t\t\t\t\t8\t\t4.6\t2.5\t1.4\t \t  0.9\t  0.1\t\t0\t\t 7.0\t  19.6\r12\t  Patrick WHELAN\t\t\t\t\t8\t    11.0\t2.0\t1.1\t\t  0.5\t  0.3\t\t0\t\t12.1\t  20.9\r13\t  BOGNáR Kristóf\t\t\t\t\t8\t\t7.8\t4.4\t1.5\t\t  0.4\t  1.0\t   0.3\t\t11.6\t  18.3\r19\t  HERGER Salamon\t\t\t\t\t7\t\t 0\t\t0.7\t0.3\t   0\t  0.6\t\t0\t\t 0.1 \t   2.4\r24\t  Juwan GRAY\t\t\t\t\t\t\t8\t    11.0\t5.3\t1.0\t\t  0.4\t  0.8\t   0.4\t\t16.9\t  22.0\r25\t  VERASZTó Péter\t\t\t\t\t3\t\t0.7\t0.3\t 0\t\t   0\t   0\t\t0\t\t 0.7\t   2.7\r30\t  Joshua PATTON\t\t\t\t\t\t8\t\t9.0\t5.0\t1.3\t\t  1.0\t  0.9\t   1.6\t\t17.1\t  19.8\r\r\r\r",
+    "runs": [
+     {
+      "text": " ",
+      "font": "LeagueGothic-Regular",
+      "size": 33.33333,
+      "color": "#dba234",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "# \t\t\t               Játékos\t\t\t\t\t  \tM\t    \tP/M\t \t L/M\tGP/M          SZ/M\t    EL/M\t     BL/M           VAL/M       IDŐ/M\r",
+      "font": "LeagueGothic-Regular",
+      "size": 30.662,
+      "color": "#dba234",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": " 2\t  TANOH DEZ András\t\t\t\t8\t    10.3\t2.9\t1.5\t\t  0.8\t  1.4\t   0.4\t\t 11.8\t  17.8\r 4\t  Darrion TRAMMELL\t\t\t\t8\t\t6.8\t2.1\t\t2.8\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "  2.1",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t  1.5\t   0.3\t\t 9.8\t  19.1\r 5\t  HORVáTH Roland Péter\t\t\t3\t\t 0\t\t0.3\t  0\t\t  0.3\t    0\t   \t0\t\t 0.3\t   1.7\r 6\t  KELLER Ákos\t\t\t\t\t\t\t8\t\t6.3\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "5.4\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "1.3\t\t  0.8\t  0.3\t   0.5\t\t12.9\t  18.0\r 9\t  PERL Zoltán ©\t\t\t\t\t8\t   ",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": " 14.9",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t3.9\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "4.9\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "  0.8\t  1.6\t   0.1\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "22.5",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t  21.0\r10\t  VáRADI Benedek\t\t\t\t\t8\t    12.4\t4.1\t\t4.6\t  1.3\t ",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": " 2.1\t",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t0\t\t16.3\t  19.9\r11\t  ROSIC Uros\t\t\t\t\t\t\t8\t\t4.6\t2.5\t1.4\t \t  0.9\t  0.1\t\t0\t\t 7.0\t  19.6\r12\t  Patrick WHELAN\t\t\t\t\t8\t    11.0\t2.0\t1.1\t\t  0.5\t  0.3\t\t0\t\t12.1\t  20.9\r13\t  BOGNáR Kristóf\t\t\t\t\t8\t\t7.8\t4.4\t1.5\t\t  0.4\t  1.0\t   0.3\t\t11.6\t  18.3\r19\t  HERGER Salamon\t\t\t\t\t7\t\t 0\t\t0.7\t0.3\t   0\t  0.6\t\t0\t\t 0.1 \t   2.4\r24\t  Juwan GRAY\t\t\t\t\t\t\t8\t    11.0\t5.3\t1.0\t\t  0.4\t  0.8\t   0.4\t\t16.9\t  ",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "22.0\r",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "25\t  VERASZTó Péter\t\t\t\t\t3\t\t0.7\t0.3\t 0\t\t   0\t   0\t\t0\t\t 0.7\t   2.7\r30\t  Joshua PATTON\t\t\t\t\t\t8\t\t9.0\t5.0\t1.3\t\t  1.0\t  0.9\t   ",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "1.6",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t\t17.1\t  19.8\r\r\r\r",
+      "font": "LeagueGothic-Regular",
+      "size": 42.9268,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 42.9268,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.3033163032663866,
+     -5.922004696109173e-17,
+     0.0,
+     1.3033163032663861,
+     198.680531281194,
+     171.98904835528768
+    ],
+    "scale": 1.3033163032663866
+   }
+  },
+  {
+   "name": "FALCO-VULCANO ENERGIA KC SZOMBATHELY",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    354,
+    43,
+    1640,
+    115
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#1a1819"
+    }
+   ],
+   "typography": {
+    "text": "FALCO-VULCANO ENERGIA KC SZOMBATHELY",
+    "runs": [
+     {
+      "text": "FALCO-VULCANO ENERGIA KC SZOMBATHELY",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#feed01",
+      "tracking": 50.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     0.9590949096357746,
+     0.0,
+     0.0,
+     0.9590949096357745,
+     350.019157951129,
+     113.81636715329616
+    ],
+    "scale": 0.9590949096357746
+   }
+  },
+  {
+   "name": "707827677_1744577086998875_3756147844167689831_n",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    216,
+    31,
+    311,
+    126
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    805,
+    975,
+    983,
+    1015
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  }
+ ]
+}

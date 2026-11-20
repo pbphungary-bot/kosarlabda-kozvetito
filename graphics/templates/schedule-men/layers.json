@@ -1,0 +1,243 @@
+{
+ "source_psd": "Falco  Next Games Graph 1111.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    95,
+    8,
+    1455,
+    968
+   ],
+   "opacity": 0.949,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    -183,
+    -53,
+    1735,
+    1027
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    911,
+    1017,
+    1009,
+    1067
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    583,
+    1012,
+    635,
+    1072
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "2026.11.14. - 18:00     EPS-Honvéd - FALCO-VULCANO KC  2026.11.",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    130,
+    255,
+    1438,
+    948
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "2026.11.14. - 18:00\t\t\t\t\tEPS-Honvéd - FALCO-VULCANO KC\r\r2026.11.18. - 18:00\t\t\t\t\tAEK ATHÉN - FALCO-VULCANO KC\r\r2026.12.05. - 18:00\t\t\t\t\tFALCO-VULCANO KC - Atomerőmű\r\r2026.12.09. - 18:00\t\t\t\t\tFALCO-VULCANO KC - DEAC\r\r2026.12.12. - 18:00\t\t\t\t\tKaposvár - FALCO-VULCANO KC\r\r2026.12.16. - 18:00\t\t\t\t\tFALCO-VULCANO KC - ANTWERP",
+    "runs": [
+     {
+      "text": "2026.11.14. - 18:00\t\t\t\t\tEPS-Honvéd - FALCO-VULCANO KC\r\r2026.11.18. - 18:00\t\t\t\t\tAEK ATHÉN - FALCO-VULCANO KC\r\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "2026.12.05. - 18:00\t\t\t\t\tFALCO-VULCANO KC - Atomerőmű\r\r2026.12.09. - 18:00\t\t\t\t\tFALCO-VULCANO KC - DEAC\r\r2026.12.12. - 18:00\t\t\t\t\tKaposvár - FALCO-VULCANO KC\r\r2026.12.16. - 18:00\t\t\t\t\tFALCO-VULCANO KC - ANTWERP",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.1783051679209184,
+     0.0,
+     1.309290043344339e-16,
+     1.1783051679209184,
+     127.0328348402266,
+     321.94805949699554
+    ],
+    "scale": 1.1783051679209184
+   }
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    685,
+    1022,
+    863,
+    1062
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "A FALCO-VULCANO ENERGIA KC SZOMBATHELY MENETRENDJE ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    350,
+    35,
+    1202,
+    230
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "A FALCO-VULCANO ENERGIA\rKC SZOMBATHELY MENETRENDJE\r",
+    "runs": [
+     {
+      "text": "A FALCO-VULCANO ENERGIA\rKC SZOMBATHELY MENETRENDJE\r",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#000000",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     774.0,
+     108.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "707827677_1744577086998875_3756147844167689831_n",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    148,
+    57,
+    298,
+    207
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    581,
+    386,
+    657,
+    455
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    581,
+    886,
+    657,
+    955
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "707827677_1744577086998875_3756147844167689831_n",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1254,
+    57,
+    1404,
+    207
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  }
+ ]
+}
