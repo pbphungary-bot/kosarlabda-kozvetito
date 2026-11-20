@@ -1,0 +1,55 @@
+name: Club Facebook pages
+
+# Finds each club's Facebook page from the club's own website (no Facebook scraping) and records it in data/fb_club_pages.json.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: club-facebook-pages
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install HTML parser
+        run: python -m pip install beautifulsoup4 lxml
+
+      - name: Run tests
+        run: python scripts/test_fb_pages.py
+
+      - name: Discover Facebook pages linked from club websites
+        run: python scripts/update_fb_pages.py | tee "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/fb_club_pages.json
+          if git diff --cached --quiet; then
+            echo 'No Facebook page changes'
+            exit 0
+          fi
+          git commit -m 'Update club Facebook pages'
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            git fetch origin main
+            git rebase origin/main
+          done
+          exit 1

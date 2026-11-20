@@ -12,7 +12,7 @@ import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlparse, urldefrag, urlencode, quote, urlunparse
+from urllib.parse import urljoin, urlparse, urldefrag, urlencode, quote, urlsplit, urlunsplit, urlunparse
 from bs4 import BeautifulSoup
 
 OUT = Path('data/news.json')
@@ -31,14 +31,36 @@ SOURCES = [
 def clean(value):
     return re.sub(r'\s+', ' ', value or '').strip()
 
+PATH_SAFE = "/%:@!$&'()*+,;=~-._"
+BROWSER_HEADERS = dict(HEADERS, **{'Accept-Encoding': 'identity', 'Upgrade-Insecure-Requests': '1', 'Sec-Fetch-Dest': 'document',
+                                   'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-User': '?1', 'Cache-Control': 'max-age=0'})
+
+def safe_url(url):
+    """Percent-encode non-ASCII characters (e.g. an ellipsis in a slug) so urllib can send the request."""
+    parts = urlsplit(url)
+    try:
+        netloc = parts.netloc.encode('ascii').decode()
+    except UnicodeEncodeError:
+        netloc = parts.netloc.encode('idna').decode()
+    return urlunsplit((parts.scheme, netloc, quote(parts.path, safe=PATH_SAFE), quote(parts.query, safe=PATH_SAFE + '?'), ''))
+
+def fetch_raw(url, timeout=12):
+    last = None
+    for headers in (HEADERS, BROWSER_HEADERS):
+        request = urllib.request.Request(safe_url(url), headers=headers)
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return response.read(), response.geturl(), response.headers.get('Content-Type', '').lower()
+        except urllib.error.HTTPError as exc:
+            last = exc
+            if exc.code not in (403, 429):
+                raise
+    raise last
+
 def fetch(url, timeout=12):
-    request = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        final = response.geturl()
-        payload = response.read()
-        content_type = response.headers.get('Content-Type', '').lower()
-        is_xml = ('xml' in content_type or payload.lstrip().startswith((b'<?xml', b'<rss', b'<feed')))
-        return BeautifulSoup(payload, 'xml' if is_xml else 'html.parser'), final
+    payload, final, content_type = fetch_raw(url, timeout)
+    is_xml = ('xml' in content_type or payload.lstrip().startswith((b'<?xml', b'<rss', b'<feed')))
+    return BeautifulSoup(payload, 'xml' if is_xml else 'html.parser'), final
 
 def metadata(soup, *names):
     for name in names:
@@ -58,12 +80,10 @@ def canonical(url):
     pairs = [(k, v) for k, v in parse_qsl(parsed.query, keep_blank_values=True)
              if not (k.lower().startswith('utm_') or k.lower() in ('fbclid','gclid','ref','source'))]
     from urllib.parse import urlencode
-    # A slash after .html/.php is a different URL on several club sites (404).
     path = parsed.path.rstrip('/')
-    if not re.search(r'\.(?:html?|php|aspx?|pdf)$', path, re.I):
-        path += '/'
-    # Percent-encode non-ASCII characters before urllib.request sees the URL.
-    path = quote(path, safe="/%:@!$&'()*+,;=-._~")
+    if not re.search(r'\.(?:html?|php|aspx?|pdf)$', path.rsplit('/', 1)[-1], re.I):
+        path += '/'   # file-style URLs (e.g. Egis Körmend *.html) 404 with a trailing slash
+    path = quote(path, safe=PATH_SAFE)
     return urlunparse((parsed.scheme.lower(), parsed.netloc.lower(), path, '', urlencode(sorted(pairs)), ''))
 
 def valid_url(url, src):
@@ -360,7 +380,8 @@ def load_club_sources():
         result.append({'name': 'Klub: ' + club['name'], 'urls': club.get('urls', []),
                        'hosts': tuple(club['hosts']), 'kind': 'club',
                        'article_pattern': club['article_pattern'],
-                       'listing_selector': club.get('listing_selector', '')})
+                       'listing_selector': club.get('listing_selector', ''),
+                       'require_keywords': [k.lower() for k in club.get('require_keywords', [])]})
     return result
 
 
@@ -373,15 +394,71 @@ def source_league(item):
     return None
 
 
+def fallback_candidates(base, src, limit=30):
+    """WordPress REST API and XML sitemap discovery for club sites whose HTML listing exposes few or no article links.
+
+    Only URLs passing the club's own valid_url rule are accepted, exactly like HTML-discovered links."""
+    parsed = urlparse(base)
+    root = f'{parsed.scheme}://{parsed.netloc}'
+    found, notes = {}, []
+    try:
+        payload, _, _ = fetch_raw(root + '/wp-json/wp/v2/posts?per_page=30&_fields=link,title,date', timeout=8)
+        for post in json.loads(payload):
+            title = clean(BeautifulSoup((post.get('title') or {}).get('rendered', ''), 'html.parser').get_text(' ', strip=True))
+            u = canonical(post.get('link', ''))
+            if 12 <= len(title) <= 250 and valid_url(u, src):
+                found.setdefault(u, title)
+        notes.append(f'wp-json:{len(found)}')
+    except Exception as exc:
+        notes.append(f'wp-json:{type(exc).__name__}')
+    if len(found) < 5:
+        def read_sitemap(url):
+            soup, _ = fetch(url, timeout=8)
+            return soup
+        queue, seen, rows = [root + '/wp-sitemap-posts-post-1.xml', root + '/post-sitemap.xml', root + '/sitemap.xml'], set(), []
+        while queue and len(seen) < 6:
+            sm = queue.pop(0)
+            if sm in seen:
+                continue
+            seen.add(sm)
+            try:
+                soup = read_sitemap(sm)
+            except Exception as exc:
+                notes.append(f'sitemap:{type(exc).__name__}')
+                continue
+            for child in soup.select('sitemap > loc'):
+                loc = child.get_text(strip=True)
+                if re.search(r'post|news|hir|cikk|article', loc, re.I) and (urlparse(loc).hostname or '').removeprefix('www.') in src['hosts']:
+                    queue.append(loc)
+            for node in soup.select('url'):
+                loc = node.find('loc')
+                if loc:
+                    last = node.find('lastmod')
+                    rows.append((last.get_text(strip=True) if last else '', canonical(loc.get_text(strip=True))))
+        for _, u in sorted(rows, reverse=True):
+            slug = re.sub(r'[-_]+', ' ', urlparse(u).path.rstrip('/').rsplit('/', 1)[-1]).strip()
+            if len(slug) >= 12 and valid_url(u, src):
+                found.setdefault(u, slug)
+            if len(found) >= limit:
+                break
+        notes.append(f'sitemap:{len(found)}')
+    return found, notes
+
+
 def collect_source(src, entries, checks, max_articles=12):
     found, listing_errors = {}, []
     listings_ok = 0
+    sample_links, fallback_notes = [], []
     for listing_url in src['urls'][:4]:
         try:
             soup, base = fetch(listing_url, timeout=9 if src['kind']=='club' else 12)
             listings_ok += 1
             for url, title in candidates(soup, base, src):
                 found.setdefault(url, title)
+            if src['kind'] == 'club' and not sample_links:
+                host = (urlparse(base).hostname or '').removeprefix('www.')
+                sample_links = [f"{clean(a.get_text(' ', strip=True))[:60]} -> {a.get('href')}" for a in soup.select('a[href]')
+                                if clean(a.get_text(' ', strip=True)) and host in (urlparse(urljoin(base, a.get('href'))).hostname or '')][:12]
             if src['kind'] in ('club','wbasket'):
                 try:
                     for url, title in feed_candidates(soup, base, src).items():
@@ -390,6 +467,13 @@ def collect_source(src, entries, checks, max_articles=12):
                     pass  # Optional feeds must not downgrade a successful HTML listing
         except Exception as exc:
             listing_errors.append(f'{listing_url}: {type(exc).__name__}: {exc}')
+    if src['kind'] == 'club' and len(found) < 5 and src['urls']:
+        try:
+            extra, fallback_notes = fallback_candidates(src['urls'][0], src)
+            for url, title in extra.items():
+                found.setdefault(url, title)
+        except Exception as exc:
+            fallback_notes = [f'fallback:{type(exc).__name__}']
     # WordPress feeds can work even when the site's homepage blocks automated requests.
     if src['kind']=='wbasket' and not found:
         try:
@@ -408,6 +492,8 @@ def collect_source(src, entries, checks, max_articles=12):
         try:
             item = article(url, title, src)
             if src['kind'] == 'club':
+                if src.get('require_keywords') and not any(k in (item['title'] + ' ' + item['summary'] + ' ' + url).lower() for k in src['require_keywords']):
+                    continue  # multi-sport club site: keep basketball items only
                 # A club's own publication is attributable to that club, not its opponent.
                 item['publisher_club'] = src['name'][6:]
             item['league'] = source_league(item) or item.get('league')
@@ -441,6 +527,9 @@ def collect_source(src, entries, checks, max_articles=12):
                    'already_saved': already_saved, 'added': added, 'repaired': repaired,
                    'article_errors': failures, 'listing_errors': listing_errors[:12],
                    'usable_articles': usable, 'source_coverage': bool(usable)})
+    if src['kind'] == 'club':
+        if fallback_notes: checks[-1]['fallback'] = fallback_notes
+        if not usable and sample_links: checks[-1]['sample_links'] = sample_links
 
 
 
@@ -684,7 +773,7 @@ def main():
     targeted_bb1(entries, checks)
     for src in all_sources:
         if src['kind'] == 'club':
-            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 10)
+            collect_source(src, entries, checks, max_articles=14 if src['kind'] != 'club' else 30)
     assign_team_tags(entries)
     # Re-key by canonical URL and preserve the highest-quality article on collisions.
     deduplicated = {}
