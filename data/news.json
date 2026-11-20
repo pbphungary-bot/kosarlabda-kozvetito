@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-20T15:10:34.649389+00:00",
+  "checked_at": "2026-11-20T16:03:35.048689+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 30,
-      "added": 0,
+      "candidates": 31,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -45,11 +45,11 @@
     },
     {
       "source": "Nemzeti Sport",
-      "status": "partial",
+      "status": "ok",
       "candidates": 50,
       "added": 0,
-      "repaired": 48,
-      "article_errors": 2,
+      "repaired": 50,
+      "article_errors": 0,
       "listing_errors": []
     },
     {
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -561,6 +561,28 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Nemzetközi kitekintő: Walker eligazolása ellenére is nagy bravúrt mutatott be a Vilpas, Golománéknak visszavágott a Galata",
+      "summary": "A Szolnok csoportjában öt győzelemmel áll a Girona, a Góra és az Oostende is.",
+      "url": "https://bball1.hu/nemzetkozi-kitekinto-walker-eligazolasa-ellenere-is-nagy-bravurt-mutatott-be-a-vilpas-golomaneknak-visszavagott-a-galata/",
+      "published_at": "2026-11-20T16:13:17+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Fővárosi rangadóval tér vissza a bajnoki pontvadászat",
+      "summary": "A válogatott szünetet követően ismét a bajnoki küzdelmeké a főszerep.",
+      "url": "https://vasasbasket.hu/index.php/fovarosi-rangadoval-ter-vissza-a-bajnoki-pontvadaszat/",
+      "published_at": "2026-11-20T15:21:04+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "20×20: Történelmet írt Perl Zoltán a Bajnokok Ligájában",
