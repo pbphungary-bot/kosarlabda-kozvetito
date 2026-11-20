@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-20T10:58:16.639463+00:00",
+  "checked_at": "2026-11-20T11:54:16.715806+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -66,13 +66,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 35,
-      "attempted": 10,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 9,
+      "repaired": 21,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 30,
       "source_coverage": true
     },
     {
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 5,
-      "attempted": 5,
+      "candidates": 6,
+      "attempted": 6,
       "already_saved": 0,
-      "added": 5,
+      "added": 6,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 5,
+      "usable_articles": 6,
       "source_coverage": true
     },
     {
@@ -109,30 +109,19 @@
     },
     {
       "source": "Klub: Egis Körmend",
-      "status": "error",
-      "reason": "all_article_extractions_failed",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 40,
-      "attempted": 10,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
+      "added": 30,
       "repaired": 0,
-      "article_errors": 10,
-      "listing_errors": [
-        "article https://www.egiskormend.hu/Hirek/Fontos_idegenbeli_gyozelemmel_zarta_a_valogatott_szunet_elotti_ido.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Idegenben_folytatjuk__Fotra_latogat_az_Egis_Kormend.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Magabiztos_hazai_gyozelemmel_folytatta_a_bajnoksagot_az_Egis_Kormend.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Hazai_palyan_javitana_az_Egis_Kormend_a_Kaposvar_erkezik_a_Rabap.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Pazar_elso_felido_utan_bosszanto_vereseg_Budapesten.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/uj_jatekossal_gyozelmi_remenyekkel_utazunk_Budapestre.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Dalan_Ancrum_probajatekra_erkezik_az_Egis_Kormendhez.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Fordulatos_merkozesen_gyozelem_a_Sopron_ellen.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Kulcsfontossagu_merkozes_elott_a_Sopront_fogadjuk_Kormenden.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Tavozik_Xavier_Cork.html/: HTTPError: HTTP Error 404: Not Found"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 30,
+      "source_coverage": true
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -141,13 +130,13 @@
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 11,
-      "attempted": 10,
-      "already_saved": 9,
+      "attempted": 11,
+      "already_saved": 10,
       "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 11,
       "source_coverage": true
     },
     {
@@ -168,20 +157,18 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 14,
-      "attempted": 10,
+      "attempted": 14,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 9,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
-      ],
-      "usable_articles": 9,
+      "added": 2,
+      "repaired": 12,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 14,
       "source_coverage": true
     },
     {
@@ -191,13 +178,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 16,
-      "attempted": 10,
+      "attempted": 16,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 15,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 16,
       "source_coverage": true
     },
     {
@@ -207,13 +194,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 12,
-      "attempted": 10,
-      "already_saved": 10,
+      "attempted": 12,
+      "already_saved": 12,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 12,
       "source_coverage": true
     },
     {
@@ -230,7 +217,26 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:0",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ],
+      "sample_links": [
+        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
+        "Kezdőlap -> https://megyeritigrisek.hu/",
+        "Hírek -> https://megyeritigrisek.hu/news/",
+        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
+        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
+        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
+        "Média -> #",
+        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
+        "Magazin -> https://megyeritigrisek.hu/magazin/",
+        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
+        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
+        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
@@ -255,29 +261,29 @@
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
       "candidates": 15,
-      "attempted": 10,
+      "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 2,
+      "repaired": 13,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 15,
       "source_coverage": true
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "status": "ok",
       "reason": "articles_available",
-      "listing_pages_ok": 1,
+      "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 19,
-      "attempted": 10,
+      "attempted": 19,
       "already_saved": 10,
-      "added": 0,
+      "added": 9,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 19,
       "source_coverage": true
     },
     {
@@ -287,13 +293,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 13,
-      "attempted": 10,
-      "already_saved": 7,
+      "attempted": 13,
+      "already_saved": 10,
       "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 13,
       "source_coverage": true
     },
     {
@@ -326,7 +332,28 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ],
+      "sample_links": [
+        "Kezdőlap -> https://kosarlabda.ase.hu",
+        "Aktuális -> #",
+        "Hírek -> https://kosarlabda.ase.hu/hirek",
+        "Események -> https://kosarlabda.ase.hu/esemenyek",
+        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
+        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
+        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
+        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
+        "Média -> #",
+        "Galéria -> https://kosarlabda.ase.hu/galeria",
+        "Videók -> https://kosarlabda.ase.hu/videok",
+        "Élő közvetítés -> /"
+      ]
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
@@ -360,7 +387,14 @@
         "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Kometa-KVGY Kaposvári KK",
@@ -368,18 +402,27 @@
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
       "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 3,
+      "attempted": 3,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 3,
       "listing_errors": [
         "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
-        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden"
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/szurkoloi-hirek/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/news-in-english/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/felkeszulesi-merkozesek/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:3"
+      ]
     },
     {
       "source": "Klub: OSE Lions",
@@ -395,23 +438,49 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: ELTE BEAC Újbuda",
       "status": "empty",
       "reason": "no_article_links",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://www.beac.hu/hu/sport/kosarlabda: HTTPError: HTTP Error 404: Not Found"
+      ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ],
+      "sample_links": [
+        "Departments -> https://www.beac.hu/en/departments",
+        "Sports -> https://www.beac.hu/en/sports",
+        "Trainings -> https://www.beac.hu/en/want-to-sport",
+        "Events -> https://www.beac.hu/en/events",
+        "News -> https://www.beac.hu/en/news",
+        "Shop -> https://www.beac.hu/en/shop",
+        "Go for it, BEAC! -> https://www.beac.hu/en/go-for-it-beac",
+        "Departments -> https://www.beac.hu/en/departments",
+        "Sports -> https://www.beac.hu/en/sports",
+        "Trainings -> https://www.beac.hu/en/want-to-sport",
+        "Events -> https://www.beac.hu/en/events",
+        "News -> https://www.beac.hu/en/news"
+      ]
     },
     {
       "source": "Klub: ETO Basket",
@@ -420,13 +489,13 @@
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 24,
-      "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "attempted": 24,
+      "already_saved": 15,
+      "added": 9,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 24,
       "source_coverage": true
     },
     {
@@ -445,7 +514,14 @@
         "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Sopron Basket",
@@ -461,7 +537,11 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: TFSE",
@@ -470,17 +550,29 @@
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
-      "attempted": 10,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 4,
+      "repaired": 26,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 30,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "20×20: Történelmet írt Perl Zoltán a Bajnokok Ligájában",
+      "summary": "A Falco válogatott kosárlabdázója decemberben pedig további mérföldkövekhez érkezhet a Bajnokok Ligájában.",
+      "url": "https://bball1.hu/20x20-tortenelmet-irt-perl-zoltan-a-bajnokok-ligajaban/",
+      "published_at": "2026-11-20T12:00:04+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Falco KC"
+      ],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Forray Gábor: Megpróbáljuk kiharcolni, hogy a feljutásért játszhassunk",
@@ -527,6 +619,19 @@
       "league": "women",
       "teams": [
         "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Négy hét után újra bajnoki: Szekszárdon folytatjuk",
+      "summary": "November 28-án, szombaton 18 órától a KSC Szekszárd otthonában lépünk pályára a női NB I.",
+      "url": "https://bkgakademia.hu/2026/11/20/negy-het-utan-ujra-bajnoki-szekszardon-folytatjuk/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
       ]
     },
     {
@@ -2927,9 +3032,7 @@
       "url": "https://wbasket.hu/dominique-darius-valtja-india-johnstont-a-vasasnal/",
       "published_at": "2026.11.08. 17:59",
       "summary_method": "article_body",
-      "teams": [
-        "women|Vasas Akadémia"
-      ],
+      "teams": [],
       "league": "women"
     },
     {
@@ -3013,7 +3116,7 @@
       "published_at": "2026.11.08. 06:44",
       "summary_method": "article_body",
       "teams": [
-        "women|Vasas Akadémia"
+        "women|Sopron Basket"
       ],
       "league": "women"
     },
@@ -3819,7 +3922,9 @@
       "published_at": "2026.11.05. 16:32",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|TARR KSC Szekszárd"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -3867,7 +3972,9 @@
       "published_at": "2026.11.05. 13:22",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|Sopron Basket"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -3929,7 +4036,10 @@
       "published_at": "2026.11.05. 08:22",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|Sopron Basket",
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -4012,9 +4122,7 @@
       "published_at": "2026.11.04. 21:19",
       "summary_method": "article_body",
       "league": "women",
-      "teams": [
-        "women|DVTK HUNTHERM"
-      ]
+      "teams": []
     },
     {
       "source": "Nemzeti Sport",
@@ -4093,6 +4201,7 @@
       "summary_method": "article_body",
       "league": "women",
       "teams": [
+        "women|Sopron Basket",
         "women|DVTK HUNTHERM"
       ]
     },
@@ -4421,7 +4530,7 @@
       "summary_method": "source_description",
       "league": "women",
       "teams": [
-        "women|Vasas Akadémia"
+        "women|Sopron Basket"
       ]
     },
     {
@@ -4538,6 +4647,45 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Visszatekintés U12-es csapatunk idei szezonjára!",
+      "summary": "Idén sikerült részben normalizálni az edzéslétszámot, így hatékonyabb munkát tudtunk végezni az eddigi évekhez képest.",
+      "url": "https://bkgakademia.hu/2026/06/29/visszatekintes-u12-es-csapatunk-idei-szezonjara/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Vereségek U14-ben",
+      "summary": "Legfőképpen érzelmileg nem álltunk készen erre a mérkőzésre, amit az eredmény is mutat.",
+      "url": "https://bkgakademia.hu/2026/10/24/veresegek-u14-ben/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "U19-es győzelem hazai pályán!",
+      "summary": "Hazai pályán fogadtuk a monoriak B csapatát.",
+      "url": "https://bkgakademia.hu/2026/10/24/u19-es-gyozelem-hazai-palyan/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "title": "U14: GYŐZELEM IDEGENBEN!",
       "summary": "Remekül kezdtünk a Parthus SE otthonában: az első negyedben 19 pontos előnyt építettünk, végül 25 pontos sikerrel zártuk a találkozót! 💪",
       "url": "https://bkgakademia.hu/2026/10/29/u14-gyozelem-idegenben/",
@@ -4567,6 +4715,32 @@
       "title": "Szoros első félidő után a PVSK örülhetett a győzelemnek",
       "summary": "Az első félidőben végig kiegyenlített mérkőzést játszottunk a PVSK-Panthers ellen, a nagyszünetben mindössze egy pont volt a különbség a csapatok között (31–32).",
       "url": "https://bkgakademia.hu/2026/10/26/szoros-elso-felido-utan-a-pvsk-orulhetett-a-gyozelemnek/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Szezonzárás a Junioroknál is!",
+      "summary": "A junior csapatunk idén három, később négy „végzőssel” állt föl, de többen is utolsó évükre készültek velünk.",
+      "url": "https://bkgakademia.hu/2026/06/29/szezonzaras-a-junioroknal-is/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Országosan a 34. helyen zárta a szezont az U14A!",
+      "summary": "Az országos főtábla alsóházi rájátszásának lezártával véget ért a szezon Kosok serdülő csapata számára.",
+      "url": "https://bkgakademia.hu/2026/05/31/orszagosan-a-34-helyen-zarta-a-szezont-az-u14a/",
       "published_at": "2026.11.01.",
       "summary_method": "article_body",
       "publisher_club": "BKG-PRIMA Szigetszentmiklós",
@@ -4616,9 +4790,48 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Hatalmas csatában győztük le a Veszprémet!",
+      "summary": "A BKG PRIMA fordulatos, végig kiélezett mérkőzésen 76–73-as győzelmet aratott az Insedo Veszprém KK ellen hazai pályán.",
+      "url": "https://bkgakademia.hu/2026/10/12/hatalmas-csataban-gyoztuk-le-a-veszpremet/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "title": "Félidei előny után fájó vereség a Cegléd ellen",
       "summary": "Az első félidőt előnnyel zártuk, a nagyszünet után azonban a Cegléd fordított, és 77–65-re megnyerte a női NB I.",
       "url": "https://bkgakademia.hu/2026/11/01/felidei-elony-utan-fajo-vereseg-a-cegled-ellen/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Fordítás az utolsó percben, PRIMA-győzelem a TF-BP ellen!",
+      "summary": "Fordulatos, végletekig kiélezett mérkőzésen felnőttcsapatunk 83–80-ra legyőzte a TF-BP együttesét.",
+      "url": "https://bkgakademia.hu/2026/09/29/forditas-az-utolso-percben-prima-gyozelem-a-tf-bp-ellen/",
+      "published_at": "2026.11.01.",
+      "summary_method": "article_body",
+      "publisher_club": "BKG-PRIMA Szigetszentmiklós",
+      "league": "women",
+      "teams": [
+        "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: BKG-PRIMA Szigetszentmiklós",
+      "title": "Ezüstéremmel zárta a szezont a BKG PRIMA",
+      "summary": "A BKG PRIMA Akadémia hatalmas küzdelemben 94–83-as vereséget szenvedett a Phoenix-MT Fót ellen a döntő negyedik mérkőzésén, így ezüstéremmel zárta a 2025/2026-os NB I/B Piros csoportos szezont.",
+      "url": "https://bkgakademia.hu/2026/05/24/ezusteremmel-zarta-a-szezont-a-bkg-prima/",
       "published_at": "2026.11.01.",
       "summary_method": "article_body",
       "publisher_club": "BKG-PRIMA Szigetszentmiklós",
@@ -5183,9 +5396,7 @@
       "published_at": "2026.10.27. 13:54",
       "summary_method": "article_body",
       "league": "women",
-      "teams": [
-        "women|Vasas Akadémia"
-      ]
+      "teams": []
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -5220,6 +5431,19 @@
       "league": "women",
       "teams": [
         "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Védjük meg a hazai pályát!",
+      "summary": "Csapatunk mindkét eddigi győzelmét a Novomatic Arénában érte el, ahol még nem talált legyőzőre az idei szezonban, az NKA Universitas Pécs elleni szerdai mérkőzésen pedig folytatná ezt a jó hazai […]",
+      "url": "https://sopronkc.hu/vedjuk-meg-a-hazai-palyat/",
+      "published_at": "2026-10-27T10:26:25+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
       ]
     },
     {
@@ -6422,9 +6646,35 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Rózsahegyen folytatódik a felkészülés",
+      "summary": "A keddi emlékmeccs után Rózsahegyen folytatjuk a felkészülést: pénteken 15.30 órakor a cseh Ostrava, szombaton 15.30-kor a házigazda Ruzomberok lesz az ellenfelünk a szlovákiai tornán.",
+      "url": "https://etobasket.hu/hu/hirek/rozsahegyen-folytatodik-a-felkeszules/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "Október legjobbjai: Dúl Panka és Tóth Kíra Boglárka",
       "summary": "Dúl Panka lett október hónap legjobbja a felnőtteknél.",
       "url": "https://etobasket.hu/hu/hirek/oktober-legjobbjai-dul-panka-es-toth-kira-boglarka/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Nagyszerű siker az utánpótlásban",
+      "summary": "A hétvégén rendezték a selejtezőt a serdülőbajnokságban, ahol az A csapatunk, az ETO Basket Gekkók három győzelemmel a felsőházba jutott.",
+      "url": "https://etobasket.hu/hu/hirek/nagyszeru-siker-az-utanpotlasban/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
@@ -6487,9 +6737,61 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Két Európa-kupa-induló csapatot fektettünk két vállra",
+      "summary": "ETO Basket–SBS Ostrava 68–63 (17–18, 25–9, 13–18, 13–18)",
+      "url": "https://etobasket.hu/hu/hirek/ket-europa-kupa-indulo-csapatot-fektettunk-ket-vallra/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Információk a jegy- és bérletvásárlásról",
+      "summary": "Ami még lényeges: most már lehet bankkártyával is fizetni.",
+      "url": "https://etobasket.hu/hu/hirek/informaciok-a-jegy--es-berletvasarlasrol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Győzelemmel kezdtük a bajnokságot",
+      "summary": "ETO Basket–ELTE BEAC Újbuda 88–74 (17–16, 20–16, 26–16, 25–23)",
+      "url": "https://etobasket.hu/hu/hirek/gyozelemmel-kezdtuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "Fontos két ponttal térhetünk haza a Csata otthonából",
       "summary": "Budapest, NB I-es női mérkőzés, 200 néző.",
       "url": "https://etobasket.hu/hu/hirek/fontos-ket-ponttal-terhetunk-haza-a-csata-otthonabol/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "Emlékmeccs új környezetben régi ellenféllel szemben",
+      "summary": "Szeptember 8-án, 18 órakor az Olimpiai Sportpark Multicsarnokában a legutóbbi bajnokság bronzérmese, a Magyar Kupa-győztes Sopron Basket ellen játssza csapatunk első hazai felkészülési meccsét, mely egyben a hagyományos Fűzy Ákos-Tapodi Péter-emlékmérkőzés.",
+      "url": "https://etobasket.hu/hu/hirek/emlekmeccs-uj-kornyezetben-regi-ellenfellel-szemben/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
@@ -6565,6 +6867,32 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "A Sopron nyerte a megyei rangadót",
+      "summary": "ETO Basket–Sopron Basket 53–88 (15–20, 16–30, 15–18, 7–20)",
+      "url": "https://etobasket.hu/hu/hirek/a-sopron-nyerte-a-megyei-rangadot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A Sopron ellen játszottuk a Fűzy Ákos-Tapodi Péter-emlékmérkőzést",
+      "summary": "ETO Basket–Sopron Basket 62–105 (22–30, 12–21, 16–27, 12–27)",
+      "url": "https://etobasket.hu/hu/hirek/a-sopron-ellen-jatszottuk-a-fuzy-akos-tapodi-peter-emlekmerkozest/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "A Márvány Óvoda kapta az emlékmeccsen összegyűjtött labdákat",
       "summary": "Szeptemberben rendeztük meg a Fűzy Ákos–Tapodi Péter emlékmérkőzést.",
       "url": "https://etobasket.hu/hu/hirek/a-marvany-ovoda-kapta-az-emlekmeccsen-osszegyujtott-labdakat/",
@@ -6581,6 +6909,19 @@
       "title": "A Csata otthonában folytatjuk a bajnokságot",
       "summary": "Szombaton 17 órakor a Csata TTK otthonában folytatjuk szereplésünket a bajnokságban.",
       "url": "https://etobasket.hu/hu/hirek/a-csata-otthonaban-folytatjuk-a-bajnoksagot/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A BEAC ellen kezdjük a bajnokságot",
+      "summary": "Csütörtökön 18 órakor az Olimpiai Sportparkban az ELTE BEAC Újbuda együttesét fogadjuk a bajnokság nyitófordulójában.",
+      "url": "https://etobasket.hu/hu/hirek/a-beac-ellen-kezdjuk-a-bajnoksagot/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
@@ -9413,7 +9754,10 @@
       "url": "https://bball1.hu/b-csoport-2021-2022-18-fordulo/",
       "published_at": "2022-01-31T07:33:27+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -9882,7 +10226,10 @@
       "url": "https://bball1.hu/vereseggel-nyitott-a-cegled/",
       "published_at": "2019-09-14T07:43:40+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -9891,7 +10238,10 @@
       "url": "https://bball1.hu/vegeleges-a-cegled-kerete-meg-ket-magyar-erkezett/",
       "published_at": "2019-08-15T06:43:02+01:00",
       "summary_method": "headline_fallback",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -9949,7 +10299,10 @@
       "url": "https://bball1.hu/veget-ert-a-szezon-a-cegled-es-a-szekszard-szamara-is/",
       "published_at": "2019-04-30T18:51:25+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -9976,7 +10329,10 @@
       "url": "https://bball1.hu/masodszor-is-legyozte-a-cegled-a-peac-ot/",
       "published_at": "2019-04-19T19:06:12+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -9985,7 +10341,10 @@
       "url": "https://bball1.hu/nem-volt-egy-sulycsoportban-a-sopron-es-a-cegled/",
       "published_at": "2019-04-03T18:29:32+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -10003,7 +10362,10 @@
       "url": "https://bball1.hu/tovabb-kapaszkodik-a-cegled/",
       "published_at": "2019-02-23T17:54:14+01:00",
       "summary_method": "source_description",
-      "teams": []
+      "teams": [
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -10229,6 +10591,19 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Új játékossal, győzelmi reményekkel utazunk Budapestre",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/uj_jatekossal_gyozelmi_remenyekkel_utazunk_Budapestre.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Új fejezet kezdődik, Szegeden törne ki a gödörből a DEAC",
       "summary": "Szombaton 18 órától a Délút-SZTE-Szedeák vendége lesz a DEAC kosárlabdacsapata az NB I.",
@@ -10307,6 +10682,19 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Xavier Cork érkezik csapatunkhoz center posztra",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Xavier_Cork_erkezik_csapatunkhoz_center_posztra.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "Volt egy 5 perces periódusunk, ami nem tetszett, de összességében elégedettek lehetünk! – Hallgasd meg a tegnapi mérkőzésünk sajtótájékoztatóját!",
       "summary": "Volt egy 5 perces periódusunk, ami nem tetszett, de összességében elégedettek lehetünk! – Hallgasd meg a tegnapi mérkőzésünk sajtótájékoztatóját!",
@@ -10352,6 +10740,19 @@
       "league": "men",
       "teams": [
         "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Uchenna Iroegbu az Egis Körmend játékosa!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Uchenna_Iroegbu_az_Egis_Kormend_jatekosa.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -10433,6 +10834,19 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Továbbra is az Egis Gyógyszergyár Zrt. a körmendi kosárlabdacsapat névadó partnere",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Tovabbra_is_az_Egis_Gyogyszergyar_Zrt_a_kormendi_kosarlabdacsapat1.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Tina Cvijanovic 9 ponttal segítette Szlovéniát, Szerbia hibátlanul zárt",
       "summary": "Tina Cvijanovic kezdőként 9 pontot szerzett az Ausztria ellen 93–50-re győző szlovén válogatottban a novemberi Eb-selejtezők keddi zárónapján.",
@@ -10485,6 +10899,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Szünetig vezettünk, a második félidőben fordított a Nagykőrös",
+      "summary": "Férfi kosárlabdacsapatunk 71–56-os vereséget szenvedett az SMTPlus-Nagykőrösi Sólymok KE otthonában az NB I.",
+      "url": "https://tfse.hu/szunetig-vezettunk-a-masodik-felidoben-forditott-a-nagykoros/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (férfi)",
       "title": "Százhúsz kapott ponttal rendszerint nem lehet meccset nyerni",
       "summary": "Nem mindennapi mérkőzésen maradtunk alul hazai pályán a Honvéddal szemben: elképesztő mennyiségű pont született, s bár mi 110-et dobtunk, ezzel sem tudtunk nyerni.",
@@ -10495,6 +10922,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Szurkolói Ankét csütörtökön!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Szurkoloi_Anket_csutortokon.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -10562,6 +11002,19 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Szolnokon folytatjuk a bajnokságot",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/SZOVEG1223.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "Szinte végig vezettünk, de a hajrában elfogytunk: AEK Athén – Falco 90-89",
       "summary": "Szinte végig vezettünk, de a hajrában elfogytunk: AEK Athén – Falco 90-89",
@@ -10620,6 +11073,19 @@
       "league": "women",
       "teams": [
         "women|VBW CEKK Cegléd"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Szekszárdon zárjuk a válogatott szünet előtti bajnoki szakaszt",
+      "summary": "Nehéz idegenbeli feladat vár női kosárlabdacsapatunkra: október 31-én, szombaton 18 órától a KSC Szekszárd otthonában lépünk pályára a női NB I.",
+      "url": "https://tfse.hu/szekszardon-zarjuk-a-valogatott-szunet-elotti-bajnoki-szakaszt/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -10702,6 +11168,19 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Reméljük, hogy ez volt a szezon mélypontja…",
+      "summary": "Csapatunk győzni ment Sopronba, aztán nem kis meglepetésre kiadós vereség után térhetett haza.",
+      "url": "https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja%E2%80%A6/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
       "title": "Reméljük, az új seprű jól seper: már Miljan Rakics irányítja a csapatunkat Szegeden",
       "summary": "Csapatunk a szezon első idegenbeli győzelmének megszerzéséért lép pályára holnap Szegeden.",
       "url": "https://www.nkapecs.hu/tartalmak/Remeljuk--az-uj-sepru-jol-seper-mar-Miljan-Rakics-iranyitja-a-csapatunkat-Szegeden/",
@@ -10721,6 +11200,32 @@
       "published_at": null,
       "summary_method": "source_description",
       "teams": []
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Pécsen folytatjuk a bajnokságot – győzelemért utazik az Egis Körmend",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Pecsen_folytatjuk_a_bajnoksagot__gyozelemert_utazik_az_Egis_Kormend.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Pazar első félidő után, bosszantó vereség Budapesten",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Pazar_elso_felido_utan_bosszanto_vereseg_Budapesten.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
     },
     {
       "source": "Klub: Falco KC Szombathely",
@@ -10874,6 +11379,32 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Nem volt esély a címvédő ellen az első vasi klasszikuson",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Nem_volt_esely_a_cimvedo_ellen_az_elso_vasi_klasszikuson.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Nem tudott meglepetést okozni az Egis Körmend Szolnokon",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Nem_tudott_meglepetest_okozni_az_Egis_Kormend_Szolnokon.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Nem találtuk a ritmust Szekszárdon",
       "summary": "Női kosárlabdacsapatunk 88–53-as vereséget szenvedett a KSC Szekszárd otthonában a női NB I.",
@@ -10884,6 +11415,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Nem sikerült az újabb győzelem, Pécsett maradt alul az Egis Körmend",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Nem_sikerult_az_ujabb_gyozelem_Pecsett_maradt_alul_az_Egis_Kormend.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -11082,6 +11626,19 @@
     },
     {
       "source": "Klub: Falco KC Szombathely",
+      "title": "Még több hír",
+      "summary": "Még több hír",
+      "url": "https://falcokc.com/hirek/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
       "title": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre!",
       "summary": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre!",
       "url": "https://falcokc.com/mar-kaphatoak-a-jegyek-a-szlovenia-elleni-vb-selejtezore/",
@@ -11160,6 +11717,19 @@
       "teams": []
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Marques Warrick az Egis Körmend játékosa!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Marques_Warrick_az_Egis_Kormend_jatekosa.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: Délút-SZTE-Szedeák",
       "title": "Mandics: A közösség ereje",
       "summary": "Mandics: A közösség ereje",
@@ -11170,6 +11740,19 @@
       "league": "men",
       "teams": [
         "men|Szedeák"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Magabiztos hazai győzelemmel folytatta a bajnokságot az Egis Körmend!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Magabiztos_hazai_gyozelemmel_folytatta_a_bajnoksagot_az_Egis_Kormend.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -11234,6 +11817,19 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Küzdelmes mérkőzésen szerezte meg első hazai győzelmét az Egis Körmend",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Kuzdelmes_merkozesen_szerezte_meg_elso_hazai_gyozelmet_az_Egis_Kormend.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Közös összefogással 100 ezer forinttal támogattuk a Mellrákinfó Egyesületet!",
       "summary": "A TFSE női kézilabdacsapata idén csatlakozott a Pink Október kampányhoz.",
@@ -11247,6 +11843,32 @@
       ]
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Következik az első vasi klasszikus!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Kovetkezik_az_elso_vasi_klasszikus.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Következik a XX. Mogyorósy Szilárd Emléktorna!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Kovetkezik_a_XX_Mogyorosy_Szilard_Emlektorna.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Kálmán László: Az 54 pontos meccs, a totális kosárlabda és a szombathelyi örökség",
       "summary": "Kálmán László: Az 54 pontos meccs, a totális kosárlabda és a szombathelyi örökség",
@@ -11254,6 +11876,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Kulcsfontosságú mérkőzés előtt: a Sopront fogadjuk Körmenden",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Kulcsfontossagu_merkozes_elott_a_Sopront_fogadjuk_Kormenden.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
     },
     {
       "source": "Hunbasket",
@@ -11266,6 +11901,19 @@
       "league": "women"
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Kozma Gergő az Egis Körmend új ügyvezetője",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Kozma_Gergo_az_Egis_Kormend_uj_ugyvezetoje.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Kováts Gabriella 11 év után távozik a TFSE edzői stábjából",
       "summary": "Jelentős szerkezeti változások előtt áll a TFSE Női Amatőr NB I.-es és MEFOB kosárlabdacsapata. 11 felejthetetlen, sikerekkel teli év után távozik a klubtól Kováts Gabriella.",
@@ -11276,6 +11924,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Kiváló első félidő után, vereség az Alba otthonában",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Kivalo_elso_felido_utan_vereseg_az_Alba_otthonaban.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -11472,6 +12133,19 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Kapcsolat",
+      "summary": "A kosárlabda egyesületet működtető cég elérhetőségei és irodája.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/kapcsolat/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
       "title": "Jól kezdtünk, de nem tudtuk hazahozni az első idegenbeli győzelmet",
       "summary": "Félidőben még ötpontos előnyben voltunk a Csata TKK otthonában, a fordulás után azonban teljesen megváltozott a mérkőzés képe.",
       "url": "https://www.nkapecswomen.hu/tartalmak/Jol-kezdtunk--de-nem-tudtuk-hazahozni-az-elso-idegenbeli-gyozelmet/",
@@ -11627,6 +12301,32 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Ismerjétek meg a TFSE Öregfiúkat!",
+      "summary": "A TFSE színeiben az utánpótlástól az élvonalig sok csapat lép pályára.",
+      "url": "https://tfse.hu/ismerjetek-meg-a-tfse-oregfiukat/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Idegenben folytatjuk – Fótra látogat az Egis Körmend",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Idegenben_folytatjuk__Fotra_latogat_az_Egis_Kormend.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: Falco KC Szombathely",
       "title": "IRÁNY SOPRON – 3 ÉRDEKESSÉG A SZOMSZÉDVÁRI RANGADÓNK ELŐTT!",
       "summary": "IRÁNY SOPRON – 3 ÉRDEKESSÉG A SZOMSZÉDVÁRI RANGADÓNK ELŐTT!",
@@ -11698,6 +12398,71 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Hazai pályán javítana az Egis Körmend, a Kaposvár érkezik a Rába-partra",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Hazai_palyan_javitana_az_Egis_Kormend_a_Kaposvar_erkezik_a_Rabap.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Hazai pályán javítana az Egis Körmend az OSE Lions ellen",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Hazai_palyan_javitana_az_Egis_Kormend_az_OSE_Lions_ellen.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Hazai pályán is megkezdjük a bajnokságot – az Atomerőmű SE érkezik Körmendr",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Hazai_palyan_is_megkezdjuk_a_bajnoksagot__az_Atomeromu_SE_erkezik.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "HIVATALOS: Távozik Xavier Cork!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/HIVATALOS_Tavozik_Xavier_Cork.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "HIVATALOS: Dalan Ancrum próbajátékra érkezik az Egis Körmendhez!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/HIVATALOS_Dalan_Ancrum_probajatekra_erkezik_az_Egis_Kormendhez.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -11830,6 +12595,45 @@
         "men|Bp. Honvéd"
       ],
       "league": "men"
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Fordulatos mérkőzésen, győzelem a Sopron ellen!",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Fordulatos_merkozesen_gyozelem_a_Sopron_ellen.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Fontos idegenbeli győzelemmel zárta a válogatott szünet előtti időszakot az Egis Körmend",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Fontos_idegenbeli_gyozelemmel_zarta_a_valogatott_szunet_elotti_ido.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "Fizikális mérkőzésen vesztettünk mérkőzést a Paks ellen",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Fizikalis_merkozesen_vesztettunk_merkozest_a_Paks_ellen.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
     },
     {
       "source": "Hunbasket",
@@ -12037,6 +12841,19 @@
       ]
     },
     {
+      "source": "Klub: NKA Universitas Pécs (férfi)",
+      "title": "Cookie tájékoztató",
+      "summary": "Cookie tájékoztató",
+      "url": "https://www.nkapecs.hu/tartalmak/cookie-tajekoztato/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "NKA Universitas Pécs (férfi)",
+      "league": "men",
+      "teams": [
+        "men|NKA Pécs"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Bíztató hírek a DEAC sérültjeiről",
       "summary": "Az elmúlt hetekben a DEAC kosárlabdacsapatának több játékosa is kisebb sérüléssel bajlódott, így Kovács Márk nem mindenkire számíthatott a legutóbbi mérkőzéseken.",
@@ -12079,7 +12896,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/",
+      "url": "https://bball1.hu/wp-login.php",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12088,7 +12905,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12097,7 +12914,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DAlba%2BFeh%25C3%25A9rv%25C3%25A1r",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DAlba%2BFeh%25C3%25A9rv%25C3%25A1r",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12106,7 +12923,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DAtomer%25C5%2591m%25C5%25B1%2BSE",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DAtomer%25C5%2591m%25C5%25B1%2BSE",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12115,7 +12932,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DBudapesti%2BHonv%25C3%25A9d%2Bkos%25C3%25A1rlabda",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DBudapesti%2BHonv%25C3%25A9d%2Bkos%25C3%25A1rlabda",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12124,7 +12941,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DDEAC%2Bkos%25C3%25A1rlabda",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DDEAC%2Bkos%25C3%25A1rlabda",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12133,7 +12950,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DFalco%2BKC",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DFalco%2BKC",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12142,7 +12959,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKaposv%25C3%25A1ri%2BKK",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKaposv%25C3%25A1ri%2BKK",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12151,7 +12968,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKTE%2Bkos%25C3%25A1rlabda",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKTE%2Bkos%25C3%25A1rlabda",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12160,7 +12977,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DEgis%2BK%25C3%25B6rmend",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DEgis%2BK%25C3%25B6rmend",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12169,7 +12986,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DOSE%2BLions",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DOSE%2BLions",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12178,7 +12995,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSopron%2BKC",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSopron%2BKC",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12187,7 +13004,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSZTE-Szede%25C3%25A1k",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSZTE-Szede%25C3%25A1k",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12196,7 +13013,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSzolnoki%2BOlajb%25C3%25A1ny%25C3%25A1sz",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSzolnoki%2BOlajb%25C3%25A1ny%25C3%25A1sz",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12205,7 +13022,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12214,7 +13031,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DF%25C3%25B3t%2Bkos%25C3%25A1rlabda",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DF%25C3%25B3t%2Bkos%25C3%25A1rlabda",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12223,7 +13040,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSopron%2BBasket",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DSopron%2BBasket",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12232,7 +13049,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DDVTK%2BHUNTHERM",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DDVTK%2BHUNTHERM",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12241,7 +13058,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs%2Bn%25C5%2591i",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs%2Bn%25C5%2591i",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12250,7 +13067,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DTFSE%2Bn%25C5%2591i%2Bkos%25C3%25A1rlabda",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DTFSE%2Bn%25C5%2591i%2Bkos%25C3%25A1rlabda",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12259,7 +13076,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DELTE%2BBEAC%2B%25C3%259Ajbuda",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DELTE%2BBEAC%2B%25C3%259Ajbuda",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12268,7 +13085,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DVasas%2BAkad%25C3%25A9mia%2Bn%25C5%2591i",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DVasas%2BAkad%25C3%25A9mia%2Bn%25C5%2591i",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12277,7 +13094,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCsata%2BTTK",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCsata%2BTTK",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12286,7 +13103,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DBKG%2BPRIMA%2Bn%25C5%2591i",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DBKG%2BPRIMA%2Bn%25C5%2591i",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12295,7 +13112,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKSC%2BSzeksz%25C3%25A1rd",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DKSC%2BSzeksz%25C3%25A1rd",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12304,7 +13121,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DUNI%2BGy%25C5%2591r%2Bn%25C5%2591i",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DUNI%2BGy%25C5%2591r%2Bn%25C5%2591i",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12313,7 +13130,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCEKK%2BCegl%25C3%25A9d",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DCEKK%2BCegl%25C3%25A9d",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12322,7 +13139,7 @@
       "source": "BB1.hu",
       "title": "Bejelentkezés",
       "summary": "Bejelentkezés",
-      "url": "https://bball1.hu/wp-login.php/?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs%2Bf%25C3%25A9rfi",
+      "url": "https://bball1.hu/wp-login.php?redirect_to=https%3A%2F%2Fbball1.hu%2F%3Fs%3DNKA%2BUniversitas%2BP%25C3%25A9cs%2Bf%25C3%25A9rfi",
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
@@ -12363,6 +13180,19 @@
       "teams": []
     },
     {
+      "source": "Klub: Egis Körmend",
+      "title": "Az Egis Körmend nyerte a XX. Mogyorósy Szilárd Emléktornát",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/Az_Egis_Kormend_nyerte_a_XX_Mogyorosy_Szilard_Emlektornat.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (férfi)",
       "title": "Adatkezelési tájékoztató",
       "summary": "Adatkezelési tájékoztató",
@@ -12373,6 +13203,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Egis Körmend",
+      "title": "ALBA FEHÉRVÁR – EGIS KÖRMEND",
+      "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
+      "url": "https://www.egiskormend.hu/Hirek/ALBA_FEHeRVaR__EGIS_KoRMEND.html",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "Egis Körmend",
+      "league": "men",
+      "teams": [
+        "men|Körmend"
       ]
     },
     {
@@ -12495,6 +13338,19 @@
     },
     {
       "source": "Klub: TFSE",
+      "title": "A TFSE, ami összeköt – csapatunk az MKOSZ „A Hét csapata” sorozatában",
+      "summary": "Női kosárlabdacsapatunkhoz látogatott a Magyar Kosárlabdázók Országos Szövetségének stábja: „A Hét csapata” videósorozat idei negyedik állomásán a TFSE került a középpontba.",
+      "url": "https://tfse.hu/a-tfse-ami-osszekot-csapatunk-az-mkosz-a-het-csapata-sorozataban/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
       "title": "A Szent Benedek RA volt a jobb",
       "summary": "A Veszprém elleni bravúros, ötszettes győzelmünk után a Szent Benedek RA otthonába látogattunk a TippmixPro Női Extraliga alapszakaszában.",
       "url": "https://tfse.hu/az-szbra-volt-a-jobb/",
@@ -12604,10 +13460,127 @@
       ]
     },
     {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#9 Z. Perl",
+      "summary": "#9 Z. Perl",
+      "url": "https://falcokc.com/bcl-player/?playerId=A53266",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#6 A. Keller",
+      "summary": "#6 A. Keller",
+      "url": "https://falcokc.com/bcl-player/?playerId=A40289",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#5 R. Horváth",
+      "summary": "#5 R. Horváth",
+      "url": "https://falcokc.com/bcl-player/?playerId=A841372",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#4 D. Trammell",
+      "summary": "#4 D. Trammell",
+      "url": "https://falcokc.com/bcl-player/?playerId=A775294",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#2 A. Tanoh Dez",
+      "summary": "#2 A. Tanoh Dez",
+      "url": "https://falcokc.com/bcl-player/?playerId=A65934",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#12 P. Whelan",
+      "summary": "#12 P. Whelan",
+      "url": "https://falcokc.com/bcl-player/?playerId=A80613",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#11 U. Rosic",
+      "summary": "#11 U. Rosic",
+      "url": "https://falcokc.com/bcl-player/?playerId=A74561",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "#10 B. Váradi",
+      "summary": "#10 B. Váradi",
+      "url": "https://falcokc.com/bcl-player/?playerId=A45500",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
       "source": "Klub: NKA Universitas Pécs (női)",
       "title": "",
       "summary": "",
       "url": "https://www.nkapecswomen.hu/tartalmak/Adatkezelesi-tajekoztato/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "",
+      "summary": "",
+      "url": "https://www.nkapecswomen.hu/tartalmak/cookie-tajekoztato/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "NKA Universitas Pécs (női)",

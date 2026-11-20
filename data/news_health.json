@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-20T10:58:16.639463+00:00",
+  "checked_at": "2026-11-20T11:54:16.715806+00:00",
   "statistics": {
-    "total": 1083,
-    "fresh": 503,
-    "fresh_with_summary": 319,
-    "missing_dates": 207,
-    "headline_only": 516,
-    "untagged": 484,
-    "sources_ok": 20,
-    "sources_partial": 1,
-    "sources_failed": 10,
-    "new_articles": 6,
+    "total": 1150,
+    "fresh": 514,
+    "fresh_with_summary": 329,
+    "missing_dates": 254,
+    "headline_only": 528,
+    "untagged": 477,
+    "sources_ok": 22,
+    "sources_partial": 0,
+    "sources_failed": 9,
+    "new_articles": 73,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 16,
+    "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
   },
   "sources": [
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -81,13 +81,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 35,
-      "attempted": 10,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 9,
+      "repaired": 21,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 30,
       "source_coverage": true
     },
     {
@@ -96,14 +96,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 5,
-      "attempted": 5,
+      "candidates": 6,
+      "attempted": 6,
       "already_saved": 0,
-      "added": 5,
+      "added": 6,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 5,
+      "usable_articles": 6,
       "source_coverage": true
     },
     {
@@ -124,30 +124,19 @@
     },
     {
       "source": "Klub: Egis Körmend",
-      "status": "error",
-      "reason": "all_article_extractions_failed",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 40,
-      "attempted": 10,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
+      "added": 30,
       "repaired": 0,
-      "article_errors": 10,
-      "listing_errors": [
-        "article https://www.egiskormend.hu/Hirek/Fontos_idegenbeli_gyozelemmel_zarta_a_valogatott_szunet_elotti_ido.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Idegenben_folytatjuk__Fotra_latogat_az_Egis_Kormend.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Magabiztos_hazai_gyozelemmel_folytatta_a_bajnoksagot_az_Egis_Kormend.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Hazai_palyan_javitana_az_Egis_Kormend_a_Kaposvar_erkezik_a_Rabap.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Pazar_elso_felido_utan_bosszanto_vereseg_Budapesten.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/uj_jatekossal_gyozelmi_remenyekkel_utazunk_Budapestre.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Dalan_Ancrum_probajatekra_erkezik_az_Egis_Kormendhez.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Fordulatos_merkozesen_gyozelem_a_Sopron_ellen.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/Kulcsfontossagu_merkozes_elott_a_Sopront_fogadjuk_Kormenden.html/: HTTPError: HTTP Error 404: Not Found",
-        "article https://www.egiskormend.hu/Hirek/HIVATALOS_Tavozik_Xavier_Cork.html/: HTTPError: HTTP Error 404: Not Found"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 30,
+      "source_coverage": true
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
@@ -156,13 +145,13 @@
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 11,
-      "attempted": 10,
-      "already_saved": 9,
+      "attempted": 11,
+      "already_saved": 10,
       "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 11,
       "source_coverage": true
     },
     {
@@ -183,20 +172,18 @@
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 14,
-      "attempted": 10,
+      "attempted": 14,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 9,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://www.nkapecs.hu/tartalmak/Remeljuk--hogy-ez-volt-a-szezon-melypontja…/: UnicodeEncodeError: 'ascii' codec can't encode character '\\u2026' in position 57: ordinal not in range(128)"
-      ],
-      "usable_articles": 9,
+      "added": 2,
+      "repaired": 12,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 14,
       "source_coverage": true
     },
     {
@@ -206,13 +193,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 16,
-      "attempted": 10,
+      "attempted": 16,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 15,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 16,
       "source_coverage": true
     },
     {
@@ -222,13 +209,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 12,
-      "attempted": 10,
-      "already_saved": 10,
+      "attempted": 12,
+      "already_saved": 12,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 12,
       "source_coverage": true
     },
     {
@@ -245,7 +232,26 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:0",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ],
+      "sample_links": [
+        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
+        "Kezdőlap -> https://megyeritigrisek.hu/",
+        "Hírek -> https://megyeritigrisek.hu/news/",
+        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
+        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
+        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
+        "Média -> #",
+        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
+        "Magazin -> https://megyeritigrisek.hu/magazin/",
+        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
+        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
+        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
+      ]
     },
     {
       "source": "Klub: Csata TKK",
@@ -270,29 +276,29 @@
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
       "candidates": 15,
-      "attempted": 10,
+      "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 2,
+      "repaired": 13,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 15,
       "source_coverage": true
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "status": "ok",
       "reason": "articles_available",
-      "listing_pages_ok": 1,
+      "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 19,
-      "attempted": 10,
+      "attempted": 19,
       "already_saved": 10,
-      "added": 0,
+      "added": 9,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 19,
       "source_coverage": true
     },
     {
@@ -302,13 +308,13 @@
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 13,
-      "attempted": 10,
-      "already_saved": 7,
+      "attempted": 13,
+      "already_saved": 10,
       "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 13,
       "source_coverage": true
     },
     {
@@ -341,7 +347,28 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ],
+      "sample_links": [
+        "Kezdőlap -> https://kosarlabda.ase.hu",
+        "Aktuális -> #",
+        "Hírek -> https://kosarlabda.ase.hu/hirek",
+        "Események -> https://kosarlabda.ase.hu/esemenyek",
+        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
+        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
+        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
+        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
+        "Média -> #",
+        "Galéria -> https://kosarlabda.ase.hu/galeria",
+        "Videók -> https://kosarlabda.ase.hu/videok",
+        "Élő közvetítés -> /"
+      ]
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
@@ -375,7 +402,14 @@
         "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Kometa-KVGY Kaposvári KK",
@@ -383,18 +417,27 @@
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
       "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 3,
+      "attempted": 3,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 3,
       "listing_errors": [
         "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
-        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden"
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/szurkoloi-hirek/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/news-in-english/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/felkeszulesi-merkozesek/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:3"
+      ]
     },
     {
       "source": "Klub: OSE Lions",
@@ -410,23 +453,49 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: ELTE BEAC Újbuda",
       "status": "empty",
       "reason": "no_article_links",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
       "candidates": 0,
       "attempted": 0,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
+      "listing_errors": [
+        "https://www.beac.hu/hu/sport/kosarlabda: HTTPError: HTTP Error 404: Not Found"
+      ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ],
+      "sample_links": [
+        "Departments -> https://www.beac.hu/en/departments",
+        "Sports -> https://www.beac.hu/en/sports",
+        "Trainings -> https://www.beac.hu/en/want-to-sport",
+        "Events -> https://www.beac.hu/en/events",
+        "News -> https://www.beac.hu/en/news",
+        "Shop -> https://www.beac.hu/en/shop",
+        "Go for it, BEAC! -> https://www.beac.hu/en/go-for-it-beac",
+        "Departments -> https://www.beac.hu/en/departments",
+        "Sports -> https://www.beac.hu/en/sports",
+        "Trainings -> https://www.beac.hu/en/want-to-sport",
+        "Events -> https://www.beac.hu/en/events",
+        "News -> https://www.beac.hu/en/news"
+      ]
     },
     {
       "source": "Klub: ETO Basket",
@@ -435,13 +504,13 @@
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 24,
-      "attempted": 10,
-      "already_saved": 10,
-      "added": 0,
+      "attempted": 24,
+      "already_saved": 15,
+      "added": 9,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 24,
       "source_coverage": true
     },
     {
@@ -460,7 +529,14 @@
         "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Sopron Basket",
@@ -476,7 +552,11 @@
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 0,
-      "source_coverage": false
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: TFSE",
@@ -485,19 +565,18 @@
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
-      "attempted": 10,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 4,
+      "repaired": 26,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
+      "usable_articles": 30,
       "source_coverage": true
     }
   ],
   "failed_sources": [
     "Kezdő5.hu",
-    "Klub: Egis Körmend",
     "Klub: PHOENIX Fóti Tigrisek",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
