@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T03:41:37.156764+00:00",
+  "checked_at": "2026-11-20T04:48:48.034326+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -415,27 +415,18 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 12,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 24,
       "attempted": 10,
-      "already_saved": 0,
-      "added": 3,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 0,
-      "article_errors": 7,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/a-sopron-nyerte-a-megyei-rangadot/: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/gyozelemmel-kezdtuk-a-bajnoksagot/: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/a-beac-ellen-kezdjuk-a-bajnoksagot/: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/nagyszeru-siker-az-utanpotlasban/: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/ket-europa-kupa-indulo-csapatot-fektettunk-ket-vallra/: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/rozsahegyen-folytatodik-a-felkeszules/: TimeoutError: The read operation timed out",
-        "article https://etobasket.hu/hu/hirek/a-sopron-ellen-jatszottuk-a-fuzy-akos-tapodi-peter-emlekmerkozest/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 3,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 10,
       "source_coverage": true
     },
     {
@@ -474,22 +465,21 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 18,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
         "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 0,
-      "source_coverage": false
+      "usable_articles": 10,
+      "source_coverage": true
     }
   ],
   "articles": [
