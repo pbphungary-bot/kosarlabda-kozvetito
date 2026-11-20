@@ -52,6 +52,9 @@
         <button data-zoom="1">100%</button>
         <label><input type="checkbox" id="checker" checked> Átlátszóság rácsa</label>
         <label><input type="checkbox" id="showRef"> PSD minta összevetés</label>
+        <label class="base-opacity" title="A pálya/panel átlátszatlansága az exportált PNG-n. A PSD-kben sablononként 95%, 98,8%, 98% vagy 100% volt.">Alap átlátszatlansága
+          <input type="range" id="baseOpacity" min="85" max="100" step="0.5"> <b id="baseOpacityVal"></b></label>
+        <button id="baseOpacityPsd" class="ghost" title="A PSD saját értéke ennél a sablonnál">PSD érték</button>
       </div>
       <div id="dims" class="dims"></div>
     </div>

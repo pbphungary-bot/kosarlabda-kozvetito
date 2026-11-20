@@ -4,7 +4,7 @@
 // `sample` reproduces the PSD's own content so the render can be diffed against
 // Photoshop's composite (tests/visual.mjs).
 
-import { HSCALE } from './calibration.js';
+import { HSCALE, PANELS, LAYER_OPACITY } from './calibration.js';
 
 const W = 1920, H = 1080;
 const GREEN = '#0b9444', RED = '#ec4036';
@@ -31,7 +31,10 @@ const base = (id, league, type, psd, label, extra) => {
     id, league, type, psd, label, width: W, height: H,
     background: `templates/${id}/background.png`, reference: `templates/${id}/reference.png`, ...extra,
   };
+  t.panel = PANELS[id];
   for (const el of t.elements) {
+    // layer opacity of the PSD (98.8 % in most designs, 100 % in the intros)
+    if (el.opacity === undefined && LAYER_OPACITY[id] !== undefined && LAYER_OPACITY[id] < 1) el.opacity = LAYER_OPACITY[id];
     if (el.type !== 'text') continue;
     const k = hscaleKey(type, el.id);
     el.hscale = (k && HSCALE[id]?.[k]) || 1;
@@ -162,8 +165,8 @@ function intro(id, league, psd, g) {
     { id: 'venue', type: 'text', label: 'Helyszín', group: 'Mérkőzés', x: 960.7, y: 244.5, size: g.venueSize, tracking: -20, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 560 },
     { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [628, 475, 384, 350], fit: 'contain', logoOutline: true },
     { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [1295, 473.5, 384, 350], fit: 'contain', logoOutline: true },
-    { id: 'home.name', label: 'Hazai csapatnév', group: 'Hazai', ...name, x: 625 },
-    { id: 'away.name', label: 'Vendég csapatnév', group: 'Vendég', ...name, x: g.awayX },
+    { id: 'home.name', label: 'Hazai csapatnév', group: 'Hazai', ...name, x: 625, compactWith: 'home.rank' },
+    { id: 'away.name', label: 'Vendég csapatnév', group: 'Vendég', ...name, x: g.awayX, compactWith: 'away.rank' },
     { id: 'home.rank', label: 'Hazai helyezés / mérleg', group: 'Hazai', ...rank, x: 627.8 },
     { id: 'away.rank', label: 'Vendég helyezés / mérleg', group: 'Vendég', ...rank, x: 1294.8 },
   ];
