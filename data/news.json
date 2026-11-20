@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-20T08:57:31.873701+00:00",
+  "checked_at": "2026-11-20T09:54:40.581157+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 9,
-      "added": 0,
+      "already_saved": 8,
+      "added": 1,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -482,10 +482,32 @@
   ],
   "articles": [
     {
+      "source": "BB1.hu",
+      "title": "Forray Gábor: Megpróbáljuk kiharcolni, hogy a feljutásért játszhassunk",
+      "summary": "Megtartotta idei első összetartását az U20-as válogatott.",
+      "url": "https://bball1.hu/forray-gabor-megprobaljuk-kiharcolni-hogy-a-feljutasert-jatszhassunk/",
+      "published_at": "2026-11-20T10:05:00+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Női NB I. 8. forduló - Ellenfélleső",
       "summary": "A piros-fehérek hat mérkőzés után hibátlan mérleggel állnak a tabella második helyén, a fővárosiak pedig öt győzelemmel és két vereséggel követik őket.",
       "url": "http://dvtk.eu/37669-Noi_NB_I_8_fordulo_Ellenfelleso-cikk-kosarlabda/",
+      "published_at": "2026-11-20T08:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Nagy csata várható",
+      "summary": "A piros-fehérek hat mérkőzés után hibátlan mérleggel állnak a tabella második helyén, a fővárosiak pedig öt győzelemmel és két vereséggel követik őket.",
+      "url": "http://dvtk.eu/37669-Nagy_csata_varhato-cikk-kosarlabda/",
       "published_at": "2026-11-20T08:00:00+01:00",
       "summary_method": "article_body",
       "publisher_club": "DVTK HUNTHERM",
@@ -505,6 +527,19 @@
       "league": "women"
     },
     {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Kecskemétre látogatunk a szünet előtti utolsó bajnoki mérkőzésen",
+      "summary": "A keddi, Dinamo Bucharest elleni nagyszerű győzelem után mindössze két nap pihenés állt az NHSZ-Szolnoki Olajbányász rendelkezésére: szombaton máris itt az újabb mérkőzés, ezúttal a 9. fordulóból halasztott találkozón a Duna Aszfalt-DTKH Kecskemét vendégei leszünk.",
+      "url": "https://olajofficial.hu/2026/11/20/kecskemetre-latogatunk-a-szunet-elotti-utolso-bajnoki-merkozesen/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Harmadik Eb-selejtezős ellenfelünk: Dánia",
       "summary": "<div>A tegnapi, portugálok elleni sikert követően a magyar női kosárlabda-válogatott kedden újra pályára lép a miskolci DVTK Arénában, az ellenfél pedig ezúttal a két vereséggel kezdő Dánia lesz.",
@@ -513,6 +548,19 @@
       "summary_method": "source_description",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
+      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
+      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
+      "published_at": "2026.11.20.",
+      "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -647,19 +695,6 @@
       "url": "https://olajofficial.hu/2026/11/19/nagyszeru-jatekkal-multuk-felul-a-dinamo-bukarestet/",
       "published_at": "2026.11.19.",
       "summary_method": "article_body",
-      "publisher_club": "NHSZ-Szolnoki Olajbányász",
-      "league": "men",
-      "teams": [
-        "men|Szolnok"
-      ]
-    },
-    {
-      "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
-      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
-      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
-      "published_at": "2026.11.19.",
-      "summary_method": "source_description",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
       "league": "men",
       "teams": [
