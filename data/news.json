@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T05:49:47.775120+00:00",
+  "checked_at": "2026-11-20T06:44:33.926511+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -270,7 +270,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 18,
+      "candidates": 19,
       "attempted": 10,
       "already_saved": 10,
       "added": 0,
@@ -469,16 +469,16 @@
       "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 1,
       "listing_pages_failed": 1,
-      "candidates": 9,
-      "attempted": 9,
+      "candidates": 21,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 9,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [
         "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 9,
+      "usable_articles": 10,
       "source_coverage": true
     }
   ],
@@ -10287,6 +10287,19 @@
       "league": "women",
       "teams": [
         "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Történelmet írt Perl Zoltán! Egyedülálló rekordot állított fel a kosárlabda Bajnokok Ligájában",
+      "summary": "Történelmet írt Perl Zoltán! Egyedülálló rekordot állított fel a kosárlabda Bajnokok Ligájában",
+      "url": "https://falcokc.com/tortenelmet-irt-perl-zoltan-egyedulallo-rekordot-allitott-fel-a-kosarlabda-bajnokok-ligajaban/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
