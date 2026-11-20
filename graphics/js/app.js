@@ -176,7 +176,7 @@ function autoValues() {
     const r = bindRowList(store, lg, s.teamId, t);
     v = r.values;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
-    if (r.games.length < t.rows) info.notices.push({ text: `Csak ${r.games.length} NB I/A mérkőzés van az adatokban – a további sorok üresek (kézzel kitölthetők, pl. európai kupameccsek).` });
+    if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} NB I/A mérkőzés van az adatokban${t.type === 'schedule' && r.games.length < 5 ? ' (a menetrendnek legalább 5 sor kellene)' : ''} – a további sorok üresek (kézzel kitölthetők, pl. európai kupameccsek).` });
     info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Európai kupa- és kupameccseket kézzel kell beírni; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {
     v = bindReferees();

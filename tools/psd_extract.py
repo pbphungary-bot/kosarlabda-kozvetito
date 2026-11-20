@@ -46,7 +46,8 @@ TEMPLATES = {
     'results-men': ('Falco  LAST Games Graph 1111.psd', {}),
     'results-women': ('DVTK Last Games - 1025.psd', {}),
     'schedule-men': ('Falco  Next Games Graph 1111.psd', {}),
-    'schedule-women': ('DVTK Next Games - 1025.psd', {}),
+    # 6-row panel (the DVTK Next Games PSD only holds 4 rows; the schedule must show at least 5)
+    'schedule-women': ('Női Next Games Graph.psd', {}),
     'resultrows-men': ('Férfi Next Games Graph.psd', {}),
     'resultrows-women': ('Női Next Games Graph.psd', {}),
     'intro-men': ('Férfi Intro Graph 26-27.psd', {}),

@@ -229,10 +229,11 @@ export const TEMPLATES = [
     compX: 619, compW: 76, compH: 69, titleX: 774, titleMax: 910,
     crestL: [223, 132, 160, 150], crestR: [1329, 132, 160, 150],
   }),
-  rowList('schedule-women', 'women', 'schedule', 'DVTK Next Games - 1025.psd', 'Következő mérkőzések (menetrend)', {
-    rows: 4, rowY: 369, dateX: 152, dateMax: 420, matchX: 661, matchMax: 740,
-    compX: 609, compW: 70, compH: 75, titleX: 774, titleMax: 780,
-    crestL: [295, 132, 160, 150], crestR: [1254, 132, 160, 150],
+  // 6-row panel of the "Női Next Games Graph" PSD, laid out like the men's schedule (the schedule always shows >= 5 games)
+  rowList('schedule-women', 'women', 'schedule', 'Női Next Games Graph.psd', 'Következő mérkőzések (menetrend)', {
+    rows: 6, rowY: 323, dateX: 130, dateMax: 420, matchX: 724, matchMax: 715,
+    compX: 619, compW: 76, compH: 69, titleX: 774, titleMax: 910,
+    crestL: [232.5, 129, 160, 150], crestR: [1316.5, 129, 160, 150],
   }),
   rowList('resultrows-men', 'men', 'resultrows', 'Férfi Next Games Graph.psd', 'Eredmények (színes sorok)', {
     rows: 6, rowY: 323, dateX: 160, dateMax: 280, matchX: 457, matchMax: 740, scoreX: 1380, titleX: 774, titleMax: 880,
