@@ -5,7 +5,7 @@ import path from 'node:path';
 import { ROOT, loadStore } from './helpers.mjs';
 import { readXlsx, readCsv } from '../graphics/js/xlsx.js';
 import { importWorkbook } from '../graphics/js/importer.js';
-import { bindComparison, bindTeamstats } from '../graphics/js/binders.js';
+import { bindComparison, bindTeamstats, bindRowList } from '../graphics/js/binders.js';
 import { templateById } from '../graphics/js/templates.js';
 
 const sample = () => readXlsx(new Uint8Array(readFileSync(path.join(ROOT, 'tests/fixtures/import-sample.xlsx'))));
@@ -143,4 +143,79 @@ test('imported players replace the dashboard list for that team only', async () 
   assert.equal(store.players('women', 'dvtkhuntherm').source, 'excel');
   assert.equal(store.players('women', 'csatattk').source, 'dashboard');
   assert.equal(store.players('women', 'csatattk').players.length, before);
+});
+
+// ───────────── cup / European games sheet ─────────────
+test('cup sheet: dates in every common format, competition → logo, foreign names kept, bad rows reported', async () => {
+  const { detectLeague } = await import('../graphics/js/importer.js');
+  const wb = readXlsx(bytes('cups-women.xlsx'));
+  assert.equal(detectLeague(wb, 'men').league, 'women');
+  const r = importWorkbook(wb, 'women');
+  assert.equal(r.report[0].status, 'kupa-/európai meccsek');
+  assert.equal(r.cupCount, 5);
+  assert.deepEqual(r.cups.map(g => g.date), ['2026-09-30', '2026-10-14', '2026-10-22', '2026-11-25', '2026-12-02']);
+  assert.equal(r.cups[3].time, '20:00');
+  assert.equal(r.cups[4].time, '18:30', 'Excel date-time cell');
+  assert.deepEqual(r.cups.map(g => g.compKey), ['comp/euroleague-women', 'comp/eurocup-women', 'comp/eurocup-women', 'comp/eurocup-women', '']);
+  assert.deepEqual(r.compsNoLogo, ['Magyar Kupa']);
+  assert.deepEqual(r.cups[0].score, { home: 66, away: 71 });
+  assert.deepEqual(r.cups[1].score, { home: 56, away: 38 }, '56:38 with a colon');
+  assert.equal(r.cups[3].status, 'scheduled');
+  assert.equal(r.cups[0].awayId, null, 'foreign team stays a plain name');
+  assert.equal(r.cups[0].away, 'Crvena Zvezda');
+  assert.ok(r.unmatched.some(u => u.includes('Olympiacos')), 'row without an NB I/A club is reported, not imported');
+  // competition marks are league specific: BCL is a men competition
+  const m = importWorkbook(readXlsx(bytes('cups-men.xlsx')), 'men');
+  assert.deepEqual(m.cups.map(g => g.compKey), ['comp/bcl', 'comp/bcl']);
+});
+
+test('cup games appear in results and schedule lists of the team, merged with NB I/A games by date', async () => {
+  const store = await loadStore(); // "today" = 2026-11-20
+  const nba = store.nextGames('women', 'dvtkhuntherm', 99).length;
+  store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'cups-women.xlsx' });
+  // schedule: upcoming cup games are mixed into date order
+  const next = store.nextGames('women', 'dvtkhuntherm', 99);
+  assert.equal(next.length, nba + 2);
+  assert.deepEqual(next.map(m => m.date), [...next.map(m => m.date)].sort());
+  const sched = bindRowList(store, 'women', 'dvtkhuntherm', templateById('schedule-women'));
+  const idx = sched.games.findIndex(m => m.cup && m.away === 'Brod na Savi');
+  assert.ok(idx >= 0, 'Brod na Savi game is on the schedule');
+  assert.equal(sched.values[`r${idx}.comp`].src, 'comp/eurocup-women');
+  assert.equal(sched.values[`r${idx}.match`].text, 'DVTK Huntherm - Brod na Savi');
+  assert.equal(sched.values[`r${idx}.date`].text, '2026.11.25. - 20:00');
+  assert.match(sched.values[`r${idx}.match`].source, /Feltöltött kupa/);
+  // the Hungarian Cup game has no logo and says so
+  const mk = sched.games.findIndex(m => m.cup && m.competition === 'Magyar Kupa');
+  assert.equal(sched.values[`r${mk}.comp`].src, '');
+  assert.ok(sched.values[`r${mk}.comp`].note);
+  // results: the three played European games, colour by result for the focus team
+  assert.equal(store.lastResults('women', 'dvtkhuntherm', 99).filter(m => m.cup).length, 3);
+  const res = bindRowList(store, 'women', 'dvtkhuntherm', { ...templateById('results-women'), rows: 14 }); // longer list: all games
+  const cups = res.games.filter(m => m.cup);
+  assert.equal(cups.length, 3);
+  const loss = res.games.findIndex(m => m.cup && m.away === 'Crvena Zvezda');
+  assert.equal(res.values[`r${loss}.score`].text, '66-71');
+  assert.equal(res.values[`r${loss}.score`].color, '#ec4036', 'DVTK lost');
+  assert.equal(res.values[`r${loss}.comp`].src, 'comp/euroleague-women');
+  const away = res.games.findIndex(m => m.cup && m.home === 'Brod na Savi');
+  assert.equal(res.values[`r${away}.score`].text, '56-89');
+  assert.equal(res.values[`r${away}.score`].color, '#1fbf1b', 'DVTK won away');
+  const dates = res.games.map(m => m.date);
+  assert.deepEqual(dates, [...dates].sort());
+});
+
+test('cup games belong to their league and switch off with the Excel toggle', async () => {
+  const store = await loadStore();
+  store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'w.xlsx' });
+  store.mergeExcel('men', importWorkbook(readXlsx(bytes('cups-men.xlsx')), 'men'), { name: 'm.xlsx' });
+  assert.equal(store.cupFixtures('men', 'dvtkhuntherm').length, 0);
+  assert.equal(store.cupFixtures('men', 'falcokc').length, 2);
+  assert.equal(store.excelInfo('women').cups, 5);
+  const before = store.nextGames('women', 'dvtkhuntherm', 99).length;
+  store.excel.women.enabled = false;
+  assert.equal(store.nextGames('women', 'dvtkhuntherm', 99).length, before - 2);
+  // a second upload of the same game replaces it instead of duplicating it
+  store.excel.women.enabled = true;
+  store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'w2.xlsx' });
+  assert.equal(store.excelInfo('women').cups, 5);
 });

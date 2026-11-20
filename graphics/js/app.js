@@ -177,7 +177,7 @@ function autoValues() {
     v = r.values;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
     if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} NB I/A mérkőzés van az adatokban${t.type === 'schedule' && r.games.length < 5 ? ' (a menetrendnek legalább 5 sor kellene)' : ''} – a további sorok üresek (kézzel kitölthetők, pl. európai kupameccsek).` });
-    info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Európai kupa- és kupameccseket kézzel kell beírni; a sorozat logója soronként választható.' });
+    if (!store.cupFixtures(lg, s.teamId).length) info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Kupa- és európai meccseket tölts fel a „Kupameccsek” lapról (Adatok feltöltése), vagy írd be kézzel; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {
     v = bindReferees();
     if (t.fontNote) info.notices.push({ text: t.fontNote });
@@ -388,7 +388,7 @@ function persistExcel() {
 
 function renderImportState() {
   const xi = store.excelInfo(state.league);
-  $('importState').textContent = xi ? `– ${xi.teams} csapat, ${xi.playerTeams} csapat játékosai (${xi.files.length} fájl)` : '';
+  $('importState').textContent = xi ? `– ${xi.teams} csapat, ${xi.playerTeams} csapat játékosai${xi.cups ? `, ${xi.cups} kupameccs` : ''} (${xi.files.length} fájl)` : '';
   $('excelOn').checked = xi ? xi.enabled : true;
   $('excelOn').disabled = !xi;
   $('excelClear').disabled = !xi;
@@ -397,22 +397,24 @@ function renderImportState() {
 function previewImports() {
   const html = pendingImports.map(({ file, league, imp, certain }) => {
     const rows = imp.report.map(r => `<tr><td>${esc(r.sheet)}</td><td>${esc(r.status)}${r.club ? ' → ' + esc(clubLabel(league, r.club)) : ''}</td><td>${r.rows ?? ''}</td><td>${esc(r.note || (r.columns || []).join(', '))}</td></tr>`).join('');
-    const useful = imp.teamCount + imp.playerTeamCount;
+    const useful = imp.teamCount + imp.playerTeamCount + (imp.cupCount || 0);
     return `<div><b>${esc(file.name)}</b> → <b>${esc(LEAGUES[league]?.label || '?')}</b>${certain ? '' : ' <span class="warn">(a bajnokság nem volt egyértelmű – a most kiválasztottat használom)</span>'}</div>
       <table><tr><th>Munkalap</th><th>Felismerve</th><th>Sor</th><th>Oszlopok / megjegyzés</th></tr>${rows}</table>
       ${imp.teamCount ? `<div class="ok">Csapatstatisztika: ${imp.teamCount} csapat</div>` : ''}
       ${imp.playerCount ? `<div class="ok">Játékosok: ${imp.playerCount} játékos, ${imp.playerTeamCount} csapat</div>` : ''}
+      ${imp.cupCount ? `<div class="ok">Kupa-/európai meccsek: ${imp.cupCount} (${imp.cups.filter(g => g.status === 'finished').length} lejátszott, ${imp.cups.filter(g => g.status !== 'finished').length} következő)</div>` : ''}
+      ${imp.compsNoLogo?.length ? `<div class="warn">Nincs logó a PSD-kben ehhez a sorozathoz (a sor logó nélkül jelenik meg): ${esc(imp.compsNoLogo.join(', '))}</div>` : ''}
       ${imp.scaled.length ? `<div class="warn">Törtként tárolt százalék szorozva 100-zal: ${esc(imp.scaled.join(', '))}</div>` : ''}
       ${imp.unmatched.length ? `<div class="warn">Nem egyeztethető (kihagyva, nem találgatok):<ul>${imp.unmatched.slice(0, 8).map(u => `<li>${esc(u)}</li>`).join('')}</ul></div>` : ''}
       ${imp.ignoredColumns.length ? `<div class="hint">Nem használt oszlopok: ${imp.ignoredColumns.length} db (${esc(imp.ignoredColumns.slice(0, 6).join(', '))}…)</div>` : ''}
       ${useful === 0 ? '<div class="warn">Nem találtam használható adatot ebben a fájlban.</div>' : ''}`;
   }).join('<hr>');
-  const any = pendingImports.some(p => p.imp.teamCount + p.imp.playerTeamCount > 0);
+  const any = pendingImports.some(p => p.imp.teamCount + p.imp.playerTeamCount + (p.imp.cupCount || 0) > 0);
   $('importPreview').innerHTML = html + (any ? '<div class="import-row"><button id="applyImport" class="primary">Alkalmazás</button><button id="cancelImport" class="ghost">Mégse</button></div>' : '<div class="import-row"><button id="cancelImport" class="ghost">Bezárás</button></div>');
   const ap = $('applyImport');
   if (ap) ap.onclick = async () => {
-    for (const { file, league, imp } of pendingImports) if (imp.teamCount + imp.playerTeamCount > 0) store.mergeExcel(league, imp, file);
-    const first = pendingImports.find(p => p.imp.teamCount + p.imp.playerTeamCount > 0);
+    for (const { file, league, imp } of pendingImports) if (imp.teamCount + imp.playerTeamCount + (imp.cupCount || 0) > 0) store.mergeExcel(league, imp, file);
+    const first = pendingImports.find(p => p.imp.teamCount + p.imp.playerTeamCount + (p.imp.cupCount || 0) > 0);
     persistExcel(); pendingImports = []; $('importPreview').innerHTML = '';
     toast('Excel adatok betöltve');
     if (first && first.league !== state.league) await switchLeague(first.league); else { renderImportState(); renderFreshness(); update(true); }
@@ -490,7 +492,7 @@ async function main() {
         const d = detectLeague(parsed, state.league);
         pendingImports.push({ file: { name: f.name, modified: parsed.modified }, league: d.league, certain: d.certain, imp: importWorkbook(parsed, d.league) });
       } catch (err) {
-        pendingImports.push({ file: { name: f.name }, league: state.league, certain: false, imp: { report: [{ sheet: f.name, status: 'hiba', note: err.message }], teamCount: 0, playerTeamCount: 0, playerCount: 0, scaled: [], unmatched: [], ignoredColumns: [] } });
+        pendingImports.push({ file: { name: f.name }, league: state.league, certain: false, imp: { report: [{ sheet: f.name, status: 'hiba', note: err.message }], teamCount: 0, playerTeamCount: 0, playerCount: 0, cupCount: 0, cups: [], scaled: [], unmatched: [], ignoredColumns: [] } });
       }
     }
     if (files.length) previewImports();

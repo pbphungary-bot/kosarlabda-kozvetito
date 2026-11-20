@@ -29,11 +29,21 @@ Az intro helyszínét egyszer kell beírni, a stúdió a hazai csapathoz jegyzi.
 |---|---|
 | `boxscore_team_avg*.xlsx` (FullField export) | csapatátlagok: PTS, 2P%, 3P%, FT%, REB, AST, STL, TOV, EFF → összevetés sablon, helyezések |
 | `Férfi / Női Statalapok*.xlsx` (egy lap = egy csapat) | játékosátlagok + mezszámok → csapat-táblázat sablon |
+| `minta-kupameccsek.xlsx` alapján kitöltött lap | kupa-/európai meccsek → bekerülnek az Eredmények és Menetrend listába, dátum szerint az NB I/A meccsek közé, sorozat-logóval |
 
 * A bajnokságot a fájl tartalmából ismeri fel (férfi/női), nem a kiválasztott fülből.
 * A csapatot **pontos névvel** egyezteti; nem egyeztethető név kimarad és jelezve van (nem találgat).
 * A feltöltött érték előnyt élvez a dashboard adataival szemben („Excel” címke a mezőn); a feltöltés a böngészőben marad.
 * A helyezések „(n.)” a feltöltött csapatok között számolódnak (TOV: kevesebb = jobb).
+
+### Kupa- és európai meccsek
+
+A dashboard adatai csak NB I/A meccseket tartalmaznak. Másold a meccseket (pl. az eredmenyek.com oldalról) a `minta-kupameccsek.xlsx`
+**Kupameccsek** lapjára: `Dátum | Idő | Hazai | Vendég | Sorozat | Eredmény`, majd töltsd fel. A dátum bármilyen szokásos formában jó
+(`2026.11.25.`, `25.11.2026`, Excel dátum). Az eredményt hagyd üresen a következő meccseknél.
+* Legalább az egyik csapat NB I/A klub legyen (pontos névvel); a külföldi csapat neve úgy jelenik meg, ahogy beírod.
+* Logó van: *EuroLeague Women*, *EuroCup Women* (női), *Basketball Champions League / BCL* (férfi). Más sorozat logó nélkül jelenik meg, és a feltöltéskor jelzi.
+* Ugyanaz a meccs (dátum + csapatok) újrafeltöltéskor felülíródik. Az automatikus lekérés az oldalról szándékosan nincs: az Eredmenyek/Livesport használati feltételei tiltják.
 
 ## Eszközök és tesztek
 

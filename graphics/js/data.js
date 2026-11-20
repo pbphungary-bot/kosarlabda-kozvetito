@@ -114,8 +114,25 @@ export class Store {
     return this.leagues[lg].fixtures.filter(m => m.status !== 'finished' && m.date && m.date >= today);
   }
 
+  /** NB I/A games from the dashboard data plus uploaded cup / European games of the team, by date. */
   teamFixtures(lg, id) {
-    return this.leagues[lg].fixtures.filter(m => m.homeId === id || m.awayId === id);
+    const base = this.leagues[lg].fixtures.filter(m => m.homeId === id || m.awayId === id);
+    const cups = this.cupFixtures(lg, id);
+    if (!cups.length) return base;
+    return [...base, ...cups].sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.time || '').localeCompare(b.time || ''));
+  }
+
+  /** Uploaded cup / European games (sheet import), in the same shape as dashboard fixtures. */
+  cupFixtures(lg, id) {
+    const x = this.#excelOn(lg);
+    if (!x?.cups) return [];
+    const today = this.now.toISOString().slice(0, 10);
+    return Object.values(x.cups).filter(g => g.homeId === id || g.awayId === id).map(g => ({
+      idx: -1, round: null, roundNo: null, home: g.home, away: g.away, homeId: g.homeId, awayId: g.awayId,
+      date: g.date, time: g.time, status: g.status, score: g.score, url: null,
+      cup: true, competition: g.competition, compKey: g.compKey,
+      resultMissing: g.status !== 'finished' && g.date < today, finishedWithoutScore: false,
+    }));
   }
 
   /** Most recent finished games with a valid score, oldest first. */
@@ -141,9 +158,11 @@ export class Store {
 
   /** Merge one imported file into the league's Excel data (team stats per field, players per team). */
   mergeExcel(lg, imp, file) {
-    const x = this.excel[lg] || { team: {}, players: {}, enabled: true, meta: { files: [] } };
+    const x = this.excel[lg] || { team: {}, players: {}, cups: {}, enabled: true, meta: { files: [] } };
     for (const [id, v] of Object.entries(imp.team || {})) x.team[id] = { ...(x.team[id] || {}), ...v };
     Object.assign(x.players, imp.players || {});
+    x.cups = x.cups || {};
+    for (const g of imp.cups || []) x.cups[`${g.date}|${g.home}|${g.away}`] = g;
     x.meta = x.meta || { files: [] };
     x.meta.files = [...(x.meta.files || []).filter(f => f.name !== file.name), { name: file.name, modified: file.modified || null, importedAt: new Date().toISOString() }];
     x.enabled = true;
@@ -187,7 +206,7 @@ export class Store {
     const times = files.map(f => f.modified).filter(Boolean).sort();
     return {
       enabled: x.enabled !== false, files, file: files.map(f => f.name).join(', ') || '—', modified: times.at(-1) || null,
-      teams: Object.keys(x.team || {}).length, playerTeams: Object.keys(x.players || {}).length,
+      teams: Object.keys(x.team || {}).length, playerTeams: Object.keys(x.players || {}).length, cups: Object.keys(x.cups || {}).length,
     };
   }
 

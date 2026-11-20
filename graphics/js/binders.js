@@ -176,12 +176,17 @@ export function bindRowList(store, lg, teamId, tpl) {
     } else {
       v[`r${r}.date`] = field(fmtDate(m.date), src);
     }
-    v[`r${r}.comp`] = { src: '', source: 'NB I/A mérkőzés' };
-    v[`r${r}.match`] = field(matchName(lg, m), src);
+    const cup = !!m.cup;
+    const rsrc = cup ? `Feltöltött kupa-/európai meccs${m.competition ? ' – ' + m.competition : ''}` : src;
+    if (cup) {
+      v[`r${r}.date`].source = rsrc;
+      v[`r${r}.comp`] = { src: m.compKey || '', source: m.compKey ? rsrc : 'Nincs logó ehhez a sorozathoz' + (m.competition ? ` (${m.competition})` : ''), ...(m.compKey ? {} : { note: 'Ehhez a sorozathoz nincs logó a PSD-kben – a sor logó nélkül jelenik meg (kézzel választható).' }) };
+    } else v[`r${r}.comp`] = { src: '', source: 'NB I/A mérkőzés' };
+    v[`r${r}.match`] = field(matchName(lg, m), rsrc);
     if (type !== 'schedule') {
       const won = m.homeId === teamId ? m.score.home > m.score.away : m.score.away > m.score.home;
       const color = won ? WIN : RED;
-      v[`r${r}.score`] = field(`${m.score.home}-${m.score.away}`, src, { color });
+      v[`r${r}.score`] = field(`${m.score.home}-${m.score.away}`, rsrc, { color });
       if (type === 'resultrows') {
         v[`r${r}.match`].color = color;
         v[`r${r}.score`].color = color;

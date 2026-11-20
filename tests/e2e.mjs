@@ -262,6 +262,43 @@ try {
     await dl.saveAs(path.join(out, 'intro-women-rank.png'));
     assert.equal(await alphaAt(), 246);
   });
+  await check('cup games: upload sheet, European rows appear with competition logo on results and schedule', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="results-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#teamSel', 'dvtkhuntherm');
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.setInputFiles('#excelFile', path.join(ROOT, 'tests/fixtures/cups-women.xlsx'));
+    await page.waitForSelector('#applyImport');
+    const prev = await page.locator('#importPreview').innerText();
+    assert.match(prev, /kupa-\/európai meccsek/);
+    assert.match(prev, /Magyar Kupa/); // no logo warning
+    assert.match(prev, /Olympiacos/); // skipped row reported
+    await page.screenshot({ path: path.join(out, 'ui-cups-preview.png') });
+    await page.click('#applyImport');
+    await page.waitForTimeout(500);
+    await page.click('#templateList button[data-id="schedule-women"]');
+    await page.waitForTimeout(400);
+    await page.selectOption('#teamSel', 'dvtkhuntherm');
+    await page.waitForTimeout(400);
+    const v = await page.evaluate(() => window.__studio.current().values);
+    const comps = Object.entries(v).filter(([k, x]) => k.endsWith('.comp') && x.src).map(([k, x]) => x.src);
+    assert.ok(comps.includes('comp/eurocup-women'), JSON.stringify(comps));
+    const matches = Object.entries(v).filter(([k]) => k.endsWith('.match')).map(([, x]) => x.text);
+    assert.ok(matches.some(t => /Brod na Savi/.test(t)), matches.join(' | '));
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'schedule-women-cups.png'));
+    await page.click('#templateList button[data-id="results-women"]');
+    await page.waitForTimeout(400);
+    const rv = await page.evaluate(() => window.__studio.current().values);
+    assert.ok(Object.entries(rv).some(([k, x]) => k.endsWith('.comp') && x.src === 'comp/eurocup-women'));
+    const [dl2] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl2.saveAs(path.join(out, 'results-women-cups.png'));
+    await page.screenshot({ path: path.join(out, 'ui-results-cups.png') });
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.click('#excelClear');
+    await page.waitForTimeout(300);
+  });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly
