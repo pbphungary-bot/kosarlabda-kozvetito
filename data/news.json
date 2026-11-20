@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T04:48:48.034326+00:00",
+  "checked_at": "2026-11-20T05:49:47.775120+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -469,16 +469,16 @@
       "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 1,
       "listing_pages_failed": 1,
-      "candidates": 18,
-      "attempted": 10,
+      "candidates": 9,
+      "attempted": 9,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [
         "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 10,
+      "usable_articles": 9,
       "source_coverage": true
     }
   ],
@@ -10987,6 +10987,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre!",
+      "summary": "Már kaphatóak a jegyek a Szlovénia elleni vb-selejtezőre!",
+      "url": "https://falcokc.com/mar-kaphatoak-a-jegyek-a-szlovenia-elleni-vb-selejtezore/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {

@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-20T04:48:48.034326+00:00",
+  "checked_at": "2026-11-20T05:49:47.775120+00:00",
   "statistics": {
-    "total": 1073,
+    "total": 1074,
     "fresh": 497,
     "fresh_with_summary": 313,
-    "missing_dates": 203,
-    "headline_only": 513,
+    "missing_dates": 204,
+    "headline_only": 514,
     "untagged": 482,
     "sources_ok": 19,
     "sources_partial": 2,
     "sources_failed": 10,
-    "new_articles": 7,
+    "new_articles": 8,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 16,
     "clubs_configured": 25
@@ -83,8 +83,8 @@
       "candidates": 35,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -484,16 +484,16 @@
       "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 1,
       "listing_pages_failed": 1,
-      "candidates": 18,
-      "attempted": 10,
+      "candidates": 9,
+      "attempted": 9,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [
         "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 10,
+      "usable_articles": 9,
       "source_coverage": true
     }
   ],
