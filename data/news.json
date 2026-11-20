@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T20:41:26.024840+00:00",
+  "checked_at": "2026-11-20T21:27:36.973585+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 29,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -247,8 +247,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -547,18 +547,20 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 31,
-      "attempted": 30,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 22,
+      "attempted": 22,
       "already_saved": 0,
       "added": 0,
-      "repaired": 30,
+      "repaired": 22,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 30,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 22,
       "source_coverage": true
     }
   ],
