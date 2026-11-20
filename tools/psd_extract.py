@@ -216,6 +216,11 @@ def save_logo(im, path):
     return im.size
 
 
+def make_thumb(ref, path):
+    bg = Image.new('RGBA', ref.size, (43, 58, 46, 255))
+    Image.alpha_composite(bg, ref).convert('RGB').resize((384, 216), Image.LANCZOS).save(path, quality=85)
+
+
 def main():
     report = {'templates': {}, 'logos': {}, 'competitions': {}}
     for tid, (fname, opts) in TEMPLATES.items():
@@ -224,7 +229,9 @@ def main():
         os.makedirs(d, exist_ok=True)
         layers = [l for l in psd.descendants()]
         dynamic = {id(l) for l in layers if l.is_visible() and not is_static(l, opts)}
-        psd.topil().convert('RGBA').save(os.path.join(d, 'reference.png'), optimize=True)
+        ref = psd.topil().convert('RGBA')
+        ref.save(os.path.join(d, 'reference.png'), optimize=True)
+        make_thumb(ref, os.path.join(d, 'thumb.jpg'))
         bg, frac = hybrid_background(psd, dynamic)
         bg.save(os.path.join(d, 'background.png'), optimize=True)
         recs = [layer_record(l, opts) for l in layers]
