@@ -35,6 +35,7 @@ jobs:
           python scripts/test_news.py
           python scripts/test_news_source_health.py
           python scripts/test_news_extended.py
+          python scripts/test_news_clubs.py
 
       - name: Collect news (isolated pilot)
         run: python scripts/update_news.py

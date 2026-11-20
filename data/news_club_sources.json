@@ -143,6 +143,7 @@
   {
     "name": "BKG-PRIMA Szigetszentmiklós",
     "urls": [
+      "https://www.bkgakademia.hu/",
       "https://bkgakademia.hu/"
     ],
     "hosts": [
@@ -234,14 +235,22 @@
   {
     "name": "ELTE BEAC Újbuda",
     "urls": [
-      "https://kosarlabda.beac.hu/kezdo",
-      "https://kosarlabda.beac.hu/"
+      "https://www.beac.hu/en/sport/kosarlabda",
+      "https://www.beac.hu/hu/sport/kosarlabda"
     ],
     "hosts": [
-      "kosarlabda.beac.hu"
+      "beac.hu"
     ],
-    "article_pattern": "^/(?:hirek|hir|news|20\\d\\d/\\d\\d/\\d\\d)/[^/]+(?:/[^/]+)?$",
-    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+    "article_pattern": "^/(?:en|hu)/(?:news|hirek)/[^/]+$",
+    "listing_selector": "a[href*=\"/news/\"], a[href*=\"/hirek/\"]",
+    "require_keywords": [
+      "kosár",
+      "kosar",
+      "basket",
+      "nb i",
+      "női",
+      "noi"
+    ]
   },
   {
     "name": "ETO Basket",
