@@ -1,0 +1,198 @@
+{
+ "source_psd": "Sporik ffi alap.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    504,
+    696,
+    1417,
+    976
+   ],
+   "opacity": 0.9804,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Réteg 1",
+   "kind": "pixel",
+   "visible": true,
+   "bbox": [
+    497,
+    582,
+    1423,
+    1104
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "           Goda László           Major Ádám           Söjtöry T",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    564,
+    723,
+    1394,
+    954
+   ],
+   "opacity": 0.9804,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 5.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#030303"
+    }
+   ],
+   "typography": {
+    "text": "\t\t\t\t\t\t\t \t\t\tGoda László\r\t\t\t\t\t\t\t\t\t\tMajor Ádám\r\t\t\t\t\t\t\t\t\t\tSöjtöry Tamás Ferenc \r\r\tMKOSZ Ellenőr:\t\t\t\tForrai Sámuel",
+    "runs": [
+     {
+      "text": "\t\t\t\t\t\t\t",
+      "font": "Satoshi-BlackItalic",
+      "size": 41.66667,
+      "color": "#fffefe",
+      "tracking": 0.0,
+      "leading": 50.00001,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": " \t\t\t",
+      "font": "Satoshi-Black",
+      "size": 41.66667,
+      "color": "#fffefe",
+      "tracking": 0.0,
+      "leading": 50.00001,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "Goda László\r\t\t\t\t\t\t\t\t\t\tMajor Ádám\r\t\t\t\t\t\t\t\t\t\tSöjtöry Tamás Ferenc \r\r",
+      "font": "Satoshi-Black",
+      "size": 41.66667,
+      "color": "#fefefe",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "\tMKOSZ Ellenőr:",
+      "font": "Satoshi-BlackItalic",
+      "size": 29.16667,
+      "color": "#fffefe",
+      "tracking": 0.0,
+      "leading": 50.00001,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "\t\t\t\tForrai Sámuel",
+      "font": "Satoshi-Black",
+      "size": 33.33333,
+      "color": "#fffefe",
+      "tracking": 0.0,
+      "leading": 50.00001,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     527.4698486328124,
+     763.0
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "hand-drawn-illustration-of-a-classic-referee-whistle-isolated-on-a-white-background-vector(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    560,
+    725,
+    788,
+    862
+   ],
+   "opacity": 0.9804,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "pbp_logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1048,
+    1002,
+    1184,
+    1062
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    },
+    {
+     "type": "BevelEmboss",
+     "size": 8.0,
+     "angle": 90.0,
+     "useGlobalAngle": true
+    }
+   ]
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    737,
+    1002,
+    790,
+    1062
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    830,
+    1012,
+    1008,
+    1052
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  }
+ ]
+}

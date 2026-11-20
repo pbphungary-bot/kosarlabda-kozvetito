@@ -1,0 +1,230 @@
+{
+ "men/oroszlany": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": -178.0,
+   "useGlobalAngle": true,
+   "color": "#e52d2c"
+  }
+ },
+ "men/albafehervar": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 1.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "men/kecskemet": {
+  "outline": null
+ },
+ "men/deac": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": true,
+   "color": "#ffffff"
+  }
+ },
+ "men/falcokc": {
+  "outline": null
+ },
+ "men/atomermomuse": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 1.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": -178.0,
+   "useGlobalAngle": true,
+   "color": "#ffffff"
+  }
+ },
+ "men/nkapecs": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 1.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ec6603"
+  }
+ },
+ "men/szedeak": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": -178.0,
+   "useGlobalAngle": true,
+   "color": "#ffffff"
+  }
+ },
+ "men/sopron": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 1.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "men/szolnok": {
+  "outline": null
+ },
+ "men/fot": {
+  "outline": null
+ },
+ "men/bphonved": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "men/kormend": {
+  "outline": null
+ },
+ "men/kaposvar": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 3.0,
+   "spread": 100.0,
+   "distance": 1.0,
+   "opacity": 100.0,
+   "angle": -178.0,
+   "useGlobalAngle": true,
+   "color": "#ffffff"
+  }
+ },
+ "women/eltebeacujbuda": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "women/csatattk": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 7.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "women/davidkornelka": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 0.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": -178.0,
+   "useGlobalAngle": true,
+   "color": "#ffffff"
+  }
+ },
+ "women/bkgprimaszigetszentmiklos": {
+  "outline": null
+ },
+ "women/vasasakademia": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "women/nkauniversitaspecs": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 1.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ec6603"
+  }
+ },
+ "women/sercounigyor": {
+  "outline": null
+ },
+ "women/dvtkhuntherm": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "women/tarrkscszekszard": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 2.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
+ },
+ "women/tfse": {
+  "outline": null
+ },
+ "women/sopronbasket": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 1.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffc905"
+  }
+ }
+}

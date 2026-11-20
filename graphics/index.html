@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NB I/A Grafika Stúdió</title>
+<link rel="stylesheet" href="css/studio.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">NB I/A <b>Grafika Stúdió</b></div>
+  <div class="league-toggle" role="tablist" aria-label="Bajnokság">
+    <button data-league="men" role="tab">Férfi NB I/A</button>
+    <button data-league="women" role="tab">Női NB I/A</button>
+  </div>
+  <div id="freshness" class="freshness" aria-live="polite"></div>
+  <a class="dash-link" href="../index.html">← Közvetítőhub</a>
+</header>
+
+<main class="layout">
+  <section class="panel controls">
+    <details class="import" id="importBox">
+      <summary>Adatok feltöltése Excelből / CSV-ből <span id="importState"></span></summary>
+      <p class="hint">Egy fájlban lehet csapatstatisztika és játékosstatisztika is (külön munkalapon). A bajnokságot a fájl tartalmából ismerem fel. A feltöltött érték előnyt élvez a dashboard adataival szemben, és „Excel” címkét kap; a következő forduló fájljai felülírják az előzőket. A fájl nem kerül fel sehova – a böngészőben dolgozom vele.</p>
+      <div class="import-row">
+        <label class="ghost file">Fájlok kiválasztása (.xlsx, .csv) – egyszerre több is<input type="file" id="excelFile" accept=".xlsx,.csv,.txt" multiple></label>
+        <label><input type="checkbox" id="excelOn" checked> Excel adatok használata</label>
+        <button id="excelClear" class="ghost">Feltöltött adatok törlése</button>
+      </div>
+      <div id="importPreview"></div>
+    </details>
+
+    <h2>1. Sablon</h2>
+    <div id="templateList" class="template-list"></div>
+
+    <h2 id="selectTitle">2. Mérkőzés</h2>
+    <div id="selection" class="selection"></div>
+
+    <h2>3. Mezők <small>(üres felülírás = automatikus adat)</small></h2>
+    <div class="field-tools">
+      <label><input type="checkbox" id="onlyMissing"> Csak hiányzó / felülírt</label>
+      <button id="resetAll" class="ghost">Minden felülírás törlése</button>
+    </div>
+    <div id="notices"></div>
+    <div id="fields" class="fields"></div>
+  </section>
+
+  <section class="panel preview">
+    <div class="preview-bar">
+      <div class="zoom">
+        <button data-zoom="fit" class="on">Igazítás</button>
+        <button data-zoom="1">100%</button>
+        <label><input type="checkbox" id="checker" checked> Átlátszóság rácsa</label>
+        <label><input type="checkbox" id="showRef"> PSD minta összevetés</label>
+      </div>
+      <div id="dims" class="dims"></div>
+    </div>
+    <div id="stage" class="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div>
+    <div id="renderReport" class="render-report"></div>
+    <div class="export-bar">
+      <input id="fileName" spellcheck="false" aria-label="Fájlnév">
+      <button id="exportBtn" class="primary" disabled>PNG exportálása</button>
+    </div>
+    <div class="presets">
+      <h2>Mentett beállítások</h2>
+      <div class="preset-row">
+        <input id="presetName" placeholder="Beállítás neve (pl. Falco–Alba intro)">
+        <button id="savePreset">Mentés</button>
+        <button id="exportPresets" class="ghost">Exportálás (JSON)</button>
+        <label class="ghost file">Importálás<input type="file" id="importPresets" accept="application/json"></label>
+      </div>
+      <ul id="presetList" class="preset-list"></ul>
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast" role="status"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

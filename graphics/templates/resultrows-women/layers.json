@@ -1,0 +1,394 @@
+{
+ "source_psd": "Női Next Games Graph.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "pbp_logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    914,
+    1012,
+    1051,
+    1072
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    },
+    {
+     "type": "BevelEmboss",
+     "size": 8.0,
+     "angle": 90.0,
+     "useGlobalAngle": true
+    }
+   ]
+  },
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    95,
+    8,
+    1455,
+    968
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    -183,
+    -53,
+    1735,
+    1027
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    583,
+    1012,
+    635,
+    1072
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "2025.10.18.  CSATA TKK - DVTK           62-67   2025.10.25.   S",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    160,
+    266,
+    1390,
+    948
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "2025.10.18.\t\tCSATA TKK - DVTK\t\t\t\t\t\t\t\t\t\t 62-67\t\r\r2025.10.25.\t \tSopron Basket -\tCsata TKK\t\t \t\t\t72-54\r\r2025.11.02.\t \tDKKA - CSATA TKK\t\t\t\t\t\t\t\t \t\t65-95\r\r2025.11.22. \t \tBEAC Újbuda -\tCSATA TKK \t\t\t \t\t\t60-58\t\r\r2025.11.29.\t \tVASAS AKADÉMIA - CSATA TKK\t \t\t\t73-82\r\r2025.12.03.  \tCSATA TKK - CEKK CEGLÉD\t\t\t\t \t\t95-57",
+    "runs": [
+     {
+      "text": "2025.10.18.\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "CSATA TKK - DVTK\t\t\t\t\t\t\t\t\t\t 62-67\t\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#ef4036",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2025.10.25.",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t \t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "Sopron Basket -\tCsata TKK\t\t \t\t\t72-54\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#ef4036",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "2025.11.02.\t \t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "DKKA - CSATA TKK\t\t\t\t\t\t\t\t \t\t65-95\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "2025.11.22. \t \t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "BEAC Újbuda -\tCSATA TKK \t\t\t \t\t\t60-58\t\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#ef4036",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2025.11.29.",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t \t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#ef4036",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "VASAS AKADÉMIA - CSATA TKK\t \t\t\t73-82\r\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "2025.12.03.  \t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "CSATA TKK - CEKK CEGLÉD\t\t\t\t \t\t95-57",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.1783051679209184,
+     0.0,
+     1.309290043344339e-16,
+     1.1783051679209184,
+     157.0328348402266,
+     321.94805949699554
+    ],
+    "scale": 1.1783051679209184
+   }
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    685,
+    1022,
+    863,
+    1062
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "A CSATA TKK Következő MÉRKŐZÉSEI ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    450,
+    35,
+    1099,
+    230
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "A CSATA TKK\rKövetkező MÉRKŐZÉSEI\r",
+    "runs": [
+     {
+      "text": "A CSATA TKK\rKövetkező MÉRKŐZÉSEI\r",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#000000",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     774.0,
+     108.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "csata tkk logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    153,
+    54,
+    312,
+    204
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "csata tkk logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1237,
+    54,
+    1396,
+    204
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,417 @@
+{
+ "source_psd": "DVTK Last Games - 1025.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    60,
+    9,
+    1377,
+    969
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    -241,
+    -53,
+    1677,
+    1027
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    855,
+    1017,
+    953,
+    1067
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "2026.09.30.  DVTK HUNTHERM - Crvena Zvezda   66-71  2026.10.04.",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    85,
+    266,
+    1348,
+    948
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "2026.09.30.\t\tDVTK HUNTHERM - Crvena Zvezda  \t66-71\r\r2026.10.04.\t\t\tDVTK HUNTHERM - KSC Szekszárd\t\t74-57 \r\r2026.10.10.\t\t\tDVTK HUNTHERM - VBW CEGLÉD\t\t\t\t66-60\r\r2026.10.14.\t\t\tDVTK HUNTHERM - PANATHLITIKOS\t\t56-38 \r\r2026.10.17. \t\t\tBKG-PRIMA - DVTK HUNTHERM\t\t\t  48-108\r\r2026.10.22. \t\tBROD NA SAVI - DVTK HUNTHERM\t\t\t56-89\r\r",
+    "runs": [
+     {
+      "text": "2026.09.30.\t\tDVTK HUNTHERM - Crvena Zvezda  \t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "66-71\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#ec4036",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2026.10.04.\t\t\tDVTK HUNTHERM - KSC Szekszárd\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "74-57 \r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2026.10.10.\t\t\tDVTK HUNTHERM - VBW CEGLÉD\t\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\t66-60\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2026.10.14.\t\t\tDVTK HUNTHERM - PANATHLITIKOS\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "56-38 \r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2026.10.17. \t\t\tBKG-PRIMA - DVTK HUNTHERM\t\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "  48-108\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r2026.10.22. \t\tBROD NA SAVI - DVTK HUNTHERM\t\t\t",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "56-89\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#1fbf1b",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "\r",
+      "font": "LeagueGothic-Regular",
+      "size": 63.65075,
+      "color": "#fefefe",
+      "tracking": 25.0,
+      "leading": 53.04229,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.1783051679209184,
+     0.0,
+     1.309290043344339e-16,
+     1.1783051679209184,
+     81.5328348402266,
+     321.94805949699554
+    ],
+    "scale": 1.1783051679209184
+   }
+  },
+  {
+   "name": "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    345,
+    631,
+    401,
+    698
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    345,
+    884,
+    401,
+    952
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    168,
+    57,
+    306,
+    207
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1127,
+    57,
+    1265,
+    207
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    525,
+    1012,
+    577,
+    1072
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    627,
+    1022,
+    805,
+    1062
+   ],
+   "opacity": 1.0,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "A DVTK HUNTHERM Eredményei ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    462,
+    35,
+    969,
+    229
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "A DVTK HUNTHERM\rEredményei\r",
+    "runs": [
+     {
+      "text": "A DVTK HUNTHERM\rEredményei\r",
+      "font": "LeagueGothic-Regular",
+      "size": 100.0,
+      "color": "#000000",
+      "tracking": 10.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     716.0,
+     108.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "EuroLeague_Women_Logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    343,
+    255,
+    412,
+    330
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "ColorOverlay",
+     "opacity": 100.0,
+     "color": "#ffffff"
+    }
+   ]
+  }
+ ]
+}

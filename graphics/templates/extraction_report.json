@@ -1,0 +1,640 @@
+{
+ "templates": {
+  "comparison-men": {
+   "psd": "Falco - Alba statösszevetés 1111 előtt.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "A mérkőző felek idei teljesítménye, statisztikai átlagszámokban",
+    "Réteg 1",
+    "707827677_1744577086998875_3756147844167689831_n",
+    "95.1 59.1% 38.1% 78.2% 42.1 21.4 9.0 10.7 122.4",
+    "(2.) (2.) (3.) (4.) (2.) (2.) (3.) (2.) (2.)",
+    "(5.) (4.) (5.) (6.) (3.) (3.) (10.) (3.) (3.)",
+    "89.6 57.1% 32.7% 76.0% 41.0 19.9 6.6 11.0 107.1"
+   ],
+   "pixels_rerendered_pct": 18.27,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Italic",
+    "LeagueGothic-Regular"
+   ]
+  },
+  "comparison-women": {
+   "psd": "DVTK - CSATA statösszevetés 1122 előtt.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "A mérkőző felek idei teljesítménye, statisztikai átlagszámokban",
+    "csata tkk logo",
+    "DVTK_cimer",
+    "77.5 50.2% 33.6% 65.8% 46.3 22.0 10.8 15.3 102.8 ",
+    "(3.) (3.) (2.) (9.) (1.) (1.) (6.) (3.) (2.)",
+    "(4.) (7.) (5.) (4.) (6.) (6.) (8.) (2.) (4.)",
+    "74.7 46.0% 30.8% 71.3% 39.1 17.2 10.4 14.9 86.1 "
+   ],
+   "pixels_rerendered_pct": 19.27,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Italic",
+    "LeagueGothic-Regular"
+   ]
+  },
+  "teamstats-men": {
+   "psd": "Falco csapatstat 9. ford után 1114.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    " #                   Játékos        M      P/M    L/M GP/M     ",
+    "FALCO-VULCANO ENERGIA KC SZOMBATHELY",
+    "707827677_1744577086998875_3756147844167689831_n"
+   ],
+   "pixels_rerendered_pct": 30.37,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "teamstats-women": {
+   "psd": "DVTK csapatstat 7. ford után 1122.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    " #                   Játékos        M      P/M       L/M     GP",
+    "DVTK_cimer",
+    "DVTK HUNTHERM"
+   ],
+   "pixels_rerendered_pct": 26.55,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "results-men": {
+   "psd": "Falco  LAST Games Graph 1111.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "2026.10.16.    NKA PÉCS - FALCO-VULCANO KC     78-106  2026.10.",
+    "A FALCO-VULCANO ENERGIA KC SZOMBATHELY Eredményei ",
+    "707827677_1744577086998875_3756147844167689831_n",
+    "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+    "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+    "707827677_1744577086998875_3756147844167689831_n"
+   ],
+   "pixels_rerendered_pct": 25.75,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "results-women": {
+   "psd": "DVTK Last Games - 1025.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "2026.09.30.  DVTK HUNTHERM - Crvena Zvezda   66-71  2026.10.04.",
+    "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+    "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+    "DVTK_cimer",
+    "DVTK_cimer",
+    "A DVTK HUNTHERM Eredményei ",
+    "EuroLeague_Women_Logo"
+   ],
+   "pixels_rerendered_pct": 24.25,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "schedule-men": {
+   "psd": "Falco  Next Games Graph 1111.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "2026.11.14. - 18:00     EPS-Honvéd - FALCO-VULCANO KC  2026.11.",
+    "A FALCO-VULCANO ENERGIA KC SZOMBATHELY MENETRENDJE ",
+    "707827677_1744577086998875_3756147844167689831_n",
+    "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+    "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+    "707827677_1744577086998875_3756147844167689831_n"
+   ],
+   "pixels_rerendered_pct": 25.85,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "schedule-women": {
+   "psd": "DVTK Next Games - 1025.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "  2026.11.04. - 19:15   PANATHLITIKOS - DVTK HUNTHERM  2026.11.",
+    "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+    "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+    "DVTK_cimer",
+    "DVTK_cimer",
+    "A DVTK HUNTHERM Következő MÉRKŐZÉSEI "
+   ],
+   "pixels_rerendered_pct": 18.93,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "resultrows-men": {
+   "psd": "Férfi Next Games Graph.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "2025.10.18.  CSATA TKK - DVTK           62-67   2025.10.25.   S",
+    "A CSATA TKK Következő MÉRKŐZÉSEI ",
+    "csata tkk logo",
+    "csata tkk logo"
+   ],
+   "pixels_rerendered_pct": 21.1,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "resultrows-women": {
+   "psd": "Női Next Games Graph.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "2025.10.18.  CSATA TKK - DVTK           62-67   2025.10.25.   S",
+    "A CSATA TKK Következő MÉRKŐZÉSEI ",
+    "csata tkk logo",
+    "csata tkk logo"
+   ],
+   "pixels_rerendered_pct": 21.12,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "intro-men": {
+   "psd": "Férfi Intro Graph 26-27.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "Novomatic Aréna",
+    "Layer 3",
+    "SOPRON KC",
+    "Alapszakasz - 1. forduló - 2026.09.25. - 19.00",
+    "734488838_1327264879025947_6430803759669777128_n",
+    "DEAC",
+    "BEAC Logo"
+   ],
+   "pixels_rerendered_pct": 13.53,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Italic",
+    "LeagueGothic-Regular"
+   ]
+  },
+  "intro-women": {
+   "psd": "Női Intro Graph 26-27.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "Olimpiai Sport Park",
+    "Layer 3",
+    "ETO BASKET",
+    "Alapszakasz - 1. forduló - 2026.09.24. - 18.00",
+    "734488838_1327264879025947_6430803759669777128_n",
+    "ELTE BEAC ÚJBUDA",
+    "BEAC Logo"
+   ],
+   "pixels_rerendered_pct": 14.84,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  },
+  "referees-men": {
+   "psd": "Sporik ffi alap.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "           Goda László           Major Ádám           Söjtöry T"
+   ],
+   "pixels_rerendered_pct": 3.12,
+   "fonts_in_visible_text": [
+    "Satoshi-Black",
+    "Satoshi-BlackItalic"
+   ]
+  },
+  "referees-women": {
+   "psd": "Sporik női alap.psd",
+   "size": [
+    1920,
+    1080
+   ],
+   "dynamic_layers": [
+    "             Györfy Rúben             Major Ádám             Go"
+   ],
+   "pixels_rerendered_pct": 3.11,
+   "fonts_in_visible_text": [
+    "LeagueGothic-Regular"
+   ]
+  }
+ },
+ "logos": {
+  "men/oroszlany": {
+   "layer": "MVM_OSE_Lions_logo",
+   "size": [
+    800,
+    692
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": -178.0,
+    "useGlobalAngle": true,
+    "color": "#e52d2c"
+   }
+  },
+  "men/albafehervar": {
+   "layer": "Réteg 3",
+   "size": [
+    471,
+    300
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 1.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "men/kecskemet": {
+   "layer": "KTE log",
+   "size": [
+    800,
+    796
+   ],
+   "outline": null
+  },
+  "men/deac": {
+   "layer": "deac_cimer_vilagos_hattere",
+   "size": [
+    800,
+    684
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": true,
+    "color": "#ffffff"
+   }
+  },
+  "men/falcokc": {
+   "layer": "707827677_1744577086998875_3756147844167689831_n",
+   "size": [
+    800,
+    800
+   ],
+   "outline": null
+  },
+  "men/atomermomuse": {
+   "layer": "298784155_486303590163351_1138511388597255352_n",
+   "size": [
+    799,
+    800
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 1.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": -178.0,
+    "useGlobalAngle": true,
+    "color": "#ffffff"
+   }
+  },
+  "men/nkapecs": {
+   "layer": "375048273_892049032445448_8495367556296081544_n",
+   "size": [
+    799,
+    800
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 1.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ec6603"
+   }
+  },
+  "men/szedeak": {
+   "layer": "szedeak logo",
+   "size": [
+    800,
+    800
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": -178.0,
+    "useGlobalAngle": true,
+    "color": "#ffffff"
+   }
+  },
+  "men/sopron": {
+   "layer": "Sopron KC_kék-fehér_átlátszó szegéllyel",
+   "size": [
+    793,
+    800
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 1.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "men/szolnok": {
+   "layer": "Szolnoki_Olajbányász_KK_logo",
+   "size": [
+    293,
+    299
+   ],
+   "outline": null
+  },
+  "men/fot": {
+   "layer": "769182816_1751304319797877_4649982038652522199_n",
+   "size": [
+    463,
+    507
+   ],
+   "outline": null
+  },
+  "men/bphonved": {
+   "layer": "logo_0005_04",
+   "size": [
+    199,
+    235
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "men/kormend": {
+   "layer": "Körmendi_KC_logo",
+   "size": [
+    259,
+    379
+   ],
+   "outline": null
+  },
+  "men/kaposvar": {
+   "layer": "Kaposvári_KK",
+   "size": [
+    194,
+    350
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 3.0,
+    "spread": 100.0,
+    "distance": 1.0,
+    "opacity": 100.0,
+    "angle": -178.0,
+    "useGlobalAngle": true,
+    "color": "#ffffff"
+   }
+  },
+  "women/eltebeacujbuda": {
+   "layer": "BEAC Logo",
+   "size": [
+    800,
+    713
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "women/csatattk": {
+   "layer": "csata tkk logo",
+   "size": [
+    800,
+    756
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 7.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "women/davidkornelka": {
+   "layer": "vbw cekk cegléd logo",
+   "size": [
+    544,
+    516
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 0.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": -178.0,
+    "useGlobalAngle": true,
+    "color": "#ffffff"
+   }
+  },
+  "women/bkgprimaszigetszentmiklos": {
+   "layer": "PNGStroke",
+   "size": [
+    456,
+    439
+   ],
+   "outline": null
+  },
+  "women/vasasakademia": {
+   "layer": "Vasas_logo",
+   "size": [
+    800,
+    800
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "women/nkauniversitaspecs": {
+   "layer": "375048273_892049032445448_8495367556296081544_n",
+   "size": [
+    799,
+    800
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 1.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ec6603"
+   }
+  },
+  "women/sercounigyor": {
+   "layer": "734488838_1327264879025947_6430803759669777128_n",
+   "size": [
+    796,
+    800
+   ],
+   "outline": null
+  },
+  "women/dvtkhuntherm": {
+   "layer": "DVTK_cimer",
+   "size": [
+    437,
+    479
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "women/tarrkscszekszard": {
+   "layer": "ksc_szekszárd_logo_szines",
+   "size": [
+    322,
+    370
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 2.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffffff"
+   }
+  },
+  "women/tfse": {
+   "layer": "514359459_1311919607047822_1373282653064184459_n",
+   "size": [
+    597,
+    800
+   ],
+   "outline": null
+  },
+  "women/sopronbasket": {
+   "layer": "Sopron_Basket",
+   "size": [
+    253,
+    375
+   ],
+   "outline": {
+    "type": "DropShadow",
+    "size": 1.0,
+    "spread": 100.0,
+    "distance": 0.0,
+    "opacity": 100.0,
+    "angle": 90.0,
+    "useGlobalAngle": false,
+    "color": "#ffc905"
+   }
+  }
+ },
+ "competitions": {
+  "eurocup-women": {
+   "psd": "DVTK Last Games - 1025.psd",
+   "layer": "EuroCup_Women_logo_white_BG_portrait_positive_RGB",
+   "size": [
+    56,
+    67
+   ]
+  },
+  "euroleague-women": {
+   "psd": "DVTK Last Games - 1025.psd",
+   "layer": "EuroLeague_Women_Logo",
+   "size": [
+    69,
+    75
+   ]
+  },
+  "bcl": {
+   "psd": "Falco  LAST Games Graph 1111.psd",
+   "layer": "Screenshot 2026-01-16 at 10-05-55 (1) Instagram(1)",
+   "size": [
+    76,
+    69
+   ]
+  }
+ }
+}
