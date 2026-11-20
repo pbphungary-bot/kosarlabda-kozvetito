@@ -94,8 +94,10 @@
     },
     {
       "club": "PHOENIX Fóti Tigrisek",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/phoenixmtfot",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Confirmed by the site owner"
     },
     {
       "club": "Csata TKK",
@@ -142,10 +144,8 @@
       "club": "Atomerőmű SE",
       "official_page": "https://www.facebook.com/asekosar",
       "verification": "verified",
-      "verified_by": "linked_from_official_site",
-      "source_url": "https://kosarlabda.ase.hu/",
-      "alternatives": [],
-      "checked_at": "2026-11-20T11:43:17+00:00"
+      "verified_by": "manual",
+      "note": "Confirmed by the site owner"
     },
     {
       "club": "Délút-SZTE-Szedeák",
@@ -170,20 +170,17 @@
     },
     {
       "club": "OSE Lions",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/mvmoselions",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Confirmed by the site owner"
     },
     {
       "club": "ELTE BEAC Újbuda",
       "official_page": "https://www.facebook.com/beackosar",
       "verification": "verified",
-      "verified_by": "linked_from_official_site",
-      "source_url": "https://www.beac.hu/en/sport/kosarlabda",
-      "alternatives": [
-        "https://www.facebook.com/elte.beac",
-        "https://www.facebook.com/eltekosar"
-      ],
-      "checked_at": "2026-11-20T11:43:30+00:00"
+      "verified_by": "manual",
+      "note": "Confirmed by the site owner"
     },
     {
       "club": "ETO Basket",
@@ -201,8 +198,10 @@
     },
     {
       "club": "Sopron Basket",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/sopronbasket",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Confirmed by the site owner"
     },
     {
       "club": "TFSE",
