@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-20T09:54:40.581157+00:00",
+  "checked_at": "2026-11-20T10:58:16.639463+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 30,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 6,
-      "attempted": 6,
+      "candidates": 5,
+      "attempted": 5,
       "already_saved": 0,
-      "added": 6,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 6,
+      "usable_articles": 5,
       "source_coverage": true
     },
     {
@@ -142,8 +142,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 10,
-      "already_saved": 8,
-      "added": 1,
+      "already_saved": 9,
+      "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -517,6 +517,19 @@
       ]
     },
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyar Gergely: Szeretnénk a lehető legtovább jutni ebben a versenykiírásban",
+      "summary": "Magyar Gergely: - A nemzetközi mezőny kiváló lehetőséget teremt arra, hogy a magyar bajnokikra felkészüljünk, és éles szituációban is tudjunk gyakorolni, komoly ellenfelekkel szemben.",
+      "url": "http://dvtk.eu/37672-Magyar_Gergely_Szeretnenk_a_leheto_legtovabb_jutni_ebben_a_versenykiirasban-cikk-kosarlabda/",
+      "published_at": "2026-11-20T08:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "Hunbasket",
       "title": "Második Eb-selejtezős ellenfelünk: Portugália",
       "summary": "<div>A szerdai, németek elleni női Európa-bajnoki selejtezőt követően a magyar női kosárlabda-válogatott holnap este 18 órától Portugália ellen lép pályára a kvalifikációs sorozat második körének második fordulójában.",
@@ -570,6 +583,18 @@
       "published_at": "2026-11-19T20:05:52+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Az értékes tapasztalatok mellett a javításra váró hibák is kirajzolódtak – Seres Évával értékeltük a Bajnokok Tornáját",
+      "summary": "A Soproni Darazsak Sportakadémia együttese bronzérmes lett az XIII.",
+      "url": "https://wbasket.hu/az-ertekes-tapasztalatok-mellett-a-javitasra-varo-hibak-is-kirajzolodtak-seres-evaval-ertekeltuk-a-bajnokok-tornajat/",
+      "published_at": "2026.11.19. 19:54",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
