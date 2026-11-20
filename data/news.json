@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T19:55:00.647681+00:00",
+  "checked_at": "2026-11-20T20:41:26.024840+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 1,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -247,8 +247,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -466,6 +466,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -562,6 +563,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Csata TKK",
+      "title": "Vége a várakozásnak: Miskolcon tér vissza a bajnoki ritmusba a Csata TKK",
+      "summary": "A válogatott szünet után végre ismét bajnoki mérkőzés vár csapatunkra.",
+      "url": "https://csatatkk.hu/2026/11/20/vege-a-varakozasnak-miskolcon-ter-vissza-a-bajnoki-ritmusba-a-csata-tkk/",
+      "published_at": "2026-11-20T20:05:47+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Csata TKK",
+      "league": "women",
+      "teams": [
+        "women|Csata TTK"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Férfi egyetemi bajnokság: Kiélezett mérkőzésen győzött a BME-MAFC!",
@@ -12514,6 +12528,19 @@
       "league": "men",
       "teams": [
         "men|DEAC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Három Falco-pályamunka jutott döntőbe a Sport Forum Awards díjátadóján!",
+      "summary": "Három Falco-pályamunka jutott döntőbe a Sport Forum Awards díjátadóján!",
+      "url": "https://falcokc.com/harom-falco-palyamunka-jutott-dontobe-a-sport-forum-awards-dijatadojan/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
