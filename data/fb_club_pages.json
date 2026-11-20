@@ -26,8 +26,10 @@
     },
     {
       "club": "DEAC",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/deackosarlabda",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Added by the site owner"
     },
     {
       "club": "Egis Körmend",
@@ -156,8 +158,10 @@
     },
     {
       "club": "Endo Plus Service-Honvéd",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/honvedkosar",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Added by the site owner"
     },
     {
       "club": "Kometa-KVGY Kaposvári KK",
