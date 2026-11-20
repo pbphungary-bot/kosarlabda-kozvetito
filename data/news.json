@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T18:57:04.411867+00:00",
+  "checked_at": "2026-11-20T19:55:00.647681+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -465,6 +465,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -12340,6 +12341,15 @@
       "teams": [
         "men|Falco KC"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Judik Zoltán: Mind testközelből, mind a lelátóról nagy élmény a Harlem Globetrotters",
+      "summary": "Judik Zoltán: Mind testközelből, mind a lelátóról nagy élmény a Harlem Globetrotters",
+      "url": "https://hunbasket.hu/hir/77739/judik-zoltan-mind-testkozelbol-mind-a-lelatorol-nagy-elmeny-a-harlem-globetrotters/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
