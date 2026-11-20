@@ -1,11 +1,11 @@
 {
   "source": "Hunbasket",
-  "updated_at": "2026-11-09T05:34:08.658971+00:00",
+  "updated_at": "2026-11-18T14:37:10.603208+00:00",
   "coverage": [
     {
       "league": "men",
       "season": "2627",
-      "count": 55,
+      "count": 68,
       "url": "https://hunbasket.hu/menetrend-teljes/ferfi/x2627/hun"
     },
     {
@@ -88,6 +88,136 @@
     }
   ],
   "matches": [
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "NHSZ-Szolnoki Olajbányász",
+      "away": "DEAC",
+      "date": "2026-11-15",
+      "score": "96–87",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134875",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Atomerőmű SE",
+      "away": "Alba Fehérvár",
+      "date": "2026-11-14",
+      "score": "102–91",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134871",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "PHOENIX Fóti Tigrisek",
+      "away": "Egis Körmend",
+      "date": "2026-11-14",
+      "score": "96–108",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134877",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Endo Plus Service-Honvéd",
+      "away": "Falco-Vulcano Energia KC Szombathely",
+      "date": "2026-11-14",
+      "score": "96–87",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134869",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Kometa-KVGY Kaposvári KK",
+      "away": "Sopron KC",
+      "date": "2026-11-14",
+      "score": "112–119",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134873",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "OSE Lions",
+      "away": "Duna Aszfalt-DTKH Kecskemét",
+      "date": "2026-11-14",
+      "score": "76–84",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134879",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Délút-SZTE-Szedeák",
+      "away": "NKA Universitas Pécs",
+      "date": "2026-11-14",
+      "score": "84–78",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134881",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Falco-Vulcano Energia KC Szombathely",
+      "away": "Alba Fehérvár",
+      "date": "2026-11-11",
+      "score": "87–76",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134855",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Sopron KC",
+      "away": "Endo Plus Service-Honvéd",
+      "date": "2026-11-11",
+      "score": "74–72",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134857",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Egis Körmend",
+      "away": "Kometa-KVGY Kaposvári KK",
+      "date": "2026-11-11",
+      "score": "110–91",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134861",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "NKA Universitas Pécs",
+      "away": "PHOENIX Fóti Tigrisek",
+      "date": "2026-11-11",
+      "score": "76–90",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134865",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Délút-SZTE-Szedeák",
+      "away": "OSE Lions",
+      "date": "2026-11-11",
+      "score": "81–65",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134867",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "DEAC",
+      "away": "Atomerőmű SE",
+      "date": "2026-11-11",
+      "score": "74–83",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134859",
+      "source": "Hunbasket"
+    },
     {
       "league": "men",
       "season": "2026/2027",
