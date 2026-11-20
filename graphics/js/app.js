@@ -1,4 +1,4 @@
-import { loadDashboard, LEAGUES, SOURCES } from './data.js';
+import { loadDashboard, LEAGUES, SOURCES, gameKey } from './data.js';
 import { readFile } from './xlsx.js';
 import { importWorkbook, detectLeague, clubLabel } from './importer.js';
 import { club, CLUBS } from './clubs.js';
@@ -55,6 +55,7 @@ async function loadLeagueImages(lg) {
 }
 
 const tpl = () => templateById(state.template[state.league]);
+const s0 = () => state.sel[state.league];
 const sel = () => state.sel[state.league];
 const ovKey = () => tpl().id;
 const overrides = () => (state.overrides[ovKey()] ||= {});
@@ -136,8 +137,18 @@ function renderSelection(extra = {}) {
     $('matchSel').onchange = e => { s.matchKey = e.target.value; s.custom = null; update(true); };
   } else {
     $('selectTitle').textContent = '2. Csapat';
-    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; resetMatchOverrides(); update(true); };
+    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
+    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; resetMatchOverrides(); update(true); };
+    if (extra.games) {
+      const group = t.type === 'schedule' ? 'schedule' : 'results';
+      $('gameFilter').onchange = e => { s.gameFilter = e.target.value; update(true); };
+      $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; update(true); };
+      box.querySelectorAll('.gamelist input').forEach(cb => cb.onchange = () => {
+        const keys = [...box.querySelectorAll('.gamelist input:checked')].map(x => x.value);
+        if (keys.length > t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} mérkőzés fér el a sablonon.`); return; }
+        (s.games ||= {})[group] = keys; update(true);
+      });
+    }
     if (extra.players) {
       box.querySelectorAll('.players input').forEach(cb => cb.onchange = () => {
         const keys = [...box.querySelectorAll('.players input:checked')].map(x => x.value);
@@ -173,10 +184,11 @@ function autoValues() {
     info.players = r.players; info.shown = r.shown;
     if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a sablonon ${t.rows} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
   } else if (t.type === 'results' || t.type === 'schedule' || t.type === 'resultrows') {
-    const r = bindRowList(store, lg, s.teamId, t);
+    const r = bindRowList(store, lg, s.teamId, t, s.games?.[t.type === 'schedule' ? 'schedule' : 'results'] || null);
     v = r.values;
+    info.games = r.games; info.candidates = r.candidates;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
-    if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} NB I/A mérkőzés van az adatokban${t.type === 'schedule' && r.games.length < 5 ? ' (a menetrendnek legalább 5 sor kellene)' : ''} – a további sorok üresek (kézzel kitölthetők, pl. európai kupameccsek).` });
+    if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} mérkőzés jelenik meg (${r.candidates.length} van a listában: NB I/A + feltöltött kupameccsek)${t.type === 'schedule' && r.games.length < 5 ? ' – a menetrendnek legalább 5 sor kellene' : ''}. A további sorok üresek, kézzel kitölthetők.` });
     if (!store.cupFixtures(lg, s.teamId).length) info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Kupa- és európai meccseket tölts fel a „Kupameccsek” lapról (Adatok feltöltése), vagy írd be kézzel; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {
     v = bindReferees();
@@ -305,7 +317,22 @@ async function update(full) {
       const shownKeys = new Set(info.shown.map(x => x.key));
       playersHtml = `<label>Megjelenő játékosok (max. ${t.rows})</label><div class="players">${info.players.map(x => `<label><input type="checkbox" value="${esc(x.key)}" ${shownKeys.has(x.key) ? 'checked' : ''}> #${esc(x.p['#'])} ${esc(x.p['Játékos'])} <small>(${esc(x.p['M.'])} m., ${esc(x.p['Idő'])} perc)</small></label>`).join('')}</div>`;
     }
-    renderSelection({ players: playersHtml });
+    let gamesHtml = '';
+    if (info.candidates) {
+      const sch = t.type === 'schedule';
+      const filter = s0().gameFilter || 'all';
+      const group = sch ? 'schedule' : 'results';
+      const manual = !!s0().games?.[group];
+      const shownKeys = new Set(info.games.map(gameKey));
+      const list = info.candidates.filter(m => filter === 'all' || (filter === 'cup' ? m.cup : !m.cup));
+      const ordered = sch ? list : [...list].reverse(); // newest first for results
+      const nameOf = m => `${club(state.league, m.homeId)?.short || m.home} – ${club(state.league, m.awayId)?.short || m.away}`;
+      gamesHtml = `<label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
+        <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
+        <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>
+        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}</small>` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
+    }
+    renderSelection({ players: playersHtml, games: gamesHtml });
     renderFields(values, auto);
     $('fileName').value = fileName(values);
   }

@@ -219,3 +219,42 @@ test('cup games belong to their league and switch off with the Excel toggle', as
   store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'w2.xlsx' });
   assert.equal(store.excelInfo('women').cups, 5);
 });
+
+// ───────────── choosing which games appear (e.g. a finished European run) ─────────────
+import { gameKey } from '../graphics/js/data.js';
+
+test('results list: European games can be picked even when newer NB I/A games exist', async () => {
+  const store = await loadStore();
+  store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'cups-women.xlsx' });
+  const t = templateById('results-women');
+  // default = the six most recent games: all NB I/A, the older European games fall outside
+  const auto = bindRowList(store, 'women', 'dvtkhuntherm', t);
+  assert.ok(auto.games.length === 6);
+  assert.ok(auto.games.filter(m => m.cup).length < 3);
+  // pick the three played European games + three NB I/A games
+  const cups = auto.candidates.filter(m => m.cup);
+  assert.equal(cups.length, 3);
+  const league = auto.candidates.filter(m => !m.cup).slice(-3);
+  const picked = bindRowList(store, 'women', 'dvtkhuntherm', t, [...cups, ...league].map(gameKey));
+  assert.equal(picked.games.length, 6);
+  assert.equal(picked.games.filter(m => m.cup).length, 3);
+  assert.deepEqual(picked.games.map(m => m.date), [...picked.games.map(m => m.date)].sort(), 'shown in date order');
+  const euro = picked.games.findIndex(m => m.cup && m.away === 'Crvena Zvezda');
+  assert.equal(picked.values[`r${euro}.comp`].src, 'comp/euroleague-women');
+  // more picks than rows are cut at the template's rows
+  assert.equal(bindRowList(store, 'women', 'dvtkhuntherm', t, auto.candidates.map(gameKey)).games.length, 6);
+});
+
+test('a team whose European run is over: schedule shows only NB I/A games, no empty European rows', async () => {
+  const store = await loadStore(); // "today" 2026-11-20
+  // played European games only (no upcoming ones) – like DVTK after its last European game
+  const wb = readXlsx(bytes('cups-women.xlsx'));
+  const imp = importWorkbook(wb, 'women');
+  imp.cups = imp.cups.filter(g => g.status === 'finished');
+  store.mergeExcel('women', imp, { name: 'played-only.xlsx' });
+  const sch = bindRowList(store, 'women', 'dvtkhuntherm', templateById('schedule-women'));
+  assert.equal(sch.games.filter(m => m.cup).length, 0);
+  assert.equal(sch.games.length, 6);
+  for (let i = 0; i < 6; i++) assert.equal(sch.values[`r${i}.comp`].src, '');
+  assert.ok(store.cupFixtures('women', 'dvtkhuntherm').length === 3, 'the played ones stay available for results');
+});

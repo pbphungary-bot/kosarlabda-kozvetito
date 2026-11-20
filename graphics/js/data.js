@@ -17,6 +17,9 @@ export const SOURCES = {
 
 export const STALE_HOURS = 48;
 
+/** Stable identity of a game (used to remember which games the operator picked). */
+export const gameKey = m => m.url || `${m.date}|${m.home}|${m.away}`;
+
 /** "2026. 09. 25." → "2026-09-25" */
 export function parseHuDate(s) {
   const m = String(s || '').match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})/);
@@ -133,6 +136,17 @@ export class Store {
       cup: true, competition: g.competition, compKey: g.compKey,
       resultMissing: g.status !== 'finished' && g.date < today, finishedWithoutScore: false,
     }));
+  }
+
+  /** All played games of the team with a score (NB I/A + uploaded cup/European games), oldest first. */
+  playedGames(lg, id) {
+    return this.teamFixtures(lg, id).filter(m => m.status === 'finished' && m.score);
+  }
+
+  /** All games still to play (today or later), soonest first. */
+  upcomingGames(lg, id) {
+    const today = this.now.toISOString().slice(0, 10);
+    return this.teamFixtures(lg, id).filter(m => m.status !== 'finished' && m.date && m.date >= today);
   }
 
   /** Most recent finished games with a valid score, oldest first. */

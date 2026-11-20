@@ -290,6 +290,21 @@ try {
     await dl.saveAs(path.join(out, 'schedule-women-cups.png'));
     await page.click('#templateList button[data-id="results-women"]');
     await page.waitForTimeout(400);
+    // default = latest six games; choose the European games through the picker
+    await page.selectOption('#gameFilter', 'cup');
+    await page.waitForTimeout(300);
+    assert.equal(await page.locator('.gamelist input').count(), 3, 'three played European games');
+    for (const cb of await page.locator('.gamelist input').all()) await cb.check();
+    await page.waitForTimeout(400);
+    assert.match(await page.locator('#selection').innerText(), /kézi választás/);
+    const euro = await page.evaluate(() => Object.entries(window.__studio.current().values).filter(([k, x]) => k.endsWith('.comp') && x.src).map(([, x]) => x.src).sort());
+    assert.deepEqual(euro, ['comp/eurocup-women', 'comp/eurocup-women', 'comp/euroleague-women']);
+    await page.screenshot({ path: path.join(out, 'ui-results-pick-european.png') });
+    const [dl3] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl3.saveAs(path.join(out, 'results-women-european.png'));
+    await page.click('#gamesAuto');
+    await page.waitForTimeout(300);
+    assert.match(await page.locator('#selection').innerText(), /automatikus/);
     const rv = await page.evaluate(() => window.__studio.current().values);
     assert.ok(Object.entries(rv).some(([k, x]) => k.endsWith('.comp') && x.src === 'comp/eurocup-women'));
     const [dl2] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
