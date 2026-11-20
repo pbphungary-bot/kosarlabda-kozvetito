@@ -104,3 +104,7 @@ details.import .hint { font-size: 12px; color: var(--muted); margin: 8px 0; }
 #importPreview ul { margin: 4px 0 8px; padding-left: 18px; }
 #importPreview table { border-collapse: collapse; width: 100%; margin: 6px 0; }
 #importPreview td, #importPreview th { border: 1px solid var(--line); padding: 3px 6px; text-align: left; }
+
+.base-opacity { display: flex; align-items: center; gap: 6px; }
+.base-opacity input[type=range] { width: 110px; padding: 0; }
+.zoom button#baseOpacityPsd { padding: 2px 8px; font-size: 12px; }

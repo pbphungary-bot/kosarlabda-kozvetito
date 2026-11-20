@@ -208,6 +208,60 @@ try {
     assert.equal(await page.evaluate(() => window.__studio.store.excelInfo('women')), null);
     assert.notEqual(await page.evaluate(() => window.__studio.store.excelInfo('men')), null, 'men data untouched by clearing women');
   });
+  await check('intro: two-line name + rank line do not overlap (DVTK Huntherm), logo stays clear', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="intro-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#matchSel', '__custom');
+    await page.selectOption('#customHome', 'dvtkhuntherm');
+    await page.selectOption('#customAway', 'csatattk');
+    await page.waitForTimeout(300);
+    await page.locator('.field[data-id="home.rank"] input.vis').check();
+    await page.waitForTimeout(300);
+    const m = await page.evaluate(() => {
+      const g = document.getElementById('canvas').getContext('2d');
+      const x0 = 440, y0 = 600, w = 400, h = 360;
+      const d = g.getImageData(x0, y0, w, h).data;
+      const whiteRows = [];
+      for (let y = 0; y < h; y++) {
+        let n = 0;
+        for (let x = 0; x < w; x++) { const i = (y * w + x) * 4; if (d[i + 3] > 200 && d[i] > 245 && d[i + 1] > 245 && d[i + 2] > 245) n++; }
+        if (n) whiteRows.push(y + y0);
+      }
+      return { whiteRows };
+    });
+    const nameRows = m.whiteRows.filter(y => y >= 662 && y < 850);
+    const inGap = m.whiteRows.filter(y => y >= 815 && y <= 858);
+    assert.ok(nameRows.length > 100, 'name drawn');
+    assert.deepEqual(inGap, [], 'nothing between the name block (ends ≈809) and the rank line (starts ≈863)');
+    assert.ok(Math.min(...nameRows) >= 655, `name top ${Math.min(...nameRows)} must stay below the logo (≈650)`);
+    await page.screenshot({ path: path.join(out, 'ui-intro-rank-fixed.png') });
+  });
+  await check('base opacity: default 96.5 % inside the panel, slider and PSD value work, export keeps it', async () => {
+    const alphaAt = () => page.evaluate(() => document.getElementById('canvas').getContext('2d').getImageData(380, 700, 1, 1).data[3]);
+    assert.equal(await alphaAt(), 246); // 0.965 * 255
+    assert.equal(await page.evaluate(() => document.getElementById('canvas').getContext('2d').getImageData(960, 1030, 1, 1).data[3] >= 0), true);
+    await page.locator('#baseOpacity').fill('100');
+    await page.waitForTimeout(250);
+    assert.equal(await alphaAt(), 255);
+    await page.locator('#baseOpacity').fill('90');
+    await page.waitForTimeout(250);
+    assert.equal(await alphaAt(), 230);
+    await page.click('#baseOpacityPsd');
+    await page.waitForTimeout(250);
+    assert.equal(await alphaAt(), 255); // the intro PSD is fully opaque
+    assert.match(await page.locator('#baseOpacityVal').innerText(), /PSD/);
+    // outside the panel (logo strip) the opacity is untouched
+    await page.locator('#baseOpacity').fill('90');
+    await page.waitForTimeout(250);
+    const strip = await page.evaluate(() => document.getElementById('canvas').getContext('2d').getImageData(900, 1020, 1, 1).data[3]);
+    assert.ok(strip === 0 || strip > 230);
+    await page.locator('#baseOpacity').fill('96.5');
+    await page.waitForTimeout(250);
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'intro-women-rank.png'));
+    assert.equal(await alphaAt(), 246);
+  });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

@@ -25,6 +25,7 @@ const state = Object.assign({
   sel: { men: {}, women: {} },
   overrides: {},
   zoom: 'fit',
+  baseOpacity: 0.965, // court/panel opacity of the export; null = the PSD's own value
 }, lsGet(LS.state, {}));
 let store = null;
 let fontsOk = false;
@@ -33,7 +34,7 @@ const measureCanvas = document.createElement('canvas').getContext('2d');
 let lastReport = null;
 let outlines = {};
 
-const saveState = () => lsSet(LS.state, { league: state.league, template: state.template, sel: state.sel, overrides: state.overrides, zoom: state.zoom });
+const saveState = () => lsSet(LS.state, { league: state.league, template: state.template, sel: state.sel, overrides: state.overrides, zoom: state.zoom, baseOpacity: state.baseOpacity });
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
 function loadImage(key, url) {
@@ -293,6 +294,7 @@ function fileName(values) {
 
 async function update(full) {
   const t = tpl();
+  renderBaseOpacity();
   document.body.classList.toggle('women', state.league === 'women');
   const { v: auto, info } = autoValues();
   const values = mergedValues(auto);
@@ -310,7 +312,7 @@ async function update(full) {
   $('notices').innerHTML = info.notices.map(n => `<div class="notice ${n.bad ? 'bad' : ''}">${esc(n.text)}</div>`).join('');
   const bg = await loadImage('bg/' + t.id, t.background);
   const canvas = $('canvas');
-  lastReport = render(canvas, t, values, { background: bg, images, outlines });
+  lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
   if ($('showRef').checked) {
     const ref = await loadImage('ref/' + t.id, t.reference);
     const ctx = canvas.getContext('2d');
@@ -431,6 +433,14 @@ async function switchLeague(lg, keep) {
   await update(true);
 }
 
+function renderBaseOpacity() {
+  const t = tpl();
+  const v = state.baseOpacity === null ? t.panel.alpha : state.baseOpacity;
+  $('baseOpacity').value = Math.round(v * 1000) / 10;
+  $('baseOpacityVal').textContent = (Math.round(v * 1000) / 10).toFixed(1).replace('.', ',') + '%'
+    + (state.baseOpacity === null ? ' (PSD)' : '');
+}
+
 function applyZoom() {
   document.querySelectorAll('[data-zoom]').forEach(b => b.classList.toggle('on', b.dataset.zoom === state.zoom));
   $('stage').classList.toggle('actual', state.zoom === '1');
@@ -447,6 +457,8 @@ async function main() {
   $('exportBtn').onclick = exportPng;
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
   $('showRef').onchange = () => update(false);
+  $('baseOpacity').oninput = e => { state.baseOpacity = +e.target.value / 100; renderBaseOpacity(); update(false); };
+  $('baseOpacityPsd').onclick = () => { state.baseOpacity = null; renderBaseOpacity(); update(false); };
   document.querySelectorAll('[data-zoom]').forEach(b => b.onclick = () => { state.zoom = b.dataset.zoom; applyZoom(); saveState(); });
   $('savePreset').onclick = savePreset;
   $('presetList').onclick = e => {

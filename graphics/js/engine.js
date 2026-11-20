@@ -124,27 +124,33 @@ function drawText(ctx, el, v, report) {
   if (overflow) report.overflow.push(el.id);
   if (scaled) report.scaled.push(el.id);
   const lh = el.lineHeight || el.size * 1.2;
-  const lhs = lh * (size / el.size);
+  // A two-line name with the rank line shown below it would collide with that line:
+  // the block is then set 15% smaller and grows upward from the single-line baseline.
+  const compact = !!el.rankOn && lines.length > 1;
+  const sz = compact ? size * 0.85 : size;
+  const lhs = compact ? sz * 0.9 : lh * (size / el.size);
   let y0 = el.y;
-  if (el.wrap?.anchor === 'middle') y0 = el.y - ((lines.length - 1) * lhs) / 2;
+  if (compact) y0 = el.y - (lines.length - 1) * lhs;
+  else if (el.wrap?.anchor === 'middle') y0 = el.y - ((lines.length - 1) * lhs) / 2;
   const style = { ...el, outline: v.outline === null ? null : (v.outline || el.outline) };
   const color = v.color || el.color;
   const placed = lines.map((line, i) => {
     const runs = el.runs && v.runs ? v.runs : [{ text: line }];
     const runsText = runs.map(r => (el.caps ? upper(r.text) : r.text));
     const shaped = runs.map((r, k) => ({ ...r, text: runsText[k] }));
-    const w = shaped.reduce((a, r) => a + measure(ctx, style, r.text, size), 0)
-      + (shaped.length > 1 ? ((style.tracking || 0) / 1000) * size * (shaped.length - 1) : 0);
+    const w = shaped.reduce((a, r) => a + measure(ctx, style, r.text, sz), 0)
+      + (shaped.length > 1 ? ((style.tracking || 0) / 1000) * sz * (shaped.length - 1) : 0);
     let x = el.x;
     if (el.align === 'center') x = el.x - w / 2;
     else if (el.align === 'right') x = el.x - w;
     return { runs: shaped, x, y: y0 + i * lhs };
   });
   ctx.save();
+  ctx.globalAlpha = el.opacity ?? 1; // layer opacity from the PSD (e.g. 98.8 %)
   if (style.outline && style.outline.size > 0) {
-    for (const p of placed) drawRuns(ctx, p.runs, p.x, p.y, size, style, color, true);
+    for (const p of placed) drawRuns(ctx, p.runs, p.x, p.y, sz, style, color, true);
   }
-  for (const p of placed) drawRuns(ctx, p.runs, p.x, p.y, size, style, color, false);
+  for (const p of placed) drawRuns(ctx, p.runs, p.x, p.y, sz, style, color, false);
   ctx.restore();
 }
 
@@ -203,6 +209,24 @@ function drawImage(ctx, el, v, assets) {
 }
 
 /**
+ * Sets the opacity of the base graphic (court + panel). The PSDs differ (95 %, 98.8 %, 100 %);
+ * `base` is the wanted opacity (0–1). Only pixels inside the panel are changed, so the logo strip
+ * under the panel keeps its own opacity. base == null keeps the PSD's native opacity.
+ */
+export function applyBaseOpacity(ctx, template, base) {
+  const p = template.panel;
+  if (base === null || base === undefined || !p) return;
+  const f = base / p.alpha;
+  if (Math.abs(f - 1) < 1e-6) return;
+  const x0 = Math.max(0, p.box[0]), y0 = Math.max(0, p.box[1]);
+  const x1 = Math.min(template.width, p.box[2]), y1 = Math.min(template.height, p.box[3]);
+  const img = ctx.getImageData(x0, y0, x1 - x0, y1 - y0);
+  const d = img.data;
+  for (let i = 3; i < d.length; i += 4) if (d[i]) d[i] = Math.min(255, Math.round(d[i] * f));
+  ctx.putImageData(img, x0, y0);
+}
+
+/**
  * values: { [elementId]: {text?, color?, src?, visible?, outline?, runs?} }
  * assets: { background, images: {key: image}, outlines: {logoKey: {size,color,dx,dy}} }
  * Returns a report of elements that were shrunk or could not fit.
@@ -213,10 +237,16 @@ export function render(canvas, template, values, assets) {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (assets.background) ctx.drawImage(assets.background, 0, 0, template.width, template.height);
+  applyBaseOpacity(ctx, template, assets.baseOpacity);
   const report = { overflow: [], scaled: [] };
   for (const base of template.elements) {
     const v = values[base.id] || {};
-    const el = v.geom ? { ...base, ...v.geom } : base;
+    let el = v.geom ? { ...base, ...v.geom } : base;
+    if (el.compactWith) {
+      const rv = values[el.compactWith] || {};
+      const re = template.elements.find(e => e.id === el.compactWith);
+      el = { ...el, rankOn: (rv.visible ?? re?.visible ?? true) && (rv.text ?? '') !== '' };
+    }
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
     if (el.type === 'text') drawText(ctx, el, v, report);
