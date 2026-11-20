@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-20T14:16:32.234622+00:00",
+  "checked_at": "2026-11-20T15:10:34.649389+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -45,11 +45,11 @@
     },
     {
       "source": "Nemzeti Sport",
-      "status": "ok",
+      "status": "partial",
       "candidates": 50,
       "added": 0,
-      "repaired": 50,
-      "article_errors": 0,
+      "repaired": 48,
+      "article_errors": 2,
       "listing_errors": []
     },
     {
@@ -196,8 +196,8 @@
       "candidates": 12,
       "attempted": 12,
       "already_saved": 11,
-      "added": 1,
-      "repaired": 0,
+      "added": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 12,
@@ -465,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -554,8 +552,8 @@
       "candidates": 31,
       "attempted": 30,
       "already_saved": 0,
-      "added": 2,
-      "repaired": 28,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -11275,6 +11273,15 @@
         "women|Sopron Basket"
       ],
       "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Négy kategóriában is helyezést ért el az MKOSZ a Sport Forum Awards 2026-on",
+      "summary": "Négy kategóriában is helyezést ért el az MKOSZ a Sport Forum Awards 2026-on",
+      "url": "https://hunbasket.hu/hir/77740/negy-kategoriaban-is-helyezest-ert-el-az-mkosz-a-sport-forum-awards-2026-on/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: TFSE",
