@@ -645,7 +645,9 @@
       "url": "https://wbasket.hu/dominique-darius-valtja-india-johnstont-a-vasasnal/",
       "published_at": "2026.11.08. 17:59",
       "summary_method": "article_body",
-      "teams": [],
+      "teams": [
+        "women|Vasas Akadémia"
+      ],
       "league": "women"
     },
     {
@@ -728,7 +730,7 @@
       "published_at": "2026.11.08. 06:44",
       "summary_method": "article_body",
       "teams": [
-        "women|Sopron Basket"
+        "women|Vasas Akadémia"
       ],
       "league": "women"
     },
@@ -1530,9 +1532,7 @@
       "published_at": "2026.11.05. 16:32",
       "summary_method": "article_body",
       "league": "women",
-      "teams": [
-        "women|TARR KSC Szekszárd"
-      ]
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -1580,9 +1580,7 @@
       "published_at": "2026.11.05. 13:22",
       "summary_method": "article_body",
       "league": "women",
-      "teams": [
-        "women|Sopron Basket"
-      ]
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -1644,10 +1642,7 @@
       "published_at": "2026.11.05. 08:22",
       "summary_method": "article_body",
       "league": "women",
-      "teams": [
-        "women|Sopron Basket",
-        "women|DVTK HUNTHERM"
-      ]
+      "teams": []
     },
     {
       "source": "BB1.hu",
@@ -1728,7 +1723,9 @@
       "published_at": "2026.11.04. 21:19",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
     },
     {
       "source": "Nemzeti Sport",
@@ -1807,7 +1804,6 @@
       "summary_method": "article_body",
       "league": "women",
       "teams": [
-        "women|Sopron Basket",
         "women|DVTK HUNTHERM"
       ]
     },
@@ -2123,7 +2119,7 @@
       "summary_method": "source_description",
       "league": "women",
       "teams": [
-        "women|Sopron Basket"
+        "women|Vasas Akadémia"
       ]
     },
     {
@@ -2866,7 +2862,9 @@
       "published_at": "2026.10.27. 13:54",
       "summary_method": "article_body",
       "league": "women",
-      "teams": []
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "Klub: Vasas Akadémia",
