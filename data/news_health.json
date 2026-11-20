@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-19T23:23:52.820175+00:00",
+  "checked_at": "2026-11-20T00:03:24.343980+00:00",
   "statistics": {
     "total": 1070,
     "fresh": 497,
@@ -7,8 +7,8 @@
     "missing_dates": 203,
     "headline_only": 512,
     "untagged": 482,
-    "sources_ok": 19,
-    "sources_partial": 2,
+    "sources_ok": 20,
+    "sources_partial": 1,
     "sources_failed": 10,
     "new_articles": 7,
     "sources_total": 31,
@@ -249,19 +249,17 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
       "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://csatatkk.hu/hirek/: TimeoutError: The read operation timed out"
-      ],
+      "listing_errors": [],
       "usable_articles": 10,
       "source_coverage": true
     },
