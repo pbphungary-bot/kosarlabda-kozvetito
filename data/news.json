@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-20T13:03:37.356500+00:00",
+  "checked_at": "2026-11-20T17:57:13.564794+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 30,
-      "added": 0,
+      "candidates": 31,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -36,11 +36,11 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: <urlopen error timed out>",
-        "https://kezdo5.hu/noi: <urlopen error timed out>",
-        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/noi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/europa: <urlopen error timed out>"
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -195,9 +195,9 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 12,
+      "already_saved": 11,
       "added": 0,
-      "repaired": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 12,
@@ -263,8 +263,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 15,
+      "added": 1,
+      "repaired": 14,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -384,15 +384,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://honved.hu/kosarlabda/: URLError: <urlopen error timed out>"
+        "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -402,24 +402,26 @@
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
       "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 3,
+      "attempted": 3,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 3,
       "listing_errors": [
-        "https://www.delfinek.hu/: URLError: <urlopen error timed out>",
-        "https://www.delfinek.hu/hirek: URLError: <urlopen error timed out>"
+        "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/szurkoloi-hirek/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/news-in-english/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/felkeszulesi-merkozesek/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:0"
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:3"
       ]
     },
     {
@@ -509,15 +511,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: URLError: <urlopen error timed out>"
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -547,7 +549,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
+      "candidates": 31,
       "attempted": 30,
       "already_saved": 0,
       "added": 0,
@@ -559,6 +561,51 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Férfi egyetemi bajnokság: Kiélezett mérkőzésen győzött a BME-MAFC!",
+      "summary": "A műszaki alakulat remek támadójátékkal bravúros győzelmet aratott a Nyíregyháza otthonában.",
+      "url": "https://bball1.hu/ferfi-egyetemi-bajnoksag-kielezett-merkozesen-gyozott-a-bme-mafc/",
+      "published_at": "2026-11-20T18:43:46+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Duna Aszfalt-DTKH Kecskemét – NHSZ-Szolnoki Olajbányász",
+      "summary": "Szolnok, Szolnok Városi Sportcsarnok, szombat 18:00.",
+      "url": "https://bball1.hu/duna-aszfalt-dtkh-kecskemet-nhsz-szolnoki-olajbanyasz-3/",
+      "published_at": "2026-11-20T18:00:22+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kecskemét",
+        "men|Szolnok"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nemzetközi kitekintő: Walker eligazolása ellenére is nagy bravúrt mutatott be a Vilpas, Golománéknak visszavágott a Galata",
+      "summary": "A Szolnok csoportjában öt győzelemmel áll a Girona, a Góra és az Oostende is.",
+      "url": "https://bball1.hu/nemzetkozi-kitekinto-walker-eligazolasa-ellenere-is-nagy-bravurt-mutatott-be-a-vilpas-golomaneknak-visszavagott-a-galata/",
+      "published_at": "2026-11-20T16:13:17+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Fővárosi rangadóval tér vissza a bajnoki pontvadászat",
+      "summary": "A válogatott szünetet követően ismét a bajnoki küzdelmeké a főszerep.",
+      "url": "https://vasasbasket.hu/index.php/fovarosi-rangadoval-ter-vissza-a-bajnoki-pontvadaszat/",
+      "published_at": "2026-11-20T15:21:04+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "20×20: Történelmet írt Perl Zoltán a Bajnokok Ligájában",
@@ -6748,6 +6795,19 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Játékra éhesen fogadjuk a Ceglédet",
+      "summary": "Vasárnap 17 órakor bajnoki mérkőzésen a Cegléd együttesét fogadjuk a győri Olimpiai Sportpark multicsarnokában.",
+      "url": "https://etobasket.hu/hu/hirek/jatekra-ehesen-fogadjuk-a-cegledet/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "Információk a jegy- és bérletvásárlásról",
       "summary": "Ami még lényeges: most már lehet bankkártyával is fizetni.",
       "url": "https://etobasket.hu/hu/hirek/informaciok-a-jegy--es-berletvasarlasrol/",
@@ -6816,6 +6876,19 @@
       "title": "A még hibátlan DVTK otthonában folytatjuk a bajnokságot",
       "summary": "Vasárnap 17 órakor a válogatott szünet előtti utolsó bajnoki mérkőzésünkön a DVTK-hoz látogatunk.",
       "url": "https://etobasket.hu/hu/hirek/a-meg-hibatlan-dvtk-otthonaban-folytatjuk-a-bajnoksagot-/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
+      "title": "A másodosztályban is edződnek a fiataljaink",
+      "summary": "Az első csapat mellett az NB I/B-ben is indítottunk csapatot.",
+      "url": "https://etobasket.hu/hu/hirek/a-masodosztalyban-is-edzodnek-a-fiataljaink/",
       "published_at": "2026.09.24. 18:00",
       "summary_method": "article_body",
       "publisher_club": "ETO Basket",
@@ -10511,6 +10584,19 @@
       ]
     },
     {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Újra a Lauberben – a BEAC ellen folytatjuk a bajnokságot",
+      "summary": "A válogatott szünet után szombaton 18 órakor a BEAC ellen lép pályára az NKA Universitas Pécs a Lauber Dezső Sportcsarnokban.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Ujra-a-Lauberben-a-BEAC-ellen-folytatjuk-a-bajnoksagot/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Újra Berényi Sándor irányítja a DEAC-ot",
       "summary": "A DEAC kosárlabdacsapatának vezetősége az A-csoportos feljutást egykoron kiharcoló, majd később Magyar Kupa-bronzérmet szerző Berényi Sándort nevezte ki a gárda élére.",
@@ -11273,6 +11359,15 @@
       "league": "women"
     },
     {
+      "source": "Hunbasket",
+      "title": "Négy kategóriában is helyezést ért el az MKOSZ a Sport Forum Awards 2026-on",
+      "summary": "Négy kategóriában is helyezést ért el az MKOSZ a Sport Forum Awards 2026-on",
+      "url": "https://hunbasket.hu/hir/77740/negy-kategoriaban-is-helyezest-ert-el-az-mkosz-a-sport-forum-awards-2026-on/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
       "source": "Klub: TFSE",
       "title": "Négy játékosunk kapott meghívót az U20-as válogatott első edzőtáborába",
       "summary": "Völgyi Lili, Szauter Petra, Babay-Bognár Kinga és Janzsó Alíz is meghívást kapott a 2027-es Európa-bajnokságra készülő U20-as női kosárlabda-válogatott első összetartására.",
@@ -11680,6 +11775,19 @@
       ]
     },
     {
+      "source": "Klub: TFSE",
+      "title": "Minden út a TF-re vezet!",
+      "summary": "MINDEN ÚT A TF-RE VEZET – Húsz év után találkoztak újra az egykori óvodástársak!",
+      "url": "https://tfse.hu/minden-ut-a-tf-re-vezet/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
       "source": "Klub: DEAC",
       "title": "Megvan az első!",
       "summary": "Öt vereség után megszerezte első győzelmét a bajnokságban a DEAC kosárlabdacsapata, Kovács Márk együttese tízpontos hátrányból felállva 86–76-ra múlta felül a továbbra is nyeretlen Duna Aszfalt-DTKH Kecskemétet.",
@@ -11738,6 +11846,19 @@
       "league": "men",
       "teams": [
         "men|Szedeák"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Magabiztos továbbjutás Kunhegyesről",
+      "summary": "Férfi NB I Liga-csapatunk Kunhegyesen kezdte a Férfi Magyar Kupa-sorozatot, és a selejtezőben 3:0-ra nyert a Kunhegyes ESE vendégeként.",
+      "url": "https://tfse.hu/magabiztos-tovabbjutas-kunhegyesrol/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
@@ -13271,6 +13392,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "A kupagyőztes Szolnokot fogadjuk",
+      "summary": "A Duna Aszfalt-DTKH Kecskemét múlt szombaton Oroszlányban megszerezte szezonbeli első győzelmét.",
+      "url": "https://ktekosar.hu/hirek/a-kupagyoztes-szolnokot-fogadjuk/",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
       ]
     },
     {

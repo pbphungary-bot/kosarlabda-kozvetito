@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-20T13:03:37.356500+00:00",
+  "checked_at": "2026-11-20T17:57:13.564794+00:00",
   "statistics": {
-    "total": 1150,
-    "fresh": 514,
-    "fresh_with_summary": 329,
-    "missing_dates": 254,
-    "headline_only": 528,
-    "untagged": 477,
+    "total": 1161,
+    "fresh": 517,
+    "fresh_with_summary": 332,
+    "missing_dates": 259,
+    "headline_only": 530,
+    "untagged": 480,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 6,
+    "new_articles": 9,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -19,8 +19,8 @@
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 30,
-      "added": 0,
+      "candidates": 31,
+      "added": 2,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -51,11 +51,11 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: <urlopen error timed out>",
-        "https://kezdo5.hu/noi: <urlopen error timed out>",
-        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/noi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/europa: <urlopen error timed out>"
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -210,9 +210,9 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 12,
+      "already_saved": 11,
       "added": 0,
-      "repaired": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 12,
@@ -278,8 +278,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 15,
+      "added": 1,
+      "repaired": 14,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -399,15 +399,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://honved.hu/kosarlabda/: URLError: <urlopen error timed out>"
+        "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -417,24 +417,26 @@
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
       "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 3,
+      "attempted": 3,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 3,
       "listing_errors": [
-        "https://www.delfinek.hu/: URLError: <urlopen error timed out>",
-        "https://www.delfinek.hu/hirek: URLError: <urlopen error timed out>"
+        "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/szurkoloi-hirek/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/news-in-english/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/felkeszulesi-merkozesek/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:0"
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:3"
       ]
     },
     {
@@ -524,15 +526,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: URLError: <urlopen error timed out>"
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -562,7 +564,7 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
+      "candidates": 31,
       "attempted": 30,
       "already_saved": 0,
       "added": 0,
