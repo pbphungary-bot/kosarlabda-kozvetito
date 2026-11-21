@@ -341,6 +341,45 @@ try {
     await page.click('#excelClear');
     await page.waitForTimeout(300);
   });
+  await check('add a European game by hand: form → schedule row with logo → delete', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="schedule-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#teamSel', 'dvtkhuntherm');
+    await page.waitForTimeout(300);
+    assert.match(await page.locator('#selection').innerText(), /nincs kupa-\/európai meccs/);
+    await page.locator('#addGame summary').click();
+    const day = new Date(Date.now() + 2 * 864e5).toISOString().slice(0, 10);
+    await page.fill('#agDate', day);
+    await page.fill('#agTime', '19:30');
+    await page.selectOption('#agComp', 'EuroCup Women');
+    await page.fill('#agOpp', 'Teszt Basket');
+    await page.click('#agSave');
+    await page.waitForTimeout(500);
+    let v = await page.evaluate(() => window.__studio.current().values);
+    const row = Object.entries(v).find(([k, x]) => k.endsWith('.match') && /Teszt Basket/.test(x.text));
+    assert.ok(row, 'row with the added game');
+    const r = row[0].split('.')[0];
+    assert.equal(v[`${r}.comp`].src, 'comp/eurocup-women');
+    assert.match(v[`${r}.date`].text, /19:30$/);
+    assert.equal(await page.locator('.gamelist .delcup').count(), 1);
+    await page.screenshot({ path: path.join(out, 'ui-add-game.png') });
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'schedule-added-game.png'));
+    // validation: missing opponent is refused
+    await page.fill('#agDate', day); // the form clears itself after a save
+    await page.fill('#agOpp', '');
+    await page.click('#agSave');
+    assert.match(await page.locator('#agMsg').innerText(), /ellenfelet/);
+    // delete it again
+    await page.locator('.gamelist .delcup').click();
+    await page.waitForTimeout(400);
+    v = await page.evaluate(() => window.__studio.current().values);
+    assert.ok(!Object.entries(v).some(([k, x]) => k.endsWith('.match') && /Teszt Basket/.test(x.text)));
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.click('#excelClear');
+    await page.waitForTimeout(300);
+  });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

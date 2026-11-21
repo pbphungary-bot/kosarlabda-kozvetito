@@ -1,7 +1,7 @@
 import { loadDashboard, LEAGUES, SOURCES, gameKey } from './data.js';
 import { readFile } from './xlsx.js';
-import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText } from './importer.js';
-import { club, CLUBS } from './clubs.js';
+import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
+import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import {
@@ -142,6 +142,38 @@ function renderSelection(extra = {}) {
     if (extra.games) {
       const group = t.type === 'schedule' ? 'schedule' : 'results';
       $('gameFilter').onchange = e => { s.gameFilter = e.target.value; update(true); };
+      $('addGame').ontoggle = e => { s.addOpen = e.target.open; };
+      box.querySelectorAll('.delcup').forEach(b => b.onclick = ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        if (!confirm('Törlöd ezt a meccset?')) return;
+        store.removeCup(state.league, b.dataset.del); persistExcel(); renderImportState(); renderFreshness(); update(true);
+      });
+      $('agSave').onclick = () => {
+        const lg = state.league, id = s.teamId, me = club(lg, id);
+        const date = $('agDate').value, time = $('agTime').value, oppText = $('agOpp').value.trim();
+        const msg = t => { $('agMsg').textContent = t; };
+        if (!date) return msg('Add meg a dátumot.');
+        if (!oppText) return msg('Add meg az ellenfelet.');
+        const oppId = clubIdStrict(lg, oppText);
+        if (oppId === id) return msg('Az ellenfél nem lehet ugyanaz a csapat.');
+        const opp = oppId ? club(lg, oppId).official : oppText;
+        const home = $('agSide').value === 'home';
+        let score = null;
+        if ($('agScore').value.trim()) {
+          const m = $('agScore').value.match(/(\d{1,3})\s*[-–:]\s*(\d{1,3})/);
+          if (!m) return msg('Az eredmény így kell: 66-71 (hazai–vendég).');
+          score = { home: +m[1], away: +m[2] };
+        }
+        const competition = $('agComp').value;
+        store.addCup(lg, {
+          home: home ? me.official : opp, away: home ? opp : me.official,
+          homeId: home ? id : oppId, awayId: home ? oppId : id,
+          date, time: time || null, status: score ? 'finished' : 'scheduled', score, competition, compKey: compKey(lg, competition),
+        });
+        persistExcel(); s.addOpen = true;
+        renderImportState(); renderFreshness(); update(true);
+        toast(`Meccs hozzáadva: ${fmtDate(date)} ${home ? me.short + ' – ' + opp : opp + ' – ' + me.short}`);
+      };
       $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; update(true); };
       box.querySelectorAll('.gamelist input').forEach(cb => cb.onchange = () => {
         const keys = [...box.querySelectorAll('.gamelist input:checked')].map(x => x.value);
@@ -327,10 +359,26 @@ async function update(full) {
       const list = info.candidates.filter(m => filter === 'all' || (filter === 'cup' ? m.cup : !m.cup));
       const ordered = sch ? list : [...list].reverse(); // newest first for results
       const nameOf = m => `${club(state.league, m.homeId)?.short || m.home} – ${club(state.league, m.awayId)?.short || m.away}`;
-      gamesHtml = `<label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
+      const comps = state.league === 'women'
+        ? [['EuroLeague Women', 'EuroLeague Women'], ['EuroCup Women', 'EuroCup Women']]
+        : [['Basketball Champions League', 'Bajnokok Ligája (BCL)']];
+      const opp = store.clubs(state.league).filter(c => c.id !== s0().teamId);
+      const addForm = `<details class="addgame" id="addGame" ${s0().addOpen ? 'open' : ''}><summary>+ Kupa-/európai meccs hozzáadása</summary>
+        <div class="addgrid">
+          <label>Dátum<input type="date" id="agDate"></label>
+          <label>Idő<input type="time" id="agTime" value="18:00"></label>
+          <label>Pálya<select id="agSide"><option value="home">Hazai</option><option value="away">Idegenben</option></select></label>
+          <label>Sorozat<select id="agComp">${comps.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('')}<option value="Magyar Kupa">Magyar Kupa (nincs logó)</option><option value="">Egyéb (nincs logó)</option></select></label>
+          <label class="wide">Ellenfél<input id="agOpp" list="agOppList" placeholder="pl. Brod na Savi" autocomplete="off"><datalist id="agOppList">${opp.map(c => `<option value="${esc(c.official)}">`).join('')}</datalist></label>
+          <label>Eredmény (hazai–vendég, ha már lejátszották)<input id="agScore" placeholder="pl. 66-71"></label>
+        </div>
+        <div class="import-row"><button id="agSave" class="primary">Meccs hozzáadása</button><span id="agMsg" class="hint"></span></div></details>`;
+      const noCups = !info.candidates.some(m => m.cup);
+      gamesHtml = `${noCups ? '<div class="notice">Ennél a csapatnál még nincs kupa-/európai meccs. Add hozzá lent, vagy tölts fel lapot / illessz be szöveget az eredmenyek.com oldalról („Adatok feltöltése” a bal felső sarokban).</div>' : ''}${addForm}
+        <label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
         <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
         <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>
-        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}</small>` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
+        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}</small> <button type="button" class="delcup" data-del="${esc(m.cupKey)}" title="Meccs törlése">✕</button>` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
     }
     renderSelection({ players: playersHtml, games: gamesHtml });
     renderFields(values, auto);

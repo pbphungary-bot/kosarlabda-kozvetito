@@ -325,3 +325,26 @@ test('pasted games merge with NB I/A games on the schedule: 22.11 Csata, 25.11 B
   store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'cups-women.xlsx' });
   assert.equal(store.cupFixtures('women', 'dvtkhuntherm').filter(m => m.date === '2026-11-25').length, 1);
 });
+
+// ───────────── adding a single cup / European game by hand ─────────────
+test('a game added by hand shows on the schedule with its logo and can be removed again', async () => {
+  const store = await loadStore(); // today 2026-11-20
+  store.addCup('women', {
+    home: 'DVTK HUNTHERM', away: 'Brod na Savi', homeId: 'dvtkhuntherm', awayId: null,
+    date: '2026-11-25', time: '18:00', status: 'scheduled', score: null, competition: 'EuroCup Women', compKey: 'comp/eurocup-women',
+  });
+  assert.equal(store.excelInfo('women').cups, 1);
+  assert.equal(store.excelInfo('women').files[0].name, 'Kézzel hozzáadott meccsek');
+  const sch = bindRowList(store, 'women', 'dvtkhuntherm', templateById('schedule-women'));
+  const i = sch.games.findIndex(m => m.cup);
+  assert.ok(i >= 0);
+  assert.equal(sch.values[`r${i}.comp`].src, 'comp/eurocup-women');
+  assert.equal(sch.values[`r${i}.match`].text, 'DVTK Huntherm - Brod na Savi');
+  // result entered later: same game, now played → replaces the scheduled one (same key)
+  store.addCup('women', { ...store.cupFixtures('women', 'dvtkhuntherm')[0], home: 'DVTK HUNTHERM', away: 'Brod na Savi', homeId: 'dvtkhuntherm', awayId: null, date: '2026-11-25', status: 'finished', score: { home: 70, away: 61 }, competition: 'EuroCup Women', compKey: 'comp/eurocup-women' });
+  assert.equal(store.excelInfo('women').cups, 1);
+  assert.deepEqual(store.cupFixtures('women', 'dvtkhuntherm')[0].score, { home: 70, away: 61 });
+  const key = store.cupFixtures('women', 'dvtkhuntherm')[0].cupKey;
+  store.removeCup('women', key);
+  assert.equal(store.cupFixtures('women', 'dvtkhuntherm').length, 0);
+});
