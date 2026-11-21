@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-21T19:27:28.118248+00:00",
+  "checked_at": "2026-11-21T20:19:03.895492+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -125,19 +125,28 @@
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 11,
-      "attempted": 11,
-      "already_saved": 10,
-      "added": 0,
-      "repaired": 1,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 17,
+      "attempted": 17,
+      "already_saved": 0,
+      "added": 17,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 11,
-      "source_coverage": true
+      "listing_errors": [
+        "https://olajofficial.hu/: URLError: <urlopen error _ssl.c:1001: The handshake operation timed out>",
+        "https://olajofficial.hu/hirek/: URLError: <urlopen error _ssl.c:1001: The handshake operation timed out>"
+      ],
+      "usable_articles": 17,
+      "source_coverage": true,
+      "fallback": [
+        "wp-json:URLError",
+        "sitemap:TimeoutError",
+        "sitemap:HTTPError",
+        "sitemap:17"
+      ]
     },
     {
       "source": "Klub: Alba Fehérvár",
@@ -195,8 +204,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 12,
-      "added": 0,
+      "already_saved": 11,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -294,8 +303,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -562,6 +571,28 @@
   ],
   "articles": [
     {
+      "source": "Nemzeti Sport",
+      "title": "Férfi kosár NB I: Kecskeméten hozta a papírformát a Szolnok",
+      "summary": "Férfi kosár NB I: Kecskeméten hozta a papírformát a Szolnok",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosar-nb-i-kecskemeten-hozta-a-papirformat-a-szolnok/",
+      "published_at": "2026-11-21T20:34:23+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Nagy előnyt adott le, de nyert a Vasas a TFSE otthonában",
+      "summary": "Bajnokság, 8. forduló Budapest, Dr.",
+      "url": "https://wbasket.hu/nagy-elonyt-adott-le-de-nyert-a-vasas-a-tfse-otthonaban/",
+      "published_at": "2026.11.21. 20:28",
+      "summary_method": "article_body",
+      "teams": [
+        "women|TFSE"
+      ],
+      "league": "women"
+    },
+    {
       "source": "WBasket.hu",
       "title": "Triplaesővel verte a Pécs a BEAC-ot",
       "summary": "Bajnokság, 8. forduló Pécs, Lauber Dezső Sportcsarnok Goda, Györfy R., Szőts (Farkas G.)",
@@ -570,6 +601,19 @@
       "summary_method": "article_body",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Körömrágós végjátékot követően megszereztük első győzelmünket",
+      "summary": "Nagy izgalmakra lehetett számítani a Női NBI/A 8. fordulóján, a TFSE otthonába ugyanis a Vasas Akadémia a két pont megszerzéséért érkezett.",
+      "url": "https://vasasbasket.hu/index.php/koromragos-vegjatekot-kovetoen-megszereztuk-elso-gyozelmunket/",
+      "published_at": "2026-11-21T20:08:05+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "BB1.hu",
@@ -599,6 +643,19 @@
       "summary_method": "headline_fallback",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Nagy csatára késztettük a Szolnokot",
+      "summary": "Pavle Djurisics múlt héten az Oroszlány elleni meccset sérülés miatt kihagyta, ezúttal viszont ismét ott volt a kezdőcsapatban a Szolnok ellen.",
+      "url": "https://ktekosar.hu/hirek/nagy-csatara-kesztettuk-a-szolnokot/",
+      "published_at": "2026. 11. 21., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -798,6 +855,32 @@
       ]
     },
     {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Soha rosszabb nyitányt!",
+      "summary": "OLAJBÁNYÁSZ: Warner 17/6, Badzim 12/6, Rudner 11/9, Zsíros 3/3, Cakarun 9.",
+      "url": "https://olajofficial.hu/2020/10/07/soha-rosszabb-nyitanyt/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Oroszlánok a Tiszaligetben",
+      "summary": "Ha van meccs, amire rá lehet húzni az amerikai sportújságírók egyik kedvenc kifejezését, a trap game -et, akkor az Olajbányász mai találkozója az, amire ez tűpontosan illik.",
+      "url": "https://olajofficial.hu/2021/02/03/oroszlanok-a-tiszaligetben/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "title": "Négy hét után újra bajnoki: Szekszárdon folytatjuk",
       "summary": "November 28-án, szombaton 18 órától a KSC Szekszárd otthonában lépünk pályára a női NB I.",
@@ -822,9 +905,48 @@
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Most tényleg elrajtol az Olaj szezonja",
+      "summary": "Csak félve merjük leírni: szerdán komoly keleti rangadó lesz a Tiszaligetben.",
+      "url": "https://olajofficial.hu/2020/10/06/most-tenyleg-elrajtol-az-olaj-szezonja/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Megyei derbi Jászberényben",
+      "summary": "Nem is olyan régen még olyan időszak is volt, hogy a Szolnoki Olajbányász és a Jászberény foglalta el a bajnoki tabella első két helyét.",
+      "url": "https://olajofficial.hu/2021/02/06/megyei-derbi-jaszberenyben/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "title": "Kecskemétre látogatunk a szünet előtti utolsó bajnoki mérkőzésen",
       "summary": "A keddi, Dinamo Bucharest elleni nagyszerű győzelem után mindössze két nap pihenés állt az NHSZ-Szolnoki Olajbányász rendelkezésére: szombaton máris itt az újabb mérkőzés, ezúttal a 9. fordulóból halasztott találkozón a Duna Aszfalt-DTKH Kecskemét vendégei leszünk.",
       "url": "https://olajofficial.hu/2026/11/20/kecskemetre-latogatunk-a-szunet-elotti-utolso-bajnoki-merkozesen/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Ilyen volt az Európa-kupa Pór Péter szemével",
+      "summary": "Rengeteg szakmai tapasztalattal gazdagodva, európai szinten is komolyan vehető csapatok ellen mutatkozott be a nemzetközi porondon a Szolnoki Olajbányász.",
+      "url": "https://olajofficial.hu/2021/02/01/ilyen-volt-az-europa-kupa-por-peter-szemevel/",
       "published_at": "2026.11.20.",
       "summary_method": "article_body",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
@@ -845,11 +967,167 @@
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Győzelemmel zárta a buborékot az Olajbányász",
+      "summary": "Szolnoki Olajbányász – Sporting CP 78-67 (19-23, 23-16, 20-18, 16-10)",
+      "url": "https://olajofficial.hu/2021/01/29/gyozelemmel-zarta-a-buborekot-az-olajbanyasz/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Gasper Potocnik: Már csak egy légióst keresünk",
+      "summary": "Az elmúlt alig két hétben két légiós szerződtetését jelentette be a Szolnoki Olajbányász, amelynek kerete ezzel szinte teljesen összeállt.",
+      "url": "https://olajofficial.hu/2020/07/22/gasper-potocnik-mar-csak-egy-legiost-keresunk/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Fáradtan is jobb volt az Olaj",
+      "summary": "Szolnok: Warner 9/3, Rudner 8/6, Kovács 2, Subotic 22/9, Cakarun 14, Csere: Juhos 11/3, Zsíros 3/3, Badzim 11/6, Pongó 3/3, Taiwo -, OSE: Washington 18/6, Abell 11/3, Kucsora 10/6, Bailey 11/3, Garamvölgyi -, Csere: Bíró 3/3, Mucza -, Anderson 4, Illés 8/6, Morgan 3/3, Anda 1, Szabadfi -,",
+      "url": "https://olajofficial.hu/2021/02/05/faradtan-is-jobb-volt-az-olaj/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Fiba Europe Cup: a jó kezdés nem ért győzelmet",
+      "summary": "Ironi Ness Ziona – Szolnoki Olajbányász 90-73 (17-27, 24-14, 28-18, 21-14)",
+      "url": "https://olajofficial.hu/2021/01/28/fiba-europe-cup-a-jo-kezdes-nem-ert-gyozelmet/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Európa-kupa ellenfelek: Sporting CP",
+      "summary": "Kedden elkezdi nemzetközi kupaszereplését az Olajbányász.",
+      "url": "https://olajofficial.hu/2021/01/25/europa-kupa-ellenfelek-sporting-cp/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Európa-kupa ellenfelek: Ironi Ness Ziona",
+      "summary": "Kedden elkezdi nemzetközi kupaszereplését az Olajbányász.",
+      "url": "https://olajofficial.hu/2021/01/23/europa-kupa-ellenfelek-ironi-ness-ziona/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Európa-kupa ellenfelek: BMSlam Stal",
+      "summary": "Kedden elkezdi nemzetközi kupaszereplését az Olajbányász.",
+      "url": "https://olajofficial.hu/2021/01/20/europa-kupa-ellenfelek-bm-stal/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Európa Kupa: vereséggel rajtoltunk a csoportfavorit ellen",
+      "summary": "Szolnoki Olajbányász – Arged BMSlam Stal 80-90 (19-26, 22-21, 22-22, 17-21)",
+      "url": "https://olajofficial.hu/2021/01/26/europa-kupa-vereseggel-rajtoltunk-a-csoportfavorit-ellen/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Elképesztő meccsen nyert az Olajbányász",
+      "summary": "Szolnoki Olajbányász – Alba Fehérvár 85-83 (19-22, 24-25, 15-16, 17-12, 10-8)",
+      "url": "https://olajofficial.hu/2020/12/19/elkepeszto-meccsen-nyert-az-olajbanyasz/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Az évad rangadója lehet az Olajbányász-Alba meccs",
+      "summary": "Az Alba-Fehérvár érkezik a Tiszaligetbe, ez önmagában elegendő normál helyzetben, hogy megteljenek a lelátók.",
+      "url": "https://olajofficial.hu/2020/12/18/az-evad-rangadoja-lehet-az-olajbanyasz-alba-meccs/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Az Olajbányászé a megyei derbi",
+      "summary": "JKSE: Coleman 29/3, Williams 16/6, Garrett 12/9, Füzi, Primorac 11/6.",
+      "url": "https://olajofficial.hu/2021/02/06/az-olajbanyasze-a-megyei-derbi/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
       "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
       "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
       "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
       "published_at": "2026.11.20.",
       "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "A fáradtságot és az Egerszeget is legyőztük",
+      "summary": "Szolnoki Olajbányász – Zalakerámia ZTE 88-83 (18-23, 20-21, 25-15, 25-24)",
+      "url": "https://olajofficial.hu/2021/01/06/a-faradtsagot-es-az-egerszeget-is-legyoztuk/",
+      "published_at": "2026.11.20.",
+      "summary_method": "article_body",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
       "league": "men",
       "teams": [
