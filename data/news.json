@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T21:36:06.000603+00:00",
+  "checked_at": "2026-11-21T22:19:34.859543+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
