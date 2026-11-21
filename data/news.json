@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-21T18:28:49.968382+00:00",
+  "checked_at": "2026-11-21T19:27:28.118248+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -465,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -563,6 +561,25 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Triplaesővel verte a Pécs a BEAC-ot",
+      "summary": "Bajnokság, 8. forduló Pécs, Lauber Dezső Sportcsarnok Goda, Györfy R., Szőts (Farkas G.)",
+      "url": "https://wbasket.hu/triplaesovel-verte-a-pecs-a-beac-ot/",
+      "published_at": "2026.11.21. 20:16",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Szoros meccset nyert meg Kecskeméten a Szolnok",
+      "summary": "70-67 után, egy 9-0-s futással alapozta meg győzelmét a vendég csapat.",
+      "url": "https://bball1.hu/szoros-meccset-nyert-meg-kecskemeten-a-szolnok/",
+      "published_at": "2026-11-21T19:57:43+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Női kosár NB I: hazai pályán verte a Szekszárdot a Sopron, és hibátlan maradt",
