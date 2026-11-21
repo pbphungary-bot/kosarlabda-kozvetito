@@ -119,8 +119,10 @@
     },
     {
       "club": "BKG-PRIMA Szigetszentmiklós",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/bkgakademia",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Added by the site owner (page link copied from the Facebook page)"
     },
     {
       "club": "Vasas Akadémia",
@@ -165,8 +167,10 @@
     },
     {
       "club": "Kometa-KVGY Kaposvári KK",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/kaposvarikk",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Added by the site owner (page link copied from the Facebook page)"
     },
     {
       "club": "OSE Lions",
@@ -193,8 +197,10 @@
     },
     {
       "club": "KSC Szekszárd",
-      "official_page": "",
-      "verification": "unverified"
+      "official_page": "https://www.facebook.com/kscszekszard",
+      "verification": "verified",
+      "verified_by": "manual",
+      "note": "Added by the site owner (page link copied from the Facebook page)"
     },
     {
       "club": "Sopron Basket",
