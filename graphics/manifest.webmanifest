@@ -1,0 +1,15 @@
+{
+  "name": "NB I/A Grafika Stúdió",
+  "short_name": "NB I/A Stúdió",
+  "lang": "hu",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f1216",
+  "theme_color": "#12161b",
+  "icons": [
+    { "src": "assets/app-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/app-icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

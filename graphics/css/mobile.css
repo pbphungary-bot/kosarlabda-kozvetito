@@ -1,0 +1,94 @@
+/* Mobile layout of the graphics studio. Loaded as <link id="mobileCss" media="(max-width: 900px)">: the media attribute is the
+   view switch (auto = small screens only, "all" = forced mobile, "not all" = forced desktop), see js/view.js and the inline script in index.html. */
+  .layout { grid-template-columns: 1fr; }
+  .controls { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); }
+
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-size: 15px; padding-bottom: calc(66px + env(safe-area-inset-bottom)); overscroll-behavior-y: none; }
+  input, select, textarea { font-size: 16px; } /* no zoom-on-focus on iOS */
+  button { padding: 8px 14px; }
+
+  .topbar { position: static; gap: 8px 12px; padding: 8px 12px; padding-top: calc(8px + env(safe-area-inset-top)); }
+  .brand { font-size: 15px; }
+
+@media (max-width: 520px) {
+  .brand { display: none; }
+}
+
+  .league-toggle button { padding: 8px 12px; }
+  .quick-cup { padding: 8px 10px; font-size: 13px; }
+  .dash-link { font-size: 0; }
+  .dash-link::before { content: "←"; font-size: 20px; }
+  .freshness { order: 9; width: 100%; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
+  .freshness span { white-space: nowrap; }
+
+  /* the two panels dissolve: their children become items of one column, ordered by us */
+  .layout { display: flex; flex-direction: column; min-height: 0; }
+  .panel.controls, .panel.preview { display: contents; }
+  .tab { display: none; margin: 0 12px; }
+  body[data-tab="template"] .tab-template, body[data-tab="data"] .tab-data, body[data-tab="fields"] .tab-fields,
+  body[data-tab="layout"] .tab-layout, body[data-tab="export"] .tab-export { display: block; }
+  body[data-tab="export"] .preview-bar.tab-export { display: flex; }
+  body[data-tab="export"] .export-bar.tab-export { display: flex; }
+  .tab h2:first-child { margin-top: 14px; }
+
+  /* preview: always visible at the top while scrolling the tab */
+  .stage { order: -3; position: sticky; top: 0; z-index: 6; margin: 0; border-radius: 0 0 10px 10px; border-top: 0; max-height: 46vh; overflow: auto; overscroll-behavior: contain; touch-action: pan-x pan-y; }
+  .stage .canvas-wrap { width: calc(var(--z, 1) * 100%); }
+  .stage.actual .canvas-wrap { width: calc(var(--z, 1) * 100%); }
+  .stage.actual canvas { width: 100%; max-width: none; }
+  .render-report { order: -2; margin: 0; padding: 4px 12px; background: var(--bg); position: sticky; top: var(--stage-h, 0px); z-index: 5; font-size: 12px; }
+  .render-report:empty { display: none; }
+  .preview-bar { order: 1; }
+  .layoutbox { order: 1; }
+  .export-bar { order: 2; flex-wrap: wrap; }
+  .export-bar input { flex: 1 1 100%; }
+  .export-bar button.primary { flex: 1 1 60%; padding: 12px 18px; }
+  .share-btn { display: block; flex: 1 1 35%; }
+  .share-btn[hidden] { display: none; }
+  .presets { order: 3; }
+  .dims { display: none; }
+  .zoom { gap: 8px 12px; }
+  .zoom label { min-height: 36px; display: flex; align-items: center; gap: 6px; }
+  .base-opacity input[type=range] { width: 100%; min-width: 140px; }
+  .preview-bar .zoom { width: 100%; }
+
+  /* lists and forms */
+  .template-list { grid-template-columns: repeat(2, 1fr); }
+  .selection .row2, .addgrid, .psgroups { grid-template-columns: 1fr; }
+  .selection .players { max-height: 40vh; }
+  .fields, .field, .field > *, .selection > * { min-width: 0; }
+  .fields { grid-template-columns: minmax(0, 1fr); }
+  .field { grid-template-columns: 28px minmax(0, 1fr); padding: 8px 6px; }
+  .field .inputs select.color { flex: 0 0 56px; }
+  .eqrow, .group-title { min-width: 0; flex-wrap: wrap; }
+  .field .inputs { flex-wrap: wrap; }
+  .field .inputs input, .field .inputs textarea { flex: 1 1 150px; }
+  .field .adj { flex-wrap: wrap; gap: 8px 14px; }
+  .field .adj input { width: 96px; }
+  details.layoutbox { margin: 8px 12px; padding: 8px 10px; }
+  details.layoutbox[open] > summary { margin-bottom: 4px; }
+  #layoutPanel .lay-row input[type=number] { width: 88px; }
+  #layoutPanel .lay-row input#layName { flex: 1 1 140px; width: auto; }
+  .rowedit li { padding: 6px; }
+  .field-tools { flex-wrap: wrap; gap: 8px; }
+  details.import, details.addgame, details.psbox { padding: 8px 10px; }
+  .toast { bottom: calc(78px + env(safe-area-inset-bottom)); right: 12px; left: 12px; text-align: center; }
+
+  /* bottom tab bar (thumb reach) */
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #12161b; border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+  .tabbar button { flex: 1; border: 0; border-radius: 0; background: transparent; padding: 6px 2px 5px; min-height: 58px; display: flex; flex-direction: column; align-items: center; gap: 1px; color: var(--muted); font-size: 11px; }
+  .tabbar button i { font-style: normal; font-size: 21px; line-height: 24px; }
+  .tabbar button.on { color: var(--text); box-shadow: inset 0 3px 0 var(--accent); }
+  body.women .tabbar button.on { box-shadow: inset 0 3px 0 var(--accent-w); }
+
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 560px) {
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+  .layout > * { grid-column: 2; }
+  .stage { grid-column: 1; grid-row: 1 / span 30; top: 0; max-height: calc(100vh - 64px); border-radius: 0 0 10px 0; }
+  .render-report { position: static; }
+  .topbar { padding: 4px 12px; gap: 6px 10px; }
+  .freshness { display: none; } /* stale data is also announced on the Mezők tab */
+  .tabbar button { min-height: 50px; flex-direction: row; justify-content: center; gap: 6px; }
+}

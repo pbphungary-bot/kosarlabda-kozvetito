@@ -90,10 +90,6 @@ label.file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .toast { position: fixed; bottom: 18px; right: 18px; background: #222a33; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
 .toast.show { opacity: 1; }
 
-@media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
-  .controls { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); }
-}
 
 details.import { margin-top: 12px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #12161b; }
 details.import summary { cursor: pointer; font-weight: 600; }
@@ -160,10 +156,26 @@ details.psbox input[type=number] { width: 100%; }
 .psgroups .chk { display: flex; flex-direction: row; gap: 6px; align-items: center; color: var(--text); }
 
 /* editable row list */
-.rowedit { list-style: none; margin: 4px 0 6px; padding: 0; display: grid; gap: 3px; }
+.rowedit { list-style: none; margin: 4px 0 6px; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; }
+.rowedit li { min-width: 0; }
 .rowedit li { display: flex; gap: 4px; align-items: center; padding: 3px 6px; background: #1b2028; border-radius: 6px; font-size: 12px; }
 .rowedit li span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rowedit li.empty { color: var(--muted); }
 .rowedit button { padding: 0 7px; font-size: 12px; line-height: 20px; }
 .rowedit button.rowdel { border-color: rgba(239, 64, 54, .6); }
 #importPreview .warn.bad { color: #ff8a83; border: 1px solid var(--bad); border-radius: 6px; padding: 6px 10px; margin: 6px 0; }
+
+/* ───────────────────────── mobile / touch ─────────────────────────
+   ≤ 900 px: the preview stays at the top, the controls are split into tabs (bottom bar). Desktop is untouched. */
+.tabbar, .share-btn { display: none; }
+
+@media (pointer: coarse) {
+  button, input, select, textarea { min-height: 40px; }
+  input[type=checkbox], input[type=radio] { min-height: 0; width: 20px; height: 20px; }
+  .field button.reset, .rowedit button, .delcup { min-height: 32px; min-width: 32px; }
+}
+
+
+/* phone in landscape: preview left, controls right */
+
+.view-switch { font-size: 12px; padding: 4px 10px; }

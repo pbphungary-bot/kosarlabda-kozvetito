@@ -2,9 +2,20 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12161b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NB I/A Stúdió">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app-icon-180.png">
 <title>NB I/A Grafika Stúdió</title>
 <link rel="stylesheet" href="css/studio.css">
+<link id="mobileCss" rel="stylesheet" href="css/mobile.css" media="(max-width: 900px)">
+<script>/* view switch: applied before the first paint (auto | mobile | desktop), see js/app.js */
+(function () { try { var v = localStorage.getItem('nbia.view'); if (v !== 'mobile' && v !== 'desktop') return;
+  document.documentElement.dataset.view = v; document.getElementById('mobileCss').media = v === 'mobile' ? 'all' : 'not all';
+  if (v === 'desktop') document.querySelector('meta[name=viewport]').content = 'width=1280'; } catch (e) { /* storage unavailable */ } })();</script>
 </head>
 <body>
 <header class="topbar">
@@ -15,11 +26,13 @@
   </div>
   <button id="quickCup" class="quick-cup" title="Megnyitja a Menetrend sablont a kupa-/európai meccs hozzáadása űrlappal">+ Kupa-/európai meccs</button>
   <div id="freshness" class="freshness" aria-live="polite"></div>
+  <button id="viewSwitch" class="view-switch" type="button" title="Nézet: automatikus / mobil / asztali. Ha a kijelzőn valami nem jó, válts nézetet.">Nézet: auto</button>
   <a class="dash-link" href="../index.html">← Közvetítőhub</a>
 </header>
 
 <main class="layout">
   <section class="panel controls">
+    <div class="tab tab-data">
     <details class="import" id="importBox">
       <summary>Adatok feltöltése Excelből / CSV-ből <span id="importState"></span></summary>
       <p class="hint">Egy fájlban lehet csapatstatisztika, játékosstatisztika és kupa-/európai meccsek lista is (külön munkalapon; minta: <a href="minta-kupameccsek.xlsx">minta-kupameccsek.xlsx</a>). A bajnokságot a fájl tartalmából ismerem fel. A feltöltött érték előnyt élvez a dashboard adataival szemben, és „Excel” címkét kap; a következő forduló fájljai felülírják az előzőket. A fájl nem kerül fel sehova – a böngészőben dolgozom vele.</p>
@@ -33,13 +46,19 @@
       <div class="import-row"><button id="pasteRead">Beillesztett szöveg beolvasása</button></div>
       <div id="importPreview"></div>
     </details>
+    </div>
 
+    <div class="tab tab-template">
     <h2>1. Sablon</h2>
     <div id="templateList" class="template-list"></div>
+    </div>
 
+    <div class="tab tab-data">
     <h2 id="selectTitle">2. Mérkőzés</h2>
     <div id="selection" class="selection"></div>
+    </div>
 
+    <div class="tab tab-fields">
     <h2>3. Mezők <small>(üres felülírás = automatikus adat)</small></h2>
     <div class="field-tools">
       <label><input type="checkbox" id="onlyMissing"> Csak hiányzó / felülírt</label>
@@ -47,10 +66,11 @@
     </div>
     <div id="notices"></div>
     <div id="fields" class="fields"></div>
+    </div>
   </section>
 
   <section class="panel preview">
-    <div class="preview-bar">
+    <div class="preview-bar tab tab-export">
       <div class="zoom">
         <button data-zoom="fit" class="on">Igazítás</button>
         <button data-zoom="1">100%</button>
@@ -62,17 +82,18 @@
       </div>
       <div id="dims" class="dims"></div>
     </div>
-    <details class="layoutbox" id="layoutBox">
+    <details class="layoutbox tab tab-layout" id="layoutBox">
       <summary>Elrendezés – elemek mozgatása és „alap” <span id="layoutState"></span></summary>
       <div id="layoutPanel"></div>
     </details>
     <div id="stage" class="stage"><div class="canvas-wrap"><canvas id="canvas" width="1920" height="1080"></canvas><div id="overlay" class="overlay"></div></div></div>
     <div id="renderReport" class="render-report"></div>
-    <div class="export-bar">
+    <div class="export-bar tab tab-export">
       <input id="fileName" spellcheck="false" aria-label="Fájlnév">
       <button id="exportBtn" class="primary" disabled>PNG exportálása</button>
+      <button id="shareBtn" class="share-btn" hidden title="Megosztás vagy mentés a Fotókba">Megosztás / Mentés</button>
     </div>
-    <div class="presets">
+    <div class="presets tab tab-export">
       <h2>Mentett beállítások</h2>
       <div class="preset-row">
         <input id="presetName" placeholder="Beállítás neve (pl. Falco–Alba intro)">
@@ -84,6 +105,13 @@
     </div>
   </section>
 </main>
+<nav class="tabbar" id="tabbar" aria-label="Szakaszok">
+  <button data-tab="template"><i>▦</i><span>Sablon</span></button>
+  <button data-tab="data"><i>⚑</i><span>Adatok</span></button>
+  <button data-tab="fields"><i>✎</i><span>Mezők</span></button>
+  <button data-tab="layout"><i>✥</i><span>Elrendezés</span></button>
+  <button data-tab="export"><i>⇩</i><span>Export</span></button>
+</nav>
 <div id="toast" class="toast" role="status"></div>
 <script type="module" src="js/app.js"></script>
 </body>

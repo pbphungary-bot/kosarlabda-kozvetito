@@ -39,16 +39,30 @@ test('men EFF is not invented (KosárStat has no VAL)', async () => {
   assert.equal(v['home.rank.val'].text, MISSING);
 });
 
-test('league ranks reproduce the ranks printed in the DVTK – Csata PSD', async () => {
+test('league ranks are the competition ranks of the current data (independent re-computation)', async () => {
   const store = await loadStore();
   const v = bindComparison(store, 'women', 'dvtkhuntherm', 'csatattk');
-  // PSD (22 Nov) – identical where the stat value in the data equals the PSD value
-  const psd = { home: { ppg: 3, fg2_pct: 3, fg3_pct: 2, ft_pct: 9, reb: 1, ast: 1, stl: 6, val: 2 }, away: { ppg: 4, fg2_pct: 7, fg3_pct: 5, ft_pct: 4, reb: 6, stl: 8, val: 4 } };
-  for (const side of ['home', 'away']) for (const [k, r] of Object.entries(psd[side])) assert.equal(v[`${side}.rank.${k}`].text, `(${r}.)`, `${side} ${k}`);
+  const raw = await readJson('data/team_stats_women.json');
+  const season = Object.fromEntries(raw.teams.map(t => [t.name, t.periods.season]));
+  const rankOf = (team, key, lowerIsBetter = false) => {
+    const mine = parseFloat(String(season[team][key]).replace(',', '.'));
+    const all = Object.values(season).map(x => parseFloat(String(x[key]).replace(',', '.'))).filter(Number.isFinite);
+    return 1 + all.filter(x => (lowerIsBetter ? x < mine : x > mine)).length;
+  };
+  const keys = { ppg: 'ppg', fg2_pct: 'fg2_pct', fg3_pct: 'fg3_pct', ft_pct: 'ft_pct', reb: 'reb', ast: 'ast', stl: 'stl' };
+  for (const [side, team] of [['home', 'DVTK HUNTHERM'], ['away', 'Csata TKK']]) {
+    for (const [k, rawKey] of Object.entries(keys)) assert.equal(v[`${side}.rank.${k}`].text, `(${rankOf(team, rawKey)}.)`, `${side} ${k}`);
+    assert.equal(v[`${side}.rank.tov`].text, `(${rankOf(team, 'tov', true)}.)`, `${side} tov (lower is better)`);
+  }
   // colour rule: better value green, worse red; lower TOV is better
-  assert.equal(v['home.ft_pct'].color, '#ec4036');
-  assert.equal(v['away.ft_pct'].color, '#0b9444');
-  assert.equal(v['home.tov'].color, '#ec4036'); // DVTK 15.0 vs Csata 14.0
+  const num = x => parseFloat(String(x).replace(',', '.'));
+  const better = (key, lower = false) => (num(season['DVTK HUNTHERM'][key]) === num(season['Csata TKK'][key]) ? null : (lower ? num(season['DVTK HUNTHERM'][key]) < num(season['Csata TKK'][key]) : num(season['DVTK HUNTHERM'][key]) > num(season['Csata TKK'][key])));
+  for (const [k, lower] of [['ft_pct', false], ['tov', true]]) {
+    const homeBetter = better(k, lower);
+    if (homeBetter === null) continue;
+    assert.equal(v[`home.${k}`].color, homeBetter ? '#0b9444' : '#ec4036');
+    assert.equal(v[`away.${k}`].color, homeBetter ? '#ec4036' : '#0b9444');
+  }
 });
 
 test('results rows: real scores, win/loss colouring, focus team in every row', async () => {
