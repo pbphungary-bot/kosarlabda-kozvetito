@@ -303,6 +303,7 @@ try {
     await page.selectOption('#gameFilter', 'cup');
     await page.waitForTimeout(300);
     assert.equal(await page.locator('.gamelist input').count(), 3, 'three played European games');
+    while (await page.locator('#rowEdit .rowdel').count()) { await page.locator('#rowEdit .rowdel').first().click(); await page.waitForTimeout(150); } // make room: delete the automatic rows
     for (const cb of await page.locator('.gamelist input').all()) await cb.check();
     await page.waitForTimeout(400);
     assert.match(await page.locator('#selection').innerText(), /kézi választás/);
@@ -651,6 +652,47 @@ try {
     assert.equal(await val('home.name', 'dy') || 0, 0);
     await page.evaluate(() => { localStorage.clear(); });
   });
+  await check('schedule rows: delete, add, typed row and reorder work at once; a new team starts clean', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.waitForTimeout(400);
+    await page.click('#templateList button[data-id="schedule-men"]');
+    await page.waitForSelector('#rowEdit');
+    await page.waitForTimeout(800);
+    const matches = () => page.evaluate(() => { const v = window.__studio.current().values; return [0, 1, 2, 3, 4, 5].map(i => v[`r${i}.match`]?.text || ''); });
+    const before = await matches();
+    assert.ok(before.every(Boolean));
+    await page.click('#rowEdit li:nth-child(2) .rowdel');
+    await page.waitForTimeout(500);
+    let now = await matches();
+    assert.equal(now.filter(Boolean).length, 5);
+    assert.ok(!now.includes(before[1]));
+    await page.selectOption('#rowAddSel', { index: 1 }); // adding fills the free row at once
+    await page.waitForTimeout(500);
+    now = await matches();
+    assert.equal(now.filter(Boolean).length, 6);
+    await page.click('#rowEdit li:nth-child(1) .rowdel');
+    await page.waitForTimeout(400);
+    await page.evaluate(() => { document.getElementById('customRowBox').open = true; });
+    await page.fill('#crMatch', 'Teszt - Párosítás'); await page.fill('#crDate', '2026.12.24. - 18:00');
+    await page.click('#crAdd');
+    await page.waitForTimeout(500);
+    now = await matches();
+    assert.equal(now[now.filter(Boolean).length - 1], 'Teszt - Párosítás');
+    await page.click('#rowEdit li:last-child .rowup');
+    await page.waitForTimeout(400);
+    assert.equal((await matches())[4], 'Teszt - Párosítás');
+    // another team: back to its own automatic list, nothing of the old rows stays
+    await page.evaluate(() => { const o = (window.__studio.state.overrides['schedule-men'] ||= {}); (o['r0.match'] ||= {}).text = 'MANUAL'; (o['r1.date'] ||= {}).visible = false; });
+    const opts = await page.$$eval('#teamSel option', os => os.map(o => [o.value, o.textContent]));
+    await page.selectOption('#teamSel', opts.find(x => x[1].includes('Alba'))[0]);
+    await page.waitForTimeout(800);
+    now = await matches();
+    assert.ok(now.every(m => m.includes('Alba')), now.join(' | '));
+    assert.ok(!now.includes('Teszt - Párosítás') && !now.includes('MANUAL'));
+    assert.equal(await page.evaluate(() => Object.keys(window.__studio.state.overrides['schedule-men'] || {}).length), 0);
+    assert.equal(await page.$$eval('#rowEdit li[data-key]', l => l.length), 6);
+  });
+
   await check('player special: photo upload, player data in the last column, own text replaces a whole line', async () => {
     await page.click('.league-toggle button[data-league="women"]');
     await page.waitForTimeout(400);

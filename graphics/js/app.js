@@ -252,7 +252,7 @@ function renderSelection(extra = {}) {
   } else {
     $('selectTitle').textContent = '2. Csapat';
     box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; resetMatchOverrides(); update(true); };
+    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null; resetTemplateOverrides(); update(true); };
     if (extra.games) {
       const group = t.type === 'schedule' ? 'schedule' : 'results';
       $('gameFilter').onchange = e => { s.gameFilter = e.target.value; update(true); };
@@ -288,11 +288,40 @@ function renderSelection(extra = {}) {
         renderImportState(); renderFreshness(); update(true);
         toast(`Meccs hozzáadva: ${fmtDate(date)} ${home ? me.short + ' – ' + opp : opp + ' – ' + me.short}`);
       };
-      $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; update(true); };
+      $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; (s.customRows ||= {})[group] = null; update(true); };
+      const keysNow = () => [...box.querySelectorAll('#rowEdit li[data-key]')].map(li => li.dataset.key);
+      const apply = keys => { (s.games ||= {})[group] = keys; update(true); };
+      const dateOf = key => (lastCandidates.find(m => gameKey(m) === key) || {}).date || null;
+      // insert a game at its place by date among the rows (rows without a date, e.g. typed ones, keep their position)
+      const insertByDate = (keys, key) => {
+        const d = dateOf(key), out = [...keys];
+        const at = d ? out.findIndex(k => dateOf(k) && dateOf(k) > d) : -1;
+        out.splice(at < 0 ? out.length : at, 0, key);
+        return out;
+      };
+      box.querySelectorAll('#rowEdit li[data-key]').forEach(li => {
+        const k = li.dataset.key;
+        li.querySelector('.rowdel').onclick = () => apply(keysNow().filter(x => x !== k));
+        const move = d => { const a = keysNow(), i = a.indexOf(k); [a[i], a[i + d]] = [a[i + d], a[i]]; apply(a); };
+        li.querySelector('.rowup').onclick = () => move(-1);
+        li.querySelector('.rowdown').onclick = () => move(1);
+      });
+      $('rowAdd').onclick = () => { const k = $('rowAddSel').value; if (k) apply(insertByDate(keysNow(), k)); };
+      $('rowAddSel').onchange = () => { if ($('rowAddSel').value && keysNow().length < t.rows) $('rowAdd').click(); };
+      $('customRowBox').ontoggle = e => { s.customOpen = e.target.open; };
+      $('crAdd').onclick = () => {
+        const dateText = $('crDate').value.trim(), matchText = $('crMatch').value.trim(), scoreText = group === 'results' ? $('crScore').value.trim() : '';
+        if (!matchText) return toast('Írd be a párosítást.');
+        const id = `custom:${Date.now().toString(36)}`;
+        ((s.customRows ||= {})[group] ||= []).push({ key: id, dateText, matchText, scoreText });
+        apply([...keysNow(), id]);
+      };
       box.querySelectorAll('.gamelist input').forEach(cb => cb.onchange = () => {
-        const keys = [...box.querySelectorAll('.gamelist input:checked')].map(x => x.value);
-        if (keys.length > t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} mérkőzés fér el a sablonon.`); return; }
-        (s.games ||= {})[group] = keys; update(true);
+        const keys = keysNow();
+        if (cb.checked) {
+          if (keys.length >= t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} mérkőzés fér el a sablonon.`); return; }
+          apply(insertByDate(keys, cb.value));
+        } else apply(keys.filter(x => x !== cb.value));
       });
     }
     if (extra.players) {
@@ -303,6 +332,12 @@ function renderSelection(extra = {}) {
       });
     }
   }
+}
+
+/** A new team starts from a clean slate: the data-bound choices of the previous team (typed rows, hidden rows, sizes) never carry over. */
+function resetTemplateOverrides() {
+  const o = overrides();
+  for (const k of Object.keys(o)) delete o[k];
 }
 
 function resetMatchOverrides() {
@@ -337,7 +372,8 @@ function autoValues() {
     info.players = r.players; info.shown = r.shown;
     if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a sablonon ${t.rows} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
   } else if (t.type === 'results' || t.type === 'schedule' || t.type === 'resultrows') {
-    const r = bindRowList(store, lg, s.teamId, t, s.games?.[t.type === 'schedule' ? 'schedule' : 'results'] || null);
+    const grp = t.type === 'schedule' ? 'schedule' : 'results';
+    const r = bindRowList(store, lg, s.teamId, t, s.games?.[grp] || null, s.customRows?.[grp] || []);
     v = r.values;
     info.games = r.games; info.candidates = r.candidates;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
@@ -483,6 +519,7 @@ function fileName(values) {
   return ascii(`${LEAGUES[lg].short}_${TEMPLATE_TYPES[t.type]}_${who}_${date}`) + '.png';
 }
 
+let lastCandidates = []; // candidate games of the current row-list graphic (for inserting rows by date)
 let updateSeq = 0; // only the newest redraw may draw: a slower, older one must not overwrite it with stale values
 async function update(full) {
   const seq = ++updateSeq;
@@ -492,6 +529,7 @@ async function update(full) {
   const { v: auto, info } = autoValues();
   const values = mergedValues(auto);
   current = { values, auto };
+  if (info.candidates) lastCandidates = info.candidates;
   if (full) {
     let playersHtml = '';
     if (t.type === 'teamstats' && info.players?.length) {
@@ -523,7 +561,20 @@ async function update(full) {
         </div>
         <div class="import-row"><button id="agSave" class="primary">Meccs hozzáadása</button><span id="agMsg" class="hint"></span></div></details>`;
       const noCups = !info.candidates.some(m => m.cup);
-      gamesHtml = `${noCups ? '<div class="notice">Ennél a csapatnál még nincs kupa-/európai meccs. Add hozzá lent, vagy tölts fel lapot / illessz be szöveget az eredmenyek.com oldalról („Adatok feltöltése” a bal felső sarokban).</div>' : ''}${addForm}
+      const rowName = m => m.custom ? `${esc(m.dateText || '')} ${esc(m.matchText || '')}${m.scoreText ? ' <small>(' + esc(m.scoreText) + ')</small>' : ''} <small>· kézzel beírt</small>`
+        : `${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ' <small>· ' + esc(m.competition || 'kupa/európai') + '</small>' : ''}`;
+      const addable = ordered.filter(m => !shownKeys.has(gameKey(m)));
+      const rowsHtml = `<label>Sorok a grafikán (${info.games.length}/${t.rows}) – törlés, hozzáadás, sorrend azonnal érvényes</label>
+        <ol class="rowedit" id="rowEdit">${info.games.map((m, i) => `<li data-key="${esc(gameKey(m))}"><span>${rowName(m)}</span>
+          <button type="button" class="rowup" ${i ? '' : 'disabled'} title="Feljebb">↑</button><button type="button" class="rowdown" ${i < info.games.length - 1 ? '' : 'disabled'} title="Lejjebb">↓</button><button type="button" class="rowdel" title="Sor törlése">✕</button></li>`).join('') || '<li class="empty">A grafika üres – adj hozzá meccset.</li>'}</ol>
+        <div class="row2"><select id="rowAddSel"><option value="">+ Meccs hozzáadása a sorokhoz…</option>${addable.slice(0, 80).map(m => `<option value="${esc(gameKey(m))}">${rowName(m).replace(/<[^>]+>/g, '')}</option>`).join('')}</select>
+          <button type="button" id="rowAdd" ${info.games.length >= t.rows ? 'disabled' : ''}>Hozzáadás</button></div>
+        <details class="addgame" id="customRowBox" ${s0().customOpen ? "open" : ""}><summary>+ Egyéni sor (szabad szöveg)</summary>
+          <div class="addgrid"><label>Dátum szövege<input id="crDate" placeholder="${sch ? '2026.12.05. - 18:00' : '2026.11.21.'}"></label>
+            <label>Párosítás<input id="crMatch" placeholder="Falco-Vulcano KC - Alba"></label>
+            ${sch ? '' : '<label>Eredmény<input id="crScore" placeholder="85-72"></label>'}</div>
+          <div class="import-row"><button type="button" id="crAdd" ${info.games.length >= t.rows ? 'disabled' : ''}>Sor hozzáadása</button></div></details>`;
+      gamesHtml = `${noCups ? '<div class="notice">Ennél a csapatnál még nincs kupa-/európai meccs. Add hozzá lent, vagy tölts fel lapot / illessz be szöveget az eredmenyek.com oldalról („Adatok feltöltése” a bal felső sarokban).</div>' : ''}${rowsHtml}${addForm}
         <label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
         <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
         <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>

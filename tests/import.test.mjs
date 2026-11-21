@@ -235,7 +235,8 @@ test('results list: European games can be picked even when newer NB I/A games ex
   const cups = auto.candidates.filter(m => m.cup);
   assert.equal(cups.length, 3);
   const league = auto.candidates.filter(m => !m.cup).slice(-3);
-  const picked = bindRowList(store, 'women', 'dvtkhuntherm', t, [...cups, ...league].map(gameKey));
+  const chosen = [...cups, ...league].sort((a, b) => a.date.localeCompare(b.date)); // the studio keeps picked rows in date order
+  const picked = bindRowList(store, 'women', 'dvtkhuntherm', t, chosen.map(gameKey));
   assert.equal(picked.games.length, 6);
   assert.equal(picked.games.filter(m => m.cup).length, 3);
   assert.deepEqual(picked.games.map(m => m.date), [...picked.games.map(m => m.date)].sort(), 'shown in date order');
