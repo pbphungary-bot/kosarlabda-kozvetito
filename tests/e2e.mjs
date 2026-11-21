@@ -934,6 +934,34 @@ try {
     await dp.close();
   });
 
+  await check('dashboard: Csapatok tab has Keret, full statistics (average / total / 40 min, sortable), records, zones and games', async () => {
+    const dp = await ctx.newPage();
+    const derrs = [];
+    dp.on('pageerror', e => derrs.push(e.message));
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForTimeout(2500);
+    await dp.evaluate(() => document.querySelector('nav button[data-tab="teams"]').click());
+    assert.equal(await dp.$$eval('#teamCards .club-panel .open-team', b => b.length), 14);
+    await dp.selectOption('#teamPick', { index: 2 });
+    await dp.waitForTimeout(400);
+    await dp.click('#teamDetail [data-sub="roster"]');
+    assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 8, 'roster');
+    await dp.click('#teamDetail [data-sub="stats"]');
+    assert.equal(await dp.$$eval('#teamDetail thead th', t => t.length), 33, 'all Hunbasket columns');
+    await dp.click('#teamDetail th[data-col="4"]');
+    const pts = await dp.$$eval('#teamDetail tbody tr td:nth-child(5)', t => t.slice(0, 4).map(x => parseFloat(x.textContent)));
+    assert.deepEqual(pts, [...pts].sort((a, b) => b - a), 'sorted by points, best first');
+    for (const kind of ['total', 'per40']) { await dp.click(`#teamDetail [data-kind="${kind}"]`); assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 8, kind); }
+    await dp.click('#teamDetail [data-sub="records"]');
+    assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 20, 'records + zones');
+    await dp.click('#teamDetail [data-sub="games"]');
+    assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 10, 'games');
+    await dp.selectOption('#teamPick', '');
+    assert.ok(await dp.isVisible('#teamCards'));
+    assert.deepEqual(derrs, []);
+    await dp.close();
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly
