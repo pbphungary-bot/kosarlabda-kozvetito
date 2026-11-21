@@ -366,20 +366,20 @@
       "round": "8.",
       "home": "NKA Universitas Pécs",
       "away": "ELTE BEAC Újbuda",
-      "result": "Előzetes",
+      "result": "33–16",
       "date": "2026. 11. 21.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135555"
     },
     {
       "round": "8.",
       "home": "TFSE",
       "away": "Vasas Akadémia",
-      "result": "Előzetes",
+      "result": "14–17",
       "date": "2026. 11. 21.",
       "time": "18:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135561"
     },
     {
@@ -1103,5 +1103,5 @@
       "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135725"
     }
   ],
-  "updated_at": "2026-11-21T16:23:42.554812+00:00"
+  "updated_at": "2026-11-21T17:22:58.579918+00:00"
 }
