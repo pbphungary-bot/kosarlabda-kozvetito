@@ -72,7 +72,9 @@ body.women .template-list button.on { outline-color: var(--accent-w); }
 .dims { font-size: 12px; color: var(--muted); }
 .stage { border: 1px solid var(--line); border-radius: 6px; overflow: auto; background: #272f38; }
 .stage.checker { background: repeating-conic-gradient(#3a4049 0 25%, #2c3138 0 50%) 50% / 24px 24px; }
+.canvas-wrap { position: relative; line-height: 0; }
 .stage canvas { display: block; width: 100%; height: auto; }
+.stage.actual .canvas-wrap { width: 1920px; }
 .stage.actual canvas { width: 1920px; max-width: none; }
 .render-report { font-size: 12px; color: var(--warn); min-height: 18px; padding: 4px 0; }
 .export-bar { display: flex; gap: 8px; margin-top: 6px; }
@@ -128,3 +130,23 @@ body.women .quick-cup { border-color: var(--accent-w); }
 .field .adj input { width: 74px; padding: 3px 6px; }
 .eqrow { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 2px; }
 .eqrow button { font-size: 12px; padding: 4px 10px; }
+
+/* layout editor */
+details.layoutbox { margin: 6px 0; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: #12161b; }
+details.layoutbox summary { cursor: pointer; font-weight: 600; }
+details.layoutbox summary span { font-weight: 400; font-size: 12px; margin-left: 8px; color: var(--warn); }
+#layoutPanel { display: grid; gap: 8px; margin-top: 8px; font-size: 12px; }
+#layoutPanel .lay-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+#layoutPanel .lay-row input[type=number] { width: 72px; padding: 3px 6px; }
+#layoutPanel .lay-row input#layName { width: 160px; }
+#layoutPanel .chk { display: flex; gap: 6px; align-items: center; }
+#layoutPanel .insp { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; background: #0f1318; }
+#layoutPanel .insp.empty { color: var(--muted); }
+#layoutPanel .hint { color: var(--muted); margin: 0; }
+.overlay { position: absolute; inset: 0; pointer-events: none; display: none; }
+.overlay.on { display: block; }
+.overlay .hit { position: absolute; min-width: 14px; min-height: 14px; border: 1px dashed rgba(255, 255, 255, .55); background: rgba(255, 255, 255, .04); pointer-events: auto; cursor: move; touch-action: none; box-sizing: border-box; }
+.overlay .hit:hover { border-color: #fff; background: rgba(255, 255, 255, .12); }
+.overlay .hit.sel { border: 2px solid var(--warn); background: rgba(242, 177, 52, .12); }
+.overlay .ghost { position: absolute; border: 1px dashed var(--warn); pointer-events: none; opacity: .7; box-sizing: border-box; }
+.field.sel { outline: 1px solid var(--warn); }

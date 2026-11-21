@@ -43,6 +43,17 @@ Kupa-/európai meccsek: lásd lent.
 * A feltöltött érték előnyt élvez a dashboard adataival szemben („Excel” címke a mezőn); a feltöltés a böngészőben marad.
 * A helyezések „(n.)” a feltöltött csapatok között számolódnak (TOV: kevesebb = jobb).
 
+### Elrendezés: minden elem mozgatható, „alap” (benchmark)
+
+Az előnézet fölötti **„Elrendezés”** dobozban:
+* **Szerkesztés** bekapcsolva minden elem (szöveg, logó) **húzható** az előnézeten; a kijelölt elemet a nyilak mozgatják (1 px, Shift+nyíl 10 px).
+  Az **Elem** sorban pontos értékek: balra/jobbra, fel/le, betűméret (szövegnél) vagy méret % (logónál). A szaggatott körvonal a PSD eredeti helyét mutatja.
+* **Rögzítés:** húzás közben az elem a PSD (és az alap) helyéhez „odaragad” (Alt: ki). **Csoport együtt mozog:** egy sor, vagy a hazai/vendég elemek együtt.
+* **Teljes grafika:** az egész grafika eltolható és átméretezhető.
+* **Alap (benchmark):** *Mentés alapként* – a jelenlegi elrendezés lesz az alap, minden új meccs ebből indul (sablononként, a böngészőben tárolva).
+  *Nem mentett módosítások eldobása* visszaáll az alapra, *Alap törlése* a PSD eredeti elrendezésére. *Mentés névvel* több elrendezést tárol
+  (pl. „Hosszú nevek”), a *Betöltés* ezeket hozza vissza. Az Exportálás (JSON) gomb az elrendezéseket is menti.
+
 ### Következik (soron következő meccs)
 
 A „Következik” sablon (a *Nex Match graph.psd* alapján) bal felső sarokban mutatja a „Következik” címet, a két logót és a kezdés időpontját
