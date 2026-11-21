@@ -52,3 +52,15 @@ test('global move / scale maps template boxes to the canvas', () => {
   const [x, y, w, h] = toCanvas([0, 0, 100, 100], { scale: 0.5 });
   assert.deepEqual([x, y, w, h], [480, 270, 50, 50]);
 });
+
+import { CONTENT } from '../graphics/js/layout.js';
+test('content move is part of the layout and maps boxes about the frame centre', () => {
+  const tpl = { elements: [{ id: 'a' }] };
+  const l = extract(tpl, null, { [CONTENT]: { dx: 20, scale: 0.9 } });
+  assert.deepEqual(l.items[CONTENT], { dx: 20, scale: 0.9 });
+  assert.equal(unsavedCount({ [CONTENT]: { dy: 5 } }), 1);
+  // a box at the frame centre only shifts; scaling is about the centre of the frame
+  const c = { dx: 10, dy: 0, scale: 0.5, cx: 600, cy: 500 };
+  assert.deepEqual(toCanvas([600, 500, 100, 100], null, 1920, 1080, c), [610, 500, 50, 50]);
+  assert.deepEqual(toCanvas([0, 0, 100, 100], { dx: 5 }, 1920, 1080, null), [5, 0, 100, 100]);
+});

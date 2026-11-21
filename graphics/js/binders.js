@@ -155,7 +155,7 @@ function matchName(lg, m) {
 }
 
 /** `selected`: optional list of game keys the operator picked (otherwise the latest / next games). */
-export function bindRowList(store, lg, teamId, tpl, selected = null) {
+export function bindRowList(store, lg, teamId, tpl, selected = null, customs = []) {
   const c = club(lg, teamId);
   const type = tpl.type;
   const suffix = type === 'schedule' ? (lg === 'men' ? 'MENETRENDJE' : 'Következő MÉRKŐZÉSEI') : 'Eredményei';
@@ -166,8 +166,17 @@ export function bindRowList(store, lg, teamId, tpl, selected = null) {
   };
   const candidates = type === 'schedule' ? store.upcomingGames(lg, teamId) : store.playedGames(lg, teamId);
   let games;
-  if (selected) { const set = new Set(selected); games = candidates.filter(m => set.has(gameKey(m))).slice(0, tpl.rows); }
-  else games = type === 'schedule' ? candidates.slice(0, tpl.rows) : candidates.slice(-tpl.rows);
+  if (selected) {
+    // the operator's own list, in the operator's order: games of the data and free-text rows ("custom:…" keys)
+    const byKey = new Map([...candidates, ...customs.map(c => ({ ...c, custom: true, url: c.key }))].map(m => [gameKey(m), m]));
+    games = selected.map(k => byKey.get(k)).filter(Boolean).slice(0, tpl.rows);
+  }
+  else if (type === 'schedule') {
+    // the very next game is usually the one the graphic is made for: the default list starts with the game after it
+    // (it stays in the candidate list and can be ticked); with fewer than 5 games left after it, it is kept
+    const start = candidates.length - 1 >= 5 ? 1 : 0;
+    games = candidates.slice(start, start + tpl.rows);
+  } else games = candidates.slice(-tpl.rows);
   const src = 'Hunbasket menetrend (NB I/A)';
   for (let r = 0; r < tpl.rows; r++) {
     const m = games[r];
@@ -179,6 +188,18 @@ export function bindRowList(store, lg, teamId, tpl, selected = null) {
       v[`r${r}.date`] = field(m.time ? `${fmtDate(m.date)} - ${m.time}` : fmtDate(m.date), src);
     } else {
       v[`r${r}.date`] = field(fmtDate(m.date), src);
+    }
+    if (m.custom) { // free-text row typed by the operator: shown exactly as typed
+      const own = 'Kézzel beírt sor';
+      v[`r${r}.date`] = { text: m.dateText || '', source: own };
+      v[`r${r}.comp`] = { src: m.compKey || '', source: own };
+      v[`r${r}.match`] = { text: m.matchText || '', source: own };
+      if (type !== 'schedule') {
+        const color = type === 'resultrows' ? WHITE_TXT : undefined;
+        v[`r${r}.score`] = { text: m.scoreText || '', source: own, ...(color ? { color } : {}) };
+        if (type === 'resultrows') { v[`r${r}.match`].color = WHITE_TXT; v[`r${r}.date`].color = WHITE_TXT; }
+      }
+      continue;
     }
     const cup = !!m.cup;
     const rsrc = cup ? `Feltöltött kupa-/európai meccs${m.competition ? ' – ' + m.competition : ''}` : src;

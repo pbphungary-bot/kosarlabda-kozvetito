@@ -5,6 +5,8 @@
 
 export const KEYS = ['dx', 'dy', 'size', 'scale'];
 export const GLOBAL = '__global';
+// '__content' moves / scales everything inside the frame (all elements, optionally not the photo); the frame (background + outline) stays
+export const CONTENT = '__content';
 
 const num = v => (typeof v === 'number' && Number.isFinite(v) ? v : undefined);
 
@@ -29,7 +31,7 @@ export function meaningful(e) {
 /** The complete effective layout of a template, ready to be saved: only entries that differ from the PSD. */
 export function extract(template, bench, ov) {
   const items = {};
-  for (const id of [...template.elements.map(e => e.id), GLOBAL]) {
+  for (const id of [...template.elements.map(e => e.id), GLOBAL, CONTENT]) {
     const e = effective(bench, ov, id);
     if (!meaningful(e)) continue;
     const c = {}; // compact: only the keys that differ from the PSD
@@ -78,9 +80,13 @@ export function unsavedCount(ov) {
   return Object.values(ov || {}).filter(o => KEYS.some(k => num(o?.[k]) !== undefined)).length;
 }
 
-/** Position of a template-space box on the canvas after the global move / scale (for the editor overlay). */
-export function toCanvas(box, g, w = 1920, h = 1080) {
+/** Position of a template-space box on the canvas after the content move / scale (c, optional) and the global one (for the editor overlay). */
+export function toCanvas(box, g, w = 1920, h = 1080, c = null) {
+  let [x, y, bw, bh] = box;
+  if (c) {
+    const k = c.scale > 0 ? c.scale : 1;
+    x = (x - c.cx) * k + c.cx + (c.dx || 0); y = (y - c.cy) * k + c.cy + (c.dy || 0); bw *= k; bh *= k;
+  }
   const gs = g?.scale > 0 ? g.scale : 1, gdx = g?.dx || 0, gdy = g?.dy || 0;
-  const [x, y, bw, bh] = box;
   return [(x - w / 2) * gs + w / 2 + gdx, (y - h / 2) * gs + h / 2 + gdy, bw * gs, bh * gs];
 }

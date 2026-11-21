@@ -252,7 +252,7 @@ function renderSelection(extra = {}) {
   } else {
     $('selectTitle').textContent = '2. Csapat';
     box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; resetMatchOverrides(); update(true); };
+    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null; resetTemplateOverrides(); update(true); };
     if (extra.games) {
       const group = t.type === 'schedule' ? 'schedule' : 'results';
       $('gameFilter').onchange = e => { s.gameFilter = e.target.value; update(true); };
@@ -288,11 +288,40 @@ function renderSelection(extra = {}) {
         renderImportState(); renderFreshness(); update(true);
         toast(`Meccs hozzáadva: ${fmtDate(date)} ${home ? me.short + ' – ' + opp : opp + ' – ' + me.short}`);
       };
-      $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; update(true); };
+      $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; (s.customRows ||= {})[group] = null; update(true); };
+      const keysNow = () => [...box.querySelectorAll('#rowEdit li[data-key]')].map(li => li.dataset.key);
+      const apply = keys => { (s.games ||= {})[group] = keys; update(true); };
+      const dateOf = key => (lastCandidates.find(m => gameKey(m) === key) || {}).date || null;
+      // insert a game at its place by date among the rows (rows without a date, e.g. typed ones, keep their position)
+      const insertByDate = (keys, key) => {
+        const d = dateOf(key), out = [...keys];
+        const at = d ? out.findIndex(k => dateOf(k) && dateOf(k) > d) : -1;
+        out.splice(at < 0 ? out.length : at, 0, key);
+        return out;
+      };
+      box.querySelectorAll('#rowEdit li[data-key]').forEach(li => {
+        const k = li.dataset.key;
+        li.querySelector('.rowdel').onclick = () => apply(keysNow().filter(x => x !== k));
+        const move = d => { const a = keysNow(), i = a.indexOf(k); [a[i], a[i + d]] = [a[i + d], a[i]]; apply(a); };
+        li.querySelector('.rowup').onclick = () => move(-1);
+        li.querySelector('.rowdown').onclick = () => move(1);
+      });
+      $('rowAdd').onclick = () => { const k = $('rowAddSel').value; if (k) apply(insertByDate(keysNow(), k)); };
+      $('rowAddSel').onchange = () => { if ($('rowAddSel').value && keysNow().length < t.rows) $('rowAdd').click(); };
+      $('customRowBox').ontoggle = e => { s.customOpen = e.target.open; };
+      $('crAdd').onclick = () => {
+        const dateText = $('crDate').value.trim(), matchText = $('crMatch').value.trim(), scoreText = group === 'results' ? $('crScore').value.trim() : '';
+        if (!matchText) return toast('Írd be a párosítást.');
+        const id = `custom:${Date.now().toString(36)}`;
+        ((s.customRows ||= {})[group] ||= []).push({ key: id, dateText, matchText, scoreText });
+        apply([...keysNow(), id]);
+      };
       box.querySelectorAll('.gamelist input').forEach(cb => cb.onchange = () => {
-        const keys = [...box.querySelectorAll('.gamelist input:checked')].map(x => x.value);
-        if (keys.length > t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} mérkőzés fér el a sablonon.`); return; }
-        (s.games ||= {})[group] = keys; update(true);
+        const keys = keysNow();
+        if (cb.checked) {
+          if (keys.length >= t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} mérkőzés fér el a sablonon.`); return; }
+          apply(insertByDate(keys, cb.value));
+        } else apply(keys.filter(x => x !== cb.value));
       });
     }
     if (extra.players) {
@@ -303,6 +332,12 @@ function renderSelection(extra = {}) {
       });
     }
   }
+}
+
+/** A new team starts from a clean slate: the data-bound choices of the previous team (typed rows, hidden rows, sizes) never carry over. */
+function resetTemplateOverrides() {
+  const o = overrides();
+  for (const k of Object.keys(o)) delete o[k];
 }
 
 function resetMatchOverrides() {
@@ -337,10 +372,12 @@ function autoValues() {
     info.players = r.players; info.shown = r.shown;
     if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a sablonon ${t.rows} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
   } else if (t.type === 'results' || t.type === 'schedule' || t.type === 'resultrows') {
-    const r = bindRowList(store, lg, s.teamId, t, s.games?.[t.type === 'schedule' ? 'schedule' : 'results'] || null);
+    const grp = t.type === 'schedule' ? 'schedule' : 'results';
+    const r = bindRowList(store, lg, s.teamId, t, s.games?.[grp] || null, s.customRows?.[grp] || []);
     v = r.values;
     info.games = r.games; info.candidates = r.candidates;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
+    if (t.type === 'schedule' && !s.games?.schedule && r.candidates.length - 1 >= 5) info.notices.push({ text: `Alapból a soron következő meccs utáni ${Math.min(t.rows, r.candidates.length - 1)} meccs jelenik meg (a következő meccs a grafika „tárgya”). A következő meccs a listában kipipálható.` });
     if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} mérkőzés jelenik meg (${r.candidates.length} van a listában: NB I/A + feltöltött kupameccsek)${t.type === 'schedule' && r.games.length < 5 ? ' – a menetrendnek legalább 5 sor kellene' : ''}. A további sorok üresek, kézzel kitölthetők.` });
     if (!store.cupFixtures(lg, s.teamId).length) info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Kupa- és európai meccseket tölts fel a „Kupameccsek” lapról (Adatok feltöltése), vagy írd be kézzel; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {
@@ -379,6 +416,7 @@ function mergedValues(auto) {
     out[el.id] = x;
   }
   out[LAY.GLOBAL] = LAY.effective(bench(), o, LAY.GLOBAL);
+  out[LAY.CONTENT] = { ...LAY.effective(bench(), o, LAY.CONTENT), photo: state.contentPhoto !== false };
   return out;
 }
 
@@ -482,6 +520,7 @@ function fileName(values) {
   return ascii(`${LEAGUES[lg].short}_${TEMPLATE_TYPES[t.type]}_${who}_${date}`) + '.png';
 }
 
+let lastCandidates = []; // candidate games of the current row-list graphic (for inserting rows by date)
 let updateSeq = 0; // only the newest redraw may draw: a slower, older one must not overwrite it with stale values
 async function update(full) {
   const seq = ++updateSeq;
@@ -491,6 +530,7 @@ async function update(full) {
   const { v: auto, info } = autoValues();
   const values = mergedValues(auto);
   current = { values, auto };
+  if (info.candidates) lastCandidates = info.candidates;
   if (full) {
     let playersHtml = '';
     if (t.type === 'teamstats' && info.players?.length) {
@@ -522,7 +562,20 @@ async function update(full) {
         </div>
         <div class="import-row"><button id="agSave" class="primary">Meccs hozzáadása</button><span id="agMsg" class="hint"></span></div></details>`;
       const noCups = !info.candidates.some(m => m.cup);
-      gamesHtml = `${noCups ? '<div class="notice">Ennél a csapatnál még nincs kupa-/európai meccs. Add hozzá lent, vagy tölts fel lapot / illessz be szöveget az eredmenyek.com oldalról („Adatok feltöltése” a bal felső sarokban).</div>' : ''}${addForm}
+      const rowName = m => m.custom ? `${esc(m.dateText || '')} ${esc(m.matchText || '')}${m.scoreText ? ' <small>(' + esc(m.scoreText) + ')</small>' : ''} <small>· kézzel beírt</small>`
+        : `${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ' <small>· ' + esc(m.competition || 'kupa/európai') + '</small>' : ''}`;
+      const addable = ordered.filter(m => !shownKeys.has(gameKey(m)));
+      const rowsHtml = `<label>Sorok a grafikán (${info.games.length}/${t.rows}) – törlés, hozzáadás, sorrend azonnal érvényes</label>
+        <ol class="rowedit" id="rowEdit">${info.games.map((m, i) => `<li data-key="${esc(gameKey(m))}"><span>${rowName(m)}</span>
+          <button type="button" class="rowup" ${i ? '' : 'disabled'} title="Feljebb">↑</button><button type="button" class="rowdown" ${i < info.games.length - 1 ? '' : 'disabled'} title="Lejjebb">↓</button><button type="button" class="rowdel" title="Sor törlése">✕</button></li>`).join('') || '<li class="empty">A grafika üres – adj hozzá meccset.</li>'}</ol>
+        <div class="row2"><select id="rowAddSel"><option value="">+ Meccs hozzáadása a sorokhoz…</option>${addable.slice(0, 80).map(m => `<option value="${esc(gameKey(m))}">${rowName(m).replace(/<[^>]+>/g, '')}</option>`).join('')}</select>
+          <button type="button" id="rowAdd" ${info.games.length >= t.rows ? 'disabled' : ''}>Hozzáadás</button></div>
+        <details class="addgame" id="customRowBox" ${s0().customOpen ? "open" : ""}><summary>+ Egyéni sor (szabad szöveg)</summary>
+          <div class="addgrid"><label>Dátum szövege<input id="crDate" placeholder="${sch ? '2026.12.05. - 18:00' : '2026.11.21.'}"></label>
+            <label>Párosítás<input id="crMatch" placeholder="Falco-Vulcano KC - Alba"></label>
+            ${sch ? '' : '<label>Eredmény<input id="crScore" placeholder="85-72"></label>'}</div>
+          <div class="import-row"><button type="button" id="crAdd" ${info.games.length >= t.rows ? 'disabled' : ''}>Sor hozzáadása</button></div></details>`;
+      gamesHtml = `${noCups ? '<div class="notice">Ennél a csapatnál még nincs kupa-/európai meccs. Add hozzá lent, vagy tölts fel lapot / illessz be szöveget az eredmenyek.com oldalról („Adatok feltöltése” a bal felső sarokban).</div>' : ''}${rowsHtml}${addForm}
         <label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
         <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
         <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>
@@ -556,7 +609,8 @@ async function update(full) {
   if (t.inner) { // the panel's outline is untouchable: text must stay inside it
     const [x0, y0, x1, y1] = t.inner.box;
     const out = t.elements.filter(el => el.type === 'text' && lastReport.boxes[el.id] && (values[el.id]?.visible ?? el.visible ?? true)).filter(el => {
-      const [bx, by, bw, bh] = lastReport.boxes[el.id];
+      const Cn = lastReport.content, moved = Cn && (Cn.dx || Cn.dy || Cn.scale !== 1);
+      const [bx, by, bw, bh] = moved ? LAY.toCanvas(lastReport.boxes[el.id], null, 1920, 1080, Cn) : lastReport.boxes[el.id]; // the content move counts
       return bx < x0 || by < y0 || bx + bw > x1 || by + bh > y1;
     });
     if (out.length) msgs.push(`A keret vonalát átlépi: ${out.map(el => el.label).slice(0, 6).join(', ')}${out.length > 6 ? ' …' : ''} – told beljebb vagy csökkentsd`);
@@ -665,7 +719,7 @@ function previewImports() {
 }
 
 // ───────────────────────── layout editor (move elements, benchmark) ─────────────────────────
-state.snap = true; state.groupMove = false; state.editMode = false;
+state.snap = true; state.groupMove = false; state.editMode = false; state.contentPhoto = true;
 const elById = id => tpl().elements.find(e => e.id === id);
 const ovFor = id => (overrides()[id] ||= {});
 const effOf = id => LAY.effective(bench(), overrides(), id);
@@ -673,6 +727,8 @@ const effOf = id => LAY.effective(bench(), overrides(), id);
 function renderLayoutPanel() {
   const L = layoutsOf(tpl().id), names = Object.keys(L.saved);
   const g = overrides()[LAY.GLOBAL] || {}, gb = bench()?.items?.[LAY.GLOBAL] || {};
+  const c = overrides()[LAY.CONTENT] || {}, cb = bench()?.items?.[LAY.CONTENT] || {};
+  const hasPhoto = tpl().elements.some(e => e.id === 'photo');
   $('layoutPanel').innerHTML = `
     <label class="chk"><input type="checkbox" id="editMode" ${state.editMode ? 'checked' : ''}> Szerkesztés: elemek húzása az előnézeten (kijelölt elem: nyilak 1 px, Shift+nyíl 10 px, Esc)</label>
     <div class="lay-row">
@@ -682,6 +738,11 @@ function renderLayoutPanel() {
     <div class="lay-row"><b>Teljes grafika:</b> Balra/jobbra <input type="number" id="gX" step="1" placeholder="${gb.dx || 0}" value="${g.dx ?? ''}">
       Fel/le <input type="number" id="gY" step="1" placeholder="${gb.dy || 0}" value="${g.dy ?? ''}">
       Méret (%) <input type="number" id="gS" step="1" min="10" max="300" placeholder="${Math.round((gb.scale || 1) * 100)}" value="${g.scale ? Math.round(g.scale * 100) : ''}"></div>
+    <div class="lay-row"><b>Tartalom a kereten belül:</b> Balra/jobbra <input type="number" id="cX" step="1" placeholder="${cb.dx || 0}" value="${c.dx ?? ''}">
+      Fel/le <input type="number" id="cY" step="1" placeholder="${cb.dy || 0}" value="${c.dy ?? ''}">
+      Méret (%) <input type="number" id="cS" step="1" min="10" max="300" placeholder="${Math.round((cb.scale || 1) * 100)}" value="${c.scale ? Math.round(c.scale * 100) : ''}">
+      ${hasPhoto ? `<label class="chk"><input type="checkbox" id="cPhoto" ${state.contentPhoto ? 'checked' : ''}> a fotó is mozogjon</label>` : ''}
+      <small class="hint">A keret és a háttér nem mozdul; a keretbe lógó szöveget jelzem.</small></div>
     <div id="inspector" class="insp empty"></div>
     <div class="lay-row"><b>Alap (benchmark):</b> <span id="benchState"></span>
       <button id="benchSave" title="A jelenlegi elrendezés lesz az alap: minden új meccs ebből indul">Mentés alapként</button>
@@ -731,14 +792,15 @@ function renderOverlay() {
   if (!ov) return;
   ov.classList.toggle('on', !!state.editMode);
   if (!state.editMode) return;
-  const boxes = lastReport?.boxes || {}, g = lastReport?.global;
+  const boxes = lastReport?.boxes || {}, g = lastReport?.global, C = lastReport?.content;
+  const cFor = id => (C && (C.dx || C.dy || C.scale !== 1) && (id !== 'photo' || C.photo) ? C : null);
   const ids = Object.keys(boxes).sort((a, b) => boxes[b][2] * boxes[b][3] - boxes[a][2] * boxes[a][3]); // big first: small elements stay on top
   const present = new Set(ids);
   ov.querySelectorAll('.hit').forEach(d => { if (!present.has(d.dataset.id)) d.remove(); });
   ids.forEach((id, i) => {
     let d = ov.querySelector(`.hit[data-id="${CSS.escape(id)}"]`);
     if (!d) { d = document.createElement('div'); d.className = 'hit'; d.dataset.id = id; ov.appendChild(d); }
-    const [x, y, w, h] = LAY.toCanvas(boxes[id], g);
+    const [x, y, w, h] = LAY.toCanvas(boxes[id], g, 1920, 1080, cFor(id));
     Object.assign(d.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%`, zIndex: i + 1 });
     d.title = `${elById(id)?.label || id} – húzd, vagy jelöld ki`;
     d.classList.toggle('sel', id === selectedId);
@@ -748,7 +810,7 @@ function renderOverlay() {
   const eff = selectedId ? effOf(selectedId) : null;
   if (eff && (eff.dx || eff.dy) && boxes[selectedId]) {
     const [bx, by, bw, bh] = boxes[selectedId];
-    const [x, y, w, h] = LAY.toCanvas([bx - (eff.dx || 0), by - (eff.dy || 0), bw, bh], g);
+    const [x, y, w, h] = LAY.toCanvas([bx - (eff.dx || 0), by - (eff.dy || 0), bw, bh], g, 1920, 1080, cFor(selectedId));
     if (!ghost) { ghost = document.createElement('div'); ghost.className = 'ghost'; ov.appendChild(ghost); }
     Object.assign(ghost.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%` });
   } else ghost?.remove();
@@ -781,7 +843,8 @@ function wireLayoutEditor() {
     if (!drag.moved && Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 3) return;
     drag.moved = true;
     const rect = $('canvas').getBoundingClientRect();
-    const k = 1920 / rect.width / (lastReport?.global?.scale || 1); // screen px → template px
+    const C = lastReport?.content, cs = C && (drag.id !== 'photo' || C.photo) ? C.scale || 1 : 1;
+    const k = 1920 / rect.width / ((lastReport?.global?.scale || 1) * cs); // screen px → template px
     const s0 = drag.start[drag.id], b = bench()?.items?.[drag.id] || {};
     let ndx = s0.dx + (e.clientX - drag.x0) * k, ndy = s0.dy + (e.clientY - drag.y0) * k;
     if (state.snap && !e.altKey) { ndx = LAY.snap(ndx, [0, b.dx || 0]); ndy = LAY.snap(ndy, [0, b.dy || 0]); }
@@ -811,11 +874,16 @@ function wireLayoutEditor() {
     if (e.target.id === 'editMode') { state.editMode = e.target.checked; renderOverlay(); }
     if (e.target.id === 'snapOn') state.snap = e.target.checked;
     if (e.target.id === 'groupMove') state.groupMove = e.target.checked;
+    if (e.target.id === 'cPhoto') { state.contentPhoto = e.target.checked; update(false); }
   });
   panel.addEventListener('input', e => {
     const id = e.target.id, v = e.target.value, n = parseFloat(v), has = v !== '' && Number.isFinite(n);
     const setKey = (o, key, val) => { if (val === undefined) delete o[key]; else o[key] = val; };
-    if (['gX', 'gY', 'gS'].includes(id)) {
+    if (['cX', 'cY', 'cS'].includes(id)) {
+      const o = ovFor(LAY.CONTENT);
+      setKey(o, { cX: 'dx', cY: 'dy', cS: 'scale' }[id], has ? (id === 'cS' ? n / 100 : n) : undefined);
+      if (!Object.keys(o).length) delete overrides()[LAY.CONTENT];
+    } else if (['gX', 'gY', 'gS'].includes(id)) {
       const o = ovFor(LAY.GLOBAL);
       setKey(o, { gX: 'dx', gY: 'dy', gS: 'scale' }[id], has ? (id === 'gS' ? n / 100 : n) : undefined);
       if (!Object.keys(o).length) delete overrides()[LAY.GLOBAL];

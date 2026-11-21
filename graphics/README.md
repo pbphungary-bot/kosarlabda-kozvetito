@@ -69,8 +69,13 @@ Sablon: *Játékos-különleges* (férfi: a Rosic-féle 3 oszlopos, női: a Kán
 mert az adatbázisban csak az idei átlag van meg; az üres mezők nem jelennek meg. A **fotót** (áttetsző PNG kivágás) a „Fotó” mezővel töltöd fel; csak a böngészőben marad,
 a panel lekerekített keretén nem lóg túl, az Elrendezés dobozzal mozgatható/nagyítható. Az **Alapbeállítás „Grafika felépítése”** dobozában megadhatod az oszlopok (1–4) és sorok (1–8) számát, a soronkénti mutatót (pl. PTS/G, 3P%, vagy 2P/3P/FT „bedobott/dobott + %”),
 melyik oszlop az idei átlag, a fotó magasságát (alapból a keret belsejéig a lehető legnagyobb) és X helyét, valamint a **rétegezést**: csoportonként (név, fejlécek, feliratok, oszlopok) eldöntheted, hogy a fotó előtt vagy mögött látszik-e.
+Az Elrendezés doboz **„Tartalom a kereten belül”** sora az összes tartalmat együtt tolja/nagyítja, miközben a keret és a háttér nem mozdul (a fotó külön kikapcsolható); a keretbe lógó szöveget jelzi. Az „alapként” is menthető.
 A „bedobott/dobott” sorokban a százalék kisebb betűvel, a számok magasságának közepén áll. A panel keretvonala érinthetetlen: a fotó és a logó a keret belső széléig vágódik, a keretbe lógó szöveget a stúdió jelzi.
 A sor-feliratok átírhatók, a hozzájuk tartozó értékeket ilyenkor kézzel kell megadni.
+
+**Sorok szerkesztése (Menetrend, Eredmények):** a „Sorok a grafikán” listában minden sor mellett ↑ ↓ ✕ gomb van: a törlés, a sorrend és a hozzáadás azonnal megjelenik a képen. A „+ Meccs hozzáadása” listából bármelyik meccs betehető (dátum szerinti helyére), az „Egyéni sor” pedig szabad szöveget enged (dátum, párosítás, eredmény). Csapatváltáskor minden visszaáll az új csapat saját, automatikus listájára; a korábbi csapat sorai, beírt szövegei és elrejtett sorai nem maradnak meg.
+
+**Menetrend alapbeállítás:** a soron következő meccs általában az, amelyikhez a grafika készül, ezért a Menetrend sablon alapból a *következő meccs utáni* 6 meccset mutatja. A következő meccs nem tűnik el a listáról, a meccslistában bármikor kipipálható. Ha a következő meccs után 5-nél kevesebb meccs maradna, nem hagyja ki (mindig legalább 5 sor kell).
 
 ### Kupa- és európai meccsek – automatikusan
 

@@ -235,7 +235,8 @@ test('results list: European games can be picked even when newer NB I/A games ex
   const cups = auto.candidates.filter(m => m.cup);
   assert.equal(cups.length, 3);
   const league = auto.candidates.filter(m => !m.cup).slice(-3);
-  const picked = bindRowList(store, 'women', 'dvtkhuntherm', t, [...cups, ...league].map(gameKey));
+  const chosen = [...cups, ...league].sort((a, b) => a.date.localeCompare(b.date)); // the studio keeps picked rows in date order
+  const picked = bindRowList(store, 'women', 'dvtkhuntherm', t, chosen.map(gameKey));
   assert.equal(picked.games.length, 6);
   assert.equal(picked.games.filter(m => m.cup).length, 3);
   assert.deepEqual(picked.games.map(m => m.date), [...picked.games.map(m => m.date)].sort(), 'shown in date order');
@@ -315,7 +316,9 @@ test('pasted games merge with NB I/A games on the schedule: 22.11 Csata, 25.11 B
   store.mergeExcel('women', imp, { name: 'Beillesztett szöveg' });
   const sch = bindRowList(store, 'women', 'dvtkhuntherm', templateById('schedule-women'));
   const order = sch.games.map(m => `${m.date.slice(5)} ${m.cup ? 'EU' : 'NB'}`);
-  assert.deepEqual(order, ['11-22 NB', '11-25 EU', '11-28 NB', '12-02 EU', '12-05 NB', '12-09 NB'], order.join(', '));
+  // the very next game (22.11) is the one the graphic is made for: the default list starts after it
+  assert.deepEqual(order, ['11-25 EU', '11-28 NB', '12-02 EU', '12-05 NB', '12-09 NB', '12-12 NB'], order.join(', '));
+  assert.ok(sch.candidates.some(m => m.date === '2026-11-22'), 'the next game stays in the list and can be ticked');
   const eu = sch.games.findIndex(m => m.cup && m.away === 'Brod na Savi');
   assert.equal(sch.values[`r${eu}.date`].text, '2026.11.25. - 18:00');
   assert.equal(sch.values[`r${eu}.match`].text, 'DVTK Huntherm - Brod na Savi');
