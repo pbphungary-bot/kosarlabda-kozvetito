@@ -1,18 +1,18 @@
 {
   "competition": "Női NB I/A",
   "source": "https://hunbasket.hu/tabella/noi",
-  "updated_at": "2026-11-01T19:12:34.614716+00:00",
-  "checked_at": "2026-11-21T19:25:31.319979+00:00",
+  "updated_at": "2026-11-21T20:15:29.442697+00:00",
+  "checked_at": "2026-11-21T20:15:29.442697+00:00",
   "standings": [
     {
       "rank": 1,
       "name": "Sopron Basket",
-      "played": 6,
-      "points": 12,
-      "wins": 6,
+      "played": 7,
+      "points": 14,
+      "wins": 7,
       "losses": 0,
-      "scored": 528,
-      "conceded": 363
+      "scored": 594,
+      "conceded": 424
     },
     {
       "rank": 2,
@@ -36,16 +36,6 @@
     },
     {
       "rank": 4,
-      "name": "KSC Szekszárd",
-      "played": 6,
-      "points": 10,
-      "wins": 4,
-      "losses": 2,
-      "scored": 483,
-      "conceded": 407
-    },
-    {
-      "rank": 5,
       "name": "ETO Basket",
       "played": 6,
       "points": 10,
@@ -53,6 +43,16 @@
       "losses": 2,
       "scored": 407,
       "conceded": 395
+    },
+    {
+      "rank": 5,
+      "name": "KSC Szekszárd",
+      "played": 7,
+      "points": 11,
+      "wins": 4,
+      "losses": 3,
+      "scored": 544,
+      "conceded": 473
     },
     {
       "rank": 6,
@@ -67,42 +67,42 @@
     {
       "rank": 7,
       "name": "NKA Universitas Pécs",
-      "played": 6,
-      "points": 8,
-      "wins": 2,
+      "played": 7,
+      "points": 10,
+      "wins": 3,
       "losses": 4,
-      "scored": 410,
-      "conceded": 393
+      "scored": 527,
+      "conceded": 471
     },
     {
       "rank": 8,
       "name": "TFSE",
-      "played": 6,
-      "points": 8,
-      "wins": 2,
-      "losses": 4,
-      "scored": 417,
-      "conceded": 414
-    },
-    {
-      "rank": 9,
-      "name": "ELTE BEAC Újbuda",
       "played": 7,
       "points": 9,
       "wins": 2,
       "losses": 5,
-      "scored": 510,
-      "conceded": 560
+      "scored": 479,
+      "conceded": 477
+    },
+    {
+      "rank": 9,
+      "name": "ELTE BEAC Újbuda",
+      "played": 8,
+      "points": 10,
+      "wins": 2,
+      "losses": 6,
+      "scored": 588,
+      "conceded": 677
     },
     {
       "rank": 10,
       "name": "Vasas Akadémia",
-      "played": 6,
-      "points": 6,
-      "wins": 0,
+      "played": 7,
+      "points": 8,
+      "wins": 1,
       "losses": 6,
-      "scored": 319,
-      "conceded": 485
+      "scored": 382,
+      "conceded": 547
     },
     {
       "rank": 11,
