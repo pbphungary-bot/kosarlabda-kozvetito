@@ -12,6 +12,7 @@ export const SOURCES = {
   fixtures: { men: 'men.json', women: 'women.json', label: 'Menetrend és eredmények (Hunbasket)' },
   standings: { men: 'standings_men.json', women: 'standings_women.json', label: 'Tabella (Hunbasket)' },
   referees: { men: 'referees_men.json', women: 'referees_women.json', label: 'Játékvezetők, ellenőr, helyszín (Hunbasket)' },
+  cups: { men: 'cups_men.json', women: 'cups_women.json', label: 'Európai / kupameccsek (FIBA)', optional: true },
   teamStats: { men: 'team_stats_men.json', women: 'team_stats_women.json', label: 'Csapatstatisztika' },
   players: { men: 'player_stats_men.json', women: 'player_stats_women.json', label: 'Játékosstatisztika (Hunbasket)' },
 };
@@ -55,7 +56,7 @@ export class Store {
   }
 
   #index(lg, r) {
-    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, statSource: null };
+    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], statSource: null };
     if (r.fixtures) {
       L.updated.fixtures = r.fixtures.updated_at || null;
       const today = this.now.toISOString().slice(0, 10);
@@ -76,6 +77,10 @@ export class Store {
     if (r.referees) {
       L.updated.referees = r.referees.updated_at || null;
       L.referees = r.referees.matches || {};
+    }
+    if (r.cups) {
+      L.updated.cups = r.cups.updated_at || null;
+      L.cups = (r.cups.games || []).filter(g => g.date && (g.homeId || g.awayId));
     }
     if (r.standings) {
       L.updated.standings = r.standings.updated_at || null;
@@ -132,13 +137,16 @@ export class Store {
 
   /** Uploaded cup / European games (sheet import), in the same shape as dashboard fixtures. */
   cupFixtures(lg, id) {
-    const x = this.#excelOn(lg);
-    if (!x?.cups) return [];
     const today = this.now.toISOString().slice(0, 10);
-    return Object.entries(x.cups).filter(([, g]) => g.homeId === id || g.awayId === id).map(([cupKey, g]) => ({
+    const k = g => `${g.date}|${g.homeId || g.home}|${g.awayId || g.away}`;
+    const all = {};
+    for (const g of this.leagues[lg].cups) all[k(g)] = { ...g, auto: true }; // automatic (FIBA) …
+    const x = this.#excelOn(lg);
+    if (x?.cups) for (const [key, g] of Object.entries(x.cups)) all[key] = g; // … the operator's own entry wins
+    return Object.entries(all).filter(([, g]) => g.homeId === id || g.awayId === id).map(([cupKey, g]) => ({
       cupKey, idx: -1, round: null, roundNo: null, home: g.home, away: g.away, homeId: g.homeId, awayId: g.awayId,
-      date: g.date, time: g.time, status: g.status, score: g.score, url: null,
-      cup: true, competition: g.competition, compKey: g.compKey,
+      date: g.date, time: g.time, status: g.status, score: g.score, url: null, venue: g.venue || null,
+      cup: true, auto: !!g.auto, competition: g.competition, compKey: g.compKey,
       resultMissing: g.status !== 'finished' && g.date < today, finishedWithoutScore: false,
     }));
   }
@@ -270,7 +278,7 @@ export async function loadDashboard(fetchJson, now = new Date()) {
   for (const [key, def] of Object.entries(SOURCES)) {
     for (const lg of Object.keys(LEAGUES)) {
       jobs.push(fetchJson(def[lg]).then(j => { raw[lg][key] = j; })
-        .catch(e => raw.errors.push({ league: lg, dataset: key, file: def[lg], error: String(e.message || e) })));
+        .catch(e => def.optional || raw.errors.push({ league: lg, dataset: key, file: def[lg], error: String(e.message || e) })));
     }
   }
   await Promise.all(jobs);

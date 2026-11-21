@@ -62,7 +62,18 @@ A „Következik” sablon (a *Nex Match graph.psd* alapján) bal felső sarokba
 
 A lábléc harmadik logója minden grafikán az **MKOSZ** logó (a Play By Play logó sehol nem jelenik meg).
 
-### Kupa- és európai meccsek
+### Kupa- és európai meccsek – automatikusan
+
+A `Európai / kupameccsek` forrás magától frissül: a `.github/workflows/cups.yml` naponta háromszor (kb. 7, 13 és 19 óra) lekéri a **hivatalos
+FIBA és Bajnokok Ligája játéklistát** (EuroCup Women, EuroLeague Women, Bajnokok Ligája, FIBA Europe Cup), kiszűri a NB I/A klubok meccseit,
+és a `data/cups_men.json` / `data/cups_women.json` fájlba írja. A stúdió ezeket automatikusan beteszi a Menetrend/Eredmények sablonokba
+(„automatikus” címkével), a felső sávban pedig látszik a frissítés ideje. A kézzel/Excelből felvett meccs ugyanarra a dátumra és csapatokra
+felülírja az automatikusat. Ha az oldal nem érhető el, a régi adat marad, üres eredmény sosem írja felül.
+* A szezon azonosítója (`26-27`) a `scripts/update_cups.mjs` elején van; új szezonban ezt kell átírni.
+* Nem lefedett: a Magyar Kupa és minden, ami nincs a FIBA oldalakon – ezekhez marad a kézi/Excel út.
+* Figyelem: az oldal nem hivatalos API-ja; a FIBA használati feltételei szigorúbbak lehetnek, mint a Hunbasket-é, ezért ritkán és azonosítható User-Agenttel kérdez. Ha szeretnéd, kikapcsolható a workflow letiltásával.
+
+### Kupa- és európai meccsek – kézzel / Excelből
 
 A felső sávban lévő **„+ Kupa-/európai meccs”** gomb a Menetrend sablonon megnyitja a hozzáadás űrlapot (válaszd ki a csapatot, add meg a dátumot,
 az ellenfelet és a sorozatot). Az Eredmények / Menetrend sablonokon a csapat alatt található ugyanez, és az alatta lévő lista dönti el, melyik

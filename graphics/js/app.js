@@ -72,10 +72,11 @@ const overrides = () => (state.overrides[ovKey()] ||= {});
 function renderFreshness() {
   const lg = state.league;
   const f = store.freshness(lg);
-  const names = { fixtures: 'Menetrend', referees: 'Játékvezetők', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat' };
+  const names = { fixtures: 'Menetrend', referees: 'Játékvezetők', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat', cups: 'Európai meccsek' };
   const fmt = iso => { const d = new Date(iso); return d.toLocaleString('hu-HU', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }); };
   const parts = Object.keys(SOURCES).map(k => {
     const x = f[k];
+    if (!x && SOURCES[k].optional) return '';
     if (!x) return `<span class="err" title="Nem tölthető be">${names[k]}: hiányzik</span>`;
     const age = x.hours === null ? '?' : x.hours < 1 ? '<1 ó' : x.hours < 48 ? `${Math.round(x.hours)} ó` : `${Math.round(x.hours / 24)} nap`;
     return `<span class="${x.stale ? 'stale' : ''}" title="Frissítve: ${esc(x.updated_at)}">${names[k]}: ${fmt(x.updated_at)} (${age})</span>`;
@@ -426,7 +427,7 @@ async function update(full) {
         <label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
         <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
         <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>
-        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}</small> <button type="button" class="delcup" data-del="${esc(m.cupKey)}" title="Meccs törlése">✕</button>` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
+        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}${m.auto ? ' · automatikus' : ''}</small> ${m.auto ? '' : `<button type="button" class="delcup" data-del="${esc(m.cupKey)}" title="Meccs törlése">✕</button>`}` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
     }
     renderSelection({ players: playersHtml, games: gamesHtml });
     renderFields(values, auto);
