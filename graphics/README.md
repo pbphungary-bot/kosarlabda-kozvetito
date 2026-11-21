@@ -72,6 +72,8 @@ melyik oszlop az idei átlag, a fotó magasságát (alapból a keret belsejéig 
 A „bedobott/dobott” sorokban a százalék kisebb betűvel, a számok magasságának közepén áll. A panel keretvonala érinthetetlen: a fotó és a logó a keret belső széléig vágódik, a keretbe lógó szöveget a stúdió jelzi.
 A sor-feliratok átírhatók, a hozzájuk tartozó értékeket ilyenkor kézzel kell megadni.
 
+**Menetrend alapbeállítás:** a soron következő meccs általában az, amelyikhez a grafika készül, ezért a Menetrend sablon alapból a *következő meccs utáni* 6 meccset mutatja. A következő meccs nem tűnik el a listáról, a meccslistában bármikor kipipálható. Ha a következő meccs után 5-nél kevesebb meccs maradna, nem hagyja ki (mindig legalább 5 sor kell).
+
 ### Kupa- és európai meccsek – automatikusan
 
 A `Európai / kupameccsek` forrás magától frissül: a `.github/workflows/cups.yml` naponta háromszor (kb. 7, 13 és 19 óra) lekéri a **hivatalos

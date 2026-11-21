@@ -32,6 +32,8 @@ try {
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('dialog', d => d.accept());
+  // the live European-games feed changes daily; the cup tests bring their own games (an empty feed is served)
+  await ctx.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   await page.goto(`${URL}/graphics/index.html`);
   await page.waitForSelector('body[data-ready="1"]', { timeout: 30000 });
 

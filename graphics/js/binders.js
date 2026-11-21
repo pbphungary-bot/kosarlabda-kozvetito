@@ -167,7 +167,12 @@ export function bindRowList(store, lg, teamId, tpl, selected = null) {
   const candidates = type === 'schedule' ? store.upcomingGames(lg, teamId) : store.playedGames(lg, teamId);
   let games;
   if (selected) { const set = new Set(selected); games = candidates.filter(m => set.has(gameKey(m))).slice(0, tpl.rows); }
-  else games = type === 'schedule' ? candidates.slice(0, tpl.rows) : candidates.slice(-tpl.rows);
+  else if (type === 'schedule') {
+    // the very next game is usually the one the graphic is made for: the default list starts with the game after it
+    // (it stays in the candidate list and can be ticked); with fewer than 5 games left after it, it is kept
+    const start = candidates.length - 1 >= 5 ? 1 : 0;
+    games = candidates.slice(start, start + tpl.rows);
+  } else games = candidates.slice(-tpl.rows);
   const src = 'Hunbasket menetrend (NB I/A)';
   for (let r = 0; r < tpl.rows; r++) {
     const m = games[r];

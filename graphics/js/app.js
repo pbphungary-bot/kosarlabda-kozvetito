@@ -341,6 +341,7 @@ function autoValues() {
     v = r.values;
     info.games = r.games; info.candidates = r.candidates;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
+    if (t.type === 'schedule' && !s.games?.schedule && r.candidates.length - 1 >= 5) info.notices.push({ text: `Alapból a soron következő meccs utáni ${Math.min(t.rows, r.candidates.length - 1)} meccs jelenik meg (a következő meccs a grafika „tárgya”). A következő meccs a listában kipipálható.` });
     if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} mérkőzés jelenik meg (${r.candidates.length} van a listában: NB I/A + feltöltött kupameccsek)${t.type === 'schedule' && r.games.length < 5 ? ' – a menetrendnek legalább 5 sor kellene' : ''}. A további sorok üresek, kézzel kitölthetők.` });
     if (!store.cupFixtures(lg, s.teamId).length) info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Kupa- és európai meccseket tölts fel a „Kupameccsek” lapról (Adatok feltöltése), vagy írd be kézzel; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {

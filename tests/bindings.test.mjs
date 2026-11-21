@@ -4,6 +4,7 @@ import { loadStore, readJson } from './helpers.mjs';
 import { bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
 import { templateById, STAT_ROWS, TEAMSTAT_COLS } from '../graphics/js/templates.js';
 import { clubId } from '../graphics/js/clubs.js';
+import { gameKey } from '../graphics/js/data.js';
 
 const measure = (el, text) => text.length * el.size * 0.4; // layout only, not asserted
 
@@ -189,4 +190,19 @@ test('every fixture has an entry in the referee file and a trio is exactly three
     }
   }
   assert.ok(store.freshness('women').referees, 'freshness shown for the referee file');
+});
+
+test('schedule: the default list starts with the game after the next one, which stays selectable; short lists keep it', async () => {
+  const store = await loadStore();
+  const t = templateById('schedule-men');
+  const up = store.upcomingGames('men', 'falcokc');
+  const r = bindRowList(store, 'men', 'falcokc', t);
+  assert.equal(r.games[0].date, up[1].date);
+  assert.equal(r.games.length, t.rows);
+  assert.ok(r.candidates.includes(up[0]));
+  const picked = bindRowList(store, 'men', 'falcokc', t, [up[0], up[1]].map(m => gameKey(m)));
+  assert.equal(picked.games[0], up[0]); // an explicit selection is never changed
+  const few = { ...store, upcomingGames: () => up.slice(0, 5), cupFixtures: () => [] };
+  Object.setPrototypeOf(few, Object.getPrototypeOf(store));
+  assert.equal(bindRowList(few, 'men', 'falcokc', t).games[0], up[0], 'with 5 games left nothing is skipped (always >= 5 rows)');
 });
