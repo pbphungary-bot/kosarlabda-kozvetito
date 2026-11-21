@@ -833,6 +833,23 @@ try {
     assert.ok(st.right < tl.left + 20 && st.width > 300, JSON.stringify([st.right, tl.left]));
     assert.ok(await mp.evaluate(() => document.documentElement.scrollWidth) <= 845);
   });
+  await check('phone: the dashboard has no sideways scrolling on any tab and finger sized controls', async () => {
+    await mp.setViewportSize({ width: 390, height: 844 });
+    await mp.goto(`${URL}/index.html`);
+    await mp.waitForTimeout(3000);
+    await mp.evaluate(() => { const h = document.getElementById('home'), a = document.getElementById('away'); if (h.options.length > 2) { h.selectedIndex = 1; a.selectedIndex = 2; h.dispatchEvent(new Event('change')); a.dispatchEvent(new Event('change')); } document.getElementById('go')?.click(); });
+    await mp.waitForTimeout(1200);
+    for (const tab of ['league', 'teams', 'matchup', 'notes', 'news', 'fb', 'sources']) {
+      await mp.evaluate(t => document.querySelector(`nav button[data-tab="${t}"]`).click(), tab);
+      await mp.waitForTimeout(500);
+      const r = await mp.evaluate(() => ({
+        sw: document.documentElement.scrollWidth,
+        small: [...document.querySelectorAll('.control select, .control button, .fb-toolbar input, .league-team-picker select')].filter(e => { const b = e.getBoundingClientRect(); return b.width && b.height < 40; }).length,
+      }));
+      assert.ok(r.sw <= 391, `${tab}: dashboard is ${r.sw}px wide`);
+      assert.equal(r.small, 0, `${tab}: small controls`);
+    }
+  });
   await check('phone: no console errors', async () => assert.deepEqual(merrors, []));
   await mctx.close();
 
