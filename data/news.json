@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T17:40:17.078432+00:00",
+  "checked_at": "2026-11-21T18:28:49.968382+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -561,6 +563,16 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár NB I: hazai pályán verte a Szekszárdot a Sopron, és hibátlan maradt",
+      "summary": "Női kosár NB I: hazai pályán verte a Szekszárdot a Sopron, és hibátlan maradt",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-nb-i-hazai-palyan-verte-a-szekszardot-a-sopron-es-hibatlan-maradt/",
+      "published_at": "2026-11-21T18:17:44+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Női kosár NB I: hazai pályán verte a Szekszárdot a Sopron és továbbra is hibátlan",
