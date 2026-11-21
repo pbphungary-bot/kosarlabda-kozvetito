@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T17:02:39.662148+00:00",
+  "checked_at": "2026-11-21T17:40:17.078432+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -46,9 +46,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 50,
-      "added": 0,
-      "repaired": 50,
+      "candidates": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -195,9 +195,9 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 11,
+      "already_saved": 12,
       "added": 0,
-      "repaired": 1,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 12,
@@ -561,6 +561,16 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár NB I: hazai pályán verte a Szekszárdot a Sopron és továbbra is hibátlan",
+      "summary": "Női kosár NB I: hazai pályán verte a Szekszárdot a Sopron és továbbra is hibátlan",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-nb-i-hazai-palyan-verte-a-szekszardot-a-sopron-es-tovabbra-is-hibatlan/",
+      "published_at": "2026-11-21T18:17:44+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
       "title": "A kupagyőztes Szolnokot fogadjuk",
