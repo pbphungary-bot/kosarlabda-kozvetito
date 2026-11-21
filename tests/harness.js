@@ -105,7 +105,7 @@ async function assets() {
 }
 
 window.harness = {
-  ids: TEMPLATES.map(t => t.id),
+  ids: TEMPLATES.filter(t => t.sample).map(t => t.id),
   async init() { return loadFonts(G + 'fonts/'); },
   async renderSample(id) {
     const t = templateById(id);
