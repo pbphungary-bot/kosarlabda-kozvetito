@@ -41,6 +41,9 @@ STATIC_PREFIXES = ('hand-drawn-illustration-of-a-classic-referee-whistle',)
 TEMPLATES = {
     'comparison-men': ('Falco - Alba statösszevetés 1111 előtt.psd', {'static_pixel': False}),
     'comparison-women': ('DVTK - CSATA statösszevetés 1122 előtt.psd', {}),
+    # player specials: photo, club logo, name, texts and numbers are dynamic
+    'playerspecial-men': ('Uros STAT.psd', {'static_pixel': False}),
+    'playerspecial-women': ('Kányási - 324 vs idei 7 meccs.psd', {'static_pixel': False}),
     'teamstats-men': ('Falco csapatstat 9. ford után 1114.psd', {}),
     'teamstats-women': ('DVTK csapatstat 7. ford után 1122.psd', {}),
     'results-men': ('Falco  LAST Games Graph 1111.psd', {}),
@@ -191,6 +194,22 @@ def hybrid_background(psd, dynamic_ids):
     return Image.fromarray(out, 'RGBA'), float(m.mean())
 
 
+def repair_panel_border(bg, ref, band=6):
+    """The photo of a player special overlaps the panel's right / bottom border: Photoshop clips it to the panel, but the
+    photo-less static render loses pieces of that border. The full composite (ref) has the border intact there, so the
+    border band of the right and bottom edge (and the pixels just outside it) are copied from it."""
+    r = np.asarray(ref)
+    a = np.asarray(bg).copy()
+    al = r[..., 3] > 128
+    xr = np.array([np.where(row)[0].max() if row.any() else -1 for row in al])
+    ex = int(np.bincount(xr[xr >= 0]).argmax())
+    yb = np.array([np.where(col)[0].max() if col.any() else -1 for col in al.T])
+    ey = int(np.bincount(yb[yb >= 0]).argmax())
+    a[:, ex - band:ex + 12] = r[:, ex - band:ex + 12]
+    a[ey - band:ey + 12, :ex + 12] = r[ey - band:ey + 12, :ex + 12]
+    bg.paste(Image.fromarray(a, 'RGBA'))
+
+
 def save_smart_object_png(layer, path):
     so = layer.smart_object
     if so.kind == 'data' and so.filetype in ('png', 'jpeg', 'jpg'):
@@ -329,6 +348,8 @@ def main():
         ref = psd.topil().convert('RGBA')
         bg, frac = hybrid_background(psd, dynamic)
         swapped = swap_pbp_for_mkosz(layers, bg, ref)
+        if tid.startswith('playerspecial'):
+            repair_panel_border(bg, ref)
         ref.save(os.path.join(d, 'reference.png'), optimize=True)
         make_thumb(ref, os.path.join(d, 'thumb.jpg'))
         bg.save(os.path.join(d, 'background.png'), optimize=True)

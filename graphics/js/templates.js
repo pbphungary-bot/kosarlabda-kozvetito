@@ -18,6 +18,7 @@ const COMP_OUTLINE = { 'comp/eurocup-women': ol(3, '#ffffff'), 'comp/euroleague-
 // element id → calibration key (see tools/calibrate_text.py)
 function hscaleKey(type, id) {
   if (id === 'subtitle' || id === 'title' || id === 'round' || id === 'venue' || id === 'time') return id;
+  if (type === 'playerspecial') return id === 'title' ? 'title' : id.endsWith('.label') ? 'label' : /\.c\d$/.test(id) ? 'value' : /^h\d$/.test(id) ? 'header' : id === 'subtitle' ? 'subtitle' : null;
   if (type === 'comparison' || type === 'playercompare') return id.includes('.rank.') ? 'rank' : 'value';
   if (type === 'teamstats') return id === 'team.name' ? 'teamname' : (/\.name$|^hdr\./.test(id) ? 'name' : 'figure');
   if (type === 'intro') return id.endsWith('.rank') ? 'round' : 'name';
@@ -217,6 +218,51 @@ for (const lg of ['men', 'women']) {
   LAYER_OPACITY[`playercompare-${lg}`] = LAYER_OPACITY[`comparison-${lg}`];
 }
 
+
+// ───────────────────────── Játékos-különleges (player special) ─────────────────────────
+// Editorial design: name, a one/two-line story, up to three stat columns (each with a 2-line header), photo.
+// Both PSDs (Uros STAT, Kányási) are laid out by the same builder; g holds the geometry of each.
+export const PLAYERSPECIAL_ROWS = {
+  men: [
+    { label: 'PTS/G', col: 'P.' }, { label: '3P%', col: '3P %', pct: true }, { label: 'REB/G', col: 'ÖLP' },
+    { label: 'AST/G', col: 'GP' }, { label: 'VAL/G', col: 'VAL' }, { label: 'MIN/G', col: 'Idő' },
+  ],
+  women: [
+    { label: 'PTS/G', col: 'P.' }, { label: '2P%', col: '2P %', pct: true, made: '2P S', att: '2P K' }, { label: 'REB/G', col: 'ÖLP' },
+    { label: 'AST/G', col: 'GP' }, { label: 'STL/G', col: 'SZL' }, { label: 'EFF/G', col: 'VAL' },
+  ],
+};
+
+function playerspecial(id, league, psd, g) {
+  const op = 0.9882;
+  const els = [
+    { id: 'photo', type: 'image', label: 'Játékos fotó (feltöltött, áttetsző PNG)', group: 'Fotó', box: g.photo, fit: 'contain', anchor: 'bottom', clipToPanel: true, fixedSrc: true },
+    { id: 'logo', type: 'image', label: 'Klublogó (háttér)', group: 'Fotó', box: g.logo, fit: 'contain', opacity: 0.6, outline: ol(2, '#ffffff'), visible: g.logoOn },
+    { id: 'title', type: 'text', label: 'Név', group: 'Fejléc', x: g.titleX, y: g.titleY, align: 'center', size: 106.667, tracking: 50, color: '#fefefe', caps: true, outline: ol(4, '#000000', 1), maxWidth: g.titleMax, opacity: op, adjust: true },
+    { id: 'subtitle', type: 'text', label: 'Alcím (1–2 sor, kézzel írandó)', group: 'Fejléc', x: g.subX, y: g.subY, align: 'center', font: 'italic', size: 42.667, tracking: 50, color: '#000000',
+      outline: ol(3, '#ffffff'), maxWidth: g.subMax, lineHeight: 48, wrap: { maxLines: 2 }, opacity: op },
+  ];
+  g.cols.forEach((c, i) => {
+    els.push({ id: `h${i + 1}`, type: 'text', label: `${i + 1}. oszlop fejléce`, group: `${i + 1}. oszlop`, x: c.x, y: g.headerY, align: 'center', size: 34.667, tracking: 50, color: '#fefefe',
+      outline: ol(4, '#000000', 1), maxWidth: 260, lineHeight: 41.6, wrap: { maxLines: 2 }, opacity: op });
+  });
+  els.push(...[]);
+  const rows = PLAYERSPECIAL_ROWS[league];
+  rows.forEach((r, i) => {
+    const y = g.rowY + i * g.pitch;
+    els.push({ id: `r${i}.label`, type: 'text', label: `${i + 1}. sor felirata`, group: 'Sorok', x: g.labelX, y, align: 'center', font: 'italic', size: 96, tracking: 50, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 200, opacity: op });
+    g.cols.forEach((c, k) => {
+      els.push({ id: `r${i}.c${k + 1}`, type: 'text', label: `${r.label} – ${k + 1}. oszlop`, group: `${k + 1}. oszlop`, x: c.x, y, align: 'center', size: 96, tracking: 25, color: c.color, outline: ol(3, c.outline), maxWidth: c.max, runs: true, opacity: op });
+    });
+  });
+  const t = base(id, league, 'playerspecial', psd, 'Játékos-különleges', { elements: els });
+  t.panel = { box: g.panel, alpha: op };
+  return t;
+}
+// text-width calibration (PSD ink width / browser width of the same string)
+HSCALE['playerspecial-men'] = { title: 0.971, label: 0.96, value: 0.968, header: 0.99, subtitle: 0.968 };
+HSCALE['playerspecial-women'] = { title: 0.995, label: 0.96, value: 0.968, header: 0.978, subtitle: 0.976 };
+
 // ───────────────────────── Template registry ─────────────────────────
 export const TEMPLATES = [
   comparison('comparison-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
@@ -296,6 +342,18 @@ export const TEMPLATES = [
   comparison('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
     subX: 648.2, titleX: 651.5, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
   }, 'playercompare'),
+  playerspecial('playerspecial-men', 'men', 'Uros STAT.psd', {
+    panel: [0, 0, 1246, 924], photo: [1069, 488, 420, 854], logo: [440, 600, 330, 360], logoOn: false,
+    titleX: 431.3, titleY: 102.5, titleMax: 800, subX: 431.8, subY: 154.7, subMax: 900, headerY: 197.6,
+    labelX: 544.8, rowY: 331.3, pitch: 114.2,
+    cols: [{ x: 128.7, color: '#ec4036', outline: '#1fbf1b', max: 230 }, { x: 348.6, color: '#0b9444', outline: '#ffffff', max: 190 }, { x: 765.6, color: '#feed01', outline: '#000000', max: 190 }],
+  }),
+  playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd', {
+    panel: [29, 10, 1286, 1003], photo: [973, 533.5, 854, 923], logo: [454, 649, 368, 400], logoOn: true,
+    titleX: 449.5, titleY: 119.5, titleMax: 800, subX: 454, subY: 166.2, subMax: 800, headerY: 263.6,
+    labelX: 447, rowY: 390.5, pitch: 115.2,
+    cols: [{ x: 199, color: '#a20100', outline: '#ffffff', max: 320 }, { x: 716, color: '#296d46', outline: '#ffffff', max: 330 }],
+  }),
   nextmatch('nextmatch-men', 'men'),
   nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {
@@ -312,6 +370,7 @@ export const TEMPLATE_TYPES = {
   intro: 'Intro',
   comparison: 'Csapatok összevetése',
   playercompare: 'Csillagjátékosok',
+  playerspecial: 'Játékos-különleges',
   teamstats: 'Csapatstatisztika',
   results: 'Eredmények',
   resultrows: 'Eredmények (színes sorok)',

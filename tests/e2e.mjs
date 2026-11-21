@@ -44,8 +44,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 9 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 9);
+    await check(`${lg}: 10 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 10);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -649,6 +649,25 @@ try {
     assert.equal(await val('home.name', 'dy') || 0, 0);
     await page.evaluate(() => { localStorage.clear(); });
   });
+  await check('player special: photo upload, player data in the last column, own text replaces a whole line', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.waitForTimeout(400);
+    await page.click('#templateList button[data-id="playerspecial-women"]');
+    await page.waitForFunction(() => document.getElementById('psPhoto'));
+    await page.waitForTimeout(1500);
+    await page.setInputFiles('#psPhoto', path.join(ROOT, 'tests/fixtures/photo-cutout.png'));
+    await page.waitForFunction(() => window.__studio.report().boxes.photo, null, { timeout: 8000 });
+    const v = await page.evaluate(() => { const c = window.__studio.current().values; return { name: c.title.text, last: c['r0.c2'].text, first: c['r0.c1'].text, h2: c.h2.text, pct: c['r1.c2'].runs?.length }; });
+    assert.ok(v.name && v.name !== '—');
+    assert.match(v.last, /^\d+\.\d$/);
+    assert.equal(v.first, ''); // other periods are never invented
+    assert.match(v.h2, /idei/);
+    assert.equal(v.pct, 2); // made/attempted + small "(41.4%)"
+    await page.evaluate(() => { const o = (window.__studio.state.overrides['playerspecial-women'] ||= {}); (o['r1.c2'] ||= {}).text = '3/7(42.9%)'; window.__studio.render(); });
+    await page.waitForTimeout(400);
+    assert.equal(await page.evaluate(() => window.__studio.current().values['r1.c2'].runs.length), 1);
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

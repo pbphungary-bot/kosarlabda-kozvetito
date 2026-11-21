@@ -3,7 +3,7 @@
 // in the data is never filled in: it renders as "—" and is flagged `missing`
 // until the operator types an override.
 import { club } from './clubs.js';
-import { STAT_ROWS, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { STAT_ROWS, PLAYERSPECIAL_ROWS, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -327,5 +327,37 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
     v[`home.rank.${s.key}`] = field(hr === null ? null : `(${hr}.)`, src);
     v[`away.rank.${s.key}`] = field(ar === null ? null : `(${ar}.)`, src);
   }
+  return v;
+}
+
+// ───────────────────────── player special ─────────────────────────
+/** Name, current-season column and the club logo come from the data; story, other columns and photo are the operator's. */
+export function bindPlayerSpecial(store, lg, teamId, playerKey, tpl) {
+  const P = pickPlayer(store, lg, teamId, playerKey);
+  const rows = PLAYERSPECIAL_ROWS[lg];
+  const seasonCol = tpl.elements.filter(e => /^h\d$/.test(e.id)).length; // the last column is the current season
+  const manual = 'Kézzel töltendő (az adatokban nincs ilyen időszak)';
+  const src = store.players(lg, teamId)?.source === 'excel' ? 'Excel – játékosstatisztika' : 'Hunbasket játékosstatisztika (idei átlag)';
+  const v = {
+    title: P ? { text: P.name, source: src } : field(null, src),
+    subtitle: { text: '', source: 'Kézzel írandó (a sztori, 1–2 sor)' },
+    logo: logo(lg, teamId),
+  };
+  for (let k = 1; k <= seasonCol; k++) v[`h${k}`] = { text: '', source: manual };
+  const m = P ? Math.round(num(P.p['M.']) ?? 0) : null;
+  v[`h${seasonCol}`] = { text: m ? `${m} idei\nmeccs` : '', source: src };
+  rows.forEach((r, i) => {
+    v[`r${i}.label`] = { text: r.label, source: 'Fix felirat a PSD-ből' };
+    for (let k = 1; k < seasonCol; k++) v[`r${i}.c${k}`] = { text: '', source: manual };
+    const id = `r${i}.c${seasonCol}`;
+    const n = P ? num(P.p[r.col]) : null;
+    if (r.pct) {
+      const pct = n === null ? null : n.toFixed(1) + '%';
+      if (r.made && P && num(P.p[r.made]) !== null && num(P.p[r.att]) !== null) {
+        const main = `${num(P.p[r.made]).toFixed(1)}/${num(P.p[r.att]).toFixed(1)}`;
+        v[id] = { text: main + `(${pct})`, runs: [{ text: main }, { text: `(${pct})`, size: 40 }], source: src };
+      } else v[id] = field(pct, src);
+    } else v[id] = field(n === null ? null : n.toFixed(1), src);
+  });
   return v;
 }

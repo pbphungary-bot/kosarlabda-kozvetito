@@ -6,7 +6,7 @@ import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import {
-  bindComparison, bindPlayerCompare, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -153,6 +153,26 @@ function renderSelection(extra = {}) {
       $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
       $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
     }
+  } else if (t.type === 'playerspecial') {
+    $('selectTitle').textContent = '2. Csapat és játékos';
+    const opts = playerOptions(store, lg, s.teamId);
+    const cur = pickPlayer(store, lg, s.teamId, s.ps?.player);
+    box.innerHTML = `<div class="row2"><label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>
+      <label>Játékos<select id="psPlayer">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)}</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label></div>
+      <label>Fotó (áttetsző PNG kivágás; csak a böngészőben marad)
+        <span class="import-row"><input type="file" id="psPhoto" accept="image/png,image/webp,image/jpeg"> <button id="psPhotoClear" class="ghost" ${images['upload/photo'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
+      <small class="hint">A név és az idei átlagok (az utolsó oszlop) az adatokból jönnek; a sztori, a többi oszlop és a fotó a tiéd. A fotó mozgatása/nagyítása: Elrendezés doboz.</small>`;
+    $('teamSel').onchange = e => { s.teamId = e.target.value; s.ps = null; resetMatchOverrides(); update(true); };
+    $('psPlayer').onchange = e => { (s.ps ||= {}).player = e.target.value; resetMatchOverrides(); update(true); };
+    $('psPhoto').onchange = e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const url = URL.createObjectURL(f), img = new Image();
+      img.onload = () => { images['upload/photo'] = img; state.photoName = f.name; renderSelection(); update(true); };
+      img.onerror = () => toast('A képet nem sikerült beolvasni.');
+      img.src = url;
+    };
+    $('psPhotoClear').onclick = () => { delete images['upload/photo']; renderSelection(); update(true); };
   } else if (t.type === 'referees') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast, showOpen = !!s.showOpen;
@@ -248,6 +268,11 @@ function autoValues() {
     else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
+  } else if (t.type === 'playerspecial') {
+    v = bindPlayerSpecial(store, lg, s.teamId, s.ps?.player, t);
+    v.photo = { src: images['upload/photo'] ? 'upload/photo' : '', source: images['upload/photo'] ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };
+    if (!images['upload/photo']) info.notices.push({ text: 'Nincs fotó feltöltve – a grafika fotó nélkül jelenik meg. Tölts fel egy áttetsző PNG kivágást a Fotó mezővel.' });
+    info.notices.push({ text: 'Az alcím és az első oszlop(ok) (pl. karrier, utolsó meccsek) kézzel töltendők: az adatbázisban csak az idei átlag van meg. Az üres mezők nem jelennek meg a képen.' });
   } else if (t.type === 'teamstats') {
     const r = bindTeamstats(store, lg, s.teamId, t, measureFn, s.players);
     v = r.values;
@@ -280,7 +305,8 @@ function mergedValues(auto) {
     const x = { ...a };
     const ov = o[el.id] || {};
     if (ov.text !== undefined) {
-      if (el.runs && a.runs) x.runs = [...a.runs.slice(0, -1), { ...a.runs[a.runs.length - 1], text: ov.text }];
+      if (el.runs && a.runs && tpl().type === 'playerspecial') x.runs = [{ text: ov.text }]; // the typed text replaces the whole line
+      else if (el.runs && a.runs) x.runs = [...a.runs.slice(0, -1), { ...a.runs[a.runs.length - 1], text: ov.text }];
       x.text = ov.text; x.missing = false; x.overridden = true;
     }
     if (ov.color) { x.color = ov.color; x.overridden = true; }
@@ -889,7 +915,7 @@ async function main() {
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
   restoreExcel();
-  window.__studio = { state, store, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
+  window.__studio = { state, store, images, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
 }

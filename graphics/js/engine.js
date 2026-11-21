@@ -51,7 +51,8 @@ function drawRuns(ctx, runs, x, y, size, style, color, outlineOnly) {
   const hs = style.hscale || 1;
   let cx = x;
   for (const r of runs) {
-    setup(ctx, style, size);
+    const rs = r.size || size; // a run may have its own size (e.g. the small "(41.4%)" next to a shooting line)
+    setup(ctx, style, rs);
     const o = style.outline;
     const ox = outlineOnly ? (o.dx || 0) : 0, oy = outlineOnly ? (o.dy || 0) : 0;
     ctx.save();
@@ -142,8 +143,8 @@ function drawText(ctx, el, v, report) {
   const placed = lines.map((line, i) => {
     const runs = el.runs && v.runs ? v.runs : [{ text: line }];
     const runsText = runs.map(r => (el.caps ? upper(r.text) : r.text));
-    const shaped = runs.map((r, k) => ({ ...r, text: runsText[k] }));
-    const w = shaped.reduce((a, r) => a + measure(ctx, style, r.text, sz), 0)
+    const shaped = runs.map((r, k) => ({ ...r, text: runsText[k], size: r.size ? r.size * (sz / el.size) : undefined }));
+    const w = shaped.reduce((a, r) => a + measure(ctx, style, r.text, r.size || sz), 0)
       + (shaped.length > 1 ? ((style.tracking || 0) / 1000) * sz * (shaped.length - 1) : 0);
     let x = el.x;
     if (el.align === 'center') x = el.x - w / 2;
@@ -175,6 +176,7 @@ export function fitBox(slot, w, h) {
     s = Math.min(mw / w, mh / h);
   }
   const dw = w * s, dh = h * s;
+  if (slot.anchor === 'bottom') return [cx - dw / 2, cy + mh / 2 - dh, dw, dh]; // e.g. player photos stand on the panel's bottom edge
   return [cx - dw / 2, cy - dh / 2, dw, dh];
 }
 
@@ -188,7 +190,7 @@ function silhouette(img, w, h, color) {
   return c;
 }
 
-function drawImage(ctx, el, v, assets, report) {
+function drawImage(ctx, el, v, assets, report, mask) {
   const img = assets.images[v.src];
   if (!img) return;
   const [x, y, w, h] = fitBox(el, img.width, img.height);
@@ -213,6 +215,7 @@ function drawImage(ctx, el, v, assets, report) {
     }
   }
   g.drawImage(img, x, y, w, h);
+  if (el.clipToPanel && mask) { g.globalCompositeOperation = 'destination-in'; g.drawImage(mask, 0, 0, layer.width, layer.height); } // photo never leaves the rounded panel
   ctx.save();
   ctx.globalAlpha = el.opacity ?? 1;
   ctx.drawImage(layer, 0, 0);
@@ -286,7 +289,7 @@ export function render(canvas, template, values, assets) {
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
     if (el.type === 'text') drawText(ctx, el, v, report);
-    else if (el.type === 'image') drawImage(ctx, el, v, assets, report);
+    else if (el.type === 'image') drawImage(ctx, el, v, assets, report, assets.background);
   }
   ctx.restore();
   return report;
