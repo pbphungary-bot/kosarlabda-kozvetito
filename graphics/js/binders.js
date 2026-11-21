@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club } from './clubs.js';
 import { STAT_ROWS, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
-import { num } from './data.js';
+import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
 
@@ -154,7 +154,8 @@ function matchName(lg, m) {
   return `${h ? h.short : m.home} - ${a ? a.short : m.away}`;
 }
 
-export function bindRowList(store, lg, teamId, tpl) {
+/** `selected`: optional list of game keys the operator picked (otherwise the latest / next games). */
+export function bindRowList(store, lg, teamId, tpl, selected = null) {
   const c = club(lg, teamId);
   const type = tpl.type;
   const suffix = type === 'schedule' ? (lg === 'men' ? 'MENETRENDJE' : 'Következő MÉRKŐZÉSEI') : 'Eredményei';
@@ -163,7 +164,10 @@ export function bindRowList(store, lg, teamId, tpl) {
     'team.logo.left': logo(lg, teamId),
     'team.logo.right': logo(lg, teamId),
   };
-  const games = type === 'schedule' ? store.nextGames(lg, teamId, tpl.rows) : store.lastResults(lg, teamId, tpl.rows);
+  const candidates = type === 'schedule' ? store.upcomingGames(lg, teamId) : store.playedGames(lg, teamId);
+  let games;
+  if (selected) { const set = new Set(selected); games = candidates.filter(m => set.has(gameKey(m))).slice(0, tpl.rows); }
+  else games = type === 'schedule' ? candidates.slice(0, tpl.rows) : candidates.slice(-tpl.rows);
   const src = 'Hunbasket menetrend (NB I/A)';
   for (let r = 0; r < tpl.rows; r++) {
     const m = games[r];
@@ -176,12 +180,17 @@ export function bindRowList(store, lg, teamId, tpl) {
     } else {
       v[`r${r}.date`] = field(fmtDate(m.date), src);
     }
-    v[`r${r}.comp`] = { src: '', source: 'NB I/A mérkőzés' };
-    v[`r${r}.match`] = field(matchName(lg, m), src);
+    const cup = !!m.cup;
+    const rsrc = cup ? `Feltöltött kupa-/európai meccs${m.competition ? ' – ' + m.competition : ''}` : src;
+    if (cup) {
+      v[`r${r}.date`].source = rsrc;
+      v[`r${r}.comp`] = { src: m.compKey || '', source: m.compKey ? rsrc : 'Nincs logó ehhez a sorozathoz' + (m.competition ? ` (${m.competition})` : ''), ...(m.compKey ? {} : { note: 'Ehhez a sorozathoz nincs logó a PSD-kben – a sor logó nélkül jelenik meg (kézzel választható).' }) };
+    } else v[`r${r}.comp`] = { src: '', source: 'NB I/A mérkőzés' };
+    v[`r${r}.match`] = field(matchName(lg, m), rsrc);
     if (type !== 'schedule') {
       const won = m.homeId === teamId ? m.score.home > m.score.away : m.score.away > m.score.home;
       const color = won ? WIN : RED;
-      v[`r${r}.score`] = field(`${m.score.home}-${m.score.away}`, src, { color });
+      v[`r${r}.score`] = field(`${m.score.home}-${m.score.away}`, rsrc, { color });
       if (type === 'resultrows') {
         v[`r${r}.match`].color = color;
         v[`r${r}.score`].color = color;
@@ -190,7 +199,7 @@ export function bindRowList(store, lg, teamId, tpl) {
     }
   }
   const missing = store.missingResults(lg, teamId).map(m => `${fmtDate(m.date)} ${matchName(lg, m)}`);
-  return { values: v, games, missingResults: missing };
+  return { values: v, games, candidates, missingResults: missing };
 }
 
 // ───────────────────────── intro ─────────────────────────

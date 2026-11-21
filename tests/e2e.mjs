@@ -13,7 +13,7 @@ const out = process.argv[2] || path.join(ROOT, 'tests/output/e2e');
 mkdirSync(out, { recursive: true });
 const port = 8890 + Math.floor(Math.random() * 100);
 const server = spawn('python3', [path.join(ROOT, 'tools/serve.py'), String(port)], { stdio: 'ignore' });
-await new Promise(r => setTimeout(r, 700));
+for (let i = 0; i < 60; i++) { try { await fetch(`http://127.0.0.1:${port}/`); break; } catch { await new Promise(r => setTimeout(r, 100)); } } // wait until the server answers
 const URL = `http://127.0.0.1:${port}`;
 
 function pngInfo(buf) {
@@ -261,6 +261,85 @@ try {
     const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
     await dl.saveAs(path.join(out, 'intro-women-rank.png'));
     assert.equal(await alphaAt(), 246);
+  });
+  await check('cup games: upload sheet, European rows appear with competition logo on results and schedule', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="results-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#teamSel', 'dvtkhuntherm');
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.setInputFiles('#excelFile', path.join(ROOT, 'tests/fixtures/cups-women.xlsx'));
+    await page.waitForSelector('#applyImport');
+    const prev = await page.locator('#importPreview').innerText();
+    assert.match(prev, /kupa-\/európai meccsek/);
+    assert.match(prev, /Magyar Kupa/); // no logo warning
+    assert.match(prev, /Olympiacos/); // skipped row reported
+    await page.screenshot({ path: path.join(out, 'ui-cups-preview.png') });
+    await page.click('#applyImport');
+    await page.waitForTimeout(500);
+    await page.click('#templateList button[data-id="schedule-women"]');
+    await page.waitForTimeout(400);
+    await page.selectOption('#teamSel', 'dvtkhuntherm');
+    await page.waitForTimeout(400);
+    const v = await page.evaluate(() => window.__studio.current().values);
+    const comps = Object.entries(v).filter(([k, x]) => k.endsWith('.comp') && x.src).map(([k, x]) => x.src);
+    assert.ok(comps.includes('comp/eurocup-women'), JSON.stringify(comps));
+    const matches = Object.entries(v).filter(([k]) => k.endsWith('.match')).map(([, x]) => x.text);
+    assert.ok(matches.some(t => /Brod na Savi/.test(t)), matches.join(' | '));
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'schedule-women-cups.png'));
+    await page.click('#templateList button[data-id="results-women"]');
+    await page.waitForTimeout(400);
+    // default = latest six games; choose the European games through the picker
+    await page.selectOption('#gameFilter', 'cup');
+    await page.waitForTimeout(300);
+    assert.equal(await page.locator('.gamelist input').count(), 3, 'three played European games');
+    for (const cb of await page.locator('.gamelist input').all()) await cb.check();
+    await page.waitForTimeout(400);
+    assert.match(await page.locator('#selection').innerText(), /kézi választás/);
+    const euro = await page.evaluate(() => Object.entries(window.__studio.current().values).filter(([k, x]) => k.endsWith('.comp') && x.src).map(([, x]) => x.src).sort());
+    assert.deepEqual(euro, ['comp/eurocup-women', 'comp/eurocup-women', 'comp/euroleague-women']);
+    await page.screenshot({ path: path.join(out, 'ui-results-pick-european.png') });
+    const [dl3] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl3.saveAs(path.join(out, 'results-women-european.png'));
+    await page.click('#gamesAuto');
+    await page.waitForTimeout(300);
+    assert.match(await page.locator('#selection').innerText(), /automatikus/);
+    const rv = await page.evaluate(() => window.__studio.current().values);
+    assert.ok(Object.entries(rv).some(([k, x]) => k.endsWith('.comp') && x.src === 'comp/eurocup-women'));
+    const [dl2] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl2.saveAs(path.join(out, 'results-women-cups.png'));
+    await page.screenshot({ path: path.join(out, 'ui-results-cups.png') });
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.click('#excelClear');
+    await page.waitForTimeout(300);
+  });
+  await check('eredmenyek.com paste: DVTK page → EuroCup games on the schedule with logo, 6 rows in the page order', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="schedule-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#teamSel', 'dvtkhuntherm');
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.fill('#pasteBox', readFileSync(path.join(ROOT, 'tests/fixtures/eredmenyek-paste.txt'), 'utf8'));
+    await page.click('#pasteRead');
+    await page.waitForSelector('#applyImport');
+    const prev = await page.locator('#importPreview').innerText();
+    assert.match(prev, /Női NB I\/A/);
+    assert.match(prev, /Brod na Savi|kupa-\/európai meccsek/);
+    assert.match(prev, /7 „NB I - női” mérkőzés kihagyva/);
+    await page.click('#applyImport');
+    await page.waitForTimeout(500);
+    const dates = await page.evaluate(() => Object.entries(window.__studio.current().values).filter(([k]) => k.endsWith('.match')).map(([, x]) => x.text));
+    const eu = dates.filter(t => /Brod na Savi|Jairis/.test(t));
+    assert.equal(eu.length >= 1, true, dates.join(' | '));
+    const comps = await page.evaluate(() => Object.entries(window.__studio.current().values).filter(([k, x]) => k.endsWith('.comp') && x.src).map(([, x]) => x.src));
+    assert.ok(comps.every(c => c === 'comp/eurocup-women') && comps.length >= 1);
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'schedule-dvtk-eredmenyek.png'));
+    await page.screenshot({ path: path.join(out, 'ui-paste-schedule.png') });
+    await page.locator('#importBox').evaluate(el => { el.open = true; });
+    await page.click('#excelClear');
+    await page.waitForTimeout(300);
   });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 

@@ -1,6 +1,6 @@
-import { loadDashboard, LEAGUES, SOURCES } from './data.js';
+import { loadDashboard, LEAGUES, SOURCES, gameKey } from './data.js';
 import { readFile } from './xlsx.js';
-import { importWorkbook, detectLeague, clubLabel } from './importer.js';
+import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText } from './importer.js';
 import { club, CLUBS } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
@@ -55,6 +55,7 @@ async function loadLeagueImages(lg) {
 }
 
 const tpl = () => templateById(state.template[state.league]);
+const s0 = () => state.sel[state.league];
 const sel = () => state.sel[state.league];
 const ovKey = () => tpl().id;
 const overrides = () => (state.overrides[ovKey()] ||= {});
@@ -136,8 +137,18 @@ function renderSelection(extra = {}) {
     $('matchSel').onchange = e => { s.matchKey = e.target.value; s.custom = null; update(true); };
   } else {
     $('selectTitle').textContent = '2. Csapat';
-    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; resetMatchOverrides(); update(true); };
+    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
+    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; resetMatchOverrides(); update(true); };
+    if (extra.games) {
+      const group = t.type === 'schedule' ? 'schedule' : 'results';
+      $('gameFilter').onchange = e => { s.gameFilter = e.target.value; update(true); };
+      $('gamesAuto').onclick = () => { (s.games ||= {})[group] = null; update(true); };
+      box.querySelectorAll('.gamelist input').forEach(cb => cb.onchange = () => {
+        const keys = [...box.querySelectorAll('.gamelist input:checked')].map(x => x.value);
+        if (keys.length > t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} mérkőzés fér el a sablonon.`); return; }
+        (s.games ||= {})[group] = keys; update(true);
+      });
+    }
     if (extra.players) {
       box.querySelectorAll('.players input').forEach(cb => cb.onchange = () => {
         const keys = [...box.querySelectorAll('.players input:checked')].map(x => x.value);
@@ -173,11 +184,12 @@ function autoValues() {
     info.players = r.players; info.shown = r.shown;
     if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a sablonon ${t.rows} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
   } else if (t.type === 'results' || t.type === 'schedule' || t.type === 'resultrows') {
-    const r = bindRowList(store, lg, s.teamId, t);
+    const r = bindRowList(store, lg, s.teamId, t, s.games?.[t.type === 'schedule' ? 'schedule' : 'results'] || null);
     v = r.values;
+    info.games = r.games; info.candidates = r.candidates;
     if (r.missingResults.length) info.notices.push({ bad: true, text: `Az adatokból hiányzik ${r.missingResults.length} lejátszott mérkőzés eredménye (${r.missingResults.join(', ')}). Ellenőrizd a menetrend frissességét, és szükség esetén írd be kézzel.` });
-    if (r.games.length < t.rows) info.notices.push({ text: `Csak ${r.games.length} NB I/A mérkőzés van az adatokban – a további sorok üresek (kézzel kitölthetők, pl. európai kupameccsek).` });
-    info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Európai kupa- és kupameccseket kézzel kell beírni; a sorozat logója soronként választható.' });
+    if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} mérkőzés jelenik meg (${r.candidates.length} van a listában: NB I/A + feltöltött kupameccsek)${t.type === 'schedule' && r.games.length < 5 ? ' – a menetrendnek legalább 5 sor kellene' : ''}. A további sorok üresek, kézzel kitölthetők.` });
+    if (!store.cupFixtures(lg, s.teamId).length) info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Kupa- és európai meccseket tölts fel a „Kupameccsek” lapról (Adatok feltöltése), vagy írd be kézzel; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {
     v = bindReferees();
     if (t.fontNote) info.notices.push({ text: t.fontNote });
@@ -305,7 +317,22 @@ async function update(full) {
       const shownKeys = new Set(info.shown.map(x => x.key));
       playersHtml = `<label>Megjelenő játékosok (max. ${t.rows})</label><div class="players">${info.players.map(x => `<label><input type="checkbox" value="${esc(x.key)}" ${shownKeys.has(x.key) ? 'checked' : ''}> #${esc(x.p['#'])} ${esc(x.p['Játékos'])} <small>(${esc(x.p['M.'])} m., ${esc(x.p['Idő'])} perc)</small></label>`).join('')}</div>`;
     }
-    renderSelection({ players: playersHtml });
+    let gamesHtml = '';
+    if (info.candidates) {
+      const sch = t.type === 'schedule';
+      const filter = s0().gameFilter || 'all';
+      const group = sch ? 'schedule' : 'results';
+      const manual = !!s0().games?.[group];
+      const shownKeys = new Set(info.games.map(gameKey));
+      const list = info.candidates.filter(m => filter === 'all' || (filter === 'cup' ? m.cup : !m.cup));
+      const ordered = sch ? list : [...list].reverse(); // newest first for results
+      const nameOf = m => `${club(state.league, m.homeId)?.short || m.home} – ${club(state.league, m.awayId)?.short || m.away}`;
+      gamesHtml = `<label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
+        <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
+        <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>
+        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}</small>` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
+    }
+    renderSelection({ players: playersHtml, games: gamesHtml });
     renderFields(values, auto);
     $('fileName').value = fileName(values);
   }
@@ -388,7 +415,7 @@ function persistExcel() {
 
 function renderImportState() {
   const xi = store.excelInfo(state.league);
-  $('importState').textContent = xi ? `– ${xi.teams} csapat, ${xi.playerTeams} csapat játékosai (${xi.files.length} fájl)` : '';
+  $('importState').textContent = xi ? `– ${xi.teams} csapat, ${xi.playerTeams} csapat játékosai${xi.cups ? `, ${xi.cups} kupameccs` : ''} (${xi.files.length} fájl)` : '';
   $('excelOn').checked = xi ? xi.enabled : true;
   $('excelOn').disabled = !xi;
   $('excelClear').disabled = !xi;
@@ -397,22 +424,25 @@ function renderImportState() {
 function previewImports() {
   const html = pendingImports.map(({ file, league, imp, certain }) => {
     const rows = imp.report.map(r => `<tr><td>${esc(r.sheet)}</td><td>${esc(r.status)}${r.club ? ' → ' + esc(clubLabel(league, r.club)) : ''}</td><td>${r.rows ?? ''}</td><td>${esc(r.note || (r.columns || []).join(', '))}</td></tr>`).join('');
-    const useful = imp.teamCount + imp.playerTeamCount;
+    const useful = imp.teamCount + imp.playerTeamCount + (imp.cupCount || 0);
     return `<div><b>${esc(file.name)}</b> → <b>${esc(LEAGUES[league]?.label || '?')}</b>${certain ? '' : ' <span class="warn">(a bajnokság nem volt egyértelmű – a most kiválasztottat használom)</span>'}</div>
       <table><tr><th>Munkalap</th><th>Felismerve</th><th>Sor</th><th>Oszlopok / megjegyzés</th></tr>${rows}</table>
       ${imp.teamCount ? `<div class="ok">Csapatstatisztika: ${imp.teamCount} csapat</div>` : ''}
       ${imp.playerCount ? `<div class="ok">Játékosok: ${imp.playerCount} játékos, ${imp.playerTeamCount} csapat</div>` : ''}
+      ${imp.cupCount ? `<div class="ok">Kupa-/európai meccsek: ${imp.cupCount} (${imp.cups.filter(g => g.status === 'finished').length} lejátszott, ${imp.cups.filter(g => g.status !== 'finished').length} következő)</div>` : ''}
+      ${imp.compsNoLogo?.length ? `<div class="warn">Nincs logó a PSD-kben ehhez a sorozathoz (a sor logó nélkül jelenik meg): ${esc(imp.compsNoLogo.join(', '))}</div>` : ''}
+      ${(imp.notes || []).map(n => `<div class="hint">${esc(n)}</div>`).join('')}
       ${imp.scaled.length ? `<div class="warn">Törtként tárolt százalék szorozva 100-zal: ${esc(imp.scaled.join(', '))}</div>` : ''}
       ${imp.unmatched.length ? `<div class="warn">Nem egyeztethető (kihagyva, nem találgatok):<ul>${imp.unmatched.slice(0, 8).map(u => `<li>${esc(u)}</li>`).join('')}</ul></div>` : ''}
       ${imp.ignoredColumns.length ? `<div class="hint">Nem használt oszlopok: ${imp.ignoredColumns.length} db (${esc(imp.ignoredColumns.slice(0, 6).join(', '))}…)</div>` : ''}
       ${useful === 0 ? '<div class="warn">Nem találtam használható adatot ebben a fájlban.</div>' : ''}`;
   }).join('<hr>');
-  const any = pendingImports.some(p => p.imp.teamCount + p.imp.playerTeamCount > 0);
+  const any = pendingImports.some(p => p.imp.teamCount + p.imp.playerTeamCount + (p.imp.cupCount || 0) > 0);
   $('importPreview').innerHTML = html + (any ? '<div class="import-row"><button id="applyImport" class="primary">Alkalmazás</button><button id="cancelImport" class="ghost">Mégse</button></div>' : '<div class="import-row"><button id="cancelImport" class="ghost">Bezárás</button></div>');
   const ap = $('applyImport');
   if (ap) ap.onclick = async () => {
-    for (const { file, league, imp } of pendingImports) if (imp.teamCount + imp.playerTeamCount > 0) store.mergeExcel(league, imp, file);
-    const first = pendingImports.find(p => p.imp.teamCount + p.imp.playerTeamCount > 0);
+    for (const { file, league, imp } of pendingImports) if (imp.teamCount + imp.playerTeamCount + (imp.cupCount || 0) > 0) store.mergeExcel(league, imp, file);
+    const first = pendingImports.find(p => p.imp.teamCount + p.imp.playerTeamCount + (p.imp.cupCount || 0) > 0);
     persistExcel(); pendingImports = []; $('importPreview').innerHTML = '';
     toast('Excel adatok betöltve');
     if (first && first.league !== state.league) await switchLeague(first.league); else { renderImportState(); renderFreshness(); update(true); }
@@ -490,11 +520,25 @@ async function main() {
         const d = detectLeague(parsed, state.league);
         pendingImports.push({ file: { name: f.name, modified: parsed.modified }, league: d.league, certain: d.certain, imp: importWorkbook(parsed, d.league) });
       } catch (err) {
-        pendingImports.push({ file: { name: f.name }, league: state.league, certain: false, imp: { report: [{ sheet: f.name, status: 'hiba', note: err.message }], teamCount: 0, playerTeamCount: 0, playerCount: 0, scaled: [], unmatched: [], ignoredColumns: [] } });
+        pendingImports.push({ file: { name: f.name }, league: state.league, certain: false, imp: { report: [{ sheet: f.name, status: 'hiba', note: err.message }], teamCount: 0, playerTeamCount: 0, playerCount: 0, cupCount: 0, cups: [], scaled: [], unmatched: [], ignoredColumns: [] } });
       }
     }
     if (files.length) previewImports();
     e.target.value = '';
+  };
+  $('pasteRead').onclick = () => {
+    const text = $('pasteBox').value;
+    if (!text.trim()) { toast('Előbb illessz be szöveget.'); return; }
+    const now = new Date();
+    const p = parseEredmenyekText(text, now);
+    const d = detectLeague(p.workbook, state.league);
+    const imp = importWorkbook(p.workbook, d.league);
+    imp.notes = [];
+    for (const k of p.skipped) imp.notes.push(`${k.n} „${k.name}” mérkőzés kihagyva: az NB I/A meccsek már a dashboard adataiban vannak.`);
+    if (p.unparsed) imp.notes.push(`${p.unparsed} sort nem tudtam értelmezni (kihagyva).`);
+    if (!p.gamesFound) imp.notes.push('Nem találtam mérkőzést a szövegben. A „Meccsek” fülről másolt szöveg kell, dátum + két csapatnév soronként.');
+    pendingImports = [{ file: { name: 'Beillesztett szöveg (eredmenyek.com)', modified: now.toISOString() }, league: d.league, certain: d.certain, imp }];
+    previewImports();
   };
   $('excelOn').onchange = e => { const x = store.excel[state.league]; if (x) { x.enabled = e.target.checked; persistExcel(); renderImportState(); renderFreshness(); update(true); } };
   $('excelClear').onclick = () => { if (confirm('Törlöd a feltöltött Excel adatokat ennél a bajnokságnál?')) { store.setExcel(state.league, null); persistExcel(); renderImportState(); renderFreshness(); update(true); } };

@@ -152,3 +152,17 @@ test('referees are manual and flagged until entered', () => {
   const v = bindReferees();
   for (const k of ['ref1', 'ref2', 'ref3', 'controller']) { assert.equal(v[k].text, MISSING); assert.ok(v[k].missing); }
 });
+
+test('schedule graphics hold at least 5 rows and every club gets at least 5 games from the data', async () => {
+  const store = await loadStore();
+  for (const lg of ['men', 'women']) {
+    const t = templateById(`schedule-${lg}`);
+    assert.ok(t.rows >= 5, `${lg} schedule design has ${t.rows} rows`);
+    for (const c of store.clubs(lg)) {
+      const r = bindRowList(store, lg, c.id, t);
+      const filled = Array.from({ length: t.rows }, (_, i) => r.values[`r${i}.match`]?.text).filter(Boolean);
+      assert.ok(filled.length >= 5, `${lg} ${c.id}: ${filled.length} games shown`);
+      assert.equal(filled.length, Math.min(t.rows, store.nextGames(lg, c.id, 99).length));
+    }
+  }
+});

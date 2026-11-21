@@ -21,12 +21,15 @@
   <section class="panel controls">
     <details class="import" id="importBox">
       <summary>Adatok feltöltése Excelből / CSV-ből <span id="importState"></span></summary>
-      <p class="hint">Egy fájlban lehet csapatstatisztika és játékosstatisztika is (külön munkalapon). A bajnokságot a fájl tartalmából ismerem fel. A feltöltött érték előnyt élvez a dashboard adataival szemben, és „Excel” címkét kap; a következő forduló fájljai felülírják az előzőket. A fájl nem kerül fel sehova – a böngészőben dolgozom vele.</p>
+      <p class="hint">Egy fájlban lehet csapatstatisztika, játékosstatisztika és kupa-/európai meccsek lista is (külön munkalapon; minta: <a href="minta-kupameccsek.xlsx">minta-kupameccsek.xlsx</a>). A bajnokságot a fájl tartalmából ismerem fel. A feltöltött érték előnyt élvez a dashboard adataival szemben, és „Excel” címkét kap; a következő forduló fájljai felülírják az előzőket. A fájl nem kerül fel sehova – a böngészőben dolgozom vele.</p>
       <div class="import-row">
         <label class="ghost file">Fájlok kiválasztása (.xlsx, .csv) – egyszerre több is<input type="file" id="excelFile" accept=".xlsx,.csv,.txt" multiple></label>
         <label><input type="checkbox" id="excelOn" checked> Excel adatok használata</label>
         <button id="excelClear" class="ghost">Feltöltött adatok törlése</button>
       </div>
+      <label class="paste-label">Vagy illessz be szöveget az eredmenyek.com csapatoldaláról („Meccsek” fül – jelöld ki, másold, illeszd be):
+        <textarea id="pasteBox" rows="4" placeholder="[EuroCup - női](…)&#10;25.11. 18:00&#10;DVTK NDVTK N&#10;Brod na Savi NBrod na Savi N"></textarea></label>
+      <div class="import-row"><button id="pasteRead">Beillesztett szöveg beolvasása</button></div>
       <div id="importPreview"></div>
     </details>
 

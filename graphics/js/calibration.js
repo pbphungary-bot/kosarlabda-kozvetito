@@ -24,11 +24,6 @@ export const HSCALE = {
   "score": 0.9214,
   "title": 0.9569
  },
- "schedule-women": {
-  "date": 0.9395,
-  "match": 0.972,
-  "title": 0.9652
- },
  "schedule-men": {
   "date": 0.9375,
   "match": 0.9639,
@@ -45,6 +40,11 @@ export const HSCALE = {
   "match": 0.9767,
   "score": 0.93,
   "title": 0.9662
+ },
+ "schedule-women": {
+  "date": 0.9375,
+  "match": 0.9639,
+  "title": 0.9587
  },
  "teamstats-women": {
   "name": 0.9863,
@@ -141,10 +141,10 @@ export const PANELS = {
  },
  "schedule-women": {
   "box": [
-   131,
+   95,
    8,
-   1426,
-   802
+   1455,
+   968
   ],
   "alpha": 0.9882
  },

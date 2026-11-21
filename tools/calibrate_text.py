@@ -104,7 +104,7 @@ def main():
 
     # result / schedule rows: date, match, score columns
     rows = [('results-women', 'DVTK Last Games - 1025.psd', True), ('results-men', 'Falco  LAST Games Graph 1111.psd', True),
-            ('schedule-women', 'DVTK Next Games - 1025.psd', False), ('schedule-men', 'Falco  Next Games Graph 1111.psd', False),
+            ('schedule-men', 'Falco  Next Games Graph 1111.psd', False),
             ('resultrows-men', 'Férfi Next Games Graph.psd', True), ('resultrows-women', 'Női Next Games Graph.psd', True)]
     for tid, fname, has_score in rows:
         psd = PSDImage.open(os.path.join(SRC, fname))
@@ -132,6 +132,9 @@ def main():
         segs = line_segments(t, 60)
         tl = [s for s in text_lines(t) if s.strip()]
         add(tid, 'title', [(sg[-1][1] - sg[0][0], ink(s.upper(), 100), 10 / 1000 * 100 * (len(s) - 1)) for (a, b, sg), s in zip(segs, tl)])
+
+    # the women's schedule uses the same 6-row layout as the men's (its PSD sample rows are results)
+    cal['schedule-women'] = dict(cal['schedule-men'])
 
     # team stats table: names and figures
     for tid, fname, size, scale in [('teamstats-women', 'DVTK csapatstat 7. ford után 1122.psd', 58.333, 1.3589),

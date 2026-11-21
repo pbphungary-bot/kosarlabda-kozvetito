@@ -44,6 +44,55 @@ export const PLAYER_COLUMNS = {
   VAL: ['val/m', 'val', 'eff', 'eff/m', 'ertekeles'],
   'Idő': ['ido/m', 'ido', 'min', 'min/g', 'perc', 'perc/m', 'mpg'],
 };
+// cup / European games list (one row per game, copied by hand from e.g. eredmenyek.com)
+export const CUP_COLUMNS = {
+  date: ['datum', 'date', 'nap'],
+  time: ['ido', 'time', 'kezdes', 'kezdet', 'idopont'],
+  home: ['hazai', 'home', 'hazaicsapat'],
+  away: ['vendeg', 'away', 'vendegcsapat'],
+  comp: ['sorozat', 'verseny', 'bajnoksag', 'competition', 'liga', 'kupa'],
+  score: ['eredmeny', 'pontszam', 'score', 'vegeredmeny', 'result'],
+  homeScore: ['hazaipont', 'hazaipontszam', 'homescore'],
+  awayScore: ['vendegpont', 'vendegpontszam', 'awayscore'],
+};
+
+// competition marks that exist in the designs (see graphics/assets/competitions)
+export function compKey(league, text) {
+  const n = norm(text);
+  if (/euroleague/.test(n)) return league === 'women' ? 'comp/euroleague-women' : '';
+  if (/eurocup/.test(n)) return league === 'women' ? 'comp/eurocup-women' : '';
+  if (/championsleague|bajnokokligaja|bcl|fibabasketballchampions/.test(n)) return league === 'men' ? 'comp/bcl' : '';
+  return '';
+}
+
+const pad2 = n => String(n).padStart(2, '0');
+function hhmm(frac) { const m = Math.round(frac * 1440) % 1440; return `${pad2(Math.floor(m / 60))}:${pad2(m % 60)}`; }
+
+/** Excel serial number, "2026.11.04.", "2026-11-04", "04.11.2026" (optionally followed by a time) → {date:'YYYY-MM-DD', time} */
+export function parseDateCell(v) {
+  if (typeof v === 'number' && v > 20000 && v < 80000) {
+    const day = Math.floor(v);
+    return { date: new Date(Math.round((day - 25569) * 86400000)).toISOString().slice(0, 10), time: v - day > 0.0001 ? hhmm(v - day) : null };
+  }
+  const s = String(v ?? '').trim();
+  let date = null, rest = s, m;
+  const valid = (y, mo, d) => mo >= 1 && mo <= 12 && d >= 1 && d <= 31 && y >= 2000 && y <= 2100;
+  // Hungarian eredmenyek style first: 04.11.2026 (day.month.year)
+  if ((m = s.match(/(?<!\d)(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})(?!\d)/)) && valid(+m[3], +m[2], +m[1])) {
+    date = `${m[3]}-${pad2(m[2])}-${pad2(m[1])}`; rest = s.replace(m[0], ' ');
+  } else if ((m = s.match(/(?<!\d)(\d{4})\s*[-./]\s*(\d{1,2})\s*[-./]\s*(\d{1,2})(?!\d)/)) && valid(+m[1], +m[2], +m[3])) {
+    date = `${m[1]}-${pad2(m[2])}-${pad2(m[3])}`; rest = s.replace(m[0], ' ');
+  }
+  const t = rest.match(/(\d{1,2})[:.](\d{2})(?!\d)/);
+  return { date, time: t && +t[1] < 24 && +t[2] < 60 ? `${pad2(t[1])}:${t[2]}` : null };
+}
+
+export function parseTimeCell(v) {
+  if (typeof v === 'number') return v >= 0 && v < 1 ? hhmm(v) : null;
+  const t = String(v ?? '').match(/(\d{1,2})[:.](\d{2})(?!\d)/);
+  return t && +t[1] < 24 && +t[2] < 60 ? `${pad2(t[1])}:${t[2]}` : null;
+}
+
 const ROSTER_COLUMNS = { number: ['mez', 'mezszam', '#', 'szam'], name: ['jatekos'], pos: ['poszt'], height: ['magassag'], born: ['szuletesiev'] };
 const PCT_KEYS = ['fg2_pct', 'fg3_pct', 'ft_pct'];
 
@@ -94,7 +143,12 @@ export function classifySheet(rows) {
     if ('name' in map && hits >= 4 && (!best || hits > best.hits)) best = { type: 'team', row: r, map, hits };
   }
   if (best) return best;
-  // 4) roster only (Mez, Játékos, Poszt …)
+  // 4) cup / European games (Dátum, Hazai, Vendég, …)
+  for (let r = 0; r < Math.min(rows.length, 15); r++) {
+    const map = mapCells(rows[r] || [], CUP_COLUMNS);
+    if ('home' in map && 'away' in map && 'date' in map) return { type: 'cups', row: r, map };
+  }
+  // 5) roster only (Mez, Játékos, Poszt …)
   for (let r = 0; r < Math.min(rows.length, 15); r++) {
     const roster = mapCells(rows[r] || [], ROSTER_COLUMNS);
     if ('name' in roster && Object.keys(roster).length >= 3) return { type: 'roster', row: r, map: {}, roster };
@@ -121,6 +175,16 @@ export function detectLeague(parsed, hint = null) {
         if (!name) continue;
         for (const lg of ['men', 'women']) if (clubId(lg, name)) votes[lg] += 1;
       }
+    } else if (cls?.type === 'cups') {
+      for (const row of rows.slice(cls.row + 1)) {
+        for (const col of [cls.map.home, cls.map.away]) {
+          const name = row[col];
+          if (!name) continue;
+          for (const lg of ['men', 'women']) if (clubId(lg, name)) votes[lg] += 1;
+        }
+        const comp = cls.map.comp !== undefined ? norm(row[cls.map.comp]) : '';
+        if (/women|noi/.test(comp)) votes.women += 2;
+      }
     } else if (!leagueOfName(sheet.name)) {
       for (const lg of ['men', 'women']) if (clubId(lg, sheet.name)) votes[lg] += 1;
     }
@@ -137,7 +201,7 @@ function unmatchedNote(sheet, name, league, who) {
 
 export function importWorkbook(parsed, league) {
   const result = {
-    league, team: {}, players: {}, report: [], unmatched: [], ignoredColumns: [], scaled: [], rowsRead: 0,
+    league, team: {}, players: {}, cups: [], compsNoLogo: [], report: [], unmatched: [], ignoredColumns: [], scaled: [], rowsRead: 0,
   };
   for (const sheet of parsed.sheets) {
     const cls = classifySheet(sheet.rows);
@@ -171,6 +235,35 @@ export function importWorkbook(parsed, league) {
       }
       for (const [id, v] of Object.entries(byClub)) result.team[id] = { ...(result.team[id] || {}), ...v };
       result.report.push({ sheet: sheet.name, status: 'csapatstatisztika', rows: n, columns: Object.keys(cls.map).filter(k => k !== 'name') });
+      continue;
+    }
+
+    if (cls.type === 'cups') {
+      let n = 0, skipped = 0;
+      for (const r of body) {
+        const home = String(r[cls.map.home] ?? '').trim(), away = String(r[cls.map.away] ?? '').trim();
+        if (!home && !away) continue;
+        const dp = parseDateCell(r[cls.map.date]);
+        if (!dp.date || !home || !away) { skipped++; continue; }
+        const time = cls.map.time !== undefined ? (parseTimeCell(r[cls.map.time]) ?? dp.time) : dp.time;
+        const homeId = clubId(league, home), awayId = clubId(league, away);
+        if (!homeId && !awayId) { result.unmatched.push(`${sheet.name}: ${home} – ${away} (egyik csapat sem ${league === 'men' ? 'férfi' : 'női'} NB I/A klub)`); continue; }
+        let score = null;
+        if (cls.map.score !== undefined) {
+          const m = String(r[cls.map.score] ?? '').match(/(\d{1,3})\s*[-–:]\s*(\d{1,3})/);
+          if (m) score = { home: +m[1], away: +m[2] };
+        }
+        if (!score && cls.map.homeScore !== undefined && cls.map.awayScore !== undefined) {
+          const a = toNum(r[cls.map.homeScore]), b = toNum(r[cls.map.awayScore]);
+          if (a !== null && b !== null) score = { home: a, away: b };
+        }
+        const competition = cls.map.comp !== undefined ? String(r[cls.map.comp] ?? '').trim() : '';
+        const key = compKey(league, competition);
+        if (competition && !key && !result.compsNoLogo.includes(competition)) result.compsNoLogo.push(competition);
+        result.cups.push({ home, away, homeId, awayId, date: dp.date, time, status: score ? 'finished' : 'scheduled', score, competition, compKey: key });
+        n++;
+      }
+      result.report.push({ sheet: sheet.name, status: 'kupa-/európai meccsek', rows: n, columns: Object.keys(cls.map), note: skipped ? `${skipped} sor kihagyva (hiányzó dátum vagy csapat)` : undefined });
       continue;
     }
 
@@ -229,7 +322,65 @@ export function importWorkbook(parsed, league) {
   result.teamCount = Object.keys(result.team).length;
   result.playerTeamCount = Object.keys(result.players).length;
   result.playerCount = Object.values(result.players).reduce((a, l) => a + l.length, 0);
+  result.cupCount = result.cups.length;
   return result;
 }
 
 export const clubLabel = (league, id) => club(league, id)?.official || id;
+
+/**
+ * Reads text copied from an eredmenyek.com team page ("Meccsek" tab), e.g.
+ *   [EuroCup - női](https://…)        competition heading (applies until the next heading)
+ *   MAGYARORSZÁG: / Tabella           ignored
+ *   25.11. 18:00                      date (year optional) and time
+ *   DVTK NDVTK N                      home team (name repeated, with a trailing " N")
+ *   Brod na Savi NBrod na Savi N      away team
+ *   --                                separator
+ * Played games may be followed by two score lines (or "66-71"); that part is read tolerantly.
+ * NB I games are skipped: the dashboard already has them. Returns a workbook-like object for
+ * importWorkbook() plus counts for the preview.
+ */
+export function parseEredmenyekText(text, now = new Date()) {
+  const lines = String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  const cleanTeam = l => { const m = l.match(/^(.+?) N\1 N$/); return (m ? m[1] : l.replace(/ N$/, '')).trim(); };
+  const pickYear = (d, mo) => {
+    let best = null;
+    for (const y of [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1]) {
+      const t = Date.UTC(y, mo - 1, d);
+      if (best === null || Math.abs(t - now.getTime()) < Math.abs(best.t - now.getTime())) best = { y, t };
+    }
+    return best.y;
+  };
+  const games = [];
+  let comp = '', cur = null, unparsed = 0;
+  for (const line of lines) {
+    let m;
+    if (/^-{2,}$/.test(line)) { cur = null; continue; }
+    if ((m = line.match(/^\[(.+?)\]\(.*\)$/))) { comp = m[1].trim(); cur = null; continue; }
+    if (/^[\p{Lu} .\-/]+:$/u.test(line) || /^tabella$/i.test(line)) continue;
+    if ((m = line.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})?(?:\s+(\d{1,2}):(\d{2}))?$/))) {
+      const year = m[3] ? +m[3] : pickYear(+m[1], +m[2]);
+      cur = { date: `${year}-${pad2(m[2])}-${pad2(m[1])}`, time: m[4] ? `${pad2(m[4])}:${m[5]}` : '', comp, teams: [], scores: [] };
+      games.push(cur);
+      continue;
+    }
+    if (cur && cur.teams.length < 2) { cur.teams.push(cleanTeam(line)); continue; }
+    if (cur && cur.teams.length === 2) {
+      if (/^\d{1,3}$/.test(line)) { cur.scores.push(+line); continue; }
+      if ((m = line.match(/^(\d{1,3})\s*[-–:]\s*(\d{1,3})$/))) { cur.scores.push(+m[1], +m[2]); continue; }
+    }
+    unparsed++;
+  }
+  const skipped = {};
+  const rows = [['Dátum', 'Idő', 'Hazai', 'Vendég', 'Sorozat', 'Eredmény']];
+  for (const g of games) {
+    if (g.teams.length < 2) { unparsed++; continue; }
+    if (/^nb\s*i\b/i.test(g.comp)) { skipped[g.comp] = (skipped[g.comp] || 0) + 1; continue; }
+    rows.push([g.date, g.time, g.teams[0], g.teams[1], g.comp, g.scores.length >= 2 ? `${g.scores[0]}-${g.scores[1]}` : '']);
+  }
+  return {
+    workbook: { sheets: [{ name: 'Beillesztett szöveg', rows }], modified: now.toISOString() },
+    gamesFound: games.length, imported: rows.length - 1,
+    skipped: Object.entries(skipped).map(([name, n]) => ({ name, n })), unparsed,
+  };
+}

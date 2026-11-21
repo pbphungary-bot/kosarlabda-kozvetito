@@ -108,3 +108,6 @@ details.import .hint { font-size: 12px; color: var(--muted); margin: 8px 0; }
 .base-opacity { display: flex; align-items: center; gap: 6px; }
 .base-opacity input[type=range] { width: 110px; padding: 0; }
 .zoom button#baseOpacityPsd { padding: 2px 8px; font-size: 12px; }
+
+.paste-label { display: grid; gap: 4px; font-size: 12px; color: var(--muted); margin: 10px 0 6px; }
+.paste-label textarea { background: #0f1318; border: 1px solid var(--line); border-radius: 6px; color: var(--text); font: inherit; padding: 6px 8px; resize: vertical; }

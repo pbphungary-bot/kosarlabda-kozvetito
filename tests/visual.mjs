@@ -13,7 +13,7 @@ const out = process.argv[2] || path.join(ROOT, 'tests/output/visual');
 mkdirSync(out, { recursive: true });
 const port = 8790 + Math.floor(Math.random() * 100);
 const server = spawn('python3', [path.join(ROOT, 'tools/serve.py'), String(port)], { stdio: 'ignore' });
-await new Promise(r => setTimeout(r, 700));
+for (let i = 0; i < 60; i++) { try { await fetch(`http://127.0.0.1:${port}/`); break; } catch { await new Promise(r => setTimeout(r, 100)); } } // wait until the server answers
 const browser = await chromium.launch();
 try {
   const page = await browser.newPage();
