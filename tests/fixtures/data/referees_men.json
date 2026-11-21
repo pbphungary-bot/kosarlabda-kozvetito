@@ -1,0 +1,1559 @@
+{
+ "league": "men",
+ "source": "hunbasket",
+ "source_url": "https://hunbasket.hu/menetrend-teljes/ferfi/x2627/hun",
+ "season": "x2627",
+ "updated_at": "2026-11-21T20:27:39.526080+00:00",
+ "matches": {
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134743": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Arena Savaria",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Jankovics Viktor Zsolt",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134745": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "OSE Lions",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Minár László Balázs",
+    "Nyilas István"
+   ],
+   "controller": "Ádám József"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134747": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Kaposvár Aréna",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Téczely Roland Balázs",
+    "Nagy Bence László"
+   ],
+   "controller": "Forrai Sámuel"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134749": {
+   "home": "Atomerőmű SE",
+   "away": "NKA Universitas Pécs",
+   "venue": "ASE Sportcsarnok",
+   "referees": [
+    "Goda László",
+    "Csabai-Kaskötő Brigitta",
+    "Söjtöry Tamás Ferenc"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134751": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Ludovika Aréna",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Földházi Tamás Péter",
+    "Pozsonyi László"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134753": {
+   "home": "Alba Fehérvár",
+   "away": "Egis Körmend",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Makrai Márton",
+    "Major Ádám"
+   ],
+   "controller": "Missura Gábor Jenő"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134755": {
+   "home": "Sopron KC",
+   "away": "DEAC",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Nagy Viktor",
+    "Dr. Popgyákunik Balázs",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Bognár Tibor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134757": {
+   "home": "OSE Lions",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Major Ádám",
+    "Kapusi Gábor"
+   ],
+   "controller": "Hartyáni Zsolt"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134759": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Városi Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Minár László Balázs",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134761": {
+   "home": "NKA Universitas Pécs",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [
+    "Nagy Viktor",
+    "Jankovics Viktor Zsolt",
+    "Kovács Nimród János"
+   ],
+   "controller": "Reisz Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134763": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Györfy Rúben",
+    "Jakab László Imre"
+   ],
+   "controller": "Balog György Attila"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134765": {
+   "home": "Egis Körmend",
+   "away": "Atomerőmű SE",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Dr. Popgyákunik Balázs",
+    "Földesi Ádám"
+   ],
+   "controller": "Németh Csaba János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134767": {
+   "home": "DEAC",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [
+    "Goda László",
+    "Söjtöry Tamás Ferenc",
+    "Rácz Zsolt Róbert"
+   ],
+   "controller": "Balogh László György"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134769": {
+   "home": "Alba Fehérvár",
+   "away": "Sopron KC",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [
+    "Kapitány Gellért",
+    "Csabai-Kaskötő Brigitta",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Fekete László"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134771": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Arena Savaria",
+   "referees": [
+    "Nagy Viktor",
+    "Csabai-Kaskötő Brigitta",
+    "Szőts Dávid István"
+   ],
+   "controller": "Hoffmann Gergely"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134773": {
+   "home": "OSE Lions",
+   "away": "NKA Universitas Pécs",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Dr. Popgyákunik Balázs",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Mocsai László"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134775": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [
+    "Goda László",
+    "Makrai Márton",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Hartyáni Zsolt"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134777": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Egis Körmend",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Dr. Mészáros Balázs",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134779": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "DEAC",
+   "venue": "Kaposvár Aréna",
+   "referees": [
+    "Kapitány Gellért",
+    "Major Ádám",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134781": {
+   "home": "Atomerőmű SE",
+   "away": "Sopron KC",
+   "venue": "ASE Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Györfy Rúben",
+    "Lengyel Ádám József"
+   ],
+   "controller": "Balogh László György"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134783": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Alba Fehérvár",
+   "venue": "Ludovika Aréna",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Nyilas István",
+    "Téczely Roland Balázs"
+   ],
+   "controller": "Ádám József"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134785": {
+   "home": "NKA Universitas Pécs",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Rácz Zsolt Róbert",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Gál János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134787": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Jankovics Viktor Zsolt",
+    "Nagy Bence László"
+   ],
+   "controller": "Fekete László"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134789": {
+   "home": "Egis Körmend",
+   "away": "OSE Lions",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [
+    "Kapitány Gellért",
+    "Söjtöry Tamás Ferenc",
+    "Kovács Nimród János"
+   ],
+   "controller": "Forrai Sámuel"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134791": {
+   "home": "DEAC",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Csabai-Kaskötő Brigitta",
+    "Jakab László Imre"
+   ],
+   "controller": "Zalai Ákos István"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134793": {
+   "home": "Sopron KC",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Major Ádám",
+    "Földesi Ádám"
+   ],
+   "controller": "Bognár Tibor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134795": {
+   "home": "Alba Fehérvár",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Dr. Popgyákunik Balázs",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Sarkadi-Nagy Ágnes"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134797": {
+   "home": "Atomerőmű SE",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "ASE Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Jankovics Viktor Zsolt",
+    "Nagy Bence László"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134799": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Arena Savaria",
+   "referees": [
+    "Kapitány Gellért",
+    "Kapusi Gábor",
+    "Téczely Roland Balázs"
+   ],
+   "controller": "Herczeg Ágoston"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134801": {
+   "home": "NKA Universitas Pécs",
+   "away": "Egis Körmend",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [
+    "Györfy Rúben",
+    "Major Ádám",
+    "Jakab László Imre"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134803": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "DEAC",
+   "venue": "Városi Sportcsarnok",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Kovács Nimród János",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Reisz Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134805": {
+   "home": "OSE Lions",
+   "away": "Sopron KC",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Csabai-Kaskötő Brigitta",
+    "Minár László Balázs"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134807": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Alba Fehérvár",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [
+    "Benczur Tamás",
+    "Rácz Zsolt Róbert",
+    "Lengyel Ádám József"
+   ],
+   "controller": "Balog György Attila"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134809": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Makrai Márton",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Gergely Csaba"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134811": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Atomerőmű SE",
+   "venue": "Kaposvár Aréna",
+   "referees": [
+    "Goda László",
+    "Nagy Viktor",
+    "Nyilas István"
+   ],
+   "controller": "Missura Gábor Jenő"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134813": {
+   "home": "Egis Körmend",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [
+    "Benczur Tamás",
+    "Csabai-Kaskötő Brigitta",
+    "Földesi Ádám"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134815": {
+   "home": "DEAC",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Minár László Balázs",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Vághy Tamás János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134817": {
+   "home": "Sopron KC",
+   "away": "NKA Universitas Pécs",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Dr. Popgyákunik Balázs",
+    "Jankovics Viktor Zsolt",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Forrai Sámuel"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134819": {
+   "home": "Alba Fehérvár",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Major Ádám",
+    "Kapusi Gábor"
+   ],
+   "controller": "Hoffmann Gergely"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134821": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "OSE Lions",
+   "venue": "Ludovika Aréna",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Györfy Rúben",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Bogárdi János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134823": {
+   "home": "Atomerőmű SE",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "ASE Sportcsarnok",
+   "referees": [
+    "Kapitány Gellért",
+    "Kovács Nimród János",
+    "Téczely Roland Balázs"
+   ],
+   "controller": "Ádám József"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134825": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Makrai Márton",
+    "Lengyel Ádám József"
+   ],
+   "controller": "Vághy Tamás János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134827": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "DEAC",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134829": {
+   "home": "Egis Körmend",
+   "away": "Sopron KC",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [
+    "Kapitány Gellért",
+    "Nagy Viktor",
+    "Szőts Dávid István"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134831": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Alba Fehérvár",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Csabai-Kaskötő Brigitta",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Fekete László"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134833": {
+   "home": "NKA Universitas Pécs",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [
+    "Goda László",
+    "Söjtöry Tamás Ferenc",
+    "Nyilas István"
+   ],
+   "controller": "Sarkadi-Nagy Ágnes"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134835": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Atomerőmű SE",
+   "venue": "Városi Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Rácz Zsolt Róbert",
+    "Lengyel Ádám József"
+   ],
+   "controller": "Balogh László György"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134837": {
+   "home": "OSE Lions",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Dr. Mészáros Balázs",
+    "Pozsonyi László"
+   ],
+   "controller": "Balog György Attila"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134839": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Dr. Popgyákunik Balázs",
+    "Jakab László Imre"
+   ],
+   "controller": "Németh Csaba János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134841": {
+   "home": "Sopron KC",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Major Ádám",
+    "Nagy Bence László"
+   ],
+   "controller": "Missura Gábor Jenő"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134843": {
+   "home": "Alba Fehérvár",
+   "away": "DEAC",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [
+    "Kapitány Gellért",
+    "Nagy Viktor",
+    "Nyilas István"
+   ],
+   "controller": "Bognár Tibor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134845": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Egis Körmend",
+   "venue": "Ludovika Aréna",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Jankovics Viktor Zsolt",
+    "Lengyel Ádám József"
+   ],
+   "controller": "Ádám József"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134847": {
+   "home": "Atomerőmű SE",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "ASE Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Dr. Popgyákunik Balázs",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Herczeg Ágoston"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134849": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "NKA Universitas Pécs",
+   "venue": "Kaposvár Aréna",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Minár László Balázs",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134851": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [
+    "Goda László",
+    "Györfy Rúben",
+    "Pozsonyi László"
+   ],
+   "controller": "Hartyáni Zsolt"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134853": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "OSE Lions",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Makrai Márton",
+    "Söjtöry Tamás Ferenc"
+   ],
+   "controller": "Vághy Tamás János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134855": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Alba Fehérvár",
+   "venue": "Arena Savaria",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Jankovics Viktor Zsolt",
+    "Minár László Balázs"
+   ],
+   "controller": "Hoffmann Gergely"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134857": {
+   "home": "Sopron KC",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Csabai-Kaskötő Brigitta",
+    "Söjtöry Tamás Ferenc",
+    "Földesi Ádám"
+   ],
+   "controller": "Németh Csaba János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134859": {
+   "home": "DEAC",
+   "away": "Atomerőmű SE",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [
+    "Makrai Márton",
+    "Jakab László Imre",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Gergely Csaba"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134861": {
+   "home": "Egis Körmend",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [
+    "Györfy Rúben",
+    "Dr. Popgyákunik Balázs",
+    "Kapusi Gábor"
+   ],
+   "controller": "Forrai Sámuel"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134863": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Dr. Mészáros Balázs",
+    "Makrai Márton"
+   ],
+   "controller": "Bognár Tibor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134865": {
+   "home": "NKA Universitas Pécs",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [
+    "Benczur Tamás",
+    "Major Ádám",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Fekete László"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134867": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "OSE Lions",
+   "venue": "Városi Sportcsarnok",
+   "referees": [
+    "Kapitány Gellért",
+    "Kovács Nimród János",
+    "Téczely Roland Balázs"
+   ],
+   "controller": "Ádám József"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134869": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Ludovika Aréna",
+   "referees": [
+    "Györfy Rúben",
+    "Makrai Márton",
+    "Pozsonyi László"
+   ],
+   "controller": "Hartyáni Zsolt"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134871": {
+   "home": "Atomerőmű SE",
+   "away": "Alba Fehérvár",
+   "venue": "ASE Sportcsarnok",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Dr. Mészáros Balázs",
+    "Söjtöry Tamás Ferenc"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134873": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Sopron KC",
+   "venue": "Kaposvár Aréna",
+   "referees": [
+    "Földházi Tamás Péter",
+    "Rácz Zsolt Róbert",
+    "Lengyel Ádám József"
+   ],
+   "controller": "Balogh László György"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134875": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "DEAC",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Dr. Németh Patrik",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134877": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Egis Körmend",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [
+    "Kapitány Gellért",
+    "Nyilas István",
+    "Nagy Bence László"
+   ],
+   "controller": "Balog György Attila"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134879": {
+   "home": "OSE Lions",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Minár László Balázs",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Missura Gábor Jenő"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134881": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "NKA Universitas Pécs",
+   "venue": "Városi Sportcsarnok",
+   "referees": [
+    "Nagy Viktor",
+    "Jankovics Viktor Zsolt",
+    "Szőts Dávid István"
+   ],
+   "controller": "Vághy Tamás János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134883": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Atomerőmű SE",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134885": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134887": {
+   "home": "Alba Fehérvár",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134889": {
+   "home": "Sopron KC",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134891": {
+   "home": "DEAC",
+   "away": "OSE Lions",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134893": {
+   "home": "Egis Körmend",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134895": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "NKA Universitas Pécs",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134897": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134899": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Atomerőmű SE",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134901": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134903": {
+   "home": "OSE Lions",
+   "away": "Alba Fehérvár",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134905": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Sopron KC",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134907": {
+   "home": "NKA Universitas Pécs",
+   "away": "DEAC",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134909": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Egis Körmend",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134911": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134913": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134915": {
+   "home": "Atomerőmű SE",
+   "away": "OSE Lions",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134917": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134919": {
+   "home": "Alba Fehérvár",
+   "away": "NKA Universitas Pécs",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134921": {
+   "home": "Sopron KC",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134923": {
+   "home": "DEAC",
+   "away": "Egis Körmend",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134925": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134927": {
+   "home": "OSE Lions",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134929": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134931": {
+   "home": "NKA Universitas Pécs",
+   "away": "Atomerőmű SE",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134933": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134935": {
+   "home": "Egis Körmend",
+   "away": "Alba Fehérvár",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134937": {
+   "home": "DEAC",
+   "away": "Sopron KC",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134939": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "OSE Lions",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134941": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134943": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "NKA Universitas Pécs",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134945": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134947": {
+   "home": "Atomerőmű SE",
+   "away": "Egis Körmend",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134949": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "DEAC",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134951": {
+   "home": "Sopron KC",
+   "away": "Alba Fehérvár",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134953": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134955": {
+   "home": "NKA Universitas Pécs",
+   "away": "OSE Lions",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134957": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134959": {
+   "home": "Egis Körmend",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134961": {
+   "home": "DEAC",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134963": {
+   "home": "Sopron KC",
+   "away": "Atomerőmű SE",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134965": {
+   "home": "Alba Fehérvár",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134967": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "NKA Universitas Pécs",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134969": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134971": {
+   "home": "OSE Lions",
+   "away": "Egis Körmend",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134973": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "DEAC",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134975": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Sopron KC",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134977": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Alba Fehérvár",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134979": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Atomerőmű SE",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134981": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134983": {
+   "home": "Egis Körmend",
+   "away": "NKA Universitas Pécs",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134985": {
+   "home": "DEAC",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134987": {
+   "home": "Sopron KC",
+   "away": "OSE Lions",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134989": {
+   "home": "Alba Fehérvár",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134991": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134993": {
+   "home": "Atomerőmű SE",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134995": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Egis Körmend",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134997": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "DEAC",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_134999": {
+   "home": "NKA Universitas Pécs",
+   "away": "Sopron KC",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135001": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Alba Fehérvár",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135003": {
+   "home": "OSE Lions",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135005": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Atomerőmű SE",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135007": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135009": {
+   "home": "DEAC",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135011": {
+   "home": "Sopron KC",
+   "away": "Egis Körmend",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135013": {
+   "home": "Alba Fehérvár",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135015": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "NKA Universitas Pécs",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135017": {
+   "home": "Atomerőmű SE",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135019": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "OSE Lions",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135021": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135023": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Sopron KC",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135025": {
+   "home": "DEAC",
+   "away": "Alba Fehérvár",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135027": {
+   "home": "Egis Körmend",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135029": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Atomerőmű SE",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135031": {
+   "home": "NKA Universitas Pécs",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135033": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135035": {
+   "home": "OSE Lions",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135037": {
+   "home": "Alba Fehérvár",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135039": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "Sopron KC",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135041": {
+   "home": "Atomerőmű SE",
+   "away": "DEAC",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135043": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Egis Körmend",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135045": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135047": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "NKA Universitas Pécs",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135049": {
+   "home": "OSE Lions",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135051": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135053": {
+   "home": "Alba Fehérvár",
+   "away": "Atomerőmű SE",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135055": {
+   "home": "Sopron KC",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135057": {
+   "home": "DEAC",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135059": {
+   "home": "Egis Körmend",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135061": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "OSE Lions",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135063": {
+   "home": "NKA Universitas Pécs",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135065": {
+   "home": "Atomerőmű SE",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135067": {
+   "home": "Kometa-KVGY Kaposvári KK",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Kaposvár Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135069": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Alba Fehérvár",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135071": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Sopron KC",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135073": {
+   "home": "OSE Lions",
+   "away": "DEAC",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135075": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Egis Körmend",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135077": {
+   "home": "NKA Universitas Pécs",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135079": {
+   "home": "Falco-Vulcano Energia KC Szombathely",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "Arena Savaria",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135081": {
+   "home": "Atomerőmű SE",
+   "away": "NHSZ-Szolnoki Olajbányász",
+   "venue": "ASE Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135083": {
+   "home": "Endo Plus Service-Honvéd",
+   "away": "PHOENIX Fóti Tigrisek",
+   "venue": "Ludovika Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135085": {
+   "home": "Alba Fehérvár",
+   "away": "OSE Lions",
+   "venue": "Alba Regia Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135087": {
+   "home": "Sopron KC",
+   "away": "Délút-SZTE-Szedeák",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135089": {
+   "home": "DEAC",
+   "away": "NKA Universitas Pécs",
+   "venue": "Oláh Gábor utcai Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135091": {
+   "home": "Egis Körmend",
+   "away": "Duna Aszfalt-DTKH Kecskemét",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135093": {
+   "home": "NHSZ-Szolnoki Olajbányász",
+   "away": "Falco-Vulcano Energia KC Szombathely",
+   "venue": "Szolnok Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135095": {
+   "home": "PHOENIX Fóti Tigrisek",
+   "away": "Kometa-KVGY Kaposvári KK",
+   "venue": "PHOENIX Sportcsarnok Fót",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135097": {
+   "home": "OSE Lions",
+   "away": "Atomerőmű SE",
+   "venue": "Krajnyik „Akác” András Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135099": {
+   "home": "Délút-SZTE-Szedeák",
+   "away": "Endo Plus Service-Honvéd",
+   "venue": "Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135101": {
+   "home": "NKA Universitas Pécs",
+   "away": "Alba Fehérvár",
+   "venue": "Nemzeti Kosárlabda Akadémia Fűzy Ákos Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135103": {
+   "home": "Duna Aszfalt-DTKH Kecskemét",
+   "away": "Sopron KC",
+   "venue": "Messzi István Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/hun/hun_135105": {
+   "home": "Egis Körmend",
+   "away": "DEAC",
+   "venue": "Dr. Kristóf László Sportcsarnok (Körmend)",
+   "referees": [],
+   "controller": ""
+  }
+ }
+}

@@ -34,7 +34,7 @@ class TeamPages(unittest.TestCase):
     def test_real_data_files(self):
         import json
         for lg, n in (('men', 14), ('women', 11)):
-            d = json.loads((ROOT / f'data/team_pages_{lg}.json').read_text(encoding='utf-8'))
+            d = json.loads((ROOT / (__import__('os').environ.get('DATA_DIR') or 'tests/fixtures/data') / f'team_pages_{lg}.json').read_text(encoding='utf-8'))
             self.assertEqual(len(d['teams']), n)
             for t in d['teams']:
                 self.assertTrue(t['roster'] and t['stats']['average']['players'], t['name'])

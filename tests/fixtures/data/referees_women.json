@@ -1,0 +1,947 @@
+{
+ "league": "women",
+ "source": "hunbasket",
+ "source_url": "https://hunbasket.hu/menetrend-teljes/noi/x2627/whun",
+ "season": "x2627",
+ "updated_at": "2026-11-21T20:27:39.526080+00:00",
+ "matches": {
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135471": {
+   "home": "KSC Szekszárd",
+   "away": "NKA Universitas Pécs",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [
+    "Rózsavölgyi Alexandra",
+    "Gruber Nikolett Lilla",
+    "Kovács Nimród János"
+   ],
+   "controller": "Sarkadi-Nagy Ágnes"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135473": {
+   "home": "Vasas Akadémia",
+   "away": "DVTK HUNTHERM",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [
+    "Rácz Zsolt Róbert",
+    "Jakab László Imre",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Balogh László György"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135475": {
+   "home": "Sopron Basket",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Földesi Ádám",
+    "Szőts Dávid István",
+    "Fülöp András"
+   ],
+   "controller": "Hoffmann Gergely"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135479": {
+   "home": "ETO Basket",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Olimpiai Sport Park",
+   "referees": [
+    "Györfy Rúben",
+    "Major Ádám",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Szabó Anita"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135481": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "Csata TKK",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [
+    "Kapusi Gábor",
+    "Lengyel Ádám József",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Balog György Attila"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135483": {
+   "home": "NKA Universitas Pécs",
+   "away": "Vasas Akadémia",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [
+    "Nyilas István",
+    "Dr. Németh Patrik",
+    "Szőts Dávid István"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135485": {
+   "home": "DVTK HUNTHERM",
+   "away": "KSC Szekszárd",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [
+    "Makrai Márton",
+    "Söjtöry Tamás Ferenc",
+    "Pozsonyi László"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135489": {
+   "home": "TFSE",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [
+    "Kapitány Gellért",
+    "Varga-Záray Katalin",
+    "Farkas Péter Gábor"
+   ],
+   "controller": "Józsa András Junior"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135491": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [
+    "Gruber Nikolett Lilla",
+    "Nepp László Oszkár",
+    "Fülöp András"
+   ],
+   "controller": "Hoffmann Gergely"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135493": {
+   "home": "Csata TKK",
+   "away": "ETO Basket",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [
+    "Rózsavölgyi Alexandra",
+    "Téczely Roland Balázs",
+    "Szőts Dávid István"
+   ],
+   "controller": "Mocsai László"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135495": {
+   "home": "VBW CEKK Cegléd",
+   "away": "NKA Universitas Pécs",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Lengyel Ádám József",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Bogárdi János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135499": {
+   "home": "ETO Basket",
+   "away": "Sopron Basket",
+   "venue": "Olimpiai Sport Park",
+   "referees": [
+    "Dr. Popgyákunik Balázs",
+    "Jankovics Viktor Zsolt",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Forrai Sámuel"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135501": {
+   "home": "TFSE",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [
+    "Rózsavölgyi Alexandra",
+    "Söjtöry Tamás Ferenc",
+    "Földesi Ádám"
+   ],
+   "controller": "Sarkadi-Nagy Ágnes"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135503": {
+   "home": "KSC Szekszárd",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [
+    "Kapitány Gellért",
+    "Nagy Bence László",
+    "Farkas Péter Gábor"
+   ],
+   "controller": "Maár Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135505": {
+   "home": "Vasas Akadémia",
+   "away": "Csata TKK",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [
+    "Györfy Rúben",
+    "Varga-Záray Katalin",
+    "Fülöp András"
+   ],
+   "controller": "Gál János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135509": {
+   "home": "DVTK HUNTHERM",
+   "away": "VBW CEKK Cegléd",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [
+    "Goda László",
+    "Jankovics Viktor Zsolt",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Gergely Csaba"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135511": {
+   "home": "Sopron Basket",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Minár László Balázs",
+    "Jakab László Imre",
+    "Horváth Csongor Béla"
+   ],
+   "controller": "Tóth Kálmán"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135513": {
+   "home": "TFSE",
+   "away": "ETO Basket",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Gruber Nikolett Lilla",
+    "Pozsonyi László"
+   ],
+   "controller": "Szabó Anita"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135515": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "Vasas Akadémia",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Kovács Nimród János",
+    "Téczely Roland Balázs"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135517": {
+   "home": "Csata TKK",
+   "away": "KSC Szekszárd",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [
+    "Benczur Tamás",
+    "Gruber Nikolett Lilla",
+    "Kapusi Gábor"
+   ],
+   "controller": "Herczeg Ágoston"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135519": {
+   "home": "ETO Basket",
+   "away": "NKA Universitas Pécs",
+   "venue": "Olimpiai Sport Park",
+   "referees": [
+    "Goda László",
+    "Minár László Balázs",
+    "Varga-Záray Katalin"
+   ],
+   "controller": "Herczeg Ágoston"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135521": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "DVTK HUNTHERM",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [
+    "Gruber Nikolett Lilla",
+    "Nyilas István",
+    "Fülöp András"
+   ],
+   "controller": "Ádám József"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135523": {
+   "home": "Csata TKK",
+   "away": "Sopron Basket",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [
+    "Goda László",
+    "Téczely Roland Balázs",
+    "Farkas Péter Gábor"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135525": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "TFSE",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [
+    "Horváth Csongor Béla",
+    "Szőts Dávid István",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Missura Gábor Jenő"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135529": {
+   "home": "Vasas Akadémia",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [
+    "Rózsavölgyi Alexandra",
+    "Pozsonyi László",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Szabó Anita"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135531": {
+   "home": "NKA Universitas Pécs",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [
+    "Söjtöry Tamás Ferenc",
+    "Kapusi Gábor",
+    "Földesi Ádám"
+   ],
+   "controller": "Németh Csaba János"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135533": {
+   "home": "DVTK HUNTHERM",
+   "away": "ETO Basket",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [
+    "Benczur Tamás",
+    "Rózsavölgyi Alexandra",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Sarkadi-Nagy Ágnes"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135535": {
+   "home": "Sopron Basket",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Dr. Popgyákunik Balázs",
+    "Gruber Nikolett Lilla",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Tóth Kálmán"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135537": {
+   "home": "TFSE",
+   "away": "Csata TKK",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Rózsavölgyi Alexandra",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Hartyáni Zsolt"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135539": {
+   "home": "VBW CEKK Cegléd",
+   "away": "KSC Szekszárd",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [
+    "Varga-Záray Katalin",
+    "Szőts Dávid István",
+    "Fülöp András"
+   ],
+   "controller": "Dr. Gincsai János Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135543": {
+   "home": "Csata TKK",
+   "away": "NKA Universitas Pécs",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [
+    "Makrai Márton",
+    "Gruber Nikolett Lilla",
+    "Fülöp András"
+   ],
+   "controller": "Gergely Csaba"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135545": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "DVTK HUNTHERM",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [
+    "Major Ádám",
+    "Földesi Ádám",
+    "Farkas Péter Gábor"
+   ],
+   "controller": "Szalai Zsolt"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135547": {
+   "home": "Vasas Akadémia",
+   "away": "Sopron Basket",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [
+    "Varga-Záray Katalin",
+    "Horváth Csongor Béla",
+    "Nagy Bence László"
+   ],
+   "controller": "Reisz Péter"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135549": {
+   "home": "KSC Szekszárd",
+   "away": "TFSE",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [
+    "Györfy Rúben",
+    "Kovács Nimród János",
+    "Téczely Roland Balázs"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135551": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [
+    "Rózsavölgyi Alexandra",
+    "Jankovics Viktor Zsolt",
+    "Dr. Németh Patrik"
+   ],
+   "controller": "Bognár Tibor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135555": {
+   "home": "NKA Universitas Pécs",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [
+    "Goda László",
+    "Györfy Rúben",
+    "Szőts Dávid István"
+   ],
+   "controller": "Farkas Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135557": {
+   "home": "DVTK HUNTHERM",
+   "away": "Csata TKK",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [
+    "Cziffra Csaba Zsolt",
+    "Jankovics Viktor Zsolt",
+    "Minár László Balázs"
+   ],
+   "controller": "Dernei Gábor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135559": {
+   "home": "Sopron Basket",
+   "away": "KSC Szekszárd",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Praksch Péter Árpád",
+    "Benczur Tamás",
+    "Rózsavölgyi Alexandra"
+   ],
+   "controller": "Sarkadi-Nagy Ágnes"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135561": {
+   "home": "TFSE",
+   "away": "Vasas Akadémia",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [
+    "Kapitány Gellért",
+    "Gruber Nikolett Lilla",
+    "Gombos Márk Bálint"
+   ],
+   "controller": "Szabó Anita"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135563": {
+   "home": "ETO Basket",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Olimpiai Sport Park",
+   "referees": [
+    "Nagy Viktor",
+    "Söjtöry Tamás Ferenc",
+    "Nyilas István"
+   ],
+   "controller": "Tóth Kálmán"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135567": {
+   "home": "TFSE",
+   "away": "NKA Universitas Pécs",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135569": {
+   "home": "Sopron Basket",
+   "away": "DVTK HUNTHERM",
+   "venue": "Novomatic Aréna",
+   "referees": [
+    "Goda László",
+    "Nagy Viktor",
+    "Györfy Rúben"
+   ],
+   "controller": "Bognár Tibor"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135573": {
+   "home": "Csata TKK",
+   "away": "VBW CEKK Cegléd",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135575": {
+   "home": "KSC Szekszárd",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [
+    "Kapitány Gellért",
+    "Gruber Nikolett Lilla",
+    "Nyilas István"
+   ],
+   "controller": "Balog György Attila"
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135577": {
+   "home": "Vasas Akadémia",
+   "away": "ETO Basket",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135579": {
+   "home": "NKA Universitas Pécs",
+   "away": "Sopron Basket",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135581": {
+   "home": "DVTK HUNTHERM",
+   "away": "TFSE",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135583": {
+   "home": "VBW CEKK Cegléd",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135587": {
+   "home": "KSC Szekszárd",
+   "away": "ETO Basket",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135589": {
+   "home": "Vasas Akadémia",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135591": {
+   "home": "DVTK HUNTHERM",
+   "away": "NKA Universitas Pécs",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135593": {
+   "home": "Sopron Basket",
+   "away": "TFSE",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135595": {
+   "home": "Csata TKK",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135597": {
+   "home": "Vasas Akadémia",
+   "away": "KSC Szekszárd",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135601": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "ETO Basket",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135603": {
+   "home": "NKA Universitas Pécs",
+   "away": "KSC Szekszárd",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135605": {
+   "home": "DVTK HUNTHERM",
+   "away": "Vasas Akadémia",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135607": {
+   "home": "VBW CEKK Cegléd",
+   "away": "Sopron Basket",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135611": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "ETO Basket",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135613": {
+   "home": "Csata TKK",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135615": {
+   "home": "Vasas Akadémia",
+   "away": "NKA Universitas Pécs",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135617": {
+   "home": "KSC Szekszárd",
+   "away": "DVTK HUNTHERM",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135621": {
+   "home": "VBW CEKK Cegléd",
+   "away": "TFSE",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135623": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135625": {
+   "home": "ETO Basket",
+   "away": "Csata TKK",
+   "venue": "Olimpiai Sport Park",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135627": {
+   "home": "NKA Universitas Pécs",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135631": {
+   "home": "Sopron Basket",
+   "away": "ETO Basket",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135633": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "TFSE",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135635": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "KSC Szekszárd",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135637": {
+   "home": "Csata TKK",
+   "away": "Vasas Akadémia",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135641": {
+   "home": "VBW CEKK Cegléd",
+   "away": "DVTK HUNTHERM",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135643": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "Sopron Basket",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135645": {
+   "home": "ETO Basket",
+   "away": "TFSE",
+   "venue": "Olimpiai Sport Park",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135647": {
+   "home": "Vasas Akadémia",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135649": {
+   "home": "KSC Szekszárd",
+   "away": "Csata TKK",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135651": {
+   "home": "NKA Universitas Pécs",
+   "away": "ETO Basket",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135653": {
+   "home": "DVTK HUNTHERM",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135655": {
+   "home": "Sopron Basket",
+   "away": "Csata TKK",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135657": {
+   "home": "TFSE",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135661": {
+   "home": "VBW CEKK Cegléd",
+   "away": "Vasas Akadémia",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135663": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "NKA Universitas Pécs",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135665": {
+   "home": "ETO Basket",
+   "away": "DVTK HUNTHERM",
+   "venue": "Olimpiai Sport Park",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135667": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "Sopron Basket",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135669": {
+   "home": "Csata TKK",
+   "away": "TFSE",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135671": {
+   "home": "KSC Szekszárd",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135675": {
+   "home": "NKA Universitas Pécs",
+   "away": "Csata TKK",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135677": {
+   "home": "DVTK HUNTHERM",
+   "away": "ELTE BEAC Újbuda",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135679": {
+   "home": "Sopron Basket",
+   "away": "Vasas Akadémia",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135681": {
+   "home": "TFSE",
+   "away": "KSC Szekszárd",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135683": {
+   "home": "VBW CEKK Cegléd",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135687": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "NKA Universitas Pécs",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135689": {
+   "home": "Csata TKK",
+   "away": "DVTK HUNTHERM",
+   "venue": "E.ON Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135691": {
+   "home": "KSC Szekszárd",
+   "away": "Sopron Basket",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135693": {
+   "home": "Vasas Akadémia",
+   "away": "TFSE",
+   "venue": "Pasaréti Sportcentrum",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135695": {
+   "home": "VBW CEKK Cegléd",
+   "away": "ETO Basket",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135699": {
+   "home": "NKA Universitas Pécs",
+   "away": "TFSE",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135701": {
+   "home": "DVTK HUNTHERM",
+   "away": "Sopron Basket",
+   "venue": "DVTK Multifunkciós Sportcsarnok Centerpálya",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135705": {
+   "home": "VBW CEKK Cegléd",
+   "away": "Csata TKK",
+   "venue": "Ceglédi Kosárlabda Csarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135707": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "KSC Szekszárd",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135709": {
+   "home": "ETO Basket",
+   "away": "Vasas Akadémia",
+   "venue": "Olimpiai Sport Park",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135711": {
+   "home": "Sopron Basket",
+   "away": "NKA Universitas Pécs",
+   "venue": "Novomatic Aréna",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135713": {
+   "home": "TFSE",
+   "away": "DVTK HUNTHERM",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135715": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "VBW CEKK Cegléd",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135719": {
+   "home": "ETO Basket",
+   "away": "KSC Szekszárd",
+   "venue": "Olimpiai Sport Park",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135721": {
+   "home": "BKG-PRIMA Szigetszentmiklós",
+   "away": "Vasas Akadémia",
+   "venue": "Szigetszentmiklósi Városi Sport- és Rendezvénycsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135723": {
+   "home": "NKA Universitas Pécs",
+   "away": "DVTK HUNTHERM",
+   "venue": "Lauber Dezső Városi Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135725": {
+   "home": "TFSE",
+   "away": "Sopron Basket",
+   "venue": "Dr. Koltai Jenő Sportközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135727": {
+   "home": "ELTE BEAC Újbuda",
+   "away": "Csata TKK",
+   "venue": "Gabányi László Sportcsarnok",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135729": {
+   "home": "KSC Szekszárd",
+   "away": "Vasas Akadémia",
+   "venue": "Szekszárdi Szabadidőközpont",
+   "referees": [],
+   "controller": ""
+  },
+  "https://hunbasket.hu/merkozes/x2627/whun/whun_135733": {
+   "home": "ETO Basket",
+   "away": "BKG-PRIMA Szigetszentmiklós",
+   "venue": "Olimpiai Sport Park",
+   "referees": [],
+   "controller": ""
+  }
+ }
+}

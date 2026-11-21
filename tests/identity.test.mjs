@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { clubId, CLUBS } from '../graphics/js/clubs.js';
-import { ROOT, readJson, loadStore } from './helpers.mjs';
+import { ROOT, readJson, loadStore, DATA_DIR } from './helpers.mjs';
 
 const LG = ['men', 'women'];
 
@@ -11,10 +11,10 @@ test('every team name in every dashboard data file resolves to exactly one club 
   for (const lg of LG) {
     const names = new Map();
     const add = (n, where) => names.set(n, [...(names.get(n) || []), where]);
-    (await readJson(`data/${lg}.json`)).matches.forEach(m => { add(m.home, 'fixtures'); add(m.away, 'fixtures'); });
-    (await readJson(`data/standings_${lg}.json`)).standings.forEach(s => add(s.name, 'standings'));
-    (await readJson(`data/team_stats_${lg}.json`)).teams.forEach(t => add(t.name, 'team stats'));
-    (await readJson(`data/player_stats_${lg}.json`)).teams.forEach(t => add(t.name, 'player stats'));
+    (await readJson(`${DATA_DIR}/${lg}.json`)).matches.forEach(m => { add(m.home, 'fixtures'); add(m.away, 'fixtures'); });
+    (await readJson(`${DATA_DIR}/standings_${lg}.json`)).standings.forEach(s => add(s.name, 'standings'));
+    (await readJson(`${DATA_DIR}/team_stats_${lg}.json`)).teams.forEach(t => add(t.name, 'team stats'));
+    (await readJson(`${DATA_DIR}/player_stats_${lg}.json`)).teams.forEach(t => add(t.name, 'player stats'));
     for (const [n, where] of names) assert.ok(clubId(lg, n), `${lg}: "${n}" (${where}) unresolved`);
   }
 });
@@ -26,7 +26,7 @@ test('each dataset has exactly one entry per club, and every club has every data
     const L = store.league(lg);
     const ids = Object.keys(CLUBS[lg]);
     for (const [key, file] of [['standings', `standings_${lg}.json`], ['teamStats', `team_stats_${lg}.json`], ['players', `player_stats_${lg}.json`]]) {
-      const raw = await readJson('data/' + file);
+      const raw = await readJson(DATA_DIR + '/' + file);
       const count = (raw.standings || raw.teams).length;
       assert.equal(Object.keys(L[key]).length, count, `${lg} ${key}: duplicate mapping`);
       for (const id of ids) assert.ok(L[key][id], `${lg} ${key}: no entry for ${id}`);

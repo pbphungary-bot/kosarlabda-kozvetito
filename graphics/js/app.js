@@ -1088,7 +1088,7 @@ function initMobile() {
   st.addEventListener('touchstart', e => {
     if (e.touches.length === 2) { pinch = { d: dist(e.touches), z: state.stageZoom || 1 }; }
     else if (e.touches.length === 1 && !state.editMode) {
-      const now = Date.now();
+      const now = performance.now(); // monotonic: not affected by clock changes
       if (now - lastTap < 300) { setStageZoom((state.stageZoom || 1) > 1.2 ? 1 : 2.5); e.preventDefault(); }
       lastTap = now;
     }

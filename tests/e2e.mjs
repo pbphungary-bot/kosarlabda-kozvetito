@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-import { ROOT } from './helpers.mjs';
+import { ROOT, DATA_DIR, FIXED_NOW } from './helpers.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
@@ -24,16 +24,26 @@ function pngInfo(buf) {
 const results = [];
 const check = (name, fn) => fn().then(() => results.push(['ok', name]), e => { results.push(['FAIL', name, e.message]); });
 
+/** Frozen data + clock for every browser context (see helpers.mjs); the cup feed stays empty, the cup tests bring their own games. */
+async function hermetic(c) {
+  await c.route(/\/data\/[a-z0-9_]+\.json/, r => {
+    const file = path.join(ROOT, DATA_DIR, new globalThis.URL(r.request().url()).pathname.split('/').pop());
+    return r.fulfill({ contentType: 'application/json', body: readFileSync(file) });
+  });
+  await c.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
+  if (FIXED_NOW) await c.clock.setFixedTime(new Date(FIXED_NOW));
+  return c;
+}
+
 const browser = await chromium.launch();
 try {
-  const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, acceptDownloads: true });
+  const ctx = await hermetic(await browser.newContext({ viewport: { width: 1600, height: 1000 }, acceptDownloads: true }));
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('dialog', d => d.accept());
   // the live European-games feed changes daily; the cup tests bring their own games (an empty feed is served)
-  await ctx.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   await page.goto(`${URL}/graphics/index.html`);
   await page.waitForSelector('body[data-ready="1"]', { timeout: 30000 });
 
@@ -759,12 +769,11 @@ try {
 
   // ───────────── phone: tabs, sticky preview, no sideways scrolling, touch zoom, export ─────────────
   const { devices } = require('playwright');
-  const mctx = await browser.newContext({ ...devices['iPhone 13'], acceptDownloads: true });
+  const mctx = await hermetic(await browser.newContext({ ...devices['iPhone 13'], acceptDownloads: true }));
   const mp = await mctx.newPage();
   const merrors = [];
   mp.on('pageerror', e => merrors.push(e.message));
   mp.on('console', m => { if (m.type() === 'error') merrors.push(m.text()); });
-  await mctx.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   await mp.goto(`${URL}/graphics/index.html`);
   await mp.waitForSelector('body[data-ready="1"]');
   await mp.waitForTimeout(1200);
@@ -851,7 +860,7 @@ try {
     }
   });
   await check('view switch (studio): auto → mobile → desktop → auto, remembered, works on a wide screen', async () => {
-    const vp = await browser.newContext({ viewport: { width: 1400, height: 900 } });
+    const vp = await hermetic(await browser.newContext({ viewport: { width: 1400, height: 900 } }));
     const vpage = await vp.newPage();
     await vpage.goto(`${URL}/graphics/index.html`);
     await vpage.waitForSelector('body[data-ready="1"]');
@@ -872,7 +881,7 @@ try {
     await vp.close();
   });
   await check('view switch (phone): forced desktop view lays the page out wide, dashboard too', async () => {
-    const pc = await browser.newContext({ ...devices['iPhone 13'] });
+    const pc = await hermetic(await browser.newContext({ ...devices['iPhone 13'] }));
     await pc.addInitScript(() => { try { localStorage.setItem('nbia.view', 'desktop'); localStorage.setItem('nbia.dash.view', 'desktop'); } catch { /* ignore */ } });
     const pp = await pc.newPage();
     await pp.goto(`${URL}/graphics/index.html`);
@@ -916,7 +925,7 @@ try {
     for (const lg of ['men', 'women']) {
       await dp.selectOption('#league', lg);
       await dp.waitForTimeout(800);
-      const data = JSON.parse(readFileSync(path.join(ROOT, `data/${lg}.json`), 'utf8')).matches;
+      const data = JSON.parse(readFileSync(path.join(ROOT, DATA_DIR, `${lg}.json`), 'utf8')).matches;
       const key = m => { const [y, mo, d] = m.date.match(/\d+/g); return `${y}${mo.padStart(2, '0')}${d.padStart(2, '0')} ${m.time || ''}`; };
       const fin = data.filter(m => m.status === 'finished').sort((a, b) => key(b).localeCompare(key(a)));
       const rows = await dp.$$eval('#fixtures tbody tr:not(.fixture-section)', trs => trs.map(tr => [...tr.children].map(td => td.textContent.trim())));

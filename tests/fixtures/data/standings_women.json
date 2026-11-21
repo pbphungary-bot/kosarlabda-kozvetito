@@ -1,0 +1,118 @@
+{
+  "competition": "Női NB I/A",
+  "source": "https://hunbasket.hu/tabella/noi",
+  "updated_at": "2026-11-21T20:15:29.442697+00:00",
+  "checked_at": "2026-11-21T21:15:41.249558+00:00",
+  "standings": [
+    {
+      "rank": 1,
+      "name": "Sopron Basket",
+      "played": 7,
+      "points": 14,
+      "wins": 7,
+      "losses": 0,
+      "scored": 594,
+      "conceded": 424
+    },
+    {
+      "rank": 2,
+      "name": "DVTK HUNTHERM",
+      "played": 6,
+      "points": 12,
+      "wins": 6,
+      "losses": 0,
+      "scored": 465,
+      "conceded": 313
+    },
+    {
+      "rank": 3,
+      "name": "Csata TKK",
+      "played": 7,
+      "points": 12,
+      "wins": 5,
+      "losses": 2,
+      "scored": 523,
+      "conceded": 446
+    },
+    {
+      "rank": 4,
+      "name": "ETO Basket",
+      "played": 6,
+      "points": 10,
+      "wins": 4,
+      "losses": 2,
+      "scored": 407,
+      "conceded": 395
+    },
+    {
+      "rank": 5,
+      "name": "KSC Szekszárd",
+      "played": 7,
+      "points": 11,
+      "wins": 4,
+      "losses": 3,
+      "scored": 544,
+      "conceded": 473
+    },
+    {
+      "rank": 6,
+      "name": "VBW CEKK Cegléd",
+      "played": 7,
+      "points": 11,
+      "wins": 4,
+      "losses": 3,
+      "scored": 483,
+      "conceded": 500
+    },
+    {
+      "rank": 7,
+      "name": "NKA Universitas Pécs",
+      "played": 7,
+      "points": 10,
+      "wins": 3,
+      "losses": 4,
+      "scored": 527,
+      "conceded": 471
+    },
+    {
+      "rank": 8,
+      "name": "TFSE",
+      "played": 7,
+      "points": 9,
+      "wins": 2,
+      "losses": 5,
+      "scored": 479,
+      "conceded": 477
+    },
+    {
+      "rank": 9,
+      "name": "ELTE BEAC Újbuda",
+      "played": 8,
+      "points": 10,
+      "wins": 2,
+      "losses": 6,
+      "scored": 588,
+      "conceded": 677
+    },
+    {
+      "rank": 10,
+      "name": "Vasas Akadémia",
+      "played": 7,
+      "points": 8,
+      "wins": 1,
+      "losses": 6,
+      "scored": 382,
+      "conceded": 547
+    },
+    {
+      "rank": 11,
+      "name": "BKG-PRIMA Szigetszentmiklós",
+      "played": 7,
+      "points": 7,
+      "wins": 0,
+      "losses": 7,
+      "scored": 401,
+      "conceded": 670
+    }
+  ]
+}
