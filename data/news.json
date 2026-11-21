@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-21T14:05:49.120116+00:00",
+  "checked_at": "2026-11-21T14:49:38.389078+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -561,6 +561,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítések",
+      "summary": "A 18 órakor kezdődő Duna Aszfalt-DTKH Kecskemét – NHSZ-Szolnoki Olajbányász mérkőzésről Fullcourtért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetitesek-918/",
+      "published_at": "2026-11-21T14:58:26+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kecskemét",
+        "men|Szolnok"
+      ],
+      "league": "men"
+    },
     {
       "source": "WBasket.hu",
       "title": "ÉLŐ: három bajnoki mérkőzés szombaton",
