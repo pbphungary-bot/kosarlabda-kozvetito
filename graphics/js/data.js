@@ -11,6 +11,7 @@ export const LEAGUES = {
 export const SOURCES = {
   fixtures: { men: 'men.json', women: 'women.json', label: 'Menetrend és eredmények (Hunbasket)' },
   standings: { men: 'standings_men.json', women: 'standings_women.json', label: 'Tabella (Hunbasket)' },
+  referees: { men: 'referees_men.json', women: 'referees_women.json', label: 'Játékvezetők, ellenőr, helyszín (Hunbasket)' },
   teamStats: { men: 'team_stats_men.json', women: 'team_stats_women.json', label: 'Csapatstatisztika' },
   players: { men: 'player_stats_men.json', women: 'player_stats_women.json', label: 'Játékosstatisztika (Hunbasket)' },
 };
@@ -54,7 +55,7 @@ export class Store {
   }
 
   #index(lg, r) {
-    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, statSource: null };
+    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, statSource: null };
     if (r.fixtures) {
       L.updated.fixtures = r.fixtures.updated_at || null;
       const today = this.now.toISOString().slice(0, 10);
@@ -71,6 +72,10 @@ export class Store {
           finishedWithoutScore: m.status === 'finished' && !score,
         };
       }).sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.time || '').localeCompare(b.time || '') || a.idx - b.idx);
+    }
+    if (r.referees) {
+      L.updated.referees = r.referees.updated_at || null;
+      L.referees = r.referees.matches || {};
     }
     if (r.standings) {
       L.updated.standings = r.standings.updated_at || null;
@@ -130,12 +135,29 @@ export class Store {
     const x = this.#excelOn(lg);
     if (!x?.cups) return [];
     const today = this.now.toISOString().slice(0, 10);
-    return Object.values(x.cups).filter(g => g.homeId === id || g.awayId === id).map(g => ({
-      idx: -1, round: null, roundNo: null, home: g.home, away: g.away, homeId: g.homeId, awayId: g.awayId,
+    return Object.entries(x.cups).filter(([, g]) => g.homeId === id || g.awayId === id).map(([cupKey, g]) => ({
+      cupKey, idx: -1, round: null, roundNo: null, home: g.home, away: g.away, homeId: g.homeId, awayId: g.awayId,
       date: g.date, time: g.time, status: g.status, score: g.score, url: null,
       cup: true, competition: g.competition, compKey: g.compKey,
       resultMissing: g.status !== 'finished' && g.date < today, finishedWithoutScore: false,
     }));
+  }
+
+  /** Adds one game by hand (the "+ Kupa-/európai meccs" form). Stored with the other Excel data. */
+  addCup(lg, g) {
+    const x = this.excel[lg] || { team: {}, players: {}, cups: {}, enabled: true, meta: { files: [] } };
+    x.cups = x.cups || {};
+    x.cups[`${g.date}|${g.homeId || g.home}|${g.awayId || g.away}`] = g;
+    x.enabled = true;
+    x.meta = x.meta || { files: [] };
+    const name = 'Kézzel hozzáadott meccsek';
+    x.meta.files = [...(x.meta.files || []).filter(f => f.name !== name), { name, modified: new Date().toISOString(), importedAt: new Date().toISOString() }];
+    this.excel[lg] = x;
+  }
+
+  removeCup(lg, cupKey) {
+    const x = this.excel[lg];
+    if (x?.cups) delete x.cups[cupKey];
   }
 
   /** All played games of the team with a score (NB I/A + uploaded cup/European games), oldest first. */
@@ -163,6 +185,11 @@ export class Store {
   /** Played matches in the window that have no result in the data (stale feed). */
   missingResults(lg, id) {
     return this.teamFixtures(lg, id).filter(m => m.resultMissing);
+  }
+
+  /** Arena, referees and MKOSZ controller of a dashboard fixture (by match URL), or null. */
+  matchStaff(lg, m) {
+    return (m && m.url && this.leagues[lg].referees[m.url]) || null;
   }
 
   standing(lg, id) { return this.leagues[lg].standings[id] || null; }

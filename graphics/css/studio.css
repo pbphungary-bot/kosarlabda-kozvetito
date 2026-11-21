@@ -111,3 +111,11 @@ details.import .hint { font-size: 12px; color: var(--muted); margin: 8px 0; }
 
 .paste-label { display: grid; gap: 4px; font-size: 12px; color: var(--muted); margin: 10px 0 6px; }
 .paste-label textarea { background: #0f1318; border: 1px solid var(--line); border-radius: 6px; color: var(--text); font: inherit; padding: 6px 8px; resize: vertical; }
+
+details.addgame { margin: 8px 0; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: #12161b; }
+details.addgame summary { cursor: pointer; font-weight: 600; }
+.addgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.addgrid label { display: grid; gap: 3px; font-size: 12px; color: var(--muted); }
+.addgrid label.wide { grid-column: 1 / -1; }
+.gamelist .delcup { padding: 0 6px; font-size: 11px; margin-left: auto; }
+.selection .notice { border: 1px solid var(--warn); color: var(--warn); border-radius: 6px; padding: 8px 10px; font-size: 12px; }

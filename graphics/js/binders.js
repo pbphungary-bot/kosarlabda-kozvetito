@@ -208,15 +208,16 @@ export function bindIntro(store, lg, m, venues = {}) {
   const time = m.time ? m.time.replace(':', '.') : null;
   const parts = ['Alapszakasz', m.roundNo ? `${m.roundNo}. forduló` : null, fmtDate(m.date), time];
   const venueKey = `${lg}/${m.homeId}`;
-  const venue = venues[venueKey] ?? KNOWN_VENUES[venueKey] ?? null;
+  const dataVenue = store.matchStaff(lg, m)?.venue || null; // arena of this very game (neutral courts, moved games)
+  const venue = dataVenue ?? venues[venueKey] ?? KNOWN_VENUES[venueKey] ?? null;
   const rank = id => {
     const s = store.standing(lg, id);
     return s ? `(${s.rank}. hely - ${s.wins}-${s.losses})` : null;
   };
   return {
     round: field(parts.includes(null) ? null : parts.join(' - '), 'Hunbasket menetrend', { note: 'A szakasz ("Alapszakasz") az adatokban nem szerepel – rájátszásnál írd át.' }),
-    venue: field(venue, venue ? (venues[venueKey] ? 'Mentett helyszín' : 'Helyszín a PSD-ből') : 'Nincs helyszín-adat',
-      { note: 'A dashboard nem tárol helyszínt. A beírt helyszínt a stúdió a hazai csapathoz menti.' }),
+    venue: field(venue, dataVenue ? 'Hunbasket teljes menetrend (helyszín)' : venue ? (venues[venueKey] ? 'Mentett helyszín' : 'Helyszín a PSD-ből') : 'Nincs helyszín-adat',
+      dataVenue ? {} : { note: 'Ehhez a meccshez nincs helyszín az adatokban. A beírt helyszínt a stúdió a hazai csapathoz menti.' }),
     'home.name': field(h.intro, 'Csapatnév'),
     'away.name': field(a.intro, 'Csapatnév'),
     'home.logo': logo(lg, m.homeId),
@@ -227,10 +228,19 @@ export function bindIntro(store, lg, m, venues = {}) {
 }
 
 // ───────────────────────── referees ─────────────────────────
-export function bindReferees() {
-  const src = 'Kézi bevitel (a dashboard nem tárol játékvezetőket)';
-  return {
-    ref1: field(null, src), ref2: field(null, src), ref3: field(null, src), controller: field(null, src),
+/** Referees + MKOSZ controller of a dashboard fixture from the Hunbasket full schedule; missing → flagged, manual. */
+export function bindReferees(store, lg, m) {
+  const staff = m && !m.custom ? store.matchStaff(lg, m) : null;
+  const src = staff ? 'Hunbasket teljes menetrend (játékvezetők, ellenőr)' : 'Kézi bevitel';
+  const why = !m ? 'Nincs kiválasztott mérkőzés.'
+    : m.custom ? 'Egyéni párosításhoz nincs játékvezető-adat – kézzel add meg.'
+      : !staff ? 'Ehhez a meccshez nincs játékvezető-adat.'
+        : 'A Hunbasket még nem tett közzé játékvezetőt ennél a meccsnél.';
+  const refs = staff?.referees || [];
+  const v = {
     'controller.label': { text: 'MKOSZ Ellenőr:', source: 'Fix felirat a PSD-ből' },
+    controller: field(staff?.controller || null, src, staff?.controller ? {} : { note: why }),
   };
+  for (let i = 0; i < 3; i++) v[`ref${i + 1}`] = field(refs[i] || null, src, refs[i] ? {} : { note: why });
+  return v;
 }
