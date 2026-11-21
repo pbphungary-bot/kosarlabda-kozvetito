@@ -282,6 +282,7 @@ export function psNormalize(league, cfg) {
   c.rows = Array.from({ length: n }, (_, i) => (PS_STATS[c.rows?.[i]] ? c.rows[i] : d.rows[i] || 'pts'));
   c.auto = Math.min(c.cols, Math.max(0, Math.round(c.auto ?? d.auto)));
   c.photoH = c.photoH > 0 ? c.photoH : 0; // 0 = as tall as the panel allows
+  for (const k of ['fsRows', 'fsHeaders', 'fsTitle', 'fsSub']) c[k] = c[k] > 0 ? Math.min(300, c[k]) : 0; // font sizes in px, 0 = the PSD's
   c.front = c.front || {};
   return c;
 }
@@ -304,17 +305,17 @@ export function psBuild(base, cfgIn) {
   const colMax = Math.max(150, (g.statsRight - g.statsLeft) / (n + 1) * 1.25);
   const rows = cfg.rows, nr = rows.length;
   const pitch = nr > 1 ? Math.min(g.rowSpan / 5, g.rowSpan / (nr - 1)) : 0;
-  const rowSize = Math.min(96, 96 * (pitch || 115) / 115);
+  const rowSize = cfg.fsRows || Math.min(96, 96 * (pitch || 115) / 115);
   const small = PS_SMALL * rowSize / 96;
   const group = { title: [], headers: [], labels: [] };
   for (let k = 1; k <= n; k++) group[`c${k}`] = [];
   group.title.push(
-    { id: 'title', type: 'text', label: 'Név', group: 'Fejléc', x: g.titleX, y: g.titleY, align: 'center', size: 106.667, tracking: 50, color: '#fefefe', caps: true, outline: ol(4, '#000000', 1), maxWidth: g.titleMax, opacity: op, adjust: true },
-    { id: 'subtitle', type: 'text', label: 'Alcím (1–2 sor, kézzel írandó)', group: 'Fejléc', x: g.subX, y: g.subY, align: 'center', font: 'italic', size: 42.667, tracking: 50, color: '#000000',
-      outline: ol(3, '#ffffff'), maxWidth: g.subMax, lineHeight: 48, wrap: { maxLines: 2 }, opacity: op },
+    { id: 'title', type: 'text', label: 'Név', group: 'Fejléc', x: g.titleX, y: g.titleY, align: 'center', size: cfg.fsTitle || 106.667, tracking: 50, color: '#fefefe', caps: true, outline: ol(4, '#000000', 1), maxWidth: g.titleMax, opacity: op, adjust: true },
+    { id: 'subtitle', type: 'text', label: 'Alcím (1–2 sor, kézzel írandó)', group: 'Fejléc', x: g.subX, y: g.subY, align: 'center', font: 'italic', size: cfg.fsSub || 42.667, tracking: 50, color: '#000000',
+      outline: ol(3, '#ffffff'), maxWidth: g.subMax, lineHeight: (cfg.fsSub || 42.667) * 1.125, wrap: { maxLines: 2 }, opacity: op },
   );
-  xs.forEach((x, i) => group.headers.push({ id: `h${i + 1}`, type: 'text', label: `${i + 1}. oszlop fejléce`, group: `${i + 1}. oszlop`, x, y: g.headerY, align: 'center', size: 34.667, tracking: 50, color: '#fefefe',
-    outline: ol(4, '#000000', 1), maxWidth: 260, lineHeight: 41.6, wrap: { maxLines: 2 }, opacity: op }));
+  xs.forEach((x, i) => group.headers.push({ id: `h${i + 1}`, type: 'text', label: `${i + 1}. oszlop fejléce`, group: `${i + 1}. oszlop`, x, y: g.headerY, align: 'center', size: cfg.fsHeaders || 34.667, tracking: 50, color: '#fefefe',
+    outline: ol(4, '#000000', 1), maxWidth: 260, lineHeight: (cfg.fsHeaders || 34.667) * 1.2, wrap: { maxLines: 2 }, opacity: op }));
   rows.forEach((key, i) => {
     const y = g.rowY + i * pitch;
     group.labels.push({ id: `r${i}.label`, type: 'text', label: `${i + 1}. sor felirata`, group: 'Sorok', x: labelX, y, align: 'center', font: 'italic', size: rowSize, tracking: 50, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 200, opacity: op });
@@ -329,6 +330,7 @@ export function psBuild(base, cfgIn) {
   const names = ['title', 'headers', 'labels', ...Array.from({ length: n }, (_, i) => `c${i + 1}`)];
   const isFront = k => cfg.front[k] !== false;
   const els = [logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
+  for (const e of els) if (e.type === 'text') e.adjust = true; // every text has size / position fields
   const t = base2(base, els);
   t.ps = { cfg, groups: names };
   t.inner = g.inner;

@@ -157,6 +157,11 @@ function psConfigHtml(s) {
     <div class="row2">${rowSel}</div>
     <div class="row2"><label>Fotó magassága (px; 0 = a lehető legnagyobb) ${num('psPhotoH', c.photoH, 0, 1000)}</label>
       <label>Fotó közepének X helye (px) ${num('psPhotoCx', Math.round(c.photoCx), 0, 1400)}</label></div>
+    <div class="row2"><label>Számok és feliratok betűmérete (px; 0 = automatikus) ${num('psFsRows', c.fsRows, 0, 300)}</label>
+      <label>Fejlécek betűmérete (px; 0 = PSD) ${num('psFsHeaders', c.fsHeaders, 0, 300)}</label></div>
+    <div class="row2"><label>Név betűmérete (px; 0 = PSD) ${num('psFsTitle', c.fsTitle, 0, 300)}</label>
+      <label>Alcím betűmérete (px; 0 = PSD) ${num('psFsSub', c.fsSub, 0, 300)}</label></div>
+    <small class="hint">Egyes elemek mérete külön is állítható a Mezők listában (Betűméret / Balra-jobbra / Fel-le).</small>
     <label>Réteg: a kipipált csoportok a <b>fotó előtt</b> jelennek meg, a többi a fotó mögött</label>
     <div class="psgroups">${groups}</div>
     <div class="import-row"><button id="psReset" class="ghost">Alaphelyzet (${lg === 'men' ? 'férfi' : 'női'} design)</button></div>
@@ -170,6 +175,7 @@ function wirePsConfig(s) {
   $('psRows').onchange = () => { const k = n('psRows', 1, PS_MAX_ROWS), c = psConfig(s); psSet(s, { rows: Array.from({ length: k }, (_, i) => c.rows[i] || 'pts') }); };
   $('psLabelAfter').onchange = () => psSet(s, { labelAfter: n('psLabelAfter', 0, psConfig(s).cols) });
   $('psAuto').onchange = () => psSet(s, { auto: n('psAuto', 0, psConfig(s).cols) });
+  for (const [id, key] of [['psFsRows', 'fsRows'], ['psFsHeaders', 'fsHeaders'], ['psFsTitle', 'fsTitle'], ['psFsSub', 'fsSub']]) $(id).onchange = () => psSet(s, { [key]: n(id, 0, 300) });
   $('psPhotoH').onchange = () => psSet(s, { photoH: n('psPhotoH', 0, 1000) });
   $('psPhotoCx').onchange = () => psSet(s, { photoCx: n('psPhotoCx', 0, 1400) });
   document.querySelectorAll('.psRow').forEach(el => el.onchange = () => { const rows = [...psConfig(s).rows]; rows[+el.dataset.i] = el.value; psSet(s, { rows }); });

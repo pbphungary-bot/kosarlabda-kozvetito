@@ -47,3 +47,14 @@ test('player special: configuration is normalised', () => {
   const c = psNormalize('women', { cols: 99, rows: ['nope'], labelAfter: 9, auto: -3 });
   assert.equal(c.cols, 4); assert.equal(c.labelAfter, 4); assert.equal(c.auto, 0); assert.equal(c.rows.length, 1);
 });
+
+test('player special: font sizes are adjustable (group settings and every text has size fields)', () => {
+  const base = templateById('playerspecial-men');
+  const t = psBuild(base, { fsRows: 70, fsHeaders: 30, fsTitle: 90, fsSub: 36 });
+  assert.equal(t.elements.find(e => e.id === 'r0.c1').size, 70);
+  assert.equal(t.elements.find(e => e.id === 'r2.label').size, 70);
+  assert.equal(t.elements.find(e => e.id === 'h1').size, 30);
+  assert.equal(t.elements.find(e => e.id === 'title').size, 90);
+  assert.equal(t.elements.find(e => e.id === 'subtitle').size, 36);
+  assert.ok(t.elements.filter(e => e.type === 'text').every(e => e.adjust));
+});
