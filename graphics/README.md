@@ -16,8 +16,12 @@ Megnyitás: <http://localhost:8000/graphics/> (a repó gyökeréből indítsd; G
 1. Válaszd a **Férfi / Női** bajnokságot, majd a **sablont**.
 2. Válaszd ki a **mérkőzést** (összevetés, intro, játékvezetők) vagy a **csapatot** (eredmények, menetrend, játékos-táblázat).
 3. A mezők automatikusan kitöltődnek. A hiányzó adat piros, a képen „—” jelenik meg – írd be kézzel.
-4. Bármelyik szöveg, szín, logó felülírható; a pipával elrejthető. A ↺ gomb visszaállítja az automatikus értéket.
-5. **PNG exportálása** – 1920×1080, átlátszó háttérrel (mint a PSD-k).
+4. **Betűméret és eltolás:** az intro csapatneveinél, a helyezés/mérleg soroknál (és a Következik, Játékvezetők, helyszín mezőknél) a „Betűméret (px)”
+   és a „Fel / le (px)” mezővel kézzel állítható a méret és a függőleges hely. A megadott méretet a stúdió pontosan használja (nem kicsinyíti tovább);
+   ha kilóg a keretből, jelzi. A **„Csapatnevek egyforma méretre”** gomb a két nevet egy kattintással azonos méretre állítja.
+   A méret meccsenként érvényes: másik meccsnél újra automatikus.
+5. Bármelyik szöveg, szín, logó felülírható; a pipával elrejthető. A ↺ gomb visszaállítja az automatikus értéket.
+6. **PNG exportálása** – 1920×1080, átlátszó háttérrel (mint a PSD-k).
 
 A **játékvezetők, az MKOSZ ellenőr és az intro helyszíne** automatikusan jön a Hunbasket teljes menetrendjéből
 (`data/referees_men.json`, `data/referees_women.json`; a `referees.yml` workflow félóránként frissíti a `scripts/update_referees.py`-vel).
@@ -39,7 +43,19 @@ Kupa-/európai meccsek: lásd lent.
 * A feltöltött érték előnyt élvez a dashboard adataival szemben („Excel” címke a mezőn); a feltöltés a böngészőben marad.
 * A helyezések „(n.)” a feltöltött csapatok között számolódnak (TOV: kevesebb = jobb).
 
+### Következik (soron következő meccs)
+
+A „Következik” sablon (a *Nex Match graph.psd* alapján) bal felső sarokban mutatja a „Következik” címet, a két logót és a kezdés időpontját
+(„12.30”). Válaszd ki a mérkőzést – bármelyik NB I/A meccshez elkészíthető. A PSD rejtett „TOP keret” rétege kapcsolóként elérhető
+(*Keret*). A PSD másik rejtett rétege („Az 5-8. helyért”) a címmel és a logókkal átfedésben van, ezért nincs benne.
+
+A lábléc harmadik logója minden grafikán az **MKOSZ** logó (a Play By Play logó sehol nem jelenik meg).
+
 ### Kupa- és európai meccsek
+
+A felső sávban lévő **„+ Kupa-/európai meccs”** gomb a Menetrend sablonon megnyitja a hozzáadás űrlapot (válaszd ki a csapatot, add meg a dátumot,
+az ellenfelet és a sorozatot). Az Eredmények / Menetrend sablonokon a csapat alatt található ugyanez, és az alatta lévő lista dönti el, melyik
+meccsek jelenjenek meg.
 
 A dashboard adatai csak NB I/A meccseket tartalmaznak. Másold a meccseket (pl. az eredmenyek.com oldalról) a `minta-kupameccsek.xlsx`
 **Kupameccsek** lapjára: `Dátum | Idő | Hazai | Vendég | Sorozat | Eredmény`, majd töltsd fel. A dátum bármilyen szokásos formában jó

@@ -5,7 +5,7 @@ import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import {
-  bindComparison, bindTeamstats, bindRowList, bindIntro, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -51,6 +51,7 @@ async function loadLeagueImages(lg) {
   await Promise.all([
     ...Object.keys(CLUBS[lg]).map(id => loadImage(`${lg}/${id}`, `logos/${lg}/${id}.png`)),
     ...Object.keys(COMPETITIONS).filter(Boolean).map(k => loadImage(k, `assets/competitions/${k.split('/')[1]}.png`)),
+    loadImage('nextmatch/frame', 'templates/nextmatch/frame.png'),
   ]);
 }
 
@@ -82,7 +83,7 @@ function renderFreshness() {
 function renderTemplateList() {
   const list = TEMPLATES.filter(t => t.league === state.league);
   $('templateList').innerHTML = list.map(t => `<button data-id="${t.id}" class="${t.id === tpl().id ? 'on' : ''}">
-    <img src="templates/${t.id}/thumb.jpg" alt="" loading="lazy"><span>${esc(TEMPLATE_TYPES[t.type])}</span></button>`).join('');
+    <img src="${t.thumb || `templates/${t.id}/thumb.jpg`}" alt="" loading="lazy"><span>${esc(TEMPLATE_TYPES[t.type])}</span></button>`).join('');
 }
 
 // ───────────────────────── selection ─────────────────────────
@@ -110,7 +111,7 @@ function currentMatch() {
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
-  if (t.type === 'intro' || t.type === 'comparison') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'nextmatch') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -132,14 +133,22 @@ function renderSelection(extra = {}) {
     }
   } else if (t.type === 'referees') {
     $('selectTitle').textContent = '2. Mérkőzés';
-    const showPast = !!s.showPast;
-    const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
+    const showPast = !!s.showPast, showOpen = !!s.showOpen;
+    const hasRefs = m => !!store.matchStaff(lg, m)?.referees?.length;
+    let games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
+    const withRefs = games.filter(hasRefs);
+    // by default only games whose referees are already published: nothing to type, the names come from Hunbasket
+    if (!showOpen) games = withRefs;
     if (!s.matchKey || !games.some(m => matchKey(m) === s.matchKey)) s.matchKey = games[0] ? matchKey(games[0]) : null;
-    const tag = m => (store.matchStaff(lg, m)?.referees?.length ? ' ✓ játékvezetők' : '');
-    box.innerHTML = `<label>Mérkőzés (${showPast ? 'teljes menetrend' : 'következő mérkőzések'}; ✓ = a játékvezetők már ki vannak írva)<select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey ? 'selected' : ''}>${esc(matchLabel(m))}${tag(m)}</option>`).join('')}</select></label>
-      <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>`;
+    const last = store.upcoming(lg).filter(hasRefs).at(-1);
+    const info = last ? `A játékvezetők ${fmtDate(last.date)}-ig vannak kiírva (${store.upcoming(lg).filter(hasRefs).length} következő meccsnél). A többi meccsé a Hunbaskeren még nem jelent meg; félóránként frissül.` : 'Egyik következő meccshez sincs még kiírva játékvezető a Hunbaskeren.';
+    box.innerHTML = `<label>Mérkőzés – csak ahol már ki vannak írva a játékvezetők${showOpen ? ' (a ✓ nélküliek kézi beírást igényelnek)' : ''}<select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey ? 'selected' : ''}>${esc(matchLabel(m))}${hasRefs(m) ? '' : ' – nincs kiírva'}</option>`).join('') || '<option value="">Nincs ilyen mérkőzés</option>'}</select></label>
+      <div class="hint">${esc(info)}</div>
+      <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
+      <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showOpen" ${showOpen ? 'checked' : ''}> Kiírás nélküli meccsek is (kézi beírással)</label>`;
     $('matchSel').onchange = e => { s.matchKey = e.target.value; s.custom = null; resetMatchOverrides(); update(true); };
-    $('showPast').onchange = e => { s.showPast = e.target.checked; renderSelection(); };
+    $('showPast').onchange = e => { s.showPast = e.target.checked; renderSelection(); update(true); };
+    $('showOpen').onchange = e => { s.showOpen = e.target.checked; renderSelection(); update(true); };
   } else {
     $('selectTitle').textContent = '2. Csapat';
     box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
@@ -209,10 +218,11 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'intro') {
+  if (t.type === 'comparison' || t.type === 'intro' || t.type === 'nextmatch') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
-    if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
+    if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
+    else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
   } else if (t.type === 'teamstats') {
@@ -253,6 +263,8 @@ function mergedValues(auto) {
     if (ov.color) { x.color = ov.color; x.overridden = true; }
     if (ov.src !== undefined) { x.src = ov.src; x.overridden = true; }
     if (ov.visible !== undefined) x.visible = ov.visible;
+    if (ov.size > 0) x.size = ov.size;
+    if (ov.dy) x.dy = ov.dy;
     if (el.runs && !x.runs && x.text !== undefined) x.runs = [{ text: x.text }];
     out[el.id] = x;
   }
@@ -272,7 +284,7 @@ function renderFields(values, auto) {
   for (const el of t.elements) {
     const v = values[el.id], a = auto[el.id] || {};
     const ov = o[el.id] || {};
-    const isOv = ov.text !== undefined || ov.color || ov.src !== undefined || ov.visible !== undefined;
+    const isOv = ov.text !== undefined || ov.color || ov.src !== undefined || ov.visible !== undefined || ov.size > 0 || !!ov.dy;
     const missing = v.missing && !isOv;
     if (only && !missing && !isOv) continue;
     if (el.group !== group) { group = el.group; html += `<div class="group-title">${esc(group)}</div>`; }
@@ -281,7 +293,9 @@ function renderFields(values, auto) {
     html += `<div class="field ${missing ? 'missing' : ''} ${isOv ? 'overridden' : ''}" data-id="${esc(el.id)}">
       <input type="checkbox" class="vis" title="Látható" ${visible ? 'checked' : ''}>
       <div class="lbl"><span>${esc(el.label || el.id)}</span><em title="${esc(a.source || '')}">${esc(a.source || '')}</em></div>`;
-    if (el.type === 'image') {
+    if (el.type === 'image' && el.fixedSrc) {
+      html += '';
+    } else if (el.type === 'image') {
       const opts = [['', 'Nincs'], ...store.clubs(state.league).map(c => [`${state.league}/${c.id}`, c.official]), ...Object.entries(COMPETITIONS).filter(([k]) => k)];
       const cur = v.src ?? '';
       html += `<div class="inputs"><select class="src">${opts.map(([k, l]) => `<option value="${esc(k)}" ${k === cur ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>
@@ -295,10 +309,18 @@ function renderFields(values, auto) {
         : `<input class="txt" value="${esc(val)}" placeholder="${ph}">`}
         <select class="color" title="Szín">${COLORS.map(([c, n]) => `<option value="${c}" ${c === (ov.color || '') ? 'selected' : ''} style="${c ? `background:${c};color:${c === '#000000' || c === '#383838' ? '#fff' : '#000'}` : ''}">${c ? '■ ' + n : 'Auto'}</option>`).join('')}</select>
         ${isOv ? '<button class="reset" title="Vissza az automatikusra">↺</button>' : ''}</div>`;
+      if (el.adjust) {
+        html += `<div class="adj"><label>Betűméret (px) <input type="number" class="sz" min="10" max="300" step="1" placeholder="${Math.round(lastReport?.sizes?.[el.id] ?? el.size)}" value="${ov.size || ''}"></label>
+          <label>Fel / le (px) <input type="number" class="dy" step="1" placeholder="0" value="${ov.dy || ''}"></label></div>`;
+      }
     }
     if (missing) html += `<div class="flag">Hiányzó adat – az adásban „${MISSING}” jelenne meg.</div>`;
     if (a.note) html += `<div class="note">${esc(a.note)}</div>`;
     html += '</div>';
+  }
+  if (t.type === 'intro') {
+    html = `<div class="eqrow"><button id="eqNames" class="ghost" title="Mindkét csapatnév a kisebb (jelenleg érvényes) méretre áll">Csapatnevek egyforma méretre</button>
+      <button id="eqRanks" class="ghost" title="Mindkét helyezés/mérleg sor egyforma méretre áll">Helyezés/mérleg egyforma méretre</button></div>` + html;
   }
   $('fields').innerHTML = html || '<p class="note">Nincs megjeleníthető mező.</p>';
 }
@@ -312,12 +334,14 @@ function onFieldEvent(e) {
   else if (e.target.classList.contains('txt')) { if (e.target.value === '') delete cur.text; else cur.text = e.target.value; }
   else if (e.target.classList.contains('color')) { if (e.target.value) cur.color = e.target.value; else delete cur.color; }
   else if (e.target.classList.contains('src')) cur.src = e.target.value;
+  else if (e.target.classList.contains('sz')) { const n = parseFloat(e.target.value); if (n > 0) cur.size = n; else delete cur.size; }
+  else if (e.target.classList.contains('dy')) { const n = parseFloat(e.target.value); if (Number.isFinite(n) && n !== 0) cur.dy = n; else delete cur.dy; }
   else if (e.target.classList.contains('reset')) { delete o[id]; update(true); return; }
   else return;
   if (!Object.keys(cur).length) delete o[id];
   // live state of the field row while typing
   const v = current.auto?.[id] || {};
-  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined));
+  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined || o[id].size > 0 || !!o[id].dy));
   f.classList.toggle('missing', !!v.missing && !(o[id] && o[id].text !== undefined));
   const flag = f.querySelector('.flag');
   if (flag) flag.hidden = !f.classList.contains('missing');
@@ -326,7 +350,8 @@ function onFieldEvent(e) {
     const m = currentMatch();
     if (m && cur.text) { const vs = lsGet(LS.venues, {}); vs[`${state.league}/${m.homeId}`] = cur.text; lsSet(LS.venues, vs); }
   }
-  update(e.type === 'change' && !e.target.classList.contains('txt'));
+  // typing boxes only redraw the graphic: re-building the field list would steal the focus from the box the user clicks next
+  update(e.type === 'change' && !['txt', 'sz', 'dy'].some(c => e.target.classList.contains(c)));
 }
 
 // ───────────────────────── render ─────────────────────────
@@ -335,7 +360,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'referees') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'referees' || t.type === 'nextmatch') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';
@@ -344,7 +369,9 @@ function fileName(values) {
   return ascii(`${LEAGUES[lg].short}_${TEMPLATE_TYPES[t.type]}_${who}_${date}`) + '.png';
 }
 
+let updateSeq = 0; // only the newest redraw may draw: a slower, older one must not overwrite it with stale values
 async function update(full) {
+  const seq = ++updateSeq;
   const t = tpl();
   renderBaseOpacity();
   document.body.classList.toggle('women', state.league === 'women');
@@ -393,18 +420,24 @@ async function update(full) {
     $('fileName').value = fileName(values);
   }
   $('notices').innerHTML = info.notices.map(n => `<div class="notice ${n.bad ? 'bad' : ''}">${esc(n.text)}</div>`).join('');
-  const bg = await loadImage('bg/' + t.id, t.background);
+  const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+  if (seq !== updateSeq) return;
   const canvas = $('canvas');
   lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+  document.querySelectorAll('#fields .field input.sz').forEach(inp => {
+    const sz = lastReport.sizes[inp.closest('.field').dataset.id];
+    if (sz) inp.placeholder = Math.round(sz);
+  });
   if ($('showRef').checked) {
     const ref = await loadImage('ref/' + t.id, t.reference);
+    if (seq !== updateSeq) return;
     const ctx = canvas.getContext('2d');
     ctx.save(); ctx.globalAlpha = 0.5; ctx.drawImage(ref, 0, 0); ctx.restore();
   }
   const missing = t.elements.filter(el => values[el.id]?.missing && (values[el.id].visible ?? el.visible ?? true));
   const msgs = [];
   if (missing.length) msgs.push(`${missing.length} hiányzó adat`);
-  if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg (a minimális méreten sem fér el): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
+  if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg, kilóg a keretből (csökkentsd a betűméretet): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   if (lastReport.scaled.length) msgs.push(`Automatikusan kicsinyítve: ${lastReport.scaled.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   $('renderReport').textContent = msgs.join(' · ');
   $('dims').textContent = `${canvas.width} × ${canvas.height} px · PNG, átlátszó háttér · forrás: ${t.psd}`;
@@ -542,6 +575,17 @@ async function main() {
   $('resetAll').onclick = () => { if (confirm('Törlöd ennek a sablonnak minden kézi felülírását?')) { state.overrides[ovKey()] = {}; update(true); } };
   $('exportBtn').onclick = exportPng;
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
+  $('fields').addEventListener('click', e => {
+    const id = e.target.id;
+    if (id !== 'eqNames' && id !== 'eqRanks') return;
+    const ids = id === 'eqNames' ? ['home.name', 'away.name'] : ['home.rank', 'away.rank'];
+    const els = tpl().elements.filter(x => ids.includes(x.id));
+    const sizes = els.map(x => lastReport?.sizes?.[x.id] ?? x.size);
+    const target = Math.round(Math.min(...sizes) * 10) / 10;
+    for (const x of els) (overrides()[x.id] ||= {}).size = target;
+    update(true);
+    toast(`Egyforma méret: ${target} px`);
+  });
   $('showRef').onchange = () => update(false);
   $('baseOpacity').oninput = e => { state.baseOpacity = +e.target.value / 100; renderBaseOpacity(); update(false); };
   $('baseOpacityPsd').onclick = () => { state.baseOpacity = null; renderBaseOpacity(); update(false); };
@@ -595,6 +639,15 @@ async function main() {
     if (!p.gamesFound) imp.notes.push('Nem találtam mérkőzést a szövegben. A „Meccsek” fülről másolt szöveg kell, dátum + két csapatnév soronként.');
     pendingImports = [{ file: { name: 'Beillesztett szöveg (eredmenyek.com)', modified: now.toISOString() }, league: d.league, certain: d.certain, imp }];
     previewImports();
+  };
+  $('quickCup').onclick = async () => {
+    const lg = state.league;
+    if (!['results', 'schedule', 'resultrows'].includes(tpl().type)) state.template[lg] = `schedule-${lg}`;
+    sel().addOpen = true;
+    renderTemplateList();
+    await update(true);
+    const box = $('addGame');
+    if (box) { box.open = true; box.scrollIntoView({ block: 'center' }); $('agOpp')?.focus(); }
   };
   $('excelOn').onchange = e => { const x = store.excel[state.league]; if (x) { x.enabled = e.target.checked; persistExcel(); renderImportState(); renderFreshness(); update(true); } };
   $('excelClear').onclick = () => { if (confirm('Törlöd a feltöltött Excel adatokat ennél a bajnokságnál?')) { store.setExcel(state.league, null); persistExcel(); renderImportState(); renderFreshness(); update(true); } };

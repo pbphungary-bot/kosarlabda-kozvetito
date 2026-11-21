@@ -109,10 +109,14 @@ export function layoutText(ctx, el, text) {
   let size = el.size;
   let overflow = false;
   if (widest > max) {
-    const s = max / widest;
-    const min = el.minScale ?? 0.6;
-    size = el.size * Math.max(s, min);
-    overflow = s < min;
+    if (el.fitLocked) {
+      overflow = true; // the operator chose the size: never shrunk automatically, only reported
+    } else {
+      const s = max / widest;
+      const min = el.minScale ?? 0.6;
+      size = el.size * Math.max(s, min);
+      overflow = s < min;
+    }
   }
   return { lines, size, scaled: size !== el.size, overflow };
 }
@@ -126,8 +130,9 @@ function drawText(ctx, el, v, report) {
   const lh = el.lineHeight || el.size * 1.2;
   // A two-line name with the rank line shown below it would collide with that line:
   // the block is then set 15% smaller and grows upward from the single-line baseline.
-  const compact = !!el.rankOn && lines.length > 1;
+  const compact = !!el.rankOn && lines.length > 1 && !el.fitLocked; // a size chosen by hand is used as it is
   const sz = compact ? size * 0.85 : size;
+  report.sizes[el.id] = sz; // effective font size (px), shown in the editor and used by the equalize buttons
   const lhs = compact ? sz * 0.9 : lh * (size / el.size);
   let y0 = el.y;
   if (compact) y0 = el.y - (lines.length - 1) * lhs;
@@ -238,10 +243,16 @@ export function render(canvas, template, values, assets) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (assets.background) ctx.drawImage(assets.background, 0, 0, template.width, template.height);
   applyBaseOpacity(ctx, template, assets.baseOpacity);
-  const report = { overflow: [], scaled: [] };
+  const report = { overflow: [], scaled: [], sizes: {} };
   for (const base of template.elements) {
     const v = values[base.id] || {};
     let el = v.geom ? { ...base, ...v.geom } : base;
+    // manual font size (px) and vertical offset (px) from the editor
+    if (el.type === 'text' && v.size > 0) {
+      const k = v.size / el.size;
+      el = { ...el, size: v.size, lineHeight: el.lineHeight ? el.lineHeight * k : undefined, fitLocked: true };
+    }
+    if (el.type === 'text' && v.dy) el = { ...el, y: el.y + v.dy };
     if (el.compactWith) {
       const rv = values[el.compactWith] || {};
       const re = template.elements.find(e => e.id === el.compactWith);

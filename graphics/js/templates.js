@@ -17,7 +17,7 @@ const COMP_OUTLINE = { 'comp/eurocup-women': ol(3, '#ffffff'), 'comp/euroleague-
 
 // element id → calibration key (see tools/calibrate_text.py)
 function hscaleKey(type, id) {
-  if (id === 'subtitle' || id === 'title' || id === 'round' || id === 'venue') return id;
+  if (id === 'subtitle' || id === 'title' || id === 'round' || id === 'venue' || id === 'time') return id;
   if (type === 'comparison') return id.includes('.rank.') ? 'rank' : 'value';
   if (type === 'teamstats') return id === 'team.name' ? 'teamname' : (/\.name$|^hdr\./.test(id) ? 'name' : 'figure');
   if (type === 'intro') return id.endsWith('.rank') ? 'round' : 'name';
@@ -158,11 +158,11 @@ function rowList(id, league, type, psd, label, g) {
 
 // ───────────────────────── Intro ─────────────────────────
 function intro(id, league, psd, g) {
-  const name = { type: 'text', y: 809.5, size: 100, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 440, lineHeight: 120, wrap: { maxLines: 2, anchor: 'middle' }, minScale: 0.5 };
-  const rank = { type: 'text', y: 909.5, size: 58.333, tracking: -20, color: '#ef4036', outline: ol(2, '#ffffff'), align: 'center', maxWidth: 420, visible: false };
+  const name = { type: 'text', adjust: true, y: 809.5, size: 100, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 440, lineHeight: 120, wrap: { maxLines: 2, anchor: 'middle' }, minScale: 0.5 };
+  const rank = { type: 'text', adjust: true, y: 909.5, size: 58.333, tracking: -20, color: '#ef4036', outline: ol(2, '#ffffff'), align: 'center', maxWidth: 420, visible: false };
   const els = [
-    { id: 'round', type: 'text', label: 'Forduló, dátum, időpont', group: 'Mérkőzés', x: g.roundX, y: g.roundY, font: g.roundFont, size: 50, tracking: 10, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 900 },
-    { id: 'venue', type: 'text', label: 'Helyszín', group: 'Mérkőzés', x: 960.7, y: 244.5, size: g.venueSize, tracking: -20, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 560 },
+    { id: 'round', type: 'text', adjust: true, label: 'Forduló, dátum, időpont', group: 'Mérkőzés', x: g.roundX, y: g.roundY, font: g.roundFont, size: 50, tracking: 10, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 900 },
+    { id: 'venue', type: 'text', adjust: true, label: 'Helyszín', group: 'Mérkőzés', x: 960.7, y: 244.5, size: g.venueSize, tracking: -20, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 560 },
     { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [628, 475, 384, 350], fit: 'contain', logoOutline: true },
     { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [1295, 473.5, 384, 350], fit: 'contain', logoOutline: true },
     { id: 'home.name', label: 'Hazai csapatnév', group: 'Hazai', ...name, x: 625, compactWith: 'home.rank' },
@@ -175,15 +175,37 @@ function intro(id, league, psd, g) {
 
 // ───────────────────────── Játékvezetők ─────────────────────────
 function referees(id, league, psd, g) {
-  const nm = { type: 'text', group: 'Játékvezetők', x: 969, size: 58.333, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(5, '#030303'), align: 'left', maxWidth: 430 };
+  const nm = { type: 'text', adjust: true, group: 'Játékvezetők', x: 969, size: 58.333, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(5, '#030303'), align: 'left', maxWidth: 430 };
   const els = [
     { id: 'ref1', label: '1. játékvezető', ...nm, y: 779 },
     { id: 'ref2', label: '2. játékvezető', ...nm, y: 833 },
     { id: 'ref3', label: '3. játékvezető', ...nm, y: 887 },
     { id: 'controller.label', type: 'text', label: 'Ellenőr felirat', group: 'Ellenőr', x: 590, y: 954, size: 45.833, tracking: 25, color: '#fffefe', outline: ol(5, '#030303'), align: 'left', fixed: true, defaultText: 'MKOSZ Ellenőr:' },
-    { id: 'controller', type: 'text', label: 'MKOSZ ellenőr', group: 'Ellenőr', x: 967, y: 954, size: 45.833, tracking: 25, color: '#fffefe', outline: ol(5, '#030303'), align: 'left', maxWidth: 430 },
+    { id: 'controller', type: 'text', adjust: true, label: 'MKOSZ ellenőr', group: 'Ellenőr', x: 967, y: 954, size: 45.833, tracking: 25, color: '#fffefe', outline: ol(5, '#030303'), align: 'left', maxWidth: 430 },
   ];
   return base(id, league, 'referees', psd, 'Játékvezetők', { elements: els, sample: g.sample, fontNote: g.fontNote });
+}
+
+// ───────────────────────── Következik (next match corner graphic) ─────────────────────────
+// One PSD ("Nex Match graph") for both leagues: title, home logo, kick-off time, away logo in the top-left corner.
+// The PSD's hidden layers: the gold frame ("TOP keret", offered as a switch) and the phase line "Az 5-8. helyért"
+// (not offered: in the PSD it overlaps the title and the logos).
+function nextmatch(id, league) {
+  const txt = { type: 'text', adjust: true, group: 'Mérkőzés', color: '#ffffff', outline: ol(5, '#000000'), align: 'left', tracking: 10 };
+  const els = [
+    { id: 'frame', type: 'image', label: 'Keret (a PSD rejtett „TOP keret” rétege)', group: 'Megjelenés', box: [960, 540, 1920, 1080], fit: 'contain', visible: false, fixedSrc: 'nextmatch/frame' },
+    { id: 'title', label: 'Cím', ...txt, x: 90, y: 93.7, size: 83.333, maxWidth: 320 },
+    { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [106.5, 165, 100, 100], fit: 'contain', logoOutline: true },
+    { id: 'time', label: 'Kezdés időpontja', ...txt, x: 171, y: 186.7, font: 'italic', size: 58.333, maxWidth: 106 },
+    { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [330, 165, 100, 100], fit: 'contain', logoOutline: true },
+  ];
+  return base(id, league, 'nextmatch', 'Nex Match graph.psd', 'Következik', {
+    elements: els, background: null, reference: 'templates/nextmatch/reference.png', thumb: 'templates/nextmatch/thumb.jpg',
+    sample: {
+      title: { text: 'Következik' }, time: { text: '12.30' },
+      'home.logo': { src: 'women/vasasakademia' }, 'away.logo': { src: 'men/szedeak' }, // the PSD's own sample (Vasas – Szedeák)
+    },
+  });
 }
 
 // ───────────────────────── Template registry ─────────────────────────
@@ -259,6 +281,8 @@ export const TEMPLATES = [
       'home.logo': { src: 'women/sercounigyor' }, 'away.logo': { src: 'women/eltebeacujbuda' },
     },
   }),
+  nextmatch('nextmatch-men', 'men'),
+  nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {
     fontNote: 'A PSD Satoshi betűtípust használ; a stúdió kérésre League Gothic-kal rendereli (a női változat tipográfiájával).',
     sample: { ref1: { text: 'Goda László' }, ref2: { text: 'Major Ádám' }, ref3: { text: 'Söjtöry Tamás Ferenc' }, controller: { text: 'Forrai Sámuel' } },
@@ -269,6 +293,7 @@ export const TEMPLATES = [
 ];
 
 export const TEMPLATE_TYPES = {
+  nextmatch: 'Következik',
   intro: 'Intro',
   comparison: 'Csapatok összevetése',
   teamstats: 'Csapatstatisztika',

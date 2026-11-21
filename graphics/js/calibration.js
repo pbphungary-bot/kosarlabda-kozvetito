@@ -73,6 +73,14 @@ export const HSCALE = {
  "referees-women": {
   "name": 0.9879,
   "controller": 0.9833
+ },
+ "nextmatch-men": {
+  "title": 0.9857,
+  "time": 0.9296
+ },
+ "nextmatch-women": {
+  "title": 0.9857,
+  "time": 0.9296
  }
 };
 export const PANELS = {

@@ -1,0 +1,210 @@
+{
+ "source_psd": "Nex Match graph.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "12.30",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    176,
+    143,
+    262,
+    188
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 5.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "12.30",
+    "runs": [
+     {
+      "text": "12.30",
+      "font": "LeagueGothic-Italic",
+      "size": 58.33333,
+      "color": "#ffffff",
+      "tracking": 10.0,
+      "leading": 80.0,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     171.0,
+     186.66666666666674
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "Vasas_logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    57,
+    115,
+    156,
+    215
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "455070773_1028663142595259_1471992004153892658_n",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    280,
+    115,
+    380,
+    215
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Az 5-8. helyért",
+   "kind": "type",
+   "visible": false,
+   "bbox": [
+    137,
+    87,
+    302,
+    126
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 5.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "Az 5-8. helyért",
+    "runs": [
+     {
+      "text": "Az 5-8. helyért",
+      "font": "LeagueGothic-Regular",
+      "size": 41.66667,
+      "color": "#ffffff",
+      "tracking": 0.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     137.0,
+     118.0
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "Következik",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    93,
+    32,
+    342,
+    95
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 5.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "Következik",
+    "runs": [
+     {
+      "text": "Következik",
+      "font": "LeagueGothic-Regular",
+      "size": 83.33334,
+      "color": "#ffffff",
+      "tracking": 10.0,
+      "leading": 80.0,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     90.0,
+     93.66666666666674
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "TOP keret",
+   "kind": "shape",
+   "visible": false,
+   "bbox": [
+    39,
+    30,
+    405,
+    229
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": []
+  }
+ ]
+}
