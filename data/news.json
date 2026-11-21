@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T06:31:51.824106+00:00",
+  "checked_at": "2026-11-21T07:49:17.796129+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 6,
-      "attempted": 6,
+      "candidates": 5,
+      "attempted": 5,
       "already_saved": 0,
-      "added": 6,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 6,
+      "usable_articles": 5,
       "source_coverage": true
     },
     {
@@ -562,6 +562,19 @@
   ],
   "articles": [
     {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Magyar Gergely: Úgy érzem kellően sikerült felkészülnünk",
+      "summary": "Magyar Gergely: - Végre volt időnk felkészülni hosszabban egy mérkőzésre, bár az is igaz, hogy a hiányzóink miatt volt, hogy csak hét fővel tudtunk edzeni.",
+      "url": "http://dvtk.eu/37671-Magyar_Gergely_Ugy_erzem_kelloen_sikerult_felkeszulnunk-cikk-kosarlabda/",
+      "published_at": "2026-11-21T08:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
       "source": "Klub: Csata TKK",
       "title": "Vége a várakozásnak: Miskolcon tér vissza a bajnoki ritmusba a Csata TKK",
       "summary": "A válogatott szünet után végre ismét bajnoki mérkőzés vár csapatunkra.",
@@ -618,6 +631,16 @@
       "teams": [
         "women|Vasas Akadémia"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Fontos időszak első állomása lesz a szombati rangadó a Sopron számára",
+      "summary": "A válogatott szünet után folytatódik a bajnokság.",
+      "url": "https://wbasket.hu/fontos-idoszak-elso-allomasa-lesz-a-szombati-rangado-a-sopron-szamara/",
+      "published_at": "2026.11.20. 15:18",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
