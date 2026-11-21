@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T08:41:21.293380+00:00",
+  "checked_at": "2026-11-21T09:24:46.431179+00:00",
   "statistics": {
     "total": 1178,
     "fresh": 521,
@@ -7,12 +7,12 @@
     "missing_dates": 272,
     "headline_only": 544,
     "untagged": 483,
-    "sources_ok": 20,
+    "sources_ok": 22,
     "sources_partial": 0,
-    "sources_failed": 11,
-    "new_articles": 17,
+    "sources_failed": 9,
+    "new_articles": 5,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 15,
+    "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
   },
   "sources": [
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -51,11 +51,11 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kezdo5.hu/magyar-ferfi: <urlopen error timed out>",
-        "https://kezdo5.hu/noi: <urlopen error timed out>",
-        "https://kezdo5.hu/magyar-ferfi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/noi/hirek: <urlopen error timed out>",
-        "https://kezdo5.hu/europa: <urlopen error timed out>"
+        "https://kezdo5.hu/magyar-ferfi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/magyar-ferfi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/noi/hirek: HTTP Error 403: Forbidden",
+        "https://kezdo5.hu/europa: HTTP Error 403: Forbidden"
       ]
     },
     {
@@ -188,23 +188,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 16,
+      "attempted": 16,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 16,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:JSONDecodeError",
-        "sitemap:0"
-      ]
+      "usable_articles": 16,
+      "source_coverage": true
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -238,29 +234,40 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:JSONDecodeError",
+        "wp-json:0",
+        "sitemap:HTTPError",
         "sitemap:0"
+      ],
+      "sample_links": [
+        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
+        "Kezdőlap -> https://megyeritigrisek.hu/",
+        "Hírek -> https://megyeritigrisek.hu/news/",
+        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
+        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
+        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
+        "Média -> #",
+        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
+        "Magazin -> https://megyeritigrisek.hu/magazin/",
+        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
+        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
+        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
       ]
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:JSONDecodeError",
-        "sitemap:0"
-      ]
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -284,18 +291,15 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 30,
+      "candidates": 19,
+      "attempted": 19,
       "already_saved": 19,
-      "added": 11,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 30,
-      "source_coverage": true,
-      "fallback": [
-        "wp-json:30"
-      ]
+      "usable_articles": 19,
+      "source_coverage": true
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -345,8 +349,25 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:JSONDecodeError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
+      ],
+      "sample_links": [
+        "Kezdőlap -> https://kosarlabda.ase.hu",
+        "Aktuális -> #",
+        "Hírek -> https://kosarlabda.ase.hu/hirek",
+        "Események -> https://kosarlabda.ase.hu/esemenyek",
+        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
+        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
+        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
+        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
+        "Média -> #",
+        "Galéria -> https://kosarlabda.ase.hu/galeria",
+        "Videók -> https://kosarlabda.ase.hu/videok",
+        "Élő közvetítés -> /"
       ]
     },
     {
@@ -378,15 +399,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://honved.hu/kosarlabda/: URLError: <urlopen error timed out>"
+        "https://honved.hu/kosarlabda/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -396,24 +417,26 @@
       "reason": "listing_unreachable",
       "listing_pages_ok": 0,
       "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 3,
+      "attempted": 3,
       "already_saved": 0,
       "added": 0,
       "repaired": 0,
-      "article_errors": 0,
+      "article_errors": 3,
       "listing_errors": [
-        "https://www.delfinek.hu/: URLError: <urlopen error timed out>",
-        "https://www.delfinek.hu/hirek: URLError: <urlopen error timed out>"
+        "https://www.delfinek.hu/: HTTPError: HTTP Error 403: Forbidden",
+        "https://www.delfinek.hu/hirek: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/szurkoloi-hirek/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/news-in-english/: HTTPError: HTTP Error 403: Forbidden",
+        "article http://www.delfinek.hu/hirek/felkeszulesi-merkozesek/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:0"
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:3"
       ]
     },
     {
@@ -505,15 +528,15 @@
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [
-        "https://kscszekszard.hu/: URLError: <urlopen error timed out>"
+        "https://kscszekszard.hu/: HTTPError: HTTP Error 403: Forbidden"
       ],
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
       ]
     },
@@ -556,9 +579,7 @@
   ],
   "failed_sources": [
     "Kezdő5.hu",
-    "Klub: Sopron KC",
     "Klub: PHOENIX Fóti Tigrisek",
-    "Klub: Csata TKK",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
