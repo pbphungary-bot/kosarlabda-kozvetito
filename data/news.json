@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T16:21:58.957505+00:00",
+  "checked_at": "2026-11-21T17:02:39.662148+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -561,6 +561,29 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "A kupagyőztes Szolnokot fogadjuk",
+      "summary": "A Duna Aszfalt-DTKH Kecskemét múlt szombaton Oroszlányban megszerezte szezonbeli első győzelmét.",
+      "url": "https://ktekosar.hu/hirek/a-kupagyoztes-szolnokot-fogadjuk/",
+      "published_at": "2026. 11. 21., 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
+      ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Nagyot hajrázott a Szekszárd, de megőrizte veretlenségét a Sopron",
+      "summary": "A-csoport, 8. forduló Sopron, Novomatic Aréna Praksch Péter Árpád, Benczur Tamás, Rózsavölgyi Alexandra (Sarkadi-Nagy Ágnes)",
+      "url": "https://wbasket.hu/nagyot-hajrazott-a-szekszard-de-megorizte-veretlenseget-a-sopron/",
+      "published_at": "2026.11.21. 17:15",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "Élő közvetítések",
@@ -13626,19 +13649,6 @@
       "league": "women",
       "teams": [
         "women|TFSE"
-      ]
-    },
-    {
-      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
-      "title": "A kupagyőztes Szolnokot fogadjuk",
-      "summary": "A Duna Aszfalt-DTKH Kecskemét múlt szombaton Oroszlányban megszerezte szezonbeli első győzelmét.",
-      "url": "https://ktekosar.hu/hirek/a-kupagyoztes-szolnokot-fogadjuk/",
-      "published_at": null,
-      "summary_method": "article_body",
-      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
-      "league": "men",
-      "teams": [
-        "men|Kecskemét"
       ]
     },
     {
