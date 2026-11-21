@@ -64,7 +64,7 @@ const overrides = () => (state.overrides[ovKey()] ||= {});
 function renderFreshness() {
   const lg = state.league;
   const f = store.freshness(lg);
-  const names = { fixtures: 'Menetrend', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat' };
+  const names = { fixtures: 'Menetrend', referees: 'Játékvezetők', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat' };
   const fmt = iso => { const d = new Date(iso); return d.toLocaleString('hu-HU', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }); };
   const parts = Object.keys(SOURCES).map(k => {
     const x = f[k];
@@ -131,10 +131,15 @@ function renderSelection(extra = {}) {
       $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
     }
   } else if (t.type === 'referees') {
-    $('selectTitle').textContent = '2. Mérkőzés (fájlnévhez)';
-    const games = store.upcoming(lg);
-    box.innerHTML = `<label>Mérkőzés<select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey ? 'selected' : ''}>${esc(matchLabel(m))}</option>`).join('')}</select></label>`;
-    $('matchSel').onchange = e => { s.matchKey = e.target.value; s.custom = null; update(true); };
+    $('selectTitle').textContent = '2. Mérkőzés';
+    const showPast = !!s.showPast;
+    const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
+    if (!s.matchKey || !games.some(m => matchKey(m) === s.matchKey)) s.matchKey = games[0] ? matchKey(games[0]) : null;
+    const tag = m => (store.matchStaff(lg, m)?.referees?.length ? ' ✓ játékvezetők' : '');
+    box.innerHTML = `<label>Mérkőzés (${showPast ? 'teljes menetrend' : 'következő mérkőzések'}; ✓ = a játékvezetők már ki vannak írva)<select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey ? 'selected' : ''}>${esc(matchLabel(m))}${tag(m)}</option>`).join('')}</select></label>
+      <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>`;
+    $('matchSel').onchange = e => { s.matchKey = e.target.value; s.custom = null; resetMatchOverrides(); update(true); };
+    $('showPast').onchange = e => { s.showPast = e.target.checked; renderSelection(); };
   } else {
     $('selectTitle').textContent = '2. Csapat';
     box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
@@ -223,7 +228,10 @@ function autoValues() {
     if (r.games.length < t.rows) info.notices.push({ bad: t.type === 'schedule' && r.games.length < 5, text: `Csak ${r.games.length} mérkőzés jelenik meg (${r.candidates.length} van a listában: NB I/A + feltöltött kupameccsek)${t.type === 'schedule' && r.games.length < 5 ? ' – a menetrendnek legalább 5 sor kellene' : ''}. A további sorok üresek, kézzel kitölthetők.` });
     if (!store.cupFixtures(lg, s.teamId).length) info.notices.push({ text: 'Az adatbázis csak NB I/A mérkőzéseket tartalmaz. Kupa- és európai meccseket tölts fel a „Kupameccsek” lapról (Adatok feltöltése), vagy írd be kézzel; a sorozat logója soronként választható.' });
   } else if (t.type === 'referees') {
-    v = bindReferees();
+    const m = currentMatch();
+    v = bindReferees(store, lg, m);
+    const staff = m && !m.custom ? store.matchStaff(lg, m) : null;
+    if (!staff?.referees?.length) info.notices.push({ bad: true, text: 'Ehhez a meccshez még nincsenek kiírva a játékvezetők (és az MKOSZ ellenőr) a Hunbasket menetrendjén – a mezők kézzel kitölthetők.' });
     if (t.fontNote) info.notices.push({ text: t.fontNote });
   }
   const f = store.freshness(lg);

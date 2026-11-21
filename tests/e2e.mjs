@@ -116,9 +116,15 @@ try {
     assert.equal(v.text, 'Falco-Vulcano Energia KC Szombathely');
     await page.screenshot({ path: path.join(out, 'ui-intro-overrides.png') });
   });
-  await check('missing data is flagged in the editor (referees)', async () => {
+  await check('missing data is flagged in the editor (referees) and manual entry clears the flag', async () => {
     await page.click('#templateList button[data-id="referees-men"]');
     await page.waitForTimeout(300);
+    await page.check('#showPast');
+    await page.waitForTimeout(300);
+    // a game whose referees are not published yet
+    const open = await page.evaluate(() => { const s = window.__studio.store; return s.league('men').fixtures.find(m => !s.matchStaff('men', m)?.referees?.length).url; });
+    await page.selectOption('#matchSel', open);
+    await page.waitForTimeout(400);
     assert.equal(await page.locator('.field.missing').count(), 4);
     await page.locator('.field[data-id="ref1"] input.txt').fill('Goda László');
     await page.waitForTimeout(200);
@@ -379,6 +385,41 @@ try {
     await page.locator('#importBox').evaluate(el => { el.open = true; });
     await page.click('#excelClear');
     await page.waitForTimeout(300);
+  });
+  await check('referees graphic and intro venue fill in from the Hunbasket full schedule (women PSD sample game)', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="referees-women"]');
+    await page.waitForTimeout(300);
+    await page.check('#showPast');
+    await page.waitForTimeout(300);
+    const url = await page.evaluate(() => window.__studio.store.league('women').fixtures.find(m => m.url.endsWith('whun_135479')).url);
+    await page.selectOption('#matchSel', url);
+    await page.waitForTimeout(400);
+    const v = await page.evaluate(() => window.__studio.current().values);
+    assert.deepEqual(['ref1', 'ref2', 'ref3', 'controller'].map(k => v[k].text), ['Györfy Rúben', 'Major Ádám', 'Gombos Márk Bálint', 'Szabó Anita']);
+    assert.equal(await page.locator('.field.missing').count(), 0);
+    assert.match(await page.locator('#freshness').innerText(), /Játékvezetők:/);
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'referees-women-real.png'));
+    await page.screenshot({ path: path.join(out, 'ui-referees-real.png') });
+    // the same game on the intro: the arena is filled in from the data
+    await page.click('#templateList button[data-id="intro-women"]');
+    await page.waitForTimeout(300);
+    await page.check('#showPast');
+    await page.waitForTimeout(300);
+    await page.selectOption('#matchSel', url);
+    await page.waitForTimeout(400);
+    const iv = await page.evaluate(() => window.__studio.current().values);
+    assert.equal(iv.venue.text, 'Olimpiai Sport Park');
+    assert.match(iv.venue.source, /Hunbasket/);
+    // a game without published referees is flagged for manual entry
+    await page.click('#templateList button[data-id="referees-women"]');
+    await page.waitForTimeout(300);
+    const open = await page.evaluate(() => { const s = window.__studio.store; return s.league('women').fixtures.find(m => !s.matchStaff('women', m)?.referees?.length).url; });
+    await page.selectOption('#matchSel', open);
+    await page.waitForTimeout(400);
+    assert.equal(await page.locator('.field.missing').count(), 4);
+    assert.match(await page.locator('#notices').innerText(), /nincsenek kiírva/);
   });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 

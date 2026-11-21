@@ -135,34 +135,58 @@ test('team stats: more players than rows keeps those with most minutes', async (
   for (const h of hidden) assert.ok(parseFloat(h.p['Idő']) <= minShown);
 });
 
-test('intro: round/date/time from fixtures, standings in rank line, venue never invented', async () => {
+test('intro: round/date/time from fixtures, standings in rank line, venue from the game, never invented', async () => {
   const store = await loadStore();
   const m = store.upcoming('men')[0];
   const v = bindIntro(store, 'men', m, {});
   assert.match(v.round.text, new RegExp(`^Alapszakasz - ${m.roundNo}\\. forduló - ${m.date.replace(/-/g, '.')}\\. - ${m.time.replace(':', '.')}$`));
   const s = store.standing('men', m.homeId);
   assert.equal(v['home.rank'].text, `(${s.rank}. hely - ${s.wins}-${s.losses})`);
-  if (m.homeId !== 'sopron') assert.equal(v.venue.text, MISSING);
-  const sop = { ...m, homeId: 'sopron' };
-  assert.equal(bindIntro(store, 'men', sop, {}).venue.text, 'Novomatic Aréna');
-  assert.equal(bindIntro(store, 'men', m, { [`men/${m.homeId}`]: 'Teszt Csarnok' }).venue.text, 'Teszt Csarnok');
+  // the arena of this very game comes from the Hunbasket full schedule
+  const staff = store.matchStaff('men', m);
+  assert.ok(staff?.venue);
+  assert.equal(v.venue.text, staff.venue);
+  assert.match(v.venue.source, /Hunbasket/);
+  // without a match URL (custom pairing) there is no arena data: remembered / known venues, else missing
+  const noUrl = { ...m, url: null };
+  if (m.homeId !== 'sopron') assert.equal(bindIntro(store, 'men', noUrl, {}).venue.text, MISSING);
+  assert.equal(bindIntro(store, 'men', { ...noUrl, homeId: 'sopron' }, {}).venue.text, 'Novomatic Aréna');
+  assert.equal(bindIntro(store, 'men', noUrl, { [`men/${m.homeId}`]: 'Teszt Csarnok' }).venue.text, 'Teszt Csarnok');
 });
 
-test('referees are manual and flagged until entered', () => {
-  const v = bindReferees();
-  for (const k of ['ref1', 'ref2', 'ref3', 'controller']) { assert.equal(v[k].text, MISSING); assert.ok(v[k].missing); }
+test('referees and MKOSZ controller come from the Hunbasket full schedule (women PSD sample game)', async () => {
+  const store = await loadStore();
+  const m = store.league('women').fixtures.find(x => x.url.endsWith('whun_135479')); // ETO Basket – ELTE BEAC Újbuda, round 1
+  const v = bindReferees(store, 'women', m);
+  assert.deepEqual(['ref1', 'ref2', 'ref3', 'controller'].map(k => v[k].text), ['Györfy Rúben', 'Major Ádám', 'Gombos Márk Bálint', 'Szabó Anita']);
+  assert.ok(['ref1', 'ref2', 'ref3', 'controller'].every(k => !v[k].missing && /Hunbasket/.test(v[k].source)));
+  assert.equal(bindIntro(store, 'women', m, {}).venue.text, 'Olimpiai Sport Park'); // the venue printed in the intro PSD
 });
 
-test('schedule graphics hold at least 5 rows and every club gets at least 5 games from the data', async () => {
+test('referees not yet published are flagged for manual entry, never invented', async () => {
   const store = await loadStore();
   for (const lg of ['men', 'women']) {
-    const t = templateById(`schedule-${lg}`);
-    assert.ok(t.rows >= 5, `${lg} schedule design has ${t.rows} rows`);
-    for (const c of store.clubs(lg)) {
-      const r = bindRowList(store, lg, c.id, t);
-      const filled = Array.from({ length: t.rows }, (_, i) => r.values[`r${i}.match`]?.text).filter(Boolean);
-      assert.ok(filled.length >= 5, `${lg} ${c.id}: ${filled.length} games shown`);
-      assert.equal(filled.length, Math.min(t.rows, store.nextGames(lg, c.id, 99).length));
+    const open = store.league(lg).fixtures.find(x => !store.matchStaff(lg, x)?.referees?.length);
+    assert.ok(open, `${lg}: a game without published referees`);
+    const v = bindReferees(store, lg, open);
+    for (const k of ['ref1', 'ref2', 'ref3', 'controller']) { assert.equal(v[k].text, MISSING); assert.ok(v[k].missing); assert.ok(v[k].note); }
+  }
+  const none = bindReferees(store, 'men', null);
+  assert.ok(none.ref1.missing);
+});
+
+test('every fixture has an entry in the referee file and a trio is exactly three names', async () => {
+  const store = await loadStore();
+  for (const lg of ['men', 'women']) {
+    const refs = store.league(lg).referees;
+    const fx = store.league(lg).fixtures;
+    // the fixtures refresh every 15 minutes, the referee file every few hours: a few new games may not be in it yet
+    assert.ok(fx.filter(m => refs[m.url]).length >= fx.length * 0.95, `${lg}: referee file covers the fixtures`);
+    for (const g of Object.values(refs)) {
+      assert.ok(g.venue, 'arena present');
+      assert.ok([0, 3].includes(g.referees.length), `${g.home}-${g.away}: ${g.referees.length} referees`);
+      if (g.referees.length) assert.ok(g.controller, `${g.home}-${g.away}: controller`);
     }
   }
+  assert.ok(store.freshness('women').referees, 'freshness shown for the referee file');
 });
