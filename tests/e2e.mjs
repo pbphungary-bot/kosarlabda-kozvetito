@@ -890,6 +890,25 @@ try {
   await check('phone: no console errors', async () => assert.deepEqual(merrors, []));
   await mctx.close();
 
+  await check('package: one click makes a ZIP with every graphic of the match (1920x1080 PNGs) and an _OLVASSEL.txt', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.waitForTimeout(500);
+    await page.evaluate(() => { document.getElementById('pkgBox').open = true; });
+    const before = await page.evaluate(() => JSON.stringify(window.__studio.state.template));
+    const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 120000 }), page.click('#pkgBtn')]);
+    const file = path.join(out, 'package.zip');
+    await dl.saveAs(file);
+    assert.match(dl.suggestedFilename(), /^Ferfi_Csomag_.*\.zip$/);
+    const { unzipSync, strFromU8 } = await import('../graphics/vendor/fflate.js');
+    const z = unzipSync(new Uint8Array(readFileSync(file)));
+    const pngs = Object.keys(z).filter(n => n.endsWith('.png'));
+    assert.ok(pngs.length >= 9, pngs.length + ' images');
+    for (const n of pngs) { const info = pngInfo(Buffer.from(z[n])); assert.equal(info.width, 1920); assert.equal(info.height, 1080); }
+    const readme = strFromU8(z['_OLVASSEL.txt']);
+    assert.match(readme, /Adatok frissessége/); assert.match(readme, /GRAFIKAI CSOMAG/);
+    assert.equal(await page.evaluate(() => JSON.stringify(window.__studio.state.template)), before, 'what is on screen is untouched');
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

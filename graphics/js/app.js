@@ -5,6 +5,7 @@ import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey }
 import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById, psBuild, psNormalize, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
+import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
   bindComparison, bindPlayerCompare, bindPlayerSpecial, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
@@ -654,6 +655,84 @@ function sharePng() {
   }, 'image/png');
 }
 
+
+// ───────────────────────── full graphic package of a match (ZIP) ─────────────────────────
+function packageItemsHtml() {
+  const on = lsGet('nbia.studio.packageItems', null);
+  return PACKAGE_ITEMS.map(it => `<label class="chk"><input type="checkbox" class="pkgItem" value="${it.id}" ${!on || on.includes(it.id) ? 'checked' : ''}> ${esc(it.label.replace(/_/g, ' '))}${it.who === 'home' ? ' – hazai csapat' : it.who === 'away' ? ' – vendég csapat' : ''}</label>`).join('');
+}
+
+/** Renders one template with the automatic data (+ saved layout) without touching what is on screen. */
+async function renderForPackage(item, m) {
+  const lg = state.league, t0 = templateById(`${item.type}-${lg}`);
+  const saved = { tpl: state.template[lg], sel: JSON.parse(JSON.stringify(state.sel[lg])), ov: state.overrides[t0.id] };
+  const s = state.sel[lg];
+  try {
+    state.template[lg] = t0.id;
+    state.overrides[t0.id] = {}; // no typed overrides: the package is the pure automatic result
+    if (item.who !== 'match') { s.teamId = item.who === 'home' ? m.homeId : m.awayId; s.games = null; s.customRows = null; s.players = null; }
+    const t = tpl();
+    const { v: auto, info } = autoValues();
+    const values = mergedValues(auto);
+    const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+    const canvas = document.createElement('canvas');
+    const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+    const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+    const missing = t.elements.filter(el => values[el.id]?.missing && (values[el.id].visible ?? el.visible ?? true)).map(el => el.label);
+    const warns = [
+      ...info.notices.filter(n => n.bad).map(n => n.text),
+      ...(missing.length ? [`${missing.length} hiányzó adat („${MISSING}”): ${missing.slice(0, 6).join(', ')}${missing.length > 6 ? ' …' : ''}`] : []),
+      ...(rep.overflow.length ? [`kilógó szöveg: ${rep.overflow.join(', ')}`] : []),
+    ];
+    return { blob, warns, what: TEMPLATE_TYPES[t.type] };
+  } finally {
+    state.template[lg] = saved.tpl; state.sel[lg] = saved.sel;
+    if (saved.ov === undefined) delete state.overrides[t0.id]; else state.overrides[t0.id] = saved.ov;
+  }
+}
+
+async function exportPackage() {
+  const lg = state.league, m = currentMatch();
+  const btn = $('pkgBtn');
+  if (!m) return toast('Válassz előbb mérkőzést (Adatok fül).');
+  const chosen = [...document.querySelectorAll('.pkgItem:checked')].map(x => x.value);
+  lsSet('nbia.studio.packageItems', chosen);
+  const items = PACKAGE_ITEMS.filter(it => chosen.includes(it.id));
+  if (!items.length) return toast('Jelölj ki legalább egy grafikát.');
+  btn.disabled = true;
+  const date = (m.date || new Date().toISOString().slice(0, 10)).slice(0, 10);
+  const hs = club(lg, m.homeId)?.short || m.home, as = club(lg, m.awayId)?.short || m.away;
+  const files = [], rendered = [], skipped = [], warnings = [];
+  let n = 0;
+  for (const [i, it] of items.entries()) {
+    btn.textContent = `Készül… ${i + 1}/${items.length}`;
+    if (it.type === 'referees' && !(m.custom ? null : store.matchStaff(lg, m))?.referees?.length) { skipped.push('Játékvezetők: még nincs kiírva (a Hunbasket menetrendjén nem szerepel)'); continue; }
+    try {
+      const r = await renderForPackage(it, m);
+      const subject = it.who === 'match' ? `${hs}-${as}` : `${it.who === 'home' ? hs : as}`;
+      const file = fileNameFor(++n, it, subject, date);
+      files.push({ name: file, bytes: new Uint8Array(await r.blob.arrayBuffer()) });
+      rendered.push({ file, what: `${r.what}${it.who === 'match' ? '' : ' – ' + (it.who === 'home' ? hs : as)}` });
+      for (const w of r.warns) warnings.push(`${file}: ${w}`);
+    } catch (e) { skipped.push(`${it.label}: nem sikerült (${e.message})`); }
+  }
+  const f = store.freshness(lg);
+  const names = { fixtures: 'Menetrend', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat', referees: 'Játékvezetők', cups: 'Európai meccsek' };
+  const freshness = Object.entries(f).map(([k, x]) => `${names[k] || k}: ${x.updated_at ? new Date(x.updated_at).toLocaleString('hu-HU') : 'ismeretlen'}${x.stale ? '  (RÉGI, 48 óránál régebbi!)' : ''}`);
+  const xi = store.excelInfo(lg);
+  if (xi) freshness.push(`Feltöltött Excel: ${xi.file}${xi.enabled ? '' : ' (kikapcsolva)'}`);
+  const readme = readmeText({ title: `${hs} – ${as} (${LEAGUES[lg].label})`, date, made: new Date().toLocaleString('hu-HU'), rendered, skipped, warnings, freshness });
+  const zip = buildZip(files, readme);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([zip], { type: 'application/zip' }));
+  a.download = zipName(LEAGUES[lg].short, `${hs}-${as}`, date);
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 8000);
+  btn.disabled = false; btn.textContent = 'Teljes csomag letöltése (ZIP)';
+  toast(`${a.download}: ${files.length} kép${warnings.length ? `, ${warnings.length} figyelmeztetés (_OLVASSEL.txt)` : ''}`);
+  update(true);
+}
+
 // ───────────────────────── presets ─────────────────────────
 function renderPresets() {
   const list = lsGet(LS.presets, []);
@@ -1046,6 +1125,8 @@ async function main() {
   $('onlyMissing').onchange = () => update(true);
   $('resetAll').onclick = () => { if (confirm('Törlöd ennek a sablonnak minden kézi felülírását?')) { state.overrides[ovKey()] = {}; update(true); } };
   $('exportBtn').onclick = exportPng;
+  $('pkgItems').innerHTML = packageItemsHtml();
+  $('pkgBtn').onclick = exportPackage;
   initMobile();
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
   $('fields').addEventListener('click', e => {
