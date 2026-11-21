@@ -971,6 +971,32 @@ try {
     await dp.close();
   });
 
+  await check('dashboard: Meccslap (one-page match sheet) with story suggestions prints on a single A4 page', async () => {
+    const dp = await ctx.newPage();
+    const derrs = [];
+    dp.on('pageerror', e => derrs.push(e.message));
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForTimeout(2500);
+    await dp.selectOption('#league', 'men');
+    await dp.waitForTimeout(400);
+    await dp.selectOption('#home', { index: 3 });
+    await dp.waitForTimeout(300);
+    await dp.selectOption('#away', { index: 5 });
+    await dp.waitForTimeout(300);
+    await dp.click('#go');
+    await dp.waitForTimeout(1000);
+    const txt = await dp.$eval('#matchSheetCard .sheet-body', e => e.innerText);
+    assert.match(txt, /MECCSLAP/); assert.match(txt, /Összevetés/i); assert.match(txt, /Kulcsjátékosok/i); assert.match(txt, /Sztori-javaslatok/i);
+    assert.ok(!/\.\./.test(txt.replace(/\.\.\./g, '')), 'no double full stops');
+    await dp.click('#sheetPrint');
+    await dp.evaluate(() => document.body.classList.add('sheet-printing')); // headless print() ends at once and removes the class again
+    const pdf = await dp.pdf({ format: 'A4', printBackground: true });
+    const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+    assert.equal(pages, 1, 'one page');
+    assert.deepEqual(derrs, []);
+    await dp.close();
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

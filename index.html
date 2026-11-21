@@ -347,6 +347,14 @@ a,#h2hHistory a{color:#075aa4!important}
 .team-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}@media(max-width:900px){.team-two{grid-template-columns:minmax(0,1fr)}}
 .team-detail-table{width:100%;border-collapse:collapse;font-size:14px}.team-detail-table th,.team-detail-table td{padding:8px 10px;border-bottom:1px solid #edf1f5;text-align:left}.team-detail-table th{background:#f1f5f9;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .club-panel .open-team{margin-top:10px}
+</style><style id="match-sheet-style">
+#matchSheetCard .sheet-actions{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 12px}
+.sheet{font-size:14px;line-height:1.45;color:#17253a}.sheet h3{margin:0 0 4px;font-size:22px}.sheet h4{margin:16px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#345773;border-bottom:2px solid #e8761c;padding-bottom:3px}
+.sheet .sub{color:#5b6b7b;margin:0 0 8px}.sheet table{width:100%;border-collapse:collapse}.sheet th,.sheet td{padding:5px 8px;border-bottom:1px solid #e6ecf2;text-align:center}.sheet td:first-child,.sheet th:first-child{text-align:left;color:#5b6b7b;width:34%}
+.sheet .chips{display:inline-flex;gap:3px}.sheet .chip{display:inline-block;width:20px;height:20px;border-radius:50%;color:#fff;font-size:11px;font-weight:800;line-height:20px;text-align:center}.sheet .chip.w{background:#1c9a4a}.sheet .chip.l{background:#d33a2f}
+.sheet ul{margin:6px 0 0;padding-left:20px}.sheet li{margin:4px 0}.sheet .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.sheet .small{font-size:12px;color:#5b6b7b}
+#matchSheet{display:none}.sheet .two>*{min-width:0}.sheet .two table{table-layout:fixed}.sheet .two td:first-child,.sheet .two th:first-child{width:40%;text-align:left}
+@media print{body.sheet-printing>*:not(#matchSheet){display:none!important}body.sheet-printing #matchSheet{display:block!important;padding:0;font-family:Inter,system-ui,sans-serif}body.sheet-printing{background:#fff!important}@page{size:A4;margin:12mm}.sheet .chip{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 </style><style id="mobile-fixes">.fixture-section th{background:#e9eff6;color:#1d3958;text-align:left;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:8px 10px}.view-switch{font:inherit;font-size:12px;font-weight:700;padding:5px 11px;margin-left:12px;border:1px solid rgba(255,255,255,.45);border-radius:999px;background:transparent;color:#fff;cursor:pointer}/* Mobile / touch fixes – only inside media queries, the desktop layout is untouched. */
 @media (max-width:720px){
   .card,.grid>*,.grid3>*,.wrap>*,.league-team-picker>*,.topline>*{min-width:0}
@@ -1145,4 +1153,45 @@ var baseRender=render;render=function(){baseRender.apply(this,arguments);
  document.querySelectorAll('#teamCards .club-panel').forEach(function(c){if(c.querySelector('.open-team'))return;var h=c.querySelector('h3');var name=h?h.textContent.trim():'';var n=(data[league]||[]).find(function(t){return name===t.name||name.endsWith(t.name)});if(!n)return;var b=document.createElement('button');b.type='button';b.className='open-team';b.dataset.team=n.name;b.textContent='Keret, statisztika, rekordok →';c.appendChild(b)});
  draw()};
 loadTeamPages();setInterval(loadTeamPages,15*60*1000);
+})()</script><script id="matchSheetScript">(function(){
+var refs={men:null,women:null};
+async function loadRefs(){await Promise.all(['men','women'].map(async function(k){try{var r=await fetch('data/referees_'+k+'.json?v='+Date.now(),{cache:'no-store'});if(r.ok)refs[k]=await r.json()}catch(e){}}))}
+function fin(team){var p=fixturesData[league];if(!p)return[];return p.matches.filter(function(m){return m.status==='finished'&&/^\d+\s*[-–:]\s*\d+$/.test(String(m.result||''))&&(m.home===team||m.away===team)}).sort(function(a,b){return (fixtureDate(b.date)||0)-(fixtureDate(a.date)||0)||(b.time||'').localeCompare(a.time||'')})}
+function sc(m){var x=String(m.result).split(/[-–:]/).map(function(v){return +v.trim()});return {h:x[0],a:x[1]}}
+function won(m,team){var s=sc(m);return m.home===team?s.h>s.a:s.a>s.h}
+function chips(team){var g=fin(team).slice(0,5).reverse();return g.length?'<span class="chips">'+g.map(function(m){return '<span class="chip '+(won(m,team)?'w':'l')+'">'+(won(m,team)?'Gy':'V')+'</span>'}).join('')+'</span>':'—'}
+function streak(team){var g=fin(team);if(!g.length)return null;var w=won(g[0],team),n=0;for(var i=0;i<g.length&&won(g[i],team)===w;i++)n++;return {win:w,n:n}}
+function next(){var p=fixturesData[league];if(!p)return null;var now=new Date();now.setHours(0,0,0,0);return p.matches.filter(function(m){var d=fixtureDate(m.date);return m.status!=='finished'&&d&&d>=now&&((m.home===home&&m.away===away)||(m.home===away&&m.away===home))}).sort(function(a,b){return (fixtureDate(a.date)||0)-(fixtureDate(b.date)||0)})[0]||null}
+function h2h(){var p=fixturesData[league];if(!p)return[];return p.matches.filter(function(m){return m.status==='finished'&&/^\d+\s*[-–:]\s*\d+$/.test(String(m.result||''))&&((m.home===home&&m.away===away)||(m.home===away&&m.away===home))}).sort(function(a,b){return (fixtureDate(b.date)||0)-(fixtureDate(a.date)||0)})}
+function players(team){var P=playerData[league];if(!P)return[];var t=P.teams.find(function(x){return normalizeTeamName(x.name)===normalizeTeamName(team)});if(!t)return[];var c=t.columns,ix=function(n){return c.indexOf(n)};return t.players.map(function(r){return {name:r[ix('Játékos')],g:+r[ix('M.')],p:+r[ix('P.')],r:+r[ix('ÖLP')],a:+r[ix('GP')],min:+r[ix('Idő')]}}).filter(function(x){return isFinite(x.p)})}
+function leaguePool(){var P=playerData[league];if(!P)return[];var all=[];P.teams.forEach(function(t){players(t.name).forEach(function(x){all.push(x)})});var mx=Math.max.apply(null,all.map(function(x){return x.g||0}));return all.filter(function(x){return x.g>=Math.max(3,Math.round(mx/2))})}
+function rank(pool,x,key){return 1+pool.filter(function(q){return q[key]>x[key]}).length}
+function ord(n){return n+'.'}
+function facts(){var out=[],t=[home,away];var pool=leaguePool();
+ t.forEach(function(team){var st=streak(team);var streakShown=false;if(st&&st.n>=3){streakShown=true;out.push('<b>'+esc(team)+'</b>: '+st.n+' meccses '+(st.win?'győzelmi':'vereségi')+' sorozatban.')}
+  var g=fin(team).slice(0,5);if(!streakShown&&g.length>=4){var w=g.filter(function(m){return won(m,team)}).length;if(w>=4||w<=1)out.push('<b>'+esc(team)+'</b>: az utolsó '+g.length+' meccséből '+w+' győzelem.')}
+  var top=players(team).sort(function(a,b){return b.p-a.p})[0];if(top){var q=pool.find(function(x){return x.name===top.name});if(q){var rp=rank(pool,q,'p');if(rp<=10)out.push('<b>'+esc(top.name)+'</b> ('+esc(team)+') meccsenként '+top.p.toFixed(1)+' ponttal a liga '+ord(rp)+' legjobb pontszerzője.')}}
+  players(team).forEach(function(x){var q=pool.find(function(z){return z.name===x.name});if(!q)return;var rr=rank(pool,q,'r'),ra=rank(pool,q,'a');if(rr<=3)out.push('<b>'+esc(x.name)+'</b> ('+esc(team)+'): '+x.r.toFixed(1)+' lepattanó/meccs – a liga '+ord(rr)+' legjobbja.');if(ra<=3)out.push('<b>'+esc(x.name)+'</b> ('+esc(team)+'): '+x.a.toFixed(1)+' gólpassz/meccs – a liga '+ord(ra)+' legjobbja.')});
+ });
+ var a=info(home),b=info(away);if(a&&b&&a.rank!=null&&b.rank!=null){out.push('A tabellán '+esc(home)+' '+a.rank+'., '+esc(away)+' '+b.rank+'. ('+Math.abs(a.rank-b.rank)+' hely különbség).')}
+ var ds=(data[league]||[]).filter(function(x){return x.played>0&&x.scored!=null}).map(function(x){return {n:x.name,o:x.scored/x.played,d:x.conceded/x.played}});
+ t.forEach(function(team){var x=ds.find(function(y){return y.n===team});if(!x||ds.length<4)return;var ro=1+ds.filter(function(y){return y.o>x.o}).length,rd=1+ds.filter(function(y){return y.d<x.d}).length;if(ro<=2)out.push('<b>'+esc(team)+'</b> a liga '+ord(ro)+' legjobb támadása ('+x.o.toFixed(1)+' dobott pont/meccs).');if(rd<=2)out.push('<b>'+esc(team)+'</b> a liga '+ord(rd)+' legjobb védekezése ('+x.d.toFixed(1)+' kapott pont/meccs).')});
+ var hh=h2h();if(hh.length){var w1=hh.filter(function(m){return won(m,home)}).length;out.push('Idei egymás elleni mérleg: '+esc(home)+' '+w1+'–'+(hh.length-w1)+' '+esc(away)+'. Legutóbb: '+esc(hh[0].home)+' '+esc(hh[0].result)+' '+esc(hh[0].away)+' ('+esc(hh[0].date)+').')}
+ return out}
+function sheetHtml(){var n=next(),a=info(home),b=info(away),L=league==='men'?'Férfi NB I/A':'Női NB I/A';
+ var ref='';if(n){var r=refs[league]&&refs[league].matches&&refs[league].matches[n.url];var ro=r&&r.referees&&r.referees.length;ref='<p class="sub">'+esc(n.round||'')+' forduló · '+esc(n.date)+' '+esc(n.time||'')+(r&&r.venue?' · '+esc(r.venue):'')+'</p><p class="small">Játékvezetők: '+(ro?esc(r.referees.join(', '))+(r.controller?' · ellenőr: '+esc(r.controller):''):'még nincs kiírva')+'</p>'}else ref='<p class="sub">Nincs kiírt mérkőzés ezen a párosításon (a mutatók a szezon eddigi adatai).</p>';
+ var row=function(l,x,y){return '<tr><td>'+l+'</td><td>'+x+'</td><td>'+y+'</td></tr>'};
+ var sx=streak(home),sy=streak(away),fs=function(s){return s?s.n+' '+(s.win?'győzelem':'vereség'):'—'};
+ var avg=function(t,k){return t&&t.played?(t[k]/t.played).toFixed(1):'—'};
+ var tbl='<table><tr><th></th><th>'+esc(home)+'</th><th>'+esc(away)+'</th></tr>'+row('Helyezés',a&&a.rank!=null?a.rank+'.':'—',b&&b.rank!=null?b.rank+'.':'—')+row('Mérleg',a?a.w+'–'+a.l:'—',b?b.w+'–'+b.l:'—')+row('Utolsó 5 meccs',chips(home),chips(away))+row('Aktuális sorozat',fs(sx),fs(sy))+row('Dobott pont / meccs',avg(a,'scored'),avg(b,'scored'))+row('Kapott pont / meccs',avg(a,'conceded'),avg(b,'conceded'))+'</table>';
+ var key=function(team){var ps=players(team).sort(function(x,y){return y.p-x.p}).slice(0,4);return '<table><tr><th>'+esc(team)+'</th><th>P</th><th>L</th><th>GP</th><th>perc</th></tr>'+(ps.length?ps.map(function(x){return '<tr><td>'+esc(x.name)+'</td><td>'+x.p.toFixed(1)+'</td><td>'+x.r.toFixed(1)+'</td><td>'+x.a.toFixed(1)+'</td><td>'+x.min.toFixed(0)+'</td></tr>'}).join(''):'<tr><td colspan="5">nincs játékosadat</td></tr>')+'</table>'};
+ var f=facts();
+ return '<div class="sheet"><h3>MECCSLAP · '+esc(home)+' – '+esc(away)+'</h3><p class="sub">'+L+' · 2026/27</p>'+ref+'<h4>Összevetés</h4>'+tbl+'<h4>Kulcsjátékosok (meccsenkénti átlag)</h4><div class="two">'+key(home)+key(away)+'</div><h4>Sztori-javaslatok az adatok alapján</h4>'+(f.length?'<ul>'+f.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'<p class="small">Nincs kiemelhető adat.</p>')+'<p class="small" style="margin-top:14px">Forrás: Hunbasket · generálva: '+esc(new Date().toLocaleString('hu-HU'))+'. A javaslatok csak a letöltött adatokból számolódnak.</p></div>'}
+function draw(){var card=document.getElementById('matchSheetCard');if(!card)return;var body=card.querySelector('.sheet-body');if(!matchupReady()){body.innerHTML='<p class="muted">Válassz két csapatot a felső menüben, majd nyisd meg a párharcot.</p>';return}body.innerHTML=sheetHtml()}
+function print(){if(!matchupReady())return;var m=document.getElementById('matchSheet');if(!m){m=document.createElement('div');m.id='matchSheet';document.body.appendChild(m)}m.innerHTML=sheetHtml();document.body.classList.add('sheet-printing');var done=function(){document.body.classList.remove('sheet-printing');window.removeEventListener('afterprint',done)};window.addEventListener('afterprint',done);window.print()}
+var card=document.createElement('article');card.className='card full';card.id='matchSheetCard';card.innerHTML='<div class="topline"><div><h2>Meccslap <span class="tag">1 oldal</span></h2><p class="muted small">Egyoldalas, nyomtatható felkészülési lap: összevetés, forma, kulcsjátékosok és adatalapú sztori-javaslatok.</p></div></div><div class="sheet-actions"><button type="button" id="sheetPrint" class="primary">Meccslap nyomtatása / PDF</button></div><div class="sheet-body"></div>';
+var grid=document.querySelector('#matchupTab .grid');if(grid)grid.insertBefore(card,grid.firstChild);
+document.getElementById('sheetPrint').onclick=print;
+var baseRender2=render;render=function(){baseRender2.apply(this,arguments);draw()};
+loadRefs().then(draw);
 })()</script></body></html>
