@@ -12,4 +12,4 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - run: python3 .github/probe/probe2.py
+      - run: python3 .github/probe/probe3.py
