@@ -239,7 +239,7 @@ function renderSelection(extra = {}) {
     const withRefs = games.filter(hasRefs);
     // by default only games whose referees are already published: nothing to type, the names come from Hunbasket
     if (!showOpen) games = withRefs;
-    if (!s.matchKey || !games.some(m => matchKey(m) === s.matchKey)) s.matchKey = games[0] ? matchKey(games[0]) : null;
+    if ((!s.matchKey || !games.some(m => matchKey(m) === s.matchKey)) && games[0]) s.matchKey = matchKey(games[0]); // never wipe the choice: other templates share it
     const last = store.upcoming(lg).filter(hasRefs).at(-1);
     const info = last ? `A játékvezetők ${fmtDate(last.date)}-ig vannak kiírva (${store.upcoming(lg).filter(hasRefs).length} következő meccsnél). A többi meccsé a Hunbaskeren még nem jelent meg; félóránként frissül.` : 'Egyik következő meccshez sincs még kiírva játékvezető a Hunbaskeren.';
     box.innerHTML = `<label>Mérkőzés – csak ahol már ki vannak írva a játékvezetők${showOpen ? ' (a ✓ nélküliek kézi beírást igényelnek)' : ''}<select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey ? 'selected' : ''}>${esc(matchLabel(m))}${hasRefs(m) ? '' : ' – nincs kiírva'}</option>`).join('') || '<option value="">Nincs ilyen mérkőzés</option>'}</select></label>
@@ -624,10 +624,16 @@ async function update(full) {
   saveState();
 }
 
-function exportPng() {
+/** Asks about missing data; true = go on. */
+function confirmMissing() {
   const t = tpl();
   const missing = t.elements.filter(el => current.values[el.id]?.missing && (current.values[el.id].visible ?? el.visible ?? true));
-  if (missing.length && !confirm(`${missing.length} mező hiányzó adatot tartalmaz („${MISSING}”):\n${missing.slice(0, 12).map(e => '• ' + e.label).join('\n')}${missing.length > 12 ? '\n…' : ''}\n\nExportálod így is?`)) return;
+  return !missing.length || confirm(`${missing.length} mező hiányzó adatot tartalmaz („${MISSING}”):\n${missing.slice(0, 12).map(e => '• ' + e.label).join('\n')}${missing.length > 12 ? '\n…' : ''}\n\nExportálod így is?`);
+}
+
+function exportPng() {
+  const t = tpl();
+  if (!confirmMissing()) return;
   $('canvas').toBlob(blob => {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -635,6 +641,16 @@ function exportPng() {
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     toast(`Exportálva: ${a.download} (${t.width}×${t.height})`);
+  }, 'image/png');
+}
+
+/** Phone: the share sheet (Save to Photos, messengers, AirDrop …) instead of a plain download. */
+function sharePng() {
+  if (!confirmMissing()) return;
+  $('canvas').toBlob(async blob => {
+    const file = new File([blob], $('fileName').value || 'grafika.png', { type: 'image/png' });
+    try { await navigator.share({ files: [file], title: file.name }); }
+    catch (e) { if (e?.name !== 'AbortError') toast('A megosztás nem sikerült – használd a „PNG exportálása” gombot.'); }
   }, 'image/png');
 }
 
@@ -940,6 +956,66 @@ function renderBaseOpacity() {
     + (state.baseOpacity === null ? ' (PSD)' : '');
 }
 
+
+// ───────────────────────── mobile: tabs, pinch zoom, share ─────────────────────────
+const mobileMQ = window.matchMedia('(max-width: 900px)');
+const TABS = ['template', 'data', 'fields', 'layout', 'export'];
+function setTab(name, scroll = true) {
+  if (!TABS.includes(name)) name = 'template';
+  state.tab = name;
+  document.body.dataset.tab = name;
+  document.querySelectorAll('#tabbar button').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
+  if (name === 'layout' && $('layoutBox')) $('layoutBox').open = true;
+  try { sessionStorage.setItem('nbia.studio.tab', name); } catch { /* ignore */ }
+  if (scroll && mobileMQ.matches) window.scrollTo({ top: 0 });
+}
+
+function setStageZoom(z) {
+  const st = $('stage');
+  state.stageZoom = Math.min(4, Math.max(1, z));
+  st.style.setProperty('--z', state.stageZoom);
+  st.classList.toggle('zoomed', state.stageZoom > 1.01);
+}
+
+function initMobile() {
+  let tab = 'template';
+  try { tab = sessionStorage.getItem('nbia.studio.tab') || tab; } catch { /* ignore */ }
+  setTab(tab, false);
+  $('tabbar').onclick = e => { const b = e.target.closest('button'); if (b) setTab(b.dataset.tab); };
+  // the sticky warning line sits right under the preview, whatever its height
+  const st = $('stage');
+  const sync = () => document.documentElement.style.setProperty('--stage-h', `${st.getBoundingClientRect().height}px`);
+  if (window.ResizeObserver) new ResizeObserver(sync).observe(st); else sync();
+  // pinch to zoom the preview, double tap toggles; one finger pans the zoomed preview (native scrolling)
+  let pinch = null, lastTap = 0;
+  const dist = t => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  const mid = t => [(t[0].clientX + t[1].clientX) / 2, (t[0].clientY + t[1].clientY) / 2];
+  st.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) { pinch = { d: dist(e.touches), z: state.stageZoom || 1 }; }
+    else if (e.touches.length === 1 && !state.editMode) {
+      const now = Date.now();
+      if (now - lastTap < 300) { setStageZoom((state.stageZoom || 1) > 1.2 ? 1 : 2.5); e.preventDefault(); }
+      lastTap = now;
+    }
+  }, { passive: false });
+  st.addEventListener('touchmove', e => {
+    if (!pinch || e.touches.length !== 2) return;
+    e.preventDefault();
+    const [cx, cy] = mid(e.touches), r = st.getBoundingClientRect();
+    const fx = (st.scrollLeft + cx - r.left) / st.scrollWidth, fy = (st.scrollTop + cy - r.top) / st.scrollHeight;
+    setStageZoom(pinch.z * dist(e.touches) / pinch.d);
+    st.scrollLeft = fx * st.scrollWidth - (cx - r.left);
+    st.scrollTop = fy * st.scrollHeight - (cy - r.top);
+  }, { passive: false });
+  st.addEventListener('touchend', e => { if (e.touches.length < 2) pinch = null; });
+  // share sheet (phones / tablets that can share files)
+  try {
+    const probe = new File([new Blob(['x'])], 'a.png', { type: 'image/png' });
+    if (navigator.canShare?.({ files: [probe] }) && window.matchMedia('(pointer: coarse)').matches) $('shareBtn').hidden = false;
+  } catch { /* no file sharing */ }
+  $('shareBtn').onclick = sharePng;
+}
+
 function applyZoom() {
   document.querySelectorAll('[data-zoom]').forEach(b => b.classList.toggle('on', b.dataset.zoom === state.zoom));
   $('stage').classList.toggle('actual', state.zoom === '1');
@@ -947,13 +1023,14 @@ function applyZoom() {
 
 async function main() {
   document.querySelectorAll('.league-toggle button').forEach(b => b.onclick = () => switchLeague(b.dataset.league));
-  $('templateList').onclick = e => { const b = e.target.closest('button'); if (!b) return; state.template[state.league] = b.dataset.id; renderTemplateList(); update(true); };
+  $('templateList').onclick = e => { const b = e.target.closest('button'); if (!b) return; state.template[state.league] = b.dataset.id; ensureSelection(); renderTemplateList(); update(true); if (mobileMQ.matches) setTab('data'); };
   $('fields').addEventListener('input', onFieldEvent);
   $('fields').addEventListener('change', onFieldEvent);
   $('fields').addEventListener('click', e => { if (e.target.classList.contains('reset')) onFieldEvent(e); });
   $('onlyMissing').onchange = () => update(true);
   $('resetAll').onclick = () => { if (confirm('Törlöd ennek a sablonnak minden kézi felülírását?')) { state.overrides[ovKey()] = {}; update(true); } };
   $('exportBtn').onclick = exportPng;
+  initMobile();
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
   $('fields').addEventListener('click', e => {
     const id = e.target.id;
@@ -1050,7 +1127,7 @@ async function main() {
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
   restoreExcel();
-  window.__studio = { state, store, images, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
+  window.__studio = { state, store, images, setTab, setStageZoom, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
 }

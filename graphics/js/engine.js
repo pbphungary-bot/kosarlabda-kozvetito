@@ -31,6 +31,14 @@ function fontString(style, size) {
   return `${size}px "${FONT_FAMILIES[style.font || 'regular']}"`;
 }
 
+/** Off-screen canvas; older iPhones (before iOS 16.4) have no OffscreenCanvas, a detached <canvas> does the same job. */
+function mkCanvas(w, h) {
+  if (typeof OffscreenCanvas !== 'undefined') return new OffscreenCanvas(w, h);
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  return c;
+}
+
 function setup(ctx, style, size) {
   ctx.font = fontString(style, size);
   // tracking is applied in the condensed (hscale) space → divide so the result is unscaled
@@ -181,7 +189,7 @@ export function fitBox(slot, w, h) {
 }
 
 function silhouette(img, w, h, color) {
-  const c = new OffscreenCanvas(Math.ceil(w), Math.ceil(h));
+  const c = mkCanvas(Math.ceil(w), Math.ceil(h));
   const g = c.getContext('2d');
   g.drawImage(img, 0, 0, w, h);
   g.globalCompositeOperation = 'source-in';
@@ -203,7 +211,7 @@ function drawImage(ctx, el, v, assets, report, inner) {
     : (el.outlineBySrc && v.src in el.outlineBySrc) ? el.outlineBySrc[v.src]
       : el.logoOutline ? (assets.outlines?.[v.src] || null) : (el.outline || null);
   if (outline && el.maxOutline !== undefined && outline.size > el.maxOutline) outline = { ...outline, size: el.maxOutline };
-  const layer = new OffscreenCanvas(ctx.canvas.width, ctx.canvas.height);
+  const layer = mkCanvas(ctx.canvas.width, ctx.canvas.height);
   const g = layer.getContext('2d');
   g.imageSmoothingQuality = 'high';
   if (outline && outline.size > 0) {
@@ -256,7 +264,7 @@ export function render(canvas, template, values, assets) {
   // base graphic (court + panel) with its opacity, on its own canvas so that the whole graphic can be moved / scaled
   let bgLayer = null;
   if (assets.background) {
-    bgLayer = new OffscreenCanvas(template.width, template.height);
+    bgLayer = mkCanvas(template.width, template.height);
     const bctx = bgLayer.getContext('2d');
     bctx.drawImage(assets.background, 0, 0, template.width, template.height);
     applyBaseOpacity(bctx, template, assets.baseOpacity);

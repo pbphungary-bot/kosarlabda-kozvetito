@@ -757,6 +757,85 @@ try {
     await page.fill('#cX', ''); await page.fill('#cS', ''); await page.waitForTimeout(300);
   });
 
+  // ───────────── phone: tabs, sticky preview, no sideways scrolling, touch zoom, export ─────────────
+  const { devices } = require('playwright');
+  const mctx = await browser.newContext({ ...devices['iPhone 13'], acceptDownloads: true });
+  const mp = await mctx.newPage();
+  const merrors = [];
+  mp.on('pageerror', e => merrors.push(e.message));
+  mp.on('console', m => { if (m.type() === 'error') merrors.push(m.text()); });
+  await mctx.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
+  await mp.goto(`${URL}/graphics/index.html`);
+  await mp.waitForSelector('body[data-ready="1"]');
+  await mp.waitForTimeout(1200);
+  await check('phone: bottom tab bar shows one section at a time; picking a template jumps to the data tab', async () => {
+    assert.ok(await mp.isVisible('#tabbar'));
+    const vis = sel => mp.isVisible(sel);
+    await mp.evaluate(() => window.__studio.setTab('template'));
+    assert.ok(await vis('#templateList') && !(await vis('#fields')) && !(await vis('#exportBtn')));
+    await mp.tap('#templateList button[data-id="comparison-men"]');
+    await mp.waitForTimeout(500);
+    assert.equal(await mp.evaluate(() => document.body.dataset.tab), 'data');
+    assert.ok(await vis('#selection') && !(await vis('#templateList')));
+    await mp.tap('#tabbar button[data-tab="fields"]');
+    assert.ok(await vis('#fields') && !(await vis('#selection')));
+    await mp.tap('#tabbar button[data-tab="export"]');
+    assert.ok(await vis('#exportBtn') && await vis('#baseOpacity'));
+  });
+  await check('phone: no sideways scrolling in any tab, for several templates', async () => {
+    for (const [lg, id] of [['men', 'comparison-men'], ['men', 'teamstats-men'], ['women', 'schedule-women'], ['women', 'playerspecial-women'], ['men', 'intro-men']]) {
+      await mp.evaluate(l => document.querySelector(`.league-toggle button[data-league="${l}"]`).click(), lg);
+      await mp.waitForTimeout(300);
+      await mp.evaluate(i => document.querySelector(`#templateList button[data-id="${i}"]`).click(), id);
+      await mp.waitForTimeout(600);
+      for (const tab of ['data', 'fields', 'layout', 'export']) {
+        await mp.evaluate(t => window.__studio.setTab(t), tab);
+        await mp.waitForTimeout(150);
+        const sw = await mp.evaluate(() => document.documentElement.scrollWidth);
+        assert.ok(sw <= 391, `${id} / ${tab}: page is ${sw}px wide`);
+      }
+    }
+  });
+  await check('phone: the preview stays on screen while the controls scroll', async () => {
+    await mp.evaluate(() => window.__studio.setTab('fields'));
+    await mp.evaluate(() => window.scrollTo(0, 900));
+    await mp.waitForTimeout(300);
+    const r = await mp.evaluate(() => document.getElementById('stage').getBoundingClientRect().toJSON());
+    assert.ok(r.top >= -1 && r.top < 4 && r.height > 150, JSON.stringify(r));
+  });
+  await check('phone: double tap zooms the preview, again resets; tap targets are finger sized', async () => {
+    await mp.evaluate(() => window.scrollTo(0, 0));
+    await mp.waitForTimeout(200);
+    const box = await mp.evaluate(() => { const r = document.getElementById('canvas').getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; });
+    await mp.touchscreen.tap(box[0], box[1]); await mp.touchscreen.tap(box[0], box[1]);
+    await mp.waitForTimeout(300);
+    assert.equal(await mp.evaluate(() => window.__studio.state.stageZoom), 2.5);
+    await mp.touchscreen.tap(box[0], box[1]); await mp.touchscreen.tap(box[0], box[1]);
+    await mp.waitForTimeout(300);
+    assert.equal(await mp.evaluate(() => window.__studio.state.stageZoom), 1);
+    const small = await mp.evaluate(() => [...document.querySelectorAll('#tabbar button, .league-toggle button, #exportBtn')].filter(b => { const h = b.getBoundingClientRect().height; return h > 0 && h < 40; }).length);
+    assert.equal(small, 0);
+  });
+  await check('phone: PNG export still works (download, full size)', async () => {
+    await mp.evaluate(() => window.__studio.setTab('export'));
+    await mp.waitForFunction(() => !document.getElementById('exportBtn').disabled);
+    mp.on('dialog', d => d.accept());
+    const [dl] = await Promise.all([mp.waitForEvent('download'), mp.tap('#exportBtn')]);
+    const file = path.join(out, 'phone-export.png');
+    await dl.saveAs(file);
+    const info = pngInfo(readFileSync(file));
+    assert.equal(info.width, 1920); assert.equal(info.height, 1080);
+  });
+  await check('phone landscape: preview left, controls right', async () => {
+    await mp.setViewportSize({ width: 844, height: 390 });
+    await mp.waitForTimeout(400);
+    const [st, tl] = await mp.evaluate(() => { window.__studio.setTab('export'); return [document.getElementById('stage').getBoundingClientRect().toJSON(), document.getElementById('exportBtn').getBoundingClientRect().toJSON()]; });
+    assert.ok(st.right < tl.left + 20 && st.width > 300, JSON.stringify([st.right, tl.left]));
+    assert.ok(await mp.evaluate(() => document.documentElement.scrollWidth) <= 845);
+  });
+  await check('phone: no console errors', async () => assert.deepEqual(merrors, []));
+  await mctx.close();
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

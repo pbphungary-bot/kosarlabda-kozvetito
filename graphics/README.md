@@ -3,6 +3,15 @@
 Böngészős műsorgrafika-készítő a Közvetítőhub adataiból és a saját PSD-sablonokból. A dashboardtól (`../index.html`)
 független; ugyanazokat a `../data/*.json` fájlokat olvassa, és semmit nem módosít bennük.
 
+## Telefonon és tableten
+
+A stúdió telefonon is használható (iPhone, Android; 900 px alatti szélességnél): az előnézet fent marad, mozgás közben is látszik, a vezérlők alul öt fülön vannak
+(**Sablon · Adatok · Mezők · Elrendezés · Export**). Sablonválasztás után magától az Adatok fülre ugrik. Az előnézet két ujjal nagyítható, dupla koppintásra 2,5×-esre ugrik (és vissza);
+nagyítva egy ujjal görgethető. Az „Elrendezés” fülön a szerkesztés (húzás) ujjal is működik. Fekvő telefonon az előnézet balra, a vezérlők jobbra kerülnek.
+Az Export fülön a **Megosztás / Mentés** gomb (ha az eszköz támogatja) a megosztó menüt nyitja – innen a Fotókba is menthető –, mellette a sima PNG-letöltés.
+Az oldal a kezdőképernyőre is felvehető (a „Hozzáadás a kezdőképernyőhöz” menüponttal), akkor teljes képernyős alkalmazásként indul. Régebbi (iOS 16.4 előtti) iPhone-on is működik.
+Excel- és fotófeltöltés telefonon a fájlválasztón át megy.
+
 ## Indítás
 
 ```bash
