@@ -336,7 +336,7 @@ a,#h2hHistory a{color:#075aa4!important}
 .shared-note-help{font-size:12px;color:#52677b;margin:8px 0 0}
 @media(max-width:620px){.shared-note-grid{grid-template-columns:1fr}}
 @media print{#sharedMatchupNotes textarea{min-height:0}}
-</style><style>#matchupNotesJump{display:inline-block;margin:12px 0 0;padding:9px 14px;border-radius:8px;background:#e68a23;color:#101c2c;font-weight:800;text-decoration:none}#sharedMatchupNotes{display:block!important;scroll-margin-top:24px}#sharedMatchupNotes .shared-note-grid{display:grid}</style><style id="mobile-fixes">.view-switch{font:inherit;font-size:12px;font-weight:700;padding:5px 11px;margin-left:12px;border:1px solid rgba(255,255,255,.45);border-radius:999px;background:transparent;color:#fff;cursor:pointer}/* Mobile / touch fixes – only inside media queries, the desktop layout is untouched. */
+</style><style>#matchupNotesJump{display:inline-block;margin:12px 0 0;padding:9px 14px;border-radius:8px;background:#e68a23;color:#101c2c;font-weight:800;text-decoration:none}#sharedMatchupNotes{display:block!important;scroll-margin-top:24px}#sharedMatchupNotes .shared-note-grid{display:grid}</style><style id="mobile-fixes">.fixture-section th{background:#e9eff6;color:#1d3958;text-align:left;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:8px 10px}.view-switch{font:inherit;font-size:12px;font-weight:700;padding:5px 11px;margin-left:12px;border:1px solid rgba(255,255,255,.45);border-radius:999px;background:transparent;color:#fff;cursor:pointer}/* Mobile / touch fixes – only inside media queries, the desktop layout is untouched. */
 @media (max-width:720px){
   .card,.grid>*,.grid3>*,.wrap>*,.league-team-picker>*,.topline>*{min-width:0}
   .grid,.grid3{grid-template-columns:minmax(0,1fr)!important}
@@ -532,13 +532,25 @@ function drawFixtures(){
  if(!payload){box.innerHTML='<div class="empty">'+esc(err||'Mérkőzésadatok betöltése…')+'</div>'; $('matchUpdated').textContent='';return}
  const matches=payload.matches.filter(m=>m&&m.home&&m.away&&m.date&&(!leagueTeam||m.home===leagueTeam||m.away===leagueTeam)).slice();
  matches.sort((a,b)=>(fixtureDate(a.date)||0)-(fixtureDate(b.date)||0)||(a.time||'').localeCompare(b.time||''));
- const now=new Date();now.setHours(0,0,0,0);
- const future=matches.filter(m=>{const d=fixtureDate(m.date);return d&&d>=now});
- const past=matches.filter(m=>{const d=fixtureDate(m.date);return d&&d<now});
- const visible=[...past.slice(-12).reverse(),...future.slice(0,20)];
+ const rn=m=>parseInt(m.round,10)||0;
+ const when=m=>(fixtureDate(m.date)?.getTime()||0)+(parseInt(String(m.time||'0').replace(':',''),10)||0);
+ const fin=matches.filter(m=>m.status==='finished'),open=matches.filter(m=>m.status!=='finished');
+ // results: the games of the last two rounds that have a result, plus the newest result overall (a postponed game played late),
+ // newest first; upcoming: the games of the next three rounds that are not played yet, in time order
+ const lastRounds=[...new Set(fin.map(rn))].sort((x,y)=>y-x).slice(0,2);
+ const newest=fin.slice().sort((x,y)=>when(y)-when(x))[0];
+ const results=fin.filter(m=>lastRounds.includes(rn(m))||m===newest).sort((x,y)=>when(y)-when(x));
+ // postponed games of older rounds (played later) are shown but do not use up one of the three rounds
+ const minLast=Math.min(...lastRounds,Infinity),isCatchUp=m=>lastRounds.length&&rn(m)<minLast;
+ const nextRounds=[...new Set(open.filter(m=>!isCatchUp(m)).map(rn))].sort((x,y)=>x-y).slice(0,3);
+ const upcoming=open.filter(m=>isCatchUp(m)||nextRounds.includes(rn(m))).sort((x,y)=>when(x)-when(y));
  $('matchUpdated').textContent=payload.updated_at?'Forrás frissítve: '+new Date(payload.updated_at).toLocaleString('hu-HU'):'Frissítési idő nem ismert';
- if(!visible.length){box.innerHTML='<div class="empty">Nincs megjeleníthető mérkőzés ebben az adatcsomagban.</div>';return}
- box.innerHTML='<table><thead><tr><th>Dátum</th><th>Hazai</th><th>Eredmény / állapot</th><th>Vendég</th></tr></thead><tbody>'+visible.map(m=>'<tr><td>'+esc(m.date)+' '+esc(m.time||'')+'</td><td>'+clubName(m.home)+'</td><td><strong>'+linkedGameResult(m,esc(m.result||'—'))+'</strong></td><td>'+clubName(m.away)+'</td></tr>').join('')+'</tbody></table>';
+ if(!results.length&&!upcoming.length){box.innerHTML='<div class="empty">Nincs megjeleníthető mérkőzés ebben az adatcsomagban.</div>';return}
+ const row=m=>'<tr><td>'+esc(m.round||'')+'</td><td>'+esc(m.date)+' '+esc(m.time||'')+'</td><td>'+clubName(m.home)+'</td><td><strong>'+linkedGameResult(m,esc(m.result||'—'))+'</strong></td><td>'+clubName(m.away)+'</td></tr>';
+ const head=t=>'<tr class="fixture-section"><th colspan="5">'+t+'</th></tr>';
+ box.innerHTML='<table><thead><tr><th>Forduló</th><th>Dátum</th><th>Hazai</th><th>Eredmény / állapot</th><th>Vendég</th></tr></thead><tbody>'
+  +(results.length?head('Legutóbbi eredmények · utolsó 2 forduló, a legfrissebb elöl')+results.map(row).join(''):'')
+  +(upcoming.length?head('Következő mérkőzések · legfeljebb a következő 3 forduló')+upcoming.map(row).join(''):'')+'</tbody></table>';
 }
 async function loadFixtures(){
  await Promise.all(['men','women'].map(async key=>{

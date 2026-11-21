@@ -909,6 +909,31 @@ try {
     assert.equal(await page.evaluate(() => JSON.stringify(window.__studio.state.template)), before, 'what is on screen is untouched');
   });
 
+  await check('dashboard: schedule starts with the newest result, last 2 rounds of results and at most 3 upcoming rounds', async () => {
+    const dp = await ctx.newPage();
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForTimeout(2500);
+    for (const lg of ['men', 'women']) {
+      await dp.selectOption('#league', lg);
+      await dp.waitForTimeout(800);
+      const data = JSON.parse(readFileSync(path.join(ROOT, `data/${lg}.json`), 'utf8')).matches;
+      const key = m => { const [y, mo, d] = m.date.match(/\d+/g); return `${y}${mo.padStart(2, '0')}${d.padStart(2, '0')} ${m.time || ''}`; };
+      const fin = data.filter(m => m.status === 'finished').sort((a, b) => key(b).localeCompare(key(a)));
+      const rows = await dp.$$eval('#fixtures tbody tr:not(.fixture-section)', trs => trs.map(tr => [...tr.children].map(td => td.textContent.trim())));
+      const sections = await dp.$$eval('#fixtures tr.fixture-section', t => t.length);
+      assert.ok(rows.length && sections >= 1, lg + ': rows');
+      assert.equal(rows[0][2].replace(/\s+/g, ' ').trim().length > 0, true);
+      assert.equal(rows[0][1].replace(/\s+/g, ' '), `${fin[0].date} ${fin[0].time}`.replace(/\s+/g, ' '), `${lg}: first row = newest result`);
+      const finRows = rows.filter(r => /\d+\s*[–-]\s*\d+/.test(r[3]));
+      const rounds = new Set(finRows.map(r => r[0]));
+      assert.ok(rounds.size <= 3, `${lg}: result rounds ${[...rounds]}`); // 2 rounds + the newest (possibly postponed) game
+      const minResult = Math.min(...finRows.map(r => parseInt(r[0], 10)));
+      const upRounds = new Set(rows.filter(r => !/\d+\s*[–-]\s*\d+/.test(r[3]) && parseInt(r[0], 10) >= minResult).map(r => r[0]));
+      assert.ok(upRounds.size <= 3, `${lg}: upcoming rounds ${[...upRounds]}`); // postponed older-round games are extra
+    }
+    await dp.close();
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly
