@@ -1,6 +1,6 @@
 import { loadDashboard, LEAGUES, SOURCES, gameKey } from './data.js';
 import { readFile } from './xlsx.js';
-import { importWorkbook, detectLeague, clubLabel } from './importer.js';
+import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText } from './importer.js';
 import { club, CLUBS } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
@@ -431,6 +431,7 @@ function previewImports() {
       ${imp.playerCount ? `<div class="ok">Játékosok: ${imp.playerCount} játékos, ${imp.playerTeamCount} csapat</div>` : ''}
       ${imp.cupCount ? `<div class="ok">Kupa-/európai meccsek: ${imp.cupCount} (${imp.cups.filter(g => g.status === 'finished').length} lejátszott, ${imp.cups.filter(g => g.status !== 'finished').length} következő)</div>` : ''}
       ${imp.compsNoLogo?.length ? `<div class="warn">Nincs logó a PSD-kben ehhez a sorozathoz (a sor logó nélkül jelenik meg): ${esc(imp.compsNoLogo.join(', '))}</div>` : ''}
+      ${(imp.notes || []).map(n => `<div class="hint">${esc(n)}</div>`).join('')}
       ${imp.scaled.length ? `<div class="warn">Törtként tárolt százalék szorozva 100-zal: ${esc(imp.scaled.join(', '))}</div>` : ''}
       ${imp.unmatched.length ? `<div class="warn">Nem egyeztethető (kihagyva, nem találgatok):<ul>${imp.unmatched.slice(0, 8).map(u => `<li>${esc(u)}</li>`).join('')}</ul></div>` : ''}
       ${imp.ignoredColumns.length ? `<div class="hint">Nem használt oszlopok: ${imp.ignoredColumns.length} db (${esc(imp.ignoredColumns.slice(0, 6).join(', '))}…)</div>` : ''}
@@ -524,6 +525,20 @@ async function main() {
     }
     if (files.length) previewImports();
     e.target.value = '';
+  };
+  $('pasteRead').onclick = () => {
+    const text = $('pasteBox').value;
+    if (!text.trim()) { toast('Előbb illessz be szöveget.'); return; }
+    const now = new Date();
+    const p = parseEredmenyekText(text, now);
+    const d = detectLeague(p.workbook, state.league);
+    const imp = importWorkbook(p.workbook, d.league);
+    imp.notes = [];
+    for (const k of p.skipped) imp.notes.push(`${k.n} „${k.name}” mérkőzés kihagyva: az NB I/A meccsek már a dashboard adataiban vannak.`);
+    if (p.unparsed) imp.notes.push(`${p.unparsed} sort nem tudtam értelmezni (kihagyva).`);
+    if (!p.gamesFound) imp.notes.push('Nem találtam mérkőzést a szövegben. A „Meccsek” fülről másolt szöveg kell, dátum + két csapatnév soronként.');
+    pendingImports = [{ file: { name: 'Beillesztett szöveg (eredmenyek.com)', modified: now.toISOString() }, league: d.league, certain: d.certain, imp }];
+    previewImports();
   };
   $('excelOn').onchange = e => { const x = store.excel[state.league]; if (x) { x.enabled = e.target.checked; persistExcel(); renderImportState(); renderFreshness(); update(true); } };
   $('excelClear').onclick = () => { if (confirm('Törlöd a feltöltött Excel adatokat ennél a bajnokságnál?')) { store.setExcel(state.league, null); persistExcel(); renderImportState(); renderFreshness(); update(true); } };

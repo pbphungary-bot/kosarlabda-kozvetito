@@ -61,7 +61,7 @@ export function compKey(league, text) {
   const n = norm(text);
   if (/euroleague/.test(n)) return league === 'women' ? 'comp/euroleague-women' : '';
   if (/eurocup/.test(n)) return league === 'women' ? 'comp/eurocup-women' : '';
-  if (/championsleague|bcl|fibabasketballchampions/.test(n)) return league === 'men' ? 'comp/bcl' : '';
+  if (/championsleague|bajnokokligaja|bcl|fibabasketballchampions/.test(n)) return league === 'men' ? 'comp/bcl' : '';
   return '';
 }
 
@@ -327,3 +327,60 @@ export function importWorkbook(parsed, league) {
 }
 
 export const clubLabel = (league, id) => club(league, id)?.official || id;
+
+/**
+ * Reads text copied from an eredmenyek.com team page ("Meccsek" tab), e.g.
+ *   [EuroCup - női](https://…)        competition heading (applies until the next heading)
+ *   MAGYARORSZÁG: / Tabella           ignored
+ *   25.11. 18:00                      date (year optional) and time
+ *   DVTK NDVTK N                      home team (name repeated, with a trailing " N")
+ *   Brod na Savi NBrod na Savi N      away team
+ *   --                                separator
+ * Played games may be followed by two score lines (or "66-71"); that part is read tolerantly.
+ * NB I games are skipped: the dashboard already has them. Returns a workbook-like object for
+ * importWorkbook() plus counts for the preview.
+ */
+export function parseEredmenyekText(text, now = new Date()) {
+  const lines = String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  const cleanTeam = l => { const m = l.match(/^(.+?) N\1 N$/); return (m ? m[1] : l.replace(/ N$/, '')).trim(); };
+  const pickYear = (d, mo) => {
+    let best = null;
+    for (const y of [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1]) {
+      const t = Date.UTC(y, mo - 1, d);
+      if (best === null || Math.abs(t - now.getTime()) < Math.abs(best.t - now.getTime())) best = { y, t };
+    }
+    return best.y;
+  };
+  const games = [];
+  let comp = '', cur = null, unparsed = 0;
+  for (const line of lines) {
+    let m;
+    if (/^-{2,}$/.test(line)) { cur = null; continue; }
+    if ((m = line.match(/^\[(.+?)\]\(.*\)$/))) { comp = m[1].trim(); cur = null; continue; }
+    if (/^[\p{Lu} .\-/]+:$/u.test(line) || /^tabella$/i.test(line)) continue;
+    if ((m = line.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})?(?:\s+(\d{1,2}):(\d{2}))?$/))) {
+      const year = m[3] ? +m[3] : pickYear(+m[1], +m[2]);
+      cur = { date: `${year}-${pad2(m[2])}-${pad2(m[1])}`, time: m[4] ? `${pad2(m[4])}:${m[5]}` : '', comp, teams: [], scores: [] };
+      games.push(cur);
+      continue;
+    }
+    if (cur && cur.teams.length < 2) { cur.teams.push(cleanTeam(line)); continue; }
+    if (cur && cur.teams.length === 2) {
+      if (/^\d{1,3}$/.test(line)) { cur.scores.push(+line); continue; }
+      if ((m = line.match(/^(\d{1,3})\s*[-–:]\s*(\d{1,3})$/))) { cur.scores.push(+m[1], +m[2]); continue; }
+    }
+    unparsed++;
+  }
+  const skipped = {};
+  const rows = [['Dátum', 'Idő', 'Hazai', 'Vendég', 'Sorozat', 'Eredmény']];
+  for (const g of games) {
+    if (g.teams.length < 2) { unparsed++; continue; }
+    if (/^nb\s*i\b/i.test(g.comp)) { skipped[g.comp] = (skipped[g.comp] || 0) + 1; continue; }
+    rows.push([g.date, g.time, g.teams[0], g.teams[1], g.comp, g.scores.length >= 2 ? `${g.scores[0]}-${g.scores[1]}` : '']);
+  }
+  return {
+    workbook: { sheets: [{ name: 'Beillesztett szöveg', rows }], modified: now.toISOString() },
+    gamesFound: games.length, imported: rows.length - 1,
+    skipped: Object.entries(skipped).map(([name, n]) => ({ name, n })), unparsed,
+  };
+}

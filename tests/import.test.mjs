@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, loadStore } from './helpers.mjs';
 import { readXlsx, readCsv } from '../graphics/js/xlsx.js';
-import { importWorkbook } from '../graphics/js/importer.js';
+import { importWorkbook, detectLeague } from '../graphics/js/importer.js';
 import { bindComparison, bindTeamstats, bindRowList } from '../graphics/js/binders.js';
 import { templateById } from '../graphics/js/templates.js';
 
@@ -257,4 +257,71 @@ test('a team whose European run is over: schedule shows only NB I/A games, no em
   assert.equal(sch.games.length, 6);
   for (let i = 0; i < 6; i++) assert.equal(sch.values[`r${i}.comp`].src, '');
   assert.ok(store.cupFixtures('women', 'dvtkhuntherm').length === 3, 'the played ones stay available for results');
+});
+
+// ───────────── text copied from an eredmenyek.com team page ─────────────
+import { parseEredmenyekText } from '../graphics/js/importer.js';
+const paste = () => readFileSync(path.join(ROOT, 'tests/fixtures/eredmenyek-paste.txt'), 'utf8');
+const NOW = new Date('2026-11-21T10:00:00Z');
+
+test('eredmenyek.com paste: DVTK page → 2 EuroCup games, the 7 NB I games are skipped (already in the dashboard)', () => {
+  const p = parseEredmenyekText(paste(), NOW);
+  assert.equal(p.gamesFound, 9);
+  assert.equal(p.imported, 2);
+  assert.deepEqual(p.skipped, [{ name: 'NB I - női', n: 7 }]);
+  assert.equal(p.unparsed, 0);
+  const rows = p.workbook.sheets[0].rows.slice(1);
+  assert.deepEqual(rows.map(r => r.slice(0, 5)), [
+    ['2026-11-25', '18:00', 'DVTK', 'Brod na Savi', 'EuroCup - női'],
+    ['2026-12-02', '18:00', 'DVTK', 'Jairis', 'EuroCup - női'],
+  ]);
+  const wb = p.workbook;
+  const d = detectLeague(wb, 'men');
+  assert.equal(d.league, 'women');
+  const imp = importWorkbook(wb, 'women');
+  assert.equal(imp.cupCount, 2);
+  assert.deepEqual(imp.cups.map(g => g.compKey), ['comp/eurocup-women', 'comp/eurocup-women']);
+  assert.equal(imp.cups[0].homeId, 'dvtkhuntherm');
+  assert.equal(imp.cups[0].awayId, null);
+  assert.deepEqual(imp.unmatched, []);
+});
+
+test('eredmenyek.com paste: dates without a year follow the season, explicit years are kept, played games read tolerantly', () => {
+  const t = `[EuroLeague - női](x)
+EURÓPA:
+05.01. 19:00
+DVTK NDVTK N
+Foo NFoo N
+--
+30.09. 18:00
+DVTK NDVTK N
+Bar NBar N
+66
+71
+--
+12.03.2027 17:00
+Baz NBaz N
+DVTK NDVTK N
+80-75`;
+  const p = parseEredmenyekText(t, NOW);
+  const rows = p.workbook.sheets[0].rows.slice(1);
+  assert.deepEqual(rows.map(r => r[0]), ['2027-01-05', '2026-09-30', '2027-03-12'], 'Jan → next year, Sep → this season');
+  assert.deepEqual(rows.map(r => r[5]), ['', '66-71', '80-75']);
+});
+
+test('pasted games merge with NB I/A games on the schedule: 22.11 Csata, 25.11 Brod, 28.11 Sopron, 02.12 Jairis …', async () => {
+  const store = await loadStore(new Date('2026-11-21T10:00:00Z'));
+  const imp = importWorkbook(parseEredmenyekText(paste(), NOW).workbook, 'women');
+  store.mergeExcel('women', imp, { name: 'Beillesztett szöveg' });
+  const sch = bindRowList(store, 'women', 'dvtkhuntherm', templateById('schedule-women'));
+  const order = sch.games.map(m => `${m.date.slice(5)} ${m.cup ? 'EU' : 'NB'}`);
+  assert.deepEqual(order, ['11-22 NB', '11-25 EU', '11-28 NB', '12-02 EU', '12-05 NB', '12-09 NB'], order.join(', '));
+  const eu = sch.games.findIndex(m => m.cup && m.away === 'Brod na Savi');
+  assert.equal(sch.values[`r${eu}.date`].text, '2026.11.25. - 18:00');
+  assert.equal(sch.values[`r${eu}.match`].text, 'DVTK Huntherm - Brod na Savi');
+  assert.equal(sch.values[`r${eu}.comp`].src, 'comp/eurocup-women');
+  // pasting the same page again does not duplicate the games; a sheet row for the same game replaces it
+  store.mergeExcel('women', imp, { name: 'Beillesztett szöveg' });
+  store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'cups-women.xlsx' });
+  assert.equal(store.cupFixtures('women', 'dvtkhuntherm').filter(m => m.date === '2026-11-25').length, 1);
 });

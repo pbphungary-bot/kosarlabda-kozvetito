@@ -176,7 +176,7 @@ export class Store {
     for (const [id, v] of Object.entries(imp.team || {})) x.team[id] = { ...(x.team[id] || {}), ...v };
     Object.assign(x.players, imp.players || {});
     x.cups = x.cups || {};
-    for (const g of imp.cups || []) x.cups[`${g.date}|${g.home}|${g.away}`] = g;
+    for (const g of imp.cups || []) x.cups[`${g.date}|${g.homeId || g.home}|${g.awayId || g.away}`] = g;
     x.meta = x.meta || { files: [] };
     x.meta.files = [...(x.meta.files || []).filter(f => f.name !== file.name), { name: file.name, modified: file.modified || null, importedAt: new Date().toISOString() }];
     x.enabled = true;
