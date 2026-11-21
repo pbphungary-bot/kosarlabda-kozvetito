@@ -540,6 +540,115 @@ try {
     await page.waitForTimeout(300);
     assert.equal(await page.locator('.field[data-id="away.name"] input.sz').inputValue(), '');
   });
+  await check('layout editor: drag, snap, keyboard, inspector, global move, benchmark ("alap"), saved layouts', async () => {
+    await page.evaluate(() => { localStorage.clear(); });
+    await page.reload();
+    await page.waitForSelector('body[data-ready="1"]');
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="intro-women"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#matchSel', '__custom');
+    await page.selectOption('#customHome', 'dvtkhuntherm');
+    await page.selectOption('#customAway', 'csatattk');
+    await page.waitForTimeout(400);
+    await page.locator('#layoutBox summary').click();
+    await page.check('#editMode');
+    await page.waitForTimeout(300);
+    const val = (id, k) => page.evaluate(([i, kk]) => window.__studio.current().values[i]?.[kk], [id, k]);
+    assert.ok(await page.locator('.hit[data-id="home.logo"]').count() === 1, 'drag handle for the home logo');
+    assert.ok(await page.locator('.hit[data-id="home.name"]').count() === 1);
+    // ----- drag the home logo by (+120, +60) screen px
+    const scale = await page.evaluate(() => 1920 / document.getElementById('canvas').getBoundingClientRect().width);
+    const box = await page.locator('.hit[data-id="home.logo"]').boundingBox();
+    const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
+    await page.mouse.move(cx, cy); await page.mouse.down();
+    await page.mouse.move(cx + 60, cy + 30, { steps: 4 }); await page.mouse.move(cx + 120, cy + 60, { steps: 4 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    const dx = await val('home.logo', 'dx'), dy = await val('home.logo', 'dy');
+    assert.ok(Math.abs(dx - Math.round(120 * scale)) <= 2 && Math.abs(dy - Math.round(60 * scale)) <= 2, `moved by ${dx},${dy} (scale ${scale})`);
+    assert.equal(await page.locator('.hit.sel').getAttribute('data-id'), 'home.logo');
+    assert.ok(await page.locator('#overlay .ghost').count() === 1, 'ghost shows the PSD position');
+    // ----- snap back to the PSD position within 6 px
+    const box2 = await page.locator('.hit[data-id="home.logo"]').boundingBox();
+    const sx = box2.x + box2.width / 2, sy = box2.y + box2.height / 2;
+    await page.mouse.move(sx, sy); await page.mouse.down();
+    await page.mouse.move(sx - dx / scale + 2, sy - dy / scale + 1, { steps: 6 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    assert.equal(await val('home.logo', 'dx') || 0, 0, 'snapped to the PSD x');
+    assert.equal(await val('home.logo', 'dy') || 0, 0, 'snapped to the PSD y');
+    // ----- keyboard nudge (needs focus outside the inputs)
+    await page.locator('.hit[data-id="home.logo"]').click();
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('Shift+ArrowDown');
+    await page.waitForTimeout(200);
+    assert.equal(await val('home.logo', 'dx'), 1); assert.equal(await val('home.logo', 'dy'), 10);
+    // ----- inspector: exact values, scale of an image
+    await page.fill('#iX', '30');
+    await page.fill('#iY', '-12');
+    await page.fill('#iS', '80');
+    await page.waitForTimeout(300);
+    assert.equal(await val('home.logo', 'dx'), 30); assert.equal(await val('home.logo', 'dy'), -12);
+    assert.equal(await val('home.logo', 'scale'), 0.8);
+    const b1 = await page.evaluate(() => window.__studio.report().boxes['home.logo']);
+    // ----- group move: logo + name + rank of "Hazai" travel together
+    await page.check('#groupMove');
+    await page.waitForTimeout(100);
+    // ----- global move / scale of the whole graphic
+    await page.fill('#gX', '40'); await page.fill('#gS', '90');
+    await page.waitForTimeout(300);
+    const gl = await page.evaluate(() => window.__studio.report().global);
+    assert.deepEqual([gl.dx, gl.scale], [40, 0.9]);
+    await page.fill('#gX', ''); await page.fill('#gS', '');
+    await page.uncheck('#groupMove');
+    // ----- benchmark: save, the session changes are cleared, the benchmark keeps working
+    await page.click('#benchSave');
+    await page.waitForTimeout(400);
+    assert.equal(await val('home.logo', 'dx'), 30);
+    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('nbia.studio.layouts.v1')));
+    assert.deepEqual(stored['intro-women'].benchmark.items['home.logo'], { dx: 30, dy: -12, scale: 0.8 });
+    assert.match(await page.locator('#benchState').innerText(), /mentve/);
+    // a different game starts from the benchmark
+    await page.selectOption('#customAway', 'sopronbasket');
+    await page.waitForTimeout(400);
+    assert.equal(await val('home.logo', 'dx'), 30, 'new game starts from the benchmark');
+    // the benchmark survives a reload
+    await page.reload();
+    await page.waitForSelector('body[data-ready="1"]');
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.waitForTimeout(500);
+    assert.equal(await val('home.logo', 'dx'), 30);
+    // ----- exported PNG is still 1920 x 1080
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'intro-women-moved.png'));
+    assert.equal(pngInfo(readFileSync(path.join(out, 'intro-women-moved.png'))).width, 1920);
+    await page.screenshot({ path: path.join(out, 'ui-layout-editor.png') });
+    // ----- named layout: save, drop the benchmark (PSD), load it again
+    await page.fill('#layName', 'Teszt elrendezés');
+    await page.click('#laySave');
+    await page.waitForTimeout(300);
+    await page.click('#benchClear');
+    await page.waitForTimeout(300);
+    assert.equal(await val('home.logo', 'dx') || 0, 0, 'back at the PSD layout');
+    await page.selectOption('#layList', 'Teszt elrendezés');
+    await page.click('#layLoad');
+    await page.waitForTimeout(300);
+    assert.equal(await val('home.logo', 'dx'), 30);
+    await page.click('#layDiscard');
+    await page.waitForTimeout(300);
+    assert.equal(await val('home.logo', 'dx') || 0, 0);
+    // per-element reset
+    await page.check('#editMode');
+    await page.locator('.hit[data-id="home.name"]').click();
+    await page.fill('#iY', '15');
+    await page.waitForTimeout(200);
+    assert.equal(await val('home.name', 'dy'), 15);
+    await page.click('#iReset');
+    await page.waitForTimeout(300);
+    assert.equal(await val('home.name', 'dy') || 0, 0);
+    await page.evaluate(() => { localStorage.clear(); });
+  });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

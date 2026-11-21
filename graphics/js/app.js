@@ -1,5 +1,6 @@
 import { loadDashboard, LEAGUES, SOURCES, gameKey } from './data.js';
 import { readFile } from './xlsx.js';
+import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
@@ -10,7 +11,7 @@ import {
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const LS = { state: 'nbia.studio.state.v1', presets: 'nbia.studio.presets.v1', venues: 'nbia.studio.venues.v1', excel: 'nbia.studio.excel.v1' };
+const LS = { state: 'nbia.studio.state.v1', presets: 'nbia.studio.presets.v1', venues: 'nbia.studio.venues.v1', excel: 'nbia.studio.excel.v1', layouts: 'nbia.studio.layouts.v1' };
 const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ } };
 
@@ -28,6 +29,12 @@ const state = Object.assign({
   baseOpacity: 0.965, // court/panel opacity of the export; null = the PSD's own value
 }, lsGet(LS.state, {}));
 let store = null;
+// saved layouts per template: { [templateId]: { benchmark: {items} | null, saved: { [name]: {items} } } }
+state.layouts = lsGet(LS.layouts, {});
+const persistLayouts = () => lsSet(LS.layouts, state.layouts);
+const layoutsOf = tid => (state.layouts[tid] ||= { benchmark: null, saved: {} });
+const bench = () => layoutsOf(tpl().id).benchmark;
+let selectedId = null; // element selected in the layout editor
 let fontsOk = false;
 const images = {};
 const measureCanvas = document.createElement('canvas').getContext('2d');
@@ -65,10 +72,11 @@ const overrides = () => (state.overrides[ovKey()] ||= {});
 function renderFreshness() {
   const lg = state.league;
   const f = store.freshness(lg);
-  const names = { fixtures: 'Menetrend', referees: 'Játékvezetők', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat' };
+  const names = { fixtures: 'Menetrend', referees: 'Játékvezetők', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat', cups: 'Európai meccsek' };
   const fmt = iso => { const d = new Date(iso); return d.toLocaleString('hu-HU', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }); };
   const parts = Object.keys(SOURCES).map(k => {
     const x = f[k];
+    if (!x && SOURCES[k].optional) return '';
     if (!x) return `<span class="err" title="Nem tölthető be">${names[k]}: hiányzik</span>`;
     const age = x.hours === null ? '?' : x.hours < 1 ? '<1 ó' : x.hours < 48 ? `${Math.round(x.hours)} ó` : `${Math.round(x.hours / 24)} nap`;
     return `<span class="${x.stale ? 'stale' : ''}" title="Frissítve: ${esc(x.updated_at)}">${names[k]}: ${fmt(x.updated_at)} (${age})</span>`;
@@ -263,11 +271,15 @@ function mergedValues(auto) {
     if (ov.color) { x.color = ov.color; x.overridden = true; }
     if (ov.src !== undefined) { x.src = ov.src; x.overridden = true; }
     if (ov.visible !== undefined) x.visible = ov.visible;
-    if (ov.size > 0) x.size = ov.size;
-    if (ov.dy) x.dy = ov.dy;
+    const lay = LAY.effective(bench(), o, el.id);
+    if (lay.size > 0) x.size = lay.size;
+    if (lay.dx) x.dx = lay.dx;
+    if (lay.dy) x.dy = lay.dy;
+    if (lay.scale > 0 && lay.scale !== 1) x.scale = lay.scale;
     if (el.runs && !x.runs && x.text !== undefined) x.runs = [{ text: x.text }];
     out[el.id] = x;
   }
+  out[LAY.GLOBAL] = LAY.effective(bench(), o, LAY.GLOBAL);
   return out;
 }
 
@@ -284,7 +296,7 @@ function renderFields(values, auto) {
   for (const el of t.elements) {
     const v = values[el.id], a = auto[el.id] || {};
     const ov = o[el.id] || {};
-    const isOv = ov.text !== undefined || ov.color || ov.src !== undefined || ov.visible !== undefined || ov.size > 0 || !!ov.dy;
+    const isOv = ov.text !== undefined || ov.color || ov.src !== undefined || ov.visible !== undefined || LAY.KEYS.some(k => ov[k] !== undefined);
     const missing = v.missing && !isOv;
     if (only && !missing && !isOv) continue;
     if (el.group !== group) { group = el.group; html += `<div class="group-title">${esc(group)}</div>`; }
@@ -311,7 +323,8 @@ function renderFields(values, auto) {
         ${isOv ? '<button class="reset" title="Vissza az automatikusra">↺</button>' : ''}</div>`;
       if (el.adjust) {
         html += `<div class="adj"><label>Betűméret (px) <input type="number" class="sz" min="10" max="300" step="1" placeholder="${Math.round(lastReport?.sizes?.[el.id] ?? el.size)}" value="${ov.size || ''}"></label>
-          <label>Fel / le (px) <input type="number" class="dy" step="1" placeholder="0" value="${ov.dy || ''}"></label></div>`;
+          <label>Balra / jobbra (px) <input type="number" class="dx" step="1" placeholder="${bench()?.items?.[el.id]?.dx || 0}" value="${ov.dx ?? ''}"></label>
+          <label>Fel / le (px) <input type="number" class="dy" step="1" placeholder="${bench()?.items?.[el.id]?.dy || 0}" value="${ov.dy ?? ''}"></label></div>`;
       }
     }
     if (missing) html += `<div class="flag">Hiányzó adat – az adásban „${MISSING}” jelenne meg.</div>`;
@@ -335,13 +348,14 @@ function onFieldEvent(e) {
   else if (e.target.classList.contains('color')) { if (e.target.value) cur.color = e.target.value; else delete cur.color; }
   else if (e.target.classList.contains('src')) cur.src = e.target.value;
   else if (e.target.classList.contains('sz')) { const n = parseFloat(e.target.value); if (n > 0) cur.size = n; else delete cur.size; }
-  else if (e.target.classList.contains('dy')) { const n = parseFloat(e.target.value); if (Number.isFinite(n) && n !== 0) cur.dy = n; else delete cur.dy; }
+  else if (e.target.classList.contains('dx')) { const n = parseFloat(e.target.value); if (e.target.value !== '' && Number.isFinite(n)) cur.dx = n; else delete cur.dx; }
+  else if (e.target.classList.contains('dy')) { const n = parseFloat(e.target.value); if (e.target.value !== '' && Number.isFinite(n)) cur.dy = n; else delete cur.dy; }
   else if (e.target.classList.contains('reset')) { delete o[id]; update(true); return; }
   else return;
   if (!Object.keys(cur).length) delete o[id];
   // live state of the field row while typing
   const v = current.auto?.[id] || {};
-  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined || o[id].size > 0 || !!o[id].dy));
+  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined || LAY.KEYS.some(k => o[id][k] !== undefined)));
   f.classList.toggle('missing', !!v.missing && !(o[id] && o[id].text !== undefined));
   const flag = f.querySelector('.flag');
   if (flag) flag.hidden = !f.classList.contains('missing');
@@ -351,7 +365,7 @@ function onFieldEvent(e) {
     if (m && cur.text) { const vs = lsGet(LS.venues, {}); vs[`${state.league}/${m.homeId}`] = cur.text; lsSet(LS.venues, vs); }
   }
   // typing boxes only redraw the graphic: re-building the field list would steal the focus from the box the user clicks next
-  update(e.type === 'change' && !['txt', 'sz', 'dy'].some(c => e.target.classList.contains(c)));
+  update(e.type === 'change' && !['txt', 'sz', 'dx', 'dy'].some(c => e.target.classList.contains(c)));
 }
 
 // ───────────────────────── render ─────────────────────────
@@ -413,10 +427,11 @@ async function update(full) {
         <label>Megjelenő mérkőzések (max. ${t.rows}) ${manual ? '<b>– kézi választás</b>' : '– automatikus'}</label>
         <div class="row2"><select id="gameFilter"><option value="all" ${filter === 'all' ? 'selected' : ''}>Mind</option><option value="nbia" ${filter === 'nbia' ? 'selected' : ''}>Csak NB I/A</option><option value="cup" ${filter === 'cup' ? 'selected' : ''}>Csak kupa-/európai</option></select>
         <button id="gamesAuto" class="ghost" ${manual ? '' : 'disabled'}>Automatikus (${sch ? 'következő' : 'legutóbbi'} ${t.rows})</button></div>
-        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}</small> <button type="button" class="delcup" data-del="${esc(m.cupKey)}" title="Meccs törlése">✕</button>` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
+        <div class="players gamelist">${ordered.slice(0, 60).map(m => `<label><input type="checkbox" value="${esc(gameKey(m))}" ${shownKeys.has(gameKey(m)) ? 'checked' : ''}> ${esc(fmtDate(m.date))} ${esc(nameOf(m))}${m.score ? ' <small>(' + m.score.home + '-' + m.score.away + ')</small>' : ''}${m.cup ? ` <small>· ${esc(m.competition || 'kupa/európai')}${m.auto ? ' · automatikus' : ''}</small> ${m.auto ? '' : `<button type="button" class="delcup" data-del="${esc(m.cupKey)}" title="Meccs törlése">✕</button>`}` : ''}</label>`).join('') || '<small>Nincs ilyen mérkőzés az adatokban.</small>'}</div>`;
     }
     renderSelection({ players: playersHtml, games: gamesHtml });
     renderFields(values, auto);
+    renderLayoutPanel();
     $('fileName').value = fileName(values);
   }
   $('notices').innerHTML = info.notices.map(n => `<div class="notice ${n.bad ? 'bad' : ''}">${esc(n.text)}</div>`).join('');
@@ -424,6 +439,8 @@ async function update(full) {
   if (seq !== updateSeq) return;
   const canvas = $('canvas');
   lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+  renderOverlay();
+  renderLayoutState();
   document.querySelectorAll('#fields .field input.sz').forEach(inp => {
     const sz = lastReport.sizes[inp.closest('.field').dataset.id];
     if (sz) inp.placeholder = Math.round(sz);
@@ -540,6 +557,193 @@ function previewImports() {
   if (ca) ca.onclick = () => { pendingImports = []; $('importPreview').innerHTML = ''; };
 }
 
+// ───────────────────────── layout editor (move elements, benchmark) ─────────────────────────
+state.snap = true; state.groupMove = false; state.editMode = false;
+const elById = id => tpl().elements.find(e => e.id === id);
+const ovFor = id => (overrides()[id] ||= {});
+const effOf = id => LAY.effective(bench(), overrides(), id);
+
+function renderLayoutPanel() {
+  const L = layoutsOf(tpl().id), names = Object.keys(L.saved);
+  const g = overrides()[LAY.GLOBAL] || {}, gb = bench()?.items?.[LAY.GLOBAL] || {};
+  $('layoutPanel').innerHTML = `
+    <label class="chk"><input type="checkbox" id="editMode" ${state.editMode ? 'checked' : ''}> Szerkesztés: elemek húzása az előnézeten (kijelölt elem: nyilak 1 px, Shift+nyíl 10 px, Esc)</label>
+    <div class="lay-row">
+      <label class="chk"><input type="checkbox" id="snapOn" ${state.snap ? 'checked' : ''}> Rögzítés a PSD / az alap helyéhez (Alt húzás közben: ki)</label>
+      <label class="chk"><input type="checkbox" id="groupMove" ${state.groupMove ? 'checked' : ''}> Csoport együtt mozog (egy sor; hazai / vendég) – Shift húzás közben: fordítva</label>
+    </div>
+    <div class="lay-row"><b>Teljes grafika:</b> Balra/jobbra <input type="number" id="gX" step="1" placeholder="${gb.dx || 0}" value="${g.dx ?? ''}">
+      Fel/le <input type="number" id="gY" step="1" placeholder="${gb.dy || 0}" value="${g.dy ?? ''}">
+      Méret (%) <input type="number" id="gS" step="1" min="10" max="300" placeholder="${Math.round((gb.scale || 1) * 100)}" value="${g.scale ? Math.round(g.scale * 100) : ''}"></div>
+    <div id="inspector" class="insp empty"></div>
+    <div class="lay-row"><b>Alap (benchmark):</b> <span id="benchState"></span>
+      <button id="benchSave" title="A jelenlegi elrendezés lesz az alap: minden új meccs ebből indul">Mentés alapként</button>
+      <button id="layDiscard" class="ghost">Nem mentett módosítások eldobása</button>
+      <button id="benchClear" class="ghost" title="Visszaáll a PSD eredeti elrendezése">Alap törlése (PSD)</button></div>
+    <div class="lay-row"><b>Mentett elrendezések:</b>
+      <select id="layList">${names.map(n => `<option>${esc(n)}</option>`).join('') || '<option value="">– nincs –</option>'}</select>
+      <button id="layLoad" ${names.length ? '' : 'disabled'}>Betöltés</button><button id="layDel" class="ghost" ${names.length ? '' : 'disabled'}>Törlés</button>
+      <input id="layName" placeholder="Név (pl. Hosszú nevek)"><button id="laySave">Mentés névvel</button></div>
+    <p class="hint">Az „alap” sablononként érvényes és böngészőben tárolódik; az Exportálás (JSON) gomb a mentett beállításokkal együtt az elrendezéseket is menti.</p>`;
+  renderInspector();
+  renderLayoutState();
+}
+
+function renderLayoutState() {
+  const n = LAY.unsavedCount(overrides());
+  const b = bench(), saved = b ? Object.keys(b.items).length : 0;
+  if ($('benchState')) $('benchState').textContent = saved ? `mentve (${saved} elem módosítva a PSD-hez képest)` : 'a PSD eredeti elrendezése';
+  if ($('layoutState')) $('layoutState').textContent = n ? `· ${n} nem mentett módosítás` : (saved ? '· alap érvényben' : '');
+}
+
+function renderInspector() {
+  const box = $('inspector');
+  if (!box) return;
+  const el = selectedId && elById(selectedId);
+  if (!el) { box.className = 'insp empty'; box.textContent = 'Nincs kijelölt elem – kapcsold be a szerkesztést, és kattints egy elemre az előnézeten.'; return; }
+  const eff = effOf(selectedId);
+  box.className = 'insp';
+  const sizeBox = el.type === 'text'
+    ? `Betűméret (px) <input type="number" id="iS" min="10" max="300" step="1" value="${eff.size > 0 ? eff.size : ''}" placeholder="${Math.round(lastReport?.sizes?.[el.id] ?? el.size)}">`
+    : `Méret (%) <input type="number" id="iS" min="10" max="400" step="1" value="${Math.round((eff.scale > 0 ? eff.scale : 1) * 100)}">`;
+  box.innerHTML = `<div class="lay-row"><b>${esc(el.label || el.id)}</b><small>${esc(el.group || '')}</small>
+    Balra/jobbra (px) <input type="number" id="iX" step="1" value="${eff.dx || 0}"> Fel/le (px) <input type="number" id="iY" step="1" value="${eff.dy || 0}"> ${sizeBox}
+    <button id="iReset">Elem a PSD helyére</button></div>`;
+}
+
+function selectElement(id) {
+  selectedId = id;
+  document.querySelectorAll('#fields .field').forEach(f => f.classList.toggle('sel', f.dataset.id === id));
+  if (id) document.querySelector(`#fields .field[data-id="${CSS.escape(id)}"]`)?.scrollIntoView({ block: 'nearest' });
+  renderOverlay();
+  renderInspector();
+}
+
+function renderOverlay() {
+  const ov = $('overlay');
+  if (!ov) return;
+  ov.classList.toggle('on', !!state.editMode);
+  if (!state.editMode) return;
+  const boxes = lastReport?.boxes || {}, g = lastReport?.global;
+  const ids = Object.keys(boxes).sort((a, b) => boxes[b][2] * boxes[b][3] - boxes[a][2] * boxes[a][3]); // big first: small elements stay on top
+  const present = new Set(ids);
+  ov.querySelectorAll('.hit').forEach(d => { if (!present.has(d.dataset.id)) d.remove(); });
+  ids.forEach((id, i) => {
+    let d = ov.querySelector(`.hit[data-id="${CSS.escape(id)}"]`);
+    if (!d) { d = document.createElement('div'); d.className = 'hit'; d.dataset.id = id; ov.appendChild(d); }
+    const [x, y, w, h] = LAY.toCanvas(boxes[id], g);
+    Object.assign(d.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%`, zIndex: i + 1 });
+    d.title = `${elById(id)?.label || id} – húzd, vagy jelöld ki`;
+    d.classList.toggle('sel', id === selectedId);
+  });
+  // ghost: where the selected element sits in the PSD
+  let ghost = ov.querySelector('.ghost');
+  const eff = selectedId ? effOf(selectedId) : null;
+  if (eff && (eff.dx || eff.dy) && boxes[selectedId]) {
+    const [bx, by, bw, bh] = boxes[selectedId];
+    const [x, y, w, h] = LAY.toCanvas([bx - (eff.dx || 0), by - (eff.dy || 0), bw, bh], g);
+    if (!ghost) { ghost = document.createElement('div'); ghost.className = 'ghost'; ov.appendChild(ghost); }
+    Object.assign(ghost.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%` });
+  } else ghost?.remove();
+}
+
+let drag = null, redrawQueued = false;
+function scheduleRedraw() {
+  if (redrawQueued) return;
+  redrawQueued = true;
+  requestAnimationFrame(() => { redrawQueued = false; update(false); });
+}
+
+function wireLayoutEditor() {
+  const ov = $('overlay');
+  ov.addEventListener('pointerdown', e => {
+    const hit = e.target.closest('.hit');
+    if (!hit) return;
+    e.preventDefault();
+    document.activeElement?.blur?.(); // a focused dropdown / box would swallow the arrow keys
+    hit.setPointerCapture(e.pointerId);
+    const id = hit.dataset.id;
+    selectElement(id);
+    const grp = elById(id)?.group;
+    const together = grp && (state.groupMove !== !!e.shiftKey);
+    const ids = together ? tpl().elements.filter(x => x.group === grp && lastReport.boxes[x.id]).map(x => x.id) : [id];
+    drag = { id, ids, x0: e.clientX, y0: e.clientY, moved: false, start: Object.fromEntries(ids.map(i => [i, { dx: effOf(i).dx || 0, dy: effOf(i).dy || 0 }])) };
+  });
+  ov.addEventListener('pointermove', e => {
+    if (!drag) return;
+    if (!drag.moved && Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 3) return;
+    drag.moved = true;
+    const rect = $('canvas').getBoundingClientRect();
+    const k = 1920 / rect.width / (lastReport?.global?.scale || 1); // screen px → template px
+    const s0 = drag.start[drag.id], b = bench()?.items?.[drag.id] || {};
+    let ndx = s0.dx + (e.clientX - drag.x0) * k, ndy = s0.dy + (e.clientY - drag.y0) * k;
+    if (state.snap && !e.altKey) { ndx = LAY.snap(ndx, [0, b.dx || 0]); ndy = LAY.snap(ndy, [0, b.dy || 0]); }
+    const ddx = Math.round(ndx) - s0.dx, ddy = Math.round(ndy) - s0.dy;
+    for (const i of drag.ids) { const o = ovFor(i); o.dx = drag.start[i].dx + ddx; o.dy = drag.start[i].dy + ddy; }
+    scheduleRedraw();
+  });
+  const end = () => { if (!drag) return; const d = drag; drag = null; if (d.moved) { saveState(); renderInspector(); renderLayoutState(); } };
+  ov.addEventListener('pointerup', end);
+  ov.addEventListener('pointercancel', end);
+
+  document.addEventListener('keydown', e => {
+    if (!state.editMode || !selectedId) return;
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+    if (e.key === 'Escape') { selectElement(null); return; }
+    const step = e.shiftKey ? 10 : 1;
+    const d = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
+    if (!d) return;
+    e.preventDefault();
+    const eff = effOf(selectedId), o = ovFor(selectedId);
+    o.dx = (eff.dx || 0) + d[0]; o.dy = (eff.dy || 0) + d[1];
+    update(false); saveState(); renderInspector();
+  });
+
+  const panel = $('layoutPanel');
+  panel.addEventListener('change', e => {
+    if (e.target.id === 'editMode') { state.editMode = e.target.checked; renderOverlay(); }
+    if (e.target.id === 'snapOn') state.snap = e.target.checked;
+    if (e.target.id === 'groupMove') state.groupMove = e.target.checked;
+  });
+  panel.addEventListener('input', e => {
+    const id = e.target.id, v = e.target.value, n = parseFloat(v), has = v !== '' && Number.isFinite(n);
+    const setKey = (o, key, val) => { if (val === undefined) delete o[key]; else o[key] = val; };
+    if (['gX', 'gY', 'gS'].includes(id)) {
+      const o = ovFor(LAY.GLOBAL);
+      setKey(o, { gX: 'dx', gY: 'dy', gS: 'scale' }[id], has ? (id === 'gS' ? n / 100 : n) : undefined);
+      if (!Object.keys(o).length) delete overrides()[LAY.GLOBAL];
+    } else if (['iX', 'iY', 'iS'].includes(id) && selectedId) {
+      const o = ovFor(selectedId), el = elById(selectedId);
+      if (id === 'iX') setKey(o, 'dx', has ? n : undefined);
+      else if (id === 'iY') setKey(o, 'dy', has ? n : undefined);
+      else if (el.type === 'text') setKey(o, 'size', has ? n : undefined);
+      else setKey(o, 'scale', has ? n / 100 : undefined);
+    } else return;
+    update(false); saveState();
+  });
+  panel.addEventListener('click', e => {
+    const id = e.target.id, L = layoutsOf(tpl().id);
+    if (id === 'benchSave') {
+      const lay = LAY.extract(tpl(), bench(), overrides());
+      L.benchmark = Object.keys(lay.items).length ? lay : null;
+      LAY.dropLayoutKeys(overrides()); persistLayouts(); saveState(); update(true);
+      toast(L.benchmark ? 'Elrendezés mentve alapként – minden új meccs ebből indul' : 'Nincs módosítás: az alap a PSD eredeti elrendezése');
+    } else if (id === 'layDiscard') { LAY.dropLayoutKeys(overrides()); saveState(); update(true); }
+    else if (id === 'benchClear') { L.benchmark = null; LAY.dropLayoutKeys(overrides()); persistLayouts(); saveState(); update(true); toast('Alap törölve: PSD eredeti elrendezés'); }
+    else if (id === 'laySave') {
+      const name = $('layName').value.trim() || `Elrendezés ${Object.keys(L.saved).length + 1}`;
+      L.saved[name] = LAY.extract(tpl(), bench(), overrides()); persistLayouts(); renderLayoutPanel(); toast('Elrendezés mentve: ' + name);
+    } else if (id === 'layLoad' && L.saved[$('layList').value]) {
+      LAY.dropLayoutKeys(overrides()); LAY.applyToOverrides(overrides(), L.saved[$('layList').value], bench()); saveState(); update(true);
+      toast('Betöltve: ' + $('layList').value + ' (nem mentett módosításként; „Mentés alapként” rögzíti)');
+    } else if (id === 'layDel' && L.saved[$('layList').value]) {
+      if (confirm('Törlöd a mentett elrendezést?')) { delete L.saved[$('layList').value]; persistLayouts(); renderLayoutPanel(); }
+    } else if (id === 'iReset' && selectedId) {
+      Object.assign(ovFor(selectedId), { dx: 0, dy: 0, size: 0, scale: 1 }); update(true); saveState();
+    }
+  });
+}
+
 // ───────────────────────── wiring ─────────────────────────
 async function switchLeague(lg, keep) {
   state.league = lg;
@@ -597,7 +801,7 @@ async function main() {
     if (e.target.dataset.del && confirm('Törlöd a mentett beállítást?')) { list.splice(+e.target.dataset.del, 1); lsSet(LS.presets, list); renderPresets(); }
   };
   $('exportPresets').onclick = () => {
-    const blob = new Blob([JSON.stringify({ presets: lsGet(LS.presets, []), venues: lsGet(LS.venues, {}) }, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify({ presets: lsGet(LS.presets, []), venues: lsGet(LS.venues, {}), layouts: state.layouts }, null, 2)], { type: 'application/json' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'grafika-studio-beallitasok.json'; a.click();
   };
   $('importPresets').onchange = async e => {
@@ -607,6 +811,7 @@ async function main() {
       for (const p of j.presets || []) { const i = list.findIndex(x => x.name === p.name); if (i >= 0) list[i] = p; else list.push(p); }
       lsSet(LS.presets, list);
       lsSet(LS.venues, { ...lsGet(LS.venues, {}), ...(j.venues || {}) });
+      if (j.layouts) { state.layouts = { ...state.layouts, ...j.layouts }; persistLayouts(); }
       renderPresets(); toast(`${(j.presets || []).length} beállítás importálva`);
     } catch (err) { toast('Hibás fájl: ' + err.message); }
     e.target.value = '';
@@ -640,6 +845,10 @@ async function main() {
     pendingImports = [{ file: { name: 'Beillesztett szöveg (eredmenyek.com)', modified: now.toISOString() }, league: d.league, certain: d.certain, imp }];
     previewImports();
   };
+  wireLayoutEditor();
+  const lb = $('layoutBox'); // remember whether the layout box was open
+  lb.open = !!lsGet('nbia.studio.layoutOpen', false);
+  lb.addEventListener('toggle', () => lsSet('nbia.studio.layoutOpen', lb.open));
   $('quickCup').onclick = async () => {
     const lg = state.league;
     if (!['results', 'schedule', 'resultrows'].includes(tpl().type)) state.template[lg] = `schedule-${lg}`;

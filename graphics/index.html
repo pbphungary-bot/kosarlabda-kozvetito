@@ -62,7 +62,11 @@
       </div>
       <div id="dims" class="dims"></div>
     </div>
-    <div id="stage" class="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div>
+    <details class="layoutbox" id="layoutBox">
+      <summary>Elrendezés – elemek mozgatása és „alap” <span id="layoutState"></span></summary>
+      <div id="layoutPanel"></div>
+    </details>
+    <div id="stage" class="stage"><div class="canvas-wrap"><canvas id="canvas" width="1920" height="1080"></canvas><div id="overlay" class="overlay"></div></div></div>
     <div id="renderReport" class="render-report"></div>
     <div class="export-bar">
       <input id="fileName" spellcheck="false" aria-label="Fájlnév">

@@ -148,8 +148,13 @@ function drawText(ctx, el, v, report) {
     let x = el.x;
     if (el.align === 'center') x = el.x - w / 2;
     else if (el.align === 'right') x = el.x - w;
-    return { runs: shaped, x, y: y0 + i * lhs };
+    return { runs: shaped, x, y: y0 + i * lhs, w };
   });
+  if (placed.length) { // box of the drawn text, used by the layout editor (drag handles)
+    const minX = Math.min(...placed.map(p => p.x)), maxX = Math.max(...placed.map(p => p.x + p.w));
+    const top = placed[0].y - sz * 0.8, bottom = placed.at(-1).y + sz * 0.15;
+    report.boxes[el.id] = [minX, top, maxX - minX, bottom - top];
+  }
   ctx.save();
   ctx.globalAlpha = el.opacity ?? 1; // layer opacity from the PSD (e.g. 98.8 %)
   if (style.outline && style.outline.size > 0) {
@@ -183,10 +188,11 @@ function silhouette(img, w, h, color) {
   return c;
 }
 
-function drawImage(ctx, el, v, assets) {
+function drawImage(ctx, el, v, assets, report) {
   const img = assets.images[v.src];
   if (!img) return;
   const [x, y, w, h] = fitBox(el, img.width, img.height);
+  report.boxes[el.id] = [x, y, w, h];
   let outline = v.outline !== undefined ? v.outline
     : (el.outlineBySrc && v.src in el.outlineBySrc) ? el.outlineBySrc[v.src]
       : el.logoOutline ? (assets.outlines?.[v.src] || null) : (el.outline || null);
@@ -241,18 +247,37 @@ export function render(canvas, template, values, assets) {
   canvas.height = template.height;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (assets.background) ctx.drawImage(assets.background, 0, 0, template.width, template.height);
-  applyBaseOpacity(ctx, template, assets.baseOpacity);
-  const report = { overflow: [], scaled: [], sizes: {} };
+  // base graphic (court + panel) with its opacity, on its own canvas so that the whole graphic can be moved / scaled
+  let bgLayer = null;
+  if (assets.background) {
+    bgLayer = new OffscreenCanvas(template.width, template.height);
+    const bctx = bgLayer.getContext('2d');
+    bctx.drawImage(assets.background, 0, 0, template.width, template.height);
+    applyBaseOpacity(bctx, template, assets.baseOpacity);
+  }
+  const G = values.__global || {};
+  const gs = G.scale > 0 ? G.scale : 1, gdx = G.dx || 0, gdy = G.dy || 0;
+  const report = { overflow: [], scaled: [], sizes: {}, boxes: {}, global: { dx: gdx, dy: gdy, scale: gs } };
+  ctx.save();
+  ctx.translate(template.width / 2 + gdx, template.height / 2 + gdy);
+  ctx.scale(gs, gs);
+  ctx.translate(-template.width / 2, -template.height / 2);
+  if (bgLayer) ctx.drawImage(bgLayer, 0, 0);
   for (const base of template.elements) {
     const v = values[base.id] || {};
     let el = v.geom ? { ...base, ...v.geom } : base;
-    // manual font size (px) and vertical offset (px) from the editor
+    // manual font size (px) of text
     if (el.type === 'text' && v.size > 0) {
       const k = v.size / el.size;
       el = { ...el, size: v.size, lineHeight: el.lineHeight ? el.lineHeight * k : undefined, fitLocked: true };
     }
-    if (el.type === 'text' && v.dy) el = { ...el, y: el.y + v.dy };
+    // manual move (px) and image scale from the layout editor
+    if (el.type === 'text' && (v.dx || v.dy)) el = { ...el, x: el.x + (v.dx || 0), y: el.y + (v.dy || 0) };
+    if (el.type === 'image' && (v.dx || v.dy || (v.scale > 0 && v.scale !== 1))) {
+      const k = v.scale > 0 ? v.scale : 1;
+      const [cx, cy, mw, mh] = el.box;
+      el = { ...el, box: [cx + (v.dx || 0), cy + (v.dy || 0), mw * k, mh * k], area: el.area ? el.area * k * k : el.area };
+    }
     if (el.compactWith) {
       const rv = values[el.compactWith] || {};
       const re = template.elements.find(e => e.id === el.compactWith);
@@ -261,8 +286,9 @@ export function render(canvas, template, values, assets) {
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
     if (el.type === 'text') drawText(ctx, el, v, report);
-    else if (el.type === 'image') drawImage(ctx, el, v, assets);
+    else if (el.type === 'image') drawImage(ctx, el, v, assets, report);
   }
+  ctx.restore();
   return report;
 }
 
