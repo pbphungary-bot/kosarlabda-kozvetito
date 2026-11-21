@@ -28,6 +28,8 @@ A **játékvezetők, az MKOSZ ellenőr és az intro helyszíne** automatikusan j
 A játékvezetőket a szövetség a meccs előtt néhány nappal teszi közzé: ami még nincs kiírva, az piros „hiányzó adat”, kézzel írható be.
 Kupa-/európai meccsek: lásd lent.
 
+> A feltöltött Excel a **FullField.info** exportja (férfi és női): az „Efficiency” / „Val” oszlop az EFF érték, és ha van Excel-érték, a grafika alján a „FULLFIELD.INFO” felirat áll. Ha egy csapatnevet nem ismerek fel, vagy egy NB I/A csapat nem szerepel a fájlban, a feltöltés előnézetén piros figyelmeztetés mutatja; a Csapatok összevetése pedig megnevezi, melyik csapat nincs az Excelben.
+
 ## Fordulónkénti frissítés Excelből
 
 *Adatok feltöltése Excelből / CSV-ből* → válaszd ki egyszerre az új fájlokat:
