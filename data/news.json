@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T12:20:22.415688+00:00",
+  "checked_at": "2026-11-21T13:09:46.182933+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 34,
-      "added": 0,
+      "candidates": 35,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -552,8 +554,8 @@
       "candidates": 31,
       "attempted": 30,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 29,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -561,6 +563,16 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "ÉLŐ: három bajnoki mérkőzés szombaton",
+      "summary": "Szombaton három mérkőzést rendeznek a hazai élvonalban.",
+      "url": "https://wbasket.hu/elo-harom-bajnoki-merkozes-szombaton-4/",
+      "published_at": "2026.11.21. 13:56",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Magyar Gergely: Úgy érzem kellően sikerült felkészülnünk",
