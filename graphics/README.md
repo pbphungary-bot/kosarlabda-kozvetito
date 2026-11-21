@@ -21,7 +21,7 @@ Megnyitás: <http://localhost:8000/graphics/> (a repó gyökeréből indítsd; G
    ha kilóg a keretből, jelzi. A **„Csapatnevek egyforma méretre”** gomb a két nevet egy kattintással azonos méretre állítja.
    A méret meccsenként érvényes: másik meccsnél újra automatikus.
 5. Bármelyik szöveg, szín, logó felülírható; a pipával elrejthető. A ↺ gomb visszaállítja az automatikus értéket.
-5. **PNG exportálása** – 1920×1080, átlátszó háttérrel (mint a PSD-k).
+6. **PNG exportálása** – 1920×1080, átlátszó háttérrel (mint a PSD-k).
 
 A **játékvezetők, az MKOSZ ellenőr és az intro helyszíne** automatikusan jön a Hunbasket teljes menetrendjéből
 (`data/referees_men.json`, `data/referees_women.json`; a `referees.yml` workflow félóránként frissíti a `scripts/update_referees.py`-vel).
