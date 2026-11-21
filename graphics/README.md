@@ -67,7 +67,10 @@ A lábléc harmadik logója minden grafikán az **MKOSZ** logó (a Play By Play 
 Sablon: *Játékos-különleges* (férfi: a Rosic-féle 3 oszlopos, női: a Kányási-féle 2 oszlopos elrendezés). Válassz csapatot és játékost; a **név**, az **idei átlagok**
 (az utolsó oszlop) és a háttérben a **klublogó** az adatokból jön. Az alcímet (1–2 sor), a többi oszlop fejlécét és értékeit (pl. karrier, utolsó meccsek) te írod be,
 mert az adatbázisban csak az idei átlag van meg; az üres mezők nem jelennek meg. A **fotót** (áttetsző PNG kivágás) a „Fotó” mezővel töltöd fel; csak a böngészőben marad,
-a panel lekerekített keretén nem lóg túl, az Elrendezés dobozzal mozgatható/nagyítható. A sor-feliratok (PTS/G, 3P% …) átírhatók, a hozzájuk tartozó értékeket ilyenkor kézzel kell megadni.
+a panel lekerekített keretén nem lóg túl, az Elrendezés dobozzal mozgatható/nagyítható. Az **Alapbeállítás „Grafika felépítése”** dobozában megadhatod az oszlopok (1–4) és sorok (1–8) számát, a soronkénti mutatót (pl. PTS/G, 3P%, vagy 2P/3P/FT „bedobott/dobott + %”),
+melyik oszlop az idei átlag, a fotó magasságát (alapból a keret belsejéig a lehető legnagyobb) és X helyét, valamint a **rétegezést**: csoportonként (név, fejlécek, feliratok, oszlopok) eldöntheted, hogy a fotó előtt vagy mögött látszik-e.
+A „bedobott/dobott” sorokban a százalék kisebb betűvel, a számok magasságának közepén áll. A panel keretvonala érinthetetlen: a fotó és a logó a keret belső széléig vágódik, a keretbe lógó szöveget a stúdió jelzi.
+A sor-feliratok átírhatók, a hozzájuk tartozó értékeket ilyenkor kézzel kell megadni.
 
 ### Kupa- és európai meccsek – automatikusan
 

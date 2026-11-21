@@ -668,6 +668,28 @@ try {
     assert.equal(await page.evaluate(() => window.__studio.current().values['r1.c2'].runs.length), 1);
   });
 
+  await check('player special: columns, rows, photo height and layering are configurable', async () => {
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    await page.fill('#psCols', '4'); await page.dispatchEvent('#psCols', 'change'); await page.waitForTimeout(500);
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    await page.fill('#psRows', '4'); await page.dispatchEvent('#psRows', 'change'); await page.waitForTimeout(500);
+    let ids = await page.evaluate(() => window.__studio.render && Object.keys(window.__studio.current().values));
+    assert.ok(ids.includes('r3.c4') && !ids.includes('r4.c1') && ids.includes('h4'));
+    // by default all text is in front of the photo; unticking a group puts the photo in front of it
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    await page.locator('#psBox .psFront[data-k="c4"]').uncheck(); await page.waitForTimeout(500);
+    const full = await page.evaluate(() => window.__studio.report().boxes.photo);
+    assert.ok(full, 'photo drawn');
+    assert.ok(full[3] > 900, 'photo as tall as the panel allows: ' + full[3]); // women's inner height 977
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    await page.fill('#psPhotoH', '600'); await page.dispatchEvent('#psPhotoH', 'change'); await page.waitForTimeout(500);
+    assert.ok(Math.abs((await page.evaluate(() => window.__studio.report().boxes.photo))[3] - 600) < 2);
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    await page.click('#psReset'); await page.waitForTimeout(500);
+    ids = await page.evaluate(() => Object.keys(window.__studio.current().values));
+    assert.ok(!ids.includes('h3') && ids.includes('r5.c2'));
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

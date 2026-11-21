@@ -220,44 +220,136 @@ for (const lg of ['men', 'women']) {
 
 
 // ───────────────────────── Játékos-különleges (player special) ─────────────────────────
-// Editorial design: name, a one/two-line story, up to three stat columns (each with a 2-line header), photo.
-// Both PSDs (Uros STAT, Kányási) are laid out by the same builder; g holds the geometry of each.
-export const PLAYERSPECIAL_ROWS = {
-  men: [
-    { label: 'PTS/G', col: 'P.' }, { label: '3P%', col: '3P %', pct: true }, { label: 'REB/G', col: 'ÖLP' },
-    { label: 'AST/G', col: 'GP' }, { label: 'VAL/G', col: 'VAL' }, { label: 'MIN/G', col: 'Idő' },
-  ],
-  women: [
-    { label: 'PTS/G', col: 'P.' }, { label: '2P%', col: '2P %', pct: true, made: '2P S', att: '2P K' }, { label: 'REB/G', col: 'ÖLP' },
-    { label: 'AST/G', col: 'GP' }, { label: 'STL/G', col: 'SZL' }, { label: 'EFF/G', col: 'VAL' },
-  ],
-};
+// Editorial design (PSDs "Uros STAT" and "Kányási"): name, a 1–2 line story, any number of stat columns (each with a 2-line
+// header), a photo that can sit behind or in front of any group of text. The operator chooses columns, rows, photo size and layering;
+// the panel's outline is untouchable: the photo / logo are clipped to the panel's inner edge and text boxes are checked against it.
 
-function playerspecial(id, league, psd, g) {
-  const op = 0.9882;
-  const els = [
-    { id: 'photo', type: 'image', label: 'Játékos fotó (feltöltött, áttetsző PNG)', group: 'Fotó', box: g.photo, fit: 'contain', anchor: 'bottom', clipToPanel: true, fixedSrc: true },
-    { id: 'logo', type: 'image', label: 'Klublogó (háttér)', group: 'Fotó', box: g.logo, fit: 'contain', opacity: 0.6, outline: ol(2, '#ffffff'), visible: g.logoOn },
+/** Stat catalogue: key → label and the columns of the player table (Hunbasket per-game averages). */
+export const PS_STATS = {
+  pts: { label: 'PTS/G', col: 'P.' },
+  reb: { label: 'REB/G', col: 'ÖLP' },
+  ast: { label: 'AST/G', col: 'GP' },
+  stl: { label: 'STL/G', col: 'SZL' },
+  tov: { label: 'TOV/G', col: 'EL' },
+  blk: { label: 'BLK/G', col: 'Blokk' },
+  min: { label: 'MIN/G', col: 'Idő' },
+  val: { label: 'VAL/G', col: 'VAL' },
+  gp: { label: 'MECCS', col: 'M.', int: true },
+  p2: { label: '2P%', col: '2P %', pct: true },
+  p3: { label: '3P%', col: '3P %', pct: true },
+  ft: { label: 'FT%', col: 'BT %', pct: true },
+  p2ma: { label: '2P', col: '2P %', pct: true, made: '2P S', att: '2P K' },
+  p3ma: { label: '3P', col: '3P %', pct: true, made: '3P S', att: '3P K' },
+  ftma: { label: 'FT', col: 'BT %', pct: true, made: 'BT S', att: 'BT K' },
+  ts: { label: 'TS%', col: 'TS%', pct: true },
+  ortg: { label: 'O.RTG', col: 'O.RTG' },
+  drtg: { label: 'D.RTG', col: 'D.RTG' },
+};
+export const PS_MAX_COLS = 4, PS_MAX_ROWS = 8;
+export const PS_SMALL = 40; // size of the percentage next to a made/attempted value
+
+const PS_GEOM = {
+  men: {
+    panel: [0, 0, 1246, 924], inner: { box: [9, 9, 1237, 915], r: 28 }, photoCx: 1069, logoBox: [440, 600, 330, 360], logoOn: false,
+    titleX: 431.3, titleY: 102.5, titleMax: 800, subX: 431.8, subY: 154.7, subMax: 900, headerY: 197.6,
+    labelX: 544.8, rowY: 331.3, rowSpan: 571, statsLeft: 10, statsRight: 852,
+    exact: { cols: 3, labelAfter: 2, xs: [128.7, 348.6, 765.6] },
+    palette: [['#ec4036', '#1fbf1b'], ['#0b9444', '#ffffff'], ['#feed01', '#000000'], ['#ffffff', '#000000']],
+    cfg: { cols: 3, labelAfter: 2, rows: ['pts', 'p3', 'reb', 'ast', 'val', 'min'], auto: 3 },
+  },
+  women: {
+    panel: [29, 10, 1286, 1003], inner: { box: [37, 18, 1278, 995], r: 37 }, photoCx: 973, logoBox: [454, 649, 368, 400], logoOn: true,
+    titleX: 449.5, titleY: 119.5, titleMax: 800, subX: 454, subY: 166.2, subMax: 800, headerY: 263.6,
+    labelX: 447, rowY: 390.5, rowSpan: 576, statsLeft: 60, statsRight: 860,
+    exact: { cols: 2, labelAfter: 1, xs: [199, 716] },
+    palette: [['#a20100', '#ffffff'], ['#296d46', '#ffffff'], ['#1d4e89', '#ffffff'], ['#6b6b6b', '#ffffff']],
+    cfg: { cols: 2, labelAfter: 1, rows: ['pts', 'p2ma', 'reb', 'ast', 'stl', 'val'], auto: 2 },
+  },
+};
+export const PS_GROUPS = (cols) => [['title', 'Név és alcím'], ['headers', 'Oszlopfejlécek'], ['labels', 'Sorfeliratok'], ...Array.from({ length: cols }, (_, i) => [`c${i + 1}`, `${i + 1}. oszlop számai`])];
+
+export function psDefaults(league) {
+  const c = PS_GEOM[league].cfg;
+  return { ...c, rows: [...c.rows], photoH: 0, photoCx: PS_GEOM[league].photoCx, front: {} };
+}
+
+/** Normalised config (never trusts stored values). */
+export function psNormalize(league, cfg) {
+  const d = psDefaults(league), c = { ...d, ...(cfg || {}) };
+  c.cols = Math.min(PS_MAX_COLS, Math.max(1, Math.round(c.cols) || d.cols));
+  c.labelAfter = Math.min(c.cols, Math.max(0, Math.round(c.labelAfter ?? d.labelAfter)));
+  const n = Math.min(PS_MAX_ROWS, Math.max(1, (c.rows || []).length || d.rows.length));
+  c.rows = Array.from({ length: n }, (_, i) => (PS_STATS[c.rows?.[i]] ? c.rows[i] : d.rows[i] || 'pts'));
+  c.auto = Math.min(c.cols, Math.max(0, Math.round(c.auto ?? d.auto)));
+  c.photoH = c.photoH > 0 ? c.photoH : 0; // 0 = as tall as the panel allows
+  c.front = c.front || {};
+  return c;
+}
+
+/** The template for one configuration of a player-special design. `base` is the registry entry (background, reference). */
+export function psBuild(base, cfgIn) {
+  const league = base.league, g = PS_GEOM[league], cfg = psNormalize(league, cfgIn), op = 0.9882;
+  const [ix0, iy0, ix1, iy1] = g.inner.box;
+  const photoH = cfg.photoH > 0 ? Math.min(cfg.photoH, iy1 - iy0) : iy1 - iy0;
+  const n = cfg.cols;
+  // x of the columns: the PSD's own positions for its own column count, otherwise even slots (the label takes one slot)
+  let xs, labelX;
+  if (n === g.exact.cols && cfg.labelAfter === g.exact.labelAfter) { xs = g.exact.xs; labelX = g.labelX; }
+  else {
+    const slot = (g.statsRight - g.statsLeft) / (n + 1);
+    const centres = Array.from({ length: n + 1 }, (_, i) => g.statsLeft + slot * (i + 0.5));
+    labelX = centres[cfg.labelAfter];
+    xs = centres.filter((_, i) => i !== cfg.labelAfter);
+  }
+  const colMax = Math.max(150, (g.statsRight - g.statsLeft) / (n + 1) * 1.25);
+  const rows = cfg.rows, nr = rows.length;
+  const pitch = nr > 1 ? Math.min(g.rowSpan / 5, g.rowSpan / (nr - 1)) : 0;
+  const rowSize = Math.min(96, 96 * (pitch || 115) / 115);
+  const small = PS_SMALL * rowSize / 96;
+  const group = { title: [], headers: [], labels: [] };
+  for (let k = 1; k <= n; k++) group[`c${k}`] = [];
+  group.title.push(
     { id: 'title', type: 'text', label: 'Név', group: 'Fejléc', x: g.titleX, y: g.titleY, align: 'center', size: 106.667, tracking: 50, color: '#fefefe', caps: true, outline: ol(4, '#000000', 1), maxWidth: g.titleMax, opacity: op, adjust: true },
     { id: 'subtitle', type: 'text', label: 'Alcím (1–2 sor, kézzel írandó)', group: 'Fejléc', x: g.subX, y: g.subY, align: 'center', font: 'italic', size: 42.667, tracking: 50, color: '#000000',
       outline: ol(3, '#ffffff'), maxWidth: g.subMax, lineHeight: 48, wrap: { maxLines: 2 }, opacity: op },
-  ];
-  g.cols.forEach((c, i) => {
-    els.push({ id: `h${i + 1}`, type: 'text', label: `${i + 1}. oszlop fejléce`, group: `${i + 1}. oszlop`, x: c.x, y: g.headerY, align: 'center', size: 34.667, tracking: 50, color: '#fefefe',
-      outline: ol(4, '#000000', 1), maxWidth: 260, lineHeight: 41.6, wrap: { maxLines: 2 }, opacity: op });
-  });
-  els.push(...[]);
-  const rows = PLAYERSPECIAL_ROWS[league];
-  rows.forEach((r, i) => {
-    const y = g.rowY + i * g.pitch;
-    els.push({ id: `r${i}.label`, type: 'text', label: `${i + 1}. sor felirata`, group: 'Sorok', x: g.labelX, y, align: 'center', font: 'italic', size: 96, tracking: 50, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 200, opacity: op });
-    g.cols.forEach((c, k) => {
-      els.push({ id: `r${i}.c${k + 1}`, type: 'text', label: `${r.label} – ${k + 1}. oszlop`, group: `${k + 1}. oszlop`, x: c.x, y, align: 'center', size: 96, tracking: 25, color: c.color, outline: ol(3, c.outline), maxWidth: c.max, runs: true, opacity: op });
+  );
+  xs.forEach((x, i) => group.headers.push({ id: `h${i + 1}`, type: 'text', label: `${i + 1}. oszlop fejléce`, group: `${i + 1}. oszlop`, x, y: g.headerY, align: 'center', size: 34.667, tracking: 50, color: '#fefefe',
+    outline: ol(4, '#000000', 1), maxWidth: 260, lineHeight: 41.6, wrap: { maxLines: 2 }, opacity: op }));
+  rows.forEach((key, i) => {
+    const y = g.rowY + i * pitch;
+    group.labels.push({ id: `r${i}.label`, type: 'text', label: `${i + 1}. sor felirata`, group: 'Sorok', x: labelX, y, align: 'center', font: 'italic', size: rowSize, tracking: 50, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 200, opacity: op });
+    xs.forEach((x, k) => {
+      const [color, outline] = g.palette[k % g.palette.length];
+      group[`c${k + 1}`].push({ id: `r${i}.c${k + 1}`, type: 'text', label: `${PS_STATS[key].label} – ${k + 1}. oszlop`, group: `${k + 1}. oszlop`, x, y, align: 'center', size: rowSize, tracking: 25, color, outline: ol(3, outline), maxWidth: PS_STATS[key].made ? colMax * 1.4 : colMax, runs: true, opacity: op });
     });
   });
-  const t = base(id, league, 'playerspecial', psd, 'Játékos-különleges', { elements: els });
+  const photo = { id: 'photo', type: 'image', label: 'Játékos fotó (feltöltött, áttetsző PNG)', group: 'Fotó', box: [cfg.photoCx, iy1 - photoH / 2, photoH * 3, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, fixedSrc: true };
+  const logo = { id: 'logo', type: 'image', label: 'Klublogó (háttér)', group: 'Fotó', box: g.logoBox, fit: 'contain', opacity: 0.6, outline: ol(2, '#ffffff'), visible: g.logoOn, clipInner: true };
+  // layering: everything not marked "in front" is drawn behind the photo (default: all text in front of the photo)
+  const names = ['title', 'headers', 'labels', ...Array.from({ length: n }, (_, i) => `c${i + 1}`)];
+  const isFront = k => cfg.front[k] !== false;
+  const els = [logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
+  const t = base2(base, els);
+  t.ps = { cfg, groups: names };
+  t.inner = g.inner;
   t.panel = { box: g.panel, alpha: op };
   return t;
+}
+
+// a copy of the registry entry with new elements (calibration: see HSCALE below)
+function base2(b, elements) {
+  const t = { ...b, elements: elements.map(e => ({ ...e })) };
+  for (const el of t.elements) {
+    if (el.type !== 'text') continue;
+    const k = hscaleKey('playerspecial', el.id);
+    el.hscale = (k && HSCALE[b.id]?.[k]) || 1;
+  }
+  return t;
+}
+
+function playerspecial(id, league, psd) {
+  const b = base(id, league, 'playerspecial', psd, 'Játékos-különleges', { elements: [] });
+  return psBuild(b, null);
 }
 // text-width calibration (PSD ink width / browser width of the same string)
 HSCALE['playerspecial-men'] = { title: 0.971, label: 0.96, value: 0.968, header: 0.99, subtitle: 0.968 };
@@ -342,18 +434,8 @@ export const TEMPLATES = [
   comparison('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
     subX: 648.2, titleX: 651.5, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
   }, 'playercompare'),
-  playerspecial('playerspecial-men', 'men', 'Uros STAT.psd', {
-    panel: [0, 0, 1246, 924], photo: [1069, 488, 420, 854], logo: [440, 600, 330, 360], logoOn: false,
-    titleX: 431.3, titleY: 102.5, titleMax: 800, subX: 431.8, subY: 154.7, subMax: 900, headerY: 197.6,
-    labelX: 544.8, rowY: 331.3, pitch: 114.2,
-    cols: [{ x: 128.7, color: '#ec4036', outline: '#1fbf1b', max: 230 }, { x: 348.6, color: '#0b9444', outline: '#ffffff', max: 190 }, { x: 765.6, color: '#feed01', outline: '#000000', max: 190 }],
-  }),
-  playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd', {
-    panel: [29, 10, 1286, 1003], photo: [973, 533.5, 854, 923], logo: [454, 649, 368, 400], logoOn: true,
-    titleX: 449.5, titleY: 119.5, titleMax: 800, subX: 454, subY: 166.2, subMax: 800, headerY: 263.6,
-    labelX: 447, rowY: 390.5, pitch: 115.2,
-    cols: [{ x: 199, color: '#a20100', outline: '#ffffff', max: 320 }, { x: 716, color: '#296d46', outline: '#ffffff', max: 330 }],
-  }),
+  playerspecial('playerspecial-men', 'men', 'Uros STAT.psd'),
+  playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd'),
   nextmatch('nextmatch-men', 'men'),
   nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {

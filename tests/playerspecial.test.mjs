@@ -29,3 +29,21 @@ test('player special (women): shooting row is made/attempted with a small percen
   assert.match(x.runs[1].text, /^\(\d+\.\d%\)$/);
   assert.equal(x.runs[1].size, 40);
 });
+
+import { psBuild, psNormalize } from '../graphics/js/templates.js';
+test('player special: layering puts the photo between the groups; the photo never exceeds the panel inside the outline', () => {
+  const base = templateById('playerspecial-men');
+  const ids = t => t.elements.map(e => e.id);
+  const front = psBuild(base, { front: {} });
+  assert.ok(ids(front).indexOf('photo') < ids(front).indexOf('title'), 'default: photo behind all text');
+  const mixed = psBuild(base, { front: { c1: false } });
+  assert.ok(ids(mixed).indexOf('r0.c1') < ids(mixed).indexOf('photo'), 'c1 numbers behind the photo');
+  assert.ok(ids(mixed).indexOf('photo') < ids(mixed).indexOf('r0.c2'), 'c2 numbers in front of it');
+  const [, y0, , y1] = base.inner.box;
+  assert.equal(base.elements.find(e => e.id === 'photo').box[3], y1 - y0, 'as tall as the inside of the outline');
+  assert.equal(psBuild(base, { photoH: 5000 }).elements.find(e => e.id === 'photo').box[3], y1 - y0);
+});
+test('player special: configuration is normalised', () => {
+  const c = psNormalize('women', { cols: 99, rows: ['nope'], labelAfter: 9, auto: -3 });
+  assert.equal(c.cols, 4); assert.equal(c.labelAfter, 4); assert.equal(c.auto, 0); assert.equal(c.rows.length, 1);
+});

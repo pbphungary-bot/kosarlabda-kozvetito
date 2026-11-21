@@ -51,12 +51,12 @@ function drawRuns(ctx, runs, x, y, size, style, color, outlineOnly) {
   const hs = style.hscale || 1;
   let cx = x;
   for (const r of runs) {
-    const rs = r.size || size; // a run may have its own size (e.g. the small "(41.4%)" next to a shooting line)
+    const rs = r.size || size; const rdy = r.dy || 0; // a run may have its own size (e.g. the small "(41.4%)" next to a shooting line)
     setup(ctx, style, rs);
     const o = style.outline;
     const ox = outlineOnly ? (o.dx || 0) : 0, oy = outlineOnly ? (o.dy || 0) : 0;
     ctx.save();
-    ctx.translate(cx + ox, y + oy);
+    ctx.translate(cx + ox, y + oy + rdy);
     ctx.scale(hs, 1);
     if (outlineOnly) {
       ctx.lineJoin = 'round';
@@ -143,7 +143,7 @@ function drawText(ctx, el, v, report) {
   const placed = lines.map((line, i) => {
     const runs = el.runs && v.runs ? v.runs : [{ text: line }];
     const runsText = runs.map(r => (el.caps ? upper(r.text) : r.text));
-    const shaped = runs.map((r, k) => ({ ...r, text: runsText[k], size: r.size ? r.size * (sz / el.size) : undefined }));
+    const shaped = runs.map((r, k) => ({ ...r, text: runsText[k], size: r.size ? r.size * (sz / el.size) : undefined, dy: r.dy ? r.dy * (sz / el.size) : undefined }));
     const w = shaped.reduce((a, r) => a + measure(ctx, style, r.text, r.size || sz), 0)
       + (shaped.length > 1 ? ((style.tracking || 0) / 1000) * sz * (shaped.length - 1) : 0);
     let x = el.x;
@@ -190,7 +190,11 @@ function silhouette(img, w, h, color) {
   return c;
 }
 
-function drawImage(ctx, el, v, assets, report, mask) {
+function roundRectPath(g, [x0, y0, x1, y1], r) {
+  g.moveTo(x0 + r, y0); g.arcTo(x1, y0, x1, y1, r); g.arcTo(x1, y1, x0, y1, r); g.arcTo(x0, y1, x0, y0, r); g.arcTo(x0, y0, x1, y0, r); g.closePath();
+}
+
+function drawImage(ctx, el, v, assets, report, inner) {
   const img = assets.images[v.src];
   if (!img) return;
   const [x, y, w, h] = fitBox(el, img.width, img.height);
@@ -202,6 +206,7 @@ function drawImage(ctx, el, v, assets, report, mask) {
   const layer = new OffscreenCanvas(ctx.canvas.width, ctx.canvas.height);
   const g = layer.getContext('2d');
   g.imageSmoothingQuality = 'high';
+  if (el.clipInner && inner) { g.beginPath(); roundRectPath(g, inner.box, inner.r); g.clip(); } // the panel's outline is untouchable
   if (outline && outline.size > 0) {
     const sil = silhouette(img, w, h, outline.color);
     const r = outline.size;
@@ -215,7 +220,6 @@ function drawImage(ctx, el, v, assets, report, mask) {
     }
   }
   g.drawImage(img, x, y, w, h);
-  if (el.clipToPanel && mask) { g.globalCompositeOperation = 'destination-in'; g.drawImage(mask, 0, 0, layer.width, layer.height); } // photo never leaves the rounded panel
   ctx.save();
   ctx.globalAlpha = el.opacity ?? 1;
   ctx.drawImage(layer, 0, 0);
@@ -289,7 +293,7 @@ export function render(canvas, template, values, assets) {
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
     if (el.type === 'text') drawText(ctx, el, v, report);
-    else if (el.type === 'image') drawImage(ctx, el, v, assets, report, assets.background);
+    else if (el.type === 'image') drawImage(ctx, el, v, assets, report, template.inner);
   }
   ctx.restore();
   return report;
