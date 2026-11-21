@@ -18,7 +18,7 @@ const COMP_OUTLINE = { 'comp/eurocup-women': ol(3, '#ffffff'), 'comp/euroleague-
 // element id → calibration key (see tools/calibrate_text.py)
 function hscaleKey(type, id) {
   if (id === 'subtitle' || id === 'title' || id === 'round' || id === 'venue' || id === 'time') return id;
-  if (type === 'comparison') return id.includes('.rank.') ? 'rank' : 'value';
+  if (type === 'comparison' || type === 'playercompare') return id.includes('.rank.') ? 'rank' : 'value';
   if (type === 'teamstats') return id === 'team.name' ? 'teamname' : (/\.name$|^hdr\./.test(id) ? 'name' : 'figure');
   if (type === 'intro') return id.endsWith('.rank') ? 'round' : 'name';
   if (type === 'referees') return id.startsWith('controller') ? 'controller' : 'name';
@@ -55,7 +55,7 @@ export const STAT_ROWS = [
 ];
 
 // ───────────────────────── Csapatok összevetése ─────────────────────────
-function comparison(id, league, psd, g) {
+function comparison(id, league, psd, g, type = 'comparison') {
   const els = [
     { id: 'subtitle', type: 'text', label: 'Alcím (adatforrás)', group: 'Fejléc', x: g.subX, y: 163.2, align: 'center',
       font: 'italic', size: 48, tracking: 10, color: '#000000', outline: ol(3, '#ffffff'), runs: true, maxWidth: 1150 },
@@ -73,7 +73,9 @@ function comparison(id, league, psd, g) {
       { id: `away.rank.${s.key}`, type: 'text', label: `Vendég ${s.label} helyezés`, group: 'Vendég', x: g.ar, y: yr, ...common, tracking: g.rankTracking, color: '#373737', maxWidth: 110 },
     );
   });
-  return base(id, league, 'comparison', psd, 'Csapatok összevetése', { elements: els, sample: g.sample });
+  if (type === 'playercompare') els.unshift({ id: 'title', type: 'text', label: 'Cím', group: 'Fejléc', x: g.titleX, y: 103.5, align: 'center',
+    size: 96, tracking: 10, color: WHITE_TXT, outline: ol(6, '#000000', 1), maxWidth: 1000, minScale: 0.6 });
+  return base(id, league, type, psd, type === 'playercompare' ? 'Csillagjátékosok' : 'Csapatok összevetése', { elements: els, sample: g.sample });
 }
 
 function comparisonSample(sub, home, away, hr, ar, hc, ac, hlogo, alogo) {
@@ -208,6 +210,13 @@ function nextmatch(id, league) {
   });
 }
 
+// aliases: the star-player designs use the team comparison's calibration (same layers, same geometry)
+for (const lg of ['men', 'women']) {
+  HSCALE[`playercompare-${lg}`] = HSCALE[`comparison-${lg}`];
+  PANELS[`playercompare-${lg}`] = PANELS[`comparison-${lg}`];
+  LAYER_OPACITY[`playercompare-${lg}`] = LAYER_OPACITY[`comparison-${lg}`];
+}
+
 // ───────────────────────── Template registry ─────────────────────────
 export const TEMPLATES = [
   comparison('comparison-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
@@ -281,6 +290,12 @@ export const TEMPLATES = [
       'home.logo': { src: 'women/sercounigyor' }, 'away.logo': { src: 'women/eltebeacujbuda' },
     },
   }),
+  comparison('playercompare-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
+    subX: 602.2, titleX: 605.5, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
+  }, 'playercompare'),
+  comparison('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
+    subX: 648.2, titleX: 651.5, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
+  }, 'playercompare'),
   nextmatch('nextmatch-men', 'men'),
   nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {
@@ -296,6 +311,7 @@ export const TEMPLATE_TYPES = {
   nextmatch: 'Következik',
   intro: 'Intro',
   comparison: 'Csapatok összevetése',
+  playercompare: 'Csillagjátékosok',
   teamstats: 'Csapatstatisztika',
   results: 'Eredmények',
   resultrows: 'Eredmények (színes sorok)',

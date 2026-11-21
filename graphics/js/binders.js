@@ -256,3 +256,76 @@ export function bindReferees(store, lg, m) {
   for (let i = 0; i < 3; i++) v[`ref${i + 1}`] = field(refs[i] || null, src, refs[i] ? {} : { note: why });
   return v;
 }
+
+// ───────────────────────── star-player comparison ─────────────────────────
+// player table column of every comparison row (see STAT_ROWS)
+export const PLAYER_COLS = { ppg: 'P.', fg2_pct: '2P %', fg3_pct: '3P %', ft_pct: 'BT %', reb: 'ÖLP', ast: 'GP', stl: 'SZL', tov: 'EL', val: 'VAL' };
+const ATTEMPTS = { fg2_pct: '2P K', fg3_pct: '3P K', ft_pct: 'BT K' }; // a percentage counts in the ranking from 1 attempt / game
+
+const pKey = p => `${p['#']}|${p['Játékos']}`;
+
+/** Players of a team, best scorer first (the first one is the default "star"). */
+export function playerOptions(store, lg, teamId) {
+  const P = store.players(lg, teamId);
+  return (P?.players || []).map(p => ({ key: pKey(p), name: p['Játékos'], p }))
+    .sort((a, b) => (num(b.p['P.']) ?? -1) - (num(a.p['P.']) ?? -1) || a.name.localeCompare(b.name, 'hu'));
+}
+
+/** League-wide ranking pool: players with at least half of the games of the most active player. */
+function rankPool(store, lg) {
+  const all = [];
+  for (const id of Object.keys(store.league(lg).players)) for (const x of playerOptions(store, lg, id)) all.push(x.p);
+  const maxM = Math.max(0, ...all.map(p => num(p['M.']) ?? 0));
+  const minM = Math.max(3, Math.round(maxM / 2));
+  return { pool: all.filter(p => (num(p['M.']) ?? 0) >= minM), minM };
+}
+
+/** The chosen player, or by default the best scorer among players with enough games (so the ranking works). */
+export function pickPlayer(store, lg, id, key, minM = rankPool(store, lg).minM) {
+  const opts = playerOptions(store, lg, id);
+  return opts.find(o => o.key === key) || opts.find(o => (num(o.p['M.']) ?? 0) >= minM) || opts[0] || null;
+}
+
+export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
+  const L = store.league(lg);
+  const { pool, minM } = rankPool(store, lg);
+  const site = (store.players(lg, homeId)?.source === 'excel' || store.players(lg, awayId)?.source === 'excel') ? 'FULLFIELD.INFO' : 'HUNBASKET.HU';
+  const pick = (id, key) => pickPlayer(store, lg, id, key, minM);
+  const hp = pick(homeId, sel.home), ap = pick(awayId, sel.away);
+  const nm = x => (x ? x.name : '—');
+  const v = {
+    title: { text: 'KULCSJÁTÉKOSOK', source: 'Fix felirat (a PSD-ben „Csapatok összevetése” állt)' },
+    subtitle: {
+      runs: [{ text: nm(hp), color: GREEN }, { text: ' – ' }, { text: nm(ap), color: RED }, { text: ' – idei átlagok, via ' }, { text: site, color: '#37b3fd' }],
+      text: `${nm(hp)} – ${nm(ap)} – idei átlagok, via ${site}`,
+      source: 'Kiválasztott játékosok', note: !hp || !ap ? 'Az egyik csapathoz nincs játékosstatisztika az adatokban.' : undefined,
+    },
+    'home.logo': logo(lg, homeId),
+    'away.logo': logo(lg, awayId),
+  };
+  const rankOf = (p, col, s) => {
+    if (!p || num(p[col]) === null) return null;
+    const val = num(p[col]);
+    if ((num(p['M.']) ?? 0) < minM) return null; // not enough games to be ranked
+    if (ATTEMPTS[s.key] && (num(p[ATTEMPTS[s.key]]) ?? 0) < 1) return null;
+    const rivals = pool.filter(q => num(q[col]) !== null && (!ATTEMPTS[s.key] || (num(q[ATTEMPTS[s.key]]) ?? 0) >= 1));
+    return 1 + rivals.filter(q => (s.lowerIsBetter ? num(q[col]) < val : num(q[col]) > val)).length;
+  };
+  for (const s of STAT_ROWS) {
+    const col = PLAYER_COLS[s.key];
+    const h = hp ? num(hp.p[col]) : null, a = ap ? num(ap.p[col]) : null;
+    const f = x => (x === null ? null : x.toFixed(1) + (s.pct ? '%' : ''));
+    let hc = WHITE_TXT, ac = WHITE_TXT;
+    if (h !== null && a !== null) {
+      const hb = s.lowerIsBetter ? h <= a : h >= a, ab = s.lowerIsBetter ? a <= h : a >= h;
+      hc = hb ? GREEN : RED; ac = ab ? GREEN : RED;
+    }
+    v[`home.${s.key}`] = field(f(h), `${nm(hp)} – ${s.label}`, { color: hc });
+    v[`away.${s.key}`] = field(f(a), `${nm(ap)} – ${s.label}`, { color: ac });
+    const hr = rankOf(hp?.p, col, s), ar = rankOf(ap?.p, col, s);
+    const src = `Helyezés a liga ${pool.length} játékosa közül (min. ${minM} meccs${ATTEMPTS[s.key] ? ', min. 1 kísérlet/meccs' : ''}${s.lowerIsBetter ? '; kevesebb = jobb' : ''})`;
+    v[`home.rank.${s.key}`] = field(hr === null ? null : `(${hr}.)`, src);
+    v[`away.rank.${s.key}`] = field(ar === null ? null : `(${ar}.)`, src);
+  }
+  return v;
+}

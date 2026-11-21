@@ -14,7 +14,7 @@ mert a gyűjtést nem tudtam ellenőrizhető forráshivatkozásokkal alátámasz
 | 5 | **Egymás elleni mérleg** (H2H sáv) | az idényben/korábban lejátszott meccsek | H2H adat: van | közepes |
 | 6 | **Hónap/forduló műsorlap** | az egész forduló 6–7 meccse egy képen | fixtures: van | közepes |
 | 7 | **Meccs napja kártya** (közösségi 1080×1080 / 1080×1920) | Következik grafika négyzet- és álló formátumban | van | közepes |
-| 8 | **Játékos-összehasonlítás** (1×1) | két kulcsjátékos átlagai egymás mellett | player_stats: van | közepes |
+| 8 | **Játékos-összehasonlítás** ✅ *megépítve: „Csillagjátékosok” sablon* | két kulcsjátékos átlagai egymás mellett | player_stats: van | közepes |
 | 9 | **Idény-rekordok / mérföldkövek** | „A 3000. pontja” – kézi szöveggel | nincs (kézi) | kicsi |
 | 10 | **Nézőszám / helyszín kártya** | csarnok, nézők | helyszín: van, nézőszám: nincs | kicsi |
 

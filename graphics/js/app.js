@@ -6,7 +6,7 @@ import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import {
-  bindComparison, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -116,10 +116,21 @@ function currentMatch() {
   return store.league(state.league).fixtures.find(m => matchKey(m) === s.matchKey) || null;
 }
 
+function playerSelects() {
+  const m = currentMatch(), s = sel(), lg = state.league;
+  if (!m) return '';
+  const one = (side, id, label) => {
+    const opts = playerOptions(store, lg, id);
+    const cur = pickPlayer(store, lg, id, s.pc?.[side]);
+    return `<label>${label}<select id="pc_${side}">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)} (${esc(o.p['P.'] ?? '?')} pont/meccs)</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label>`;
+  };
+  return `<div class="row2">${one('home', m.homeId, 'Hazai játékos')}${one('away', m.awayId, 'Vendég játékos')}</div><small class="hint">Alapból a legjobb pontszerző; a helyezés a liga játékosai között értendő.</small>`;
+}
+
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -128,7 +139,10 @@ function renderSelection(extra = {}) {
         <select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey && !s.custom ? 'selected' : ''}>${esc(matchLabel(m))}${m.resultMissing ? ' – eredmény hiányzik az adatokból' : ''}</option>`).join('')}
         <option value="__custom" ${s.custom ? 'selected' : ''}>Egyéni párosítás…</option></select></label>
       <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
-      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}`;
+      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}${t.type === 'playercompare' ? playerSelects() : ''}`;
+    if (t.type === 'playercompare') {
+      for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetMatchOverrides(); update(true); };
+    }
     $('matchSel').onchange = e => {
       if (e.target.value === '__custom') { const m = currentMatch(); s.custom = { homeId: m?.homeId || Object.keys(CLUBS[lg])[0], awayId: m?.awayId || Object.keys(CLUBS[lg])[1] }; }
       else { s.custom = null; s.matchKey = e.target.value; }
@@ -226,11 +240,12 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'intro' || t.type === 'nextmatch') {
+  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
     if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
+    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
   } else if (t.type === 'teamstats') {
@@ -374,7 +389,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'referees' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';

@@ -281,11 +281,37 @@ def extract_nextmatch():
     print(f'nextmatch          {NEXTMATCH_PSD}: frame bbox {frame.getbbox()}')
 
 
+# "Csillagjátékosok": the team comparison design with its baked-in title removed (the title becomes editable text).
+PLAYERCOMPARE = {'playercompare-men': 'comparison-men', 'playercompare-women': 'comparison-women'}
+
+
+def extract_playercompare(tid):
+    fname, opts = TEMPLATES[PLAYERCOMPARE[tid]]
+    psd = PSDImage.open(os.path.join(SRC, fname))
+    d = os.path.join(OUT, 'templates', tid)
+    os.makedirs(d, exist_ok=True)
+    layers = list(psd.descendants())
+    dynamic = {id(l) for l in layers if l.is_visible() and (not is_static(l, opts) or l.name.startswith('CSAPATOK'))}
+    ref = psd.topil().convert('RGBA')
+    bg, frac = hybrid_background(psd, dynamic)
+    swap_pbp_for_mkosz(layers, bg, ref)
+    ref.save(os.path.join(d, 'reference.png'), optimize=True)
+    make_thumb(ref, os.path.join(d, 'thumb.jpg'))
+    bg.save(os.path.join(d, 'background.png'), optimize=True)
+    print(f'{tid:20} from {fname}: re-rendered {frac*100:.2f}%')
+
+
 def main():
     only = None
     if '--only' in sys.argv:
         only = set(sys.argv[sys.argv.index('--only') + 1].split(','))
     ensure_mkosz_asset()
+    for tid in PLAYERCOMPARE:
+        if only and tid in only:
+            extract_playercompare(tid)
+            only.discard(tid)
+    if only is not None and not only:
+        return 0
     if only and 'nextmatch' in only:
         extract_nextmatch()
         only.discard('nextmatch')

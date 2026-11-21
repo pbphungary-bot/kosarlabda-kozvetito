@@ -44,8 +44,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 8 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 8);
+    await check(`${lg}: 9 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 9);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
