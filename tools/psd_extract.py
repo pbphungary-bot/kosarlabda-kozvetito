@@ -32,7 +32,7 @@ OUT = os.path.join(ROOT, 'graphics')
 # Layers that are part of the fixed design (kept in the background).
 STATIC_NAMES = {
     'Téglalap 1', 'Háttér nb1a - kosárpályával', '50633_mkosz_horizontalbigger',
-    '74641_HUNBASKET_profil új(1)', 'tippmix_CMYK_outline', 'pbp_logo',
+    '74641_HUNBASKET_profil új(1)', 'tippmix_CMYK_outline',
     'CSAPATOK ÖSSZEVETÉSE', 'PTS 2P% 3P% FT% REB AST STL TOV EFF ',
     'FÉRFI NB I. A CSOPORT', 'NŐI NB I. A CSOPORT',
 }
@@ -222,18 +222,89 @@ def make_thumb(ref, path):
     Image.alpha_composite(bg, ref).convert('RGB').resize((384, 216), Image.LANCZOS).save(path, quality=85)
 
 
+MKOSZ_ASSET = os.path.join(OUT, 'assets', 'mkosz-strip.png')
+MKOSZ_GAP = 40  # px between the Tippmix mark and the MKOSZ logo, as in the comparison / team-stat designs
+
+
+def ensure_mkosz_asset():
+    """The MKOSZ logo of the bottom strip, as rendered in the 'Falco - Alba' comparison design (116 x 60 px)."""
+    psd = PSDImage.open(os.path.join(SRC, TEMPLATES['comparison-men'][0]))
+    layer = next(l for l in psd.descendants() if l.name == '50633_mkosz_horizontalbigger')
+    os.makedirs(os.path.dirname(MKOSZ_ASSET), exist_ok=True)
+    layer.topil().convert('RGBA').save(MKOSZ_ASSET, optimize=True)
+
+
+def swap_pbp_for_mkosz(layers, bg, ref):
+    """The designs with a 'Play by Play' logo in the strip show the MKOSZ logo instead (it must never be visible).
+    The logo is placed like in the comparison / team-stat designs: 40 px right of the Tippmix mark,
+    vertically centred on the Hunbasket mark. Returns True if a swap was made."""
+    pbp = next((l for l in layers if l.name == 'pbp_logo'), None)
+    if pbp is None:
+        return False
+    hb = next(l for l in layers if l.name.startswith('74641_HUNBASKET'))
+    tp = next(l for l in layers if l.name.startswith('tippmix'))
+    mk = Image.open(MKOSZ_ASSET).convert('RGBA')
+    x0 = tp.bbox[2] + MKOSZ_GAP
+    y0 = round((hb.bbox[1] + hb.bbox[3]) / 2 - mk.height / 2)
+    m = 14  # margin for the logo's bevel / glow
+    box = (pbp.bbox[0] - m, pbp.bbox[1] - m, pbp.bbox[2] + m, pbp.bbox[3] + m)
+    ref.paste(bg.crop(box), box)  # the background has the area cleared (the logo is not part of it)
+    bg.alpha_composite(mk, (x0, y0))
+    ref.alpha_composite(mk, (x0, y0))
+    return True
+
+
+NEXTMATCH_PSD = 'Nex Match graph.psd'
+
+
+def extract_nextmatch():
+    """The "Következik" corner graphic: reference composite, the optional (hidden) frame layer, layer dump, thumbnail.
+    Everything else in the design is dynamic (title, kick-off time, both logos), so there is no background image."""
+    psd = PSDImage.open(os.path.join(SRC, NEXTMATCH_PSD))
+    d = os.path.join(OUT, 'templates', 'nextmatch')
+    os.makedirs(d, exist_ok=True)
+    layers = list(psd.descendants())
+    ref = psd.topil().convert('RGBA')
+    ref.save(os.path.join(d, 'reference.png'), optimize=True)
+    visibility = {id(l): l.visible for l in layers}
+    for l in layers:  # render the hidden frame layer on its own
+        l.visible = l.name == 'TOP keret'
+    frame = psd.composite(force=True).convert('RGBA')
+    for l in layers:
+        l.visible = visibility[id(l)]
+    frame.save(os.path.join(d, 'frame.png'), optimize=True)
+    bg = Image.new('RGBA', ref.size, (43, 58, 46, 255))
+    Image.alpha_composite(bg, ref).convert('RGB').crop((0, 0, 480, 270)).resize((384, 216), Image.LANCZOS).save(os.path.join(d, 'thumb.jpg'), quality=85)
+    recs = [layer_record(l, {}) for l in layers]
+    with open(os.path.join(d, 'layers.json'), 'w', encoding='utf-8') as fh:
+        json.dump({'source_psd': NEXTMATCH_PSD, 'width': psd.width, 'height': psd.height, 'layers': recs}, fh, ensure_ascii=False, indent=1)
+    print(f'nextmatch          {NEXTMATCH_PSD}: frame bbox {frame.getbbox()}')
+
+
 def main():
+    only = None
+    if '--only' in sys.argv:
+        only = set(sys.argv[sys.argv.index('--only') + 1].split(','))
+    ensure_mkosz_asset()
+    if only and 'nextmatch' in only:
+        extract_nextmatch()
+        only.discard('nextmatch')
+        if not only:
+            return 0
     report = {'templates': {}, 'logos': {}, 'competitions': {}}
     for tid, (fname, opts) in TEMPLATES.items():
+        if only and tid not in only:
+            continue
         psd = PSDImage.open(os.path.join(SRC, fname))
         d = os.path.join(OUT, 'templates', tid)
         os.makedirs(d, exist_ok=True)
         layers = [l for l in psd.descendants()]
         dynamic = {id(l) for l in layers if l.is_visible() and not is_static(l, opts)}
         ref = psd.topil().convert('RGBA')
+        bg, frac = hybrid_background(psd, dynamic)
+        swapped = swap_pbp_for_mkosz(layers, bg, ref)
         ref.save(os.path.join(d, 'reference.png'), optimize=True)
         make_thumb(ref, os.path.join(d, 'thumb.jpg'))
-        bg, frac = hybrid_background(psd, dynamic)
         bg.save(os.path.join(d, 'background.png'), optimize=True)
         recs = [layer_record(l, opts) for l in layers]
         with open(os.path.join(d, 'layers.json'), 'w', encoding='utf-8') as fh:
@@ -245,8 +316,13 @@ def main():
             'psd': fname, 'size': [psd.width, psd.height],
             'dynamic_layers': [l.name for l in layers if id(l) in dynamic],
             'pixels_rerendered_pct': round(frac * 100, 2), 'fonts_in_visible_text': fonts,
+            'pbp_swapped_for_mkosz': swapped,
         }
-        print(f'{tid:18} {fname:45} re-rendered {frac*100:5.2f}%  fonts={fonts}')
+        print(f'{tid:18} {fname:45} re-rendered {frac*100:5.2f}%  mkosz-swap={swapped}')
+    if only:
+        return 0
+
+    extract_nextmatch()
 
     for fname, (league, mapping) in LOGO_SHEETS.items():
         psd = PSDImage.open(os.path.join(SRC, fname))

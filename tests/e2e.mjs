@@ -44,8 +44,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 7 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 7);
+    await check(`${lg}: 8 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 8);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -120,6 +120,7 @@ try {
     await page.click('#templateList button[data-id="referees-men"]');
     await page.waitForTimeout(300);
     await page.check('#showPast');
+    await page.check('#showOpen');
     await page.waitForTimeout(300);
     // a game whose referees are not published yet
     const open = await page.evaluate(() => { const s = window.__studio.store; return s.league('men').fixtures.find(m => !s.matchStaff('men', m)?.referees?.length).url; });
@@ -416,10 +417,75 @@ try {
     await page.click('#templateList button[data-id="referees-women"]');
     await page.waitForTimeout(300);
     const open = await page.evaluate(() => { const s = window.__studio.store; return s.league('women').fixtures.find(m => !s.matchStaff('women', m)?.referees?.length).url; });
+    await page.check('#showOpen');
+    await page.waitForTimeout(300);
     await page.selectOption('#matchSel', open);
     await page.waitForTimeout(400);
     assert.equal(await page.locator('.field.missing').count(), 4);
     assert.match(await page.locator('#notices').innerText(), /nincsenek kiírva/);
+  });
+  await check('referee page opens on a game that already has referees: nothing to type', async () => {
+    await page.evaluate(() => { localStorage.removeItem('nbia.studio.state.v1'); });
+    await page.reload(); // fresh state: the tick boxes of earlier checks must not leak in
+    await page.waitForSelector('body[data-ready="1"]');
+    for (const lg of ['women', 'men']) {
+      await page.click(`.league-toggle button[data-league="${lg}"]`);
+      await page.click(`#templateList button[data-id="referees-${lg}"]`);
+      await page.waitForTimeout(400);
+      // default list: only games with published referees (upcoming)
+      const opts = await page.$$eval('#matchSel option', os => os.map(o => o.textContent));
+      const first = await page.evaluate(() => window.__studio.current().values.ref1.text);
+      if (opts.length && opts[0] !== 'Nincs ilyen mérkőzés') {
+        assert.ok(opts.every(o => !/nincs kiírva/.test(o)), opts.join(' | '));
+        assert.notEqual(first, '—', `${lg}: first game must have referees`);
+        assert.equal(await page.locator('.field.missing').count(), 0);
+      }
+    }
+  });
+  await check('next match graphic (Következik): picks any game, kick-off time as in the design, logos, optional frame, export', async () => {
+    await page.evaluate(() => { localStorage.removeItem('nbia.studio.state.v1'); });
+    await page.reload();
+    await page.waitForSelector('body[data-ready="1"]');
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="nextmatch-women"]');
+    await page.waitForTimeout(400);
+    const url = await page.evaluate(() => window.__studio.store.upcoming('women')[0].url);
+    await page.selectOption('#matchSel', url);
+    await page.waitForTimeout(400);
+    const v = await page.evaluate(() => window.__studio.current().values);
+    const m = await page.evaluate(u => { const f = window.__studio.store.league('women').fixtures.find(x => x.url === u); return { time: f.time, home: f.homeId, away: f.awayId }; }, url);
+    assert.equal(v.time.text, m.time.replace(':', '.'));
+    assert.equal(v['home.logo'].src, `women/${m.home}`);
+    assert.equal(v['away.logo'].src, `women/${m.away}`);
+    assert.equal(v.title.text, 'Következik');
+    assert.equal(await page.locator('.field[data-id="frame"] input.vis').isChecked(), false, 'frame off by default');
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'nextmatch-women-real.png'));
+    const info = pngInfo(readFileSync(path.join(out, 'nextmatch-women-real.png')));
+    assert.equal(info.width, 1920); assert.equal(info.height, 1080); assert.equal(info.colorType, 6);
+    // the frame switch draws the PSD's hidden frame; text and time stay editable
+    await page.locator('.field[data-id="frame"] input.vis').check();
+    await page.locator('.field[data-id="time"] input.txt').fill('20.30');
+    await page.waitForTimeout(300);
+    assert.equal(await page.evaluate(() => window.__studio.current().values.time.text), '20.30');
+    const [dl2] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl2.saveAs(path.join(out, 'nextmatch-women-frame.png'));
+    await page.screenshot({ path: path.join(out, 'ui-nextmatch.png') });
+    // men league uses the same PSD
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="nextmatch-men"]');
+    await page.waitForTimeout(400);
+    assert.match(await page.locator('#selection').innerText(), /Mérkőzés/);
+  });
+  await check('top button "+ Kupa-/európai meccs" opens the add form from any template', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="referees-women"]'); // a template without the form
+    await page.waitForTimeout(300);
+    await page.click('#quickCup');
+    await page.waitForSelector('#agOpp');
+    assert.equal(await page.evaluate(() => document.querySelector('#addGame').open), true);
+    assert.equal(await page.evaluate(() => window.__studio.state.template.women), 'schedule-women');
+    assert.ok(await page.locator('#agSave').isVisible());
   });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 

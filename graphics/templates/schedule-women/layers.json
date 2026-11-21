@@ -14,7 +14,7 @@
     1072
    ],
    "opacity": 1.0,
-   "static": true,
+   "static": false,
    "effects": [
     {
      "type": "DropShadow",

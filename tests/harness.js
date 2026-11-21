@@ -44,7 +44,7 @@ function cellsOf(line) {
 }
 
 async function sampleValues(t) {
-  if (t.sample && (t.type === 'comparison' || t.type === 'intro' || t.type === 'referees')) {
+  if (t.sample && (t.type === 'comparison' || t.type === 'intro' || t.type === 'referees' || t.type === 'nextmatch')) {
     const v = structuredClone(t.sample);
     if (t.type === 'referees') v['controller.label'] = { text: 'MKOSZ Ellenőr:' };
     return v;
@@ -111,7 +111,7 @@ window.harness = {
     const t = templateById(id);
     const values = await sampleValues(t);
     const images = await assets();
-    const bg = await img(G + t.background);
+    const bg = t.background ? await img(G + t.background) : null;
     const canvas = document.createElement('canvas');
     const outlines = logoOutlines(await (await fetch(G + 'logos/logos.json')).json());
     const report = render(canvas, t, values, { background: bg, images, outlines });

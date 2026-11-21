@@ -227,6 +227,18 @@ export function bindIntro(store, lg, m, venues = {}) {
   };
 }
 
+// ───────────────────────── next match ("Következik") ─────────────────────────
+export function bindNextMatch(store, lg, m) {
+  const time = m.time ? m.time.replace(':', '.') : null; // "12:30" → "12.30" as in the design
+  return {
+    title: { text: 'Következik', source: 'Fix felirat a PSD-ből' },
+    time: field(time, 'Hunbasket menetrend', { note: 'A kezdési időpont nincs az adatokban – kézzel add meg.' }),
+    'home.logo': logo(lg, m.homeId),
+    'away.logo': logo(lg, m.awayId),
+    frame: { src: 'nextmatch/frame', source: 'A PSD rejtett „TOP keret” rétege (alapból ki van kapcsolva)' },
+  };
+}
+
 // ───────────────────────── referees ─────────────────────────
 /** Referees + MKOSZ controller of a dashboard fixture from the Hunbasket full schedule; missing → flagged, manual. */
 export function bindReferees(store, lg, m) {
