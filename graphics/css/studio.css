@@ -166,3 +166,4 @@ details.psbox input[type=number] { width: 100%; }
 .rowedit li.empty { color: var(--muted); }
 .rowedit button { padding: 0 7px; font-size: 12px; line-height: 20px; }
 .rowedit button.rowdel { border-color: rgba(239, 64, 54, .6); }
+#importPreview .warn.bad { color: #ff8a83; border: 1px solid var(--bad); border-radius: 6px; padding: 6px 10px; margin: 6px 0; }

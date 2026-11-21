@@ -51,12 +51,14 @@ export function bindComparison(store, lg, homeId, awayId) {
   const fromExcel = STAT_ROWS.some(s => store.statSource(lg, homeId, s.key) === 'excel' || store.statSource(lg, awayId, s.key) === 'excel');
   const srcName = L.statSource === 'kosarstat' ? 'KosárStat' : 'Hunbasket';
   const site = fromExcel ? 'FULLFIELD.INFO' : (L.statSource === 'kosarstat' ? 'KOSARSTAT.HU' : 'HUNBASKET.HU');
+  const excelOn = store.excelTeams(lg).length > 0;
+  const missingFromExcel = excelOn ? [homeId, awayId].filter(id => !store.excelHasTeam(lg, id)).map(id => club(lg, id)?.official || id) : [];
   const v = {
     subtitle: {
       runs: [{ text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' }, { text: site, color: '#37b3fd' }],
       text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' + site,
-      source: fromExcel ? 'Feltöltött Excel (a PSD mintában is FULLFIELD.INFO szerepel)' : 'Adatforrás: ' + srcName,
-      note: fromExcel ? 'Az adatok a feltöltött Excelből jönnek – ha nem a FullField a forrás, írd át a feliratot.' : undefined,
+      source: fromExcel ? 'FullField.info Excel (feltöltve)' : 'Adatforrás: ' + srcName,
+      note: missingFromExcel.length ? `Nem szerepel a feltöltött FullField Excelben: ${missingFromExcel.join(', ')} – az ő értékei a ${srcName}-adatokból jönnek, ellenőrizd a feliratot.` : undefined,
     },
     'home.logo': logo(lg, homeId),
     'away.logo': logo(lg, awayId),
@@ -69,9 +71,10 @@ export function bindComparison(store, lg, homeId, awayId) {
       const hb = s.lowerIsBetter ? h <= a : h >= a, ab = s.lowerIsBetter ? a <= h : a >= h;
       hc = hb ? GREEN : RED; ac = ab ? GREEN : RED;
     }
-    const note = s.key === 'val' ? (lg === 'women'
-      ? 'EFF = Hunbasket csapat-VAL (a PSD mintában a FullField EFF szerepelt, más képlettel) – Excelből felülírható'
-      : 'A KosárStat adatcsomagban nincs EFF/VAL mutató – töltsd fel Excelből, vagy írd be kézzel') : undefined;
+    const missingNote = x => (store.statSource(lg, x, s.key) === 'excel' ? undefined : (s.key === 'val'
+      ? (lg === 'women' ? 'EFF: nincs a FullField Excelben ennél a csapatnál – a Hunbasket csapat-VAL szerepel (más képlettel)' : 'EFF: nincs a FullField Excelben ennél a csapatnál, és a KosárStat adatcsomagban sincs – töltsd fel Excelből, vagy írd be kézzel')
+      : undefined));
+    const note = missingNote(homeId) || missingNote(awayId);
     const lab = id => (store.statSource(lg, id, s.key) === 'excel' ? `Excel – ${s.label}` : `${srcName} – ${s.label}`);
     v[`home.${s.key}`] = field(f(h), lab(homeId), { color: hc, note });
     v[`away.${s.key}`] = field(f(a), lab(awayId), { color: ac, note });

@@ -351,3 +351,19 @@ test('a game added by hand shows on the schedule with its logo and can be remove
   store.removeCup('women', key);
   assert.equal(store.cupFixtures('women', 'dvtkhuntherm').length, 0);
 });
+
+test('FullField "Efficiency" column is read as EFF; unknown team names are reported, never guessed', async () => {
+  const csv = 'Team;Pts;2Pp;3Pp;FTP;TRB;ST;TOV;ASS;Efficiency\nDVTK HUNTHERM;77,5;50,2;33,6;65,8;46,3;10,8;15,3;22,0;102,8\nNoname Basket;70,0;45,0;30,0;70,0;40,0;8,0;14,0;15,0;80,0\n';
+  const r = importWorkbook(readCsv(csv, 'stat'), 'women');
+  assert.equal(r.team.dvtkhuntherm.val, 102.8);
+  assert.equal(r.unmatched.length, 1);
+  assert.match(r.unmatched[0], /Noname Basket/);
+  const store = await loadStore();
+  store.mergeExcel('women', r, { name: 'fullfield.csv' });
+  assert.equal(store.excelHasTeam('women', 'dvtkhuntherm'), true);
+  assert.equal(store.excelHasTeam('women', 'csatattk'), false);
+  const v = bindComparison(store, 'women', 'dvtkhuntherm', 'csatattk');
+  assert.match(v.subtitle.text, /FULLFIELD\.INFO$/);
+  assert.match(v.subtitle.note, /Csata TKK/); // the team that is not in the Excel is named
+  assert.equal(v['home.val'].text, '102.8');
+});

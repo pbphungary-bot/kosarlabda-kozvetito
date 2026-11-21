@@ -247,6 +247,10 @@ export class Store {
     return d ? { ...d, source: 'dashboard' } : null;
   }
 
+  /** Is the uploaded Excel switched on and does it hold team statistics (any team) / this team? */
+  excelTeams(lg) { const x = this.#excelOn(lg); return x?.team ? Object.keys(x.team).filter(id => Object.keys(x.team[id] || {}).length) : []; }
+  excelHasTeam(lg, id) { return this.excelTeams(lg).includes(id); }
+
   excelInfo(lg) {
     const x = this.excel[lg];
     if (!x) return null;

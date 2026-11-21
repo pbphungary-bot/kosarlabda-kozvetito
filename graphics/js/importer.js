@@ -27,7 +27,7 @@ export const TEAM_COLUMNS = {
   ast: ['ass', 'ast', 'ast/g', 'gp', 'gp/m', 'golpassz', 'golpassz/m'],
   stl: ['st', 'stl', 'stl/g', 'szl', 'sz/m', 'szerzettlabda', 'labdaszerzes'],
   tov: ['tov', 'tov/g', 'to', 'el', 'el/m', 'eladottlabda', 'labdaeladas'],
-  val: ['val', 'eff', 'val/m', 'ertekeles', 'ertekeles/m'],
+  val: ['val', 'eff', 'efficiency', 'efficienco', 'efficiencyrating', 'val/m', 'ertekeles', 'ertekeles/m', 'hatekonysag'],
 };
 // the same abbreviation can mean something else in a player table (see the Hungarian conventions of the dashboard)
 export const PLAYER_COLUMNS = {
@@ -41,7 +41,7 @@ export const PLAYER_COLUMNS = {
   SZL: ['labdasz', 'sz/m', 'stl', 'stl/g', 'szl', 'szl/m', 'szerzettlabda'],
   EL: ['labdael', 'el/m', 'tov', 'tov/g', 'el', 'eladottlabda'],
   Blokk: ['blokksa', 'bl/m', 'blk', 'blk/g', 'blokk', 'blokk/m'],
-  VAL: ['val/m', 'val', 'eff', 'eff/m', 'ertekeles'],
+  VAL: ['val/m', 'val', 'eff', 'efficiency', 'efficienco', 'eff/m', 'ertekeles', 'hatekonysag'],
   'Idő': ['ido/m', 'ido', 'min', 'min/g', 'perc', 'perc/m', 'mpg'],
 };
 // cup / European games list (one row per game, copied by hand from e.g. eredmenyek.com)

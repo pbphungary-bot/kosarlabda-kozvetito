@@ -700,7 +700,8 @@ function previewImports() {
       ${imp.compsNoLogo?.length ? `<div class="warn">Nincs logó a PSD-kben ehhez a sorozathoz (a sor logó nélkül jelenik meg): ${esc(imp.compsNoLogo.join(', '))}</div>` : ''}
       ${(imp.notes || []).map(n => `<div class="hint">${esc(n)}</div>`).join('')}
       ${imp.scaled.length ? `<div class="warn">Törtként tárolt százalék szorozva 100-zal: ${esc(imp.scaled.join(', '))}</div>` : ''}
-      ${imp.unmatched.length ? `<div class="warn">Nem egyeztethető (kihagyva, nem találgatok):<ul>${imp.unmatched.slice(0, 8).map(u => `<li>${esc(u)}</li>`).join('')}</ul></div>` : ''}
+      ${imp.unmatched.length ? `<div class="warn bad"><b>Nem ismertem fel ezeket a csapatneveket – kihagytam őket, nem találgatok:</b><ul>${imp.unmatched.map(u => `<li>${esc(u)}</li>`).join('')}</ul></div>` : ''}
+      ${imp.teamCount ? (() => { const have = new Set(Object.keys(imp.team || {})); const miss = store.clubs(league).filter(c => !have.has(c.id)).map(c => c.official); return miss.length ? `<div class="warn bad"><b>Ezek a ${esc(LEAGUES[league].short.toLowerCase())} NB I/A csapatok nem szerepelnek a fájlban</b> (az ő adataik a dashboardról jönnek): ${esc(miss.join(', '))}</div>` : ''; })() : ''}
       ${imp.ignoredColumns.length ? `<div class="hint">Nem használt oszlopok: ${imp.ignoredColumns.length} db (${esc(imp.ignoredColumns.slice(0, 6).join(', '))}…)</div>` : ''}
       ${useful === 0 ? '<div class="warn">Nem találtam használható adatot ebben a fájlban.</div>' : ''}`;
   }).join('<hr>');
