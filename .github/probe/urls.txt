@@ -1,9 +1,1 @@
-https://www.fiba.basketball/robots.txt
-https://www.championsleague.basketball/robots.txt
-https://www.fiba.basketball/en/events/eurocup-women-26-27
-https://www.fiba.basketball/en/events/eurocup-women-26-27/games
-https://www.fiba.basketball/en/events/euroleague-women-26-27/games
-https://www.championsleague.basketball/en/games/136252-FAL-AEK
-https://www.championsleague.basketball/en/schedule
-https://www.thesportsdb.com/api/v1/json/3/eventsseason.php?id=5620&s=2026-2027
-https://www.thesportsdb.com/api/v1/json/3/search_all_leagues.php?s=Basketball
+# (unused by probe2)
