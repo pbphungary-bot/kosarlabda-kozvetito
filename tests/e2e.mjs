@@ -487,6 +487,59 @@ try {
     assert.equal(await page.evaluate(() => window.__studio.state.template.women), 'schedule-women');
     assert.ok(await page.locator('#agSave').isVisible());
   });
+  await check('intro: team name / rank font sizes and offsets can be set by hand, names equalised in one click', async () => {
+    await page.evaluate(() => { localStorage.removeItem('nbia.studio.state.v1'); });
+    await page.reload();
+    await page.waitForSelector('body[data-ready="1"]');
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="intro-men"]');
+    await page.waitForTimeout(300);
+    await page.selectOption('#matchSel', '__custom');
+    await page.selectOption('#customHome', 'kecskemet'); // "Duna Aszfalt-DTKH Kecskemét": long, shrinks automatically
+    await page.selectOption('#customAway', 'szolnok');
+    await page.waitForTimeout(400);
+    const sizes = () => page.evaluate(() => window.__studio.report().sizes);
+    let z = await sizes();
+    assert.notEqual(Math.round(z['home.name']), Math.round(z['away.name']), 'auto sizes differ: ' + JSON.stringify(z));
+    // one click: both names at the smaller (currently valid) size
+    await page.click('#eqNames');
+    await page.waitForTimeout(400);
+    z = await sizes();
+    assert.ok(Math.abs(z['home.name'] - z['away.name']) < 0.05, JSON.stringify(z));
+    assert.ok(await page.locator('.field[data-id="away.name"] input.sz').inputValue() !== '');
+    // set sizes by hand: exactly what was typed is used, nothing is shrunk any more
+    await page.locator('.field[data-id="home.name"] input.sz').fill('70');
+    await page.locator('.field[data-id="away.name"] input.sz').fill('70');
+    await page.waitForTimeout(300);
+    z = await sizes();
+    assert.equal(z['home.name'], 70); assert.equal(z['away.name'], 70);
+    // the rank lines (visible after ticking) and their size / offset
+    await page.locator('.field[data-id="home.rank"] input.vis').check();
+    await page.locator('.field[data-id="away.rank"] input.vis').check();
+    await page.waitForTimeout(300);
+    await page.locator('.field[data-id="home.rank"] input.sz').fill('40');
+    await page.locator('.field[data-id="away.rank"] input.sz').fill('40');
+    await page.waitForTimeout(300);
+    z = await sizes();
+    assert.equal(z['home.rank'], 40); assert.equal(z['away.rank'], 40);
+    const before = await page.evaluate(() => document.getElementById('canvas').toDataURL());
+    await page.locator('.field[data-id="away.name"] input.dy').fill('25');
+    await page.waitForTimeout(300);
+    const after = await page.evaluate(() => document.getElementById('canvas').toDataURL());
+    assert.notEqual(before, after, 'the vertical offset moves the text');
+    await page.screenshot({ path: path.join(out, 'ui-intro-sizes.png') });
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    await dl.saveAs(path.join(out, 'intro-men-sizes.png'));
+    // reset returns to the automatic size
+    await page.locator('.field[data-id="home.name"] button.reset').click();
+    await page.waitForTimeout(300);
+    z = await sizes();
+    assert.notEqual(z['home.name'], 70);
+    // the size is a per-game choice: another game starts with automatic sizes again
+    await page.selectOption('#customAway', 'kormend');
+    await page.waitForTimeout(300);
+    assert.equal(await page.locator('.field[data-id="away.name"] input.sz').inputValue(), '');
+  });
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

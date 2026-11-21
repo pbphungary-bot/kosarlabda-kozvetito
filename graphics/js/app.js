@@ -263,6 +263,8 @@ function mergedValues(auto) {
     if (ov.color) { x.color = ov.color; x.overridden = true; }
     if (ov.src !== undefined) { x.src = ov.src; x.overridden = true; }
     if (ov.visible !== undefined) x.visible = ov.visible;
+    if (ov.size > 0) x.size = ov.size;
+    if (ov.dy) x.dy = ov.dy;
     if (el.runs && !x.runs && x.text !== undefined) x.runs = [{ text: x.text }];
     out[el.id] = x;
   }
@@ -282,7 +284,7 @@ function renderFields(values, auto) {
   for (const el of t.elements) {
     const v = values[el.id], a = auto[el.id] || {};
     const ov = o[el.id] || {};
-    const isOv = ov.text !== undefined || ov.color || ov.src !== undefined || ov.visible !== undefined;
+    const isOv = ov.text !== undefined || ov.color || ov.src !== undefined || ov.visible !== undefined || ov.size > 0 || !!ov.dy;
     const missing = v.missing && !isOv;
     if (only && !missing && !isOv) continue;
     if (el.group !== group) { group = el.group; html += `<div class="group-title">${esc(group)}</div>`; }
@@ -307,10 +309,18 @@ function renderFields(values, auto) {
         : `<input class="txt" value="${esc(val)}" placeholder="${ph}">`}
         <select class="color" title="Szín">${COLORS.map(([c, n]) => `<option value="${c}" ${c === (ov.color || '') ? 'selected' : ''} style="${c ? `background:${c};color:${c === '#000000' || c === '#383838' ? '#fff' : '#000'}` : ''}">${c ? '■ ' + n : 'Auto'}</option>`).join('')}</select>
         ${isOv ? '<button class="reset" title="Vissza az automatikusra">↺</button>' : ''}</div>`;
+      if (el.adjust) {
+        html += `<div class="adj"><label>Betűméret (px) <input type="number" class="sz" min="10" max="300" step="1" placeholder="${Math.round(lastReport?.sizes?.[el.id] ?? el.size)}" value="${ov.size || ''}"></label>
+          <label>Fel / le (px) <input type="number" class="dy" step="1" placeholder="0" value="${ov.dy || ''}"></label></div>`;
+      }
     }
     if (missing) html += `<div class="flag">Hiányzó adat – az adásban „${MISSING}” jelenne meg.</div>`;
     if (a.note) html += `<div class="note">${esc(a.note)}</div>`;
     html += '</div>';
+  }
+  if (t.type === 'intro') {
+    html = `<div class="eqrow"><button id="eqNames" class="ghost" title="Mindkét csapatnév a kisebb (jelenleg érvényes) méretre áll">Csapatnevek egyforma méretre</button>
+      <button id="eqRanks" class="ghost" title="Mindkét helyezés/mérleg sor egyforma méretre áll">Helyezés/mérleg egyforma méretre</button></div>` + html;
   }
   $('fields').innerHTML = html || '<p class="note">Nincs megjeleníthető mező.</p>';
 }
@@ -324,12 +334,14 @@ function onFieldEvent(e) {
   else if (e.target.classList.contains('txt')) { if (e.target.value === '') delete cur.text; else cur.text = e.target.value; }
   else if (e.target.classList.contains('color')) { if (e.target.value) cur.color = e.target.value; else delete cur.color; }
   else if (e.target.classList.contains('src')) cur.src = e.target.value;
+  else if (e.target.classList.contains('sz')) { const n = parseFloat(e.target.value); if (n > 0) cur.size = n; else delete cur.size; }
+  else if (e.target.classList.contains('dy')) { const n = parseFloat(e.target.value); if (Number.isFinite(n) && n !== 0) cur.dy = n; else delete cur.dy; }
   else if (e.target.classList.contains('reset')) { delete o[id]; update(true); return; }
   else return;
   if (!Object.keys(cur).length) delete o[id];
   // live state of the field row while typing
   const v = current.auto?.[id] || {};
-  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined));
+  f.classList.toggle('overridden', !!o[id] && (o[id].text !== undefined || !!o[id].color || o[id].src !== undefined || o[id].visible !== undefined || o[id].size > 0 || !!o[id].dy));
   f.classList.toggle('missing', !!v.missing && !(o[id] && o[id].text !== undefined));
   const flag = f.querySelector('.flag');
   if (flag) flag.hidden = !f.classList.contains('missing');
@@ -338,7 +350,8 @@ function onFieldEvent(e) {
     const m = currentMatch();
     if (m && cur.text) { const vs = lsGet(LS.venues, {}); vs[`${state.league}/${m.homeId}`] = cur.text; lsSet(LS.venues, vs); }
   }
-  update(e.type === 'change' && !e.target.classList.contains('txt'));
+  // typing boxes only redraw the graphic: re-building the field list would steal the focus from the box the user clicks next
+  update(e.type === 'change' && !['txt', 'sz', 'dy'].some(c => e.target.classList.contains(c)));
 }
 
 // ───────────────────────── render ─────────────────────────
@@ -356,7 +369,9 @@ function fileName(values) {
   return ascii(`${LEAGUES[lg].short}_${TEMPLATE_TYPES[t.type]}_${who}_${date}`) + '.png';
 }
 
+let updateSeq = 0; // only the newest redraw may draw: a slower, older one must not overwrite it with stale values
 async function update(full) {
+  const seq = ++updateSeq;
   const t = tpl();
   renderBaseOpacity();
   document.body.classList.toggle('women', state.league === 'women');
@@ -406,17 +421,23 @@ async function update(full) {
   }
   $('notices').innerHTML = info.notices.map(n => `<div class="notice ${n.bad ? 'bad' : ''}">${esc(n.text)}</div>`).join('');
   const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+  if (seq !== updateSeq) return;
   const canvas = $('canvas');
   lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+  document.querySelectorAll('#fields .field input.sz').forEach(inp => {
+    const sz = lastReport.sizes[inp.closest('.field').dataset.id];
+    if (sz) inp.placeholder = Math.round(sz);
+  });
   if ($('showRef').checked) {
     const ref = await loadImage('ref/' + t.id, t.reference);
+    if (seq !== updateSeq) return;
     const ctx = canvas.getContext('2d');
     ctx.save(); ctx.globalAlpha = 0.5; ctx.drawImage(ref, 0, 0); ctx.restore();
   }
   const missing = t.elements.filter(el => values[el.id]?.missing && (values[el.id].visible ?? el.visible ?? true));
   const msgs = [];
   if (missing.length) msgs.push(`${missing.length} hiányzó adat`);
-  if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg (a minimális méreten sem fér el): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
+  if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg, kilóg a keretből (csökkentsd a betűméretet): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   if (lastReport.scaled.length) msgs.push(`Automatikusan kicsinyítve: ${lastReport.scaled.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   $('renderReport').textContent = msgs.join(' · ');
   $('dims').textContent = `${canvas.width} × ${canvas.height} px · PNG, átlátszó háttér · forrás: ${t.psd}`;
@@ -554,6 +575,17 @@ async function main() {
   $('resetAll').onclick = () => { if (confirm('Törlöd ennek a sablonnak minden kézi felülírását?')) { state.overrides[ovKey()] = {}; update(true); } };
   $('exportBtn').onclick = exportPng;
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
+  $('fields').addEventListener('click', e => {
+    const id = e.target.id;
+    if (id !== 'eqNames' && id !== 'eqRanks') return;
+    const ids = id === 'eqNames' ? ['home.name', 'away.name'] : ['home.rank', 'away.rank'];
+    const els = tpl().elements.filter(x => ids.includes(x.id));
+    const sizes = els.map(x => lastReport?.sizes?.[x.id] ?? x.size);
+    const target = Math.round(Math.min(...sizes) * 10) / 10;
+    for (const x of els) (overrides()[x.id] ||= {}).size = target;
+    update(true);
+    toast(`Egyforma méret: ${target} px`);
+  });
   $('showRef').onchange = () => update(false);
   $('baseOpacity').oninput = e => { state.baseOpacity = +e.target.value / 100; renderBaseOpacity(); update(false); };
   $('baseOpacityPsd').onclick = () => { state.baseOpacity = null; renderBaseOpacity(); update(false); };
