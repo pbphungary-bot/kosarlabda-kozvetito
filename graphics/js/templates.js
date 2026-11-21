@@ -18,7 +18,8 @@ const COMP_OUTLINE = { 'comp/eurocup-women': ol(3, '#ffffff'), 'comp/euroleague-
 // element id → calibration key (see tools/calibrate_text.py)
 function hscaleKey(type, id) {
   if (id === 'subtitle' || id === 'title' || id === 'round' || id === 'venue' || id === 'time') return id;
-  if (type === 'comparison') return id.includes('.rank.') ? 'rank' : 'value';
+  if (type === 'playerspecial') return id === 'title' ? 'title' : id.endsWith('.label') ? 'label' : /\.c\d$/.test(id) ? 'value' : /^h\d$/.test(id) ? 'header' : id === 'subtitle' ? 'subtitle' : null;
+  if (type === 'comparison' || type === 'playercompare') return id.includes('.rank.') ? 'rank' : 'value';
   if (type === 'teamstats') return id === 'team.name' ? 'teamname' : (/\.name$|^hdr\./.test(id) ? 'name' : 'figure');
   if (type === 'intro') return id.endsWith('.rank') ? 'round' : 'name';
   if (type === 'referees') return id.startsWith('controller') ? 'controller' : 'name';
@@ -55,7 +56,7 @@ export const STAT_ROWS = [
 ];
 
 // ───────────────────────── Csapatok összevetése ─────────────────────────
-function comparison(id, league, psd, g) {
+function comparison(id, league, psd, g, type = 'comparison') {
   const els = [
     { id: 'subtitle', type: 'text', label: 'Alcím (adatforrás)', group: 'Fejléc', x: g.subX, y: 163.2, align: 'center',
       font: 'italic', size: 48, tracking: 10, color: '#000000', outline: ol(3, '#ffffff'), runs: true, maxWidth: 1150 },
@@ -73,7 +74,9 @@ function comparison(id, league, psd, g) {
       { id: `away.rank.${s.key}`, type: 'text', label: `Vendég ${s.label} helyezés`, group: 'Vendég', x: g.ar, y: yr, ...common, tracking: g.rankTracking, color: '#373737', maxWidth: 110 },
     );
   });
-  return base(id, league, 'comparison', psd, 'Csapatok összevetése', { elements: els, sample: g.sample });
+  if (type === 'playercompare') els.unshift({ id: 'title', type: 'text', label: 'Cím', group: 'Fejléc', x: g.titleX, y: 103.5, align: 'center',
+    size: 96, tracking: 10, color: WHITE_TXT, outline: ol(6, '#000000', 1), maxWidth: 1000, minScale: 0.6 });
+  return base(id, league, type, psd, type === 'playercompare' ? 'Csillagjátékosok' : 'Csapatok összevetése', { elements: els, sample: g.sample });
 }
 
 function comparisonSample(sub, home, away, hr, ar, hc, ac, hlogo, alogo) {
@@ -208,6 +211,152 @@ function nextmatch(id, league) {
   });
 }
 
+// aliases: the star-player designs use the team comparison's calibration (same layers, same geometry)
+for (const lg of ['men', 'women']) {
+  HSCALE[`playercompare-${lg}`] = HSCALE[`comparison-${lg}`];
+  PANELS[`playercompare-${lg}`] = PANELS[`comparison-${lg}`];
+  LAYER_OPACITY[`playercompare-${lg}`] = LAYER_OPACITY[`comparison-${lg}`];
+}
+
+
+// ───────────────────────── Játékos-különleges (player special) ─────────────────────────
+// Editorial design (PSDs "Uros STAT" and "Kányási"): name, a 1–2 line story, any number of stat columns (each with a 2-line
+// header), a photo that can sit behind or in front of any group of text. The operator chooses columns, rows, photo size and layering;
+// the panel's outline is untouchable: the photo / logo are clipped to the panel's inner edge and text boxes are checked against it.
+
+/** Stat catalogue: key → label and the columns of the player table (Hunbasket per-game averages). */
+export const PS_STATS = {
+  pts: { label: 'PTS/G', col: 'P.' },
+  reb: { label: 'REB/G', col: 'ÖLP' },
+  ast: { label: 'AST/G', col: 'GP' },
+  stl: { label: 'STL/G', col: 'SZL' },
+  tov: { label: 'TOV/G', col: 'EL' },
+  blk: { label: 'BLK/G', col: 'Blokk' },
+  min: { label: 'MIN/G', col: 'Idő' },
+  val: { label: 'VAL/G', col: 'VAL' },
+  gp: { label: 'MECCS', col: 'M.', int: true },
+  p2: { label: '2P%', col: '2P %', pct: true },
+  p3: { label: '3P%', col: '3P %', pct: true },
+  ft: { label: 'FT%', col: 'BT %', pct: true },
+  p2ma: { label: '2P', col: '2P %', pct: true, made: '2P S', att: '2P K' },
+  p3ma: { label: '3P', col: '3P %', pct: true, made: '3P S', att: '3P K' },
+  ftma: { label: 'FT', col: 'BT %', pct: true, made: 'BT S', att: 'BT K' },
+  ts: { label: 'TS%', col: 'TS%', pct: true },
+  ortg: { label: 'O.RTG', col: 'O.RTG' },
+  drtg: { label: 'D.RTG', col: 'D.RTG' },
+};
+export const PS_MAX_COLS = 4, PS_MAX_ROWS = 8;
+export const PS_SMALL = 40; // size of the percentage next to a made/attempted value
+
+const PS_GEOM = {
+  men: {
+    panel: [0, 0, 1246, 924], inner: { box: [9, 9, 1237, 915], r: 28 }, photoCx: 1069, logoBox: [440, 600, 330, 360], logoOn: false,
+    titleX: 431.3, titleY: 102.5, titleMax: 800, subX: 431.8, subY: 154.7, subMax: 900, headerY: 197.6,
+    labelX: 544.8, rowY: 331.3, rowSpan: 571, statsLeft: 10, statsRight: 852,
+    exact: { cols: 3, labelAfter: 2, xs: [128.7, 348.6, 765.6] },
+    palette: [['#ec4036', '#1fbf1b'], ['#0b9444', '#ffffff'], ['#feed01', '#000000'], ['#ffffff', '#000000']],
+    cfg: { cols: 3, labelAfter: 2, rows: ['pts', 'p3', 'reb', 'ast', 'val', 'min'], auto: 3 },
+  },
+  women: {
+    panel: [29, 10, 1286, 1003], inner: { box: [37, 18, 1278, 995], r: 37 }, photoCx: 973, logoBox: [454, 649, 368, 400], logoOn: true,
+    titleX: 449.5, titleY: 119.5, titleMax: 800, subX: 454, subY: 166.2, subMax: 800, headerY: 263.6,
+    labelX: 447, rowY: 390.5, rowSpan: 576, statsLeft: 60, statsRight: 860,
+    exact: { cols: 2, labelAfter: 1, xs: [199, 716] },
+    palette: [['#a20100', '#ffffff'], ['#296d46', '#ffffff'], ['#1d4e89', '#ffffff'], ['#6b6b6b', '#ffffff']],
+    cfg: { cols: 2, labelAfter: 1, rows: ['pts', 'p2ma', 'reb', 'ast', 'stl', 'val'], auto: 2 },
+  },
+};
+export const PS_GROUPS = (cols) => [['title', 'Név és alcím'], ['headers', 'Oszlopfejlécek'], ['labels', 'Sorfeliratok'], ...Array.from({ length: cols }, (_, i) => [`c${i + 1}`, `${i + 1}. oszlop számai`])];
+
+export function psDefaults(league) {
+  const c = PS_GEOM[league].cfg;
+  return { ...c, rows: [...c.rows], photoH: 0, photoCx: PS_GEOM[league].photoCx, front: {} };
+}
+
+/** Normalised config (never trusts stored values). */
+export function psNormalize(league, cfg) {
+  const d = psDefaults(league), c = { ...d, ...(cfg || {}) };
+  c.cols = Math.min(PS_MAX_COLS, Math.max(1, Math.round(c.cols) || d.cols));
+  c.labelAfter = Math.min(c.cols, Math.max(0, Math.round(c.labelAfter ?? d.labelAfter)));
+  const n = Math.min(PS_MAX_ROWS, Math.max(1, (c.rows || []).length || d.rows.length));
+  c.rows = Array.from({ length: n }, (_, i) => (PS_STATS[c.rows?.[i]] ? c.rows[i] : d.rows[i] || 'pts'));
+  c.auto = Math.min(c.cols, Math.max(0, Math.round(c.auto ?? d.auto)));
+  c.photoH = c.photoH > 0 ? c.photoH : 0; // 0 = as tall as the panel allows
+  for (const k of ['fsRows', 'fsHeaders', 'fsTitle', 'fsSub']) c[k] = c[k] > 0 ? Math.min(300, c[k]) : 0; // font sizes in px, 0 = the PSD's
+  c.front = c.front || {};
+  return c;
+}
+
+/** The template for one configuration of a player-special design. `base` is the registry entry (background, reference). */
+export function psBuild(base, cfgIn) {
+  const league = base.league, g = PS_GEOM[league], cfg = psNormalize(league, cfgIn), op = 0.9882;
+  const [ix0, iy0, ix1, iy1] = g.inner.box;
+  const photoH = cfg.photoH > 0 ? Math.min(cfg.photoH, iy1 - iy0) : iy1 - iy0;
+  const n = cfg.cols;
+  // x of the columns: the PSD's own positions for its own column count, otherwise even slots (the label takes one slot)
+  let xs, labelX;
+  if (n === g.exact.cols && cfg.labelAfter === g.exact.labelAfter) { xs = g.exact.xs; labelX = g.labelX; }
+  else {
+    const slot = (g.statsRight - g.statsLeft) / (n + 1);
+    const centres = Array.from({ length: n + 1 }, (_, i) => g.statsLeft + slot * (i + 0.5));
+    labelX = centres[cfg.labelAfter];
+    xs = centres.filter((_, i) => i !== cfg.labelAfter);
+  }
+  const colMax = Math.max(150, (g.statsRight - g.statsLeft) / (n + 1) * 1.25);
+  const rows = cfg.rows, nr = rows.length;
+  const pitch = nr > 1 ? Math.min(g.rowSpan / 5, g.rowSpan / (nr - 1)) : 0;
+  const rowSize = cfg.fsRows || Math.min(96, 96 * (pitch || 115) / 115);
+  const small = PS_SMALL * rowSize / 96;
+  const group = { title: [], headers: [], labels: [] };
+  for (let k = 1; k <= n; k++) group[`c${k}`] = [];
+  group.title.push(
+    { id: 'title', type: 'text', label: 'Név', group: 'Fejléc', x: g.titleX, y: g.titleY, align: 'center', size: cfg.fsTitle || 106.667, tracking: 50, color: '#fefefe', caps: true, outline: ol(4, '#000000', 1), maxWidth: g.titleMax, opacity: op, adjust: true },
+    { id: 'subtitle', type: 'text', label: 'Alcím (1–2 sor, kézzel írandó)', group: 'Fejléc', x: g.subX, y: g.subY, align: 'center', font: 'italic', size: cfg.fsSub || 42.667, tracking: 50, color: '#000000',
+      outline: ol(3, '#ffffff'), maxWidth: g.subMax, lineHeight: (cfg.fsSub || 42.667) * 1.125, wrap: { maxLines: 2 }, opacity: op },
+  );
+  xs.forEach((x, i) => group.headers.push({ id: `h${i + 1}`, type: 'text', label: `${i + 1}. oszlop fejléce`, group: `${i + 1}. oszlop`, x, y: g.headerY, align: 'center', size: cfg.fsHeaders || 34.667, tracking: 50, color: '#fefefe',
+    outline: ol(4, '#000000', 1), maxWidth: 260, lineHeight: (cfg.fsHeaders || 34.667) * 1.2, wrap: { maxLines: 2 }, opacity: op }));
+  rows.forEach((key, i) => {
+    const y = g.rowY + i * pitch;
+    group.labels.push({ id: `r${i}.label`, type: 'text', label: `${i + 1}. sor felirata`, group: 'Sorok', x: labelX, y, align: 'center', font: 'italic', size: rowSize, tracking: 50, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 200, opacity: op });
+    xs.forEach((x, k) => {
+      const [color, outline] = g.palette[k % g.palette.length];
+      group[`c${k + 1}`].push({ id: `r${i}.c${k + 1}`, type: 'text', label: `${PS_STATS[key].label} – ${k + 1}. oszlop`, group: `${k + 1}. oszlop`, x, y, align: 'center', size: rowSize, tracking: 25, color, outline: ol(3, outline), maxWidth: PS_STATS[key].made ? colMax * 1.4 : colMax, runs: true, opacity: op });
+    });
+  });
+  const photo = { id: 'photo', type: 'image', label: 'Játékos fotó (feltöltött, áttetsző PNG)', group: 'Fotó', box: [cfg.photoCx, iy1 - photoH / 2, photoH * 3, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, fixedSrc: true };
+  const logo = { id: 'logo', type: 'image', label: 'Klublogó (háttér)', group: 'Fotó', box: g.logoBox, fit: 'contain', opacity: 0.6, outline: ol(2, '#ffffff'), visible: g.logoOn, clipInner: true };
+  // layering: everything not marked "in front" is drawn behind the photo (default: all text in front of the photo)
+  const names = ['title', 'headers', 'labels', ...Array.from({ length: n }, (_, i) => `c${i + 1}`)];
+  const isFront = k => cfg.front[k] !== false;
+  const els = [logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
+  for (const e of els) if (e.type === 'text') e.adjust = true; // every text has size / position fields
+  const t = base2(base, els);
+  t.ps = { cfg, groups: names };
+  t.inner = g.inner;
+  t.panel = { box: g.panel, alpha: op };
+  return t;
+}
+
+// a copy of the registry entry with new elements (calibration: see HSCALE below)
+function base2(b, elements) {
+  const t = { ...b, elements: elements.map(e => ({ ...e })) };
+  for (const el of t.elements) {
+    if (el.type !== 'text') continue;
+    const k = hscaleKey('playerspecial', el.id);
+    el.hscale = (k && HSCALE[b.id]?.[k]) || 1;
+  }
+  return t;
+}
+
+function playerspecial(id, league, psd) {
+  const b = base(id, league, 'playerspecial', psd, 'Játékos-különleges', { elements: [] });
+  return psBuild(b, null);
+}
+// text-width calibration (PSD ink width / browser width of the same string)
+HSCALE['playerspecial-men'] = { title: 0.971, label: 0.96, value: 0.968, header: 0.99, subtitle: 0.968 };
+HSCALE['playerspecial-women'] = { title: 0.995, label: 0.96, value: 0.968, header: 0.978, subtitle: 0.976 };
+
 // ───────────────────────── Template registry ─────────────────────────
 export const TEMPLATES = [
   comparison('comparison-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
@@ -281,6 +430,14 @@ export const TEMPLATES = [
       'home.logo': { src: 'women/sercounigyor' }, 'away.logo': { src: 'women/eltebeacujbuda' },
     },
   }),
+  comparison('playercompare-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
+    subX: 602.2, titleX: 605.5, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
+  }, 'playercompare'),
+  comparison('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
+    subX: 648.2, titleX: 651.5, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
+  }, 'playercompare'),
+  playerspecial('playerspecial-men', 'men', 'Uros STAT.psd'),
+  playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd'),
   nextmatch('nextmatch-men', 'men'),
   nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {
@@ -296,6 +453,8 @@ export const TEMPLATE_TYPES = {
   nextmatch: 'Következik',
   intro: 'Intro',
   comparison: 'Csapatok összevetése',
+  playercompare: 'Csillagjátékosok',
+  playerspecial: 'Játékos-különleges',
   teamstats: 'Csapatstatisztika',
   results: 'Eredmények',
   resultrows: 'Eredmények (színes sorok)',

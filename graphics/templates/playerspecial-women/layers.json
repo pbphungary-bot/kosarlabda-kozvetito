@@ -1,0 +1,526 @@
+{
+ "source_psd": "Kányási - 324 vs idei 7 meccs.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "Téglalap 1",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    29,
+    11,
+    1285,
+    1002
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    -238,
+    5,
+    1551,
+    1011
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Réteg 1",
+   "kind": "pixel",
+   "visible": true,
+   "bbox": [
+    546,
+    72,
+    1400,
+    995
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "50633_mkosz_horizontalbigger",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    757,
+    1014,
+    873,
+    1074
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "KÁNYÁSI VERONIKA",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    137,
+    25,
+    770,
+    121
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "KÁNYÁSI VERONIKA",
+    "runs": [
+     {
+      "text": "KÁNYÁSI VERONIKA",
+      "font": "LeagueGothic-Regular",
+      "size": 106.66666,
+      "color": "#fefefe",
+      "tracking": 50.0,
+      "leading": 18.66667,
+      "autoLeading": false,
+      "caps": 2
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     449.49999999999955,
+     119.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "DVTK_cimer",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    270,
+    449,
+    638,
+    849
+   ],
+   "opacity": 0.6,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 2.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ]
+  },
+  {
+   "name": "2016-2026 (Cegléd+DVTK)",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    116,
+    238,
+    283,
+    312
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "2016-2026\r(Cegléd+DVTK)",
+    "runs": [
+     {
+      "text": "2016-2026\r(Cegléd+DVTK)",
+      "font": "LeagueGothic-Regular",
+      "size": 34.66667,
+      "color": "#fefefe",
+      "tracking": 50.0,
+      "leading": 18.66667,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     0.990543062468824,
+     0.0,
+     0.0,
+     0.990543062468824,
+     199.1423603129009,
+     263.57551321240567
+    ],
+    "scale": 0.990543062468824
+   }
+  },
+  {
+   "name": "Idei első 7 tétmérkőzés",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    640,
+    239,
+    792,
+    306
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 4.0,
+     "spread": 100.0,
+     "distance": 1.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "Idei első\r7 tétmérkőzés",
+    "runs": [
+     {
+      "text": "Idei első\r7 tétmérkőzés",
+      "font": "LeagueGothic-Regular",
+      "size": 34.66667,
+      "color": "#fefefe",
+      "tracking": 50.0,
+      "leading": 18.66667,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     0.990543062468824,
+     0.0,
+     0.0,
+     0.990543062468824,
+     715.1423603129009,
+     263.57551321240567
+    ],
+    "scale": 0.990543062468824
+   }
+  },
+  {
+   "name": "A DVTK válogatott hátvédjének sosem látott nagy szerepe - a “Cs",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    60,
+    134,
+    851,
+    222
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "A DVTK válogatott hátvédjének sosem látott nagy szerepe -\ra “CséKá” statisztikái is ezt támasztják alá ",
+    "runs": [
+     {
+      "text": "A DVTK válogatott hátvédjének sosem látott nagy szerepe -\ra “CséKá” statisztikái is ",
+      "font": "LeagueGothic-Italic",
+      "size": 42.66667,
+      "color": "#000000",
+      "tracking": 50.0,
+      "leading": 48.0,
+      "autoLeading": false,
+      "caps": 0
+     },
+     {
+      "text": "ezt támasztják alá ",
+      "font": "LeagueGothic-Italic",
+      "size": 42.66667,
+      "color": "#000000",
+      "tracking": 50.0,
+      "leading": 48.0,
+      "autoLeading": false,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     454.0,
+     166.19970703125
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "7.3 2.8/6.7(41.4%) 2.1 2.1 1.1 7.8",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    53,
+    319,
+    347,
+    968
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "7.3\r2.8/6.7(41.4%)\r2.1\r2.1\r1.1\r7.8",
+    "runs": [
+     {
+      "text": "7.3\r2.8/6.7",
+      "font": "LeagueGothic-Regular",
+      "size": 96.0,
+      "color": "#a20100",
+      "tracking": 25.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "(41.4%)\r",
+      "font": "LeagueGothic-Regular",
+      "size": 40.0,
+      "color": "#a20100",
+      "tracking": 25.0,
+      "leading": 16.0,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "2.1\r2.1\r1.1\r7.8",
+      "font": "LeagueGothic-Regular",
+      "size": 96.0,
+      "color": "#a20100",
+      "tracking": 25.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     199.0,
+     390.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "11.9 4.8/10.3(47.2%) 4.6 2.9 1.9 12.9",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    553,
+    319,
+    880,
+    968
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "11.9\r4.8/10.3(47.2%)\r4.6\r2.9\r1.9\r12.9",
+    "runs": [
+     {
+      "text": "11.9\r",
+      "font": "LeagueGothic-Regular",
+      "size": 96.0,
+      "color": "#296d46",
+      "tracking": 25.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "4.8/10.3",
+      "font": "LeagueGothic-Regular",
+      "size": 96.0,
+      "color": "#296d46",
+      "tracking": 25.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "(47.2%)\r",
+      "font": "LeagueGothic-Regular",
+      "size": 40.0,
+      "color": "#296d46",
+      "tracking": 25.0,
+      "leading": 16.0,
+      "autoLeading": true,
+      "caps": 0
+     },
+     {
+      "text": "4.6\r2.9\r1.9\r12.9",
+      "font": "LeagueGothic-Regular",
+      "size": 96.0,
+      "color": "#296d46",
+      "tracking": 25.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     716.0,
+     390.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    446,
+    1014,
+    500,
+    1075
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    539,
+    1024,
+    716,
+    1064
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "PTS/G 2P% REB/G AST/G STL/G EFF/G  ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    366,
+    319,
+    544,
+    974
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": -178.0,
+     "useGlobalAngle": true,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "PTS/G\r2P%\rREB/G\rAST/G\rSTL/G\rEFF/G\r\r",
+    "runs": [
+     {
+      "text": "PTS/G\r2P%\rREB/G\rAST/G\rSTL/G\rEFF/G\r\r",
+      "font": "LeagueGothic-Italic",
+      "size": 96.0,
+      "color": "#000000",
+      "tracking": 50.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     447.0,
+     390.5
+    ],
+    "scale": 1.0
+   }
+  }
+ ]
+}

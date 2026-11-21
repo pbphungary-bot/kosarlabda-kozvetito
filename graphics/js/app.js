@@ -3,10 +3,10 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, psBuild, psNormalize, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import {
-  bindComparison, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -62,7 +62,16 @@ async function loadLeagueImages(lg) {
   ]);
 }
 
-const tpl = () => templateById(state.template[state.league]);
+const psCache = new Map();
+const tpl = () => {
+  const t = templateById(state.template[state.league]);
+  if (t.type !== 'playerspecial') return t;
+  // the player-special graphic is built from the operator's settings (columns, rows, photo, layering)
+  const cfg = psNormalize(t.league, state.sel[t.league]?.psCfg);
+  const key = t.id + JSON.stringify(cfg);
+  if (!psCache.has(key)) { if (psCache.size > 30) psCache.clear(); psCache.set(key, psBuild(t, cfg)); }
+  return psCache.get(key);
+};
 const s0 = () => state.sel[state.league];
 const sel = () => state.sel[state.league];
 const ovKey = () => tpl().id;
@@ -116,10 +125,68 @@ function currentMatch() {
   return store.league(state.league).fixtures.find(m => matchKey(m) === s.matchKey) || null;
 }
 
+function playerSelects() {
+  const m = currentMatch(), s = sel(), lg = state.league;
+  if (!m) return '';
+  const one = (side, id, label) => {
+    const opts = playerOptions(store, lg, id);
+    const cur = pickPlayer(store, lg, id, s.pc?.[side]);
+    return `<label>${label}<select id="pc_${side}">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)} (${esc(o.p['P.'] ?? '?')} pont/meccs)</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label>`;
+  };
+  return `<div class="row2">${one('home', m.homeId, 'Hazai játékos')}${one('away', m.awayId, 'Vendég játékos')}</div><small class="hint">Alapból a legjobb pontszerző; a helyezés a liga játékosai között értendő.</small>`;
+}
+
+
+// ───────────────────────── player special: settings ─────────────────────────
+function psConfig(s) { return psNormalize(state.league, s.psCfg); }
+function psSet(s, patch) {
+  s.psCfg = { ...psConfig(s), ...patch };
+  renderSelection(); update(true);
+}
+
+function psConfigHtml(s) {
+  const c = psConfig(s), lg = state.league;
+  const num = (id, v, min, max, step = 1) => `<input type="number" id="${id}" min="${min}" max="${max}" step="${step}" value="${v}">`;
+  const rowSel = c.rows.map((k, i) => `<label>${i + 1}. sor <select class="psRow" data-i="${i}">${Object.entries(PS_STATS).map(([key, d]) => `<option value="${key}" ${key === k ? 'selected' : ''}>${esc(d.label)}${d.made ? ' (bedobott/dobott + %)' : ''}</option>`).join('')}</select></label>`).join('');
+  const groups = PS_GROUPS(c.cols).map(([k, label]) => `<label class="chk"><input type="checkbox" class="psFront" data-k="${k}" ${c.front[k] === false ? '' : 'checked'}> ${esc(label)}</label>`).join('');
+  return `<details class="psbox" ${s.psOpen ? 'open' : ''} id="psBox"><summary>Grafika felépítése (oszlopok, sorok, fotó, rétegek)</summary>
+    <div class="row2"><label>Oszlopok száma (1–${PS_MAX_COLS}) ${num('psCols', c.cols, 1, PS_MAX_COLS)}</label>
+      <label>Sorok száma (1–${PS_MAX_ROWS}) ${num('psRows', c.rows.length, 1, PS_MAX_ROWS)}</label></div>
+    <div class="row2"><label>Oszlopok a felirat előtt (bal oldalon) ${num('psLabelAfter', c.labelAfter, 0, c.cols)}</label>
+      <label>Az idei átlag oszlopa (0 = egyik sem) ${num('psAuto', c.auto, 0, c.cols)}</label></div>
+    <div class="row2">${rowSel}</div>
+    <div class="row2"><label>Fotó magassága (px; 0 = a lehető legnagyobb) ${num('psPhotoH', c.photoH, 0, 1000)}</label>
+      <label>Fotó közepének X helye (px) ${num('psPhotoCx', Math.round(c.photoCx), 0, 1400)}</label></div>
+    <div class="row2"><label>Számok és feliratok betűmérete (px; 0 = automatikus) ${num('psFsRows', c.fsRows, 0, 300)}</label>
+      <label>Fejlécek betűmérete (px; 0 = PSD) ${num('psFsHeaders', c.fsHeaders, 0, 300)}</label></div>
+    <div class="row2"><label>Név betűmérete (px; 0 = PSD) ${num('psFsTitle', c.fsTitle, 0, 300)}</label>
+      <label>Alcím betűmérete (px; 0 = PSD) ${num('psFsSub', c.fsSub, 0, 300)}</label></div>
+    <small class="hint">Egyes elemek mérete külön is állítható a Mezők listában (Betűméret / Balra-jobbra / Fel-le).</small>
+    <label>Réteg: a kipipált csoportok a <b>fotó előtt</b> jelennek meg, a többi a fotó mögött</label>
+    <div class="psgroups">${groups}</div>
+    <div class="import-row"><button id="psReset" class="ghost">Alaphelyzet (${lg === 'men' ? 'férfi' : 'női'} design)</button></div>
+  </details>`;
+}
+
+function wirePsConfig(s) {
+  $('psBox').ontoggle = e => { s.psOpen = e.target.open; };
+  const n = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(+$(id).value || 0)));
+  $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), auto: Math.min(cols, c.auto) }); };
+  $('psRows').onchange = () => { const k = n('psRows', 1, PS_MAX_ROWS), c = psConfig(s); psSet(s, { rows: Array.from({ length: k }, (_, i) => c.rows[i] || 'pts') }); };
+  $('psLabelAfter').onchange = () => psSet(s, { labelAfter: n('psLabelAfter', 0, psConfig(s).cols) });
+  $('psAuto').onchange = () => psSet(s, { auto: n('psAuto', 0, psConfig(s).cols) });
+  for (const [id, key] of [['psFsRows', 'fsRows'], ['psFsHeaders', 'fsHeaders'], ['psFsTitle', 'fsTitle'], ['psFsSub', 'fsSub']]) $(id).onchange = () => psSet(s, { [key]: n(id, 0, 300) });
+  $('psPhotoH').onchange = () => psSet(s, { photoH: n('psPhotoH', 0, 1000) });
+  $('psPhotoCx').onchange = () => psSet(s, { photoCx: n('psPhotoCx', 0, 1400) });
+  document.querySelectorAll('.psRow').forEach(el => el.onchange = () => { const rows = [...psConfig(s).rows]; rows[+el.dataset.i] = el.value; psSet(s, { rows }); });
+  document.querySelectorAll('.psFront').forEach(el => el.onchange = () => psSet(s, { front: { ...psConfig(s).front, [el.dataset.k]: el.checked } }));
+  $('psReset').onclick = () => { s.psCfg = null; renderSelection(); update(true); };
+}
+
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -128,7 +195,10 @@ function renderSelection(extra = {}) {
         <select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey && !s.custom ? 'selected' : ''}>${esc(matchLabel(m))}${m.resultMissing ? ' – eredmény hiányzik az adatokból' : ''}</option>`).join('')}
         <option value="__custom" ${s.custom ? 'selected' : ''}>Egyéni párosítás…</option></select></label>
       <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
-      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}`;
+      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}${t.type === 'playercompare' ? playerSelects() : ''}`;
+    if (t.type === 'playercompare') {
+      for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetMatchOverrides(); update(true); };
+    }
     $('matchSel').onchange = e => {
       if (e.target.value === '__custom') { const m = currentMatch(); s.custom = { homeId: m?.homeId || Object.keys(CLUBS[lg])[0], awayId: m?.awayId || Object.keys(CLUBS[lg])[1] }; }
       else { s.custom = null; s.matchKey = e.target.value; }
@@ -139,6 +209,28 @@ function renderSelection(extra = {}) {
       $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
       $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
     }
+  } else if (t.type === 'playerspecial') {
+    $('selectTitle').textContent = '2. Csapat és játékos';
+    const opts = playerOptions(store, lg, s.teamId);
+    const cur = pickPlayer(store, lg, s.teamId, s.ps?.player);
+    box.innerHTML = `<div class="row2"><label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>
+      <label>Játékos<select id="psPlayer">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)}</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label></div>
+      <label>Fotó (áttetsző PNG kivágás; csak a böngészőben marad)
+        <span class="import-row"><input type="file" id="psPhoto" accept="image/png,image/webp,image/jpeg"> <button id="psPhotoClear" class="ghost" ${images['upload/photo'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
+      ${psConfigHtml(s)}
+      <small class="hint">A név és az idei átlagok (az utolsó oszlop) az adatokból jönnek; a sztori, a többi oszlop és a fotó a tiéd. A fotó mozgatása/nagyítása: Elrendezés doboz.</small>`;
+    $('teamSel').onchange = e => { s.teamId = e.target.value; s.ps = null; resetMatchOverrides(); update(true); };
+    $('psPlayer').onchange = e => { (s.ps ||= {}).player = e.target.value; resetMatchOverrides(); update(true); };
+    $('psPhoto').onchange = e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const url = URL.createObjectURL(f), img = new Image();
+      img.onload = () => { images['upload/photo'] = img; state.photoName = f.name; renderSelection(); update(true); };
+      img.onerror = () => toast('A képet nem sikerült beolvasni.');
+      img.src = url;
+    };
+    $('psPhotoClear').onclick = () => { delete images['upload/photo']; renderSelection(); update(true); };
+    wirePsConfig(s);
   } else if (t.type === 'referees') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast, showOpen = !!s.showOpen;
@@ -226,13 +318,19 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'intro' || t.type === 'nextmatch') {
+  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
     if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
+    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
+  } else if (t.type === 'playerspecial') {
+    v = bindPlayerSpecial(store, lg, s.teamId, s.ps?.player, t);
+    v.photo = { src: images['upload/photo'] ? 'upload/photo' : '', source: images['upload/photo'] ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };
+    if (!images['upload/photo']) info.notices.push({ text: 'Nincs fotó feltöltve – a grafika fotó nélkül jelenik meg. Tölts fel egy áttetsző PNG kivágást a Fotó mezővel.' });
+    info.notices.push({ text: 'Az alcím és az első oszlop(ok) (pl. karrier, utolsó meccsek) kézzel töltendők: az adatbázisban csak az idei átlag van meg. Az üres mezők nem jelennek meg a képen.' });
   } else if (t.type === 'teamstats') {
     const r = bindTeamstats(store, lg, s.teamId, t, measureFn, s.players);
     v = r.values;
@@ -265,7 +363,8 @@ function mergedValues(auto) {
     const x = { ...a };
     const ov = o[el.id] || {};
     if (ov.text !== undefined) {
-      if (el.runs && a.runs) x.runs = [...a.runs.slice(0, -1), { ...a.runs[a.runs.length - 1], text: ov.text }];
+      if (el.runs && a.runs && tpl().type === 'playerspecial') x.runs = [{ text: ov.text }]; // the typed text replaces the whole line
+      else if (el.runs && a.runs) x.runs = [...a.runs.slice(0, -1), { ...a.runs[a.runs.length - 1], text: ov.text }];
       x.text = ov.text; x.missing = false; x.overridden = true;
     }
     if (ov.color) { x.color = ov.color; x.overridden = true; }
@@ -374,7 +473,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'referees' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';
@@ -454,6 +553,14 @@ async function update(full) {
   const missing = t.elements.filter(el => values[el.id]?.missing && (values[el.id].visible ?? el.visible ?? true));
   const msgs = [];
   if (missing.length) msgs.push(`${missing.length} hiányzó adat`);
+  if (t.inner) { // the panel's outline is untouchable: text must stay inside it
+    const [x0, y0, x1, y1] = t.inner.box;
+    const out = t.elements.filter(el => el.type === 'text' && lastReport.boxes[el.id] && (values[el.id]?.visible ?? el.visible ?? true)).filter(el => {
+      const [bx, by, bw, bh] = lastReport.boxes[el.id];
+      return bx < x0 || by < y0 || bx + bw > x1 || by + bh > y1;
+    });
+    if (out.length) msgs.push(`A keret vonalát átlépi: ${out.map(el => el.label).slice(0, 6).join(', ')}${out.length > 6 ? ' …' : ''} – told beljebb vagy csökkentsd`);
+  }
   if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg, kilóg a keretből (csökkentsd a betűméretet): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   if (lastReport.scaled.length) msgs.push(`Automatikusan kicsinyítve: ${lastReport.scaled.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   $('renderReport').textContent = msgs.join(' · ');
@@ -874,7 +981,7 @@ async function main() {
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
   restoreExcel();
-  window.__studio = { state, store, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
+  window.__studio = { state, store, images, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
 }
