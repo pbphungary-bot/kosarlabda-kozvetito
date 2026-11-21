@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 SOURCES = {'men': 'https://hunbasket.hu/tabella/ferfi', 'women': 'https://hunbasket.hu/tabella/noi'}
 EXPECTED_TEAMS = {'men': 14, 'women': 11}
 SEASON = '2026/2027'
+RECHECK_STAMP_SECONDS = 3 * 3600
 
 def number(value):
     value = re.sub(r'[\s\u00a0]', '', str(value))
@@ -110,6 +111,15 @@ def main():
             old = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
             now = datetime.now(timezone.utc).isoformat()
             unchanged = old.get('standings') == standings
+            # an unchanged table is only re-stamped every few hours: otherwise every run would be a commit that changes nothing but a timestamp
+            if unchanged and old.get('checked_at'):
+                try:
+                    age = (datetime.fromisoformat(now) - datetime.fromisoformat(old['checked_at'])).total_seconds()
+                except ValueError:
+                    age = RECHECK_STAMP_SECONDS
+                if age < RECHECK_STAMP_SECONDS:
+                    print(f'{league}: {len(standings)} official teams; unchanged (checked {int(age // 60)} min ago, file kept)', flush=True)
+                    continue
             output = {'competition': 'Férfi NB I/A' if league == 'men' else 'Női NB I/A',
                 'source': url, 'updated_at': old.get('updated_at', now) if unchanged else now,
                 'checked_at': now, 'standings': standings}

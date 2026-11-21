@@ -1,0 +1,35 @@
+name: Tests
+on:
+  pull_request:
+  push:
+    branches: ['claude/**']
+    paths: ['graphics/**', 'tests/**', 'index.html', 'scripts/**', '.github/workflows/tests.yml']
+permissions:
+  contents: read
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install beautifulsoup4 lxml numpy pillow
+      - name: Unit tests (frozen data)
+        run: node --test tests/*.test.mjs
+      - name: Parser and asset tests
+        run: for t in tests/*.test.py; do python "$t"; done
+      - name: Install Playwright (Chromium)
+        run: |
+          cd tests
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Browser tests (studio on desktop and phone, dashboard)
+        run: node tests/e2e.mjs

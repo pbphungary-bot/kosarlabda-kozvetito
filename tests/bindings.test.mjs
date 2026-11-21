@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadStore, readJson } from './helpers.mjs';
+import { loadStore, readJson, DATA_DIR } from './helpers.mjs';
 import { bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
 import { templateById, STAT_ROWS, TEAMSTAT_COLS } from '../graphics/js/templates.js';
 import { clubId } from '../graphics/js/clubs.js';
@@ -11,7 +11,7 @@ const measure = (el, text) => text.length * el.size * 0.4; // layout only, not a
 test('comparison values equal the raw team-stat JSON, both leagues', async () => {
   const store = await loadStore();
   for (const lg of ['men', 'women']) {
-    const raw = await readJson(`data/team_stats_${lg}.json`);
+    const raw = await readJson(`${DATA_DIR}/team_stats_${lg}.json`);
     const up = store.upcoming(lg);
     assert.ok(up.length > 0, `${lg}: upcoming matches`);
     for (const m of up.slice(0, 5)) {
@@ -42,7 +42,7 @@ test('men EFF is not invented (KosárStat has no VAL)', async () => {
 test('league ranks are the competition ranks of the current data (independent re-computation)', async () => {
   const store = await loadStore();
   const v = bindComparison(store, 'women', 'dvtkhuntherm', 'csatattk');
-  const raw = await readJson('data/team_stats_women.json');
+  const raw = await readJson(DATA_DIR + '/team_stats_women.json');
   const season = Object.fromEntries(raw.teams.map(t => [t.name, t.periods.season]));
   const rankOf = (team, key, lowerIsBetter = false) => {
     const mine = parseFloat(String(season[team][key]).replace(',', '.'));

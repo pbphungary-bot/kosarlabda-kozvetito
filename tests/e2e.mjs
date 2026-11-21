@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-import { ROOT } from './helpers.mjs';
+import { ROOT, DATA_DIR, FIXED_NOW } from './helpers.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
@@ -24,16 +24,26 @@ function pngInfo(buf) {
 const results = [];
 const check = (name, fn) => fn().then(() => results.push(['ok', name]), e => { results.push(['FAIL', name, e.message]); });
 
+/** Frozen data + clock for every browser context (see helpers.mjs); the cup feed stays empty, the cup tests bring their own games. */
+async function hermetic(c) {
+  await c.route(/\/data\/[a-z0-9_]+\.json/, r => {
+    const file = path.join(ROOT, DATA_DIR, new globalThis.URL(r.request().url()).pathname.split('/').pop());
+    return r.fulfill({ contentType: 'application/json', body: readFileSync(file) });
+  });
+  await c.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
+  if (FIXED_NOW) await c.clock.setFixedTime(new Date(FIXED_NOW));
+  return c;
+}
+
 const browser = await chromium.launch();
 try {
-  const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, acceptDownloads: true });
+  const ctx = await hermetic(await browser.newContext({ viewport: { width: 1600, height: 1000 }, acceptDownloads: true }));
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('dialog', d => d.accept());
   // the live European-games feed changes daily; the cup tests bring their own games (an empty feed is served)
-  await ctx.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   await page.goto(`${URL}/graphics/index.html`);
   await page.waitForSelector('body[data-ready="1"]', { timeout: 30000 });
 
@@ -759,12 +769,11 @@ try {
 
   // ───────────── phone: tabs, sticky preview, no sideways scrolling, touch zoom, export ─────────────
   const { devices } = require('playwright');
-  const mctx = await browser.newContext({ ...devices['iPhone 13'], acceptDownloads: true });
+  const mctx = await hermetic(await browser.newContext({ ...devices['iPhone 13'], acceptDownloads: true }));
   const mp = await mctx.newPage();
   const merrors = [];
   mp.on('pageerror', e => merrors.push(e.message));
   mp.on('console', m => { if (m.type() === 'error') merrors.push(m.text()); });
-  await mctx.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   await mp.goto(`${URL}/graphics/index.html`);
   await mp.waitForSelector('body[data-ready="1"]');
   await mp.waitForTimeout(1200);
@@ -851,7 +860,7 @@ try {
     }
   });
   await check('view switch (studio): auto → mobile → desktop → auto, remembered, works on a wide screen', async () => {
-    const vp = await browser.newContext({ viewport: { width: 1400, height: 900 } });
+    const vp = await hermetic(await browser.newContext({ viewport: { width: 1400, height: 900 } }));
     const vpage = await vp.newPage();
     await vpage.goto(`${URL}/graphics/index.html`);
     await vpage.waitForSelector('body[data-ready="1"]');
@@ -872,7 +881,7 @@ try {
     await vp.close();
   });
   await check('view switch (phone): forced desktop view lays the page out wide, dashboard too', async () => {
-    const pc = await browser.newContext({ ...devices['iPhone 13'] });
+    const pc = await hermetic(await browser.newContext({ ...devices['iPhone 13'] }));
     await pc.addInitScript(() => { try { localStorage.setItem('nbia.view', 'desktop'); localStorage.setItem('nbia.dash.view', 'desktop'); } catch { /* ignore */ } });
     const pp = await pc.newPage();
     await pp.goto(`${URL}/graphics/index.html`);
@@ -889,6 +898,104 @@ try {
   });
   await check('phone: no console errors', async () => assert.deepEqual(merrors, []));
   await mctx.close();
+
+  await check('package: one click makes a ZIP with every graphic of the match (1920x1080 PNGs) and an _OLVASSEL.txt', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.waitForTimeout(500);
+    await page.evaluate(() => { document.getElementById('pkgBox').open = true; });
+    const before = await page.evaluate(() => JSON.stringify(window.__studio.state.template));
+    const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 120000 }), page.click('#pkgBtn')]);
+    const file = path.join(out, 'package.zip');
+    await dl.saveAs(file);
+    assert.match(dl.suggestedFilename(), /^Ferfi_Csomag_.*\.zip$/);
+    const { unzipSync, strFromU8 } = await import('../graphics/vendor/fflate.js');
+    const z = unzipSync(new Uint8Array(readFileSync(file)));
+    const pngs = Object.keys(z).filter(n => n.endsWith('.png'));
+    assert.ok(pngs.length >= 9, pngs.length + ' images');
+    for (const n of pngs) { const info = pngInfo(Buffer.from(z[n])); assert.equal(info.width, 1920); assert.equal(info.height, 1080); }
+    const readme = strFromU8(z['_OLVASSEL.txt']);
+    assert.match(readme, /Adatok frissessége/); assert.match(readme, /GRAFIKAI CSOMAG/);
+    assert.equal(await page.evaluate(() => JSON.stringify(window.__studio.state.template)), before, 'what is on screen is untouched');
+  });
+
+  await check('dashboard: schedule starts with the newest result, last 2 rounds of results and at most 3 upcoming rounds', async () => {
+    const dp = await ctx.newPage();
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForTimeout(2500);
+    for (const lg of ['men', 'women']) {
+      await dp.selectOption('#league', lg);
+      await dp.waitForTimeout(800);
+      const data = JSON.parse(readFileSync(path.join(ROOT, DATA_DIR, `${lg}.json`), 'utf8')).matches;
+      const key = m => { const [y, mo, d] = m.date.match(/\d+/g); return `${y}${mo.padStart(2, '0')}${d.padStart(2, '0')} ${m.time || ''}`; };
+      const fin = data.filter(m => m.status === 'finished').sort((a, b) => key(b).localeCompare(key(a)));
+      const rows = await dp.$$eval('#fixtures tbody tr:not(.fixture-section)', trs => trs.map(tr => [...tr.children].map(td => td.textContent.trim())));
+      const sections = await dp.$$eval('#fixtures tr.fixture-section', t => t.length);
+      assert.ok(rows.length && sections >= 1, lg + ': rows');
+      assert.equal(rows[0][2].replace(/\s+/g, ' ').trim().length > 0, true);
+      assert.equal(rows[0][1].replace(/\s+/g, ' '), `${fin[0].date} ${fin[0].time}`.replace(/\s+/g, ' '), `${lg}: first row = newest result`);
+      const finRows = rows.filter(r => /\d+\s*[–-]\s*\d+/.test(r[3]));
+      const rounds = new Set(finRows.map(r => r[0]));
+      assert.ok(rounds.size <= 3, `${lg}: result rounds ${[...rounds]}`); // 2 rounds + the newest (possibly postponed) game
+      const minResult = Math.min(...finRows.map(r => parseInt(r[0], 10)));
+      const upRounds = new Set(rows.filter(r => !/\d+\s*[–-]\s*\d+/.test(r[3]) && parseInt(r[0], 10) >= minResult).map(r => r[0]));
+      assert.ok(upRounds.size <= 3, `${lg}: upcoming rounds ${[...upRounds]}`); // postponed older-round games are extra
+    }
+    await dp.close();
+  });
+
+  await check('dashboard: Csapatok tab has Keret, full statistics (average / total / 40 min, sortable), records, zones and games', async () => {
+    const dp = await ctx.newPage();
+    const derrs = [];
+    dp.on('pageerror', e => derrs.push(e.message));
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForTimeout(2500);
+    await dp.evaluate(() => document.querySelector('nav button[data-tab="teams"]').click());
+    assert.equal(await dp.$$eval('#teamCards .club-panel .open-team', b => b.length), 14);
+    await dp.selectOption('#teamPick', { index: 2 });
+    await dp.waitForTimeout(400);
+    await dp.click('#teamDetail [data-sub="roster"]');
+    assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 8, 'roster');
+    await dp.click('#teamDetail [data-sub="stats"]');
+    assert.equal(await dp.$$eval('#teamDetail thead th', t => t.length), 33, 'all Hunbasket columns');
+    await dp.click('#teamDetail th[data-col="4"]');
+    const pts = await dp.$$eval('#teamDetail tbody tr td:nth-child(5)', t => t.slice(0, 4).map(x => parseFloat(x.textContent)));
+    assert.deepEqual(pts, [...pts].sort((a, b) => b - a), 'sorted by points, best first');
+    for (const kind of ['total', 'per40']) { await dp.click(`#teamDetail [data-kind="${kind}"]`); assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 8, kind); }
+    await dp.click('#teamDetail [data-sub="records"]');
+    assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 20, 'records + zones');
+    await dp.click('#teamDetail [data-sub="games"]');
+    assert.ok((await dp.$$eval('#teamDetail tbody tr', r => r.length)) >= 10, 'games');
+    await dp.selectOption('#teamPick', '');
+    assert.ok(await dp.isVisible('#teamCards'));
+    assert.deepEqual(derrs, []);
+    await dp.close();
+  });
+
+  await check('dashboard: Meccslap (one-page match sheet) with story suggestions prints on a single A4 page', async () => {
+    const dp = await ctx.newPage();
+    const derrs = [];
+    dp.on('pageerror', e => derrs.push(e.message));
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForTimeout(2500);
+    await dp.selectOption('#league', 'men');
+    await dp.waitForTimeout(400);
+    await dp.selectOption('#home', { index: 3 });
+    await dp.waitForTimeout(300);
+    await dp.selectOption('#away', { index: 5 });
+    await dp.waitForTimeout(300);
+    await dp.click('#go');
+    await dp.waitForTimeout(1000);
+    const txt = await dp.$eval('#matchSheetCard .sheet-body', e => e.innerText);
+    assert.match(txt, /MECCSLAP/); assert.match(txt, /Összevetés/i); assert.match(txt, /Kulcsjátékosok/i); assert.match(txt, /Sztori-javaslatok/i);
+    assert.ok(!/\.\./.test(txt.replace(/\.\.\./g, '')), 'no double full stops');
+    await dp.click('#sheetPrint');
+    await dp.evaluate(() => document.body.classList.add('sheet-printing')); // headless print() ends at once and removes the class again
+    const pdf = await dp.pdf({ format: 'A4', printBackground: true });
+    const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+    assert.equal(pages, 1, 'one page');
+    assert.deepEqual(derrs, []);
+    await dp.close();
+  });
 
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 

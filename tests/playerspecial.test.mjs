@@ -5,7 +5,8 @@ import { Store } from '../graphics/js/data.js';
 import { bindPlayerSpecial } from '../graphics/js/binders.js';
 import { templateById } from '../graphics/js/templates.js';
 
-const read = f => readFile(new URL(`../data/${f}`, import.meta.url), 'utf8').then(JSON.parse);
+import { DATA_DIR, ROOT } from './helpers.mjs';
+const read = f => readFile(`${ROOT}/${DATA_DIR}/${f}`, 'utf8').then(JSON.parse);
 const raw = { men: { players: await read('player_stats_men.json') }, women: { players: await read('player_stats_women.json') } };
 const store = new Store(raw, new Date('2026-11-21T12:00:00Z'));
 

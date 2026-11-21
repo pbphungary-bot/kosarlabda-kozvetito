@@ -179,3 +179,8 @@ details.psbox input[type=number] { width: 100%; }
 /* phone in landscape: preview left, controls right */
 
 .view-switch { font-size: 12px; padding: 4px 10px; }
+
+details.pkg { margin: 10px 0; border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: #12161b; }
+details.pkg summary { cursor: pointer; font-weight: 600; }
+details.pkg .hint { font-size: 12px; color: var(--muted); margin: 8px 0; }
+details.pkg .chk { display: flex; flex-direction: row; gap: 6px; align-items: center; font-size: 13px; }

@@ -1,0 +1,6 @@
+{
+  "name": "nbia-tests",
+  "private": true,
+  "description": "Test dependencies (Playwright) for the browser tests; see .github/workflows/tests.yml",
+  "devDependencies": { "playwright": "1.63.0" }
+}

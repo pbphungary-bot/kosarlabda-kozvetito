@@ -93,6 +93,12 @@
       <button id="exportBtn" class="primary" disabled>PNG exportálása</button>
       <button id="shareBtn" class="share-btn" hidden title="Megosztás vagy mentés a Fotókba">Megosztás / Mentés</button>
     </div>
+    <details class="pkg tab tab-export" id="pkgBox" open>
+      <summary>Egy meccs teljes grafikai csomagja (ZIP)</summary>
+      <p class="hint">A kiválasztott meccshez (Adatok fül) minden grafikát legyárt az automatikus adatokból és a mentett „alap” elrendezésekből, és egyetlen ZIP-be teszi, egy <b>_OLVASSEL.txt</b>-vel (mi van benne, mennyire friss az adat, figyelmeztetések). Kézi felülírásokat nem visz.</p>
+      <div id="pkgItems" class="psgroups"></div>
+      <div class="import-row"><button id="pkgBtn" class="primary" type="button">Teljes csomag letöltése (ZIP)</button></div>
+    </details>
     <div class="presets tab tab-export">
       <h2>Mentett beállítások</h2>
       <div class="preset-row">

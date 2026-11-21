@@ -3,6 +3,12 @@
 Böngészős műsorgrafika-készítő a Közvetítőhub adataiból és a saját PSD-sablonokból. A dashboardtól (`../index.html`)
 független; ugyanazokat a `../data/*.json` fájlokat olvassa, és semmit nem módosít bennük.
 
+## Egy meccs teljes grafikai csomagja (ZIP)
+
+Az **Export** fülön a „Teljes csomag letöltése (ZIP)” gomb a kiválasztott meccshez (Adatok fül) legyárt minden grafikát: Intro, Következik, Csapatok összevetése, Csillagjátékosok, Játékvezetők (ha már ki vannak írva), mindkét csapat Menetrendje, Eredményei és Csapatstatisztikája.
+Minden kép 1920×1080, átlátszó PNG, sorszámozott fájlnévvel (`01_Intro_Falco-Alba_2026-12-05.png`). A csomagban van egy **`_OLVASSEL.txt`**: mi van benne, mi maradt ki és miért, mennyire friss az adat, és melyik képen van hiányzó adat. A kipipálható listával kiválaszthatod, mi kerüljön bele.
+A csomag az automatikus adatokból és a mentett „alap” elrendezésekből készül (a kézi felülírásokat nem viszi), és közben a képernyőn lévő grafikához nem nyúl. RAR nem készíthető böngészőben, a ZIP mindenhol megnyílik.
+
 ## Telefonon és tableten
 
 A stúdió telefonon is használható (iPhone, Android; 900 px alatti szélességnél): az előnézet fent marad, mozgás közben is látszik, a vezérlők alul öt fülön vannak

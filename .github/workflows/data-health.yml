@@ -1,0 +1,23 @@
+name: Data health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 6 * * *'
+permissions:
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Every team name in the live data resolves to a known club; collectors produced complete files
+        run: |
+          DATA_DIR=data node --test tests/identity.test.mjs
+          DATA_DIR=data python tests/team_pages_parser.test.py

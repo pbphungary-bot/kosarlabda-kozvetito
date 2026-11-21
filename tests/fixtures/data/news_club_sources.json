@@ -1,0 +1,302 @@
+[
+  {
+    "name": "Falco KC Szombathely",
+    "urls": [
+      "https://falcokc.com/"
+    ],
+    "hosts": [
+      "falcokc.com"
+    ],
+    "article_pattern": "^/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]"
+  },
+  {
+    "name": "DVTK HUNTHERM",
+    "urls": [
+      "https://dvtk.eu/2-kosarlabda-sportag",
+      "https://dvtk.eu/37572-Hat_hazai_merkozesre_biztosithatod_be_a_helyed-cikk-kosarlabda",
+      "https://dvtk.eu/37527-EK_Hozono_Global_Jairis_DVTK_HUNTHERM_89_48-cikk-kosarlabda"
+    ],
+    "hosts": [
+      "dvtk.eu"
+    ],
+    "article_pattern": "^/\\d+-[^/]+-cikk-kosarlabda$",
+    "listing_selector": "a[href*=\"-cikk-kosarlabda\"]"
+  },
+  {
+    "name": "DEAC",
+    "urls": [
+      "https://kosarlabda.deac.hu/",
+      "https://kosarlabda.deac.hu/hirek/"
+    ],
+    "hosts": [
+      "kosarlabda.deac.hu"
+    ],
+    "article_pattern": "^/hirek/[^/]+$",
+    "listing_selector": "a[href*=\"/hirek/\"]"
+  },
+  {
+    "name": "Egis Körmend",
+    "urls": [
+      "https://www.egiskormend.hu/",
+      "https://www.egiskormend.hu/Hirek.html"
+    ],
+    "hosts": [
+      "egiskormend.hu"
+    ],
+    "article_pattern": "^/hirek/[^/]+\\.html$",
+    "listing_selector": "a[href*=\"/Hirek/\"], a[href*=\"/hirek/\"]"
+  },
+  {
+    "name": "NHSZ-Szolnoki Olajbányász",
+    "urls": [
+      "https://olajofficial.hu/",
+      "https://olajofficial.hu/hirek/"
+    ],
+    "hosts": [
+      "olajofficial.hu"
+    ],
+    "article_pattern": "^/20\\d\\d/\\d{2}/\\d{2}/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], a[href*=\"/2026/\"], a[href*=\"/2027/\"]"
+  },
+  {
+    "name": "Alba Fehérvár",
+    "urls": [
+      "https://www.albakosar.hu/index.php?pg=news_lead"
+    ],
+    "hosts": [
+      "albakosar.hu"
+    ],
+    "article_pattern": "^/index\\.php\\?pg=news_3_\\d+$",
+    "listing_selector": "a[href*=\"pg=news_3_\"]"
+  },
+  {
+    "name": "NKA Universitas Pécs (férfi)",
+    "urls": [
+      "https://www.nkapecs.hu/hirek",
+      "https://www.nkapecs.hu/"
+    ],
+    "hosts": [
+      "nkapecs.hu"
+    ],
+    "article_pattern": "^/tartalmak/[^/]+$",
+    "listing_selector": "a[href*=\"/tartalmak/\"]"
+  },
+  {
+    "name": "Sopron KC",
+    "urls": [
+      "https://sopronkc.hu/"
+    ],
+    "hosts": [
+      "sopronkc.hu"
+    ],
+    "article_pattern": "^/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href], .post-title a[href]"
+  },
+  {
+    "name": "Duna Aszfalt-DTKH Kecskemét",
+    "urls": [
+      "https://ktekosar.hu/"
+    ],
+    "hosts": [
+      "ktekosar.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir)/[^/]+$",
+    "listing_selector": "a[href*=\"/hirek/\"], a[href*=\"/hir/\"]"
+  },
+  {
+    "name": "PHOENIX Fóti Tigrisek",
+    "urls": [
+      "https://www.megyeritigrisek.hu/"
+    ],
+    "hosts": [
+      "megyeritigrisek.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir|cikk)/[^/]+$",
+    "listing_selector": "a[href*=\"/hirek/\"], a[href*=\"/hir/\"], a[href*=\"/cikk/\"]"
+  },
+  {
+    "name": "Csata TKK",
+    "urls": [
+      "https://csatatkk.hu/",
+      "https://csatatkk.hu/hirek/"
+    ],
+    "hosts": [
+      "csatatkk.hu"
+    ],
+    "article_pattern": "^/20\\d\\d/\\d{2}/\\d{2}/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/2026/\"], a[href*=\"/2027/\"]"
+  },
+  {
+    "name": "NKA Universitas Pécs (női)",
+    "urls": [
+      "https://www.nkapecswomen.hu/",
+      "https://www.nkapecswomen.hu/hirek",
+      "https://www.nkapecswomen.hu/tartalmak/Uj-fejezet-kezdodik--a-pecsi-sziv-marad"
+    ],
+    "hosts": [
+      "nkapecswomen.hu"
+    ],
+    "article_pattern": "^/tartalmak/[^/]+$",
+    "listing_selector": "a[href*=\"/tartalmak/\"]"
+  },
+  {
+    "name": "BKG-PRIMA Szigetszentmiklós",
+    "urls": [
+      "https://www.bkgakademia.hu/",
+      "https://bkgakademia.hu/"
+    ],
+    "hosts": [
+      "bkgakademia.hu"
+    ],
+    "article_pattern": "^/20\\d\\d/\\d{2}/\\d{2}/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/2026/\"], a[href*=\"/2027/\"]"
+  },
+  {
+    "name": "Vasas Akadémia",
+    "urls": [
+      "https://vasasbasket.hu/"
+    ],
+    "hosts": [
+      "vasasbasket.hu"
+    ],
+    "article_pattern": "^/index\\.php/[^/]+$",
+    "listing_selector": "a[href*=\"index.php/\"]"
+  },
+  {
+    "name": "VBW CEKK Cegléd",
+    "urls": [
+      "https://www.cekk.hu/new/index.php",
+      "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek"
+    ],
+    "hosts": [
+      "cekk.hu"
+    ],
+    "article_pattern": "^/new/index\\.php/(?:hirek/)?item/\\d+-[^/]+$",
+    "listing_selector": "a[href*=\"/item/\"]"
+  },
+  {
+    "name": "Atomerőmű SE",
+    "urls": [
+      "https://kosarlabda.ase.hu/"
+    ],
+    "hosts": [
+      "kosarlabda.ase.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir|kosarlabda|cikk)/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hirek/\"], a[href*=\"/kosarlabda/\"]"
+  },
+  {
+    "name": "Délút-SZTE-Szedeák",
+    "urls": [
+      "https://szedeak.com/"
+    ],
+    "hosts": [
+      "szedeak.com"
+    ],
+    "article_pattern": "^/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+  },
+  {
+    "name": "Endo Plus Service-Honvéd",
+    "urls": [
+      "https://honved.hu/kosarlabda/"
+    ],
+    "hosts": [
+      "honved.hu"
+    ],
+    "article_pattern": "^/kosarlabda/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/kosarlabda/\"]"
+  },
+  {
+    "name": "Kometa-KVGY Kaposvári KK",
+    "urls": [
+      "https://www.delfinek.hu/",
+      "https://www.delfinek.hu/hirek"
+    ],
+    "hosts": [
+      "delfinek.hu"
+    ],
+    "article_pattern": "^/(?:hirek|hir)/[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hirek/\"]"
+  },
+  {
+    "name": "OSE Lions",
+    "urls": [
+      "https://mvm.oselions.hu/",
+      "https://mvm.oselions.hu/teams/nbi-a/16"
+    ],
+    "hosts": [
+      "mvm.oselions.hu"
+    ],
+    "article_pattern": "^/(?:news|hirek|hir|articles|article)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/news/\"], a[href*=\"/hirek/\"]"
+  },
+  {
+    "name": "ELTE BEAC Újbuda",
+    "urls": [
+      "https://www.beac.hu/en/sport/kosarlabda",
+      "https://www.beac.hu/hu/sport/kosarlabda"
+    ],
+    "hosts": [
+      "beac.hu"
+    ],
+    "article_pattern": "^/(?:en|hu)/(?:news|hirek)/[^/]+$",
+    "listing_selector": "a[href*=\"/news/\"], a[href*=\"/hirek/\"]",
+    "require_keywords": [
+      "kosár",
+      "kosar",
+      "basket",
+      "nb i",
+      "női",
+      "noi"
+    ]
+  },
+  {
+    "name": "ETO Basket",
+    "urls": [
+      "https://etobasket.hu/hu/hirek/1",
+      "https://etobasket.hu/hu/hirek/2"
+    ],
+    "hosts": [
+      "etobasket.hu"
+    ],
+    "article_pattern": "^/hu/(?:hirek|hir|cikk)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/hu/hir\"]"
+  },
+  {
+    "name": "KSC Szekszárd",
+    "urls": [
+      "https://kscszekszard.hu/"
+    ],
+    "hosts": [
+      "kscszekszard.hu"
+    ],
+    "article_pattern": "^/(?!wp-content|category|tag|page|author)[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+  },
+  {
+    "name": "Sopron Basket",
+    "urls": [
+      "https://sopronbasket.com/",
+      "https://sopronbasket.com/home"
+    ],
+    "hosts": [
+      "sopronbasket.com"
+    ],
+    "article_pattern": "^/(?:news|hirek|article|cikk)/[^/]+(?:/[^/]+)?$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], a[href*=\"/news/\"]"
+  },
+  {
+    "name": "TFSE",
+    "urls": [
+      "https://tfse.hu/szakosztaly/kosarlabda/",
+      "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/"
+    ],
+    "hosts": [
+      "tfse.hu"
+    ],
+    "article_pattern": "^/(?!szakosztaly|wp-content|hirek|category|tag|page)[^/]+$",
+    "listing_selector": "article a[href], h2 a[href], h3 a[href], .entry-title a[href]"
+  }
+]

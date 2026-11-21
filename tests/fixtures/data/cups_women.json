@@ -1,0 +1,246 @@
+{
+ "updated_at": "2026-11-21T15:03:13.544Z",
+ "source": "FIBA / Basketball Champions League (hivatalos játéklista)",
+ "games": [
+  {
+   "key": "fiba:136147",
+   "date": "2026-09-30",
+   "time": "18:00",
+   "competition": "EuroLeague Women",
+   "compKey": "comp/euroleague-women",
+   "home": "Sopron Basket",
+   "away": "Kibirkstis-TOKS",
+   "homeId": "sopronbasket",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 62,
+    "away": 81
+   },
+   "venue": "Arena Sopron",
+   "round": "Final Path 1 2"
+  },
+  {
+   "key": "fiba:136149",
+   "date": "2026-09-30",
+   "time": "18:00",
+   "competition": "EuroLeague Women",
+   "compKey": "comp/euroleague-women",
+   "home": "DVTK HUNTHERM",
+   "away": "KKZ Crvena Zvezda",
+   "homeId": "dvtkhuntherm",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 66,
+    "away": 71
+   },
+   "venue": "DVTK Arena",
+   "round": "Final Path 2 2"
+  },
+  {
+   "key": "fiba:135308",
+   "date": "2026-10-14",
+   "time": "18:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "DVTK HUNTHERM",
+   "away": "Panathlitikos Sykeon",
+   "homeId": "dvtkhuntherm",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 56,
+    "away": 38
+   },
+   "venue": "DVTK Arena",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135324",
+   "date": "2026-10-14",
+   "time": "18:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "Sopron Basket",
+   "away": "UZKK Student Nis",
+   "homeId": "sopronbasket",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 89,
+    "away": 71
+   },
+   "venue": "Arena Sopron",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135328",
+   "date": "2026-10-21",
+   "time": "19:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "Saarlouis Royals",
+   "away": "Sopron Basket",
+   "homeId": null,
+   "awayId": "sopronbasket",
+   "status": "finished",
+   "score": {
+    "home": 46,
+    "away": 83
+   },
+   "venue": "Stadtgartenhalle Saarlouis",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135302",
+   "date": "2026-10-22",
+   "time": "20:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "ZKK Brod Na Savi",
+   "away": "DVTK HUNTHERM",
+   "homeId": null,
+   "awayId": "dvtkhuntherm",
+   "status": "finished",
+   "score": {
+    "home": 56,
+    "away": 89
+   },
+   "venue": "Sports Hall Vijus",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135306",
+   "date": "2026-10-28",
+   "time": "20:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "Hozono Global Jairis",
+   "away": "DVTK HUNTHERM",
+   "homeId": null,
+   "awayId": "dvtkhuntherm",
+   "status": "finished",
+   "score": {
+    "home": 89,
+    "away": 48
+   },
+   "venue": "Pabellón Municipal Fausto Vicent",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135322",
+   "date": "2026-10-29",
+   "time": "18:30",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "SL Benfica",
+   "away": "Sopron Basket",
+   "homeId": null,
+   "awayId": "sopronbasket",
+   "status": "finished",
+   "score": {
+    "home": 72,
+    "away": 62
+   },
+   "venue": "Pavilhao Fidelidade",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135325",
+   "date": "2026-11-04",
+   "time": "19:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "UZKK Student Nis",
+   "away": "Sopron Basket",
+   "homeId": null,
+   "awayId": "sopronbasket",
+   "status": "finished",
+   "score": {
+    "home": 75,
+    "away": 78
+   },
+   "venue": "Sports Centre Cair",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135305",
+   "date": "2026-11-04",
+   "time": "20:30",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "Panathlitikos Sykeon",
+   "away": "DVTK HUNTHERM",
+   "homeId": null,
+   "awayId": "dvtkhuntherm",
+   "status": "finished",
+   "score": {
+    "home": 74,
+    "away": 77
+   },
+   "venue": "EPTAPYRGIO ARENA",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135300",
+   "date": "2026-11-25",
+   "time": "18:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "DVTK HUNTHERM",
+   "away": "ZKK Brod Na Savi",
+   "homeId": "dvtkhuntherm",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "DVTK Arena",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135332",
+   "date": "2026-11-25",
+   "time": "18:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "Sopron Basket",
+   "away": "Saarlouis Royals",
+   "homeId": "sopronbasket",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "Arena Sopron",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135307",
+   "date": "2026-12-02",
+   "time": "18:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "DVTK HUNTHERM",
+   "away": "Hozono Global Jairis",
+   "homeId": "dvtkhuntherm",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "DVTK Arena",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135323",
+   "date": "2026-12-02",
+   "time": "18:00",
+   "competition": "EuroCup Women",
+   "compKey": "comp/eurocup-women",
+   "home": "Sopron Basket",
+   "away": "SL Benfica",
+   "homeId": "sopronbasket",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "Arena Sopron",
+   "round": "Regular Season 2"
+  }
+ ]
+}

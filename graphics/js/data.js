@@ -56,7 +56,7 @@ export class Store {
   }
 
   #index(lg, r) {
-    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], statSource: null };
+    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], checked: {}, statSource: null };
     if (r.fixtures) {
       L.updated.fixtures = r.fixtures.updated_at || null;
       const today = this.now.toISOString().slice(0, 10);
@@ -84,6 +84,7 @@ export class Store {
     }
     if (r.standings) {
       L.updated.standings = r.standings.updated_at || null;
+      L.checked.standings = r.standings.checked_at || null; // last time the collector looked (the data may simply not have changed)
       for (const s of r.standings.standings || []) {
         const id = this.#resolve(lg, s.name, 'standings');
         if (id) L.standings[id] = { ...s };
@@ -267,9 +268,13 @@ export class Store {
   freshness(lg) {
     const out = {};
     for (const [k, v] of Object.entries(this.leagues[lg].updated)) {
+      const checked = this.leagues[lg].checked[k];
       const t = v ? Date.parse(v) : NaN;
-      const hours = Number.isFinite(t) ? (this.now - t) / 36e5 : null;
-      out[k] = { updated_at: v, hours, stale: hours === null || hours > STALE_HOURS };
+      const tc = checked ? Date.parse(checked) : NaN;
+      // a source that was checked recently is fresh even when its content did not change (e.g. the table during a break)
+      const fresh = Number.isFinite(tc) ? Math.max(Number.isFinite(t) ? t : 0, tc) : t;
+      const hours = Number.isFinite(fresh) ? (this.now - fresh) / 36e5 : null;
+      out[k] = { updated_at: v, checked_at: checked || null, hours, stale: hours === null || hours > STALE_HOURS };
     }
     return out;
   }

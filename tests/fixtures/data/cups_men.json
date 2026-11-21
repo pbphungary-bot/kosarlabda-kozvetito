@@ -1,0 +1,279 @@
+{
+ "updated_at": "2026-11-21T15:03:13.544Z",
+ "source": "FIBA / Basketball Champions League (hivatalos játéklista)",
+ "games": [
+  {
+   "key": "fiba:135695",
+   "date": "2026-10-06",
+   "time": "18:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "NHSZ-Szolnoki Olajbanyasz",
+   "away": "Zastal Zielona Gora",
+   "homeId": "szolnok",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 80,
+    "away": 90
+   },
+   "venue": "Varosi Sportcsarnok",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:136248",
+   "date": "2026-10-07",
+   "time": "20:00",
+   "competition": "Basketball Champions League",
+   "compKey": "comp/bcl",
+   "home": "Windrose Giants Antwerp",
+   "away": "Falco KC Szombathely",
+   "homeId": null,
+   "awayId": "falcokc",
+   "status": "finished",
+   "score": {
+    "home": 99,
+    "away": 93
+   },
+   "venue": "Lotto Arena",
+   "round": "Regular Season 1"
+  },
+  {
+   "key": "fiba:135697",
+   "date": "2026-10-13",
+   "time": "19:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "Dinamo Bucharest",
+   "away": "NHSZ-Szolnoki Olajbanyasz",
+   "homeId": null,
+   "awayId": "szolnok",
+   "status": "finished",
+   "score": {
+    "home": 93,
+    "away": 76
+   },
+   "venue": "Arena of Dinamo",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:136249",
+   "date": "2026-10-20",
+   "time": "18:00",
+   "competition": "Basketball Champions League",
+   "compKey": "comp/bcl",
+   "home": "Falco KC Szombathely",
+   "away": "Salon Vilpas",
+   "homeId": "falcokc",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 85,
+    "away": 72
+   },
+   "venue": "Schaeffler Arena Savaria",
+   "round": "Regular Season 1"
+  },
+  {
+   "key": "fiba:135701",
+   "date": "2026-10-22",
+   "time": "19:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "Patrioti Levice",
+   "away": "NHSZ-Szolnoki Olajbanyasz",
+   "homeId": null,
+   "awayId": "szolnok",
+   "status": "finished",
+   "score": {
+    "home": 79,
+    "away": 85
+   },
+   "venue": "Haleon Arena",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135705",
+   "date": "2026-10-28",
+   "time": "18:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "NHSZ-Szolnoki Olajbanyasz",
+   "away": "FIATC Girona",
+   "homeId": "szolnok",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 81,
+    "away": 79
+   },
+   "venue": "Varosi Sportcsarnok",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:136252",
+   "date": "2026-11-04",
+   "time": "18:00",
+   "competition": "Basketball Champions League",
+   "compKey": "comp/bcl",
+   "home": "Falco KC Szombathely",
+   "away": "AEK BC",
+   "homeId": "falcokc",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 66,
+    "away": 72
+   },
+   "venue": "Schaeffler Arena Savaria",
+   "round": "Regular Season 1"
+  },
+  {
+   "key": "fiba:135708",
+   "date": "2026-11-04",
+   "time": "20:30",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "Coretec Oostende",
+   "away": "NHSZ-Szolnoki Olajbanyasz",
+   "homeId": null,
+   "awayId": "szolnok",
+   "status": "finished",
+   "score": {
+    "home": 86,
+    "away": 77
+   },
+   "venue": "COREtec Dôme",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135710",
+   "date": "2026-11-11",
+   "time": "18:30",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "Zastal Zielona Gora",
+   "away": "NHSZ-Szolnoki Olajbanyasz",
+   "homeId": null,
+   "awayId": "szolnok",
+   "status": "finished",
+   "score": {
+    "home": 103,
+    "away": 66
+   },
+   "venue": "Centrum Rekreacyjno-Sportowe Zielona Gora",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135712",
+   "date": "2026-11-18",
+   "time": "18:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "NHSZ-Szolnoki Olajbanyasz",
+   "away": "Dinamo Bucharest",
+   "homeId": "szolnok",
+   "awayId": null,
+   "status": "finished",
+   "score": {
+    "home": 104,
+    "away": 73
+   },
+   "venue": "Varosi Sportcsarnok",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:136254",
+   "date": "2026-11-18",
+   "time": "19:00",
+   "competition": "Basketball Champions League",
+   "compKey": "comp/bcl",
+   "home": "AEK BC",
+   "away": "Falco KC Szombathely",
+   "homeId": null,
+   "awayId": "falcokc",
+   "status": "finished",
+   "score": {
+    "home": 90,
+    "away": 89
+   },
+   "venue": "SUNEL Arena",
+   "round": "Regular Season 1"
+  },
+  {
+   "key": "fiba:135716",
+   "date": "2026-12-09",
+   "time": "18:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "NHSZ-Szolnoki Olajbanyasz",
+   "away": "Patrioti Levice",
+   "homeId": "szolnok",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "Varosi Sportcsarnok",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:136256",
+   "date": "2026-12-16",
+   "time": "18:00",
+   "competition": "Basketball Champions League",
+   "compKey": "comp/bcl",
+   "home": "Falco KC Szombathely",
+   "away": "Windrose Giants Antwerp",
+   "homeId": "falcokc",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "Schaeffler Arena Savaria",
+   "round": "Regular Season 1"
+  },
+  {
+   "key": "fiba:135720",
+   "date": "2026-12-16",
+   "time": "20:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "FIATC Girona",
+   "away": "NHSZ-Szolnoki Olajbanyasz",
+   "homeId": null,
+   "awayId": "szolnok",
+   "status": "scheduled",
+   "score": null,
+   "venue": "Pavello Fontajau",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:135723",
+   "date": "2026-12-22",
+   "time": "18:00",
+   "competition": "FIBA Europe Cup",
+   "compKey": "",
+   "home": "NHSZ-Szolnoki Olajbanyasz",
+   "away": "Coretec Oostende",
+   "homeId": "szolnok",
+   "awayId": null,
+   "status": "scheduled",
+   "score": null,
+   "venue": "Varosi Sportcsarnok",
+   "round": "Regular Season 2"
+  },
+  {
+   "key": "fiba:136258",
+   "date": "2026-12-22",
+   "time": "20:30",
+   "competition": "Basketball Champions League",
+   "compKey": "comp/bcl",
+   "home": "Salon Vilpas",
+   "away": "Falco KC Szombathely",
+   "homeId": null,
+   "awayId": "falcokc",
+   "status": "scheduled",
+   "score": null,
+   "venue": "Kupittaa Hall",
+   "round": "Regular Season 1"
+  }
+ ]
+}
