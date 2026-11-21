@@ -12,6 +12,9 @@ Az Export fülön a **Megosztás / Mentés** gomb (ha az eszköz támogatja) a m
 Az oldal a kezdőképernyőre is felvehető (a „Hozzáadás a kezdőképernyőhöz” menüponttal), akkor teljes képernyős alkalmazásként indul. Régebbi (iOS 16.4 előtti) iPhone-on is működik.
 Excel- és fotófeltöltés telefonon a fájlválasztón át megy.
 
+**Nézetváltó (biztonsági kapcsoló):** a felső sáv „Nézet: auto” gombja körbeváltja: *auto* (a képernyő szélessége dönt) → *mobil* (mobil elrendezés kényszerítve, akár nagy képernyőn is) → *asztali* (az asztali elrendezés kényszerítve; telefonon a teljes oldal kicsinyítve látszik). A választás megmarad ebben a böngészőben.
+A dashboardon (főoldal) a fejlécben van egy hasonló „Nézet” gomb: *auto* vagy *asztali* (a mobil nézet kényszerítése nagy képernyőn ott nem lehetséges, mert az oldal mobil szabályai a képernyő szélességéhez kötődnek).
+
 ## Indítás
 
 ```bash

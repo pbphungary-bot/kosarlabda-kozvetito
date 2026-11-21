@@ -11,6 +11,11 @@
 <link rel="apple-touch-icon" href="assets/app-icon-180.png">
 <title>NB I/A Grafika Stúdió</title>
 <link rel="stylesheet" href="css/studio.css">
+<link id="mobileCss" rel="stylesheet" href="css/mobile.css" media="(max-width: 900px)">
+<script>/* view switch: applied before the first paint (auto | mobile | desktop), see js/app.js */
+(function () { try { var v = localStorage.getItem('nbia.view'); if (v !== 'mobile' && v !== 'desktop') return;
+  document.documentElement.dataset.view = v; document.getElementById('mobileCss').media = v === 'mobile' ? 'all' : 'not all';
+  if (v === 'desktop') document.querySelector('meta[name=viewport]').content = 'width=1280'; } catch (e) { /* storage unavailable */ } })();</script>
 </head>
 <body>
 <header class="topbar">
@@ -21,6 +26,7 @@
   </div>
   <button id="quickCup" class="quick-cup" title="Megnyitja a Menetrend sablont a kupa-/európai meccs hozzáadása űrlappal">+ Kupa-/európai meccs</button>
   <div id="freshness" class="freshness" aria-live="polite"></div>
+  <button id="viewSwitch" class="view-switch" type="button" title="Nézet: automatikus / mobil / asztali. Ha a kijelzőn valami nem jó, válts nézetet.">Nézet: auto</button>
   <a class="dash-link" href="../index.html">← Közvetítőhub</a>
 </header>
 

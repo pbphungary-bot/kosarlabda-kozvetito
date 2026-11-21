@@ -850,6 +850,43 @@ try {
       assert.equal(r.small, 0, `${tab}: small controls`);
     }
   });
+  await check('view switch (studio): auto → mobile → desktop → auto, remembered, works on a wide screen', async () => {
+    const vp = await browser.newContext({ viewport: { width: 1400, height: 900 } });
+    const vpage = await vp.newPage();
+    await vpage.goto(`${URL}/graphics/index.html`);
+    await vpage.waitForSelector('body[data-ready="1"]');
+    assert.ok(!(await vpage.isVisible('#tabbar')), 'wide screen: desktop layout');
+    await vpage.click('#viewSwitch'); // → mobile
+    await vpage.waitForTimeout(300);
+    assert.equal(await vpage.evaluate(() => window.__studio.viewMode()), 'mobile');
+    assert.ok(await vpage.isVisible('#tabbar'), 'forced mobile layout on a wide screen');
+    await vpage.reload();
+    await vpage.waitForSelector('body[data-ready="1"]');
+    assert.ok(await vpage.isVisible('#tabbar'), 'remembered after reload');
+    await vpage.click('#viewSwitch'); // → desktop
+    await vpage.waitForTimeout(300);
+    assert.ok(!(await vpage.isVisible('#tabbar')));
+    assert.equal(await vpage.evaluate(() => document.querySelector('meta[name=viewport]').content), 'width=1280');
+    await vpage.click('#viewSwitch'); // → auto
+    assert.equal(await vpage.evaluate(() => window.__studio.viewMode()), 'auto');
+    await vp.close();
+  });
+  await check('view switch (phone): forced desktop view lays the page out wide, dashboard too', async () => {
+    const pc = await browser.newContext({ ...devices['iPhone 13'] });
+    await pc.addInitScript(() => { try { localStorage.setItem('nbia.view', 'desktop'); localStorage.setItem('nbia.dash.view', 'desktop'); } catch { /* ignore */ } });
+    const pp = await pc.newPage();
+    await pp.goto(`${URL}/graphics/index.html`);
+    await pp.waitForSelector('body[data-ready="1"]');
+    assert.ok(!(await pp.isVisible('#tabbar')), 'no mobile tab bar when desktop is forced');
+    assert.ok(await pp.evaluate(() => window.innerWidth) >= 1200, 'page laid out at desktop width');
+    await pp.goto(`${URL}/index.html`);
+    await pp.waitForTimeout(1500);
+    assert.ok(await pp.evaluate(() => window.innerWidth) >= 1200, 'dashboard laid out at desktop width');
+    assert.equal(await pp.textContent('#dashView'), 'Nézet: asztali');
+    await pp.click('#dashView'); // back to auto
+    assert.equal(await pp.evaluate(() => document.querySelector('meta[name=viewport]').content), 'width=device-width,initial-scale=1');
+    await pc.close();
+  });
   await check('phone: no console errors', async () => assert.deepEqual(merrors, []));
   await mctx.close();
 

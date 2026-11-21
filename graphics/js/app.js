@@ -958,7 +958,21 @@ function renderBaseOpacity() {
 
 
 // ───────────────────────── mobile: tabs, pinch zoom, share ─────────────────────────
-const mobileMQ = window.matchMedia('(max-width: 900px)');
+const smallMQ = window.matchMedia('(max-width: 900px)');
+/** View switch: 'auto' follows the screen width, 'mobile' / 'desktop' force a layout (kept in this browser). */
+const viewMode = () => { try { const v = localStorage.getItem('nbia.view'); return v === 'mobile' || v === 'desktop' ? v : 'auto'; } catch { return 'auto'; } };
+const mobileMQ = { get matches() { const v = viewMode(); return v === 'mobile' || (v === 'auto' && smallMQ.matches); } };
+const VIEW_LABEL = { auto: 'Nézet: auto', mobile: 'Nézet: mobil', desktop: 'Nézet: asztali' };
+function applyView(mode, reload = false) {
+  try { if (mode === 'auto') localStorage.removeItem('nbia.view'); else localStorage.setItem('nbia.view', mode); } catch { /* storage unavailable */ }
+  document.documentElement.dataset.view = mode;
+  $('mobileCss').media = mode === 'mobile' ? 'all' : mode === 'desktop' ? 'not all' : '(max-width: 900px)';
+  const vp = document.querySelector('meta[name=viewport]');
+  vp.content = mode === 'desktop' ? 'width=1280' : 'width=device-width, initial-scale=1, viewport-fit=cover';
+  $('viewSwitch').textContent = VIEW_LABEL[mode];
+  if (reload) toast(`${VIEW_LABEL[mode]}${mode === 'desktop' ? ' – telefonon a teljes asztali elrendezés kicsinyítve jelenik meg' : ''}`);
+}
+
 const TABS = ['template', 'data', 'fields', 'layout', 'export'];
 function setTab(name, scroll = true) {
   if (!TABS.includes(name)) name = 'template';
@@ -978,6 +992,8 @@ function setStageZoom(z) {
 }
 
 function initMobile() {
+  $('viewSwitch').textContent = VIEW_LABEL[viewMode()];
+  $('viewSwitch').onclick = () => applyView({ auto: 'mobile', mobile: 'desktop', desktop: 'auto' }[viewMode()], true);
   let tab = 'template';
   try { tab = sessionStorage.getItem('nbia.studio.tab') || tab; } catch { /* ignore */ }
   setTab(tab, false);
@@ -1127,7 +1143,7 @@ async function main() {
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
   restoreExcel();
-  window.__studio = { state, store, images, setTab, setStageZoom, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
+  window.__studio = { state, store, images, setTab, setStageZoom, applyView, viewMode, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
 }
