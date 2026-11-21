@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T20:19:03.895492+00:00",
+  "checked_at": "2026-11-21T20:58:43.876338+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -125,28 +125,19 @@
     },
     {
       "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 17,
-      "attempted": 17,
-      "already_saved": 0,
-      "added": 17,
-      "repaired": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 11,
+      "attempted": 11,
+      "already_saved": 10,
+      "added": 0,
+      "repaired": 1,
       "article_errors": 0,
-      "listing_errors": [
-        "https://olajofficial.hu/: URLError: <urlopen error _ssl.c:1001: The handshake operation timed out>",
-        "https://olajofficial.hu/hirek/: URLError: <urlopen error _ssl.c:1001: The handshake operation timed out>"
-      ],
-      "usable_articles": 17,
-      "source_coverage": true,
-      "fallback": [
-        "wp-json:URLError",
-        "sitemap:TimeoutError",
-        "sitemap:HTTPError",
-        "sitemap:17"
-      ]
+      "listing_errors": [],
+      "usable_articles": 11,
+      "source_coverage": true
     },
     {
       "source": "Klub: Alba Fehérvár",
@@ -204,8 +195,8 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 11,
-      "added": 1,
+      "already_saved": 12,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -272,8 +263,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 15,
+      "added": 1,
+      "repaired": 14,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -303,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -474,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -558,11 +551,11 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 31,
+      "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 1,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -11431,6 +11424,19 @@
       ]
     },
     {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Száz fölé jutva őriztük meg hazai veretlenségünket",
+      "summary": "A BEAC zónavédekezése az első percekben még megnehezítette a dolgunkat, de fokozatosan megtaláltuk ellene a jó megoldásokat, és egyre nagyobb fölénybe kerültünk.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Szaz-fole-jutva-oriztuk-meg-hazai-veretlensegunket/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
       "source": "Klub: Egis Körmend",
       "title": "Szurkolói Ankét csütörtökön!",
       "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
@@ -12978,6 +12984,19 @@
       "league": "women",
       "teams": [
         "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Húszpontos hátrányból az utolsó dobásig – egy ponttal maradtunk alul a Vasas ellen",
+      "summary": "A harmadik negyedben még húsz ponttal vezetett a Vasas Akadémia, a hajrában azonban a győzelem lehetőségét is kiharcolta a TFSE.",
+      "url": "https://tfse.hu/huszpontos-hatranybol-az-utolso-dobasig-egy-ponttal-maradtunk-alul-a-vasas-ellen/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
