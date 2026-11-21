@@ -416,6 +416,7 @@ function mergedValues(auto) {
     out[el.id] = x;
   }
   out[LAY.GLOBAL] = LAY.effective(bench(), o, LAY.GLOBAL);
+  out[LAY.CONTENT] = { ...LAY.effective(bench(), o, LAY.CONTENT), photo: state.contentPhoto !== false };
   return out;
 }
 
@@ -608,7 +609,8 @@ async function update(full) {
   if (t.inner) { // the panel's outline is untouchable: text must stay inside it
     const [x0, y0, x1, y1] = t.inner.box;
     const out = t.elements.filter(el => el.type === 'text' && lastReport.boxes[el.id] && (values[el.id]?.visible ?? el.visible ?? true)).filter(el => {
-      const [bx, by, bw, bh] = lastReport.boxes[el.id];
+      const Cn = lastReport.content, moved = Cn && (Cn.dx || Cn.dy || Cn.scale !== 1);
+      const [bx, by, bw, bh] = moved ? LAY.toCanvas(lastReport.boxes[el.id], null, 1920, 1080, Cn) : lastReport.boxes[el.id]; // the content move counts
       return bx < x0 || by < y0 || bx + bw > x1 || by + bh > y1;
     });
     if (out.length) msgs.push(`A keret vonalát átlépi: ${out.map(el => el.label).slice(0, 6).join(', ')}${out.length > 6 ? ' …' : ''} – told beljebb vagy csökkentsd`);
@@ -717,7 +719,7 @@ function previewImports() {
 }
 
 // ───────────────────────── layout editor (move elements, benchmark) ─────────────────────────
-state.snap = true; state.groupMove = false; state.editMode = false;
+state.snap = true; state.groupMove = false; state.editMode = false; state.contentPhoto = true;
 const elById = id => tpl().elements.find(e => e.id === id);
 const ovFor = id => (overrides()[id] ||= {});
 const effOf = id => LAY.effective(bench(), overrides(), id);
@@ -725,6 +727,8 @@ const effOf = id => LAY.effective(bench(), overrides(), id);
 function renderLayoutPanel() {
   const L = layoutsOf(tpl().id), names = Object.keys(L.saved);
   const g = overrides()[LAY.GLOBAL] || {}, gb = bench()?.items?.[LAY.GLOBAL] || {};
+  const c = overrides()[LAY.CONTENT] || {}, cb = bench()?.items?.[LAY.CONTENT] || {};
+  const hasPhoto = tpl().elements.some(e => e.id === 'photo');
   $('layoutPanel').innerHTML = `
     <label class="chk"><input type="checkbox" id="editMode" ${state.editMode ? 'checked' : ''}> Szerkesztés: elemek húzása az előnézeten (kijelölt elem: nyilak 1 px, Shift+nyíl 10 px, Esc)</label>
     <div class="lay-row">
@@ -734,6 +738,11 @@ function renderLayoutPanel() {
     <div class="lay-row"><b>Teljes grafika:</b> Balra/jobbra <input type="number" id="gX" step="1" placeholder="${gb.dx || 0}" value="${g.dx ?? ''}">
       Fel/le <input type="number" id="gY" step="1" placeholder="${gb.dy || 0}" value="${g.dy ?? ''}">
       Méret (%) <input type="number" id="gS" step="1" min="10" max="300" placeholder="${Math.round((gb.scale || 1) * 100)}" value="${g.scale ? Math.round(g.scale * 100) : ''}"></div>
+    <div class="lay-row"><b>Tartalom a kereten belül:</b> Balra/jobbra <input type="number" id="cX" step="1" placeholder="${cb.dx || 0}" value="${c.dx ?? ''}">
+      Fel/le <input type="number" id="cY" step="1" placeholder="${cb.dy || 0}" value="${c.dy ?? ''}">
+      Méret (%) <input type="number" id="cS" step="1" min="10" max="300" placeholder="${Math.round((cb.scale || 1) * 100)}" value="${c.scale ? Math.round(c.scale * 100) : ''}">
+      ${hasPhoto ? `<label class="chk"><input type="checkbox" id="cPhoto" ${state.contentPhoto ? 'checked' : ''}> a fotó is mozogjon</label>` : ''}
+      <small class="hint">A keret és a háttér nem mozdul; a keretbe lógó szöveget jelzem.</small></div>
     <div id="inspector" class="insp empty"></div>
     <div class="lay-row"><b>Alap (benchmark):</b> <span id="benchState"></span>
       <button id="benchSave" title="A jelenlegi elrendezés lesz az alap: minden új meccs ebből indul">Mentés alapként</button>
@@ -783,14 +792,15 @@ function renderOverlay() {
   if (!ov) return;
   ov.classList.toggle('on', !!state.editMode);
   if (!state.editMode) return;
-  const boxes = lastReport?.boxes || {}, g = lastReport?.global;
+  const boxes = lastReport?.boxes || {}, g = lastReport?.global, C = lastReport?.content;
+  const cFor = id => (C && (C.dx || C.dy || C.scale !== 1) && (id !== 'photo' || C.photo) ? C : null);
   const ids = Object.keys(boxes).sort((a, b) => boxes[b][2] * boxes[b][3] - boxes[a][2] * boxes[a][3]); // big first: small elements stay on top
   const present = new Set(ids);
   ov.querySelectorAll('.hit').forEach(d => { if (!present.has(d.dataset.id)) d.remove(); });
   ids.forEach((id, i) => {
     let d = ov.querySelector(`.hit[data-id="${CSS.escape(id)}"]`);
     if (!d) { d = document.createElement('div'); d.className = 'hit'; d.dataset.id = id; ov.appendChild(d); }
-    const [x, y, w, h] = LAY.toCanvas(boxes[id], g);
+    const [x, y, w, h] = LAY.toCanvas(boxes[id], g, 1920, 1080, cFor(id));
     Object.assign(d.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%`, zIndex: i + 1 });
     d.title = `${elById(id)?.label || id} – húzd, vagy jelöld ki`;
     d.classList.toggle('sel', id === selectedId);
@@ -800,7 +810,7 @@ function renderOverlay() {
   const eff = selectedId ? effOf(selectedId) : null;
   if (eff && (eff.dx || eff.dy) && boxes[selectedId]) {
     const [bx, by, bw, bh] = boxes[selectedId];
-    const [x, y, w, h] = LAY.toCanvas([bx - (eff.dx || 0), by - (eff.dy || 0), bw, bh], g);
+    const [x, y, w, h] = LAY.toCanvas([bx - (eff.dx || 0), by - (eff.dy || 0), bw, bh], g, 1920, 1080, cFor(selectedId));
     if (!ghost) { ghost = document.createElement('div'); ghost.className = 'ghost'; ov.appendChild(ghost); }
     Object.assign(ghost.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%` });
   } else ghost?.remove();
@@ -833,7 +843,8 @@ function wireLayoutEditor() {
     if (!drag.moved && Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 3) return;
     drag.moved = true;
     const rect = $('canvas').getBoundingClientRect();
-    const k = 1920 / rect.width / (lastReport?.global?.scale || 1); // screen px → template px
+    const C = lastReport?.content, cs = C && (drag.id !== 'photo' || C.photo) ? C.scale || 1 : 1;
+    const k = 1920 / rect.width / ((lastReport?.global?.scale || 1) * cs); // screen px → template px
     const s0 = drag.start[drag.id], b = bench()?.items?.[drag.id] || {};
     let ndx = s0.dx + (e.clientX - drag.x0) * k, ndy = s0.dy + (e.clientY - drag.y0) * k;
     if (state.snap && !e.altKey) { ndx = LAY.snap(ndx, [0, b.dx || 0]); ndy = LAY.snap(ndy, [0, b.dy || 0]); }
@@ -863,11 +874,16 @@ function wireLayoutEditor() {
     if (e.target.id === 'editMode') { state.editMode = e.target.checked; renderOverlay(); }
     if (e.target.id === 'snapOn') state.snap = e.target.checked;
     if (e.target.id === 'groupMove') state.groupMove = e.target.checked;
+    if (e.target.id === 'cPhoto') { state.contentPhoto = e.target.checked; update(false); }
   });
   panel.addEventListener('input', e => {
     const id = e.target.id, v = e.target.value, n = parseFloat(v), has = v !== '' && Number.isFinite(n);
     const setKey = (o, key, val) => { if (val === undefined) delete o[key]; else o[key] = val; };
-    if (['gX', 'gY', 'gS'].includes(id)) {
+    if (['cX', 'cY', 'cS'].includes(id)) {
+      const o = ovFor(LAY.CONTENT);
+      setKey(o, { cX: 'dx', cY: 'dy', cS: 'scale' }[id], has ? (id === 'cS' ? n / 100 : n) : undefined);
+      if (!Object.keys(o).length) delete overrides()[LAY.CONTENT];
+    } else if (['gX', 'gY', 'gS'].includes(id)) {
       const o = ovFor(LAY.GLOBAL);
       setKey(o, { gX: 'dx', gY: 'dy', gS: 'scale' }[id], has ? (id === 'gS' ? n / 100 : n) : undefined);
       if (!Object.keys(o).length) delete overrides()[LAY.GLOBAL];

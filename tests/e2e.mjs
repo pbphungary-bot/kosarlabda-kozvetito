@@ -734,6 +734,29 @@ try {
     assert.ok(!ids.includes('h3') && ids.includes('r5.c2'));
   });
 
+  await check('content inside the frame: moves / scales text and photo, the frame stays', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.waitForTimeout(400);
+    await page.click('#templateList button[data-id="playerspecial-women"]');
+    await page.waitForFunction(() => document.getElementById('psPhoto'));
+    await page.waitForTimeout(1500);
+    await page.setInputFiles('#psPhoto', path.join(ROOT, 'tests/fixtures/photo-cutout.png'));
+    await page.waitForFunction(() => window.__studio.report().boxes.photo, null, { timeout: 8000 });
+    await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
+    await page.waitForSelector('#cX');
+    const bg = () => page.evaluate(() => { const c = document.getElementById('canvas'); const d = c.getContext('2d').getImageData(1275, 400, 12, 1).data; return Array.from(d).join(','); });
+    const before = await bg();
+    const t0 = await page.evaluate(() => window.__studio.report().boxes.title);
+    await page.fill('#cX', '30'); await page.waitForTimeout(500);
+    const r = await page.evaluate(() => window.__studio.report());
+    assert.equal(r.content.dx, 30);
+    assert.equal(r.boxes.title[0], t0[0]); // template-space boxes are unchanged, the transform is applied on drawing
+    assert.equal(await bg(), before, 'frame pixels did not move');
+    await page.fill('#cS', '90'); await page.waitForTimeout(400);
+    assert.equal(await page.evaluate(() => window.__studio.report().content.scale), 0.9);
+    await page.fill('#cX', ''); await page.fill('#cS', ''); await page.waitForTimeout(300);
+  });
+
   await check('no console errors in the studio', async () => assert.deepEqual(errors, []));
 
   // the existing dashboard still loads cleanly

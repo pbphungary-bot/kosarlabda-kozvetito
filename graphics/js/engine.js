@@ -206,7 +206,6 @@ function drawImage(ctx, el, v, assets, report, inner) {
   const layer = new OffscreenCanvas(ctx.canvas.width, ctx.canvas.height);
   const g = layer.getContext('2d');
   g.imageSmoothingQuality = 'high';
-  if (el.clipInner && inner) { g.beginPath(); roundRectPath(g, inner.box, inner.r); g.clip(); } // the panel's outline is untouchable
   if (outline && outline.size > 0) {
     const sil = silhouette(img, w, h, outline.color);
     const r = outline.size;
@@ -264,7 +263,13 @@ export function render(canvas, template, values, assets) {
   }
   const G = values.__global || {};
   const gs = G.scale > 0 ? G.scale : 1, gdx = G.dx || 0, gdy = G.dy || 0;
-  const report = { overflow: [], scaled: [], sizes: {}, boxes: {}, global: { dx: gdx, dy: gdy, scale: gs } };
+  // content move / scale: everything inside the frame moves, the frame (background + outline) stays; the photo may be excluded
+  const C = values.__content || {};
+  const cs = C.scale > 0 ? C.scale : 1, cdx = C.dx || 0, cdy = C.dy || 0;
+  const pb = template.panel?.box;
+  const ccx = pb ? (pb[0] + pb[2]) / 2 : template.width / 2, ccy = pb ? (pb[1] + pb[3]) / 2 : template.height / 2;
+  const contentOn = cs !== 1 || cdx !== 0 || cdy !== 0;
+  const report = { overflow: [], scaled: [], sizes: {}, boxes: {}, global: { dx: gdx, dy: gdy, scale: gs }, content: { dx: cdx, dy: cdy, scale: cs, cx: ccx, cy: ccy, photo: C.photo !== false } };
   ctx.save();
   ctx.translate(template.width / 2 + gdx, template.height / 2 + gdy);
   ctx.scale(gs, gs);
@@ -292,8 +297,14 @@ export function render(canvas, template, values, assets) {
     }
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
+    const clip = el.clipInner && template.inner; // the panel's outline is untouchable: the clip stays put even when the content moves
+    if (clip) { ctx.save(); ctx.beginPath(); roundRectPath(ctx, template.inner.box, template.inner.r); ctx.clip(); }
+    const moved = contentOn && (el.id !== 'photo' || C.photo !== false);
+    if (moved) { ctx.save(); ctx.translate(ccx + cdx, ccy + cdy); ctx.scale(cs, cs); ctx.translate(-ccx, -ccy); }
     if (el.type === 'text') drawText(ctx, el, v, report);
     else if (el.type === 'image') drawImage(ctx, el, v, assets, report, template.inner);
+    if (moved) ctx.restore();
+    if (clip) ctx.restore();
   }
   ctx.restore();
   return report;
