@@ -285,7 +285,7 @@ test('form graphic: last five played games, latest on the right, Gy / V from the
   games.forEach((m, i) => {
     const home = m.homeId === id, own = home ? m.score.home : m.score.away, opp = home ? m.score.away : m.score.home;
     assert.equal(v[`t0.g${i}.badge`].src, own > opp ? 'form/win' : 'form/loss');
-    assert.equal(v[`t0.g${i}.score`].text, `${own}–${opp}`); // the team's own score first
+    assert.equal(v[`t0.g${i}.score`].text, `${home ? "" : "@ "}${own}–${opp}`); // own score first; away games get an @
   });
   // a team with fewer games: the empty columns on the left stay empty
   const few = bindForm({ playedGames: () => games.slice(-2), ...Object.fromEntries([]) }, 'men', [id]);
