@@ -1,8 +1,8 @@
 {
   "competition": "Női NB I/A",
   "source": "https://hunbasket.hu/tabella/noi",
-  "updated_at": "2026-11-21T20:15:29.442697+00:00",
-  "checked_at": "2026-11-22T18:13:54.296413+00:00",
+  "updated_at": "2026-11-22T19:27:42.349187+00:00",
+  "checked_at": "2026-11-22T19:27:42.349187+00:00",
   "standings": [
     {
       "rank": 1,
@@ -17,32 +17,32 @@
     {
       "rank": 2,
       "name": "DVTK HUNTHERM",
-      "played": 6,
-      "points": 12,
+      "played": 7,
+      "points": 13,
       "wins": 6,
-      "losses": 0,
-      "scored": 465,
-      "conceded": 313
+      "losses": 1,
+      "scored": 542,
+      "conceded": 399
     },
     {
       "rank": 3,
       "name": "Csata TKK",
-      "played": 7,
-      "points": 12,
-      "wins": 5,
+      "played": 8,
+      "points": 14,
+      "wins": 6,
       "losses": 2,
-      "scored": 523,
-      "conceded": 446
+      "scored": 609,
+      "conceded": 523
     },
     {
       "rank": 4,
       "name": "ETO Basket",
-      "played": 6,
-      "points": 10,
-      "wins": 4,
+      "played": 7,
+      "points": 12,
+      "wins": 5,
       "losses": 2,
-      "scored": 407,
-      "conceded": 395
+      "scored": 497,
+      "conceded": 443
     },
     {
       "rank": 5,
@@ -57,12 +57,12 @@
     {
       "rank": 6,
       "name": "VBW CEKK Cegléd",
-      "played": 7,
-      "points": 11,
+      "played": 8,
+      "points": 12,
       "wins": 4,
-      "losses": 3,
-      "scored": 483,
-      "conceded": 500
+      "losses": 4,
+      "scored": 531,
+      "conceded": 590
     },
     {
       "rank": 7,
