@@ -466,3 +466,28 @@ export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
   }
   return { values: v, players, missing: false };
 }
+
+
+// ───────────────────────── form (last five games) ─────────────────────────
+/** One row per team id: the last five played games (NB I/A and European), oldest left, the latest right. */
+export function bindForm(store, lg, teamIds) {
+  const v = {};
+  const src = 'Hunbasket menetrend / eredmények (idei meccsek)';
+  teamIds.forEach((teamId, r) => {
+    const k = `t${r}`;
+    v[`${k}.logo`] = teamId ? logo(lg, teamId) : { src: '' };
+    const games = teamId ? store.playedGames(lg, teamId).slice(-5) : [];
+    for (let i = 0; i < 5; i++) {
+      const m = games[i - (5 - games.length)]; // right-aligned: with fewer games the left columns stay empty
+      const e = ['badge', 'logo', 'name', 'score'].map(x => `${k}.g${i}.${x}`);
+      if (!m) { v[e[0]] = { src: '' }; v[e[1]] = { src: '' }; v[e[2]] = { text: '', source: 'Nincs ennyi lejátszott meccs' }; v[e[3]] = { text: '', source: 'Nincs ennyi lejátszott meccs' }; continue; }
+      const home = m.homeId === teamId, own = home ? m.score.home : m.score.away, opp = home ? m.score.away : m.score.home;
+      const oppId = home ? m.awayId : m.homeId, oppName = home ? m.away : m.home;
+      v[e[0]] = { src: own > opp ? 'form/win' : 'form/loss', source: own > opp ? 'Győzelem' : 'Vereség' };
+      v[e[1]] = oppId ? logo(lg, oppId) : { src: '', source: 'Nincs logó ehhez a csapathoz' };
+      v[e[2]] = { text: oppId ? '' : String(oppName || '').split(' ').slice(0, 2).join(' '), source: oppId ? 'Van logó' : `${oppName} (nincs logó)` };
+      v[e[3]] = { text: `${own}–${opp}`, source: `${src}${m.cup ? ' – kupa/európai' : ''}` };
+    }
+  });
+  return v;
+}

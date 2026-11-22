@@ -9,6 +9,7 @@ export const PACKAGE_ITEMS = [
   { id: 'comparison', type: 'comparison', who: 'match', label: 'Csapatok_osszevetese' },
   { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Csillagjatekosok' },
   { id: 'referees', type: 'referees', who: 'match', label: 'Jatekvezetok' },
+  { id: 'formpair', type: 'formpair', who: 'match', label: 'Forma' },
   { id: 'schedule-home', type: 'schedule', who: 'home', label: 'Menetrend' },
   { id: 'schedule-away', type: 'schedule', who: 'away', label: 'Menetrend' },
   { id: 'results-home', type: 'results', who: 'home', label: 'Eredmenyek' },

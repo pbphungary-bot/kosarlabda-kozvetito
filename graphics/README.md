@@ -9,6 +9,11 @@ Az **Export** fülön a „Teljes csomag letöltése (ZIP)” gomb a kiválaszto
 Minden kép 1920×1080, átlátszó PNG, sorszámozott fájlnévvel (`01_Intro_Falco-Alba_2026-12-05.png`). A csomagban van egy **`_OLVASSEL.txt`**: mi van benne, mi maradt ki és miért, mennyire friss az adat, és melyik képen van hiányzó adat. A kipipálható listával kiválaszthatod, mi kerüljön bele.
 A csomag az automatikus adatokból és a mentett „alap” elrendezésekből készül (a kézi felülírásokat nem viszi), és közben a képernyőn lévő grafikához nem nyúl. RAR nem készíthető böngészőben, a ZIP mindenhol megnyílik.
 
+## Forma (két sablon)
+
+Kompakt sarokgrafika (legfeljebb a kép negyede: egy csapatnál 960×263, két csapatnál 960×478 px, a bal felső sarokban; az Elrendezés fülön mozgatható). Meccsenként **zöld „Gy” / piros „V” jelvény**, alatta az ellenfél logója (ha nincs logó, a neve), majd az eredmény a csapat saját pontjával elöl. A legutóbbi meccs jobb oldalon.
+*Forma* = egy kiválasztott csapat utolsó 5 lejátszott meccse (NB I/A és európai); *Forma (két csapat)* = a kiválasztott meccs két csapata egymás alatt. Szöveges összegzés nincs rajta. A csomag-ZIP-be a két csapatos változat kerül. A jelvények és a panel a `tools/make_form_assets.py`-vel újragenerálhatók.
+
 ## Keret (két sablon)
 
 A **Keret (tábla)** a FALCO / DVTK keret PSD-k kinézete, a **Keret (fotókkal)** kártyás változat játékosfotókkal. Mindkettő a Hunbasket csapatoldalából töltődik: mezszám szerinti sorrend, név, poszt, magasság, születési év, a külföldi játékosoknál zászló (a magyarnál nincs), a vezető- és a segédedző, a klublogó.

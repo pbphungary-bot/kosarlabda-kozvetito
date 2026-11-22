@@ -7,7 +7,7 @@ import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormal
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -46,7 +46,7 @@ const saveState = () => lsSet(LS.state, { league: state.league, template: state.
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
 let photoIds = new Set(); // ids of the downloaded player photos (players/index.json); a missing photo shows the placeholder
-const imageUrl = key => key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
+const imageUrl = key => key.startsWith('form/') ? `assets/form/${key.slice(5)}.png` : key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
 /** Loads the flags / photos a set of values refers to (the renderer draws only what is already loaded). */
 async function ensureImages(values) {
   const jobs = [];
@@ -206,7 +206,7 @@ function wirePsConfig(s) {
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -373,14 +373,18 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch') {
+  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
-    if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
+    if (t.type === 'formpair') v = bindForm(store, lg, [m.homeId, m.awayId]);
+    else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
     else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
+  } else if (t.type === 'form') {
+    v = bindForm(store, lg, [s.teamId]);
+    if (store.playedGames(lg, s.teamId).length < 5) info.notices.push({ text: 'Ennek a csapatnak 5-nél kevesebb lejátszott meccse van: az üres oszlopok nem jelennek meg.' });
   } else if (t.type === 'roster' || t.type === 'rostergrid') {
     const r = bindRoster(store, lg, s.teamId, t, photoIds);
     v = r.values;
@@ -539,7 +543,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';
@@ -626,7 +630,7 @@ async function update(full) {
     const sz = lastReport.sizes[inp.closest('.field').dataset.id];
     if (sz) inp.placeholder = Math.round(sz);
   });
-  if ($('showRef').checked) {
+  if ($('showRef').checked && t.reference) {
     const ref = await loadImage('ref/' + t.id, t.reference);
     if (seq !== updateSeq) return;
     const ctx = canvas.getContext('2d');

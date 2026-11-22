@@ -276,3 +276,22 @@ test('roster (Keret): players in shirt order, flags only for foreigners, coaches
   assert.equal(vg[`r${ix}.last`].text, parseName(pl[ix].name).surname);
   assert.equal(vg[`r${ix}.first`].text, parseName(pl[ix].name).given[0]);
 });
+
+import { bindForm } from '../graphics/js/binders.js';
+test('form graphic: last five played games, latest on the right, Gy / V from the team\'s own score, no invented games', async () => {
+  const store = await loadStore();
+  const id = 'szolnok', games = store.playedGames('men', id).slice(-5);
+  const v = bindForm(store, 'men', [id]);
+  games.forEach((m, i) => {
+    const home = m.homeId === id, own = home ? m.score.home : m.score.away, opp = home ? m.score.away : m.score.home;
+    assert.equal(v[`t0.g${i}.badge`].src, own > opp ? 'form/win' : 'form/loss');
+    assert.equal(v[`t0.g${i}.score`].text, `${own}–${opp}`); // the team's own score first
+  });
+  // a team with fewer games: the empty columns on the left stay empty
+  const few = bindForm({ playedGames: () => games.slice(-2), ...Object.fromEntries([]) }, 'men', [id]);
+  assert.equal(few['t0.g0.badge'].src, ''); assert.equal(few['t0.g0.score'].text, '');
+  assert.notEqual(few['t0.g4.badge'].src, '');
+  // two rows for a match
+  const pair = bindForm(store, 'men', ['szolnok', 'falcokc']);
+  assert.ok(pair['t1.g4.score'].text && pair['t1.logo'].src === 'men/falcokc');
+});
