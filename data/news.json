@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T00:10:26.230070+00:00",
+  "checked_at": "2026-11-22T01:19:06.426682+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -465,6 +465,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -11784,6 +11785,16 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Női NB I: A Sopron nyerte a Szekszárd elleni rangadót",
+      "summary": "Női NB I: A Sopron nyerte a Szekszárd elleni rangadót",
+      "url": "https://hunbasket.hu/hir/77745/noi-nb-i-a-sopron-nyerte-a-szekszard-elleni-rangadot/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Hunbasket",
