@@ -151,5 +151,14 @@ node tests/e2e.mjs                  # böngészős végigpróbálás: export, fe
 Az eredeti PSD-k a `BROADCAST GRAPHICS/` mappában vannak, ezeket a stúdió sosem módosítja.
 Betűtípus: League Gothic Regular + Italic (SIL OFL, `fonts/`).
 
-**Mezszámok mérete (Keret):** a „2. Csapat” panelen a *Mezszámok mérete (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
-**Zászlók mérete (Keret fotókkal):** a *Zászlók mérete (%)* mező az összes zászlót egyszerre méretezi; a zászló jobb széle és a mezszám középvonala nem mozdul.
+**Mezszámok mérete (Keret):** a kép feletti *Méretek* sávban a *Mezszámok (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
+**Zászlók mérete (Keret fotókkal):** a *Zászlók (%)* mező az összes zászlót egyszerre méretezi; a zászló jobb széle és a mezszám középvonala nem mozdul.
+
+**Sorok mozgatása (Keret fotókkal):** a *Méretek* sávban minden sor (felső, középső, alsó) külön eltolható: ↔ vízszintesen, ↕ függőlegesen (pixel, ±300). A *Sorok alaphelyzet* gomb visszaállítja. A csapat váltásakor az eltolások megmaradnak.
+
+### Extra (MKOSZ) – fotókeret és QR-keret
+
+Sablon: *Extra (MKOSZ)* (az „Background for extra graphics + QR code outliner.psd” alapján; a két keret **alakzat**, nem kép, ezért szabadon mozgatható és méretezhető).
+- **Fotókeret** (álló): tölts fel egy képet; a keretbe illeszkedik (a szegélyen belül marad). *Illesztés*: kitölti a keretet (levágva) vagy egészben belefér; nagyítás, eltolás, belső margó, a keret háttere (barna / fehér / fekete / átlátszó).
+- **QR-keret** (négyzet): a QR-kód feltöltése külön mezőből; alapból egészben, 14 px margóval; ha a kód átlátszó hátterű, válassz fehér keret-hátteret.
+- **Mozgatás / méretezés:** kattints a keretre az előnézeten (a szerkesztés itt mindig be van kapcsolva) – húzással mozgatható, a sarok-fogantyúkkal méretezhető. A *Arány rögzítve* jelölőnégyzet: bekapcsolva a keret mindkét irányban ugyanúgy nő/fogy (Alt lenyomva: szabad húzás), kikapcsolva szabadon húzható. Számmal is megadható (szélesség/magasság), és az Elrendezés „alap”-ként menthető.

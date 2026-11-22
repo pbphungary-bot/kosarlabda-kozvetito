@@ -389,7 +389,7 @@ export function rosterDims(n) {
 }
 
 /** base = registry entry (background); n = number of players. */
-export function rosterBuild(base, n, mask = '', ns = 1, fs = 1) {
+export function rosterBuild(base, n, mask = '', ns = 1, fs = 1, off = []) {
   const g = ROSTER_GEOM[base.league], op = 0.9882;
   n = Math.max(1, Math.min(24, n || g.defaultN));
   const els = rosterCommon(g, op);
@@ -414,7 +414,7 @@ export function rosterBuild(base, n, mask = '', ns = 1, fs = 1) {
     const { cols, rows } = rosterDims(n), areaX = 700, areaW = 940, areaY = g.hdr - 20, areaH = g.last - areaY + 8;
     const cw = areaW / cols, ch = Math.min(290, areaH / rows), ph = ch * 0.6, pw = ph * 0.88;
     for (let i = 0; i < n; i++) {
-      const c = i % cols, r = Math.floor(i / cols), cx = areaX + cw * (c + 0.5), top = areaY + r * ch + (areaH - ch * rows) / 2;
+      const c = i % cols, r = Math.floor(i / cols), cx = areaX + cw * (c + 0.5) + (off[r]?.[0] || 0), top = areaY + r * ch + (areaH - ch * rows) / 2 + (off[r]?.[1] || 0); // off[r] = [dx, dy] of the whole row
       const grp = `${i + 1}. játékos`, nm = Math.min(1, cw / 190);
       els.push(
         { id: `r${i}.photo`, type: 'image', label: `${i + 1}. fotó`, group: grp, box: [cx, top + ph / 2, pw, ph], fit: 'contain', anchor: 'bottom', clipInner: true },
@@ -466,6 +466,20 @@ function formTpl(id, league, rows) {
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
   return t;
+}
+
+// ───────────────────────── Extra (MKOSZ) – freely sized frames ─────────────────────────
+// "Background for extra graphics + QR code outliner.psd": a tall photo frame and a square QR frame (brown fill, gold border, radius 18).
+// Both are drawn as shapes (not as a picture), so they can be moved and resized freely; the uploaded photo / QR code sits inside.
+function extraTpl(id, league) {
+  const look = { fill: '#2d0909', stroke: '#b58d41', sw: 6, r: 18 };
+  return base(id, league, 'extra', 'Background for extra graphics + QR code outliner.psd', 'Extra (MKOSZ)', {
+    elements: [
+      { id: 'frameA', type: 'framed', label: 'Fotókeret', group: 'Fotókeret', box: [317, 540, 580, 1026], fit: 'cover', pad: 0, ...look },
+      { id: 'frameB', type: 'framed', label: 'QR-keret', group: 'QR-keret', box: [849, 540, 316, 320], fit: 'contain', pad: 14, ...look },
+    ],
+    background: null, reference: null, thumb: 'templates/extra/thumb.jpg',
+  });
 }
 
 // ───────────────────────── Template registry ─────────────────────────
@@ -557,6 +571,8 @@ export const TEMPLATES = [
   formTpl('form-women', 'women', 1),
   formTpl('formpair-men', 'men', 2),
   formTpl('formpair-women', 'women', 2),
+  extraTpl('extra-men', 'men'),
+  extraTpl('extra-women', 'women'),
   nextmatch('nextmatch-men', 'men'),
   nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {
@@ -583,6 +599,7 @@ export const TEMPLATE_TYPES = {
   resultrows: 'Eredmények (színes sorok)',
   schedule: 'Menetrend',
   referees: 'Játékvezetők',
+  extra: 'Extra (MKOSZ)',
 };
 
 export function templateById(id) { return TEMPLATES.find(t => t.id === id); }

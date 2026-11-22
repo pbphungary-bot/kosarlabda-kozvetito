@@ -64,3 +64,13 @@ test('content move is part of the layout and maps boxes about the frame centre',
   assert.deepEqual(toCanvas([600, 500, 100, 100], null, 1920, 1080, c), [610, 500, 50, 50]);
   assert.deepEqual(toCanvas([0, 0, 100, 100], { dx: 5 }, 1920, 1080, null), [5, 0, 100, 100]);
 });
+
+test('free width / height of framed shapes are layout keys: kept, saved, cancelled', () => {
+  const tpl = { elements: [{ id: 'frameB' }] };
+  assert.equal(meaningful({ w: 400 }), true);
+  assert.equal(meaningful({ w: 0, h: 0 }), false);
+  assert.deepEqual(extract(tpl, null, { frameB: { dx: 5, w: 400, h: 380 } }).items.frameB, { dx: 5, w: 400, h: 380 });
+  const ov = {};
+  applyToOverrides(ov, { items: {} }, { items: { frameB: { w: 400 } } });
+  assert.equal(effective(null, ov, 'frameB').w, 0); // the benchmark's width is cancelled with an explicit 0
+});

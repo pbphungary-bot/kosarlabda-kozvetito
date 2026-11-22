@@ -184,3 +184,20 @@ details.pkg { margin: 10px 0; border: 1px solid var(--line); border-radius: 8px;
 details.pkg summary { cursor: pointer; font-weight: 600; }
 details.pkg .hint { font-size: 12px; color: var(--muted); margin: 8px 0; }
 details.pkg .chk { display: flex; flex-direction: row; gap: 6px; align-items: center; font-size: 13px; }
+
+.sizebar { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; padding: 8px 12px; margin: 0 0 8px; background: var(--panel, #1c2520); border: 1px solid var(--line, #2f3d35); border-radius: 8px; }
+.sizebar[hidden] { display: none; }
+.sizebar label { display: flex; gap: 6px; align-items: center; }
+.sizebar input { width: 76px; }
+.sizebar .rowoff { display: flex; gap: 8px; align-items: center; }
+.sizebar .rowoff input { width: 64px; }
+
+/* Extra (MKOSZ) frames: resize handles on the selected frame, panel */
+.overlay .hit .rh { position: absolute; width: 16px; height: 16px; background: var(--warn); border: 2px solid #000; border-radius: 3px; touch-action: none; z-index: 5; }
+.overlay .hit .rh[data-c="nw"] { left: -9px; top: -9px; cursor: nwse-resize; }
+.overlay .hit .rh[data-c="ne"] { right: -9px; top: -9px; cursor: nesw-resize; }
+.overlay .hit .rh[data-c="sw"] { left: -9px; bottom: -9px; cursor: nesw-resize; }
+.overlay .hit .rh[data-c="se"] { right: -9px; bottom: -9px; cursor: nwse-resize; }
+.xbox { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 10px; padding: 8px 10px; }
+.xbox legend { padding: 0 6px; font-weight: 600; }
+label.inline { display: flex; gap: 6px; align-items: flex-start; }
