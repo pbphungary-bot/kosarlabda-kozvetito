@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T08:52:02.690361+00:00",
+  "checked_at": "2026-11-22T14:28:16.205671+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -472,6 +472,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -569,6 +571,25 @@
   ],
   "articles": [
     {
+      "source": "WBasket.hu",
+      "title": "Nyilatkozatcsokor a vasárnapi mérkőzések előtt",
+      "summary": "Vasárnap két mérkőzést rendeznek a hazai élvonalban.",
+      "url": "https://wbasket.hu/dvtk-huntherm-csata-tkk2026-november-22-vasarnap1700-8-forduloeto-basket-vbw-cekk-cegled2026-november-22-vasarnap1700/",
+      "published_at": "2026.11.22. 10:48",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Sztojan Ivkovics : A hiányérzetem abból adódik, hogy ez a második olyan mérkőzés, ahol átvettük a vezetést, de kaptunk három triplát zsinórban, és alulmaradtunk",
+      "summary": "Sztojan Ivkovics : Gratulálok a Szolnoknak.",
+      "url": "https://bball1.hu/sztojan-ivkovics-a-hianyerzetem-abbol-adodik-hogy-ez-a-masodik-olyan-merkozes-ahol-atvettuk-a-vezetest-de-kaptunk-harom-triplat-zsinorban-es-alulmaradtunk/",
+      "published_at": "2026-11-22T09:53:35+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Ma itthon játszik a DVTK HUNTHERM",
       "summary": "Magyar Gergely: - Végre volt időnk felkészülni hosszabban egy mérkőzésre, bár az is igaz, hogy a hiányzóink miatt volt, hogy csak hét fővel tudtunk edzeni.",
@@ -579,6 +600,32 @@
       "league": "women",
       "teams": [
         "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "Kemény meccsen arattunk fontos győzelmet Kecskeméten",
+      "summary": "Jobban kezdett a Kecskemét, 7-2-es hazai vezetés után azonban felpörögtünk védekezésben, hosszú percekig nem engedtünk kosarat.",
+      "url": "https://olajofficial.hu/2026/11/22/kemeny-meccsen-arattunk-fontos-gyozelmet-kecskemeten/",
+      "published_at": "2026.11.22.",
+      "summary_method": "article_body",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
+      ]
+    },
+    {
+      "source": "Klub: NHSZ-Szolnoki Olajbányász",
+      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
+      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
+      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
+      "published_at": "2026.11.22.",
+      "summary_method": "source_description",
+      "publisher_club": "NHSZ-Szolnoki Olajbányász",
+      "league": "men",
+      "teams": [
+        "men|Szolnok"
       ]
     },
     {
@@ -1113,19 +1160,6 @@
       "url": "https://olajofficial.hu/2021/02/06/az-olajbanyasze-a-megyei-derbi/",
       "published_at": "2026.11.20.",
       "summary_method": "article_body",
-      "publisher_club": "NHSZ-Szolnoki Olajbányász",
-      "league": "men",
-      "teams": [
-        "men|Szolnok"
-      ]
-    },
-    {
-      "source": "Klub: NHSZ-Szolnoki Olajbányász",
-      "title": "AJ Ferguson az NHSZ-Szolnoki Olajbányászban!",
-      "summary": "Új játékossal erősítünk: AJ Ferguson az NHSZ-Szolnoki Olajbányászban folytatja pályafutását!",
-      "url": "https://olajofficial.hu/2026/11/09/aj-ferguson-az-nhsz-szolnoki-olajbanyaszban/",
-      "published_at": "2026.11.20.",
-      "summary_method": "source_description",
       "publisher_club": "NHSZ-Szolnoki Olajbányász",
       "league": "men",
       "teams": [
@@ -10980,7 +11014,7 @@
     {
       "source": "Klub: Sopron KC",
       "title": "Játékosok / Stáb",
-      "summary": "Kovács Áron #0 poszt: 2-3 szül.: 2007.03.25. magasság: 189 cm súly: 90 kg Trey Wertz poszt: 2 szül.: 1999.12.06. magasság: cm súly: kg #3 Bősze Gergő #4 poszt: 2 szül.: […]",
+      "summary": "Kovács Áron #0 poszt: 2-3 szül.: 2007.03.25. magasság: 189 cm súly: 90 kg Trey Wertz #3 poszt: 2 szül.: 1999.12.06. magasság: cm súly: kg Bősze Gergő #4 poszt: 2 szül.: […]",
       "url": "https://sopronkc.hu/jatekosaink/",
       "published_at": "2012-10-29T11:08:41+00:00",
       "summary_method": "source_description",
@@ -11738,10 +11772,10 @@
     {
       "source": "BB1.hu",
       "title": "Regisztráció",
-      "summary": "Végig vezetve nyert hazai pályán a Szolnok.",
+      "summary": "Regisztráció",
       "url": "https://bball1.hu/regisztral/",
       "published_at": null,
-      "summary_method": "source_description",
+      "summary_method": "headline_fallback",
       "teams": []
     },
     {

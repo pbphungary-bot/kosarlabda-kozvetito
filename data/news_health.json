@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-22T08:52:02.690361+00:00",
+  "checked_at": "2026-11-22T14:28:16.205671+00:00",
   "statistics": {
-    "total": 1212,
-    "fresh": 550,
+    "total": 1215,
+    "fresh": 552,
     "fresh_with_summary": 361,
     "missing_dates": 276,
-    "headline_only": 550,
-    "untagged": 492,
+    "headline_only": 552,
+    "untagged": 494,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
@@ -487,6 +487,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
