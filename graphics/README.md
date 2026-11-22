@@ -13,7 +13,7 @@ A csomag az automatikus adatokból és a mentett „alap” elrendezésekből k�
 
 A **Keret (tábla)** a FALCO / DVTK keret PSD-k kinézete, a **Keret (fotókkal)** kártyás változat játékosfotókkal. Mindkettő a Hunbasket csapatoldalából töltődik: mezszám szerinti sorrend, név, poszt, magasság, születési év, a külföldi játékosoknál zászló (a magyarnál nincs), a vezető- és a segédedző, a klublogó.
 A sorok / kártyák a játékosok tényleges számához igazodnak (9–24 fő). A hosszú, többkeresztnevű nevek 3 szóra rövidülnek; a kapitány-jelölés (©) az adatokban nincs, kézzel írható a név mögé.
-**Fotók:** a Hunbasket fotói (`graphics/players/`) a „Player photos” workflow-val töltődnek le és kicsinyítődnek (kézzel indítható az Actions fülön). A fotókat másik szerverről a PNG-export nem tudná használni (nincs CORS-engedély), ezért kell letölteni őket – **a jogaik az MKOSZ-nál / a fotósoknál vannak; mivel a repó publikus, a letöltött fotók is publikusak. Használatuk előtt egyeztess az MKOSZ-szal.** Ahol nincs fotó, helyőrző jelenik meg.
+**Fotók:** a Hunbasket fotói (`graphics/players/`) a „Player photos” workflow-val töltődnek le és kicsinyítődnek (kézzel indítható az Actions fülön). A fotókat másik szerverről a PNG-export nem tudná használni (nincs CORS-engedély), ezért kell letölteni őket – **a fotók az MKOSZ-é / a fotósoké; a használatukra az MKOSZ engedélyt adott. A repó publikus, ezért a letöltött fotók is publikusak: ne tegyél fel olyat, amire nincs engedély.** Ahol nincs fotó, helyőrző jelenik meg.
 
 ## Telefonon és tableten
 

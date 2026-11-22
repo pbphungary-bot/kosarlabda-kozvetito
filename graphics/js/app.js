@@ -386,7 +386,7 @@ function autoValues() {
     if (r.missing) info.notices.push({ bad: true, text: 'Ehhez a csapathoz nincs Hunbasket keret-adat (data/team_pages_*.json). Töltsd ki kézzel.' });
     else {
       info.notices.push({ text: 'A keret a Hunbasket csapatoldaláról jön (mezszám szerint rendezve). A kapitány-jelölés (©) az adatokban nincs: kézzel írd a név mögé, ha kell. A nevek hosszú, több keresztnevesek lerövidülnek (3 szó).' });
-      if (t.type === 'rostergrid') info.notices.push({ text: 'A fotók a Hunbasketről valók (letöltve a repóba); a jogaik az MKOSZ-nál / a fotósoknál vannak. Ahol nincs fotó, helyőrző jelenik meg.' });
+      if (t.type === 'rostergrid') info.notices.push({ text: 'A fotók a Hunbasketről valók (az MKOSZ engedélyével, letöltve a repóba). Ahol nincs fotó, helyőrző jelenik meg.' });
     }
   } else if (t.type === 'playerspecial') {
     v = bindPlayerSpecial(store, lg, s.teamId, s.ps?.player, t);
