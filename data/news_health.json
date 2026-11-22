@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T11:06:08.707355+00:00",
+  "checked_at": "2026-11-22T11:46:53.987132+00:00",
   "statistics": {
     "total": 1215,
     "fresh": 552,
@@ -7,12 +7,12 @@
     "missing_dates": 276,
     "headline_only": 552,
     "untagged": 494,
-    "sources_ok": 22,
+    "sources_ok": 21,
     "sources_partial": 0,
-    "sources_failed": 9,
+    "sources_failed": 10,
     "new_articles": 4,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 17,
+    "clubs_with_direct_source_coverage": 16,
     "clubs_configured": 25
   },
   "sources": [
@@ -326,19 +326,29 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://www.cekk.hu/new/index.php: HTTPError: HTTP Error 503: Service Unavailable",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: HTTPError: HTTP Error 503: Service Unavailable"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -488,7 +498,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -587,6 +596,7 @@
   "failed_sources": [
     "Kezdő5.hu",
     "Klub: PHOENIX Fóti Tigrisek",
+    "Klub: VBW CEKK Cegléd",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
