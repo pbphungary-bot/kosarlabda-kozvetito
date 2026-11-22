@@ -546,3 +546,18 @@ export function bindForm(store, lg, teamIds) {
   });
   return v;
 }
+
+// ───────────────────────── head to head ─────────────────────────
+/** The last five meetings of the two clubs of a match (newest on top): date, badges, score. Nothing is invented. */
+export function bindH2H(store, lg, homeId, awayId, rows = 5) {
+  const v = {}, games = homeId && awayId ? store.h2hGames(lg, homeId, awayId) : [];
+  const src = 'Hunbasket (2020/21-től) + az idei menetrend';
+  for (let r = 0; r < rows; r++) {
+    const g = games[r], e = ['date', 'home', 'away', 'score'].map(x => `h${r}.${x}`);
+    if (!g) { v[e[0]] = { text: '', source: 'Nincs ennyi korábbi meccs az adatokban' }; v[e[1]] = { src: '' }; v[e[2]] = { src: '' }; v[e[3]] = { text: '' }; continue; }
+    v[e[0]] = { text: g.date.replace(/-/g, '.') + '.', source: `${src}${g.season ? ' – ' + g.season : ''}` };
+    v[e[1]] = logo(lg, g.homeId); v[e[2]] = logo(lg, g.awayId);
+    v[e[3]] = { text: `${g.home}–${g.away}`, source: src };
+  }
+  return v;
+}

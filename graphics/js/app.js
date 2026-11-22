@@ -7,7 +7,7 @@ import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormal
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -284,7 +284,7 @@ function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
   $('sizeBar').hidden = true; // only the roster templates show it (set below)
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -462,10 +462,11 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair') {
+  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
     if (t.type === 'formpair') v = bindForm(store, lg, [m.homeId, m.awayId]);
+    else if (t.type === 'h2h') { v = bindH2H(store, lg, m.homeId, m.awayId); if (!store.h2hGames(lg, m.homeId, m.awayId).length) info.notices.push({ text: 'Ennek a két csapatnak nincs korábbi egymás elleni meccse az adatokban (Hunbasket 2020/21-től).' }); }
     else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
     else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
@@ -640,7 +641,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';
@@ -658,6 +659,7 @@ const fetchData = async f => {
 };
 async function update(full) {
   const seq = ++updateSeq;
+  if (tpl().type === 'h2h') await store.loadLazy(state.league, 'h2h', fetchData);
   if (tpl().type === 'playerspecial') { // the big player-page files are only needed here
     const had = store.lazyLoaded?.[state.league + 'playerPages'];
     await store.loadLazy(state.league, 'playerPages', fetchData);
@@ -811,6 +813,7 @@ async function renderForPackage(item, m) {
     state.template[lg] = t0.id;
     state.overrides[t0.id] = {}; // no typed overrides: the package is the pure automatic result
     if (item.who !== 'match') { s.teamId = item.who === 'home' ? m.homeId : m.awayId; s.games = null; s.customRows = null; s.players = null; }
+    if (t0.type === 'h2h') await store.loadLazy(lg, 'h2h', fetchData);
     const t = tpl();
     const { v: auto, info } = autoValues();
     const values = mergedValues(auto);
