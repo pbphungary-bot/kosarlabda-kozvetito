@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T16:44:48.523151+00:00",
+  "checked_at": "2026-11-22T17:36:11.281513+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 1,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -473,7 +473,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -554,18 +553,20 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 30,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 22,
+      "attempted": 22,
       "already_saved": 0,
       "added": 0,
-      "repaired": 30,
+      "repaired": 22,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 30,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 22,
       "source_coverage": true
     }
   ],
@@ -14074,6 +14075,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "A természet mellett a kávézás a nagy szenvedélyem – Marko Curovic",
+      "summary": "A természet mellett a kávézás a nagy szenvedélyem – Marko Curovic",
+      "url": "https://falcokc.com/a-termeszet-mellett-a-kavezas-a-nagy-szenvedelyem-marko-curovic/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
