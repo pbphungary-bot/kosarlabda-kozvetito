@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-22T14:28:16.205671+00:00",
+  "checked_at": "2026-11-22T15:19:40.345522+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -570,6 +570,28 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "DVTK HUNTHERM - Csata TKK élőben",
+      "summary": "November 22., vasárnap 17:00 (Miskolc, DVTK Aréna) DVTK HUNTHERM – Csata TKK",
+      "url": "http://dvtk.eu/37688-DVTK_HUNTHERM_Csata_TKK_eloben-cikk-kosarlabda/",
+      "published_at": "2026-11-22T16:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Nézd vissza a 9. forduló legfontosabb jeleneteit",
+      "summary": "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\">﻿</span>",
+      "url": "https://bball1.hu/nezd-vissza-a-9-fordulo-legfontosabb-jeleneteit-3/",
+      "published_at": "2026-11-22T15:50:30+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "WBasket.hu",
       "title": "Nyilatkozatcsokor a vasárnapi mérkőzések előtt",
@@ -11014,7 +11036,7 @@
     {
       "source": "Klub: Sopron KC",
       "title": "Játékosok / Stáb",
-      "summary": "Kovács Áron #0 poszt: 2-3 szül.: 2007.03.25. magasság: 189 cm súly: 90 kg Trey Wertz #3 poszt: 2 szül.: 1999.12.06. magasság: cm súly: kg Bősze Gergő #4 poszt: 2 szül.: […]",
+      "summary": "Kovács Áron #0 poszt: 2-3 szül.: 2007.03.25. magasság: 189 cm súly: 90 kg Trey Wertz #3 poszt: 1-2 szül.: 1999.12.06. magasság: 192 cm súly: 87 kg Bősze Gergő #4 poszt: […]",
       "url": "https://sopronkc.hu/jatekosaink/",
       "published_at": "2012-10-29T11:08:41+00:00",
       "summary_method": "source_description",
