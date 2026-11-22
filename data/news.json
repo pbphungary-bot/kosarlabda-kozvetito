@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T06:50:36.603297+00:00",
+  "checked_at": "2026-11-22T08:52:02.690361+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -81,15 +81,22 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 5,
-      "attempted": 5,
+      "candidates": 4,
+      "attempted": 4,
       "already_saved": 0,
-      "added": 5,
+      "added": 4,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 5,
-      "source_coverage": true
+      "usable_articles": 4,
+      "source_coverage": true,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: DEAC",
@@ -304,29 +311,19 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:URLError",
-        "sitemap:0"
-      ]
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -475,8 +472,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -573,6 +568,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Ma itthon játszik a DVTK HUNTHERM",
+      "summary": "Magyar Gergely: - Végre volt időnk felkészülni hosszabban egy mérkőzésre, bár az is igaz, hogy a hiányzóink miatt volt, hogy csak hét fővel tudtunk edzeni.",
+      "url": "http://dvtk.eu/37685-Ma_itthon_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-22T08:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Férfi kosár NB I: Kecskeméten hozta a papírformát a Szolnok",
