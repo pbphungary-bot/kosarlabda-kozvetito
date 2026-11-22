@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-22T15:19:40.345522+00:00",
+  "checked_at": "2026-11-22T16:03:32.354303+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 0,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -570,6 +570,26 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Értékelések a szombati bajnoki mérkőzések után",
+      "summary": "Szombaton három összecsapást rendeztek a bajnokságban.",
+      "url": "https://wbasket.hu/ertekelesek-a-szombati-bajnoki-merkozesek-utan/",
+      "published_at": "2026.11.22. 16:32",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "ÉLŐ: két élvonalbeli találkozó vasárnap",
+      "summary": "Az alábbiakban linkeket ajánlunk az élő eseménykövetéshez:",
+      "url": "https://wbasket.hu/elo-ket-elvonalbeli-talakozo-vasarnap/",
+      "published_at": "2026.11.22. 16:18",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "DVTK HUNTHERM - Csata TKK élőben",
