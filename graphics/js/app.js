@@ -3,7 +3,7 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
@@ -83,8 +83,9 @@ const tpl = () => {
     const n = pl.length || t.rosterN, mask = pl.map(p => (isForeign(p) ? '1' : '0')).join(''); // foreign players: given name above the surname
     const ns = Math.max(0.5, Math.min(2.5, (state.sel[t.league]?.numScale || 100) / 100)); // jersey-number size, all players at once
     const fs = Math.max(0.5, Math.min(2.5, (state.sel[t.league]?.flagScale || 100) / 100)); // flag size, all players at once
-    const key = `${t.id}|${n}|${mask}|${ns}|${fs}`;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask, ns, fs)); }
+    const off = state.sel[t.league]?.rowOff || [];
+    const key = `${t.id}|${n}|${mask}|${ns}|${fs}|${JSON.stringify(off)}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask, ns, fs, off)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -208,6 +209,11 @@ function wirePsConfig(s) {
   $('psReset').onclick = () => { s.psCfg = null; renderSelection(); update(true); };
 }
 
+function rowOffHtml(s, rows) {
+  const names = ['Felső sor', 'Középső sor', 'Alsó sor', '4. sor', '5. sor'];
+  return Array.from({ length: rows }, (_, r) => `<span class="rowoff"><b>${names[r] || (r + 1) + '. sor'}</b> <label>↔ <input type="number" class="rowOff" data-r="${r}" data-a="0" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[0] || 0}"></label><label>↕ <input type="number" class="rowOff" data-r="${r}" data-a="1" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[1] || 0}"></label></span>`).join('') + '<button type="button" id="rowOffReset" class="ghost">Sorok alaphelyzet</button>';
+}
+
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
@@ -280,7 +286,9 @@ function renderSelection(extra = {}) {
     box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
     const bar = $('sizeBar'), isRoster = t.type === 'roster' || t.type === 'rostergrid';
     bar.hidden = !isRoster;
-    bar.innerHTML = !isRoster ? '' : `<b>Méretek – az összes játékosra egyszerre:</b> <label>Mezszámok (%) <input type="number" id="numScale" min="50" max="250" step="5" value="${s.numScale || 100}"></label>${t.type === 'rostergrid' ? `<label>Zászlók (%) <input type="number" id="flagScale" min="50" max="250" step="5" value="${s.flagScale || 100}"></label>` : ''}`;
+    bar.innerHTML = !isRoster ? '' : `<b>Méretek – az összes játékosra egyszerre:</b> <label>Mezszámok (%) <input type="number" id="numScale" min="50" max="250" step="5" value="${s.numScale || 100}"></label>${t.type === 'rostergrid' ? `<label>Zászlók (%) <input type="number" id="flagScale" min="50" max="250" step="5" value="${s.flagScale || 100}"></label>` : ''}${t.type === 'rostergrid' ? rowOffHtml(s, rosterDims(rosterPlayers(store, lg, s.teamId).length || t.rosterN).rows) : ''}`;
+    if ($('rowOffReset')) $('rowOffReset').onclick = () => { s.rowOff = []; renderSelection(); update(true); };
+    document.querySelectorAll('.rowOff').forEach(el => el.onchange = () => { const o = [...(s.rowOff || [])]; const i = +el.dataset.r; o[i] = [...(o[i] || [0, 0])]; o[i][+el.dataset.a] = Math.max(-300, Math.min(300, +el.value || 0)); s.rowOff = o; update(true); });
     if ($('numScale')) $('numScale').onchange = e => { s.numScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
     if ($('flagScale')) $('flagScale').onchange = e => { s.flagScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
     $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null; resetTemplateOverrides(); update(true); };

@@ -189,3 +189,5 @@ details.pkg .chk { display: flex; flex-direction: row; gap: 6px; align-items: ce
 .sizebar[hidden] { display: none; }
 .sizebar label { display: flex; gap: 6px; align-items: center; }
 .sizebar input { width: 76px; }
+.sizebar .rowoff { display: flex; gap: 8px; align-items: center; }
+.sizebar .rowoff input { width: 64px; }

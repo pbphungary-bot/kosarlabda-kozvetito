@@ -153,3 +153,5 @@ Betűtípus: League Gothic Regular + Italic (SIL OFL, `fonts/`).
 
 **Mezszámok mérete (Keret):** a kép feletti *Méretek* sávban a *Mezszámok (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
 **Zászlók mérete (Keret fotókkal):** a *Zászlók (%)* mező az összes zászlót egyszerre méretezi; a zászló jobb széle és a mezszám középvonala nem mozdul.
+
+**Sorok mozgatása (Keret fotókkal):** a *Méretek* sávban minden sor (felső, középső, alsó) külön eltolható: ↔ vízszintesen, ↕ függőlegesen (pixel, ±300). A *Sorok alaphelyzet* gomb visszaállítja. A csapat váltásakor az eltolások megmaradnak.

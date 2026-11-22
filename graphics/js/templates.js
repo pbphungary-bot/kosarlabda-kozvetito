@@ -389,7 +389,7 @@ export function rosterDims(n) {
 }
 
 /** base = registry entry (background); n = number of players. */
-export function rosterBuild(base, n, mask = '', ns = 1, fs = 1) {
+export function rosterBuild(base, n, mask = '', ns = 1, fs = 1, off = []) {
   const g = ROSTER_GEOM[base.league], op = 0.9882;
   n = Math.max(1, Math.min(24, n || g.defaultN));
   const els = rosterCommon(g, op);
@@ -414,7 +414,7 @@ export function rosterBuild(base, n, mask = '', ns = 1, fs = 1) {
     const { cols, rows } = rosterDims(n), areaX = 700, areaW = 940, areaY = g.hdr - 20, areaH = g.last - areaY + 8;
     const cw = areaW / cols, ch = Math.min(290, areaH / rows), ph = ch * 0.6, pw = ph * 0.88;
     for (let i = 0; i < n; i++) {
-      const c = i % cols, r = Math.floor(i / cols), cx = areaX + cw * (c + 0.5), top = areaY + r * ch + (areaH - ch * rows) / 2;
+      const c = i % cols, r = Math.floor(i / cols), cx = areaX + cw * (c + 0.5) + (off[r]?.[0] || 0), top = areaY + r * ch + (areaH - ch * rows) / 2 + (off[r]?.[1] || 0); // off[r] = [dx, dy] of the whole row
       const grp = `${i + 1}. játékos`, nm = Math.min(1, cw / 190);
       els.push(
         { id: `r${i}.photo`, type: 'image', label: `${i + 1}. fotó`, group: grp, box: [cx, top + ph / 2, pw, ph], fit: 'contain', anchor: 'bottom', clipInner: true },
