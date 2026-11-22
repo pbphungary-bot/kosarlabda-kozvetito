@@ -81,8 +81,9 @@ const tpl = () => {
   if (t.type === 'roster' || t.type === 'rostergrid') { // rows / cards for the real number of players of the chosen team
     const pl = rosterPlayers(store, t.league, state.sel[t.league]?.teamId);
     const n = pl.length || t.rosterN, mask = pl.map(p => (isForeign(p) ? '1' : '0')).join(''); // foreign players: given name above the surname
-    const key = `${t.id}|${n}|${mask}`;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask)); }
+    const ns = Math.max(0.5, Math.min(2.5, (state.sel[t.league]?.numScale || 100) / 100)); // jersey-number size, all players at once
+    const key = `${t.id}|${n}|${mask}|${ns}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask, ns)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -274,7 +275,8 @@ function renderSelection(extra = {}) {
     $('showOpen').onchange = e => { s.showOpen = e.target.checked; renderSelection(); update(true); };
   } else {
     $('selectTitle').textContent = '2. Csapat';
-    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
+    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}${t.type === 'roster' || t.type === 'rostergrid' ? `<label>Mezszámok mérete (% – mind egyszerre)<input type="number" id="numScale" min="50" max="250" step="5" value="${s.numScale || 100}"></label>` : ''}`;
+    if ($('numScale')) $('numScale').onchange = e => { s.numScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
     $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null; resetTemplateOverrides(); update(true); };
     if (extra.games) {
       const group = t.type === 'schedule' ? 'schedule' : 'results';

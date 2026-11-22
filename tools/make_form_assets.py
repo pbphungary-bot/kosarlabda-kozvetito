@@ -49,7 +49,7 @@ def panel(src, box, border, path, alpha=246):
 
 if __name__ == '__main__':
     os.makedirs(os.path.join(G, 'assets', 'form'), exist_ok=True)
-    badge('Gy', (31, 191, 27, 255), os.path.join(G, 'assets', 'form', 'win.png'))
+    badge('GY', (31, 191, 27, 255), os.path.join(G, 'assets', 'form', 'win.png'))
     badge('V', (236, 64, 54, 255), os.path.join(G, 'assets', 'form', 'loss.png'))
     for lg, border in (('men', (11, 148, 68)), ('women', (236, 64, 54))):
         src = os.path.join(G, 'templates', f'roster-{lg}', 'background.png')

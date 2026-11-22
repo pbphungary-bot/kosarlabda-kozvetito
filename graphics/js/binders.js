@@ -541,7 +541,7 @@ export function bindForm(store, lg, teamIds) {
       v[e[0]] = { src: own > opp ? 'form/win' : 'form/loss', source: own > opp ? 'Győzelem' : 'Vereség' };
       v[e[1]] = oppId ? logo(lg, oppId) : { src: '', source: 'Nincs logó ehhez a csapathoz' };
       v[e[2]] = { text: oppId ? '' : String(oppName || '').split(' ').slice(0, 2).join(' '), source: oppId ? 'Van logó' : `${oppName} (nincs logó)` };
-      v[e[3]] = { text: `${own}–${opp}`, source: `${src}${m.cup ? ' – kupa/európai' : ''}` };
+      v[e[3]] = { text: `${home ? '' : '@ '}${own}–${opp}`, source: `${src}${home ? ' – hazai' : ' – idegenbeli (@)'}${m.cup ? ' – kupa/európai' : ''}` };
     }
   });
   return v;

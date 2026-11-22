@@ -11,7 +11,7 @@ A csomag az automatikus adatokból és a mentett „alap” elrendezésekből k�
 
 ## Forma (két sablon)
 
-Kompakt sarokgrafika (legfeljebb a kép negyede: egy csapatnál 960×263, két csapatnál 960×478 px, a bal felső sarokban; az Elrendezés fülön mozgatható). Meccsenként **zöld „Gy” / piros „V” jelvény**, alatta az ellenfél logója (ha nincs logó, a neve), majd az eredmény a csapat saját pontjával elöl. A legutóbbi meccs jobb oldalon.
+Kompakt sarokgrafika (legfeljebb a kép negyede: egy csapatnál 960×263, két csapatnál 960×478 px, a bal felső sarokban; az Elrendezés fülön mozgatható). Meccsenként **zöld „GY” / piros „V” jelvény**, alatta az ellenfél logója (ha nincs logó, a neve), majd az eredmény a csapat saját pontjával elöl; idegenbeli meccsnél az eredmény előtt **@** áll. A legutóbbi meccs jobb oldalon.
 *Forma* = egy kiválasztott csapat utolsó 5 lejátszott meccse (NB I/A és európai); *Forma (két csapat)* = a kiválasztott meccs két csapata egymás alatt. Szöveges összegzés nincs rajta. A csomag-ZIP-be a két csapatos változat kerül. A jelvények és a panel a `tools/make_form_assets.py`-vel újragenerálhatók.
 
 ## Keret (két sablon)
@@ -150,3 +150,5 @@ node tests/e2e.mjs                  # böngészős végigpróbálás: export, fe
 
 Az eredeti PSD-k a `BROADCAST GRAPHICS/` mappában vannak, ezeket a stúdió sosem módosítja.
 Betűtípus: League Gothic Regular + Italic (SIL OFL, `fonts/`).
+
+**Mezszámok mérete (Keret):** a „2. Csapat” panelen a *Mezszámok mérete (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
