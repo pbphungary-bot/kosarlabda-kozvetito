@@ -1,8 +1,8 @@
 {
   "competition": "Férfi NB I/A",
   "source": "https://hunbasket.hu/tabella/ferfi",
-  "updated_at": "2026-11-19T13:10:48.232598+00:00",
-  "checked_at": "2026-11-22T08:16:30.009429+00:00",
+  "updated_at": "2026-11-22T11:16:53.762911+00:00",
+  "checked_at": "2026-11-22T11:16:53.762911+00:00",
   "standings": [
     {
       "rank": 1,
@@ -27,12 +27,12 @@
     {
       "rank": 3,
       "name": "NHSZ-Szolnoki Olajbányász",
-      "played": 9,
-      "points": 16,
-      "wins": 7,
+      "played": 10,
+      "points": 18,
+      "wins": 8,
       "losses": 2,
-      "scored": 794,
-      "conceded": 723
+      "scored": 882,
+      "conceded": 805
     },
     {
       "rank": 4,
@@ -126,16 +126,6 @@
     },
     {
       "rank": 13,
-      "name": "Duna Aszfalt-DTKH Kecskemét",
-      "played": 9,
-      "points": 10,
-      "wins": 1,
-      "losses": 8,
-      "scored": 644,
-      "conceded": 804
-    },
-    {
-      "rank": 14,
       "name": "NKA Universitas Pécs",
       "played": 10,
       "points": 11,
@@ -143,6 +133,16 @@
       "losses": 9,
       "scored": 798,
       "conceded": 919
+    },
+    {
+      "rank": 14,
+      "name": "Duna Aszfalt-DTKH Kecskemét",
+      "played": 10,
+      "points": 11,
+      "wins": 1,
+      "losses": 9,
+      "scored": 726,
+      "conceded": 892
     }
   ]
 }
