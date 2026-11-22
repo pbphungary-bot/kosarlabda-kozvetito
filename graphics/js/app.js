@@ -7,7 +7,7 @@ import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormal
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -46,7 +46,7 @@ const saveState = () => lsSet(LS.state, { league: state.league, template: state.
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
 let photoIds = new Set(); // ids of the downloaded player photos (players/index.json); a missing photo shows the placeholder
-const imageUrl = key => key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
+const imageUrl = key => key.startsWith('form/') ? `assets/form/${key.slice(5)}.png` : key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
 /** Loads the flags / photos a set of values refers to (the renderer draws only what is already loaded). */
 async function ensureImages(values) {
   const jobs = [];
@@ -79,9 +79,10 @@ const psCache = new Map();
 const tpl = () => {
   const t = templateById(state.template[state.league]);
   if (t.type === 'roster' || t.type === 'rostergrid') { // rows / cards for the real number of players of the chosen team
-    const n = rosterPlayers(store, t.league, state.sel[t.league]?.teamId).length || t.rosterN;
-    const key = `${t.id}|${n}`;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n)); }
+    const pl = rosterPlayers(store, t.league, state.sel[t.league]?.teamId);
+    const n = pl.length || t.rosterN, mask = pl.map(p => (isForeign(p) ? '1' : '0')).join(''); // foreign players: given name above the surname
+    const key = `${t.id}|${n}|${mask}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -172,7 +173,9 @@ function psConfigHtml(s) {
     <div class="row2"><label>Oszlopok száma (1–${PS_MAX_COLS}) ${num('psCols', c.cols, 1, PS_MAX_COLS)}</label>
       <label>Sorok száma (1–${PS_MAX_ROWS}) ${num('psRows', c.rows.length, 1, PS_MAX_ROWS)}</label></div>
     <div class="row2"><label>Oszlopok a felirat előtt (bal oldalon) ${num('psLabelAfter', c.labelAfter, 0, c.cols)}</label>
-      <label>Az idei átlag oszlopa (0 = egyik sem) ${num('psAuto', c.auto, 0, c.cols)}</label></div>
+      <label>Utolsó N meccs átlaga (ha van ilyen oszlop) ${num('psLastN', c.lastN, 1, 20)}</label></div>
+    <label>Oszlopok adatforrása (a Hunbasket játékosoldalából; a „kézi” oszlopot te írod)</label>
+    <div class="row2">${c.colSrc.map((k, i) => `<label>${i + 1}. oszlop <select class="psSrc" data-i="${i}">${[['manual', 'Kézi'], ['season', 'Idei átlag'], ['career', 'Karrier'], ['last', 'Utolsó N meccs']].map(([v, l]) => `<option value="${v}" ${v === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label>`).join('')}</div>
     <div class="row2">${rowSel}</div>
     <div class="row2"><label>Fotó magassága (px; 0 = a lehető legnagyobb) ${num('psPhotoH', c.photoH, 0, 1000)}</label>
       <label>Fotó közepének X helye (px) ${num('psPhotoCx', Math.round(c.photoCx), 0, 1400)}</label></div>
@@ -190,10 +193,11 @@ function psConfigHtml(s) {
 function wirePsConfig(s) {
   $('psBox').ontoggle = e => { s.psOpen = e.target.open; };
   const n = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(+$(id).value || 0)));
-  $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), auto: Math.min(cols, c.auto) }); };
+  $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), colSrc: Array.from({ length: cols }, (_, i) => c.colSrc[i] || 'manual') }); };
   $('psRows').onchange = () => { const k = n('psRows', 1, PS_MAX_ROWS), c = psConfig(s); psSet(s, { rows: Array.from({ length: k }, (_, i) => c.rows[i] || 'pts') }); };
   $('psLabelAfter').onchange = () => psSet(s, { labelAfter: n('psLabelAfter', 0, psConfig(s).cols) });
-  $('psAuto').onchange = () => psSet(s, { auto: n('psAuto', 0, psConfig(s).cols) });
+  $('psLastN').onchange = () => psSet(s, { lastN: n('psLastN', 1, 20) });
+  document.querySelectorAll('.psSrc').forEach(el => el.onchange = () => { const colSrc = [...psConfig(s).colSrc]; colSrc[+el.dataset.i] = el.value; psSet(s, { colSrc }); });
   for (const [id, key] of [['psFsRows', 'fsRows'], ['psFsHeaders', 'fsHeaders'], ['psFsTitle', 'fsTitle'], ['psFsSub', 'fsSub']]) $(id).onchange = () => psSet(s, { [key]: n(id, 0, 300) });
   $('psPhotoH').onchange = () => psSet(s, { photoH: n('psPhotoH', 0, 1000) });
   $('psPhotoCx').onchange = () => psSet(s, { photoCx: n('psPhotoCx', 0, 1400) });
@@ -205,7 +209,7 @@ function wirePsConfig(s) {
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -372,14 +376,18 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch') {
+  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
-    if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
+    if (t.type === 'formpair') v = bindForm(store, lg, [m.homeId, m.awayId]);
+    else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
     else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
+  } else if (t.type === 'form') {
+    v = bindForm(store, lg, [s.teamId]);
+    if (store.playedGames(lg, s.teamId).length < 5) info.notices.push({ text: 'Ennek a csapatnak 5-nél kevesebb lejátszott meccse van: az üres oszlopok nem jelennek meg.' });
   } else if (t.type === 'roster' || t.type === 'rostergrid') {
     const r = bindRoster(store, lg, s.teamId, t, photoIds);
     v = r.values;
@@ -538,7 +546,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';
@@ -549,8 +557,18 @@ function fileName(values) {
 
 let lastCandidates = []; // candidate games of the current row-list graphic (for inserting rows by date)
 let updateSeq = 0; // only the newest redraw may draw: a slower, older one must not overwrite it with stale values
+const fetchData = async f => {
+  const r = await fetch(`../data/${f}?v=${Date.now()}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+};
 async function update(full) {
   const seq = ++updateSeq;
+  if (tpl().type === 'playerspecial') { // the big player-page files are only needed here
+    const had = store.lazyLoaded?.[state.league + 'playerPages'];
+    await store.loadLazy(state.league, 'playerPages', fetchData);
+    if (!had && seq !== updateSeq) return;
+  }
   const t = tpl();
   renderBaseOpacity();
   document.body.classList.toggle('women', state.league === 'women');
@@ -625,7 +643,7 @@ async function update(full) {
     const sz = lastReport.sizes[inp.closest('.field').dataset.id];
     if (sz) inp.placeholder = Math.round(sz);
   });
-  if ($('showRef').checked) {
+  if ($('showRef').checked && t.reference) {
     const ref = await loadImage('ref/' + t.id, t.reference);
     if (seq !== updateSeq) return;
     const ctx = canvas.getContext('2d');

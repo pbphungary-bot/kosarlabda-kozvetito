@@ -9,6 +9,11 @@ Az **Export** fülön a „Teljes csomag letöltése (ZIP)” gomb a kiválaszto
 Minden kép 1920×1080, átlátszó PNG, sorszámozott fájlnévvel (`01_Intro_Falco-Alba_2026-12-05.png`). A csomagban van egy **`_OLVASSEL.txt`**: mi van benne, mi maradt ki és miért, mennyire friss az adat, és melyik képen van hiányzó adat. A kipipálható listával kiválaszthatod, mi kerüljön bele.
 A csomag az automatikus adatokból és a mentett „alap” elrendezésekből készül (a kézi felülírásokat nem viszi), és közben a képernyőn lévő grafikához nem nyúl. RAR nem készíthető böngészőben, a ZIP mindenhol megnyílik.
 
+## Forma (két sablon)
+
+Kompakt sarokgrafika (legfeljebb a kép negyede: egy csapatnál 960×263, két csapatnál 960×478 px, a bal felső sarokban; az Elrendezés fülön mozgatható). Meccsenként **zöld „Gy” / piros „V” jelvény**, alatta az ellenfél logója (ha nincs logó, a neve), majd az eredmény a csapat saját pontjával elöl. A legutóbbi meccs jobb oldalon.
+*Forma* = egy kiválasztott csapat utolsó 5 lejátszott meccse (NB I/A és európai); *Forma (két csapat)* = a kiválasztott meccs két csapata egymás alatt. Szöveges összegzés nincs rajta. A csomag-ZIP-be a két csapatos változat kerül. A jelvények és a panel a `tools/make_form_assets.py`-vel újragenerálhatók.
+
 ## Keret (két sablon)
 
 A **Keret (tábla)** a FALCO / DVTK keret PSD-k kinézete, a **Keret (fotókkal)** kártyás változat játékosfotókkal. Mindkettő a Hunbasket csapatoldalából töltődik: mezszám szerinti sorrend, név, poszt, magasság, születési év, a külföldi játékosoknál zászló (a magyarnál nincs), a vezető- és a segédedző, a klublogó.
@@ -89,6 +94,8 @@ A „Következik” sablon (a *Nex Match graph.psd* alapján) bal felső sarokba
 A lábléc harmadik logója minden grafikán az **MKOSZ** logó (a Play By Play logó sehol nem jelenik meg).
 
 ### Játékos-különleges („Uros STAT” / „Kányási” design)
+
+Minden oszlophoz külön forrás választható: **Kézi**, **Idei átlag**, **Karrier** vagy **Utolsó N meccs** (a Hunbasket játékososzlopairól, `data/player_pages_*.json`, naponta frissül). A nagy fájl csak e sablon megnyitásakor töltődik be.
 
 Sablon: *Játékos-különleges* (férfi: a Rosic-féle 3 oszlopos, női: a Kányási-féle 2 oszlopos elrendezés). Válassz csapatot és játékost; a **név**, az **idei átlagok**
 (az utolsó oszlop) és a háttérben a **klublogó** az adatokból jön. Az alcímet (1–2 sor), a többi oszlop fejlécét és értékeit (pl. karrier, utolsó meccsek) te írod be,

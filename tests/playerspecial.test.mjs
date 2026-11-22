@@ -59,3 +59,24 @@ test('player special: font sizes are adjustable (group settings and every text h
   assert.equal(t.elements.find(e => e.id === 'subtitle').size, 36);
   assert.ok(t.elements.filter(e => e.type === 'text').every(e => e.adjust));
 });
+
+import { lastGamesMap, careerMap, playerIdFor } from '../graphics/js/binders.js';
+const sample = JSON.parse(await readFile(`${ROOT}/tests/fixtures/player-page-sample.json`, 'utf8'));
+test('player page data: last N games and career averages are computed from the real page, percentages from the sums', () => {
+  const l = lastGamesMap(sample, 3);
+  const g = sample.gamelog.slice(-3);
+  const pts = g.map(x => +x.stats[1]);
+  assert.equal(l['M.'], '3');
+  assert.ok(Math.abs(+l['P.'] - pts.reduce((a, b) => a + b, 0) / 3) < 1e-9);
+  const s2 = g.reduce((a, x) => a + +x.stats[3], 0), k2 = g.reduce((a, x) => a + +x.stats[4], 0);
+  assert.ok(Math.abs(+l['2P %'] - 100 * s2 / k2) < 1e-9);
+  assert.equal(lastGamesMap({ gamelog: [] }, 5), null); // nothing is invented
+  const c = careerMap(sample);
+  assert.equal(c.map['P.'], '15.6');
+  assert.deepEqual(c.seasons, ['2026/2027']);
+});
+test('player page: the studio finds the Hunbasket player id from the name in the statistics list', async () => {
+  const store = new Store({ men: {}, women: { teamPages: JSON.parse(await readFile(`${ROOT}/${DATA_DIR}/team_pages_women.json`, 'utf8')) }, errors: [] }, new Date('2026-11-21T20:00:00Z'));
+  assert.equal(playerIdFor(store, 'women', 'eltebeacujbuda', 'Fisher Malia'), 'B152349');
+  assert.equal(playerIdFor(store, 'women', 'eltebeacujbuda', 'Nincs Ilyen'), null);
+});

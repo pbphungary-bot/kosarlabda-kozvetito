@@ -355,31 +355,87 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
 }
 
 // ───────────────────────── player special ─────────────────────────
-/** Name, the auto (current season) column and the club logo come from the data; story, other columns and photo are the operator's. */
+// column names of the Hunbasket player page (season / career tables and the game log), see scripts/update_player_pages.py
+const PP_SEASON = ['M.', 'K.', 'P.', 'Idő', '2P S', '2P K', '2P %', '3P S', '3P K', '3P %', 'BT S', 'BT K', 'BT %', 'VLP', 'TLP', 'ÖLP', 'SZL', 'EL', 'Fault', 'Kih. fault', 'GP', 'Blokk', 'Kapott blokk', 'VAL'];
+const PP_GAME = ['K.', 'P.', 'Idő', '2P S', '2P K', '2P %', '3P S', '3P K', '3P %', 'BT S', 'BT K', 'BT %', 'VLP', 'TLP', 'ÖLP', 'SZL', 'EL', 'Fault', 'Kih. fault', 'GP', 'Blokk', 'Kapott blokk', 'VAL'];
+const normTok = x => String(x || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
+
+/** Hunbasket player id of a player of the player-statistics list (matched by the words of the name within the team's roster). */
+export function playerIdFor(store, lg, teamId, name) {
+  const want = normTok(name);
+  if (!want.length) return null;
+  for (const p of rosterPlayers(store, lg, teamId)) {
+    const have = normTok(p.name);
+    if (want.every(w => have.includes(w))) return idOf(p.url);
+  }
+  return null;
+}
+
+/** Average of the last n games of the game log, as a map of the season column names (percentages from the sums). */
+export function lastGamesMap(page, n) {
+  const g = (page?.gamelog || []).slice(-n);
+  if (!g.length) return null;
+  const col = c => g.map(x => num(x.stats[PP_GAME.indexOf(c)]));
+  const sum = c => col(c).reduce((a, b) => a + (b ?? 0), 0);
+  const avg = c => sum(c) / g.length;
+  const m = { 'M.': String(g.length), 'K.': String(g.filter(x => x.stats[0] === '*').length) };
+  for (const c of ['P.', 'Idő', '2P S', '2P K', '3P S', '3P K', 'BT S', 'BT K', 'VLP', 'TLP', 'ÖLP', 'SZL', 'EL', 'Fault', 'Kih. fault', 'GP', 'Blokk', 'Kapott blokk', 'VAL']) m[c] = String(avg(c));
+  for (const [pc, sc, kc] of [['2P %', '2P S', '2P K'], ['3P %', '3P S', '3P K'], ['BT %', 'BT S', 'BT K']]) m[pc] = sum(kc) ? String(100 * sum(sc) / sum(kc)) : null;
+  return m;
+}
+
+/** Career averages (all seasons, regular season) of the player page + the span of the seasons. */
+export function careerMap(page) {
+  const rows = page?.career?.regular || [];
+  const tot = rows.find(r => r.label === 'Összesítés');
+  if (!tot) return null;
+  const seasons = rows.filter(r => /^\d{4}\/\d{4}$/.test(r.label)).map(r => r.label).sort();
+  return { map: Object.fromEntries(PP_SEASON.map((c, i) => [c, tot.average[i]])), seasons };
+}
+
+/** Name, the data columns (season / career / last N games) and the club logo come from the data; story, manual columns and photo are the operator's. */
 export function bindPlayerSpecial(store, lg, teamId, playerKey, tpl) {
   const P = pickPlayer(store, lg, teamId, playerKey);
   const cfg = tpl.ps.cfg, n = cfg.cols;
-  const auto = cfg.auto; // 1-based column that carries the player's season averages, 0 = none
-  const manual = 'Kézzel töltendő (az adatokban nincs ilyen időszak)';
-  const src = store.players(lg, teamId)?.source === 'excel' ? 'Excel – játékosstatisztika' : 'Hunbasket játékosstatisztika (idei átlag)';
+  const manual = 'Kézzel töltendő';
+  const seasonSrc = store.players(lg, teamId)?.source === 'excel' ? 'Excel – játékosstatisztika' : 'Hunbasket játékosstatisztika (idei átlag)';
+  const pid = P ? playerIdFor(store, lg, teamId, P.name) : null;
+  const page = pid ? store.playerPage(lg, pid) : null;
   const v = {
-    title: P ? { text: P.name, source: src } : field(null, src),
+    title: P ? { text: P.name, source: seasonSrc } : field(null, seasonSrc),
     subtitle: { text: '', source: 'Kézzel írandó (a sztori, 1–2 sor)' },
     logo: logo(lg, teamId),
   };
-  const m = P ? Math.round(num(P.p['M.']) ?? 0) : null;
-  for (let k = 1; k <= n; k++) v[`h${k}`] = k === auto ? { text: m ? `${m} idei\nmeccs` : '', source: src } : { text: '', source: manual };
+  // one value map per data source
+  const maps = {}, heads = {};
+  if (P) {
+    maps.season = Object.fromEntries(Object.keys(P.p).map(k => [k, P.p[k]]));
+    const m = Math.round(num(P.p['M.']) ?? 0);
+    heads.season = m ? `${m} idei\nmeccs` : '';
+  }
+  const car = careerMap(page);
+  if (car) {
+    maps.career = car.map;
+    heads.career = car.seasons.length ? `Karrier\n${car.seasons[0].slice(0, 4)}–${car.seasons.at(-1).slice(5)}` : 'Karrier';
+  }
+  const last = lastGamesMap(page, cfg.lastN);
+  if (last) { maps.last = last; heads.last = `Utolsó ${last['M.']}\nmeccs`; }
   const sample = tpl.elements.find(e => e.id === 'r0.c1');
   const rowSize = sample?.size || 96;
+  const labelOf = { season: seasonSrc, career: 'Hunbasket játékosoldal – karrier (alapszakasz)', last: `Hunbasket játékosoldal – az utolsó ${cfg.lastN} meccs átlaga` };
+  for (let k = 1; k <= n; k++) {
+    const kind = cfg.colSrc[k - 1];
+    v[`h${k}`] = kind !== 'manual' && heads[kind] ? { text: heads[kind], source: labelOf[kind] } : { text: '', source: kind === 'manual' ? manual : `Nincs ${kind === 'career' ? 'karrier' : 'meccsnapló'}-adat ehhez a játékoshoz (kézzel írható)` };
+  }
   cfg.rows.forEach((key, i) => {
     const r = PS_STATS[key];
     v[`r${i}.label`] = { text: r.label, source: 'Sor felirata (átírható)' };
     for (let k = 1; k <= n; k++) {
-      const id = `r${i}.c${k}`;
-      if (k !== auto) { v[id] = { text: '', source: manual }; continue; }
-      const x = P ? num(P.p[r.col]) : null;
+      const id = `r${i}.c${k}`, kind = cfg.colSrc[k - 1], mp = kind === 'manual' ? null : maps[kind];
+      if (!mp) { v[id] = { text: '', source: kind === 'manual' ? manual : 'Nincs adat ehhez a forráshoz' }; continue; }
+      const x = num(mp[r.col]), src = labelOf[kind];
       if (r.made) {
-        const ms = P ? num(P.p[r.made]) : null, at = P ? num(P.p[r.att]) : null;
+        const ms = num(mp[r.made]), at = num(mp[r.att]);
         if (ms !== null && at !== null) {
           const main = `${ms.toFixed(1)}/${at.toFixed(1)}`, pct = x === null ? '' : `(${x.toFixed(1)}%)`;
           const small = PS_SMALL * rowSize / 96;
@@ -390,20 +446,32 @@ export function bindPlayerSpecial(store, lg, teamId, playerKey, tpl) {
       else if (r.int) v[id] = field(x === null ? null : String(Math.round(x)), src);
       else v[id] = field(x === null ? null : x.toFixed(1), src);
     }
-  });
+  }); 
   return v;
 }
-
 
 // ───────────────────────── roster (Keret) ─────────────────────────
 const flagKey = f => { const m = String(f || '').match(/\/([a-z]{2})\.svg$/i); return m ? `flag/${m[1].toLowerCase()}` : ''; };
 const idOf = url => (String(url || '').match(/\/([A-Z]\d+)\//) || [])[1] || null;
 
-/** "FERGUSON JR Anthony Charles" → keep the surname part (capitals) and the first given name when the name is long. */
-export function shortName(name) {
-  const w = String(name || '').trim().split(/\s+/);
-  return w.length <= 3 ? w.join(' ') : w.slice(0, 3).join(' ');
+// Hunbasket writes "SURNAME Given Names" (the surname in capitals, accented capitals sometimes lower case: "HORVáTH Roland Péter").
+const isSurnameWord = w => { const rest = w.slice(1).replace(/[áéíóöőúüű]/g, ''); return rest.length > 0 && rest === rest.toUpperCase(); };
+export function parseName(full) {
+  const w = String(full || '').trim().split(/\s+/).filter(Boolean);
+  let k = 0;
+  while (k < w.length && isSurnameWord(w[k])) k++;
+  if (k === 0) k = 1; // no capitals: the first word is the surname
+  if (k === w.length && w.length > 1) k = 1; // all capitals: first word = surname, the rest given names
+  return { surname: w.slice(0, k).join(' '), given: w.slice(k) };
 }
+export const isForeign = p => !!p.nationality && p.nationality !== 'HUN' && p.nationality !== '-';
+/** The way the designs write names: Hungarian players "SURNAME Given Given", foreign players "Given SURNAME" (first given name only). */
+export function displayName(p) {
+  const n = parseName(p.name);
+  if (isForeign(p)) return [n.given[0], n.surname].filter(Boolean).join(' ');
+  return [n.surname, ...n.given.slice(0, 2)].join(' ');
+}
+export function shortName(name) { return parseName(name).surname + ' ' + parseName(name).given.slice(0, 2).join(' '); }
 
 /** Players of a team page in shirt-number order (the order of the page for equal numbers). */
 export function rosterPlayers(store, lg, teamId) {
@@ -433,25 +501,48 @@ export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
     const p = players[i];
     if (!p) { for (const e of tpl.elements) if (e.id.startsWith(`r${i}.`)) v[e.id] = e.type === 'image' ? { src: '' } : { text: '', source: 'Üres sor' }; continue; }
     v[`r${i}.num`] = field(p.number, src);
-    const foreign = p.nationality && p.nationality !== 'HUN' && p.nationality !== '-';
+    const foreign = isForeign(p);
     v[`r${i}.flag`] = { src: foreign ? flagKey(p.flag) : '', source: foreign ? `Zászló (${p.nationality})` : 'Magyar játékos: nincs zászló' };
     const h = p.height ? String(p.height).replace(/\s*cm/i, ' cm') : null;
     if (grid) {
-      const w = String(p.name).trim().split(/\s+/);
-      const split = w.findIndex(x => x !== x.toUpperCase() || /[a-záéíóöőúüű]/.test(x)); // surname = leading all-capital words
-      const k = split <= 0 ? 1 : split;
-      v[`r${i}.last`] = field(w.slice(0, k).join(' '), src);
-      v[`r${i}.first`] = { text: w.slice(k, k + 2).join(' '), source: src };
+      const n = parseName(p.name);
+      v[`r${i}.last`] = field(n.surname, src);
+      v[`r${i}.first`] = { text: (isForeign(p) ? n.given.slice(0, 1) : n.given.slice(0, 2)).join(' '), source: src };
       v[`r${i}.info`] = { text: [p.position, h].filter(Boolean).join(' · '), source: src };
       const id = idOf(p.url);
       const has = !!(id && photoIds && photoIds.has(id));
       v[`r${i}.photo`] = { src: has ? `photo/${id}` : 'photo/none', source: has ? 'Hunbasket fotó' : 'Nincs fotó (helyőrző)' };
     } else {
-      v[`r${i}.name`] = field(shortName(p.name), src);
+      v[`r${i}.name`] = field(displayName(p), src);
       v[`r${i}.pos`] = field(p.position, src);
       v[`r${i}.height`] = field(h, src);
       v[`r${i}.year`] = field(p.birth_year, src);
     }
   }
   return { values: v, players, missing: false };
+}
+
+
+// ───────────────────────── form (last five games) ─────────────────────────
+/** One row per team id: the last five played games (NB I/A and European), oldest left, the latest right. */
+export function bindForm(store, lg, teamIds) {
+  const v = {};
+  const src = 'Hunbasket menetrend / eredmények (idei meccsek)';
+  teamIds.forEach((teamId, r) => {
+    const k = `t${r}`;
+    v[`${k}.logo`] = teamId ? logo(lg, teamId) : { src: '' };
+    const games = teamId ? store.playedGames(lg, teamId).slice(-5) : [];
+    for (let i = 0; i < 5; i++) {
+      const m = games[i - (5 - games.length)]; // right-aligned: with fewer games the left columns stay empty
+      const e = ['badge', 'logo', 'name', 'score'].map(x => `${k}.g${i}.${x}`);
+      if (!m) { v[e[0]] = { src: '' }; v[e[1]] = { src: '' }; v[e[2]] = { text: '', source: 'Nincs ennyi lejátszott meccs' }; v[e[3]] = { text: '', source: 'Nincs ennyi lejátszott meccs' }; continue; }
+      const home = m.homeId === teamId, own = home ? m.score.home : m.score.away, opp = home ? m.score.away : m.score.home;
+      const oppId = home ? m.awayId : m.homeId, oppName = home ? m.away : m.home;
+      v[e[0]] = { src: own > opp ? 'form/win' : 'form/loss', source: own > opp ? 'Győzelem' : 'Vereség' };
+      v[e[1]] = oppId ? logo(lg, oppId) : { src: '', source: 'Nincs logó ehhez a csapathoz' };
+      v[e[2]] = { text: oppId ? '' : String(oppName || '').split(' ').slice(0, 2).join(' '), source: oppId ? 'Van logó' : `${oppName} (nincs logó)` };
+      v[e[3]] = { text: `${own}–${opp}`, source: `${src}${m.cup ? ' – kupa/európai' : ''}` };
+    }
+  });
+  return v;
 }

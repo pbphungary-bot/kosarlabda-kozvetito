@@ -13,6 +13,7 @@ export const SOURCES = {
   standings: { men: 'standings_men.json', women: 'standings_women.json', label: 'Tabella (Hunbasket)' },
   referees: { men: 'referees_men.json', women: 'referees_women.json', label: 'Játékvezetők, ellenőr, helyszín (Hunbasket)' },
   cups: { men: 'cups_men.json', women: 'cups_women.json', label: 'Európai / kupameccsek (FIBA)', optional: true },
+  playerPages: { men: 'player_pages_men.json', women: 'player_pages_women.json', label: 'Játékosoldalak (Hunbasket)', optional: true, lazy: true },
   teamPages: { men: 'team_pages_men.json', women: 'team_pages_women.json', label: 'Keretek (Hunbasket)', optional: true },
   teamStats: { men: 'team_stats_men.json', women: 'team_stats_women.json', label: 'Csapatstatisztika' },
   players: { men: 'player_stats_men.json', women: 'player_stats_women.json', label: 'Játékosstatisztika (Hunbasket)' },
@@ -57,7 +58,7 @@ export class Store {
   }
 
   #index(lg, r) {
-    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], checked: {}, teamPages: {}, statSource: null };
+    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], checked: {}, teamPages: {}, playerPages: {}, statSource: null };
     if (r.fixtures) {
       L.updated.fixtures = r.fixtures.updated_at || null;
       const today = this.now.toISOString().slice(0, 10);
@@ -78,6 +79,10 @@ export class Store {
     if (r.referees) {
       L.updated.referees = r.referees.updated_at || null;
       L.referees = r.referees.matches || {};
+    }
+    if (r.playerPages) {
+      L.updated.playerPages = r.playerPages.updated_at || null;
+      L.playerPages = r.playerPages.players || {};
     }
     if (r.teamPages) {
       L.updated.teamPages = r.teamPages.updated_at || null;
@@ -257,6 +262,20 @@ export class Store {
   excelTeams(lg) { const x = this.#excelOn(lg); return x?.team ? Object.keys(x.team).filter(id => Object.keys(x.team[id] || {}).length) : []; }
   excelHasTeam(lg, id) { return this.excelTeams(lg).includes(id); }
 
+  /** Loads the lazy sources (player pages) of a league into the store; fetchJson(file) as for loadDashboard. */
+  async loadLazy(lg, key, fetchJson) {
+    const def = SOURCES[key];
+    if (!def || this.lazyLoaded?.[lg + key]) return;
+    (this.lazyLoaded ||= {})[lg + key] = true;
+    try {
+      const j = await fetchJson(def[lg]);
+      if (key === 'playerPages') { this.leagues[lg].playerPages = j.players || {}; this.leagues[lg].updated.playerPages = j.updated_at || null; }
+    } catch (e) { this.errors.push({ league: lg, dataset: key, file: def[lg], error: String(e.message || e) }); }
+  }
+
+  /** Season / game log / career of a player from the Hunbasket player page (null when not collected). */
+  playerPage(lg, id) { return this.leagues[lg].playerPages[id] || null; }
+
   /** Roster, coaches, records … of a club from the Hunbasket team page (null when not collected). */
   teamPage(lg, id) { return this.leagues[lg].teamPages[id] || null; }
 
@@ -293,6 +312,7 @@ export async function loadDashboard(fetchJson, now = new Date()) {
   const raw = { men: {}, women: {}, errors: [] };
   const jobs = [];
   for (const [key, def] of Object.entries(SOURCES)) {
+    if (def.lazy) continue; // big files are loaded when a graphic needs them (loadLazy)
     for (const lg of Object.keys(LEAGUES)) {
       jobs.push(fetchJson(def[lg]).then(j => { raw[lg][key] = j; })
         .catch(e => def.optional || raw.errors.push({ league: lg, dataset: key, file: def[lg], error: String(e.message || e) })));
