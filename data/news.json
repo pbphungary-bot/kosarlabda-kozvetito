@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T10:24:56.986231+00:00",
+  "checked_at": "2026-11-22T11:06:08.707355+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -138,8 +138,8 @@
       "listing_pages_failed": 0,
       "candidates": 11,
       "attempted": 11,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
@@ -472,6 +472,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
