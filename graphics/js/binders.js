@@ -393,3 +393,65 @@ export function bindPlayerSpecial(store, lg, teamId, playerKey, tpl) {
   });
   return v;
 }
+
+
+// ───────────────────────── roster (Keret) ─────────────────────────
+const flagKey = f => { const m = String(f || '').match(/\/([a-z]{2})\.svg$/i); return m ? `flag/${m[1].toLowerCase()}` : ''; };
+const idOf = url => (String(url || '').match(/\/([A-Z]\d+)\//) || [])[1] || null;
+
+/** "FERGUSON JR Anthony Charles" → keep the surname part (capitals) and the first given name when the name is long. */
+export function shortName(name) {
+  const w = String(name || '').trim().split(/\s+/);
+  return w.length <= 3 ? w.join(' ') : w.slice(0, 3).join(' ');
+}
+
+/** Players of a team page in shirt-number order (the order of the page for equal numbers). */
+export function rosterPlayers(store, lg, teamId) {
+  const page = store.teamPage(lg, teamId);
+  if (!page) return [];
+  return page.roster.map((p, i) => ({ ...p, i })).sort((a, b) => (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0) || a.i - b.i);
+}
+
+export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
+  const page = store.teamPage(lg, teamId), c = club(lg, teamId);
+  const players = rosterPlayers(store, lg, teamId);
+  const src = 'Hunbasket csapatoldal (keret)';
+  const grid = tpl.type === 'rostergrid';
+  const v = { logo: logo(lg, teamId) };
+  if (!page) return { values: v, players, missing: true };
+  const head = page.coaches.find(x => /vezető/i.test(x.role)), assist = page.coaches.find(x => /másod|segéd/i.test(x.role));
+  v['coach.label'] = { text: 'Vezetőedző:', source: 'Fix felirat a PSD-ből' };
+  v['coach.name'] = head ? { text: head.name, source: src } : field(null, src);
+  v['assist.label'] = { text: 'Segédedző:', source: 'Fix felirat a PSD-ből' };
+  v['assist.name'] = assist ? { text: assist.name, source: src } : { text: '', source: 'Nincs adat (kézzel írható)' };
+  v['assist2.name'] = { text: '', source: 'Kézzel írható' };
+  if (!grid) {
+    for (const [id, t] of [['hdr.num', '#'], ['hdr.name', 'NÉV'], ['hdr.pos', 'POSZT'], ['hdr.height', 'MAGASSÁG'], ['hdr.year', 'SZÜL. ÉV']]) v[id] = { text: t, source: 'Fix felirat a PSD-ből' };
+  }
+  const n = tpl.rosterN || players.length;
+  for (let i = 0; i < n; i++) {
+    const p = players[i];
+    if (!p) { for (const e of tpl.elements) if (e.id.startsWith(`r${i}.`)) v[e.id] = e.type === 'image' ? { src: '' } : { text: '', source: 'Üres sor' }; continue; }
+    v[`r${i}.num`] = field(p.number, src);
+    const foreign = p.nationality && p.nationality !== 'HUN' && p.nationality !== '-';
+    v[`r${i}.flag`] = { src: foreign ? flagKey(p.flag) : '', source: foreign ? `Zászló (${p.nationality})` : 'Magyar játékos: nincs zászló' };
+    const h = p.height ? String(p.height).replace(/\s*cm/i, ' cm') : null;
+    if (grid) {
+      const w = String(p.name).trim().split(/\s+/);
+      const split = w.findIndex(x => x !== x.toUpperCase() || /[a-záéíóöőúüű]/.test(x)); // surname = leading all-capital words
+      const k = split <= 0 ? 1 : split;
+      v[`r${i}.last`] = field(w.slice(0, k).join(' '), src);
+      v[`r${i}.first`] = { text: w.slice(k, k + 2).join(' '), source: src };
+      v[`r${i}.info`] = { text: [p.position, h].filter(Boolean).join(' · '), source: src };
+      const id = idOf(p.url);
+      const has = !!(id && photoIds && photoIds.has(id));
+      v[`r${i}.photo`] = { src: has ? `photo/${id}` : 'photo/none', source: has ? 'Hunbasket fotó' : 'Nincs fotó (helyőrző)' };
+    } else {
+      v[`r${i}.name`] = field(shortName(p.name), src);
+      v[`r${i}.pos`] = field(p.position, src);
+      v[`r${i}.height`] = field(h, src);
+      v[`r${i}.year`] = field(p.birth_year, src);
+    }
+  }
+  return { values: v, players, missing: false };
+}

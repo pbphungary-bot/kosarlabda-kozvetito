@@ -1,0 +1,383 @@
+{
+ "source_psd": "FALCO keret 26-27.psd",
+ "width": 1920,
+ "height": 1080,
+ "layers": [
+  {
+   "name": "TOP",
+   "kind": "shape",
+   "visible": true,
+   "bbox": [
+    67,
+    48,
+    1672,
+    907
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Háttér nb1a - kosárpályával",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    -89,
+    -90,
+    1829,
+    990
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "Layer 3",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "opacity": 1.0,
+   "static": false,
+   "effects": [],
+   "typography": {
+    "text": "",
+    "runs": [
+     {
+      "text": "",
+      "font": "Poppins-Medium",
+      "size": 125.00046,
+      "color": "#26262c",
+      "tracking": -20.0,
+      "leading": 0.01,
+      "autoLeading": true,
+      "caps": 0
+     }
+    ],
+    "justification": "center",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     768.0,
+     106.5
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "  #       NÉV                 Poszt       Magasság    SZül. év ",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    661,
+    76,
+    1635,
+    872
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#000000"
+    }
+   ],
+   "typography": {
+    "text": "  # \t\t\t\t\t\tNÉV\t\t\t\t\t     \t    \t\tPoszt       Magasság\t   SZül. év\r 2\t\tTANOH DEZ András\t\t\t\t\t  2\t\t  191 cm\t  2002\r 4\t\tDarrion TRAMMELL\t\t\t\t\t  1\t\t  178 cm\t  2000\r 5\t\tHORVáTH Roland Péter\t\t\t1-2\t  186 cm\t  2007\r 6\t\tKELLER Ákos\t\t\t\t\t\t\t4-5\t  208 cm\t  1989\r 9\t\tPERL Zoltán ©\t\t\t\t\t\t  2\t  \t  195 cm\t  1995\r10\t\tVáRADI Benedek\t\t\t\t\t\t1-2\t  195 cm\t  1995\r11\t\tROSIC Uros\t\t\t\t\t\t\t\t  3\t\t  197 cm\t  2000\r12\t\tPatrick WHELAN\t\t\t\t\t\t2-3\t  195 cm\t  1996\r13\t\tBOGNáR Kristóf\t\t\t\t\t\t  4\t\t  205 cm\t  1994\r19\t\tHERGER Salamon\t\t\t\t\t \t  5\t\t  209cm\t  2001\r24\t\tJuwan GRAY\t\t\t\t\t\t\t\t  4\t\t  203 cm\t  1996\r25\tVERASZTó Péter\t\t\t\t\t\t1-2\t  188 cm\t  2001\r30\t\tJoshua PATTON\t\t\t\t\t\t  5\t\t  203 cm\t  1997\r\r\r",
+    "runs": [
+     {
+      "text": " ",
+      "font": "LeagueGothic-Regular",
+      "size": 33.33333,
+      "color": "#ffffff",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": " ",
+      "font": "LeagueGothic-Regular",
+      "size": 33.33333,
+      "color": "#ef4036",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "# \t\t\t\t\t\tNÉV\t\t\t\t\t     \t    \t\tPoszt       Magasság\t   SZül. év\r",
+      "font": "LeagueGothic-Regular",
+      "size": 34.60381,
+      "color": "#ef4036",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": " 2\t\tTANOH DEZ András\t\t\t\t\t  2\t\t  191 cm\t  2002\r 4\t\tDarrion TRAMMELL\t\t\t\t\t  1\t\t  178 cm\t  2000\r 5\t\tHORVáTH Roland Péter\t\t\t1-2\t  186 cm\t  2007\r 6\t\tKELLER Ákos\t\t\t\t\t\t\t4-5\t  208 cm\t  1989\r 9\t\tPERL Zoltán ©\t\t\t\t\t\t  2\t  \t  195 cm\t  1995\r10\t\tVáRADI Benedek\t\t\t\t\t\t1-2\t  195 cm\t  1995\r11\t\tROSIC Uros\t\t\t\t\t\t\t\t  3\t\t  197 cm\t  2000\r12\t\tPatrick WHELAN\t\t\t\t\t\t2-3\t  195 cm\t  1996\r13\t\tBOGNáR Kristóf\t\t\t\t\t\t  4\t\t  205 cm\t  1994\r19\t\tHERGER Salamon\t\t\t\t\t \t  5\t\t  209cm\t  2001\r24\t\tJuwan GRAY\t\t\t\t\t\t\t\t  4\t\t  203 cm\t  1996\r25\tVERASZTó Péter\t\t\t\t\t\t1-2\t  188 cm\t  2001\r30\t\tJoshua PATTON\t\t\t\t\t\t  5\t\t  203 cm\t  1997\r\r\r",
+      "font": "LeagueGothic-Regular",
+      "size": 48.44532,
+      "color": "#ffffff",
+      "tracking": 25.0,
+      "leading": 48.44532,
+      "autoLeading": false,
+      "caps": 2
+     },
+     {
+      "text": "",
+      "font": "LeagueGothic-Regular",
+      "size": 41.52456,
+      "color": "#ffffff",
+      "tracking": -20.0,
+      "leading": 79.99999,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.2041065983787238,
+     -5.4712159376382706e-17,
+     0.0,
+     1.204106598378724,
+     661.0590204179099,
+     112.88344642580108
+    ],
+    "scale": 1.2041065983787238
+   }
+  },
+  {
+   "name": "707827677_1744577086998875_3756147844167689831_n",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    143,
+    102,
+    593,
+    552
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Flag_of_the_United_States.svg",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1180,
+    832,
+    1256,
+    872
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Flag_of_the_United_States.svg",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1180,
+    189,
+    1256,
+    229
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Flag_of_the_United_States.svg",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1180,
+    715,
+    1256,
+    755
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Ireland_flag_300",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    1177,
+    539,
+    1257,
+    579
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": []
+  },
+  {
+   "name": "Vezetőedző:  Milos KONAKOV Segédedző:  Marko Curivoc      Svajd",
+   "kind": "type",
+   "visible": true,
+   "bbox": [
+    125,
+    630,
+    610,
+    837
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    }
+   ],
+   "typography": {
+    "text": "Vezetőedző: \tMilos KONAKOV\rSegédedző:\t\tMarko Curivoc\r\t\t\t\t\tSvajda Gábor",
+    "runs": [
+     {
+      "text": "Vezetőedző: \t",
+      "font": "LeagueGothic-Italic",
+      "size": 50.0,
+      "color": "#000000",
+      "tracking": -20.0,
+      "leading": 70.0,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "Milos KONAKOV\r",
+      "font": "LeagueGothic-Italic",
+      "size": 75.0,
+      "color": "#000000",
+      "tracking": -20.0,
+      "leading": 70.0,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "Segédedző:\t",
+      "font": "LeagueGothic-Italic",
+      "size": 50.0,
+      "color": "#000000",
+      "tracking": -20.0,
+      "leading": 70.0,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "\t",
+      "font": "LeagueGothic-Italic",
+      "size": 66.66666,
+      "color": "#000000",
+      "tracking": -20.0,
+      "leading": 70.0,
+      "autoLeading": true,
+      "caps": 2
+     },
+     {
+      "text": "Marko Curivoc\r\t\t\t\t\tSvajda Gábor",
+      "font": "LeagueGothic-Italic",
+      "size": 58.33333,
+      "color": "#000000",
+      "tracking": -20.0,
+      "leading": 70.0,
+      "autoLeading": true,
+      "caps": 2
+     }
+    ],
+    "justification": "left",
+    "transform": [
+     1.0,
+     0.0,
+     0.0,
+     1.0,
+     122.25,
+     686.2499999999999
+    ],
+    "scale": 1.0
+   }
+  },
+  {
+   "name": "pbp_logo",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    977,
+    1001,
+    1114,
+    1061
+   ],
+   "opacity": 0.9882,
+   "static": false,
+   "effects": [
+    {
+     "type": "DropShadow",
+     "size": 3.0,
+     "spread": 100.0,
+     "distance": 0.0,
+     "opacity": 100.0,
+     "angle": 90.0,
+     "useGlobalAngle": false,
+     "color": "#ffffff"
+    },
+    {
+     "type": "BevelEmboss",
+     "size": 8.0,
+     "angle": 90.0,
+     "useGlobalAngle": true
+    }
+   ]
+  },
+  {
+   "name": "74641_HUNBASKET_profil új(1)",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    646,
+    1001,
+    698,
+    1061
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  },
+  {
+   "name": "tippmix_CMYK_outline",
+   "kind": "smartobject",
+   "visible": true,
+   "bbox": [
+    748,
+    1011,
+    926,
+    1051
+   ],
+   "opacity": 0.9882,
+   "static": true,
+   "effects": []
+  }
+ ]
+}

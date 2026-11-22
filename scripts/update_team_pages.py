@@ -61,7 +61,13 @@ def parse_stats(html):
 def parse_team_page(html):
     """Roster, shooting zones and records of /csapat/…"""
     soup = BeautifulSoup(html, 'html.parser')
-    res = {'roster': [], 'zones': [], 'team_records': [], 'player_records': []}
+    res = {'roster': [], 'coaches': [], 'zones': [], 'team_records': [], 'player_records': []}
+    for span in soup.find_all('span'):  # "Vezetőedző: Name", "Másodedző: Name" (the value is in the text that follows)
+        label = clean(span.get_text())
+        if label in ('Vezetőedző:', 'Másodedző:', 'Segédedző:'):
+            name = clean(span.parent.get_text(' ')).replace(label, '', 1).strip()
+            if name and not any(c['name'] == name for c in res['coaches']):
+                res['coaches'].append({'role': label.rstrip(':'), 'name': name})
     for table in soup.find_all('table'):
         hdr = [clean(c.get_text(' ')) for c in (table.find('tr').find_all(['th', 'td']) if table.find('tr') else [])]
         if hdr[:2] == ['#', 'Játékos'] and 'Poszt' in hdr:
@@ -71,10 +77,12 @@ def parse_team_page(html):
                     continue
                 a = td[1].find('a')
                 nat = td[2].find('img')
+                flag = nat.get('src') if nat and nat.get('src') else None
                 name = clean(' '.join(s.get_text(' ') for s in td[1].select('span span'))) or clean(td[1].get_text(' '))
                 res['roster'].append({
                     'number': clean(td[0].get_text()), 'name': name, 'url': a['href'] if a and a.get('href') else None,
                     'nationality': (nat.get('alt') if nat else None) or clean(td[2].get_text()) or None,
+                    'flag': flag,
                     'birth_year': clean(td[3].get_text()) or None, 'position': clean(td[4].get_text()) or None,
                     'height': clean(td[5].get_text()) or None, 'weight': clean(td[6].get_text()) or None})
         elif hdr and hdr[0] == 'Zónák':

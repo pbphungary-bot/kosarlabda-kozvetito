@@ -1,0 +1,41 @@
+name: Player photos
+# Manual only (and once when this file changes): downloads the Hunbasket player photos into graphics/players/.
+on:
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: 'Download every photo again'
+        type: boolean
+        default: false
+  push:
+    branches: ['claude/**']
+    paths: ['.github/workflows/player-photos.yml', 'scripts/fetch_player_photos.py']
+permissions:
+  contents: write
+concurrency:
+  group: basketball-player-photos
+  cancel-in-progress: false
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pillow numpy
+      - name: Download and shrink the photos
+        run: python scripts/fetch_player_photos.py ${{ inputs.refresh && '--refresh' || '' }}
+      - name: Commit new photos
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add graphics/players
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Add / refresh Hunbasket player photos'
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            git pull --rebase
+          done
+          exit 1

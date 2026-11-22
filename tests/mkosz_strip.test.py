@@ -25,7 +25,7 @@ class MkoszStrip(unittest.TestCase):
     def test_every_design_that_had_pbp_shows_mkosz(self):
         swapped = [d.name for d in TPL.iterdir() if d.is_dir() and 'pbp_logo' in layers(d.name)] if False else [
             d.name for d in sorted(TPL.iterdir()) if (d / 'layers.json').exists() and 'pbp_logo' in layers(d.name)]
-        self.assertEqual(len(swapped), 7, swapped)
+        self.assertEqual(len(swapped), 9, swapped)
         for tid in swapped:
             with self.subTest(template=tid):
                 pbp = layers(tid)['pbp_logo']['bbox']

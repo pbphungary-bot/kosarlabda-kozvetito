@@ -3,11 +3,11 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, psBuild, psNormalize, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -45,6 +45,18 @@ let outlines = {};
 const saveState = () => lsSet(LS.state, { league: state.league, template: state.template, sel: state.sel, overrides: state.overrides, zoom: state.zoom, baseOpacity: state.baseOpacity });
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
+let photoIds = new Set(); // ids of the downloaded player photos (players/index.json); a missing photo shows the placeholder
+const imageUrl = key => key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
+/** Loads the flags / photos a set of values refers to (the renderer draws only what is already loaded). */
+async function ensureImages(values) {
+  const jobs = [];
+  for (const v of Object.values(values)) {
+    const k = v?.src;
+    if (typeof k === 'string' && !images[k]) { const u = imageUrl(k); if (u) jobs.push(loadImage(k, u)); }
+  }
+  await Promise.all(jobs);
+}
+
 function loadImage(key, url) {
   if (images[key]) return Promise.resolve(images[key]);
   return new Promise(resolve => {
@@ -66,6 +78,12 @@ async function loadLeagueImages(lg) {
 const psCache = new Map();
 const tpl = () => {
   const t = templateById(state.template[state.league]);
+  if (t.type === 'roster' || t.type === 'rostergrid') { // rows / cards for the real number of players of the chosen team
+    const n = rosterPlayers(store, t.league, state.sel[t.league]?.teamId).length || t.rosterN;
+    const key = `${t.id}|${n}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n)); }
+    return psCache.get(key);
+  }
   if (t.type !== 'playerspecial') return t;
   // the player-special graphic is built from the operator's settings (columns, rows, photo, layering)
   const cfg = psNormalize(t.league, state.sel[t.league]?.psCfg);
@@ -362,6 +380,14 @@ function autoValues() {
     else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
+  } else if (t.type === 'roster' || t.type === 'rostergrid') {
+    const r = bindRoster(store, lg, s.teamId, t, photoIds);
+    v = r.values;
+    if (r.missing) info.notices.push({ bad: true, text: 'Ehhez a csapathoz nincs Hunbasket keret-adat (data/team_pages_*.json). Töltsd ki kézzel.' });
+    else {
+      info.notices.push({ text: 'A keret a Hunbasket csapatoldaláról jön (mezszám szerint rendezve). A kapitány-jelölés (©) az adatokban nincs: kézzel írd a név mögé, ha kell. A nevek hosszú, több keresztnevesek lerövidülnek (3 szó).' });
+      if (t.type === 'rostergrid') info.notices.push({ text: 'A fotók a Hunbasketről valók (az MKOSZ engedélyével, letöltve a repóba). Ahol nincs fotó, helyőrző jelenik meg.' });
+    }
   } else if (t.type === 'playerspecial') {
     v = bindPlayerSpecial(store, lg, s.teamId, s.ps?.player, t);
     v.photo = { src: images['upload/photo'] ? 'upload/photo' : '', source: images['upload/photo'] ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };
@@ -589,6 +615,7 @@ async function update(full) {
   }
   $('notices').innerHTML = info.notices.map(n => `<div class="notice ${n.bad ? 'bad' : ''}">${esc(n.text)}</div>`).join('');
   const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+  await ensureImages(values);
   if (seq !== updateSeq) return;
   const canvas = $('canvas');
   lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
@@ -675,6 +702,7 @@ async function renderForPackage(item, m) {
     const { v: auto, info } = autoValues();
     const values = mergedValues(auto);
     const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+    await ensureImages(values);
     const canvas = document.createElement('canvas');
     const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
     const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
@@ -1128,6 +1156,7 @@ async function main() {
   $('pkgItems').innerHTML = packageItemsHtml();
   $('pkgBtn').onclick = exportPackage;
   initMobile();
+  try { const r = await fetch('players/index.json', { cache: 'no-store' }); if (r.ok) photoIds = new Set((await r.json()).ids); } catch { /* no photos downloaded */ }
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
   $('fields').addEventListener('click', e => {
     const id = e.target.id;
