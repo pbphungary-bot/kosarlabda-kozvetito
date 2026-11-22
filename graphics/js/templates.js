@@ -418,7 +418,7 @@ export function rosterBuild(base, n, mask = '', ns = 1) {
       const grp = `${i + 1}. játékos`, nm = Math.min(1, cw / 190);
       els.push(
         { id: `r${i}.photo`, type: 'image', label: `${i + 1}. fotó`, group: grp, box: [cx, top + ph / 2, pw, ph], fit: 'contain', anchor: 'bottom', clipInner: true },
-        { id: `r${i}.flag`, type: 'image', label: `${i + 1}. zászló`, group: grp, box: [cx + pw / 2 - 20, top + 12, 44, 30], fit: 'contain', opacity: op },
+        { id: `r${i}.flag`, type: 'image', label: `${i + 1}. zászló`, group: grp, box: [cx + pw / 2 - 20, top + (44 - 0.371 * 46 * ns) * nm, 44, 30] /* centre on the digits' centre line (digit height 0.743 em) */, fit: 'contain', opacity: op },
         { id: `r${i}.num`, type: 'text', label: `${i + 1}. mezszám`, group: grp, x: cx - pw / 2 + 6, y: top + 44 * nm, size: 46 * nm * ns, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: 60 * ns },
         // Hungarian players: SURNAME (big) above the given names; foreign players: the given name above the SURNAME (big), as in the table design
         { id: `r${i}.last`, type: 'text', label: `${i + 1}. vezetéknév`, group: grp, x: cx, y: top + ph + (mask[i] === '1' ? 64 : 36) * nm, align: 'center', size: 36 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
