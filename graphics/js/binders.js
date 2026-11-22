@@ -399,11 +399,24 @@ export function bindPlayerSpecial(store, lg, teamId, playerKey, tpl) {
 const flagKey = f => { const m = String(f || '').match(/\/([a-z]{2})\.svg$/i); return m ? `flag/${m[1].toLowerCase()}` : ''; };
 const idOf = url => (String(url || '').match(/\/([A-Z]\d+)\//) || [])[1] || null;
 
-/** "FERGUSON JR Anthony Charles" → keep the surname part (capitals) and the first given name when the name is long. */
-export function shortName(name) {
-  const w = String(name || '').trim().split(/\s+/);
-  return w.length <= 3 ? w.join(' ') : w.slice(0, 3).join(' ');
+// Hunbasket writes "SURNAME Given Names" (the surname in capitals, accented capitals sometimes lower case: "HORVáTH Roland Péter").
+const isSurnameWord = w => { const rest = w.slice(1).replace(/[áéíóöőúüű]/g, ''); return rest.length > 0 && rest === rest.toUpperCase(); };
+export function parseName(full) {
+  const w = String(full || '').trim().split(/\s+/).filter(Boolean);
+  let k = 0;
+  while (k < w.length && isSurnameWord(w[k])) k++;
+  if (k === 0) k = 1; // no capitals: the first word is the surname
+  if (k === w.length && w.length > 1) k = 1; // all capitals: first word = surname, the rest given names
+  return { surname: w.slice(0, k).join(' '), given: w.slice(k) };
 }
+export const isForeign = p => !!p.nationality && p.nationality !== 'HUN' && p.nationality !== '-';
+/** The way the designs write names: Hungarian players "SURNAME Given Given", foreign players "Given SURNAME" (first given name only). */
+export function displayName(p) {
+  const n = parseName(p.name);
+  if (isForeign(p)) return [n.given[0], n.surname].filter(Boolean).join(' ');
+  return [n.surname, ...n.given.slice(0, 2)].join(' ');
+}
+export function shortName(name) { return parseName(name).surname + ' ' + parseName(name).given.slice(0, 2).join(' '); }
 
 /** Players of a team page in shirt-number order (the order of the page for equal numbers). */
 export function rosterPlayers(store, lg, teamId) {
@@ -433,21 +446,19 @@ export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
     const p = players[i];
     if (!p) { for (const e of tpl.elements) if (e.id.startsWith(`r${i}.`)) v[e.id] = e.type === 'image' ? { src: '' } : { text: '', source: 'Üres sor' }; continue; }
     v[`r${i}.num`] = field(p.number, src);
-    const foreign = p.nationality && p.nationality !== 'HUN' && p.nationality !== '-';
+    const foreign = isForeign(p);
     v[`r${i}.flag`] = { src: foreign ? flagKey(p.flag) : '', source: foreign ? `Zászló (${p.nationality})` : 'Magyar játékos: nincs zászló' };
     const h = p.height ? String(p.height).replace(/\s*cm/i, ' cm') : null;
     if (grid) {
-      const w = String(p.name).trim().split(/\s+/);
-      const split = w.findIndex(x => x !== x.toUpperCase() || /[a-záéíóöőúüű]/.test(x)); // surname = leading all-capital words
-      const k = split <= 0 ? 1 : split;
-      v[`r${i}.last`] = field(w.slice(0, k).join(' '), src);
-      v[`r${i}.first`] = { text: w.slice(k, k + 2).join(' '), source: src };
+      const n = parseName(p.name);
+      v[`r${i}.last`] = field(n.surname, src);
+      v[`r${i}.first`] = { text: (isForeign(p) ? n.given.slice(0, 1) : n.given.slice(0, 2)).join(' '), source: src };
       v[`r${i}.info`] = { text: [p.position, h].filter(Boolean).join(' · '), source: src };
       const id = idOf(p.url);
       const has = !!(id && photoIds && photoIds.has(id));
       v[`r${i}.photo`] = { src: has ? `photo/${id}` : 'photo/none', source: has ? 'Hunbasket fotó' : 'Nincs fotó (helyőrző)' };
     } else {
-      v[`r${i}.name`] = field(shortName(p.name), src);
+      v[`r${i}.name`] = field(displayName(p), src);
       v[`r${i}.pos`] = field(p.position, src);
       v[`r${i}.height`] = field(h, src);
       v[`r${i}.year`] = field(p.birth_year, src);

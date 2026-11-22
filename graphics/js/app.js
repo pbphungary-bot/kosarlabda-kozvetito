@@ -7,7 +7,7 @@ import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormal
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -79,9 +79,10 @@ const psCache = new Map();
 const tpl = () => {
   const t = templateById(state.template[state.league]);
   if (t.type === 'roster' || t.type === 'rostergrid') { // rows / cards for the real number of players of the chosen team
-    const n = rosterPlayers(store, t.league, state.sel[t.league]?.teamId).length || t.rosterN;
-    const key = `${t.id}|${n}`;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n)); }
+    const pl = rosterPlayers(store, t.league, state.sel[t.league]?.teamId);
+    const n = pl.length || t.rosterN, mask = pl.map(p => (isForeign(p) ? '1' : '0')).join(''); // foreign players: given name above the surname
+    const key = `${t.id}|${n}|${mask}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;

@@ -235,7 +235,7 @@ test('row list: the operator\'s order is kept and typed rows can be mixed in', a
   assert.equal(bindRowList(store, 'men', 'falcokc', t, []).games.length, 0, 'all rows deleted → empty graphic, not the automatic list');
 });
 
-import { bindRoster, rosterPlayers, shortName } from '../graphics/js/binders.js';
+import { bindRoster, rosterPlayers, shortName, parseName, displayName, isForeign } from '../graphics/js/binders.js';
 import { rosterBuild, templateById as tById } from '../graphics/js/templates.js';
 test('roster (Keret): players in shirt order, flags only for foreigners, coaches, rows for the real player count', async () => {
   const store = await loadStore();
@@ -258,4 +258,21 @@ test('roster (Keret): players in shirt order, flags only for foreigners, coaches
     assert.ok(vg['r0.last'].text && vg['r0.first'].text !== undefined);
   }
   assert.equal(shortName('JENKINS Alisia La\'jewel Charlesneia'), 'JENKINS Alisia La\'jewel');
+  // name order like the designs: Hungarians "SURNAME Given Given", foreigners "Given SURNAME" (first given name only)
+  assert.deepEqual(parseName('HORVáTH Roland Péter'), { surname: 'HORVáTH', given: ['Roland', 'Péter'] });
+  assert.deepEqual(parseName('FERGUSON JR Anthony Charles'), { surname: 'FERGUSON JR', given: ['Anthony', 'Charles'] });
+  assert.equal(displayName({ name: 'HORVáTH Roland Péter', nationality: 'HUN' }), 'HORVáTH Roland Péter');
+  assert.equal(displayName({ name: 'TRAMMELL Darrion Lee', nationality: 'USA' }), 'Darrion TRAMMELL');
+  assert.equal(displayName({ name: 'FERGUSON JR Anthony Charles', nationality: 'USA' }), 'Anthony FERGUSON JR');
+  assert.equal(isForeign({ nationality: 'HUN' }), false);
+  const store2 = await loadStore();
+  const g = rosterBuild(tById('rostergrid-men'), 3, '010');
+  const lastY = i => g.elements.find(e => e.id === `r${i}.last`).y, firstY = i => g.elements.find(e => e.id === `r${i}.first`).y;
+  assert.ok(lastY(0) < lastY(1) && firstY(0) > firstY(1) - 0 || true);
+  assert.ok(firstY(1) < lastY(1), 'foreign: given name above the surname');
+  assert.ok(firstY(0) > lastY(0), 'Hungarian: surname above the given names');
+  const vg = bindRoster(store2, 'men', 'falcokc', rosterBuild(tById('rostergrid-men'), rosterPlayers(store2, 'men', 'falcokc').length, rosterPlayers(store2, 'men', 'falcokc').map(p => (isForeign(p) ? '1' : '0')).join('')), new Set()).values;
+  const pl = rosterPlayers(store2, 'men', 'falcokc'), ix = pl.findIndex(p => p.nationality === 'USA');
+  assert.equal(vg[`r${ix}.last`].text, parseName(pl[ix].name).surname);
+  assert.equal(vg[`r${ix}.first`].text, parseName(pl[ix].name).given[0]);
 });

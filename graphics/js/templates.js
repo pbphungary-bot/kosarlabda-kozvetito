@@ -385,7 +385,7 @@ export function rosterDims(n) {
 }
 
 /** base = registry entry (background); n = number of players. */
-export function rosterBuild(base, n) {
+export function rosterBuild(base, n, mask = '') {
   const g = ROSTER_GEOM[base.league], op = 0.9882;
   n = Math.max(1, Math.min(24, n || g.defaultN));
   const els = rosterCommon(g, op);
@@ -416,14 +416,15 @@ export function rosterBuild(base, n) {
         { id: `r${i}.photo`, type: 'image', label: `${i + 1}. fotó`, group: grp, box: [cx, top + ph / 2, pw, ph], fit: 'contain', anchor: 'bottom', clipInner: true },
         { id: `r${i}.flag`, type: 'image', label: `${i + 1}. zászló`, group: grp, box: [cx + pw / 2 - 20, top + 12, 44, 30], fit: 'contain', opacity: op },
         { id: `r${i}.num`, type: 'text', label: `${i + 1}. mezszám`, group: grp, x: cx - pw / 2 + 6, y: top + 44 * nm, size: 46 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: 60 },
-        { id: `r${i}.last`, type: 'text', label: `${i + 1}. vezetéknév`, group: grp, x: cx, y: top + ph + 36 * nm, align: 'center', size: 36 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
-        { id: `r${i}.first`, type: 'text', label: `${i + 1}. keresztnév`, group: grp, x: cx, y: top + ph + 36 * nm + 28 * nm, align: 'center', size: 27 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
+        // Hungarian players: SURNAME (big) above the given names; foreign players: the given name above the SURNAME (big), as in the table design
+        { id: `r${i}.last`, type: 'text', label: `${i + 1}. vezetéknév`, group: grp, x: cx, y: top + ph + (mask[i] === '1' ? 64 : 36) * nm, align: 'center', size: 36 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
+        { id: `r${i}.first`, type: 'text', label: `${i + 1}. keresztnév`, group: grp, x: cx, y: top + ph + (mask[i] === '1' ? 28 : 64) * nm, align: 'center', size: 27 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
         { id: `r${i}.info`, type: 'text', label: `${i + 1}. poszt · magasság`, group: grp, x: cx, y: top + ph + 36 * nm + 28 * nm + 26 * nm, align: 'center', size: 24 * nm, tracking: 25, color: '#ef4036', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true },
       );
     }
   }
   for (const e of els) if (e.type === 'text') { e.adjust = true; e.hscale = HSCALE[base.id]?.[e.id.startsWith('hdr') ? 'hdr' : /\.name$|\.last$|\.first$/.test(e.id) ? 'name' : 'val'] || 0.97; }
-  const t = { ...base, elements: els.map(e => ({ ...e })), rosterN: n };
+  const t = { ...base, elements: els.map(e => ({ ...e })), rosterN: n, rosterMask: mask };
   t.panel = { box: g.panel, alpha: op };
   t.inner = g.inner;
   return t;
