@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-22T18:13:10.615247+00:00",
+  "checked_at": "2026-11-22T19:05:36.699094+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -81,15 +81,22 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 5,
-      "attempted": 5,
+      "candidates": 4,
+      "attempted": 4,
       "already_saved": 0,
-      "added": 5,
+      "added": 4,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 5,
-      "source_coverage": true
+      "usable_articles": 4,
+      "source_coverage": true,
+      "fallback": [
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: DEAC",
@@ -490,8 +497,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 24,
-      "already_saved": 23,
-      "added": 1,
+      "already_saved": 24,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -561,6 +568,39 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár NB I: odahaza vesztett hosszabbításos rangadót a DVTK",
+      "summary": "Női kosár NB I: odahaza vesztett hosszabbításos rangadót a DVTK",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-nb-i-odahaza-vesztett-hosszabbitasos-rangadot-a-dvtk/",
+      "published_at": "2026-11-22T19:24:39+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "DVTK HUNTHERM – Csata TKK 77-86 (h.u.)",
+      "summary": "Aho Nina szerezte a találkozó első kosarát, amelyre Marisa közeli dobása volt a válasz (2–2).",
+      "url": "http://dvtk.eu/37692-DVTK_HUNTHERM_Csata_TKK_77_86_h_u-cikk-kosarlabda/",
+      "published_at": "2026-11-22T19:14:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "A 9. forduló csapata",
+      "summary": "Lezárult a kilencedik forduló a férfi élvonalban , így posztok és VAL-értékek alapján ismét összeállítottuk a kör legjobb ötösét, illetve magyar és U23-as ötösét.",
+      "url": "https://bball1.hu/a-9-fordulo-csapata-4/",
+      "published_at": "2026-11-22T19:03:14+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "WBasket.hu",
       "title": "Értékelések a szombati bajnoki mérkőzések után",
