@@ -95,6 +95,8 @@ A lábléc harmadik logója minden grafikán az **MKOSZ** logó (a Play By Play 
 
 ### Játékos-különleges („Uros STAT” / „Kányási” design)
 
+Minden oszlophoz külön forrás választható: **Kézi**, **Idei átlag**, **Karrier** vagy **Utolsó N meccs** (a Hunbasket játékososzlopairól, `data/player_pages_*.json`, naponta frissül). A nagy fájl csak e sablon megnyitásakor töltődik be.
+
 Sablon: *Játékos-különleges* (férfi: a Rosic-féle 3 oszlopos, női: a Kányási-féle 2 oszlopos elrendezés). Válassz csapatot és játékost; a **név**, az **idei átlagok**
 (az utolsó oszlop) és a háttérben a **klublogó** az adatokból jön. Az alcímet (1–2 sor), a többi oszlop fejlécét és értékeit (pl. karrier, utolsó meccsek) te írod be,
 mert az adatbázisban csak az idei átlag van meg; az üres mezők nem jelennek meg. A **fotót** (áttetsző PNG kivágás) a „Fotó” mezővel töltöd fel; csak a böngészőben marad,

@@ -557,8 +557,18 @@ function fileName(values) {
 
 let lastCandidates = []; // candidate games of the current row-list graphic (for inserting rows by date)
 let updateSeq = 0; // only the newest redraw may draw: a slower, older one must not overwrite it with stale values
+const fetchData = async f => {
+  const r = await fetch(`../data/${f}?v=${Date.now()}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+};
 async function update(full) {
   const seq = ++updateSeq;
+  if (tpl().type === 'playerspecial') { // the big player-page files are only needed here
+    const had = store.lazyLoaded?.[state.league + 'playerPages'];
+    await store.loadLazy(state.league, 'playerPages', fetchData);
+    if (!had && seq !== updateSeq) return;
+  }
   const t = tpl();
   renderBaseOpacity();
   document.body.classList.toggle('women', state.league === 'women');

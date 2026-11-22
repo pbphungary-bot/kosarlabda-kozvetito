@@ -118,7 +118,8 @@ def main():
                 data = parse_player_page(get(url))
                 if not data['season'].get('average') or not data['gamelog'] and not data['career']:
                     raise ValueError('no tables')
-                players[pid] = {'name': name, 'team': team, 'url': url, 'columns': SEASON_COLS, 'game_columns': GAME_COLS, 'advanced_columns': ADV_COLS, **data}
+                data['career'] = {k: v for k, v in data['career'].items() if k == 'regular'}  # the other career tab repeats it
+                players[pid] = {'name': name, 'team': team, 'url': url, **data}
             except Exception as e:
                 errors.append(f'{name}: {e}')
                 if pid in old.get('players', {}):
@@ -132,7 +133,7 @@ def main():
         if old.get('players') == players:
             print(f'{league}: unchanged')
             continue
-        out = {'updated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'source': 'https://hunbasket.hu', 'league': league, 'players': players}
+        out = {'updated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'source': 'https://hunbasket.hu', 'league': league, 'columns': SEASON_COLS, 'game_columns': GAME_COLS, 'advanced_columns': ADV_COLS, 'players': players}
         path.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
         print(f'{league}: {len(players)} players written')
     return 0
