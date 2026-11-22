@@ -386,20 +386,20 @@
       "round": "8.",
       "home": "DVTK HUNTHERM",
       "away": "Csata TKK",
-      "result": "Előzetes",
+      "result": "24–30",
       "date": "2026. 11. 22.",
       "time": "17:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135557"
     },
     {
       "round": "8.",
       "home": "ETO Basket",
       "away": "VBW CEKK Cegléd",
-      "result": "Előzetes",
+      "result": "29–5",
       "date": "2026. 11. 22.",
       "time": "17:00",
-      "status": "scheduled",
+      "status": "finished",
       "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135563"
     },
     {
@@ -1103,5 +1103,5 @@
       "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135725"
     }
   ],
-  "updated_at": "2026-11-21T19:14:39.057487+00:00"
+  "updated_at": "2026-11-22T16:24:35.360651+00:00"
 }
