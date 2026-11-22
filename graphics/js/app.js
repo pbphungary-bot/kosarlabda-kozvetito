@@ -214,6 +214,72 @@ function rowOffHtml(s, rows) {
   return Array.from({ length: rows }, (_, r) => `<span class="rowoff"><b>${names[r] || (r + 1) + '. sor'}</b> <label>↔ <input type="number" class="rowOff" data-r="${r}" data-a="0" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[0] || 0}"></label><label>↕ <input type="number" class="rowOff" data-r="${r}" data-a="1" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[1] || 0}"></label></span>`).join('') + '<button type="button" id="rowOffReset" class="ghost">Sorok alaphelyzet</button>';
 }
 
+// ───────────────────────── Extra (MKOSZ): photo frame + QR frame ─────────────────────────
+const EXTRA_FILLS = [['', 'Alap (barna)'], ['#ffffff', 'Fehér'], ['#000000', 'Fekete'], ['transparent', 'Átlátszó']];
+function extraPanelHtml(s) {
+  const one = (k, id, title, hint, dflt) => {
+    const c = s.extra?.[k] || {}, has = !!images['upload/extra' + k], fit = c.fit || dflt.fit;
+    const b = lastReport?.boxes?.[id], w = b ? Math.round(b[2]) : '', h = b ? Math.round(b[3]) : '';
+    return `<fieldset class="xbox" data-k="${k}"><legend>${title}</legend>
+      <label>${hint}<span class="import-row"><input type="file" class="xFile" accept="image/png,image/webp,image/jpeg"> <button type="button" class="xClear ghost" ${has ? '' : 'disabled'}>Kép törlése</button></span></label>
+      <div class="row2"><label>Illesztés<select class="xFit"><option value="cover" ${fit === 'cover' ? 'selected' : ''}>Kitölti a keretet (levágva)</option><option value="contain" ${fit === 'contain' ? 'selected' : ''}>Egészben belefér</option></select></label>
+        <label>Keret háttere<select class="xFill">${EXTRA_FILLS.map(([v, n]) => `<option value="${v}" ${(c.fill ?? '') === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label></div>
+      <div class="row2"><label>Kép nagyítása (%)<input type="number" class="xZoom" min="10" max="500" step="5" value="${c.zoom || 100}"></label>
+        <label>Belső margó (px)<input type="number" class="xPad" min="0" max="200" step="2" value="${c.pad ?? dflt.pad}"></label></div>
+      <div class="row2"><label>Kép balra / jobbra (px)<input type="number" class="xPx" step="2" value="${c.px || 0}"></label>
+        <label>Kép fel / le (px)<input type="number" class="xPy" step="2" value="${c.py || 0}"></label></div>
+      <div class="row2"><label>Keret szélessége (px)<input type="number" class="xW" min="40" max="1920" step="2" value="${w}"></label>
+        <label>Keret magassága (px)<input type="number" class="xH" min="40" max="1080" step="2" value="${h}"></label></div></fieldset>`;
+  };
+  return `${one('A', 'frameA', 'Fotókeret', 'Fotó feltöltése (a kereten belül marad)', { fit: 'cover', pad: 0 })}
+    ${one('B', 'frameB', 'QR-keret', 'QR-kód feltöltése', { fit: 'contain', pad: 14 })}
+    <label class="inline"><input type="checkbox" id="xLock" ${state.lockAspect !== false ? 'checked' : ''}> Arány rögzítve (méretezéskor a keret ugyanúgy nő / fogy; kikapcsolva szabadon húzható)</label>
+    <small class="hint">Mozgatás és húzással átméretezés: kapcsold be a szerkesztést (Elrendezés fül), kattints a keretre – a sarkain a fogantyúkkal méretezhetsz.</small>`;
+}
+function wireExtraPanel(s) {
+  const box = $('selection');
+  s.extra ||= { A: {}, B: {} };
+  $('xLock').onchange = e => { state.lockAspect = e.target.checked; renderOverlay(); };
+  box.querySelectorAll('.xbox').forEach(fs => {
+    const k = fs.dataset.k, id = k === 'A' ? 'frameA' : 'frameB', c = (s.extra[k] ||= {});
+    const set = (key, val) => { c[key] = val; update(false); };
+    fs.querySelector('.xFile').onchange = e => {
+      const f = e.target.files[0]; if (!f) return;
+      const img = new Image();
+      img.onload = () => { images['upload/extra' + k] = img; c.name = f.name; renderSelection(); update(true); };
+      img.src = URL.createObjectURL(f);
+    };
+    fs.querySelector('.xClear').onclick = () => { delete images['upload/extra' + k]; renderSelection(); update(true); };
+    fs.querySelector('.xFit').onchange = e => set('fit', e.target.value);
+    fs.querySelector('.xFill').onchange = e => set('fill', e.target.value);
+    fs.querySelector('.xZoom').onchange = e => set('zoom', Math.max(10, Math.min(500, +e.target.value || 100)));
+    fs.querySelector('.xPad').onchange = e => set('pad', Math.max(0, +e.target.value || 0));
+    fs.querySelector('.xPx').onchange = e => set('px', +e.target.value || 0);
+    fs.querySelector('.xPy').onchange = e => set('py', +e.target.value || 0);
+    const size = which => {
+      const o = ovFor(id), b = lastReport.boxes[id], kk = effOf(id).scale > 0 ? effOf(id).scale : 1;
+      let w = Math.max(40, +fs.querySelector('.xW').value || b[2]), h = Math.max(40, +fs.querySelector('.xH').value || b[3]);
+      if (state.lockAspect !== false) { if (which === 'w') h = w * b[3] / b[2]; else w = h * b[2] / b[3]; }
+      const cx = b[0] + b[2] / 2, cy = b[1] + b[3] / 2, base = elById(id).box; // keep the centre where it is
+      o.w = Math.round(w / kk); o.h = Math.round(h / kk); o.dx = Math.round(cx - base[0]); o.dy = Math.round(cy - base[1]);
+      saveState(); update(true);
+    };
+    fs.querySelector('.xW').onchange = () => size('w');
+    fs.querySelector('.xH').onchange = () => size('h');
+  });
+}
+
+function refreshExtraSizes() {
+  if (tpl().type !== 'extra' || !lastReport) return;
+  document.querySelectorAll('.xbox').forEach(fs => {
+    const b = lastReport.boxes[fs.dataset.k === 'A' ? 'frameA' : 'frameB'];
+    if (!b) return;
+    const w = fs.querySelector('.xW'), h = fs.querySelector('.xH');
+    if (document.activeElement !== w) w.value = Math.round(b[2]);
+    if (document.activeElement !== h) h.value = Math.round(b[3]);
+  });
+}
+
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
@@ -241,6 +307,10 @@ function renderSelection(extra = {}) {
       $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
       $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
     }
+  } else if (t.type === 'extra') {
+    $('selectTitle').textContent = '2. Képek és keretek';
+    box.innerHTML = extraPanelHtml(s);
+    wireExtraPanel(s);
   } else if (t.type === 'playerspecial') {
     $('selectTitle').textContent = '2. Csapat és játékos';
     const opts = playerOptions(store, lg, s.teamId);
@@ -412,6 +482,12 @@ function autoValues() {
       info.notices.push({ text: 'A keret a Hunbasket csapatoldaláról jön (mezszám szerint rendezve). A kapitány-jelölés (©) az adatokban nincs: kézzel írd a név mögé, ha kell. A nevek hosszú, több keresztnevesek lerövidülnek (3 szó).' });
       if (t.type === 'rostergrid') info.notices.push({ text: 'A fotók a Hunbasketről valók (az MKOSZ engedélyével, letöltve a repóba). Ahol nincs fotó, helyőrző jelenik meg.' });
     }
+  } else if (t.type === 'extra') {
+    v = {};
+    for (const [id, k] of [['frameA', 'A'], ['frameB', 'B']]) {
+      const c = s.extra?.[k] || {}, has = !!images['upload/extra' + k];
+      v[id] = { src: has ? 'upload/extra' + k : '', source: has ? (c.name || 'Feltöltött kép') : 'Nincs kép feltöltve (üres keret)', fit: c.fit, zoom: (c.zoom || 100) / 100, px: c.px || 0, py: c.py || 0, pad: c.pad, fill: c.fill };
+    }
   } else if (t.type === 'playerspecial') {
     v = bindPlayerSpecial(store, lg, s.teamId, s.ps?.player, t);
     v.photo = { src: images['upload/photo'] ? 'upload/photo' : '', source: images['upload/photo'] ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };
@@ -463,6 +539,8 @@ function mergedValues(auto) {
     if (lay.dx) x.dx = lay.dx;
     if (lay.dy) x.dy = lay.dy;
     if (lay.scale > 0 && lay.scale !== 1) x.scale = lay.scale;
+    if (lay.w > 0) x.w = lay.w;
+    if (lay.h > 0) x.h = lay.h;
     if (el.runs && !x.runs && x.text !== undefined) x.runs = [{ text: x.text }];
     out[el.id] = x;
   }
@@ -493,7 +571,7 @@ function renderFields(values, auto) {
     html += `<div class="field ${missing ? 'missing' : ''} ${isOv ? 'overridden' : ''}" data-id="${esc(el.id)}">
       <input type="checkbox" class="vis" title="Látható" ${visible ? 'checked' : ''}>
       <div class="lbl"><span>${esc(el.label || el.id)}</span><em title="${esc(a.source || '')}">${esc(a.source || '')}</em></div>`;
-    if (el.type === 'image' && el.fixedSrc) {
+    if ((el.type === 'image' && el.fixedSrc) || el.type === 'framed') {
       html += '';
     } else if (el.type === 'image') {
       const opts = [['', 'Nincs'], ...store.clubs(state.league).map(c => [`${state.league}/${c.id}`, c.official]), ...Object.entries(COMPETITIONS).filter(([k]) => k)];
@@ -653,6 +731,7 @@ async function update(full) {
   if (seq !== updateSeq) return;
   const canvas = $('canvas');
   lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+  refreshExtraSizes();
   renderOverlay();
   renderLayoutState();
   document.querySelectorAll('#fields .field input.sz').forEach(inp => {
@@ -931,7 +1010,8 @@ function renderInspector() {
   box.className = 'insp';
   const sizeBox = el.type === 'text'
     ? `Betűméret (px) <input type="number" id="iS" min="10" max="300" step="1" value="${eff.size > 0 ? eff.size : ''}" placeholder="${Math.round(lastReport?.sizes?.[el.id] ?? el.size)}">`
-    : `Méret (%) <input type="number" id="iS" min="10" max="400" step="1" value="${Math.round((eff.scale > 0 ? eff.scale : 1) * 100)}">`;
+    : `Méret (%) <input type="number" id="iS" min="10" max="400" step="1" value="${Math.round((eff.scale > 0 ? eff.scale : 1) * 100)}">`
+      + (el.type === 'framed' ? ` Szélesség (px) <input type="number" id="iW" min="40" step="2" value="${Math.round(lastReport?.boxes?.[el.id]?.[2] ?? el.box[2])}"> Magasság (px) <input type="number" id="iH" min="40" step="2" value="${Math.round(lastReport?.boxes?.[el.id]?.[3] ?? el.box[3])}">` : '');
   box.innerHTML = `<div class="lay-row"><b>${esc(el.label || el.id)}</b><small>${esc(el.group || '')}</small>
     Balra/jobbra (px) <input type="number" id="iX" step="1" value="${eff.dx || 0}"> Fel/le (px) <input type="number" id="iY" step="1" value="${eff.dy || 0}"> ${sizeBox}
     <button id="iReset">Elem a PSD helyére</button></div>`;
@@ -948,8 +1028,9 @@ function selectElement(id) {
 function renderOverlay() {
   const ov = $('overlay');
   if (!ov) return;
-  ov.classList.toggle('on', !!state.editMode);
-  if (!state.editMode) return;
+  const on = !!state.editMode || tpl().type === 'extra'; // the frames of the extra graphic are always directly editable
+  ov.classList.toggle('on', on);
+  if (!on) return;
   const boxes = lastReport?.boxes || {}, g = lastReport?.global, C = lastReport?.content;
   const cFor = id => (C && (C.dx || C.dy || C.scale !== 1) && (id !== 'photo' || C.photo) ? C : null);
   const ids = Object.keys(boxes).sort((a, b) => boxes[b][2] * boxes[b][3] - boxes[a][2] * boxes[a][3]); // big first: small elements stay on top
@@ -962,6 +1043,9 @@ function renderOverlay() {
     Object.assign(d.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%`, zIndex: i + 1 });
     d.title = `${elById(id)?.label || id} – húzd, vagy jelöld ki`;
     d.classList.toggle('sel', id === selectedId);
+    const handles = elById(id)?.type === 'framed' && id === selectedId; // framed shapes can be resized by their corners
+    if (!handles) d.querySelectorAll('.rh').forEach(h => h.remove());
+    else if (!d.querySelector('.rh')) for (const c of ['nw', 'ne', 'sw', 'se']) { const h = document.createElement('i'); h.className = 'rh'; h.dataset.c = c; d.appendChild(h); }
   });
   // ghost: where the selected element sits in the PSD
   let ghost = ov.querySelector('.ghost');
@@ -983,7 +1067,15 @@ function scheduleRedraw() {
 
 function wireLayoutEditor() {
   const ov = $('overlay');
+  let resize = null;
   ov.addEventListener('pointerdown', e => {
+    const rh = e.target.closest('.rh');
+    if (rh) {
+      e.preventDefault(); rh.setPointerCapture(e.pointerId);
+      const id = rh.parentElement.dataset.id;
+      resize = { id, c: rh.dataset.c, x0: e.clientX, y0: e.clientY, b: [...lastReport.boxes[id]], k0: effOf(id).scale > 0 ? effOf(id).scale : 1, moved: false };
+      return;
+    }
     const hit = e.target.closest('.hit');
     if (!hit) return;
     e.preventDefault();
@@ -997,6 +1089,17 @@ function wireLayoutEditor() {
     drag = { id, ids, x0: e.clientX, y0: e.clientY, moved: false, start: Object.fromEntries(ids.map(i => [i, { dx: effOf(i).dx || 0, dy: effOf(i).dy || 0 }])) };
   });
   ov.addEventListener('pointermove', e => {
+    if (resize) {
+      const r = resize, rect = $('canvas').getBoundingClientRect(), k = 1920 / rect.width / (lastReport?.global?.scale || 1);
+      const sx = r.c.includes('e') ? 1 : -1, sy = r.c.includes('s') ? 1 : -1;
+      let w = Math.max(40, r.b[2] + sx * (e.clientX - r.x0) * k), h = Math.max(40, r.b[3] + sy * (e.clientY - r.y0) * k);
+      if (state.lockAspect !== false && !e.altKey) { const f = Math.max(w / r.b[2], h / r.b[3]); w = r.b[2] * f; h = r.b[3] * f; } // the same growth in both directions (Alt = free)
+      const left = sx === 1 ? r.b[0] : r.b[0] + r.b[2] - w, top = sy === 1 ? r.b[1] : r.b[1] + r.b[3] - h; // the opposite corner stays
+      const base = elById(r.id).box, o = ovFor(r.id);
+      o.w = Math.round(w / r.k0); o.h = Math.round(h / r.k0); o.dx = Math.round(left + w / 2 - base[0]); o.dy = Math.round(top + h / 2 - base[1]);
+      r.moved = true; scheduleRedraw();
+      return;
+    }
     if (!drag) return;
     if (!drag.moved && Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 3) return;
     drag.moved = true;
@@ -1010,7 +1113,7 @@ function wireLayoutEditor() {
     for (const i of drag.ids) { const o = ovFor(i); o.dx = drag.start[i].dx + ddx; o.dy = drag.start[i].dy + ddy; }
     scheduleRedraw();
   });
-  const end = () => { if (!drag) return; const d = drag; drag = null; if (d.moved) { saveState(); renderInspector(); renderLayoutState(); } };
+  const end = () => { if (resize) { const m = resize.moved; resize = null; if (m) { saveState(); renderInspector(); renderLayoutState(); refreshExtraSizes(); } return; } if (!drag) return; const d = drag; drag = null; if (d.moved) { saveState(); renderInspector(); renderLayoutState(); } };
   ov.addEventListener('pointerup', end);
   ov.addEventListener('pointercancel', end);
 
@@ -1045,6 +1148,13 @@ function wireLayoutEditor() {
       const o = ovFor(LAY.GLOBAL);
       setKey(o, { gX: 'dx', gY: 'dy', gS: 'scale' }[id], has ? (id === 'gS' ? n / 100 : n) : undefined);
       if (!Object.keys(o).length) delete overrides()[LAY.GLOBAL];
+    } else if (['iW', 'iH'].includes(id) && selectedId) {
+      const b = lastReport.boxes[selectedId], o = ovFor(selectedId), base = elById(selectedId).box, kk = effOf(selectedId).scale > 0 ? effOf(selectedId).scale : 1;
+      let w = id === 'iW' ? n : b[2], h = id === 'iH' ? n : b[3];
+      if (state.lockAspect !== false) { if (id === 'iW') h = w * b[3] / b[2]; else w = h * b[2] / b[3]; }
+      o.w = Math.round(w / kk); o.h = Math.round(h / kk);
+      o.dx = Math.round(b[0] + b[2] / 2 - base[0]); o.dy = Math.round(b[1] + b[3] / 2 - base[1]);
+      renderInspector(); refreshExtraSizes();
     } else if (['iX', 'iY', 'iS'].includes(id) && selectedId) {
       const o = ovFor(selectedId), el = elById(selectedId);
       if (id === 'iX') setKey(o, 'dx', has ? n : undefined);
@@ -1072,7 +1182,7 @@ function wireLayoutEditor() {
     } else if (id === 'layDel' && L.saved[$('layList').value]) {
       if (confirm('Törlöd a mentett elrendezést?')) { delete L.saved[$('layList').value]; persistLayouts(); renderLayoutPanel(); }
     } else if (id === 'iReset' && selectedId) {
-      Object.assign(ovFor(selectedId), { dx: 0, dy: 0, size: 0, scale: 1 }); update(true); saveState();
+      Object.assign(ovFor(selectedId), { dx: 0, dy: 0, size: 0, scale: 1, w: 0, h: 0 }); update(true); saveState();
     }
   });
 }

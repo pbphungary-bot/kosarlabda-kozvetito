@@ -3,7 +3,7 @@
 // Effective layout of an element = benchmark ("alap", saved) overridden by the unsaved changes of the session.
 // A key that is present in the session changes wins even when it is 0 (that is how a benchmark value is cancelled).
 
-export const KEYS = ['dx', 'dy', 'size', 'scale'];
+export const KEYS = ['dx', 'dy', 'size', 'scale', 'w', 'h']; // w / h: free width / height (px) of framed shapes (0 = the template's own)
 export const GLOBAL = '__global';
 // '__content' moves / scales everything inside the frame (all elements, optionally not the photo); the frame (background + outline) stays
 export const CONTENT = '__content';
@@ -25,7 +25,7 @@ export function effective(bench, ov, id) {
 
 /** Does this layout entry change anything compared to the PSD? */
 export function meaningful(e) {
-  return !!e && ((e.dx || 0) !== 0 || (e.dy || 0) !== 0 || e.size > 0 || (e.scale > 0 && e.scale !== 1));
+  return !!e && ((e.dx || 0) !== 0 || (e.dy || 0) !== 0 || e.size > 0 || (e.scale > 0 && e.scale !== 1) || e.w > 0 || e.h > 0);
 }
 
 /** The complete effective layout of a template, ready to be saved: only entries that differ from the PSD. */
@@ -39,6 +39,8 @@ export function extract(template, bench, ov) {
     if (e.dy) c.dy = e.dy;
     if (e.size > 0) c.size = e.size;
     if (e.scale > 0 && e.scale !== 1) c.scale = e.scale;
+    if (e.w > 0) c.w = e.w;
+    if (e.h > 0) c.h = e.h;
     items[id] = c;
   }
   return { items };
@@ -60,7 +62,7 @@ export function applyToOverrides(ov, layout, bench) {
   const ids = new Set([...Object.keys(layout?.items || {}), ...Object.keys(bench?.items || {})]);
   for (const id of ids) {
     const item = layout?.items?.[id];
-    const cancel = { dx: 0, dy: 0, size: 0, scale: 1 };
+    const cancel = { dx: 0, dy: 0, size: 0, scale: 1, w: 0, h: 0 };
     ov[id] = { ...(ov[id] || {}), ...(item ? { ...cancel, ...pick(item) } : cancel) };
   }
 }

@@ -56,8 +56,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 14 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 14);
+    await check(`${lg}: 15 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 15);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -1009,6 +1009,33 @@ try {
     assert.deepEqual(errs, []);
     await p2.close();
   });
+  await check('extra (MKOSZ): photo + QR upload, proportional and free resize of the frames', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="extra-men"]');
+    await page.waitForTimeout(500);
+    await page.setInputFiles('.xbox[data-k="A"] .xFile', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await page.setInputFiles('.xbox[data-k="B"] .xFile', path.join(ROOT, 'tests/fixtures/img/extra-qr.png'));
+    await page.waitForTimeout(600);
+    const size = async k => [+(await page.$eval(`.xbox[data-k="${k}"] .xW`, e => e.value)), +(await page.$eval(`.xbox[data-k="${k}"] .xH`, e => e.value))];
+    const [w0, h0] = await size('B');
+    assert.deepEqual([w0, h0], [316, 320]); // the PSD's QR frame
+    const hit = await page.$('.hit[data-id="frameB"]'); const bb = await hit.boundingBox();
+    await page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
+    const drag = async (dx, dy) => {
+      const hb = await (await page.$('.hit[data-id="frameB"] .rh[data-c="se"]')).boundingBox();
+      await page.mouse.move(hb.x + 8, hb.y + 8); await page.mouse.down(); await page.mouse.move(hb.x + 8 + dx, hb.y + 8 + dy, { steps: 4 }); await page.mouse.up(); await page.waitForTimeout(400);
+    };
+    await drag(60, 10); // lock on: grows by the same ratio
+    const [w1, h1] = await size('B');
+    assert.ok(w1 > w0 && Math.abs(w1 / h1 - w0 / h0) < 0.02, `proportional ${w1}x${h1}`);
+    await page.uncheck('#xLock');
+    await drag(60, 0); // lock off: only the width changes
+    const [w2, h2] = await size('B');
+    assert.ok(w2 > w1 && h2 === h1, `free ${w2}x${h2}`);
+    const png = await page.$eval('#canvas', c => c.toDataURL('image/png'));
+    assert.ok(png.length > 1000);
+  });
+
 } finally {
   await browser.close();
   server.kill();

@@ -202,6 +202,37 @@ function roundRectPath(g, [x0, y0, x1, y1], r) {
   g.moveTo(x0 + r, y0); g.arcTo(x1, y0, x1, y1, r); g.arcTo(x1, y1, x0, y1, r); g.arcTo(x0, y1, x0, y0, r); g.arcTo(x0, y0, x1, y0, r); g.closePath();
 }
 
+/** A rounded frame (fill + border) that holds an optional picture, e.g. the MKOSZ photo frame / QR frame. box = [cx, cy, w, h]. */
+function drawFramed(ctx, el, v, assets, report) {
+  const [cx, cy, w, h] = el.box, x0 = cx - w / 2, y0 = cy - h / 2, x1 = x0 + w, y1 = y0 + h;
+  report.boxes[el.id] = [x0, y0, w, h];
+  const sw = el.sw ?? 6, r = Math.min(el.r ?? 18, w / 2, h / 2);
+  const fill = v.fill !== undefined ? v.fill : el.fill;
+  ctx.save();
+  ctx.globalAlpha = el.opacity ?? 1;
+  if (fill) { ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.fillStyle = fill; ctx.fill(); }
+  const img = v.src ? assets.images[v.src] : null;
+  if (img) {
+    const pad = sw + (v.pad ?? el.pad ?? 0);
+    const ix = x0 + pad, iy = y0 + pad, iw = w - 2 * pad, ih = h - 2 * pad;
+    if (iw > 0 && ih > 0) {
+      const fit = v.fit || el.fit || 'contain';
+      const s = (fit === 'cover' ? Math.max(iw / img.width, ih / img.height) : Math.min(iw / img.width, ih / img.height)) * (v.zoom > 0 ? v.zoom : 1);
+      const dw = img.width * s, dh = img.height * s;
+      ctx.save();
+      ctx.beginPath(); roundRectPath(ctx, [ix, iy, ix + iw, iy + ih], Math.max(r - pad, 0)); ctx.clip();
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, ix + iw / 2 - dw / 2 + (v.px || 0), iy + ih / 2 - dh / 2 + (v.py || 0), dw, dh);
+      ctx.restore();
+    }
+  }
+  if (sw > 0 && el.stroke) {
+    ctx.beginPath(); roundRectPath(ctx, [x0 + sw / 2, y0 + sw / 2, x1 - sw / 2, y1 - sw / 2], Math.max(r - sw / 2, 0));
+    ctx.lineWidth = sw; ctx.strokeStyle = el.stroke; ctx.stroke();
+  }
+  ctx.restore();
+}
+
 function drawImage(ctx, el, v, assets, report, inner) {
   const img = assets.images[v.src];
   if (!img) return;
@@ -298,6 +329,10 @@ export function render(canvas, template, values, assets) {
       const [cx, cy, mw, mh] = el.box;
       el = { ...el, box: [cx + (v.dx || 0), cy + (v.dy || 0), mw * k, mh * k], area: el.area ? el.area * k * k : el.area };
     }
+    if (el.type === 'framed' && (v.dx || v.dy || v.w > 0 || v.h > 0 || (v.scale > 0 && v.scale !== 1))) {
+      const k = v.scale > 0 ? v.scale : 1, [cx, cy, mw, mh] = el.box;
+      el = { ...el, box: [cx + (v.dx || 0), cy + (v.dy || 0), (v.w > 0 ? v.w : mw) * k, (v.h > 0 ? v.h : mh) * k] };
+    }
     if (el.compactWith) {
       const rv = values[el.compactWith] || {};
       const re = template.elements.find(e => e.id === el.compactWith);
@@ -311,6 +346,7 @@ export function render(canvas, template, values, assets) {
     if (moved) { ctx.save(); ctx.translate(ccx + cdx, ccy + cdy); ctx.scale(cs, cs); ctx.translate(-ccx, -ccy); }
     if (el.type === 'text') drawText(ctx, el, v, report);
     else if (el.type === 'image') drawImage(ctx, el, v, assets, report, template.inner);
+    else if (el.type === 'framed') drawFramed(ctx, el, v, assets, report);
     if (moved) ctx.restore();
     if (clip) ctx.restore();
   }
