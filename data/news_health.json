@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T22:46:37.417679+00:00",
+  "checked_at": "2026-11-22T23:34:27.206724+00:00",
   "statistics": {
     "total": 1228,
     "fresh": 560,
@@ -262,18 +262,21 @@
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
+      "repaired": 9,
+      "article_errors": 1,
+      "listing_errors": [
+        "https://csatatkk.hu/hirek/: TimeoutError: The read operation timed out",
+        "article https://csatatkk.hu/2026/11/20/vege-a-varakozasnak-miskolcon-ter-vissza-a-bajnoki-ritmusba-a-csata-tkk/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 9,
       "source_coverage": true
     },
     {
@@ -487,8 +490,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -569,20 +570,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
       "added": 0,
-      "repaired": 29,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 29,
+      "repaired": 30,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 30,
       "source_coverage": true
     }
   ],
