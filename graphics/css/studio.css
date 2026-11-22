@@ -184,3 +184,8 @@ details.pkg { margin: 10px 0; border: 1px solid var(--line); border-radius: 8px;
 details.pkg summary { cursor: pointer; font-weight: 600; }
 details.pkg .hint { font-size: 12px; color: var(--muted); margin: 8px 0; }
 details.pkg .chk { display: flex; flex-direction: row; gap: 6px; align-items: center; font-size: 13px; }
+
+.sizebar { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; padding: 8px 12px; margin: 0 0 8px; background: var(--panel, #1c2520); border: 1px solid var(--line, #2f3d35); border-radius: 8px; }
+.sizebar[hidden] { display: none; }
+.sizebar label { display: flex; gap: 6px; align-items: center; }
+.sizebar input { width: 76px; }

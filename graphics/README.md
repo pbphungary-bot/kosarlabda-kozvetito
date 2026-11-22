@@ -151,5 +151,5 @@ node tests/e2e.mjs                  # böngészős végigpróbálás: export, fe
 Az eredeti PSD-k a `BROADCAST GRAPHICS/` mappában vannak, ezeket a stúdió sosem módosítja.
 Betűtípus: League Gothic Regular + Italic (SIL OFL, `fonts/`).
 
-**Mezszámok mérete (Keret):** a „2. Csapat” panelen a *Mezszámok mérete (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
-**Zászlók mérete (Keret fotókkal):** a *Zászlók mérete (%)* mező az összes zászlót egyszerre méretezi; a zászló jobb széle és a mezszám középvonala nem mozdul.
+**Mezszámok mérete (Keret):** a kép feletti *Méretek* sávban a *Mezszámok (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
+**Zászlók mérete (Keret fotókkal):** a *Zászlók (%)* mező az összes zászlót egyszerre méretezi; a zászló jobb széle és a mezszám középvonala nem mozdul.

@@ -211,6 +211,7 @@ function wirePsConfig(s) {
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
+  $('sizeBar').hidden = true; // only the roster templates show it (set below)
   if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
@@ -276,7 +277,10 @@ function renderSelection(extra = {}) {
     $('showOpen').onchange = e => { s.showOpen = e.target.checked; renderSelection(); update(true); };
   } else {
     $('selectTitle').textContent = '2. Csapat';
-    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}${t.type === 'roster' || t.type === 'rostergrid' ? `<label>Mezszámok mérete (% – mind egyszerre)<input type="number" id="numScale" min="50" max="250" step="5" value="${s.numScale || 100}"></label>${t.type === 'rostergrid' ? `<label>Zászlók mérete (% – mind egyszerre)<input type="number" id="flagScale" min="50" max="250" step="5" value="${s.flagScale || 100}"></label>` : ''}` : ''}`;
+    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
+    const bar = $('sizeBar'), isRoster = t.type === 'roster' || t.type === 'rostergrid';
+    bar.hidden = !isRoster;
+    bar.innerHTML = !isRoster ? '' : `<b>Méretek – az összes játékosra egyszerre:</b> <label>Mezszámok (%) <input type="number" id="numScale" min="50" max="250" step="5" value="${s.numScale || 100}"></label>${t.type === 'rostergrid' ? `<label>Zászlók (%) <input type="number" id="flagScale" min="50" max="250" step="5" value="${s.flagScale || 100}"></label>` : ''}`;
     if ($('numScale')) $('numScale').onchange = e => { s.numScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
     if ($('flagScale')) $('flagScale').onchange = e => { s.flagScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
     $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null; resetTemplateOverrides(); update(true); };
