@@ -34,8 +34,21 @@ def main():
             have.append(pid)
             continue
         try:
-            req = urllib.request.Request(f'https://15th.webpont.com/art/player/profile/{pid}.png', headers={'User-Agent': UA})
-            data = urllib.request.urlopen(req, timeout=30).read()
+            data = None
+            # hunbasket.hu uses .../player/profile/<id>.png; mkosz.hu player pages use .../player/photo/<id>.png, which exists for some
+            # players whose profile photo is missing
+            for kind in ('profile', 'photo'):
+                try:
+                    req = urllib.request.Request(f'https://15th.webpont.com/art/player/{kind}/{pid}.png', headers={'User-Agent': UA})
+                    data = urllib.request.urlopen(req, timeout=30).read()
+                    if kind == 'photo':
+                        print(f'{pid} {name}: only the mkosz.hu "photo" variant exists')
+                    break
+                except urllib.error.HTTPError as e:
+                    if e.code != 404 or kind == 'photo':
+                        raise
+            if data is None:
+                raise ValueError('no photo')
             im = Image.open(io.BytesIO(data)).convert('RGBA')
             if im.width > MAX_W:
                 im = im.resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
