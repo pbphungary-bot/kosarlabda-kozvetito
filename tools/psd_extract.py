@@ -31,7 +31,7 @@ OUT = os.path.join(ROOT, 'graphics')
 
 # Layers that are part of the fixed design (kept in the background).
 STATIC_NAMES = {
-    'Téglalap 1', 'Háttér nb1a - kosárpályával', '50633_mkosz_horizontalbigger',
+    'Téglalap 1', 'TOP', 'Háttér nb1a - kosárpályával', '50633_mkosz_horizontalbigger',
     '74641_HUNBASKET_profil új(1)', 'tippmix_CMYK_outline',
     'CSAPATOK ÖSSZEVETÉSE', 'PTS 2P% 3P% FT% REB AST STL TOV EFF ',
     'FÉRFI NB I. A CSOPORT', 'NŐI NB I. A CSOPORT',
@@ -41,6 +41,9 @@ STATIC_PREFIXES = ('hand-drawn-illustration-of-a-classic-referee-whistle',)
 TEMPLATES = {
     'comparison-men': ('Falco - Alba statösszevetés 1111 előtt.psd', {'static_pixel': False}),
     'comparison-women': ('DVTK - CSATA statösszevetés 1122 előtt.psd', {}),
+    # rosters ("Keret"): club logo, coaches, the table and the flags are dynamic, the panel is fixed
+    'roster-men': ('FALCO keret 26-27.psd', {'static_pixel': False}),
+    'roster-women': ('DVTK keret 26-27.psd', {'static_pixel': False}),
     # player specials: photo, club logo, name, texts and numbers are dynamic
     'playerspecial-men': ('Uros STAT.psd', {'static_pixel': False}),
     'playerspecial-women': ('Kányási - 324 vs idei 7 meccs.psd', {'static_pixel': False}),

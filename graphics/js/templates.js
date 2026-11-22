@@ -354,8 +354,85 @@ function playerspecial(id, league, psd) {
   return psBuild(b, null);
 }
 // text-width calibration (PSD ink width / browser width of the same string)
+for (const id of ['roster-men', 'roster-women', 'rostergrid-men', 'rostergrid-women']) HSCALE[id] = { hdr: 0.98, name: 0.97, val: 0.97 };
 HSCALE['playerspecial-men'] = { title: 0.971, label: 0.96, value: 0.968, header: 0.99, subtitle: 0.968 };
 HSCALE['playerspecial-women'] = { title: 0.995, label: 0.96, value: 0.968, header: 0.978, subtitle: 0.976 };
+
+
+// ───────────────────────── Keret (roster) ─────────────────────────
+// Two designs of the same data (Hunbasket roster): "roster" = the table of the FALCO / DVTK keret PSDs, "rostergrid" = cards with photos.
+// The panel is fixed; the rows / cards are laid out for the real number of players (built per team, see rosterBuild).
+const ROSTER_GEOM = {
+  men: { panel: [67, 48, 1672, 907], inner: { box: [75, 56, 1664, 899], r: 14 }, hdr: 110.6, first: 169.7, last: 869, logo: [368, 327, 450, 450], coach: [690, 770, 835], defaultN: 13 },
+  women: { panel: [67, 67, 1672, 860], inner: { box: [75, 75, 1664, 852], r: 14 }, hdr: 127, first: 185, last: 826, logo: [370, 365, 430, 430], coach: [690, 772, 835], defaultN: 12 },
+};
+const ROSTER_COLS = { num: 682, name: 749, nameHdr: 943, flag: 1218, pos: 1300, height: 1433, year: 1592 };
+
+function rosterCommon(g, op) {
+  const els = [
+    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Bal oldal', box: g.logo, fit: 'contain', opacity: op },
+    { id: 'coach.label', type: 'text', label: 'Vezetőedző felirat', group: 'Edzők', x: 125, y: g.coach[0], size: 50, tracking: -20, font: 'italic', color: '#000000', outline: ol(3, '#ffffff'), opacity: op, adjust: true },
+    { id: 'coach.name', type: 'text', label: 'Vezetőedző', group: 'Edzők', x: 305, y: g.coach[0], size: 75, tracking: -20, font: 'italic', color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 310, opacity: op, adjust: true, caps: true },
+    { id: 'assist.label', type: 'text', label: 'Segédedző felirat', group: 'Edzők', x: 125, y: g.coach[1], size: 50, tracking: -20, font: 'italic', color: '#000000', outline: ol(3, '#ffffff'), opacity: op, adjust: true },
+    { id: 'assist.name', type: 'text', label: 'Segédedző', group: 'Edzők', x: 305, y: g.coach[1], size: 58.3, tracking: -20, font: 'italic', color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 310, opacity: op, adjust: true, caps: true },
+    { id: 'assist2.name', type: 'text', label: '2. segédedző (kézzel)', group: 'Edzők', x: 305, y: g.coach[2], size: 58.3, tracking: -20, font: 'italic', color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 310, opacity: op, adjust: true, caps: true },
+  ];
+  return els;
+}
+
+export function rosterDims(n) {
+  return n <= 12 ? { cols: 4, rows: Math.ceil(n / 4) } : n <= 15 ? { cols: 5, rows: Math.ceil(n / 5) } : { cols: 6, rows: Math.ceil(n / 6) };
+}
+
+/** base = registry entry (background); n = number of players. */
+export function rosterBuild(base, n) {
+  const g = ROSTER_GEOM[base.league], op = 0.9882;
+  n = Math.max(1, Math.min(24, n || g.defaultN));
+  const els = rosterCommon(g, op);
+  if (base.type === 'roster') {
+    const pitch = n > 1 ? Math.min(58.4, (g.last - g.first) / (n - 1)) : 0, k = pitch / 58.4;
+    const sz = 48.4453 * k, hs = 34.6 * Math.max(k, 0.8);
+    const hdr = (id, label, x, align = 'center') => els.push({ id, type: 'text', label, group: 'Fejléc', x, y: g.hdr, align, size: hs, tracking: -20, color: '#ef4036', outline: ol(3, '#000000'), opacity: op, adjust: true });
+    hdr('hdr.num', 'Fejléc: #', ROSTER_COLS.num); hdr('hdr.name', 'Fejléc: NÉV', ROSTER_COLS.nameHdr); hdr('hdr.pos', 'Fejléc: POSZT', ROSTER_COLS.pos);
+    hdr('hdr.height', 'Fejléc: MAGASSÁG', ROSTER_COLS.height); hdr('hdr.year', 'Fejléc: SZÜL. ÉV', ROSTER_COLS.year);
+    for (let i = 0; i < n; i++) {
+      const y = g.first + i * pitch, base2 = { type: 'text', group: `${i + 1}. játékos`, y, size: sz, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, caps: true };
+      els.push(
+        { ...base2, id: `r${i}.num`, label: `${i + 1}. mezszám`, x: ROSTER_COLS.num, align: 'center', maxWidth: 70 },
+        { ...base2, id: `r${i}.name`, label: `${i + 1}. név`, x: ROSTER_COLS.name, maxWidth: 420, minScale: 0.5 },
+        { id: `r${i}.flag`, type: 'image', label: `${i + 1}. zászló`, group: `${i + 1}. játékos`, box: [ROSTER_COLS.flag, y - 0.3 * sz, 76, 40 * Math.min(1, k + 0.15)], fit: 'contain', opacity: op },
+        { ...base2, id: `r${i}.pos`, label: `${i + 1}. poszt`, x: ROSTER_COLS.pos, align: 'center', maxWidth: 110 },
+        { ...base2, id: `r${i}.height`, label: `${i + 1}. magasság`, x: ROSTER_COLS.height, align: 'center', maxWidth: 140 },
+        { ...base2, id: `r${i}.year`, label: `${i + 1}. születési év`, x: ROSTER_COLS.year, align: 'center', maxWidth: 120 },
+      );
+    }
+  } else { // cards with photos
+    const { cols, rows } = rosterDims(n), areaX = 700, areaW = 940, areaY = g.hdr - 20, areaH = g.last - areaY + 8;
+    const cw = areaW / cols, ch = Math.min(290, areaH / rows), ph = ch * 0.6, pw = ph * 0.88;
+    for (let i = 0; i < n; i++) {
+      const c = i % cols, r = Math.floor(i / cols), cx = areaX + cw * (c + 0.5), top = areaY + r * ch + (areaH - ch * rows) / 2;
+      const grp = `${i + 1}. játékos`, nm = Math.min(1, cw / 190);
+      els.push(
+        { id: `r${i}.photo`, type: 'image', label: `${i + 1}. fotó`, group: grp, box: [cx, top + ph / 2, pw, ph], fit: 'contain', anchor: 'bottom', clipInner: true },
+        { id: `r${i}.flag`, type: 'image', label: `${i + 1}. zászló`, group: grp, box: [cx + pw / 2 - 20, top + 12, 44, 30], fit: 'contain', opacity: op },
+        { id: `r${i}.num`, type: 'text', label: `${i + 1}. mezszám`, group: grp, x: cx - pw / 2 + 6, y: top + 44 * nm, size: 46 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: 60 },
+        { id: `r${i}.last`, type: 'text', label: `${i + 1}. vezetéknév`, group: grp, x: cx, y: top + ph + 36 * nm, align: 'center', size: 36 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
+        { id: `r${i}.first`, type: 'text', label: `${i + 1}. keresztnév`, group: grp, x: cx, y: top + ph + 36 * nm + 28 * nm, align: 'center', size: 27 * nm, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true, minScale: 0.5 },
+        { id: `r${i}.info`, type: 'text', label: `${i + 1}. poszt · magasság`, group: grp, x: cx, y: top + ph + 36 * nm + 28 * nm + 26 * nm, align: 'center', size: 24 * nm, tracking: 25, color: '#ef4036', outline: ol(3, '#000000'), opacity: op, maxWidth: cw - 8, caps: true },
+      );
+    }
+  }
+  for (const e of els) if (e.type === 'text') { e.adjust = true; e.hscale = HSCALE[base.id]?.[e.id.startsWith('hdr') ? 'hdr' : /\.name$|\.last$|\.first$/.test(e.id) ? 'name' : 'val'] || 0.97; }
+  const t = { ...base, elements: els.map(e => ({ ...e })), rosterN: n };
+  t.panel = { box: g.panel, alpha: op };
+  t.inner = g.inner;
+  return t;
+}
+
+function rosterEntry(id, league, type, psd, label, bgId) {
+  const b = base(id, league, type, psd, label, { elements: [], background: `templates/${bgId}/background.png`, reference: `templates/${bgId}/reference.png`, thumb: `templates/${bgId}/thumb.jpg` });
+  return rosterBuild(b, ROSTER_GEOM[league].defaultN);
+}
 
 // ───────────────────────── Template registry ─────────────────────────
 export const TEMPLATES = [
@@ -438,6 +515,10 @@ export const TEMPLATES = [
   }, 'playercompare'),
   playerspecial('playerspecial-men', 'men', 'Uros STAT.psd'),
   playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd'),
+  rosterEntry('roster-men', 'men', 'roster', 'FALCO keret 26-27.psd', 'Keret (tábla)', 'roster-men'),
+  rosterEntry('roster-women', 'women', 'roster', 'DVTK keret 26-27.psd', 'Keret (tábla)', 'roster-women'),
+  rosterEntry('rostergrid-men', 'men', 'rostergrid', 'FALCO keret 26-27.psd', 'Keret (fotókkal)', 'roster-men'),
+  rosterEntry('rostergrid-women', 'women', 'rostergrid', 'DVTK keret 26-27.psd', 'Keret (fotókkal)', 'roster-women'),
   nextmatch('nextmatch-men', 'men'),
   nextmatch('nextmatch-women', 'women'),
   referees('referees-men', 'men', 'Sporik ffi alap.psd', {
@@ -455,6 +536,8 @@ export const TEMPLATE_TYPES = {
   comparison: 'Csapatok összevetése',
   playercompare: 'Csillagjátékosok',
   playerspecial: 'Játékos-különleges',
+  roster: 'Keret (tábla)',
+  rostergrid: 'Keret (fotókkal)',
   teamstats: 'Csapatstatisztika',
   results: 'Eredmények',
   resultrows: 'Eredmények (színes sorok)',

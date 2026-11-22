@@ -234,3 +234,28 @@ test('row list: the operator\'s order is kept and typed rows can be mixed in', a
   assert.equal(r.values['r3.match'].text, ''); // the rest stays empty
   assert.equal(bindRowList(store, 'men', 'falcokc', t, []).games.length, 0, 'all rows deleted → empty graphic, not the automatic list');
 });
+
+import { bindRoster, rosterPlayers, shortName } from '../graphics/js/binders.js';
+import { rosterBuild, templateById as tById } from '../graphics/js/templates.js';
+test('roster (Keret): players in shirt order, flags only for foreigners, coaches, rows for the real player count', async () => {
+  const store = await loadStore();
+  for (const [lg, id, tid] of [['men', 'falcokc', 'roster-men'], ['women', 'dvtkhuntherm', 'roster-women']]) {
+    const players = rosterPlayers(store, lg, id);
+    assert.ok(players.length >= 9);
+    const nums = players.map(p => parseInt(p.number, 10) || 0);
+    assert.deepEqual(nums, [...nums].sort((a, b) => a - b));
+    const t = rosterBuild(tById(tid), players.length);
+    assert.equal(t.elements.filter(e => /^r\d+\.num$/.test(e.id)).length, players.length);
+    const v = bindRoster(store, lg, id, t).values;
+    assert.ok(v['coach.name'].text && v['coach.name'].text !== '—');
+    players.forEach((p, i) => {
+      assert.equal(v[`r${i}.flag`].src !== '', !!p.nationality && p.nationality !== 'HUN' && p.nationality !== '-', p.name);
+      assert.match(v[`r${i}.height`].text, /^\d+ cm$/);
+    });
+    const g = rosterBuild(tById(tid.replace('roster', 'rostergrid')), players.length);
+    const vg = bindRoster(store, lg, id, g, new Set()).values;
+    assert.equal(vg['r0.photo'].src, 'photo/none'); // no photo downloaded → placeholder, never a broken image
+    assert.ok(vg['r0.last'].text && vg['r0.first'].text !== undefined);
+  }
+  assert.equal(shortName('JENKINS Alisia La\'jewel Charlesneia'), 'JENKINS Alisia La\'jewel');
+});

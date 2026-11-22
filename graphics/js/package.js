@@ -13,6 +13,8 @@ export const PACKAGE_ITEMS = [
   { id: 'schedule-away', type: 'schedule', who: 'away', label: 'Menetrend' },
   { id: 'results-home', type: 'results', who: 'home', label: 'Eredmenyek' },
   { id: 'results-away', type: 'results', who: 'away', label: 'Eredmenyek' },
+  { id: 'roster-home', type: 'roster', who: 'home', label: 'Keret' },
+  { id: 'roster-away', type: 'roster', who: 'away', label: 'Keret' },
   { id: 'teamstats-home', type: 'teamstats', who: 'home', label: 'Csapatstat' },
   { id: 'teamstats-away', type: 'teamstats', who: 'away', label: 'Csapatstat' },
 ];
