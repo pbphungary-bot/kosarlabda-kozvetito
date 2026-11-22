@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-22T19:05:36.699094+00:00",
+  "checked_at": "2026-11-22T19:50:19.421835+00:00",
   "statistics": {
-    "total": 1224,
-    "fresh": 558,
-    "fresh_with_summary": 366,
-    "missing_dates": 277,
-    "headline_only": 555,
-    "untagged": 499,
+    "total": 1228,
+    "fresh": 560,
+    "fresh_with_summary": 368,
+    "missing_dates": 279,
+    "headline_only": 556,
+    "untagged": 502,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 6,
+    "new_articles": 8,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -28,8 +28,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 35,
-      "added": 0,
+      "candidates": 36,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -38,8 +38,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -122,8 +122,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -487,6 +487,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [

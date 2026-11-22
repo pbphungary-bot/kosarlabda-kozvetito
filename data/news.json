@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-22T19:05:36.699094+00:00",
+  "checked_at": "2026-11-22T19:50:19.421835+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 35,
-      "added": 0,
+      "candidates": 36,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -107,8 +107,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -472,6 +472,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -569,6 +570,16 @@
   ],
   "articles": [
     {
+      "source": "WBasket.hu",
+      "title": "Hosszabbítás után nyert a Csata a DVTK otthonában",
+      "summary": "A-csoport, 8. forduló Miskolc, DVTK Aréna Cziffra Csaba Zsolt, Jankovics Viktor Zsolt, Minár László Balázs (Dernei Gábor)",
+      "url": "https://wbasket.hu/hosszabbitas-utan-nyert-a-csata-a-dvtk-otthonaban/",
+      "published_at": "2026.11.22. 19:54",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Női kosár NB I: odahaza vesztett hosszabbításos rangadót a DVTK",
       "summary": "Női kosár NB I: odahaza vesztett hosszabbításos rangadót a DVTK",
@@ -600,6 +611,16 @@
       "summary_method": "article_body",
       "teams": [],
       "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Magabiztosan győzte le a Győr a kulcsjátékosait nélkülöző Ceglédet",
+      "summary": "A-csoport, 8. forduló Győr, Olimpiai Sport Park Nagy Viktor, Söjtöry Tamás Ferenc, Nyilas István (Tóth Kálmán)",
+      "url": "https://wbasket.hu/magabiztosan-gyozte-le-a-gyor-a-kulcsjatekosait-nelkulozo-cegledet/",
+      "published_at": "2026.11.22. 19:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
@@ -11927,6 +11948,16 @@
     },
     {
       "source": "Hunbasket",
+      "title": "Női NB I: Hosszabbítás után nyert a Csata Miskolcon",
+      "summary": "Női NB I: Hosszabbítás után nyert a Csata Miskolcon",
+      "url": "https://hunbasket.hu/hir/77747/noi-nb-i-hosszabbitas-utan-nyert-a-csata-miskolcon/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
       "title": "Női NB I: A Sopron nyerte a Szekszárd elleni rangadót",
       "summary": "Női NB I: A Sopron nyerte a Szekszárd elleni rangadót",
       "url": "https://hunbasket.hu/hir/77745/noi-nb-i-a-sopron-nyerte-a-szekszard-elleni-rangadot/",
@@ -12285,6 +12316,19 @@
       "title": "NB I. B: Nem hagyott esélyt a PRIMA",
       "summary": "U23-as csapatunk ezúttal csak asszisztálni tudott a helyenként örömkosárlabdát bemutató BKG játékához.",
       "url": "https://kosarlabda.deac.hu/hirek/nb-i-b-nem-hagyott-eselyt-a-prima/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "DEAC",
+      "league": "men",
+      "teams": [
+        "men|DEAC"
+      ]
+    },
+    {
+      "source": "Klub: DEAC",
+      "title": "NB I. B: Megszorongattuk a bajnokesélyest",
+      "summary": "Kovács Márk tanítványai végig egyenrangú partnerei voltak a feljutás elsőszámú várományosának tartott Zalaegerszegnek, a győzelmet azonban nem tudták kiharcolni.",
+      "url": "https://kosarlabda.deac.hu/hirek/nb-i-b-megszorongattuk-a-bajnokeselyest/",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "DEAC",
