@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install pillow
+      - run: python -m pip install pillow numpy
       - name: Download and shrink the photos
         run: python scripts/fetch_player_photos.py ${{ inputs.refresh && '--refresh' || '' }}
       - name: Commit new photos
