@@ -173,7 +173,9 @@ function psConfigHtml(s) {
     <div class="row2"><label>Oszlopok száma (1–${PS_MAX_COLS}) ${num('psCols', c.cols, 1, PS_MAX_COLS)}</label>
       <label>Sorok száma (1–${PS_MAX_ROWS}) ${num('psRows', c.rows.length, 1, PS_MAX_ROWS)}</label></div>
     <div class="row2"><label>Oszlopok a felirat előtt (bal oldalon) ${num('psLabelAfter', c.labelAfter, 0, c.cols)}</label>
-      <label>Az idei átlag oszlopa (0 = egyik sem) ${num('psAuto', c.auto, 0, c.cols)}</label></div>
+      <label>Utolsó N meccs átlaga (ha van ilyen oszlop) ${num('psLastN', c.lastN, 1, 20)}</label></div>
+    <label>Oszlopok adatforrása (a Hunbasket játékosoldalából; a „kézi” oszlopot te írod)</label>
+    <div class="row2">${c.colSrc.map((k, i) => `<label>${i + 1}. oszlop <select class="psSrc" data-i="${i}">${[['manual', 'Kézi'], ['season', 'Idei átlag'], ['career', 'Karrier'], ['last', 'Utolsó N meccs']].map(([v, l]) => `<option value="${v}" ${v === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label>`).join('')}</div>
     <div class="row2">${rowSel}</div>
     <div class="row2"><label>Fotó magassága (px; 0 = a lehető legnagyobb) ${num('psPhotoH', c.photoH, 0, 1000)}</label>
       <label>Fotó közepének X helye (px) ${num('psPhotoCx', Math.round(c.photoCx), 0, 1400)}</label></div>
@@ -191,10 +193,11 @@ function psConfigHtml(s) {
 function wirePsConfig(s) {
   $('psBox').ontoggle = e => { s.psOpen = e.target.open; };
   const n = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(+$(id).value || 0)));
-  $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), auto: Math.min(cols, c.auto) }); };
+  $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), colSrc: Array.from({ length: cols }, (_, i) => c.colSrc[i] || 'manual') }); };
   $('psRows').onchange = () => { const k = n('psRows', 1, PS_MAX_ROWS), c = psConfig(s); psSet(s, { rows: Array.from({ length: k }, (_, i) => c.rows[i] || 'pts') }); };
   $('psLabelAfter').onchange = () => psSet(s, { labelAfter: n('psLabelAfter', 0, psConfig(s).cols) });
-  $('psAuto').onchange = () => psSet(s, { auto: n('psAuto', 0, psConfig(s).cols) });
+  $('psLastN').onchange = () => psSet(s, { lastN: n('psLastN', 1, 20) });
+  document.querySelectorAll('.psSrc').forEach(el => el.onchange = () => { const colSrc = [...psConfig(s).colSrc]; colSrc[+el.dataset.i] = el.value; psSet(s, { colSrc }); });
   for (const [id, key] of [['psFsRows', 'fsRows'], ['psFsHeaders', 'fsHeaders'], ['psFsTitle', 'fsTitle'], ['psFsSub', 'fsSub']]) $(id).onchange = () => psSet(s, { [key]: n(id, 0, 300) });
   $('psPhotoH').onchange = () => psSet(s, { photoH: n('psPhotoH', 0, 1000) });
   $('psPhotoCx').onchange = () => psSet(s, { photoCx: n('psPhotoCx', 0, 1400) });

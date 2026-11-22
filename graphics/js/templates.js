@@ -281,6 +281,10 @@ export function psNormalize(league, cfg) {
   const n = Math.min(PS_MAX_ROWS, Math.max(1, (c.rows || []).length || d.rows.length));
   c.rows = Array.from({ length: n }, (_, i) => (PS_STATS[c.rows?.[i]] ? c.rows[i] : d.rows[i] || 'pts'));
   c.auto = Math.min(c.cols, Math.max(0, Math.round(c.auto ?? d.auto)));
+  // data source of every column: manual | season | career | last (last N games); default: the old "auto" column is the season
+  c.lastN = Math.min(20, Math.max(1, Math.round(c.lastN) || 5));
+  const ok = ['manual', 'season', 'career', 'last'];
+  c.colSrc = Array.from({ length: c.cols }, (_, i) => (ok.includes(cfg?.colSrc?.[i]) ? cfg.colSrc[i] : (cfg?.colSrc ? 'manual' : (i + 1 === c.auto ? 'season' : 'manual'))));
   c.photoH = c.photoH > 0 ? c.photoH : 0; // 0 = as tall as the panel allows
   for (const k of ['fsRows', 'fsHeaders', 'fsTitle', 'fsSub']) c[k] = c[k] > 0 ? Math.min(300, c[k]) : 0; // font sizes in px, 0 = the PSD's
   c.front = c.front || {};
