@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-22T22:02:08.282353+00:00",
+  "checked_at": "2026-11-22T22:46:37.417679+00:00",
   "statistics": {
     "total": 1228,
     "fresh": 560,
@@ -7,8 +7,8 @@
     "missing_dates": 279,
     "headline_only": 556,
     "untagged": 502,
-    "sources_ok": 22,
-    "sources_partial": 0,
+    "sources_ok": 21,
+    "sources_partial": 1,
     "sources_failed": 9,
     "new_articles": 4,
     "sources_total": 31,
@@ -569,18 +569,20 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
       "added": 0,
-      "repaired": 30,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 30,
+      "repaired": 29,
+      "article_errors": 1,
+      "listing_errors": [
+        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
