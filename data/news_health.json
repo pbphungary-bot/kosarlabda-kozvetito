@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-22T08:52:02.690361+00:00",
+  "checked_at": "2026-11-22T09:37:11.712345+00:00",
   "statistics": {
-    "total": 1212,
+    "total": 1213,
     "fresh": 550,
-    "fresh_with_summary": 361,
+    "fresh_with_summary": 360,
     "missing_dates": 276,
-    "headline_only": 550,
-    "untagged": 492,
+    "headline_only": 551,
+    "untagged": 493,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 4,
+    "new_articles": 5,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
