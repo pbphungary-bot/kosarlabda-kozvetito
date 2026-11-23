@@ -311,7 +311,6 @@ export function pickPlayer(store, lg, id, key, minM = rankPool(store, lg).minM) 
 }
 
 export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
-  const L = store.league(lg);
   const { pool, minM } = rankPool(store, lg);
   const site = (store.players(lg, homeId)?.source === 'excel' || store.players(lg, awayId)?.source === 'excel') ? 'FULLFIELD.INFO' : 'HUNBASKET.HU';
   const pick = (id, key) => pickPlayer(store, lg, id, key, minM);
@@ -481,7 +480,7 @@ export function rosterPlayers(store, lg, teamId) {
 }
 
 export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
-  const page = store.teamPage(lg, teamId), c = club(lg, teamId);
+  const page = store.teamPage(lg, teamId);
   const players = rosterPlayers(store, lg, teamId);
   const src = 'Hunbasket csapatoldal (keret)';
   const grid = tpl.type === 'rostergrid';

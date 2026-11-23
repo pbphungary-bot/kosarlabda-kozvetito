@@ -4,6 +4,7 @@
 // `sample` reproduces the PSD's own content so the render can be diffed against
 // Photoshop's composite (tests/visual.mjs).
 
+import { FRAMES } from './frames.js';
 import { HSCALE, PANELS, LAYER_OPACITY } from './calibration.js';
 
 const W = 1920, H = 1080;
@@ -27,12 +28,25 @@ function hscaleKey(type, id) {
   return m ? m[1] : null;
 }
 
+/** The panel (court + border) of a PSD graphic as a resizable shape; null when the design has none (see tools/psd_frames.py). */
+export function panelEl(id) {
+  const f = FRAMES[id];
+  if (!f) return null;
+  const [x0, y0, x1, y1] = f.box, [cx0, cy0, cx1, cy1] = f.court;
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], box0: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], texture: 'assets/court/court.jpg', texRect: [cx0, cy0, cx1 - cx0, cy1 - cy0],
+    stroke: f.stroke, sw: f.sw, r: f.r, useBase: true, opacity: f.opacity, fixedFrame: true, lockAspect: false };
+}
+
 const base = (id, league, type, psd, label, extra) => {
   const t = {
     id, league, type, psd, label, width: W, height: H,
     background: `templates/${id}/background.png`, reference: `templates/${id}/reference.png`, ...extra,
   };
   t.panel = PANELS[id];
+  const fid = extra.frameId || id; // the design whose PSD frame this graphic uses (the photo roster shares the table roster's)
+  t.frameId = fid;
+  const pe = panelEl(fid);
+  if (pe) { t.elements = [pe, ...t.elements]; t.background = `templates/${fid}/statics.png`; t.staticsOnTop = true; } // frame = shape, background = the fixed rest of the PSD
   for (const el of t.elements) {
     // layer opacity of the PSD (98.8 % in most designs, 100 % in the intros)
     if (el.opacity === undefined && LAYER_OPACITY[id] !== undefined && LAYER_OPACITY[id] < 1) el.opacity = LAYER_OPACITY[id];
@@ -294,7 +308,7 @@ export function psNormalize(league, cfg) {
 /** The template for one configuration of a player-special design. `base` is the registry entry (background, reference). */
 export function psBuild(base, cfgIn) {
   const league = base.league, g = PS_GEOM[league], cfg = psNormalize(league, cfgIn), op = 0.9882;
-  const [ix0, iy0, ix1, iy1] = g.inner.box;
+  const [, iy0, , iy1] = g.inner.box;
   const photoH = cfg.photoH > 0 ? Math.min(cfg.photoH, iy1 - iy0) : iy1 - iy0;
   const n = cfg.cols;
   // x of the columns: the PSD's own positions for its own column count, otherwise even slots (the label takes one slot)
@@ -310,7 +324,6 @@ export function psBuild(base, cfgIn) {
   const rows = cfg.rows, nr = rows.length;
   const pitch = nr > 1 ? Math.min(g.rowSpan / 5, g.rowSpan / (nr - 1)) : 0;
   const rowSize = cfg.fsRows || Math.min(96, 96 * (pitch || 115) / 115);
-  const small = PS_SMALL * rowSize / 96;
   const group = { title: [], headers: [], labels: [] };
   for (let k = 1; k <= n; k++) group[`c${k}`] = [];
   group.title.push(
@@ -333,7 +346,7 @@ export function psBuild(base, cfgIn) {
   // layering: everything not marked "in front" is drawn behind the photo (default: all text in front of the photo)
   const names = ['title', 'headers', 'labels', ...Array.from({ length: n }, (_, i) => `c${i + 1}`)];
   const isFront = k => cfg.front[k] !== false;
-  const els = [logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
+  const els = [...(panelEl(base.frameId || base.id) ? [panelEl(base.frameId || base.id)] : []), logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
   for (const e of els) if (e.type === 'text') e.adjust = true; // every text has size / position fields
   const t = base2(base, els);
   t.ps = { cfg, groups: names };
@@ -392,7 +405,7 @@ export function rosterDims(n) {
 export function rosterBuild(base, n, mask = '', ns = 1, fs = 1, off = []) {
   const g = ROSTER_GEOM[base.league], op = 0.9882;
   n = Math.max(1, Math.min(24, n || g.defaultN));
-  const els = rosterCommon(g, op);
+  const els = [...(panelEl(base.frameId || base.id) ? [panelEl(base.frameId || base.id)] : []), ...rosterCommon(g, op)];
   if (base.type === 'roster') {
     const pitch = n > 1 ? Math.min(58.4, (g.last - g.first) / (n - 1)) : 0, k = pitch / 58.4;
     const sz = 48.4453 * k, hs = 34.6 * Math.max(k, 0.8);
@@ -435,7 +448,7 @@ export function rosterBuild(base, n, mask = '', ns = 1, fs = 1, off = []) {
 }
 
 function rosterEntry(id, league, type, psd, label, bgId) {
-  const b = base(id, league, type, psd, label, { elements: [], background: `templates/${bgId}/background.png`, reference: `templates/${bgId}/reference.png`, thumb: `templates/${bgId}/thumb.jpg` });
+  const b = base(id, league, type, psd, label, { elements: [], frameId: bgId, background: `templates/${bgId}/background.png`, reference: `templates/${bgId}/reference.png`, thumb: `templates/${bgId}/thumb.jpg` });
   return rosterBuild(b, ROSTER_GEOM[league].defaultN);
 }
 
@@ -444,9 +457,15 @@ function rosterEntry(id, league, type, psd, label, bgId) {
 // A compact corner graphic (at most a quarter of the picture: 960 × 263 for one team, 960 × 478 for two): per game a Gy / V badge,
 // the opponent's logo (or its name when there is no logo) and the score; the latest game on the right.
 const FORM_PANEL = { x: 40, y: 40, w: 960, row: 215, pad: 24 };
+// The panel of the compact graphics (form, head to head) is a shape filled with the court texture, so it can be resized freely.
+const BORDER = { men: '#0b9444', women: '#ec4036' };
+function panelFrame(league, x, y, w, h) {
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [x + w / 2, y + h / 2, w, h], texture: `assets/court/${league}.jpg`, texOrigin: [610, 20],
+    stroke: BORDER[league], sw: 6, r: 28, useBase: true, opacity: 0.965, fixedFrame: true, lockAspect: false };
+}
 function formTpl(id, league, rows) {
   const { x, y, w, row, pad } = FORM_PANEL, op = 0.9882, h = pad * 2 + row * rows;
-  const els = [];
+  const els = [panelFrame(league, x, y, w, h)];
   for (let r = 0; r < rows; r++) {
     const top = y + pad + r * row, k = `t${r}`;
     els.push({ id: `${k}.logo`, type: 'image', label: rows > 1 ? `${r + 1}. csapat logója` : 'Csapat logója', group: rows > 1 ? `${r + 1}. csapat` : 'Csapat', box: [x + pad + 85, top + 100, 140, 140], fit: 'contain', opacity: op, logoOutline: true });
@@ -461,7 +480,7 @@ function formTpl(id, league, rows) {
     }
   }
   const t = base(id, league, rows > 1 ? 'formpair' : 'form', 'Forma', rows > 1 ? 'Forma (két csapat)' : 'Forma', {
-    elements: els, background: `templates/${rows > 1 ? 'formpair' : 'form'}-${league}/background.png`, reference: null, thumb: `templates/${rows > 1 ? 'formpair' : 'form'}-${league}/thumb.jpg`,
+    elements: els, background: null, reference: null, thumb: `templates/${rows > 1 ? 'formpair' : 'form'}-${league}/thumb.jpg`,
   });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
@@ -472,7 +491,7 @@ function formTpl(id, league, rows) {
 // One row per meeting, newest on top: date · home badge · score · away badge. Panel 680x478 (top-left, like the form graphic).
 const H2H_PANEL = { x: 40, y: 40, w: 680, row: 86, pad: 24, rows: 5 };
 function h2hTpl(id, league) {
-  const { x, y, w, row, pad, rows } = H2H_PANEL, op = 0.9882, h = pad * 2 + row * rows, els = [];
+  const { x, y, w, row, pad, rows } = H2H_PANEL, op = 0.9882, h = pad * 2 + row * rows, els = [panelFrame(league, x, y, w, h)];
   for (let r = 0; r < rows; r++) {
     const cy = y + pad + row * r + row / 2, g = `${r + 1}. meccs`, base = y + pad + row * r + row / 2;
     const txt = (size, extra) => ({ type: 'text', group: g, size, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, adjust: true, ...extra });
@@ -483,7 +502,7 @@ function h2hTpl(id, league) {
       { id: `h${r}.away`, type: 'image', label: `${r + 1}. meccs – vendég`, group: g, box: [x + 590, cy, 84, 72], fit: 'contain', opacity: op, logoOutline: true },
     );
   }
-  const t = base(id, league, 'h2h', 'Forma-panel (saját)', 'Egymás ellen', { elements: els, background: `templates/${id}/background.png`, reference: null, thumb: `templates/${id}/thumb.jpg` });
+  const t = base(id, league, 'h2h', 'Forma-panel (saját)', 'Egymás ellen', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
   return t;

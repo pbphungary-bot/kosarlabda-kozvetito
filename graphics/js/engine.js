@@ -208,9 +208,24 @@ function drawFramed(ctx, el, v, assets, report) {
   report.boxes[el.id] = [x0, y0, w, h];
   const sw = el.sw ?? 6, r = Math.min(el.r ?? 18, w / 2, h / 2);
   const fill = v.fill !== undefined ? v.fill : el.fill;
+  const tex = el.texture && assets.images['tex/' + el.texture];
   ctx.save();
-  ctx.globalAlpha = el.opacity ?? 1;
-  if (fill) { ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.fillStyle = fill; ctx.fill(); }
+  ctx.globalAlpha = (el.useBase && assets.baseOpacity != null ? assets.baseOpacity : el.opacity) ?? 1; // panels follow the "base opacity" slider
+  if (tex && fill !== '') { // court texture at its natural scale (a bigger panel shows more of it); cover-scaled when the panel outgrows it
+    ctx.save(); ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.clip();
+    if (el.texRect) { // the court is part of the frame: it moves with it and scales with it (uniformly, so circles stay round; it always covers the frame)
+      const [tx, ty, tw, th] = el.texRect, [bx, by, bw, bh] = el.box0 || el.box;
+      const k = Math.max(w / bw, h / bh), tcx = cx + (tx + tw / 2 - bx) * k, tcy = cy + (ty + th / 2 - by) * k;
+      ctx.drawImage(tex, tcx - tw * k / 2, tcy - th * k / 2, tw * k, th * k);
+    } else if (w <= tex.width && h <= tex.height) {
+      const [ox, oy] = el.texOrigin || [0, 0];
+      ctx.drawImage(tex, Math.min(ox, tex.width - w), Math.min(oy, tex.height - h), w, h, x0, y0, w, h);
+    } else {
+      const k = Math.max(w / tex.width, h / tex.height);
+      ctx.drawImage(tex, x0 - (tex.width * k - w) / 2, y0 - (tex.height * k - h) / 2, tex.width * k, tex.height * k);
+    }
+    ctx.restore();
+  } else if (fill) { ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.fillStyle = fill; ctx.fill(); }
   const img = v.src ? assets.images[v.src] : null;
   if (img) {
     const pad = sw + (v.pad ?? el.pad ?? 0);
@@ -270,6 +285,7 @@ function drawImage(ctx, el, v, assets, report, inner) {
  * under the panel keeps its own opacity. base == null keeps the PSD's native opacity.
  */
 export function applyBaseOpacity(ctx, template, base) {
+  if (template.elements?.some(e => e.id === 'panel' && e.type === 'framed')) return; // the panel shape follows the opacity itself (drawFramed)
   const p = template.panel;
   if (base === null || base === undefined || !p) return;
   const f = base / p.alpha;
@@ -313,7 +329,9 @@ export function render(canvas, template, values, assets) {
   ctx.translate(template.width / 2 + gdx, template.height / 2 + gdy);
   ctx.scale(gs, gs);
   ctx.translate(-template.width / 2, -template.height / 2);
-  if (bgLayer) ctx.drawImage(bgLayer, 0, 0);
+  let liveInner = template.inner;
+  const staticsOnTop = !!bgLayer && !!template.staticsOnTop; // fixed texts / logos of the PSD are drawn over the (shape) panel
+  if (bgLayer && !staticsOnTop) ctx.drawImage(bgLayer, 0, 0);
   for (const base of template.elements) {
     const v = values[base.id] || {};
     let el = v.geom ? { ...base, ...v.geom } : base;
@@ -340,15 +358,17 @@ export function render(canvas, template, values, assets) {
     }
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
-    const clip = el.clipInner && template.inner; // the panel's outline is untouchable: the clip stays put even when the content moves
+    if (el.id === 'panel' && el.type === 'framed') { const [pcx, pcy, pw, ph] = el.box, sw = el.sw ?? 0; liveInner = { box: [pcx - pw / 2 + sw, pcy - ph / 2 + sw, pcx + pw / 2 - sw, pcy + ph / 2 - sw], r: Math.max((el.r ?? 0) - sw, 0) }; } // photos stay inside the (resized) panel
+    const clip = el.clipInner && liveInner; // the panel's outline is untouchable: the clip stays put even when the content moves
     if (clip) { ctx.save(); ctx.beginPath(); roundRectPath(ctx, template.inner.box, template.inner.r); ctx.clip(); }
-    const moved = contentOn && (el.id !== 'photo' || C.photo !== false);
+    const moved = contentOn && !el.fixedFrame && (el.id !== 'photo' || C.photo !== false);
     if (moved) { ctx.save(); ctx.translate(ccx + cdx, ccy + cdy); ctx.scale(cs, cs); ctx.translate(-ccx, -ccy); }
     if (el.type === 'text') drawText(ctx, el, v, report);
     else if (el.type === 'image') drawImage(ctx, el, v, assets, report, template.inner);
     else if (el.type === 'framed') drawFramed(ctx, el, v, assets, report);
     if (moved) ctx.restore();
     if (clip) ctx.restore();
+    if (staticsOnTop && el.id === 'panel') ctx.drawImage(bgLayer, 0, 0);
   }
   ctx.restore();
   return report;
