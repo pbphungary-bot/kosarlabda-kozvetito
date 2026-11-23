@@ -4,10 +4,10 @@ import { zipSync, strToU8 } from '../vendor/fflate.js';
 
 /** [template type, whose data, label of the file] – the order of the numbers in the file names. */
 export const PACKAGE_ITEMS = [
-  { id: 'intro', type: 'intro', who: 'match', label: 'Intro' },
+  { id: 'intro', type: 'intro', who: 'match', label: 'Intro', defaultOn: false },
   { id: 'nextmatch', type: 'nextmatch', who: 'match', label: 'Kovetkezik' },
   { id: 'comparison', type: 'comparison', who: 'match', label: 'Csapatok_osszevetese' },
-  { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Csillagjatekosok' },
+  { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Csillagjatekosok', defaultOn: false },
   { id: 'referees', type: 'referees', who: 'match', label: 'Jatekvezetok' },
   { id: 'formpair', type: 'formpair', who: 'match', label: 'Forma' },
   { id: 'h2h', type: 'h2h', who: 'match', label: 'Egymas_ellen' },
@@ -19,6 +19,10 @@ export const PACKAGE_ITEMS = [
   { id: 'results-away', type: 'results', who: 'away', label: 'Eredmenyek' },
   { id: 'roster-home', type: 'roster', who: 'home', label: 'Keret' },
   { id: 'roster-away', type: 'roster', who: 'away', label: 'Keret' },
+  { id: 'rostergrid-home', type: 'rostergrid', who: 'home', label: 'Keret_fotokkal' },
+  { id: 'rostergrid-away', type: 'rostergrid', who: 'away', label: 'Keret_fotokkal' },
+  { id: 'playerspecial-home', type: 'playerspecial', who: 'home', label: 'Jatekos_kulonleges', defaultOn: false },
+  { id: 'playerspecial-away', type: 'playerspecial', who: 'away', label: 'Jatekos_kulonleges', defaultOn: false },
   { id: 'teamstats-home', type: 'teamstats', who: 'home', label: 'Csapatstat' },
   { id: 'teamstats-away', type: 'teamstats', who: 'away', label: 'Csapatstat' },
 ];

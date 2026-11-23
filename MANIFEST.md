@@ -4,6 +4,16 @@ Living record of **what exists, what was agreed and what is finished**. Kept up 
 Rule: anything under **LOCKED** is finished and agreed – it is used as it is and is **not reworked** unless the owner explicitly asks.
 See also: `DESIGN-SYSTEM.md` (look & feel rules), `graphics/README.md` (feature guide, Hungarian), `graphics/HASZNALATI-UTMUTATO.md` (user guide).
 
+## 0. Platform priority (owner decision 2026-11-23)
+**Desktop first.** The tools are used on desktop; design, polish and test the desktop version only. The mobile/phone versions stay as they are (existing tests keep passing) but get no new work, no real-phone testing and no mobile screenshots unless the owner asks.
+
+## 0b. Handoff (where we stopped, 2026-11-23)
+- Everything is committed and pushed on `claude/focused-dirac-vkihwr`; PR #28 holds the latest work (head to head 6 rows, photo roster in the ZIP, intro rank shown, package defaults, sidebar splitter, key-players fixes). The owner merges; check CI is green first (`/check`).
+- Awaiting the owner's review (REVIEW rows below): resizable frames with the court fit rule, key players (photos, upload, ranks), logo line, Csapatok layout + printable team sheet, studio sidebar splitter.
+- Owner's view on weak spots: **Kulcsjátékosok** (data gaps – ask for a concrete match to analyse), **Játékos-különleges**, **Intro** (position line now shown) – unticked in the ZIP by default.
+- Working style the owner wants: short sessions, one feature per session, restate the rule first, desktop only, no rework of LOCKED items, fewer e-mails (CI runs on pull requests only).
+- Start a new session with `/start <task>`; end with `/finish`.
+
 ## 1. Purpose
 Basketball commentator tool for the Hungarian NB I/A (men + women, always separate):
 1. **Közvetítőhub** (`index.html`, `css/dashboard.css`) – match preparation dashboard (schedule/results, standings, team pages, head-to-head, notes, news, match sheet).
@@ -29,18 +39,18 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | any player selectable (dropdown bug fixed), ranks also for players with few games (among all who played, noted in the field), own photo upload per side (wins over Hunbasket photo/logo, with background removal), photos instead of logos (option), levelled + mirrored rows, source-name colour |
 | Csapatstatisztika | REVIEW | |
 | Eredmények / Eredmények (színes sorok) / Menetrend | REVIEW | editable rows (delete/add/reorder at once); schedule starts with the game after the next; rows reset on team change |
-| Intro | REVIEW | |
+| Intro | REVIEW | position + W-L line ("(3. hely - 5-2)") is now shown by default (the PSD has it hidden); two-line names make room for it |
 | Játékos-különleges | REVIEW | per-column data source (manual / season / career / last N); columns movable as units; AI background removal for the photo |
 | Keret (táblás) / Keret (fotókkal) | REVIEW | name order rule (below); jersey-number and flag size fields; row moving |
 | Forma / Forma (két csapat) | **LOCKED** | GY / V badges, @ before the score for away games, ≤ ¼ of the picture, no text caption |
-| Egymás ellen (head to head) | **LOCKED** (look) | last 5 meetings: date · badge · score · badge; data covers 7 seasons only |
+| Egymás ellen (head to head) | **LOCKED** (look) | last up to **6** meetings: date · badge · score · badge; the box is exactly as tall as the list; score green / red from the match's HOME team's point of view ("we work for the home team"); data covers 7 seasons only |
 | Extra (MKOSZ) | **LOCKED** | photo frame + QR frame, free / proportional resize, uploads |
 | Következik | REVIEW | |
 | Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
 Studio layout: desktop sidebar width is draggable (splitter, remembered, double click resets); controls wrap instead of overflowing – REVIEW.
 
-Other studio features: ZIP package of all graphics of a match, presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
+Other studio features: ZIP package of all graphics of a match (includes the photo roster; **Intro, Csillagjátékosok and Játékos-különleges are unticked by default** – owner decision, they can be ticked per download), presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
 
 ## 4. Közvetítőhub – status
 | Area | Status |
@@ -50,7 +60,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 | Csapatok tab layout: open button in the card's header row (top right), "← Vissza a csapatokhoz" back button, "Teljes csapatlap nyomtatása" (one A4 landscape team sheet: last games, roster, 3 stat tables, records/zones, matches), clean transparent crests everywhere (`graphics/logos`, old `logos/` only as fallback) | REVIEW |
 | Meccslap (one-page A4 match sheet) | REVIEW |
 | Logo line (club crest rail under the header, men + women) | REVIEW | tiles with the clean transparent studio logos, optical size normalisation, league label + accent (men green / women red), hover accent in the club colour, swipeable row on phones, click = player statistics |
-| Mobile version + view switch | REVIEW (not yet tested on a real phone) |
+| Mobile version + view switch | PARKED (desktop first; kept working, no further work) |
 | Shared notes (Supabase, project "Kosárlabda Jegyzetek") | REVIEWED read-only (2026-11-23), nothing changed: one table `public.matchup_notes` (5 rows, RLS on, length checks, version column). Anyone with the public anon key can read, insert and update every row (policies `using true`); delete is blocked. **Owner decision (2026-11-23): leave it as it is** – only the commentators who work with the owner use it. Not to be raised again unless the audience changes (then: access code or login). |
 
 ## 5. LOCKED decisions (do not revisit without being asked)
@@ -63,7 +73,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 - Working agreement: work on a branch, open PRs, **the owner merges** (never merge/deploy by the assistant); CI (unit + browser tests) must be green; docs (this file, README) updated with every change.
 
 ## 6. Open items / ideas
-Real-phone test of both mobile versions · Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
+Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
 
 ## 7. Repo map
 `index.html`+`css/dashboard.css` dashboard · `graphics/` studio (`js/` app, engine, templates, binders, panels, bgremove; `templates/<id>/` statics+thumbs; `assets/court/court.png`; `players/` photos; `models/`+`vendor/ort/` background removal) · `data/` collected JSON · `scripts/` collectors · `tools/` PSD extraction (`psd_extract.py`, `psd_frames.py`) · `tests/` (unit + browser) · `.github/workflows/` collectors + CI · `BROADCAST GRAPHICS/` the owner's PSDs (read-only source).

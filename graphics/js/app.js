@@ -721,8 +721,8 @@ function sharePng() {
 
 // ───────────────────────── full graphic package of a match (ZIP) ─────────────────────────
 function packageItemsHtml() {
-  const on = lsGet('nbia.studio.packageItems', null);
-  return PACKAGE_ITEMS.map(it => `<label class="chk"><input type="checkbox" class="pkgItem" value="${it.id}" ${!on || on.includes(it.id) ? 'checked' : ''}> ${esc(it.label.replace(/_/g, ' '))}${it.who === 'home' ? ' – hazai csapat' : it.who === 'away' ? ' – vendég csapat' : ''}</label>`).join('');
+  const on = lsGet('nbia.studio.packageItems.v2', null); // v2: Intro, Csillagjátékosok and Játékos-különleges are unticked by default
+  return PACKAGE_ITEMS.map(it => `<label class="chk"><input type="checkbox" class="pkgItem" value="${it.id}" ${on ? (on.includes(it.id) ? 'checked' : '') : (it.defaultOn === false ? '' : 'checked')}> ${esc(it.label.replace(/_/g, ' '))}${it.who === 'home' ? ' – hazai csapat' : it.who === 'away' ? ' – vendég csapat' : ''}</label>`).join('');
 }
 
 /** Renders one template with the automatic data (+ saved layout) without touching what is on screen. */
@@ -762,7 +762,7 @@ async function exportPackage() {
   const btn = $('pkgBtn');
   if (!m) return toast('Válassz előbb mérkőzést (Adatok fül).');
   const chosen = [...document.querySelectorAll('.pkgItem:checked')].map(x => x.value);
-  lsSet('nbia.studio.packageItems', chosen);
+  lsSet('nbia.studio.packageItems.v2', chosen);
   const items = PACKAGE_ITEMS.filter(it => chosen.includes(it.id));
   if (!items.length) return toast('Jelölj ki legalább egy grafikát.');
   btn.disabled = true;

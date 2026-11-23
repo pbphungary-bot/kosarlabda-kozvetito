@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Anything marked **LOCKED** there is finished and agreed: use it as it is, do **not** redo or restyle it unless the owner explicitly asks. When the owner says something is finished/approved, mark it LOCKED in the same commit. Keep both files (and `graphics/README.md`, Hungarian) up to date with every change.
 - Product rules: never invent data (missing data is flagged, freshness shown); men and women always separate; League Gothic Regular/Italic only; graphics export as transparent 1920×1080 PNG.
 - Work on the branch you are given and open pull requests; the owner merges, never merge/deploy yourself. Push only when both local test sets pass, then confirm the GitHub CI result. The repo is public (PSDs, photos and data are visible to everyone).
+- Platform: **desktop first** – design, polish and verify the desktop versions only; do not spend effort on phone layouts, mobile screenshots or real-phone tests unless the owner asks (just do not break the existing mobile code/tests).
 - Language: the UI texts, README and user guide are Hungarian; code, comments, commit messages and these project files are English. The owner chats in English.
 - Never run `tools/psd_extract.py` without `--only <template-id>` (it regenerates every template and logo).
 - Session shortcuts live in `.claude/commands/`: `/start <task>`, `/finish`, `/check` (owner types these instead of long prompts).
