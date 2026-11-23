@@ -8,7 +8,7 @@ import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate 
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate 
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -154,6 +154,22 @@ function currentMatch() {
   return store.league(state.league).fixtures.find(m => matchKey(m) === s.matchKey) || null;
 }
 
+/** Options of the comparison graphics: colour of the data-source name; key players: photos instead of logos. */
+function cmpOptionsHtml(s, t) {
+  const col = s.srcColor || SRC_COLOR;
+  const photo = t.type === 'playercompare' ? `<div class="row2"><label>Középen: <select id="pcMode"><option value="auto" ${s.pc?.mode !== 'logo' ? 'selected' : ''}>a játékosok fotója (ha van)</option><option value="logo" ${s.pc?.mode === 'logo' ? 'selected' : ''}>a klubok logója</option></select></label>
+      <label>Fotó átlátszatlansága (%)<input type="number" id="pcOpacity" min="10" max="100" step="5" value="${Math.round((s.pc?.photoOpacity ?? 0.6) * 100)}"></label></div>` : '';
+  return `<div class="row2"><label>Forrás-felirat színe (FULLFIELD.INFO / HUNBASKET.HU)<span class="import-row"><input type="color" id="srcColor" value="${col}"> <button type="button" id="srcColorReset" class="ghost">Alap</button></span></label></div>${photo}`;
+}
+function wireCmpOptions(s) {
+  $('srcColor').oninput = e => { s.srcColor = e.target.value; update(false); };
+  $('srcColorReset').onclick = () => { s.srcColor = null; renderSelection(); update(true); };
+  if ($('pcMode')) {
+    $('pcMode').onchange = e => { (s.pc ||= {}).mode = e.target.value; update(true); };
+    $('pcOpacity').onchange = e => { (s.pc ||= {}).photoOpacity = Math.max(0.1, Math.min(1, (+e.target.value || 60) / 100)); update(true); };
+  }
+}
+
 function playerSelects() {
   const m = currentMatch(), s = sel(), lg = state.league;
   if (!m) return '';
@@ -185,7 +201,8 @@ function renderSelection(extra = {}) {
         <select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey && !s.custom ? 'selected' : ''}>${esc(matchLabel(m))}${m.resultMissing ? ' – eredmény hiányzik az adatokból' : ''}</option>`).join('')}
         <option value="__custom" ${s.custom ? 'selected' : ''}>Egyéni párosítás…</option></select></label>
       <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
-      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}${t.type === 'playercompare' ? playerSelects() : ''}`;
+      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}${t.type === 'playercompare' ? playerSelects() : ''}${t.type === 'comparison' || t.type === 'playercompare' ? cmpOptionsHtml(s, t) : ''}`;
+    if (t.type === 'comparison' || t.type === 'playercompare') wireCmpOptions(s);
     if (t.type === 'playercompare') {
       for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetMatchOverrides(); update(true); };
     }
@@ -363,8 +380,8 @@ function autoValues() {
     if (t.type === 'formpair') v = bindForm(store, lg, [m.homeId, m.awayId]);
     else if (t.type === 'h2h') { v = bindH2H(store, lg, m.homeId, m.awayId); if (!store.h2hGames(lg, m.homeId, m.awayId).length) info.notices.push({ text: 'Ennek a két csapatnak nincs korábbi egymás elleni meccse az adatokban (Hunbasket 2020/21-től).' }); }
     else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
-    else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
-    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
+    else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId, s.srcColor);
+    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, { ...(s.pc || {}), photoIds, srcColor: s.srcColor });
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
   } else if (t.type === 'form') {

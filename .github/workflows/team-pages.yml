@@ -2,7 +2,7 @@ name: Hunbasket Team Pages
 on:
   workflow_dispatch:
   schedule:
-    - cron: '50 5,17 * * *'
+    - cron: '50 */3 * * *'
 permissions:
   contents: write
 concurrency:

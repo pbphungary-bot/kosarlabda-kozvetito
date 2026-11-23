@@ -43,10 +43,11 @@ const field = (text, source, extra = {}) => (text === null || text === undefined
   ? { text: MISSING, source, missing: true, ...extra }
   : { text: String(text), source, ...extra });
 
+export const SRC_COLOR = '#37b3fd'; // default colour of the data-source name (FULLFIELD.INFO / HUNBASKET.HU) in the subtitle
 const logo = (lg, id) => ({ src: `${lg}/${id}`, source: 'Logó a "logók 26-27" PSD-ből' });
 
 // ───────────────────────── comparison ─────────────────────────
-export function bindComparison(store, lg, homeId, awayId) {
+export function bindComparison(store, lg, homeId, awayId, srcColor) {
   const L = store.league(lg);
   const fromExcel = STAT_ROWS.some(s => store.statSource(lg, homeId, s.key) === 'excel' || store.statSource(lg, awayId, s.key) === 'excel');
   const srcName = L.statSource === 'kosarstat' ? 'KosárStat' : 'Hunbasket';
@@ -55,7 +56,7 @@ export function bindComparison(store, lg, homeId, awayId) {
   const missingFromExcel = excelOn ? [homeId, awayId].filter(id => !store.excelHasTeam(lg, id)).map(id => club(lg, id)?.official || id) : [];
   const v = {
     subtitle: {
-      runs: [{ text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' }, { text: site, color: '#37b3fd' }],
+      runs: [{ text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' }, { text: site, color: srcColor || SRC_COLOR }],
       text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' + site,
       source: fromExcel ? 'FullField.info Excel (feltöltve)' : 'Adatforrás: ' + srcName,
       note: missingFromExcel.length ? `Nem szerepel a feltöltött FullField Excelben: ${missingFromExcel.join(', ')} – az ő értékei a ${srcName}-adatokból jönnek, ellenőrizd a feliratot.` : undefined,
@@ -319,13 +320,20 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
   const v = {
     title: { text: 'KULCSJÁTÉKOSOK', source: 'Fix felirat (a PSD-ben „Csapatok összevetése” állt)' },
     subtitle: {
-      runs: [{ text: nm(hp), color: GREEN }, { text: ' – ' }, { text: nm(ap), color: RED }, { text: ' – idei átlagok, via ' }, { text: site, color: '#37b3fd' }],
+      runs: [{ text: nm(hp), color: GREEN }, { text: ' – ' }, { text: nm(ap), color: RED }, { text: ' – idei átlagok, via ' }, { text: site, color: sel.srcColor || SRC_COLOR }],
       text: `${nm(hp)} – ${nm(ap)} – idei átlagok, via ${site}`,
       source: 'Kiválasztott játékosok', note: !hp || !ap ? 'Az egyik csapathoz nincs játékosstatisztika az adatokban.' : undefined,
     },
     'home.logo': logo(lg, homeId),
     'away.logo': logo(lg, awayId),
   };
+  // photos of the two players instead of the club logos (Hunbasket photos; a player without a photo keeps his club's logo)
+  if (sel.mode !== 'logo') {
+    for (const [side, p, tid] of [['home', hp, homeId], ['away', ap, awayId]]) {
+      const pid = p ? playerIdFor(store, lg, tid, p.name) : null;
+      if (pid && sel.photoIds?.has(pid)) v[`${side}.logo`] = { src: `photo/${pid}`, source: 'Hunbasket fotó (' + p.name + ')', geom: { fit: 'contain', area: undefined, anchor: 'bottom', logoOutline: false, opacity: sel.photoOpacity ?? 0.6 } };
+    }
+  }
   const rankOf = (p, col, s) => {
     if (!p || num(p[col]) === null) return null;
     const val = num(p[col]);
