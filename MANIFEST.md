@@ -70,7 +70,7 @@ Other studio features: ZIP package of all graphics of a match (includes the phot
 - **Name order:** foreigners "Given SURNAME", Hungarians "SURNAME Given"; surname highlighted in capitals on photo cards. (Smuda is not Hungarian.)
 - Forma look (see table), no text caption, never larger than a quarter of 1920×1080.
 - Team-page / stat tables: "all the stats available on Hunbasket should be reachable".
-- Working agreement: work on a branch, open PRs, **the owner merges** (never merge/deploy by the assistant); CI (unit + browser tests) must be green; docs (this file, README) updated with every change.
+- Working agreement: work on a branch, open PRs; the assistant may merge **only** what the owner asked for, once it is finished, tested and CI is green (owner decision 2026-11-23) – nothing unrequested; CI (unit + browser tests) must be green; docs (this file, README) updated with every change.
 
 ## 6. Open items / ideas
 Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
