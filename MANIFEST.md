@@ -51,7 +51,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 | Meccslap (one-page A4 match sheet) | REVIEW |
 | Logo line (club crest rail under the header, men + women) | REVIEW | tiles with the clean transparent studio logos, optical size normalisation, league label + accent (men green / women red), hover accent in the club colour, swipeable row on phones, click = player statistics |
 | Mobile version + view switch | REVIEW (not yet tested on a real phone) |
-| Shared notes (Supabase) | OPEN – row-level-security review needs the owner's `pg_policies` output (never keys) |
+| Shared notes (Supabase, project "Kosárlabda Jegyzetek") | REVIEWED read-only (2026-11-23), nothing changed: one table `public.matchup_notes` (5 rows, RLS on, length checks, version column). Anyone with the public anon key can read, insert and update every row (policies `using true`); delete is blocked. Open decision for the owner: accept as is / access code / login; low-risk fix pending: pin the trigger function's `search_path`. |
 
 ## 5. LOCKED decisions (do not revisit without being asked)
 - Fonts: **League Gothic Regular/Italic only, everywhere in the graphics** (owner's rule; this also covers the men's referee graphic although its PSD uses Satoshi).

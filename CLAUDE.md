@@ -35,7 +35,7 @@ There is no build step and no package.json: everything is static files (ES modul
 
 **Tests** are hermetic: unit tests load `tests/fixtures/data` through `tests/helpers.mjs` (`loadStore`); e2e routes `/data/*.json` to the same fixtures. Update the fixtures (copy from `data/`) when a collector's output format changes. CI (`.github/workflows/tests.yml`) runs unit + Python + e2e on pull requests.
 
-**Data conventions:** matching is club-scoped (`clubIdStrict`), never fuzzy across leagues; collectors use a polite User-Agent, are low-frequency, and `mkosz.hu`, `webpont`, `facebook` and `eredmenyek.com` are not reachable from the sandbox (use workflow probes or pasted data). `updated_at` in a data file only changes when the content changes, so an old stamp can still be a current file (some collectors also write a `checked` stamp). Shared dashboard notes use Supabase (row-level security not yet reviewed).
+**Data conventions:** matching is club-scoped (`clubIdStrict`), never fuzzy across leagues; collectors use a polite User-Agent, are low-frequency, and `mkosz.hu`, `webpont`, `facebook` and `eredmenyek.com` are not reachable from the sandbox (use workflow probes or pasted data). `updated_at` in a data file only changes when the content changes, so an old stamp can still be a current file (some collectors also write a `checked` stamp). Shared dashboard notes use Supabase (table `matchup_notes`; reviewed read-only, see MANIFEST – the anon key can read/write every note; no changes without the owner's decision).
 
 ## Lessons learned (do not repeat these)
 **Session hygiene**
