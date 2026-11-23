@@ -71,6 +71,10 @@ export const STAT_ROWS = [
 
 // ───────────────────────── Csapatok összevetése ─────────────────────────
 function comparison(id, league, psd, g, type = 'comparison') {
+  if (type === 'playercompare' && g.cx) { // key players: values / ranks / photos mirrored around the label column, rank rows on the value rows' baseline
+    const dv = (g.av - g.hv) / 2, dr = (g.ar - g.hr) / 2, dl = (g.al[0] - g.hl[0]) / 2, ly = (g.hl[1] + g.al[1]) / 2;
+    g = { ...g, hv: g.cx - dv, av: g.cx + dv, hr: g.cx - dr, ar: g.cx + dr, hl: [g.cx - dl, ly], al: [g.cx + dl, ly], level: true };
+  }
   const els = [
     { id: 'subtitle', type: 'text', label: 'Alcím (adatforrás)', group: 'Fejléc', x: g.subX, y: 163.2, align: 'center',
       font: 'italic', size: 48, tracking: 10, color: '#000000', outline: ol(3, '#ffffff'), runs: true, maxWidth: 1150 },
@@ -79,7 +83,7 @@ function comparison(id, league, psd, g, type = 'comparison') {
   ];
   STAT_ROWS.forEach((s, i) => {
     const y = 253.5 + i * 90.6667;
-    const yr = g.rankY + i * 89.6;
+    const yr = g.level ? y : g.rankY + i * 89.6;
     const common = { size: 74.6667, tracking: 25, outline: ol(3, '#ffffff', 1), align: 'center', maxWidth: 170 };
     els.push(
       { id: `home.rank.${s.key}`, type: 'text', label: `Hazai ${s.label} helyezés`, group: 'Hazai', x: g.hr, y: yr, ...common, tracking: g.rankTracking, color: '#383838', maxWidth: 110 },
@@ -596,10 +600,10 @@ export const TEMPLATES = [
     },
   }),
   comparison('playercompare-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
-    subX: 602.2, titleX: 605.5, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
+    subX: 602.2, titleX: 605.5, cx: 605, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
   }, 'playercompare'),
   comparison('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
-    subX: 648.2, titleX: 651.5, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
+    subX: 648.2, titleX: 651.5, cx: 651, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
   }, 'playercompare'),
   playerspecial('playerspecial-men', 'men', 'Uros STAT.psd'),
   playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd'),

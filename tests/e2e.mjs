@@ -21,6 +21,25 @@ function pngInfo(buf) {
   return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20), colorType: buf[25] };
 }
 
+/** Selects the panel (frame) in the layout editor by clicking a spot of its edge that no other element covers; retries while the overlay settles. */
+async function selectPanel(page) {
+  await page.waitForSelector('.hit[data-id="panel"]', { timeout: 15000 });
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded();
+    const bb = await hit.boundingBox();
+    const vp = page.viewportSize();
+    const pts = [];
+    for (let f = 0.06; f < 0.95; f += 0.03) pts.push([bb.x + bb.width * f, bb.y + bb.height - 4], [bb.x + bb.width * f, bb.y + 4]);
+    for (let f = 0.06; f < 0.95; f += 0.03) pts.push([bb.x + 4, bb.y + bb.height * f], [bb.x + bb.width - 4, bb.y + bb.height * f]);
+    for (const [x, y] of pts) {
+      if (x < 0 || y < 0 || x > vp.width || y > vp.height) continue;
+      if (await page.evaluate(([px, py]) => document.elementFromPoint(px, py)?.dataset?.id === 'panel', [x, y])) { await page.mouse.click(x, y); return true; }
+    }
+    await page.waitForTimeout(400);
+  }
+  return false;
+}
+
 const results = [];
 const check = (name, fn) => fn().then(() => results.push(['ok', name]), e => { results.push(['FAIL', name, e.message]); });
 
@@ -1081,18 +1100,13 @@ try {
     for (const id of ['form-men', 'h2h-men', 'roster-men', 'results-women', 'playerspecial-men', 'comparison-men', 'intro-women']) {
       await page.click(`.league-toggle button[data-league="${id.endsWith('women') ? 'women' : 'men'}"]`);
       await page.click(`#templateList button[data-id="${id}"]`);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1800);
       await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
       if (!(await page.$eval('#editMode', e => e.checked))) await page.check('#editMode');
       const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
       const before = await shot();
       const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded(); const bb = await hit.boundingBox();
-      let clicked = false; // a spot of the panel's bottom edge that no other element covers
-      for (let fx = 0.08; fx < 0.95 && !clicked; fx += 0.04) {
-        const px = bb.x + bb.width * fx, py = bb.y + bb.height - 4;
-        if (await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.dataset?.id === 'panel', [px, py])) { await page.mouse.click(px, py); clicked = true; }
-      }
-      assert.ok(clicked, `${id}: panel selectable`);
+      assert.ok(await selectPanel(page), `${id}: panel selectable`);
       await page.waitForTimeout(300);
       const hb = await (await page.$('.hit[data-id="panel"] .rh[data-c="se"]')).boundingBox();
       await page.mouse.move(hb.x + 8, hb.y + 8); await page.mouse.down(); await page.mouse.move(hb.x + 8 + 90, hb.y + 8 + 40, { steps: 4 }); await page.mouse.up();
@@ -1107,16 +1121,11 @@ try {
   await check('frame = court + outline as one unit: moving the panel carries the court with it (pixel-identical)', async () => {
     await page.click('.league-toggle button[data-league="men"]');
     await page.click('#templateList button[data-id="roster-men"]');
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1800);
     await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
     if (!(await page.$eval('#editMode', e => e.checked))) await page.check('#editMode');
     const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded(); const bb = await hit.boundingBox();
-    let clicked = false;
-    for (let fx = 0.08; fx < 0.95 && !clicked; fx += 0.04) {
-      const px = bb.x + bb.width * fx, py = bb.y + bb.height - 4;
-      if (await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.dataset?.id === 'panel', [px, py])) { await page.mouse.click(px, py); clicked = true; }
-    }
-    assert.ok(clicked);
+    assert.ok(await selectPanel(page), 'panel selectable');
     // a strip of the panel above the table header: only court + border, no dynamic element
     const strip = x => page.evaluate(x0 => Array.from(document.getElementById('canvas').getContext('2d').getImageData(x0, 62, 600, 18).data), x);
     const before = await strip(800);

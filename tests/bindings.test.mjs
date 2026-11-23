@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadStore, readJson, DATA_DIR } from './helpers.mjs';
-import { bindH2H, bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
+import { bindPlayerCompare, bindH2H, bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
 import { templateById, STAT_ROWS, TEAMSTAT_COLS } from '../graphics/js/templates.js';
 import { clubId } from '../graphics/js/clubs.js';
 import { gameKey } from '../graphics/js/data.js';
@@ -310,4 +310,30 @@ test('head to head: past meetings of two clubs, newest first, both orientations,
   // fewer than five meetings: the missing rows stay empty
   const none = bindH2H({ h2hGames: () => g.slice(0, 2) }, 'men', 'kecskemet', 'nkapecs');
   assert.equal(none['h1.score'].text !== '', true); assert.equal(none['h2.score'].text, ''); assert.equal(none['h4.home'].src, '');
+});
+
+test('key players graphic: photos instead of logos (with fallback), source colour, rows level and mirrored', async () => {
+  const store = await loadStore();
+  const t = templateById('playercompare-men'), el = id => t.elements.find(e => e.id === id);
+  for (const lgT of ['playercompare-men', 'playercompare-women']) {
+    const tt = templateById(lgT), e = id => tt.elements.find(x => x.id === id);
+    const cx = lgT.endsWith('men') && !lgT.endsWith('women') ? 605 : 651;
+    assert.equal((e('home.ppg').x + e('away.ppg').x) / 2, cx, 'values mirrored around the label column');
+    assert.equal((e('home.rank.ppg').x + e('away.rank.ppg').x) / 2, cx, 'ranks mirrored');
+    for (const s of ['ppg', 'val']) assert.equal(e(`home.rank.${s}`).y, e(`home.${s}`).y, 'rank rows on the value baseline');
+    assert.equal(e('home.logo').box[1], e('away.logo').box[1], 'photo slots level');
+  }
+  assert.ok(el('home.ppg'));
+  const hid = 'kecskemet', aid = 'nkapecs';
+  const plain = bindPlayerCompare(store, 'men', hid, aid, {});
+  assert.ok(plain['home.logo'].src.startsWith('men/'));
+  const { playerIdFor, pickPlayer } = await import('../graphics/js/binders.js');
+  const hp = pickPlayer(store, 'men', hid), pid = playerIdFor(store, 'men', hid, hp.name);
+  assert.ok(pid, 'player id found in the roster');
+  const withPhoto = bindPlayerCompare(store, 'men', hid, aid, { photoIds: new Set([pid]), srcColor: '#ff00aa' });
+  assert.equal(withPhoto['home.logo'].src, `photo/${pid}`);
+  assert.equal(withPhoto['home.logo'].geom.fit, 'contain');
+  assert.ok(withPhoto['away.logo'].src.startsWith('men/'), 'no photo: the club logo stays');
+  assert.equal(withPhoto.subtitle.runs.at(-1).color, '#ff00aa');
+  assert.ok(bindPlayerCompare(store, 'men', hid, aid, { photoIds: new Set([pid]), mode: 'logo' })['home.logo'].src.startsWith('men/'));
 });
