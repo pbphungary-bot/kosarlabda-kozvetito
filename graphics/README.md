@@ -186,6 +186,8 @@ Előállítás: `python3 tools/psd_frames.py` (a PSD-kből: keret-adatok → `js
 ### Csillagjátékosok (Kulcsjátékosok): fotók, színek, sorok
 - **Adat:** a két csapat játékosai a *Játékosstatisztikából* jönnek (Hunbasket idei átlagok, vagy a feltöltött FullField.info Excel, ha van); alapból a legjobb pontszerző, de a legördülőkkel bármelyik játékos választható. A zárójeles helyezés a liga játékosai között értendő (min. meccsszám).
 - **Fotó a logó helyett:** a *Középen* választóval a játékosok Hunbasket-fotója jelenik meg a klublogó helyén (ha egy játékosnak nincs fotója, a klubja logója marad); a fotó átlátszatlansága állítható, mozgatása / nagyítása az Elrendezésben.
+- **Saját fotó:** a feltöltött fotó alapból **900 px magas**, és a keret alsó szélén áll (a lába a kereten marad). Az Elrendezésben kijelölve a sarkait húzva arányosan átméretezhető (felfelé nő), húzással mozgatható, a *Méret (%)* mezővel számmal is.
+- **Hiányzó százalékok:** ha az Excelben nincs 2P % / 3P % / BT % oszlop (a FullField csapat-/játékosexport nem mindig tartalmazza), az érték a játékos Hunbasket-soráról pótlódik (név alapján); a mező forrás-címkéje jelzi. Ha egyik forrásban sincs, marad a „–” (nincs kitalált adat).
 - **Forrás-felirat színe:** a *Forrás-felirat színe* választóval a „FULLFIELD.INFO / HUNBASKET.HU” felirat színe állítható (ez a Csapatok összevetése grafikán is működik); az *Alap* a kék.
 - **Sorok:** a helyezés-sorok mostantól ugyanazon az alapvonalon vannak, mint az értékek (a PSD-ben 1–9 px-et csúsztak), és az értékek / helyezések / fotók a felirat-oszlop közepére szimmetrikusak.
 

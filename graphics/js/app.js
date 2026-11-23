@@ -973,7 +973,7 @@ function renderOverlay() {
     Object.assign(d.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%`, zIndex: i + 1 });
     d.title = `${elById(id)?.label || id} – húzd, vagy jelöld ki`;
     d.classList.toggle('sel', id === selectedId);
-    const handles = elById(id)?.type === 'framed' && id === selectedId; // framed shapes can be resized by their corners
+    const handles = ['framed', 'image'].includes(elById(id)?.type) && id === selectedId; // framed shapes and pictures can be resized by their corners (pictures: proportional scale)
     if (!handles) d.querySelectorAll('.rh').forEach(h => h.remove());
     else if (!d.querySelector('.rh')) for (const c of ['nw', 'ne', 'sw', 'se']) { const h = document.createElement('i'); h.className = 'rh'; h.dataset.c = c; d.appendChild(h); }
   });
@@ -1044,6 +1044,14 @@ function wireLayoutEditor() {
     if (resize) {
       const r = resize, rect = $('canvas').getBoundingClientRect(), k = 1920 / rect.width / (lastReport?.global?.scale || 1);
       const sx = r.c.includes('e') ? 1 : -1, sy = r.c.includes('s') ? 1 : -1;
+      const elr = elById(r.id);
+      if (elr.type === 'image') { // pictures: proportional scale (about the centre; pictures that stand on the panel's bottom edge grow upwards and keep their feet)
+        const m = elr.stand > 0 ? 1 : 2, w = r.b[2] + sx * (e.clientX - r.x0) * k * m, h = r.b[3] + sy * (e.clientY - r.y0) * k * m;
+        const f = Math.max(0.1, Math.max(w / r.b[2], h / r.b[3]));
+        ovFor(r.id).scale = Math.round(Math.min(4, r.k0 * f) * 1000) / 1000;
+        r.moved = true; scheduleRedraw();
+        return;
+      }
       let w = Math.max(40, r.b[2] + sx * (e.clientX - r.x0) * k), h = Math.max(40, r.b[3] + sy * (e.clientY - r.y0) * k);
       const lock = (elById(r.id).lockAspect ?? state.lockAspect !== false) !== (e.altKey || e.shiftKey); // Shift / Alt flips the lock for this drag
       if (lock) { const f = Math.max(w / r.b[2], h / r.b[3]); w = r.b[2] * f; h = r.b[3] * f; } // the same growth in both directions (Alt = free)
@@ -1351,7 +1359,7 @@ async function main() {
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
   restoreExcel();
-  window.__studio = { state, store, images, setTab, setStageZoom, applyView, viewMode, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
+  window.__studio = { state, store, images, selectElement, setTab, setStageZoom, applyView, viewMode, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
 }

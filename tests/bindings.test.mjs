@@ -363,4 +363,21 @@ test('key players: a chosen player with few games still gets ranks (among all wh
   assert.equal(up['home.logo'].src, 'upload/pcHome');
   assert.equal(up['home.logo'].geom.fit, 'contain');
   assert.ok(up['away.logo'].src.startsWith('men/'), 'no upload for the other side: logo stays');
+  assert.equal(up['home.logo'].geom.stand, 900, 'uploaded photo: 900 px tall by default, standing on the panel bottom');
+});
+
+test('players: an Excel row without 2P % / 3P % / BT % is completed from the Hunbasket row of the same player', async () => {
+  const store = await loadStore();
+  const hb = store.players('women', 'dvtkhuntherm').players.find(p => Number(p['M.']) >= 1);
+  assert.ok(hb && hb['2P %'] !== undefined, 'fixture has Hunbasket percentages');
+  const row = { 'Játékos': hb['Játékos'], '#': hb['#'], 'M.': hb['M.'], 'P.': '99' }; // what the Excel importer yields: no percentage columns
+  store.setExcel('women', { team: {}, players: { dvtkhuntherm: [row] }, cups: {}, enabled: true, meta: { files: [] } });
+  const x = store.players('women', 'dvtkhuntherm');
+  assert.equal(x.source, 'excel');
+  assert.equal(x.players[0]['P.'], '99', 'the Excel value wins');
+  assert.equal(x.players[0]['3P %'], hb['3P %'], 'missing column comes from Hunbasket');
+  assert.ok(x.players[0].filledFromHunbasket.includes('3P %'));
+  const none = { ...row, 'Játékos': 'Nincs Ilyen' };
+  store.setExcel('women', { team: {}, players: { dvtkhuntherm: [none] }, cups: {}, enabled: true, meta: { files: [] } });
+  assert.equal(store.players('women', 'dvtkhuntherm').players[0]['3P %'], undefined, 'unknown player: nothing invented');
 });

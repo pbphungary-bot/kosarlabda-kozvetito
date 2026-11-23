@@ -1211,6 +1211,24 @@ try {
     await page.waitForSelector('.bgrow[data-k="pcHome"] .bgGo:not([disabled])', { timeout: 15000 });
     const src = await page.evaluate(() => [...document.querySelectorAll('#fields .field')].find(f => f.querySelector('.lbl span')?.textContent.startsWith('Hazai logó'))?.querySelector('.lbl em')?.title);
     assert.equal(src, 'Feltöltött fotó');
+    await page.waitForFunction(() => Math.round(window.__studio.report().boxes['home.logo']?.[3]) === 900, null, { timeout: 15000 });
+    const bx = await page.evaluate(() => window.__studio.report().boxes['home.logo']);
+    assert.ok(Math.abs(bx[3] - 900) < 1, `uploaded photo is 900 px tall by default (${bx[3]})`);
+    // pictures can be resized by their corner handles (proportional, feet stay on the panel's bottom edge)
+    if (!(await page.isVisible('#editMode'))) await page.locator('#layoutBox summary').click();
+    await page.check('#editMode');
+    await page.waitForSelector('.hit[data-id="home.logo"]');
+    // the stat texts lie over the photo, so a mouse click would hit them: send the selection events to the photo's own hit area
+    await page.evaluate(() => window.__studio.selectElement('home.logo'));
+    await page.waitForSelector('.hit[data-id="home.logo"] .rh[data-c="ne"]');
+    const hb = await (await page.$('.hit[data-id="home.logo"] .rh[data-c="ne"]')).boundingBox();
+    await page.mouse.move(hb.x + hb.width / 2, hb.y + hb.height / 2); await page.mouse.down();
+    await page.mouse.move(hb.x + hb.width / 2 - 60, hb.y + hb.height / 2 + 60, { steps: 6 }); await page.mouse.up();
+    await page.waitForFunction(b => window.__studio.report().boxes['home.logo'][3] < b - 20, bx[3], { timeout: 10000 });
+    const b2 = await page.evaluate(() => window.__studio.report().boxes['home.logo']);
+    assert.ok(Math.abs((b2[0] + b2[2] / 2) - (bx[0] + bx[2] / 2)) < 2 && Math.abs((b2[1] + b2[3]) - (bx[1] + bx[3])) < 2, 'the picture keeps its centre line and its feet');
+    assert.ok(Math.abs(b2[2] / b2[3] - bx[2] / bx[3]) < 0.01, 'proportional');
+    await page.uncheck('#editMode');
     await page.click('.pcUpClear[data-side="home"]');
   });
 

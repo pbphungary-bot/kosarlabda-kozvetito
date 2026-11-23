@@ -36,7 +36,7 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Graphic | Status | Notes |
 |---|---|---|
 | Csapatok összevetése (comparison) | REVIEW | frame resizable; Excel/Hunbasket data; source-name colour option |
-| Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | any player selectable (dropdown bug fixed), ranks also for players with few games (among all who played, noted in the field), own photo upload per side (wins over Hunbasket photo/logo, with background removal), photos instead of logos (option), levelled + mirrored rows, source-name colour |
+| Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | any player selectable (dropdown bug fixed), ranks also for players with few games (among all who played, noted in the field), own photo upload per side (wins over Hunbasket photo/logo, with background removal; **default 900 px tall standing on the panel's bottom edge, corner-handle resizable**), photos instead of logos (option), levelled + mirrored rows, source-name colour; columns the Excel lacks (2P/3P/FT %) are completed per player from Hunbasket (flagged in the source label) |
 | Csapatstatisztika | REVIEW | |
 | Eredmények / Eredmények (színes sorok) / Menetrend | REVIEW | editable rows (delete/add/reorder at once); schedule starts with the game after the next; rows reset on team change |
 | Intro | REVIEW | position + W-L line ("(3. hely - 5-2)") is now shown by default (the PSD has it hidden); two-line names make room for it |
