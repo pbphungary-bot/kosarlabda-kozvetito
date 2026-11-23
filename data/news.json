@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T20:29:38.399128+00:00",
+  "checked_at": "2026-11-23T21:24:48.197323+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
