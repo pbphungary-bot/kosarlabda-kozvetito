@@ -188,3 +188,5 @@ Előállítás: `python3 tools/psd_frames.py` (a PSD-kből: keret-adatok → `js
 - **Fotó a logó helyett:** a *Középen* választóval a játékosok Hunbasket-fotója jelenik meg a klublogó helyén (ha egy játékosnak nincs fotója, a klubja logója marad); a fotó átlátszatlansága állítható, mozgatása / nagyítása az Elrendezésben.
 - **Forrás-felirat színe:** a *Forrás-felirat színe* választóval a „FULLFIELD.INFO / HUNBASKET.HU” felirat színe állítható (ez a Csapatok összevetése grafikán is működik); az *Alap* a kék.
 - **Sorok:** a helyezés-sorok mostantól ugyanazon az alapvonalon vannak, mint az értékek (a PSD-ben 1–9 px-et csúsztak), és az értékek / helyezések / fotók a felirat-oszlop közepére szimmetrikusak.
+
+**Oldalsáv szélessége (asztali nézet):** a bal oldalsáv és az előnézet közti függőleges sávot (a vékony vonalat) megfogva az oldalsáv szélessége szabadon húzható (320–1000 px); a böngésző megjegyzi, dupla kattintás vagy a *Home* billentyű az alaphelyzetre (480 px) állítja, a ←/→ nyilak 24 px-et lépnek. A mezők „Betűméret / Balra-jobbra / Fel-le” sora keskeny oldalsávban új sorba tör, nem lóg ki.

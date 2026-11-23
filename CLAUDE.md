@@ -11,6 +11,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Never run `tools/psd_extract.py` without `--only <template-id>` (it regenerates every template and logo).
 - Session shortcuts live in `.claude/commands/`: `/start <task>`, `/finish`, `/check` (owner types these instead of long prompts).
 
+## Playwright MCP
+`.mcp.json` registers a Playwright MCP server (`tools/playwright-mcp.sh`, headless with the pre-installed Chromium in the cloud sandbox). Use it to look at the running studio/dashboard interactively (reproduce a reported problem, check layout, mobile emulation with `--device`), not as a replacement for `tests/e2e.mjs`. It is only started in sessions where the owner approved the project MCP server.
+
 ## Commands
 There is no build step and no package.json: everything is static files (ES modules) plus Python/Node scripts.
 - Serve the studio locally: `python3 tools/serve.py [port]` → `http://localhost:8000/graphics/` (dashboard: `/index.html`). Hosted as static pages on GitHub Pages.
@@ -32,7 +35,7 @@ There is no build step and no package.json: everything is static files (ES modul
 
 **Tests** are hermetic: unit tests load `tests/fixtures/data` through `tests/helpers.mjs` (`loadStore`); e2e routes `/data/*.json` to the same fixtures. Update the fixtures (copy from `data/`) when a collector's output format changes. CI (`.github/workflows/tests.yml`) runs unit + Python + e2e on pull requests.
 
-**Data conventions:** matching is club-scoped (`clubIdStrict`), never fuzzy across leagues; collectors use a polite User-Agent, are low-frequency, and `mkosz.hu`, `webpont`, `facebook` and `eredmenyek.com` are not reachable from the sandbox (use workflow probes or pasted data). `updated_at` in a data file only changes when the content changes, so an old stamp can still be a current file (some collectors also write a `checked` stamp). Shared dashboard notes use Supabase (row-level security not yet reviewed).
+**Data conventions:** matching is club-scoped (`clubIdStrict`), never fuzzy across leagues; collectors use a polite User-Agent, are low-frequency, and `mkosz.hu`, `webpont`, `facebook` and `eredmenyek.com` are not reachable from the sandbox (use workflow probes or pasted data). `updated_at` in a data file only changes when the content changes, so an old stamp can still be a current file (some collectors also write a `checked` stamp). Shared dashboard notes use Supabase (table `matchup_notes`; reviewed read-only, see MANIFEST – the anon key can read/write every note; owner decided to leave it as is – do not change or re-raise it).
 
 ## Lessons learned (do not repeat these)
 **Session hygiene**

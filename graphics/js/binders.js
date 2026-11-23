@@ -328,18 +328,24 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
     'away.logo': logo(lg, awayId),
   };
   // photos of the two players instead of the club logos (Hunbasket photos; a player without a photo keeps his club's logo)
-  if (sel.mode !== 'logo') {
-    for (const [side, p, tid] of [['home', hp, homeId], ['away', ap, awayId]]) {
-      const pid = p ? playerIdFor(store, lg, tid, p.name) : null;
-      if (pid && sel.photoIds?.has(pid)) v[`${side}.logo`] = { src: `photo/${pid}`, source: 'Hunbasket fotó (' + p.name + ')', geom: { fit: 'contain', area: undefined, anchor: 'bottom', logoOutline: false, opacity: sel.photoOpacity ?? 0.6 } };
-    }
+  const photoGeom = { fit: 'contain', area: undefined, anchor: 'bottom', logoOutline: false, opacity: sel.photoOpacity ?? 0.6 };
+  for (const [side, p, tid] of [['home', hp, homeId], ['away', ap, awayId]]) {
+    if (sel.uploads?.[side]) { v[`${side}.logo`] = { src: `upload/pc${side === 'home' ? 'Home' : 'Away'}`, source: 'Feltöltött fotó', geom: photoGeom }; continue; } // the owner's own photo always wins
+    if (sel.mode === 'logo') continue;
+    const pid = p ? playerIdFor(store, lg, tid, p.name) : null;
+    if (pid && sel.photoIds?.has(pid)) v[`${side}.logo`] = { src: `photo/${pid}`, source: 'Hunbasket fotó (' + p.name + ')', geom: photoGeom };
   }
+  // ranking: among the league's players with enough games; a player with fewer games is ranked among ALL players who played (flagged in the source note)
+  const poolAll = [];
+  for (const id of Object.keys(store.league(lg).players)) for (const x of playerOptions(store, lg, id)) if ((num(x.p['M.']) ?? 0) >= 1) poolAll.push(x.p);
+  const few = p => (num(p?.['M.']) ?? 0) < minM;
   const rankOf = (p, col, s) => {
     if (!p || num(p[col]) === null) return null;
     const val = num(p[col]);
-    if ((num(p['M.']) ?? 0) < minM) return null; // not enough games to be ranked
+    if ((num(p['M.']) ?? 0) < 1) return null; // did not play: nothing to rank
     if (ATTEMPTS[s.key] && (num(p[ATTEMPTS[s.key]]) ?? 0) < 1) return null;
-    const rivals = pool.filter(q => num(q[col]) !== null && (!ATTEMPTS[s.key] || (num(q[ATTEMPTS[s.key]]) ?? 0) >= 1));
+    const base = few(p) ? poolAll : pool;
+    const rivals = base.filter(q => num(q[col]) !== null && (!ATTEMPTS[s.key] || (num(q[ATTEMPTS[s.key]]) ?? 0) >= 1));
     return 1 + rivals.filter(q => (s.lowerIsBetter ? num(q[col]) < val : num(q[col]) > val)).length;
   };
   for (const s of STAT_ROWS) {
@@ -355,8 +361,9 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
     v[`away.${s.key}`] = field(f(a), `${nm(ap)} – ${s.label}`, { color: ac });
     const hr = rankOf(hp?.p, col, s), ar = rankOf(ap?.p, col, s);
     const src = `Helyezés a liga ${pool.length} játékosa közül (min. ${minM} meccs${ATTEMPTS[s.key] ? ', min. 1 kísérlet/meccs' : ''}${s.lowerIsBetter ? '; kevesebb = jobb' : ''})`;
-    v[`home.rank.${s.key}`] = field(hr === null ? null : `(${hr}.)`, src);
-    v[`away.rank.${s.key}`] = field(ar === null ? null : `(${ar}.)`, src);
+    const srcFor = p => (few(p) ? `Kevés meccs (${num(p?.['M.']) ?? 0} < ${minM}): a helyezés az összes ${poolAll.length} pályára lépett játékos között értendő${ATTEMPTS[s.key] ? ' (min. 1 kísérlet/meccs)' : ''}` : src);
+    v[`home.rank.${s.key}`] = field(hr === null ? null : `(${hr}.)`, srcFor(hp?.p));
+    v[`away.rank.${s.key}`] = field(ar === null ? null : `(${ar}.)`, srcFor(ap?.p));
   }
   return v;
 }

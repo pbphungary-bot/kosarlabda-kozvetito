@@ -18,6 +18,7 @@ Basketball commentator tool for the Hungarian NB I/A (men + women, always separa
 | FIBA | European/cup fixtures | collector `scripts/update_cups.mjs` |
 | KosárStat | all-time head-to-head, **men only** | collector |
 | Hunbasket photos | player photos (MKOSZ gave permission) | `graphics/players/` (4 players have none → placeholder) |
+| Flags (roster graphics) | one SVG per nationality in `graphics/assets/flags/`; Hungarian players get no flag by design; the team-pages job now downloads the flag of any new nationality automatically; Hunbasket lists no nationality (`-`) for one player (Sopron Basket, JANKOVIC Masa) → no flag |
 
 ## 3. Graphics Studio – templates (16 per league)
 Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting for the owner's check · **OPEN** = not done.
@@ -25,7 +26,7 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Graphic | Status | Notes |
 |---|---|---|
 | Csapatok összevetése (comparison) | REVIEW | frame resizable; Excel/Hunbasket data; source-name colour option |
-| Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | player photos instead of logos (option), levelled + mirrored rows, source-name colour |
+| Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | any player selectable (dropdown bug fixed), ranks also for players with few games (among all who played, noted in the field), own photo upload per side (wins over Hunbasket photo/logo, with background removal), photos instead of logos (option), levelled + mirrored rows, source-name colour |
 | Csapatstatisztika | REVIEW | |
 | Eredmények / Eredmények (színes sorok) / Menetrend | REVIEW | editable rows (delete/add/reorder at once); schedule starts with the game after the next; rows reset on team change |
 | Intro | REVIEW | |
@@ -37,6 +38,8 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Következik | REVIEW | |
 | Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
+Studio layout: desktop sidebar width is draggable (splitter, remembered, double click resets); controls wrap instead of overflowing – REVIEW.
+
 Other studio features: ZIP package of all graphics of a match, presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
 
 ## 4. Közvetítőhub – status
@@ -44,10 +47,11 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 |---|---|
 | Menetrend: newest result first, last 2 rounds, next 3 rounds | **LOCKED** |
 | Csapatok tab: Keret + all Hunbasket team/player stats | **LOCKED** (data refresh every 3 h) |
+| Csapatok tab layout: open button in the card's header row (top right), "← Vissza a csapatokhoz" back button, "Teljes csapatlap nyomtatása" (one A4 landscape team sheet: last games, roster, 3 stat tables, records/zones, matches), clean transparent crests everywhere (`graphics/logos`, old `logos/` only as fallback) | REVIEW |
 | Meccslap (one-page A4 match sheet) | REVIEW |
 | Logo line (club crest rail under the header, men + women) | REVIEW | tiles with the clean transparent studio logos, optical size normalisation, league label + accent (men green / women red), hover accent in the club colour, swipeable row on phones, click = player statistics |
 | Mobile version + view switch | REVIEW (not yet tested on a real phone) |
-| Shared notes (Supabase) | OPEN – row-level-security review needs the owner's `pg_policies` output (never keys) |
+| Shared notes (Supabase, project "Kosárlabda Jegyzetek") | REVIEWED read-only (2026-11-23), nothing changed: one table `public.matchup_notes` (5 rows, RLS on, length checks, version column). Anyone with the public anon key can read, insert and update every row (policies `using true`); delete is blocked. **Owner decision (2026-11-23): leave it as it is** – only the commentators who work with the owner use it. Not to be raised again unless the audience changes (then: access code or login). |
 
 ## 5. LOCKED decisions (do not revisit without being asked)
 - Fonts: **League Gothic Regular/Italic only, everywhere in the graphics** (owner's rule; this also covers the men's referee graphic although its PSD uses Satoshi).

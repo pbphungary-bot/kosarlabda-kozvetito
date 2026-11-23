@@ -1163,6 +1163,64 @@ try {
     await dp.context().close();
   });
 
+  await check('dashboard Csapatok: open button sits in the card header row, way back, printable team sheet, clean crests', async () => {
+    const dp = await (await hermetic(await browser.newContext({ viewport: { width: 1440, height: 900 } }))).newPage();
+    await dp.addInitScript(() => { window.__printed = 0; window.print = () => { window.__printed++; }; });
+    await dp.goto(`${URL}/index.html`);
+    await dp.click('nav [data-tab="teams"]');
+    await dp.waitForSelector('#teamCards .club-panel .club-panel-head .open-team');
+    const same = await dp.$eval('#teamCards .club-panel', c => { const h = c.querySelector('h3').getBoundingClientRect(), b = c.querySelector('.open-team').getBoundingClientRect(); return Math.abs((h.top + h.bottom) / 2 - (b.top + b.bottom) / 2) < 30 && b.left > h.right; });
+    assert.ok(same, 'button on the same line as the team name, to its right');
+    await dp.waitForFunction(() => [...document.querySelectorAll('#teamCards .club-mark img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 15000 });
+    assert.ok((await dp.$$eval('#teamCards .club-mark img', is => is.every(i => i.getAttribute('src').startsWith('graphics/logos/')))), 'transparent studio logos');
+    await dp.click('.open-team >> nth=0');
+    await dp.waitForSelector('.team-back');
+    await dp.click('.team-print');
+    assert.equal(await dp.evaluate(() => window.__printed), 1);
+    const secs = await dp.$$eval('#teamPrint h3', h => h.map(x => x.textContent));
+    for (const k of ['Keret', 'Rekordok és zónák', 'Mérkőzések']) assert.ok(secs.includes(k), k);
+    assert.ok(secs.filter(x => x.startsWith('Statisztika')).length >= 1);
+    await dp.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+    assert.equal(await dp.evaluate(() => document.body.classList.contains('team-printing') || !!document.getElementById('teamPageStyle')), false, 'print mode cleaned up');
+    await dp.click('.team-back');
+    await dp.waitForFunction(() => document.getElementById('teamDetail').innerHTML === '' && getComputedStyle(document.getElementById('teamCards')).display !== 'none');
+    await dp.context().close();
+  });
+
+  await check('key players: the dropdown shows the chosen player, ranks stay for a low-game player, own photo upload works with background removal controls', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="playercompare-men"]');
+    await page.waitForSelector('#pc_home');
+    const n = await page.$$eval('#pc_home option', o => o.length);
+    await page.selectOption('#pc_home', { index: n - 2 });
+    await page.waitForTimeout(800);
+    const shown = await page.$eval('#pc_home', e => e.selectedIndex);
+    assert.equal(shown, n - 2, 'the dropdown keeps the player the graphic uses');
+    await page.setInputFiles('.pcUp[data-side="home"]', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await page.waitForSelector('.bgrow[data-k="pcHome"] .bgGo:not([disabled])', { timeout: 15000 });
+    const src = await page.evaluate(() => [...document.querySelectorAll('#fields .field')].find(f => f.querySelector('.lbl span')?.textContent.startsWith('Hazai logó'))?.querySelector('.lbl em')?.title);
+    assert.equal(src, 'Feltöltött fotó');
+    await page.click('.pcUpClear[data-side="home"]');
+  });
+
+  await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {
+    const sp = await (await hermetic(await browser.newContext({ viewport: { width: 1600, height: 900 } }))).newPage();
+    await sp.goto(`${URL}/graphics/index.html`);
+    await sp.waitForSelector('body[data-ready="1"]');
+    const w = () => sp.$eval('.controls', e => Math.round(e.getBoundingClientRect().width));
+    const w0 = await w();
+    const bb = await (await sp.$('#splitter')).boundingBox();
+    await sp.mouse.move(bb.x + 5, bb.y + 150); await sp.mouse.down(); await sp.mouse.move(bb.x + 5 + 200, bb.y + 150, { steps: 5 }); await sp.mouse.up();
+    const w1 = await w();
+    assert.ok(w1 > w0 + 150, `wider ${w0} -> ${w1}`);
+    await sp.reload(); await sp.waitForSelector('body[data-ready="1"]');
+    assert.equal(await w(), w1, 'remembered');
+    assert.equal(await sp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), 0, 'no horizontal page scroll');
+    await sp.dblclick('#splitter');
+    assert.equal(await w(), w0, 'reset');
+    await sp.context().close();
+  });
+
 } finally {
   await browser.close();
   server.kill();

@@ -435,7 +435,7 @@ function clubIdentity(name,key=league){
  return {id:resolved,color:entry[0],pale:entry[1],initials:entry[2],key};
 }
 function clubStyle(name,key=league){const b=clubIdentity(name,key);return '--club:'+b.color+';--club-secondary:'+b.pale+';';}
-function clubMark(name,key=league){const b=clubIdentity(name,key);const filename='logos/'+b.key+'/'+b.id+'.png?v=20261120d';return '<span class="club-mark" style="'+clubStyle(name,key)+'" title="'+esc(name)+'"><span>'+esc(b.initials)+'</span><img src="'+filename+'" alt="" loading="lazy" onerror="this.remove()"></span>';}
+function clubMark(name,key=league){const b=clubIdentity(name,key);const filename='graphics/logos/'+b.key+'/'+b.id+'.png?v=20261123';const old='logos/'+b.key+'/'+b.id+'.png?v=20261120d';return '<span class="club-mark" style="'+clubStyle(name,key)+'" title="'+esc(name)+'"><span>'+esc(b.initials)+'</span><img src="'+filename+'" alt="" loading="lazy" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=\''+old+'\'}else this.remove()"></span>';}
 function clubName(name,key=league){return '<span class="club-name" style="'+clubStyle(name,key)+'">'+clubMark(name,key)+'<span>'+esc(name)+'</span></span>';}
 function matchupBrandHeader(){const teamPanel=(name)=>{const t=info(name);const homeRecord=statsFromFixtures(name,'home'),awayRecord=statsFromFixtures(name,'away');const fmt=(r)=>r?r.wins+'–'+r.losses:'—';return '<div class="matchup-side" style="'+clubStyle(name)+'">'+clubMark(name)+'<strong>'+esc(name)+'</strong><div class="matchup-team-record"><b>'+(t?.rank!=null?t.rank+'.':'—')+'</b><small>HELYEZÉS</small><b>'+(t?t.w+'–'+t.l:'—')+'</b><small>GY–V MÉRLEG</small></div><div class="matchup-venue-record" aria-label="Hazai és idegenbeli győzelem-vereség mérleg"><div><span>HAZAI MÉRLEG</span><b>'+fmt(homeRecord)+'</b></div><div><span>IDEGENBELI MÉRLEG</span><b>'+fmt(awayRecord)+'</b></div></div></div>';};return '<div class="matchup-brands">'+teamPanel(home)+'<span class="matchup-versus">VS</span>'+teamPanel(away)+'</div>';}
 function formBadgesInline(team){const games=recentGames(team)||[];return '<span class="form-inline" aria-label="Utolsó öt mérkőzés, legfrissebb elöl">'+games.map(g=>'<span class="formbadge '+(g.draw?'none':g.won?'win':'loss')+'">'+(g.draw?'D':g.won?'W':'L')+'</span>').join('')+'</span>';}
@@ -769,7 +769,8 @@ function draw(){var box=document.getElementById('teamDetail'),cards=document.get
  cards.style.display=view.team?'none':'';
  if(!view.team){box.innerHTML='';return}
  var t=info(view.team),page=pageFor(view.team);
- var head='<div class="team-detail-head">'+clubMark(view.team)+'<div><h3>'+esc(view.team)+'</h3><p class="muted">'+record(t)+(tp[league]?' · Hunbasket-adat frissítve: '+esc(new Date(tp[league].updated_at).toLocaleString('hu-HU')):'')+'</p></div></div>';
+ var actions='<div class="team-detail-actions"><button type="button" class="team-back">← Vissza a csapatokhoz</button><button type="button" class="team-print" title="A teljes csapatlap nyomtatása: keret, statisztika, rekordok, mérkőzések">🖨 Teljes csapatlap nyomtatása</button></div>';
+ var head=actions+'<div class="team-detail-head">'+clubMark(view.team)+'<div><h3>'+esc(view.team)+'</h3><p class="muted">'+record(t)+(tp[league]?' · Hunbasket-adat frissítve: '+esc(new Date(tp[league].updated_at).toLocaleString('hu-HU')):'')+'</p></div></div>';
  var subs=[['overview','Áttekintés'],['roster','Keret'],['stats','Statisztika'],['records','Rekordok és zónák'],['games','Mérkőzések']];
  var nav='<div class="subtabs">'+subs.map(function(x){return '<button type="button" data-sub="'+x[0]+'" class="'+(view.sub===x[0]?'on':'')+'">'+x[1]+'</button>'}).join('')+'</div>';
  var body='';
@@ -780,13 +781,30 @@ function draw(){var box=document.getElementById('teamDetail'),cards=document.get
  else if(view.sub==='stats')body=statsHtml(page);
  else body=recordsHtml(page);
  box.innerHTML=head+nav+body}
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#teamDetail [data-sub],#teamDetail [data-kind],#teamDetail th[data-col],.open-team');if(!b)return;
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#teamDetail [data-sub],#teamDetail [data-kind],#teamDetail th[data-col],.open-team,.team-back,.team-print');if(!b)return;
+ if(b.classList.contains('team-back')){view.team='';view.sub='overview';view.sort=null;draw();var tt=document.getElementById('teamsTab');if(tt)tt.scrollIntoView({behavior:'smooth',block:'start'});return}
+ if(b.classList.contains('team-print')){printTeam();return}
  if(b.classList.contains('open-team')){view.team=b.dataset.team;view.sub='overview';draw();var t=document.getElementById('teamsTab');if(t)t.scrollIntoView({behavior:'smooth',block:'start'});return}
  if(b.dataset.sub){view.sub=b.dataset.sub;draw()}else if(b.dataset.kind){view.kind=b.dataset.kind;view.sort=null;draw()}
  else if(b.dataset.col){var c=+b.dataset.col;view.sort=view.sort&&view.sort.col===c?{col:c,dir:-view.sort.dir}:{col:c,dir:1};draw()}});
 document.addEventListener('change',function(e){if(e.target&&e.target.id==='teamPick'){view.team=e.target.value;view.sub='overview';view.sort=null;draw()}});
+function printTeam(){var name=view.team;if(!name)return;var t=info(name),page=pageFor(name),keepKind=view.kind,keepSort=view.sort;
+ var h='<div class="team-detail-head">'+clubMark(name)+'<div><h2>'+esc(name)+'</h2><p class="muted">'+record(t)+(tp[league]?' · Hunbasket-adat frissítve: '+esc(new Date(tp[league].updated_at).toLocaleString('hu-HU')):'')+'</p></div></div>';
+ h+='<h3>Utolsó öt mérkőzés</h3>'+formBlock(name);
+ if(page){
+  h+='<h3>Keret</h3>'+rosterHtml(page);
+  KINDS.forEach(function(k){if(!page.stats[k[0]])return;view.kind=k[0];view.sort=null;h+='<h3>Statisztika – '+k[1]+'</h3>'+statsHtml(page).replace(/<div class="subtabs">.*?<\/div><p class="muted small">.*?<\/p>/,'')});
+  h+='<h3>Rekordok és zónák</h3>'+recordsHtml(page);
+ }
+ h+='<h3>Mérkőzések</h3>'+gamesHtml(name);
+ view.kind=keepKind;view.sort=keepSort;
+ var box=document.getElementById('teamPrint');if(!box){box=document.createElement('div');box.id='teamPrint';document.body.appendChild(box)}
+ box.innerHTML=h+'<p class="source">Forrás: Hunbasket. Nyomtatva: '+esc(new Date().toLocaleString('hu-HU'))+'</p>';
+ var ps=document.getElementById('teamPageStyle');if(!ps){ps=document.createElement('style');ps.id='teamPageStyle';document.head.appendChild(ps)}ps.textContent='@page{size:A4 landscape;margin:9mm}'; /* only while printing the team sheet: the match sheet keeps its own portrait page */
+ document.body.classList.add('team-printing');window.print()}
+window.addEventListener('afterprint',function(){document.body.classList.remove('team-printing');var ps=document.getElementById('teamPageStyle');if(ps)ps.remove();var b=document.getElementById('teamPrint');if(b)b.innerHTML=''});
 var baseRender=render;render=function(){baseRender.apply(this,arguments);
- document.querySelectorAll('#teamCards .club-panel').forEach(function(c){if(c.querySelector('.open-team'))return;var h=c.querySelector('h3');var name=h?h.textContent.trim():'';var n=(data[league]||[]).find(function(t){return name===t.name||name.endsWith(t.name)});if(!n)return;var b=document.createElement('button');b.type='button';b.className='open-team';b.dataset.team=n.name;b.textContent='Keret, statisztika, rekordok →';c.appendChild(b)});
+ document.querySelectorAll('#teamCards .club-panel').forEach(function(c){if(c.querySelector('.open-team'))return;var h=c.querySelector('h3');var name=h?h.textContent.trim():'';var n=(data[league]||[]).find(function(t){return name===t.name||name.endsWith(t.name)});if(!n)return;var b=document.createElement('button');b.type='button';b.className='open-team';b.dataset.team=n.name;b.textContent='Keret, statisztika, rekordok →';var row=document.createElement('div');row.className='club-panel-head';h.parentNode.insertBefore(row,h);row.appendChild(h);row.appendChild(b)});
  draw()};
 loadTeamPages();setInterval(loadTeamPages,15*60*1000);
 })()</script><script id="matchSheetScript">(function(){
