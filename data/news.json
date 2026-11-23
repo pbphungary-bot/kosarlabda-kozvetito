@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T15:21:48.234221+00:00",
+  "checked_at": "2026-11-23T16:26:46.119699+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -466,6 +466,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -563,6 +564,15 @@
   ],
   "articles": [
     {
+      "source": "BB1.hu",
+      "title": "Kihirdette keretét Svédország, két kulcsemberére nem számíthat a kapitány",
+      "summary": "Pelle Larsson és Ludvig Hakanson sem léphet pályára a mieink elleni mérkőzésen.",
+      "url": "https://bball1.hu/kihirdette-keretet-svedorszag-ket-kulcsemberere-nem-szamithat-a-kapitany/",
+      "published_at": "2026-11-23T17:00:49+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
       "source": "Nemzeti Sport",
       "title": "Az Európai Kosárlabda-szövetség fenntartja az orosz válogatottak felfüggesztését",
       "summary": "Az Európai Kosárlabda-szövetség fenntartja az orosz válogatottak felfüggesztését",
@@ -579,6 +589,19 @@
       "published_at": "2026-11-23T15:21:08+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Fontos győzelmet arattak idegenben",
+      "summary": "Kadett/A csapatunk a Zsíros Akadémia Kőbánya/A vendégeként lépett pályára a hétvégén.",
+      "url": "https://vasasbasket.hu/index.php/fontos-gyozelmet-arattak-idegenben/",
+      "published_at": "2026-11-23T15:18:59+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "Klub: DVTK HUNTHERM",
@@ -12361,6 +12384,19 @@
       "league": "women",
       "teams": [
         "women|BKG-PRIMA Szigetszentmiklós"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Negyven lőtt gólnál sem álltak meg férfi kéziseink",
+      "summary": "Férfi együttesünk remek támadójátékkal és két kiváló kapusteljesítménnyel aratott fölényes, 42–27-es győzelmet az Agrofeed UNI Győr II. ellen.",
+      "url": "https://tfse.hu/negyven-lott-golnal-sem-alltak-meg-ferfi-keziseink/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
