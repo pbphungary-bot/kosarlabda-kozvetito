@@ -70,7 +70,17 @@ export const STAT_ROWS = [
 ];
 
 // ───────────────────────── Csapatok összevetése ─────────────────────────
-function comparison(id, league, psd, g, type = 'comparison') {
+// Key players: the picture is built from the chosen rows: the panel is exactly as tall as the rows (frame = shape, labels = texts, logo strip below the panel).
+const PC_STRIP = { men: [382, 427, 60], women: [428, 409, 60] }; // x, width, height of the logo strip crop (templates/playercompare-<lg>/strip.png); it sits 12 px below the panel
+const PC_ROW0 = 253.5, PC_PITCH = 90.6667, PC_TOP = 2, PC_BELOW = 21.2; // first row's y, row pitch, panel top, space under the last row (from the PSD)
+export const PC_BUILDERS = {}; // template id → (rowKeys) => template (see app.js tpl())
+export function pcRowKeys(keys) { const k = STAT_ROWS.filter(r => (keys || []).includes(r.key)).map(r => r.key); return k.length ? k : STAT_ROWS.map(r => r.key); }
+
+function comparison(id, league, psd, g, type = 'comparison', rowKeys = null) {
+  const pc = type === 'playercompare' && g.cx;
+  const rowList = pc ? pcRowKeys(rowKeys).map(k => STAT_ROWS.find(r => r.key === k)) : STAT_ROWS;
+  const lastY = PC_ROW0 + (rowList.length - 1) * PC_PITCH;
+  if (pc) { g = { ...g, hl: [g.hl[0], (193.5 + lastY) / 2 + 3.5], al: [g.al[0], (193.5 + lastY) / 2 + 3.5] }; } // the logos / photos stay in the middle of the rows
   if (type === 'playercompare' && g.cx) { // key players: values / ranks / photos mirrored around the label column, rank rows on the value rows' baseline
     const dv = (g.av - g.hv) / 2, dr = (g.ar - g.hr) / 2, dl = (g.al[0] - g.hl[0]) / 2, ly = (g.hl[1] + g.al[1]) / 2;
     g = { ...g, hv: g.cx - dv, av: g.cx + dv, hr: g.cx - dr, ar: g.cx + dr, hl: [g.cx - dl, ly], al: [g.cx + dl, ly], level: true };
@@ -81,8 +91,8 @@ function comparison(id, league, psd, g, type = 'comparison') {
     { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [g.hl[0], g.hl[1], 471, 400], fit: 'area', area: 152000, opacity: 0.702, logoOutline: true },
     { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [g.al[0], g.al[1], 471, 400], fit: 'area', area: 152000, opacity: 0.702, logoOutline: true },
   ];
-  STAT_ROWS.forEach((s, i) => {
-    const y = 253.5 + i * 90.6667;
+  rowList.forEach((s, i) => {
+    const y = PC_ROW0 + i * PC_PITCH;
     const yr = g.level ? y : g.rankY + i * 89.6;
     const common = { size: 74.6667, tracking: 25, outline: ol(3, '#ffffff', 1), align: 'center', maxWidth: 170 };
     els.push(
@@ -91,11 +101,23 @@ function comparison(id, league, psd, g, type = 'comparison') {
       { id: `away.${s.key}`, type: 'text', label: `Vendég ${s.label}`, group: 'Vendég', x: g.av, y, ...common, color: RED },
       { id: `away.rank.${s.key}`, type: 'text', label: `Vendég ${s.label} helyezés`, group: 'Vendég', x: g.ar, y: yr, ...common, tracking: g.rankTracking, color: '#373737', maxWidth: 110 },
     );
+    if (pc) els.push({ id: `label.${s.key}`, type: 'text', label: `${s.label} – sor felirata`, group: 'Sorok', x: g.cx, y, ...common, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 190 });
   });
   if (type === 'playercompare') els.unshift({ id: 'title', type: 'text', label: 'Cím', group: 'Fejléc', x: g.titleX, y: 103.5, align: 'center',
     size: 96, tracking: 10, color: WHITE_TXT, outline: ol(6, '#000000', 1), maxWidth: 1000, minScale: 0.6 });
-  return base(id, league, type, psd, type === 'playercompare' ? 'Csillagjátékosok' : 'Csapatok összevetése', { elements: els, sample: g.sample });
+  if (!pc) return base(id, league, type, psd, type === 'playercompare' ? PC_LABEL : 'Csapatok összevetése', { elements: els, sample: g.sample });
+  const pe = panelEl(`comparison-${league}`), [px0, , px1] = [pe.box[0] - pe.box[2] / 2, 0, pe.box[0] + pe.box[2] / 2], py1 = lastY + PC_BELOW, sw = pe.sw ?? 0;
+  pe.box = [pe.box[0], (PC_TOP + py1) / 2, pe.box[2], py1 - PC_TOP];
+  const [sx, sw0, sh] = PC_STRIP[league];
+  const strip = { id: 'strip', type: 'image', label: 'Logósor (Hunbasket · Tippmix · MKOSZ)', group: 'Panel', box: [sx + sw0 / 2, py1 + 12 + sh / 2, sw0, sh], fit: 'contain', fixedSrc: true, fixedFrame: true };
+  for (const e of els) if (e.id.endsWith('.logo')) e.clipInner = true; // the photos stay inside the panel
+  const t = base(id, league, type, psd, PC_LABEL, { elements: [pe, strip, ...els], background: null, sample: g.sample });
+  t.inner = { box: [px0 + sw, PC_TOP + sw, px1 - sw, py1 - sw], r: Math.max((pe.r ?? 0) - sw, 0) };
+  t.panel = { box: [px0, PC_TOP, px1, py1], alpha: pe.opacity ?? 0.9882 };
+  t.pcRows = rowList.map(r => r.key);
+  return t;
 }
+const PC_LABEL = 'Kulcsjátékosok összehasonlítása / szemtől szemben';
 
 function comparisonSample(sub, home, away, hr, ar, hc, ac, hlogo, alogo) {
   const v = { subtitle: { runs: [{ text: 'A mérkőző felek idei teljesítménye, statisztikai átlagszámokban - via ' }, { text: sub, color: '#37b3fd' }] } };
@@ -527,6 +549,11 @@ function extraTpl(id, league) {
 }
 
 // ───────────────────────── Template registry ─────────────────────────
+function pcEntry(id, league, psd, g) {
+  PC_BUILDERS[id] = rows => comparison(id, league, psd, g, 'playercompare', rows);
+  return PC_BUILDERS[id](null);
+}
+
 export const TEMPLATES = [
   comparison('comparison-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
     subX: 602.2, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
@@ -599,12 +626,12 @@ export const TEMPLATES = [
       'home.logo': { src: 'women/sercounigyor' }, 'away.logo': { src: 'women/eltebeacujbuda' },
     },
   }),
-  comparison('playercompare-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
+  pcEntry('playercompare-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
     subX: 602.2, titleX: 605.5, cx: 605, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
-  }, 'playercompare'),
-  comparison('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
+  }),
+  pcEntry('playercompare-women', 'women', 'DVTK - CSATA statösszevetés 1122 előtt.psd', {
     subX: 648.2, titleX: 651.5, cx: 651, hv: 388, av: 914.8, hr: 156, ar: 1122, rankY: 251.5, rankTracking: -20, hl: [391, 589], al: [917, 586],
-  }, 'playercompare'),
+  }),
   playerspecial('playerspecial-men', 'men', 'Uros STAT.psd'),
   playerspecial('playerspecial-women', 'women', 'Kányási - 324 vs idei 7 meccs.psd'),
   rosterEntry('roster-men', 'men', 'roster', 'FALCO keret 26-27.psd', 'Keret (tábla)', 'roster-men'),
@@ -634,7 +661,7 @@ export const TEMPLATE_TYPES = {
   nextmatch: 'Következik',
   intro: 'Intro',
   comparison: 'Csapatok összevetése',
-  playercompare: 'Csillagjátékosok',
+  playercompare: PC_LABEL,
   playerspecial: 'Játékos-különleges',
   form: 'Forma',
   formpair: 'Forma (két csapat)',

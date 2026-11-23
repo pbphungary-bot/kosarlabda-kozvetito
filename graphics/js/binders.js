@@ -329,6 +329,7 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
     },
     'home.logo': logo(lg, homeId),
     'away.logo': logo(lg, awayId),
+    strip: { src: `strip/playercompare-${lg}`, source: 'Fix logósor (Hunbasket · Tippmix · MKOSZ)' },
   };
   // photos of the two players instead of the club logos (Hunbasket photos; a player without a photo keeps his club's logo)
   const photoGeom = { fit: 'contain', area: undefined, anchor: 'bottom', logoOutline: false, opacity: sel.photoOpacity ?? 0.6 };
@@ -360,6 +361,7 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
       const hb = s.lowerIsBetter ? h <= a : h >= a, ab = s.lowerIsBetter ? a <= h : a >= h;
       hc = hb ? GREEN : RED; ac = ab ? GREEN : RED;
     }
+    v[`label.${s.key}`] = { text: s.label, source: 'Sor felirata (átírható)' };
     const fromHb = p => (p?.p.filledFromHunbasket?.includes(col) ? ' (Hunbasket – az Excelben nincs ilyen oszlop)' : '');
     v[`home.${s.key}`] = field(f(h), `${nm(hp)} – ${s.label}${fromHb(hp)}`, { color: hc });
     v[`away.${s.key}`] = field(f(a), `${nm(ap)} – ${s.label}${fromHb(ap)}`, { color: ac });

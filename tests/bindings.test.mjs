@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadStore, readJson, DATA_DIR } from './helpers.mjs';
 import { bindPlayerCompare, bindH2H, bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
-import { templateById, STAT_ROWS, TEAMSTAT_COLS } from '../graphics/js/templates.js';
+import { templateById, STAT_ROWS, TEAMSTAT_COLS, PC_BUILDERS, pcRowKeys } from '../graphics/js/templates.js';
 import { clubId } from '../graphics/js/clubs.js';
 import { gameKey } from '../graphics/js/data.js';
 
@@ -380,4 +380,26 @@ test('players: an Excel row without 2P % / 3P % / BT % is completed from the Hun
   const none = { ...row, 'Játékos': 'Nincs Ilyen' };
   store.setExcel('women', { team: {}, players: { dvtkhuntherm: [none] }, cups: {}, enabled: true, meta: { files: [] } });
   assert.equal(store.players('women', 'dvtkhuntherm').players[0]['3P %'], undefined, 'unknown player: nothing invented');
+});
+
+test('key players: the chosen rows only, the panel is exactly as tall as the rows, labels / strip / logos follow', async () => {
+  for (const lg of ['men', 'women']) {
+    const all = PC_BUILDERS[`playercompare-${lg}`](null), four = PC_BUILDERS[`playercompare-${lg}`](['ppg', 'reb', 'ast', 'val']);
+    const panel = t => t.elements.find(e => e.id === 'panel');
+    assert.equal(all.pcRows.length, 9);
+    assert.deepEqual(four.pcRows, ['ppg', 'reb', 'ast', 'val'], 'rows keep the fixed order');
+    assert.ok(Math.abs(panel(all).box[3] - 998) < 0.5, `all 9 rows: the PSD's own frame height (${panel(all).box[3]})`);
+    assert.ok(Math.abs((panel(all).box[3] - panel(four).box[3]) - 5 * 90.6667) < 0.5, 'five rows fewer: 5 row pitches shorter');
+    assert.equal(four.elements.filter(e => /^label\./.test(e.id)).length, 4);
+    assert.ok(!four.elements.some(e => e.id === 'home.fg3_pct'), 'unchosen rows do not exist');
+    const strip = four.elements.find(e => e.id === 'strip'), pb = panel(four).box;
+    assert.ok(Math.abs((strip.box[1] - strip.box[3] / 2) - (pb[1] + pb[3] / 2 + 12)) < 0.5, 'logo strip sits 12 px under the panel');
+    assert.ok(four.elements.find(e => e.id === 'home.logo').box[1] < all.elements.find(e => e.id === 'home.logo').box[1], 'photos / logos move up with the shorter panel');
+    assert.ok(Math.abs(four.inner.box[3] - (pb[1] + pb[3] / 2 - panel(four).sw)) < 0.5, 'photos are clipped to the new inner edge');
+  }
+  assert.equal(pcRowKeys([]).length, 9, 'an empty selection falls back to all rows');
+  const store = await loadStore(), hid = 'kecskemet', aid = 'nkapecs';
+  const v = bindPlayerCompare(store, 'men', hid, aid, {});
+  assert.equal(v['label.ppg'].text, 'PTS');
+  assert.equal(v.strip.src, 'strip/playercompare-men');
 });

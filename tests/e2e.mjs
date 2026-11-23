@@ -1230,6 +1230,15 @@ try {
     assert.ok(Math.abs(b2[2] / b2[3] - bx[2] / bx[3]) < 0.01, 'proportional');
     await page.uncheck('#editMode');
     await page.click('.pcUpClear[data-side="home"]');
+    // statistical categories: unticking rows removes them and the panel shrinks with them
+    const ph = () => page.evaluate(() => window.__studio.report().boxes['panel'][3]);
+    const h9 = await ph();
+    for (const k of ['fg2_pct', 'fg3_pct', 'ft_pct', 'stl', 'tov']) await page.uncheck(`.pcRow[data-k="${k}"]`);
+    await page.waitForFunction(h => window.__studio.report().boxes['panel'][3] < h - 400, h9, { timeout: 15000 });
+    assert.ok(Math.abs((h9 - await ph()) - 5 * 90.6667) < 1, 'the panel is five rows shorter');
+    assert.equal(await page.evaluate(() => Object.keys(window.__studio.report().boxes).filter(id => /^label\./.test(id)).length), 4);
+    for (const k of ['fg2_pct', 'fg3_pct', 'ft_pct', 'stl', 'tov']) await page.check(`.pcRow[data-k="${k}"]`);
+    await page.waitForFunction(h => Math.abs(window.__studio.report().boxes['panel'][3] - h) < 1, h9, { timeout: 15000 });
   });
 
   await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {

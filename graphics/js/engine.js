@@ -334,7 +334,7 @@ export function render(canvas, template, values, assets) {
     // manual move (px) and image scale from the layout editor
     if (el.type === 'text' && (v.dx || v.dy)) el = { ...el, x: el.x + (v.dx || 0), y: el.y + (v.dy || 0) };
     if (el.type === 'image' && el.stand > 0) { // stands on the panel's bottom edge at a default height (px); the layout editor scale grows it upwards, dx / dy move it
-      const k = v.scale > 0 ? v.scale : 1, H = el.stand * k, bottom = (liveInner?.box?.[3] ?? template.height - 10) + (v.dy || 0);
+      const innerH = liveInner?.box ? liveInner.box[3] - liveInner.box[1] : Infinity, k = v.scale > 0 ? v.scale : 1, H = Math.min(el.stand, innerH) * k, bottom = (liveInner?.box?.[3] ?? template.height - 10) + (v.dy || 0);
       el = { ...el, box: [el.box[0] + (v.dx || 0), bottom - H / 2, (el.wide || el.box[2]) * k, H], area: undefined };
     } else if (el.type === 'image' && (v.dx || v.dy || (v.scale > 0 && v.scale !== 1))) {
       const k = v.scale > 0 ? v.scale : 1;

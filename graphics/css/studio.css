@@ -196,6 +196,8 @@ details.pkg .chk { display: flex; flex-direction: row; gap: 6px; align-items: ce
 .sizebar .rowoff input { width: 64px; }
 
 /* Extra (MKOSZ) frames: resize handles on the selected frame, panel */
+.overlay .hit.sel-img { pointer-events: none; } /* a selected picture: its body lets clicks through to the texts over it, only the corner handles catch them */
+.overlay .hit.sel-img .rh { pointer-events: auto; }
 .overlay .hit .rh { position: absolute; width: 16px; height: 16px; background: var(--warn); border: 2px solid #000; border-radius: 3px; touch-action: none; z-index: 5; }
 .overlay .hit .rh[data-c="nw"] { left: -9px; top: -9px; cursor: nwse-resize; }
 .overlay .hit .rh[data-c="ne"] { right: -9px; top: -9px; cursor: nesw-resize; }

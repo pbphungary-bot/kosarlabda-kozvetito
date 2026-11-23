@@ -3,7 +3,7 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
@@ -47,7 +47,7 @@ const saveState = () => lsSet(LS.state, { league: state.league, template: state.
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
 let photoIds = new Set(); // ids of the downloaded player photos (players/index.json); a missing photo shows the placeholder
-const imageUrl = key => key.startsWith('form/') ? `assets/form/${key.slice(5)}.png` : key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
+const imageUrl = key => key.startsWith('strip/') ? `templates/${key.slice(6)}/strip.png` : key.startsWith('form/') ? `assets/form/${key.slice(5)}.png` : key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
 /** Loads the flags / photos a set of values refers to (the renderer draws only what is already loaded). */
 async function ensureImages(values) {
   const jobs = [];
@@ -92,6 +92,11 @@ const tpl = () => {
     const off = state.sel[t.league]?.rowOff || [];
     const key = `${t.id}|${n}|${mask}|${ns}|${fs}|${JSON.stringify(off)}`;
     if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, rosterBuild(t, n, mask, ns, fs, off)); }
+    return psCache.get(key);
+  }
+  if (t.type === 'playercompare') { // key players: only the chosen rows, the panel is as tall as they are
+    const rows = pcRowKeys(state.sel[t.league]?.pc?.rows), key = t.id + '|' + rows.join();
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, PC_BUILDERS[t.id](rows)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -158,7 +163,8 @@ function currentMatch() {
 function cmpOptionsHtml(s, t) {
   const col = s.srcColor || SRC_COLOR;
   const photo = t.type === 'playercompare' ? `<div class="row2"><label>Középen: <select id="pcMode"><option value="auto" ${s.pc?.mode !== 'logo' ? 'selected' : ''}>a játékosok fotója (ha van)</option><option value="logo" ${s.pc?.mode === 'logo' ? 'selected' : ''}>a klubok logója</option></select></label>
-      <label>Fotó átlátszatlansága (%)<input type="number" id="pcOpacity" min="10" max="100" step="5" value="${Math.round((s.pc?.photoOpacity ?? 0.6) * 100)}"></label></div>` : '';
+      <label>Fotó átlátszatlansága (%)<input type="number" id="pcOpacity" min="10" max="100" step="5" value="${Math.round((s.pc?.photoOpacity ?? 0.6) * 100)}"></label></div>
+    <fieldset class="xbox"><legend>Statisztikai kategóriák (a háttér a sorok számához igazodik)</legend><div class="pcRows">${STAT_ROWS.map(r => `<label class="chk"><input type="checkbox" class="pcRow" data-k="${r.key}" ${pcRowKeys(s.pc?.rows).includes(r.key) ? 'checked' : ''}> ${r.label}</label>`).join(' ')}</div></fieldset>` : '';
   return `<div class="row2"><label>Forrás-felirat színe (FULLFIELD.INFO / HUNBASKET.HU)<span class="import-row"><input type="color" id="srcColor" value="${col}"> <button type="button" id="srcColorReset" class="ghost">Alap</button></span></label></div>${photo}`;
 }
 function wireCmpOptions(s) {
@@ -166,6 +172,11 @@ function wireCmpOptions(s) {
   $('srcColorReset').onclick = () => { s.srcColor = null; renderSelection(); update(true); };
   if ($('pcMode')) {
     $('pcMode').onchange = e => { (s.pc ||= {}).mode = e.target.value; update(true); };
+    document.querySelectorAll('.pcRow').forEach(cb => cb.onchange = () => {
+      const on = [...document.querySelectorAll('.pcRow')].filter(x => x.checked).map(x => x.dataset.k);
+      if (!on.length) { cb.checked = true; return toast('Legalább egy kategóriának maradnia kell.'); }
+      (s.pc ||= {}).rows = on; update(true);
+    });
     $('pcOpacity').onchange = e => { (s.pc ||= {}).photoOpacity = Math.max(0.1, Math.min(1, (+e.target.value || 60) / 100)); update(true); };
   }
 }
@@ -973,6 +984,9 @@ function renderOverlay() {
     Object.assign(d.style, { left: `${(x / 1920) * 100}%`, top: `${(y / 1080) * 100}%`, width: `${(w / 1920) * 100}%`, height: `${(h / 1080) * 100}%`, zIndex: i + 1 });
     d.title = `${elById(id)?.label || id} – húzd, vagy jelöld ki`;
     d.classList.toggle('sel', id === selectedId);
+    const bigPic = id === selectedId && elById(id)?.type === 'image' && w * h > 300000; // a large picture (e.g. a 900 px tall photo) lies under many texts
+    d.classList.toggle('sel-img', bigPic);
+    if (bigPic) d.style.zIndex = 9999; // its handles stay above those texts
     const handles = ['framed', 'image'].includes(elById(id)?.type) && id === selectedId; // framed shapes and pictures can be resized by their corners (pictures: proportional scale)
     if (!handles) d.querySelectorAll('.rh').forEach(h => h.remove());
     else if (!d.querySelector('.rh')) for (const c of ['nw', 'ne', 'sw', 'se']) { const h = document.createElement('i'); h.className = 'rh'; h.dataset.c = c; d.appendChild(h); }
