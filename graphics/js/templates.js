@@ -294,7 +294,7 @@ export function psNormalize(league, cfg) {
 /** The template for one configuration of a player-special design. `base` is the registry entry (background, reference). */
 export function psBuild(base, cfgIn) {
   const league = base.league, g = PS_GEOM[league], cfg = psNormalize(league, cfgIn), op = 0.9882;
-  const [ix0, iy0, ix1, iy1] = g.inner.box;
+  const [, iy0, , iy1] = g.inner.box;
   const photoH = cfg.photoH > 0 ? Math.min(cfg.photoH, iy1 - iy0) : iy1 - iy0;
   const n = cfg.cols;
   // x of the columns: the PSD's own positions for its own column count, otherwise even slots (the label takes one slot)
@@ -310,7 +310,6 @@ export function psBuild(base, cfgIn) {
   const rows = cfg.rows, nr = rows.length;
   const pitch = nr > 1 ? Math.min(g.rowSpan / 5, g.rowSpan / (nr - 1)) : 0;
   const rowSize = cfg.fsRows || Math.min(96, 96 * (pitch || 115) / 115);
-  const small = PS_SMALL * rowSize / 96;
   const group = { title: [], headers: [], labels: [] };
   for (let k = 1; k <= n; k++) group[`c${k}`] = [];
   group.title.push(

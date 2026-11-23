@@ -172,3 +172,7 @@ Sablon: *Egymás ellen* – a kiválasztott mérkőzés két csapatának **utols
 ### Háttér eltávolítása (AI)
 
 A Játékos-különleges fotómezője és az Extra (MKOSZ) fotókerete alatt a **Háttér eltávolítása (AI)** gomb a feltöltött fotó hátterét eltünteti (átlátszó PNG lesz belőle). Teljesen a böngészőben fut: nincs szerver, fiók vagy díj, a kép nem hagyja el a gépet. Az első használatkor betölti a modellt (`models/silueta.onnx`, 44 MB, utána a böngésző gyorsítótárazza), egy fotó pár másodperc. A **Vágás erőssége** csúszka a szél keménységét állítja (nem kell újra futtatni), az **Eredeti kép vissza** gomb visszaadja a feltöltött képet. Egyszínű / stúdióháttéren a legpontosabb; nagyon zsúfolt háttérnél a haj körül kézi utómunka kellhet. A modell és a futtató licence: `models/README.md`.
+
+## Fejlesztői jegyzet (kód szerkezete)
+- `js/app.js` – a stúdió fő vezérlője (állapot, mezők, renderelés, elrendezés-szerkesztő, mobil nézet); `js/panels.js` – az önálló oldalpanelek (Játékos-különleges beállítások + oszlopok együtt mozgatása, AI háttéreltávolítás, Extra keretek); `js/bgremove.js` – a háttéreltávolító motor.
+- A dashboard stílusai a `css/dashboard.css`-ben vannak (korábban 18 beágyazott `<style>` blokk, ugyanabban a sorrendben összefűzve; a megjelenés pixelre azonos). Új szabály a fájl végére kerül.

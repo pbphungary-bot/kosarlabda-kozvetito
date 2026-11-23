@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches: ['claude/**']
-    paths: ['graphics/**', 'tests/**', 'index.html', 'scripts/**', '.github/workflows/tests.yml']
+    paths: ['graphics/**', 'tests/**', 'index.html', 'css/**', 'scripts/**', '.github/workflows/tests.yml']
 permissions:
   contents: read
 concurrency:
