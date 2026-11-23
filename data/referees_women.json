@@ -3,7 +3,7 @@
  "source": "hunbasket",
  "source_url": "https://hunbasket.hu/menetrend-teljes/noi/x2627/whun",
  "season": "x2627",
- "updated_at": "2026-11-23T10:50:21.013345+00:00",
+ "updated_at": "2026-11-23T18:41:00.198681+00:00",
  "matches": {
   "https://hunbasket.hu/merkozes/x2627/whun/whun_135471": {
    "home": "KSC Szekszárd",
@@ -449,8 +449,12 @@
    "home": "TFSE",
    "away": "NKA Universitas Pécs",
    "venue": "Dr. Koltai Jenő Sportközpont",
-   "referees": [],
-   "controller": ""
+   "referees": [
+    "Major Ádám",
+    "Varga-Záray Katalin",
+    "Nepp László Oszkár"
+   ],
+   "controller": "Fekete László"
   },
   "https://hunbasket.hu/merkozes/x2627/whun/whun_135569": {
    "home": "Sopron Basket",
