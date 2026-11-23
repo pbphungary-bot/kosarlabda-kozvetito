@@ -4,6 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { ROOT } from './helpers.mjs';
 import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss } from '../graphics/js/live.js';
+import { loadStore } from './helpers.mjs';
+import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -72,4 +75,45 @@ test('live feed: game clock from elapsed seconds (4 x 10 min, overtimes 5 min)',
   assert.equal(gameClock(2400).period, 4);
   assert.deepEqual(gameClock(2401), { period: 5, elapsed: 1, seconds: 2401 });
   assert.equal(gameClock(2701).period, 6);
+});
+
+test('live graphic: every variant is a compact panel (at most a quarter of the picture), cells = elements', () => {
+  for (const id of ['livestat-men', 'livestat-women']) {
+    assert.equal(templateById(id).type, 'livestat');
+    for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
+      const t = LIVE_BUILDERS[id](k), panel = t.elements.find(e => e.id === 'panel');
+      assert.ok(panel.box[2] <= 960 && panel.box[3] <= 540, `${id}/${k}: panel ${panel.box[2]}x${panel.box[3]} fits a quarter of 1920x1080`);
+      assert.equal(t.elements.filter(e => /^c\d+\.value$/.test(e.id)).length, V.cells.length);
+      assert.ok(t.elements.some(e => e.id === 'photo') && t.elements.some(e => e.id === 'name'));
+      assert.deepEqual(panel.stroke, id.endsWith('men') && !id.endsWith('women') ? '#0b9444' : '#ef4036', 'league outline colour');
+    }
+  }
+  assert.equal(liveVariant('nonsense'), 'basic');
+  assert.ok(TEMPLATE_TYPES.livestat);
+});
+
+test('live graphic: values of the chosen player, roster-style name, official photo only when there is one', async () => {
+  const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563');
+  const ids = new Set(['B203034']);
+  const ch = liveChoice(store, 'women', g, 'home');
+  assert.equal(ch.teamId, 'sercounigyor');
+  assert.equal(ch.player.code, 'B203034', 'default: the best scorer');
+  const v = bindLiveStat(store, 'women', g, { side: 'home', variant: 'basic', fetchedAt: '22:41:03' }, ids);
+  assert.equal(v.name.text, 'GÁLOS Hanna Andrea', 'surname in capitals, Hunbasket roster spelling');
+  assert.equal(v['c0.value'].text, '15'); assert.equal(v['c1.value'].text, '5'); assert.equal(v['c2.value'].text, '1');
+  assert.equal(v.photo.src, 'photo/B203034');
+  assert.match(v.sub.text, /^#11 · ETO Basket 90–48 VBW CEKK Cegléd · végeredmény$/);
+  assert.match(v['c0.value'].source, /22:41:03/, 'freshness is in the source label');
+  const sh = bindLiveStat(store, 'women', g, { side: 'home', variant: 'shooting' }, ids);
+  assert.deepEqual([sh['c1.value'].text, sh['c1.sub'].text], ['4/5', '80.0%']);
+  assert.equal(sh['c0.sub'].text, '0.0%');
+  const full = bindLiveStat(store, 'women', g, { side: 'home', variant: 'full' }, ids);
+  assert.equal(full['c0.value'].text, '25:18'); assert.equal(full['c8.value'].text, '20', 'EFF');
+  // another player of the other team (not in the photo list: no photo, never a made-up one); a wrong code falls back to the best scorer
+  const away = bindLiveStat(store, 'women', g, { side: 'away', player: 'B12490', variant: 'basic' }, ids);
+  assert.equal(away.photo.src, ''); assert.equal(away['c0.value'].text, '10');
+  assert.equal(bindLiveStat(store, 'women', g, { side: 'away', player: 'nope' }, ids)['c0.value'].text, '10');
+  // nothing loaded: nothing invented
+  const none = bindLiveStat(store, 'women', null, {}, ids);
+  assert.equal(none.name.missing, true);
 });

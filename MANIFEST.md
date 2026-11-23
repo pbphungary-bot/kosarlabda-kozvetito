@@ -30,7 +30,7 @@ Basketball commentator tool for the Hungarian NB I/A (men + women, always separa
 | Hunbasket photos | player photos (MKOSZ gave permission) | `graphics/players/` (4 players have none → placeholder) |
 | Flags (roster graphics) | one SVG per nationality in `graphics/assets/flags/`; Hungarian players get no flag by design; the team-pages job now downloads the flag of any new nationality automatically; Hunbasket lists no nationality (`-`) for one player (Sopron Basket, JANKOVIC Masa) → no flag |
 
-## 3. Graphics Studio – templates (16 per league)
+## 3. Graphics Studio – templates (17 per league)
 Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting for the owner's check · **OPEN** = not done.
 
 | Graphic | Status | Notes |
@@ -46,6 +46,7 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Egymás ellen (head to head) | **LOCKED** (look) | last up to **6** meetings: date · badge · score · badge; the box is exactly as tall as the list; score green / red from the match's HOME team's point of view ("we work for the home team"); data covers 7 seasons only |
 | Extra (MKOSZ) | **LOCKED** | photo frame + QR frame, free / proportional resize, uploads |
 | Következik | REVIEW | |
+| Élő statisztika (játékos) (livestat) | REVIEW | **new 2026-11-23:** compact court-frame panel (top-left, ≤ 960×540): official roster photo, name (Hungarian "SURNAME Given" / foreign "Given SURNAME" from the Hunbasket roster), `#number · score · period`, club logo, and stats of the chosen live-game player; variants **Alap** (PTS·REB·AST), **Dobások** (2P·3P·BT with %), **Teljes sor** (PERC·PTS·REB·AST·STL·BLK·TOV·FAULT·EFF). Data = live boxscore (section 5b); loaded by link/code (auto refresh 5 s via the local relay) or pasted; every value carries the freshness in its source label; nothing is invented. Not in the ZIP package (it is a live insert). |
 | Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
 Studio layout: desktop sidebar width is draggable (splitter, remembered, double click resets); controls wrap instead of overflowing – REVIEW.
@@ -77,7 +78,7 @@ Goal: during timeouts / quarter breaks pick a player of the running game and sho
 - **Source:** the MKOSZ netcasting page `https://netcasting4.webpont.com/?whun_<id>` (`whun_` = women, `hun_` = men). It loads `storage/full<gamecode>.html` (whole game) / `storage/last<gamecode>.html` (latest events), refreshed about every 5 s. Format: home-made `key|value#key|value` text, `%` between array items; three string replaces turn it into JSON (`graphics/js/live.js` `decodeFeed`). Contains roster (`players.home/away`: Hunbasket player code, name, number, photo URL), `i` (teams, score `hp`/`vp`, arena, referees, date) and the play-by-play `f` (codes: 1000 made shot, 1001 miss, 1002 def reb, 1003 off reb, 1004 steal, 1005 turnover, 1006 foul drawn, 1007 foul, 1008 assist, 1009 block, 1010 block against, 1020 technical, 1011 substitution, 1100 15 s tick, 1101 period end; `gt` = elapsed game seconds). Shot type 3 = three, 4 = free throw, 1/2/5 = two. **Player codes are Hunbasket player ids**, so `graphics/players/<id>.webp` fits directly.
 - **Parser:** `graphics/js/live.js` (counts the stats like the netcasting page; counted points equal the official score), tests `tests/live.test.mjs` on a saved finished game (`tests/fixtures/live/whun_135563.full.txt`, ETO Basket – CEKK Cegléd 90–48).
 - **Access:** the feed server sends **no CORS header** (a browser on GitHub Pages cannot read it) and **blocks cloud networks**: a Supabase Edge Function was tried and cannot reach it (IPv6 reset, IPv4 port 443 dropped, port 80 only redirects) – do not retry that route (the two stub functions `live-box` / `live-diag` in the Supabase project can be deleted in its dashboard). **Working route:** `python3 tools/serve.py` serves the studio and relays the feed at `/live?game=whun_135563&kind=full` (the owner's own connection is accepted). The sandbox reaches the feed only through the allowed host `netcasting4.webpont.com` of the environment.
-- **Next:** the graphic itself (player picker, basic stat versions, photo, paste fallback). Coach interview graphic (owner will add a PSD prototype): data from Hunbasket preview links / BB1 (`bball1.hu`) preview article, always a photo upload.
+- **Built:** the graphic `livestat-<men|women>` (see section 3). Open ideas: OBS browser-source page that refreshes by itself, team-level insert (team fouls, quarter scores), own photo upload per player. Coach interview graphic (owner will add a PSD prototype): data from Hunbasket preview links / BB1 (`bball1.hu`) preview article, always a photo upload.
 
 ## 6. Open items / ideas
 Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).

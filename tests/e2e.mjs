@@ -75,8 +75,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 16 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 16);
+    await check(`${lg}: 17 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 17);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -1239,6 +1239,50 @@ try {
     assert.equal(await page.evaluate(() => Object.keys(window.__studio.report().boxes).filter(id => /^label\./.test(id)).length), 4);
     for (const k of ['fg2_pct', 'fg3_pct', 'ft_pct', 'stl', 'tov']) await page.check(`.pcRow[data-k="${k}"]`);
     await page.waitForFunction(h => Math.abs(window.__studio.report().boxes['panel'][3] - h) < 1, h9, { timeout: 15000 });
+  });
+
+  await check('live statistics: paste the feed, pick team / player / variant, values follow, no relay = clear message', async () => {
+    const until = (n, fn, arg, o) => page.waitForFunction(fn, arg, o).catch(e => { throw new Error(`live test: wait #${n} timed out (${e.message.split('\n')[0]})`); });
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="livestat-women"]');
+    await page.waitForSelector('#liveCode');
+    assert.match(await page.textContent('#liveInfo'), /Még nincs élő meccs/, 'nothing loaded: stated, nothing invented');
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
+    await page.fill('#liveCode', 'https://netcasting4.webpont.com/?whun_135563'); await page.dispatchEvent('#liveCode', 'change');
+    await page.click('details:has(#livePaste) > summary');
+    await page.fill('#livePaste', 'half a feed {"i":'); await page.click('#livePasteGo');
+    await until(1, () => /nem értelmezhető/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
+    await page.fill('#livePaste', feed); await page.click('#livePasteGo');
+    await page.waitForSelector('#livePlayer option[value="B203034"]', { state: 'attached' });
+    const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
+    await until(2, () => window.__studio.current().values?.name?.text === 'GÁLOS Hanna Andrea', null, { timeout: 15000 });
+    assert.equal(await val('c0.value'), '15'); assert.equal(await val('c1.value'), '5');
+    assert.equal(await val('photo', 'src'), 'photo/B203034', 'the official roster photo');
+    await page.selectOption('#liveVariant', 'shooting');
+    await until(3, () => window.__studio.current().values?.['c1.sub']?.text === '80.0%', null, { timeout: 15000 });
+    await page.selectOption('#liveVariant', 'full');
+    await until(4, () => window.__studio.current().values?.['c0.value']?.text === '25:18', null, { timeout: 15000 });
+    await page.selectOption('#livePlayer', 'B20186');
+    await until(5, () => /WENINGER/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 });
+    await page.selectOption('#liveSide', 'away');
+    await until(6, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 });
+    assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    const file = path.join(out, 'livestat-women-away.png'); await dl.saveAs(file);
+    const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.colorType, 6);
+    // the relay (tools/serve.py /live) is intercepted so the test never touches the network: first it fails, then it answers with the saved feed
+    let relayUrl = '';
+    await page.route('**/live?*', route => { relayUrl = route.request().url(); route.fulfill({ status: 502, contentType: 'text/plain', body: 'upstream unreachable' }); });
+    await page.click('#liveLoad');
+    await until(7, () => /nem érhető el/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
+    assert.match(relayUrl, /\/live\?game=whun_135563&kind=full$/, 'asks the relay for the full feed of the game code');
+    assert.ok(await val('name'), 'the game stays loaded when the relay fails');
+    await page.unroute('**/live?*');
+    await page.route('**/live?*', route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
+    await page.click('#liveLoad');
+    await until(8, () => /végeredmény · frissítve/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
+    await until(9, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 }); // a refresh keeps the chosen player
+    await page.unroute('**/live?*');
   });
 
   await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {
