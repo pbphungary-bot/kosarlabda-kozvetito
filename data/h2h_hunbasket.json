@@ -1,11 +1,11 @@
 {
   "source": "Hunbasket",
-  "updated_at": "2026-11-18T14:37:10.603208+00:00",
+  "updated_at": "2026-11-23T05:42:22.625919+00:00",
   "coverage": [
     {
       "league": "men",
       "season": "2627",
-      "count": 68,
+      "count": 69,
       "url": "https://hunbasket.hu/menetrend-teljes/ferfi/x2627/hun"
     },
     {
@@ -47,7 +47,7 @@
     {
       "league": "women",
       "season": "2627",
-      "count": 35,
+      "count": 40,
       "url": "https://hunbasket.hu/menetrend-teljes/noi/x2627/whun"
     },
     {
@@ -88,6 +88,66 @@
     }
   ],
   "matches": [
+    {
+      "league": "women",
+      "season": "2026/2027",
+      "home": "DVTK HUNTHERM",
+      "away": "Csata TKK",
+      "date": "2026-11-22",
+      "score": "77–86",
+      "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135557",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "women",
+      "season": "2026/2027",
+      "home": "ETO Basket",
+      "away": "VBW CEKK Cegléd",
+      "date": "2026-11-22",
+      "score": "90–48",
+      "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135563",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "men",
+      "season": "2026/2027",
+      "home": "Duna Aszfalt-DTKH Kecskemét",
+      "away": "NHSZ-Szolnoki Olajbányász",
+      "date": "2026-11-21",
+      "score": "82–88",
+      "url": "https://hunbasket.hu/merkozes/x2627/hun/hun_134863",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "women",
+      "season": "2026/2027",
+      "home": "Sopron Basket",
+      "away": "KSC Szekszárd",
+      "date": "2026-11-21",
+      "score": "66–61",
+      "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135559",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "women",
+      "season": "2026/2027",
+      "home": "NKA Universitas Pécs",
+      "away": "ELTE BEAC Újbuda",
+      "date": "2026-11-21",
+      "score": "117–78",
+      "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135555",
+      "source": "Hunbasket"
+    },
+    {
+      "league": "women",
+      "season": "2026/2027",
+      "home": "TFSE",
+      "away": "Vasas Akadémia",
+      "date": "2026-11-21",
+      "score": "62–63",
+      "url": "https://hunbasket.hu/merkozes/x2627/whun/whun_135561",
+      "source": "Hunbasket"
+    },
     {
       "league": "men",
       "season": "2026/2027",
