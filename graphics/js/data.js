@@ -254,8 +254,21 @@ export class Store {
 
   players(lg, id) {
     const x = this.#excelOn(lg)?.players?.[id];
-    if (x && x.length) return { name: club(lg, id)?.official, sourceUrl: null, source: 'excel', players: x };
     const d = this.leagues[lg].players[id];
+    if (x && x.length) {
+      // the Excel wins, but a column it does not have (e.g. 2P % / 3P % / BT %) is completed from the Hunbasket row of the same player
+      const tok = n => String(n || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
+      const hb = (d?.players || []).map(p => ({ p, t: tok(p['Játékos']) }));
+      const merged = x.map(row => {
+        const w = tok(row['Játékos']);
+        const m = w.length ? hb.find(h => w.every(t => h.t.includes(t)) || h.t.every(t => w.includes(t))) : null;
+        if (!m) return row;
+        const out = { ...row }, filled = [];
+        for (const [k, v] of Object.entries(m.p)) if (!(k in out) || out[k] === '' || out[k] === null) { out[k] = v; filled.push(k); }
+        return filled.length ? Object.defineProperty(out, 'filledFromHunbasket', { value: filled, enumerable: false }) : out;
+      });
+      return { name: club(lg, id)?.official, sourceUrl: null, source: 'excel', players: merged };
+    }
     return d ? { ...d, source: 'dashboard' } : null;
   }
 

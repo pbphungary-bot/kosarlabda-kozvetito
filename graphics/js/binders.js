@@ -287,6 +287,9 @@ export function bindReferees(store, lg, m) {
 export const PLAYER_COLS = { ppg: 'P.', fg2_pct: '2P %', fg3_pct: '3P %', ft_pct: 'BT %', reb: 'ÖLP', ast: 'GP', stl: 'SZL', tov: 'EL', val: 'VAL' };
 const ATTEMPTS = { fg2_pct: '2P K', fg3_pct: '3P K', ft_pct: 'BT K' }; // a percentage counts in the ranking from 1 attempt / game
 
+/** Default height (px) of an uploaded key-players photo: it stands on the panel's bottom edge; resizable in the layout editor. */
+export const UPLOAD_PHOTO_H = 900;
+
 const pKey = p => `${p['#']}|${p['Játékos']}`;
 
 /** Players of a team, best scorer first (the first one is the default "star"). */
@@ -326,11 +329,12 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
     },
     'home.logo': logo(lg, homeId),
     'away.logo': logo(lg, awayId),
+    strip: { src: `strip/playercompare-${lg}`, source: 'Fix logósor (Hunbasket · Tippmix · MKOSZ)' },
   };
   // photos of the two players instead of the club logos (Hunbasket photos; a player without a photo keeps his club's logo)
   const photoGeom = { fit: 'contain', area: undefined, anchor: 'bottom', logoOutline: false, opacity: sel.photoOpacity ?? 0.6 };
   for (const [side, p, tid] of [['home', hp, homeId], ['away', ap, awayId]]) {
-    if (sel.uploads?.[side]) { v[`${side}.logo`] = { src: `upload/pc${side === 'home' ? 'Home' : 'Away'}`, source: 'Feltöltött fotó', geom: photoGeom }; continue; } // the owner's own photo always wins
+    if (sel.uploads?.[side]) { v[`${side}.logo`] = { src: `upload/pc${side === 'home' ? 'Home' : 'Away'}`, source: 'Feltöltött fotó', geom: { ...photoGeom, stand: UPLOAD_PHOTO_H, wide: 1000 } }; continue; } // the owner's own photo always wins
     if (sel.mode === 'logo') continue;
     const pid = p ? playerIdFor(store, lg, tid, p.name) : null;
     if (pid && sel.photoIds?.has(pid)) v[`${side}.logo`] = { src: `photo/${pid}`, source: 'Hunbasket fotó (' + p.name + ')', geom: photoGeom };
@@ -357,8 +361,10 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
       const hb = s.lowerIsBetter ? h <= a : h >= a, ab = s.lowerIsBetter ? a <= h : a >= h;
       hc = hb ? GREEN : RED; ac = ab ? GREEN : RED;
     }
-    v[`home.${s.key}`] = field(f(h), `${nm(hp)} – ${s.label}`, { color: hc });
-    v[`away.${s.key}`] = field(f(a), `${nm(ap)} – ${s.label}`, { color: ac });
+    v[`label.${s.key}`] = { text: s.label, source: 'Sor felirata (átírható)' };
+    const fromHb = p => (p?.p.filledFromHunbasket?.includes(col) ? ' (Hunbasket – az Excelben nincs ilyen oszlop)' : '');
+    v[`home.${s.key}`] = field(f(h), `${nm(hp)} – ${s.label}${fromHb(hp)}`, { color: hc });
+    v[`away.${s.key}`] = field(f(a), `${nm(ap)} – ${s.label}${fromHb(ap)}`, { color: ac });
     const hr = rankOf(hp?.p, col, s), ar = rankOf(ap?.p, col, s);
     const src = `Helyezés a liga ${pool.length} játékosa közül (min. ${minM} meccs${ATTEMPTS[s.key] ? ', min. 1 kísérlet/meccs' : ''}${s.lowerIsBetter ? '; kevesebb = jobb' : ''})`;
     const srcFor = p => (few(p) ? `Kevés meccs (${num(p?.['M.']) ?? 0} < ${minM}): a helyezés az összes ${poolAll.length} pályára lépett játékos között értendő${ATTEMPTS[s.key] ? ' (min. 1 kísérlet/meccs)' : ''}` : src);
