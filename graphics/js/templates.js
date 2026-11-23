@@ -32,8 +32,8 @@ function hscaleKey(type, id) {
 export function panelEl(id) {
   const f = FRAMES[id];
   if (!f) return null;
-  const [x0, y0, x1, y1] = f.box, [cx0, cy0, cx1, cy1] = f.court;
-  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], box0: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], texture: 'assets/court/court.png', texRect: [cx0, cy0, cx1 - cx0, cy1 - cy0],
+  const [x0, y0, x1, y1] = f.box;
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], texture: 'assets/court/court.png',
     stroke: f.stroke, sw: f.sw, r: f.r, useBase: true, opacity: f.opacity, fixedFrame: true, lockAspect: false };
 }
 
@@ -464,9 +464,7 @@ const FORM_PANEL = { x: 40, y: 40, w: 960, row: 215, pad: 24 };
 // The panel of the compact graphics (form, head to head) is a shape filled with the court texture, so it can be resized freely.
 const BORDER = { men: '#0b9444', women: '#ef4036' }; // the PSDs' outline colours
 function panelFrame(league, x, y, w, h) {
-  // the same court picture as the PSD graphics, placed like the roster's (its pixel 700,90 at the panel's top-left corner)
-  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [x + w / 2, y + h / 2, w, h], box0: [x + w / 2, y + h / 2, w, h],
-    texture: 'assets/court/court.png', texRect: [-89 - 700 + x, -90 - 90 + y, 1918, 1080],
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [x + w / 2, y + h / 2, w, h], texture: 'assets/court/court.png',
     stroke: BORDER[league], sw: 6, r: 28, useBase: true, opacity: 0.965, fixedFrame: true, lockAspect: false };
 }
 function formTpl(id, league, rows) {
