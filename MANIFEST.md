@@ -35,7 +35,7 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Egymás ellen (head to head) | **LOCKED** (look) | last 5 meetings: date · badge · score · badge; data covers 7 seasons only |
 | Extra (MKOSZ) | **LOCKED** | photo frame + QR frame, free / proportional resize, uploads |
 | Következik | REVIEW | |
-| Játékvezetők | OPEN | men's PSD uses Satoshi; studio renders League Gothic (owner to decide) |
+| Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
 Other studio features: ZIP package of all graphics of a match, presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
 
@@ -49,7 +49,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 | Shared notes (Supabase) | OPEN – row-level-security review needs the owner's `pg_policies` output (never keys) |
 
 ## 5. LOCKED decisions (do not revisit without being asked)
-- Fonts: **League Gothic Regular/Italic only**.
+- Fonts: **League Gothic Regular/Italic only, everywhere in the graphics** (owner's rule; this also covers the men's referee graphic although its PSD uses Satoshi).
 - Output: transparent 1920×1080 PNG; men and women never mixed; missing data flagged, never invented; data freshness always visible.
 - **Frames:** every graphic frame is a shape = *Téglalap* (outline, freely resizable) + *kosárpálya* (court, locked aspect ratio). The court's upper and lower edge sit on the frame's upper and lower border, centred on the frame's axes; if the frame is wider it grows to cover. Court + outline move/scale as one unit. Outline colours: **men `#0b9444`, women `#ef4036`**.
 - **Name order:** foreigners "Given SURNAME", Hungarians "SURNAME Given"; surname highlighted in capitals on photo cards. (Smuda is not Hungarian.)
@@ -58,7 +58,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 - Working agreement: work on a branch, open PRs, **the owner merges** (never merge/deploy by the assistant); CI (unit + browser tests) must be green; docs (this file, README) updated with every change.
 
 ## 6. Open items / ideas
-Referee graphic font decision · real-phone test of both mobile versions · Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
+Real-phone test of both mobile versions · Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
 
 ## 7. Repo map
 `index.html`+`css/dashboard.css` dashboard · `graphics/` studio (`js/` app, engine, templates, binders, panels, bgremove; `templates/<id>/` statics+thumbs; `assets/court/court.png`; `players/` photos; `models/`+`vendor/ort/` background removal) · `data/` collected JSON · `scripts/` collectors · `tools/` PSD extraction (`psd_extract.py`, `psd_frames.py`) · `tests/` (unit + browser) · `.github/workflows/` collectors + CI · `BROADCAST GRAPHICS/` the owner's PSDs (read-only source).
