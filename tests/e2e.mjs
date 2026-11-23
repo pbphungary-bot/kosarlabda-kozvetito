@@ -1104,6 +1104,32 @@ try {
     }
   });
 
+  await check('frame = court + outline as one unit: moving the panel carries the court with it (pixel-identical)', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="roster-men"]');
+    await page.waitForTimeout(700);
+    await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
+    if (!(await page.$eval('#editMode', e => e.checked))) await page.check('#editMode');
+    const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded(); const bb = await hit.boundingBox();
+    let clicked = false;
+    for (let fx = 0.08; fx < 0.95 && !clicked; fx += 0.04) {
+      const px = bb.x + bb.width * fx, py = bb.y + bb.height - 4;
+      if (await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.dataset?.id === 'panel', [px, py])) { await page.mouse.click(px, py); clicked = true; }
+    }
+    assert.ok(clicked);
+    // a strip of the panel above the table header: only court + border, no dynamic element
+    const strip = x => page.evaluate(x0 => Array.from(document.getElementById('canvas').getContext('2d').getImageData(x0, 62, 600, 18).data), x);
+    const before = await strip(800);
+    await page.focus('body');
+    for (let i = 0; i < 10; i++) await page.keyboard.press('Shift+ArrowRight'); // 10 x 10 px
+    await page.waitForTimeout(600);
+    const after = await strip(900);
+    let diff = 0;
+    for (let i = 0; i < before.length; i++) diff += Math.abs(before[i] - after[i]);
+    assert.ok(diff / before.length < 1, `the court moved with the frame (mean diff ${diff / before.length})`);
+    await page.uncheck('#editMode');
+  });
+
 } finally {
   await browser.close();
   server.kill();

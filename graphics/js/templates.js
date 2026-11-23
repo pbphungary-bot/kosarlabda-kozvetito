@@ -33,7 +33,7 @@ export function panelEl(id) {
   const f = FRAMES[id];
   if (!f) return null;
   const [x0, y0, x1, y1] = f.box, [cx0, cy0, cx1, cy1] = f.court;
-  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], texture: 'assets/court/court.jpg', texRect: [cx0, cy0, cx1 - cx0, cy1 - cy0],
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], box0: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], texture: 'assets/court/court.jpg', texRect: [cx0, cy0, cx1 - cx0, cy1 - cy0],
     stroke: f.stroke, sw: f.sw, r: f.r, useBase: true, opacity: f.opacity, fixedFrame: true, lockAspect: false };
 }
 
