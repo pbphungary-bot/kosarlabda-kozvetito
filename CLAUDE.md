@@ -11,6 +11,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Never run `tools/psd_extract.py` without `--only <template-id>` (it regenerates every template and logo).
 - Session shortcuts live in `.claude/commands/`: `/start <task>`, `/finish`, `/check` (owner types these instead of long prompts).
 
+## Playwright MCP
+`.mcp.json` registers a Playwright MCP server (`tools/playwright-mcp.sh`, headless with the pre-installed Chromium in the cloud sandbox). Use it to look at the running studio/dashboard interactively (reproduce a reported problem, check layout, mobile emulation with `--device`), not as a replacement for `tests/e2e.mjs`. It is only started in sessions where the owner approved the project MCP server.
+
 ## Commands
 There is no build step and no package.json: everything is static files (ES modules) plus Python/Node scripts.
 - Serve the studio locally: `python3 tools/serve.py [port]` → `http://localhost:8000/graphics/` (dashboard: `/index.html`). Hosted as static pages on GitHub Pages.
