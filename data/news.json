@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-23T10:06:42.646324+00:00",
+  "checked_at": "2026-11-23T11:54:25.370499+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -247,8 +247,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -552,8 +554,8 @@
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
-      "added": 2,
-      "repaired": 28,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -561,6 +563,50 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Heti program: Svédországban lép pályára a válogatott",
+      "summary": "14:00 Sopron Basket – DVTK HUNTHERM 17:00 Csata TKK – VBW CEKK Cegléd 18:00 KSC Szekszárd – BKG-PRIMA Szigetszentmiklós 18:00 Vasas Akadémia – ETO Basket",
+      "url": "https://bball1.hu/heti-program-svedorszagban-lep-palyara-a-valogatott/",
+      "published_at": "2026-11-23T12:33:24+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket",
+        "women|DVTK HUNTHERM",
+        "women|Csata TTK",
+        "women|BKG-PRIMA Szigetszentmiklós",
+        "women|TARR KSC Szekszárd",
+        "women|SERCO UNI Győr",
+        "women|VBW CEKK Cegléd"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Hazai pályán folytatódik a menetelés?",
+      "summary": "A DVTK HUNTHERM négy forduló után három győzelemmel és egy vereséggel az E-csoport második helyén áll, míg a horvát együttes négy vereséggel sereghajtó.",
+      "url": "http://dvtk.eu/37689-Hazai_palyan_folytatodik_a_meneteles-cikk-kosarlabda/",
+      "published_at": "2026-11-23T12:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: Csata TKK",
+      "title": "Ne dobd a kukába! Dobj egy REpontot a Csatának!",
+      "summary": "Palackgyűjtő akció a Csata TKK – VBW CEKK Cegléd mérkőzésen, november 28-án Szombaton 17:00-kor […]",
+      "url": "https://csatatkk.hu/2026/11/23/ne-dobd-a-kukaba-dobj-egy-repontot-a-csatanak/",
+      "published_at": "2026-11-23T11:42:02+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Csata TKK",
+      "league": "women",
+      "teams": [
+        "women|Csata TTK"
+      ]
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Pályán a kosárlabda utánpótlás - Eredmények, 47. hét",
@@ -13614,6 +13660,16 @@
       "teams": [
         "men|Körmend"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Fantasy: Nneka Ezeigbo volt a heti legjobb, megvan a novemberi férfi győztes",
+      "summary": "Fantasy: Nneka Ezeigbo volt a heti legjobb, megvan a novemberi férfi győztes",
+      "url": "https://hunbasket.hu/hir/77750/fantasy-nneka-ezeigbo-volt-a-heti-legjobb-megvan-a-novemberi-ferfi-gyoztes/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
     },
     {
       "source": "Hunbasket",
