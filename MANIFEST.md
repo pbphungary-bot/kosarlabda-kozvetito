@@ -38,6 +38,8 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Következik | REVIEW | |
 | Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
+Studio layout: desktop sidebar width is draggable (splitter, remembered, double click resets); controls wrap instead of overflowing – REVIEW.
+
 Other studio features: ZIP package of all graphics of a match, presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
 
 ## 4. Közvetítőhub – status

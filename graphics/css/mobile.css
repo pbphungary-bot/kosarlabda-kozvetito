@@ -92,3 +92,6 @@
   .freshness { display: none; } /* stale data is also announced on the Mezők tab */
   .tabbar button { min-height: 50px; flex-direction: row; justify-content: center; gap: 6px; }
 }
+
+/* the side-bar splitter is a desktop feature */
+.splitter { display: none !important; }

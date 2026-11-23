@@ -995,6 +995,28 @@ function scheduleRedraw() {
   requestAnimationFrame(() => { redrawQueued = false; update(false); });
 }
 
+/** Draggable splitter between the controls sidebar and the preview (desktop): width remembered, double click / Home resets. */
+function initSplitter() {
+  const sp = $('splitter'), layout = document.querySelector('.layout');
+  if (!sp || !layout) return;
+  const DEF = 480, key = 'nbia.studio.sideW';
+  const clamp = w => Math.max(320, Math.min(Math.round(w), Math.max(360, window.innerWidth - 480), 1000));
+  const set = (w, save) => { w = clamp(w); layout.style.setProperty('--side-w', w + 'px'); if (save) lsSet(key, w); return w; };
+  set(lsGet(key, DEF), false);
+  let startX = 0, startW = 0;
+  const cur = () => parseInt(getComputedStyle(layout).getPropertyValue('--side-w'), 10) || DEF;
+  sp.addEventListener('pointerdown', e => { e.preventDefault(); sp.setPointerCapture(e.pointerId); startX = e.clientX; startW = cur(); sp.classList.add('drag'); });
+  sp.addEventListener('pointermove', e => { if (sp.classList.contains('drag')) set(startW + e.clientX - startX, false); });
+  const end = () => { if (!sp.classList.contains('drag')) return; sp.classList.remove('drag'); set(cur(), true); renderOverlay(); };
+  sp.addEventListener('pointerup', end); sp.addEventListener('pointercancel', end);
+  sp.addEventListener('dblclick', () => { set(DEF, true); renderOverlay(); });
+  sp.addEventListener('keydown', e => {
+    const d = { ArrowLeft: -24, ArrowRight: 24 }[e.key];
+    if (d) { e.preventDefault(); set(cur() + d, true); renderOverlay(); } else if (e.key === 'Home') { set(DEF, true); renderOverlay(); }
+  });
+  window.addEventListener('resize', () => set(cur(), false));
+}
+
 function wireLayoutEditor() {
   const ov = $('overlay');
   let resize = null;
@@ -1300,6 +1322,7 @@ async function main() {
     previewImports();
   };
   wireLayoutEditor();
+  initSplitter();
   const lb = $('layoutBox'); // remember whether the layout box was open
   lb.open = !!lsGet('nbia.studio.layoutOpen', false);
   lb.addEventListener('toggle', () => lsSet('nbia.studio.layoutOpen', lb.open));

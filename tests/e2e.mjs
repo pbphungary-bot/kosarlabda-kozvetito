@@ -1203,6 +1203,24 @@ try {
     await page.click('.pcUpClear[data-side="home"]');
   });
 
+  await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {
+    const sp = await (await hermetic(await browser.newContext({ viewport: { width: 1600, height: 900 } }))).newPage();
+    await sp.goto(`${URL}/graphics/index.html`);
+    await sp.waitForSelector('body[data-ready="1"]');
+    const w = () => sp.$eval('.controls', e => Math.round(e.getBoundingClientRect().width));
+    const w0 = await w();
+    const bb = await (await sp.$('#splitter')).boundingBox();
+    await sp.mouse.move(bb.x + 5, bb.y + 150); await sp.mouse.down(); await sp.mouse.move(bb.x + 5 + 200, bb.y + 150, { steps: 5 }); await sp.mouse.up();
+    const w1 = await w();
+    assert.ok(w1 > w0 + 150, `wider ${w0} -> ${w1}`);
+    await sp.reload(); await sp.waitForSelector('body[data-ready="1"]');
+    assert.equal(await w(), w1, 'remembered');
+    assert.equal(await sp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), 0, 'no horizontal page scroll');
+    await sp.dblclick('#splitter');
+    assert.equal(await w(), w0, 'reset');
+    await sp.context().close();
+  });
+
 } finally {
   await browser.close();
   server.kill();
