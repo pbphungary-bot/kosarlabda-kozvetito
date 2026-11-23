@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Splits the baked backgrounds into (a) 'statics.png' – the fixed layers of the PSD WITHOUT the court and the panel shape – and
 (b) the numbers needed to draw the panel as a resizable shape (graphics/js/frames.js): panel box, corner radius, stroke width + colour,
-layer opacity and the placement of the court picture. The court itself is saved once as graphics/assets/court/court.jpg (embedded smart object).
+layer opacity and the placement of the court picture. The court itself is saved once as graphics/assets/court/court.png (embedded smart object).
 Usage: python3 tools/psd_frames.py            (read-only on the PSDs; needs psd-tools, numpy, pillow)"""
 import io, json, os, sys, warnings
 warnings.filterwarnings('ignore')
@@ -31,7 +31,7 @@ def main(only=None):
         if not court or not panel:
             print('skip', tid, '(no court / panel layer)'); continue
         if not saved_court:
-            Image.open(io.BytesIO(court.smart_object.data)).convert('RGB').save(os.path.join(X.OUT, 'assets', 'court', 'court.jpg'), quality=92, optimize=True)
+            Image.open(io.BytesIO(court.smart_object.data)).convert('RGB').save(os.path.join(X.OUT, 'assets', 'court', 'court.png'), optimize=True)
             saved_court = True
         st = panel.stroke
         o = panel.origination[0]._data
