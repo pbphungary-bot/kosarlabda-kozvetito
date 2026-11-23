@@ -4,6 +4,7 @@
 // `sample` reproduces the PSD's own content so the render can be diffed against
 // Photoshop's composite (tests/visual.mjs).
 
+import { FRAMES } from './frames.js';
 import { HSCALE, PANELS, LAYER_OPACITY } from './calibration.js';
 
 const W = 1920, H = 1080;
@@ -27,12 +28,25 @@ function hscaleKey(type, id) {
   return m ? m[1] : null;
 }
 
+/** The panel (court + border) of a PSD graphic as a resizable shape; null when the design has none (see tools/psd_frames.py). */
+export function panelEl(id) {
+  const f = FRAMES[id];
+  if (!f) return null;
+  const [x0, y0, x1, y1] = f.box, [cx0, cy0, cx1, cy1] = f.court;
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, x1 - x0, y1 - y0], texture: 'assets/court/court.jpg', texRect: [cx0, cy0, cx1 - cx0, cy1 - cy0],
+    stroke: f.stroke, sw: f.sw, r: f.r, useBase: true, opacity: f.opacity, fixedFrame: true, lockAspect: false };
+}
+
 const base = (id, league, type, psd, label, extra) => {
   const t = {
     id, league, type, psd, label, width: W, height: H,
     background: `templates/${id}/background.png`, reference: `templates/${id}/reference.png`, ...extra,
   };
   t.panel = PANELS[id];
+  const fid = extra.frameId || id; // the design whose PSD frame this graphic uses (the photo roster shares the table roster's)
+  t.frameId = fid;
+  const pe = panelEl(fid);
+  if (pe) { t.elements = [pe, ...t.elements]; t.background = `templates/${fid}/statics.png`; t.staticsOnTop = true; } // frame = shape, background = the fixed rest of the PSD
   for (const el of t.elements) {
     // layer opacity of the PSD (98.8 % in most designs, 100 % in the intros)
     if (el.opacity === undefined && LAYER_OPACITY[id] !== undefined && LAYER_OPACITY[id] < 1) el.opacity = LAYER_OPACITY[id];
@@ -332,7 +346,7 @@ export function psBuild(base, cfgIn) {
   // layering: everything not marked "in front" is drawn behind the photo (default: all text in front of the photo)
   const names = ['title', 'headers', 'labels', ...Array.from({ length: n }, (_, i) => `c${i + 1}`)];
   const isFront = k => cfg.front[k] !== false;
-  const els = [logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
+  const els = [...(panelEl(base.frameId || base.id) ? [panelEl(base.frameId || base.id)] : []), logo, ...names.filter(k => !isFront(k)).flatMap(k => group[k]), photo, ...names.filter(isFront).flatMap(k => group[k])];
   for (const e of els) if (e.type === 'text') e.adjust = true; // every text has size / position fields
   const t = base2(base, els);
   t.ps = { cfg, groups: names };
@@ -391,7 +405,7 @@ export function rosterDims(n) {
 export function rosterBuild(base, n, mask = '', ns = 1, fs = 1, off = []) {
   const g = ROSTER_GEOM[base.league], op = 0.9882;
   n = Math.max(1, Math.min(24, n || g.defaultN));
-  const els = rosterCommon(g, op);
+  const els = [...(panelEl(base.frameId || base.id) ? [panelEl(base.frameId || base.id)] : []), ...rosterCommon(g, op)];
   if (base.type === 'roster') {
     const pitch = n > 1 ? Math.min(58.4, (g.last - g.first) / (n - 1)) : 0, k = pitch / 58.4;
     const sz = 48.4453 * k, hs = 34.6 * Math.max(k, 0.8);
@@ -434,7 +448,7 @@ export function rosterBuild(base, n, mask = '', ns = 1, fs = 1, off = []) {
 }
 
 function rosterEntry(id, league, type, psd, label, bgId) {
-  const b = base(id, league, type, psd, label, { elements: [], background: `templates/${bgId}/background.png`, reference: `templates/${bgId}/reference.png`, thumb: `templates/${bgId}/thumb.jpg` });
+  const b = base(id, league, type, psd, label, { elements: [], frameId: bgId, background: `templates/${bgId}/background.png`, reference: `templates/${bgId}/reference.png`, thumb: `templates/${bgId}/thumb.jpg` });
   return rosterBuild(b, ROSTER_GEOM[league].defaultN);
 }
 

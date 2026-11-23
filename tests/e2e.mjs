@@ -1077,9 +1077,9 @@ try {
     assert.equal(await page.$eval('.bgrow[data-k="photo"] .bgCut', e => e.disabled), true);
   });
 
-  await check('form / head-to-head panels: the frame is a resizable shape (edit mode, corner handle)', async () => {
-    for (const id of ['form-men', 'h2h-men']) {
-      await page.click('.league-toggle button[data-league="men"]');
+  await check('all panels (frames) are resizable shapes: form, head to head and the PSD graphics (edit mode, corner handle)', async () => {
+    for (const id of ['form-men', 'h2h-men', 'roster-men', 'results-women', 'playerspecial-men', 'comparison-men', 'intro-women']) {
+      await page.click(`.league-toggle button[data-league="${id.endsWith('women') ? 'women' : 'men'}"]`);
       await page.click(`#templateList button[data-id="${id}"]`);
       await page.waitForTimeout(700);
       await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
@@ -1087,7 +1087,12 @@ try {
       const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
       const before = await shot();
       const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded(); const bb = await hit.boundingBox();
-      await page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height - 4);
+      let clicked = false; // a spot of the panel's bottom edge that no other element covers
+      for (let fx = 0.08; fx < 0.95 && !clicked; fx += 0.04) {
+        const px = bb.x + bb.width * fx, py = bb.y + bb.height - 4;
+        if (await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.dataset?.id === 'panel', [px, py])) { await page.mouse.click(px, py); clicked = true; }
+      }
+      assert.ok(clicked, `${id}: panel selectable`);
       await page.waitForTimeout(300);
       const hb = await (await page.$('.hit[data-id="panel"] .rh[data-c="se"]')).boundingBox();
       await page.mouse.move(hb.x + 8, hb.y + 8); await page.mouse.down(); await page.mouse.move(hb.x + 8 + 90, hb.y + 8 + 40, { steps: 4 }); await page.mouse.up();

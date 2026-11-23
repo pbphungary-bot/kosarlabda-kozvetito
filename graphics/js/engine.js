@@ -213,7 +213,11 @@ function drawFramed(ctx, el, v, assets, report) {
   ctx.globalAlpha = (el.useBase && assets.baseOpacity != null ? assets.baseOpacity : el.opacity) ?? 1; // panels follow the "base opacity" slider
   if (tex && fill !== '') { // court texture at its natural scale (a bigger panel shows more of it); cover-scaled when the panel outgrows it
     ctx.save(); ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.clip();
-    if (w <= tex.width && h <= tex.height) {
+    if (el.texRect) { // the court picture exactly where the PSD places it; if the panel outgrows it, a cover-scaled copy fills the rest
+      const [tx, ty, tw, th] = el.texRect;
+      if (x0 < tx || y0 < ty || x1 > tx + tw || y1 > ty + th) { const k = Math.max(w / tex.width, h / tex.height); ctx.drawImage(tex, x0 - (tex.width * k - w) / 2, y0 - (tex.height * k - h) / 2, tex.width * k, tex.height * k); }
+      ctx.drawImage(tex, tx, ty, tw, th);
+    } else if (w <= tex.width && h <= tex.height) {
       const [ox, oy] = el.texOrigin || [0, 0];
       ctx.drawImage(tex, Math.min(ox, tex.width - w), Math.min(oy, tex.height - h), w, h, x0, y0, w, h);
     } else {
@@ -281,6 +285,7 @@ function drawImage(ctx, el, v, assets, report, inner) {
  * under the panel keeps its own opacity. base == null keeps the PSD's native opacity.
  */
 export function applyBaseOpacity(ctx, template, base) {
+  if (template.elements?.some(e => e.id === 'panel' && e.type === 'framed')) return; // the panel shape follows the opacity itself (drawFramed)
   const p = template.panel;
   if (base === null || base === undefined || !p) return;
   const f = base / p.alpha;
@@ -324,7 +329,9 @@ export function render(canvas, template, values, assets) {
   ctx.translate(template.width / 2 + gdx, template.height / 2 + gdy);
   ctx.scale(gs, gs);
   ctx.translate(-template.width / 2, -template.height / 2);
-  if (bgLayer) ctx.drawImage(bgLayer, 0, 0);
+  let liveInner = template.inner;
+  const staticsOnTop = !!bgLayer && !!template.staticsOnTop; // fixed texts / logos of the PSD are drawn over the (shape) panel
+  if (bgLayer && !staticsOnTop) ctx.drawImage(bgLayer, 0, 0);
   for (const base of template.elements) {
     const v = values[base.id] || {};
     let el = v.geom ? { ...base, ...v.geom } : base;
@@ -351,7 +358,8 @@ export function render(canvas, template, values, assets) {
     }
     const visible = v.visible ?? el.visible ?? true;
     if (!visible) continue;
-    const clip = el.clipInner && template.inner; // the panel's outline is untouchable: the clip stays put even when the content moves
+    if (el.id === 'panel' && el.type === 'framed') { const [pcx, pcy, pw, ph] = el.box, sw = el.sw ?? 0; liveInner = { box: [pcx - pw / 2 + sw, pcy - ph / 2 + sw, pcx + pw / 2 - sw, pcy + ph / 2 - sw], r: Math.max((el.r ?? 0) - sw, 0) }; } // photos stay inside the (resized) panel
+    const clip = el.clipInner && liveInner; // the panel's outline is untouchable: the clip stays put even when the content moves
     if (clip) { ctx.save(); ctx.beginPath(); roundRectPath(ctx, template.inner.box, template.inner.r); ctx.clip(); }
     const moved = contentOn && !el.fixedFrame && (el.id !== 'photo' || C.photo !== false);
     if (moved) { ctx.save(); ctx.translate(ccx + cdx, ccy + cdy); ctx.scale(cs, cs); ctx.translate(-ccx, -ccy); }
@@ -360,6 +368,7 @@ export function render(canvas, template, values, assets) {
     else if (el.type === 'framed') drawFramed(ctx, el, v, assets, report);
     if (moved) ctx.restore();
     if (clip) ctx.restore();
+    if (staticsOnTop && el.id === 'panel') ctx.drawImage(bgLayer, 0, 0);
   }
   ctx.restore();
   return report;
