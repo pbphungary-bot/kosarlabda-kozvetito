@@ -32,18 +32,18 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | any player selectable (dropdown bug fixed), ranks also for players with few games (among all who played, noted in the field), own photo upload per side (wins over Hunbasket photo/logo, with background removal), photos instead of logos (option), levelled + mirrored rows, source-name colour |
 | Csapatstatisztika | REVIEW | |
 | Eredmények / Eredmények (színes sorok) / Menetrend | REVIEW | editable rows (delete/add/reorder at once); schedule starts with the game after the next; rows reset on team change |
-| Intro | REVIEW | |
+| Intro | REVIEW | position + W-L line ("(3. hely - 5-2)") is now shown by default (the PSD has it hidden); two-line names make room for it |
 | Játékos-különleges | REVIEW | per-column data source (manual / season / career / last N); columns movable as units; AI background removal for the photo |
 | Keret (táblás) / Keret (fotókkal) | REVIEW | name order rule (below); jersey-number and flag size fields; row moving |
 | Forma / Forma (két csapat) | **LOCKED** | GY / V badges, @ before the score for away games, ≤ ¼ of the picture, no text caption |
-| Egymás ellen (head to head) | **LOCKED** (look) | last 5 meetings: date · badge · score · badge; data covers 7 seasons only |
+| Egymás ellen (head to head) | **LOCKED** (look) | last up to **6** meetings: date · badge · score · badge; the box is exactly as tall as the list; score green / red from the match's HOME team's point of view ("we work for the home team"); data covers 7 seasons only |
 | Extra (MKOSZ) | **LOCKED** | photo frame + QR frame, free / proportional resize, uploads |
 | Következik | REVIEW | |
 | Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
 Studio layout: desktop sidebar width is draggable (splitter, remembered, double click resets); controls wrap instead of overflowing – REVIEW.
 
-Other studio features: ZIP package of all graphics of a match, presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
+Other studio features: ZIP package of all graphics of a match (includes the photo roster; **Intro, Csillagjátékosok and Játékos-különleges are unticked by default** – owner decision, they can be ticked per download), presets, layout editor with saved "alap" (benchmark), Excel/CSV import, mobile version (+ manual desktop/mobile switch), PWA manifest (`graphics/manifest.webmanifest`).
 
 ## 4. Közvetítőhub – status
 | Area | Status |

@@ -310,6 +310,16 @@ test('head to head: past meetings of two clubs, newest first, both orientations,
   // fewer than five meetings: the missing rows stay empty
   const none = bindH2H({ h2hGames: () => g.slice(0, 2) }, 'men', 'kecskemet', 'nkapecs');
   assert.equal(none['h1.score'].text !== '', true); assert.equal(none['h2.score'].text, ''); assert.equal(none['h4.home'].src, '');
+  // the box is exactly as tall as the list; up to 6 meetings; score coloured from the home team of the match
+  const six = bindH2H(store, 'men', 'kecskemet', 'nkapecs');
+  const n = Math.min(6, g.length);
+  assert.equal(six.panel.geom.box[3], 24 * 2 + 86 * n);
+  assert.equal(none.panel.geom.box[3], 24 * 2 + 86 * 2);
+  const first = g[0], ownHome = first.homeId === 'kecskemet', own = ownHome ? first.home : first.away, opp = ownHome ? first.away : first.home;
+  assert.equal(six['h0.score'].color, own > opp ? '#1fbf1b' : '#ec4036');
+  const flipped = bindH2H(store, 'men', 'nkapecs', 'kecskemet'); // same games, the other club is "home": colours flip
+  assert.notEqual(flipped['h0.score'].color, six['h0.score'].color);
+  assert.equal(bindH2H({ h2hGames: () => [] }, 'men', 'kecskemet', 'nkapecs').panel.visible, false, 'no meetings: no box');
 });
 
 test('key players graphic: photos instead of logos (with fallback), source colour, rows level and mirrored', async () => {

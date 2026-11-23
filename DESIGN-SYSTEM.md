@@ -27,8 +27,8 @@ Text outlines: 3–4 px (PSD stroke), club logos carry the white outline stored 
 
 ## Components (LOCKED where marked)
 - **Form badge (LOCKED):** circle with a dark rim, white 6 px ring, "GY" on green / "V" on red, League Gothic letters; opponent logo (or name) under it; own score first; **@** before the score for away games; latest game on the right; no text caption.
-- **Compact graphics (LOCKED):** top-left corner, at most ¼ of 1920×1080 (one team 960×263, two teams 960×478, head-to-head 680×478).
-- **Head to head (LOCKED look):** rows of date · home badge · score · away badge, newest first.
+- **Compact graphics (LOCKED):** top-left corner, at most ¼ of 1920×1080 (one team 960×263, two teams 960×478, head-to-head 680 × up to 564).
+- **Head to head (LOCKED look):** rows of date · home badge · score · away badge, newest first, up to 6 rows; the frame height follows the number of rows; the score is green (`#1fbf1b`) when the match's home team won that meeting, red (`#ec4036`) when it lost.
 - **Player cards (photo roster):** photo, jersey number top-left, flag top-right on the number's centre line, surname in capitals, position · height line in red; name order rule in MANIFEST.md.
 - **Key players:** values and ranks mirrored around the label column, rank rows on the value baseline, photo (or club logo) behind the numbers.
 - **Extra (MKOSZ) (LOCKED):** tall photo frame + square QR frame, brown fill / gold border, free or proportional resize, QR frame white fill option.

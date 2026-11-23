@@ -3,7 +3,7 @@
 // in the data is never filled in: it renders as "—" and is flagged `missing`
 // until the operator types an override.
 import { club } from './clubs.js';
-import { STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { H2H_PANEL, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -562,16 +562,20 @@ export function bindForm(store, lg, teamIds) {
 }
 
 // ───────────────────────── head to head ─────────────────────────
-/** The last five meetings of the two clubs of a match (newest on top): date, badges, score. Nothing is invented. */
-export function bindH2H(store, lg, homeId, awayId, rows = 5) {
+/** The last meetings of the two clubs of a match (newest on top, up to 6): date, badges, score. The score is coloured from the point of view of
+ *  the match's HOME team (green = it won that meeting, red = it lost); the panel is exactly as tall as the list. Nothing is invented. */
+export function bindH2H(store, lg, homeId, awayId, rows = H2H_PANEL.rows) {
   const v = {}, games = homeId && awayId ? store.h2hGames(lg, homeId, awayId) : [];
   const src = 'Hunbasket (2020/21-től) + az idei menetrend';
+  const { x, y, w, row, pad } = H2H_PANEL, n = Math.min(rows, games.length), h = pad * 2 + row * n;
+  v.panel = n ? { geom: { box: [x + w / 2, y + h / 2, w, h] } } : { visible: false };
   for (let r = 0; r < rows; r++) {
-    const g = games[r], e = ['date', 'home', 'away', 'score'].map(x => `h${r}.${x}`);
+    const g = games[r], e = ['date', 'home', 'away', 'score'].map(k => `h${r}.${k}`);
     if (!g) { v[e[0]] = { text: '', source: 'Nincs ennyi korábbi meccs az adatokban' }; v[e[1]] = { src: '' }; v[e[2]] = { src: '' }; v[e[3]] = { text: '' }; continue; }
+    const own = g.homeId === homeId ? g.home : g.away, opp = g.homeId === homeId ? g.away : g.home;
     v[e[0]] = { text: g.date.replace(/-/g, '.') + '.', source: `${src}${g.season ? ' – ' + g.season : ''}` };
     v[e[1]] = logo(lg, g.homeId); v[e[2]] = logo(lg, g.awayId);
-    v[e[3]] = { text: `${g.home}–${g.away}`, source: src };
+    v[e[3]] = { text: `${g.home}–${g.away}`, color: own > opp ? WIN : own < opp ? RED : WHITE_TXT, source: `${src} – ${own > opp ? 'a mérkőzés hazai csapatának győzelme' : own < opp ? 'a mérkőzés hazai csapatának veresége' : 'döntetlen'}` };
   }
   return v;
 }

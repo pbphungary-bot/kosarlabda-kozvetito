@@ -123,12 +123,17 @@ try {
     const venues = await page.evaluate(() => JSON.parse(localStorage.getItem('nbia.studio.venues.v1')));
     assert.ok(Object.values(venues).includes('Messzi István Sportcsarnok'));
   });
-  await check('override: hidden element is not drawn, rank line can be switched on', async () => {
+  await check('intro: position + record line is shown by default and can be switched off and on', async () => {
+    const vis = () => page.evaluate(() => window.__studio.current().values['home.rank']);
+    let v = await vis();
+    assert.notEqual(v.visible, false, 'visible by default');
+    assert.match(v.text, /^\(\d+\. hely - \d+-\d+\)$/);
+    await page.locator('.field[data-id="home.rank"] input.vis').uncheck();
+    await page.waitForTimeout(250);
+    assert.equal((await vis()).visible, false);
     await page.locator('.field[data-id="home.rank"] input.vis').check();
     await page.waitForTimeout(250);
-    const v = await page.evaluate(() => window.__studio.current().values['home.rank']);
-    assert.equal(v.visible, true);
-    assert.match(v.text, /^\(\d+\. hely - \d+-\d+\)$/);
+    assert.equal((await vis()).visible, true);
   });
   await check('override: colour change applies', async () => {
     await page.locator('.field[data-id="venue"] select.color').selectOption('#1fbf1b');
@@ -931,6 +936,8 @@ try {
     const z = unzipSync(new Uint8Array(readFileSync(file)));
     const pngs = Object.keys(z).filter(n => n.endsWith('.png'));
     assert.ok(pngs.length >= 9, pngs.length + ' images');
+    assert.ok(pngs.some(n => /Keret_fotokkal/.test(n)), 'the photo roster is in the package');
+    for (const off of ['Intro', 'Csillagjatekosok', 'Jatekos_kulonleges']) assert.ok(!pngs.some(n => n.includes(off)), `${off} is unticked by default`);
     for (const n of pngs) { const info = pngInfo(Buffer.from(z[n])); assert.equal(info.width, 1920); assert.equal(info.height, 1080); }
     const readme = strFromU8(z['_OLVASSEL.txt']);
     assert.match(readme, /Adatok frissessége/); assert.match(readme, /GRAFIKAI CSOMAG/);
@@ -1029,6 +1036,7 @@ try {
     await p2.close();
   });
   await check('extra (MKOSZ): photo + QR upload, proportional and free resize of the frames', async () => {
+    await page.setViewportSize({ width: 1600, height: 1500 }); // preview and handles fully on screen on any runner
     await page.click('.league-toggle button[data-league="men"]');
     await page.click('#templateList button[data-id="extra-men"]');
     await page.waitForTimeout(500);
@@ -1038,8 +1046,10 @@ try {
     const size = async k => [+(await page.$eval(`.xbox[data-k="${k}"] .xW`, e => e.value)), +(await page.$eval(`.xbox[data-k="${k}"] .xH`, e => e.value))];
     const [w0, h0] = await size('B');
     assert.deepEqual([w0, h0], [316, 320]); // the PSD's QR frame
+    await page.waitForSelector('.hit[data-id="frameB"]', { timeout: 15000 });
     const hit = await page.$('.hit[data-id="frameB"]'); const bb = await hit.boundingBox();
     await page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
+    await page.waitForSelector('.hit[data-id="frameB"] .rh[data-c="se"]', { timeout: 10000 });
     const drag = async (dx, dy) => {
       const hb = await (await page.$('.hit[data-id="frameB"] .rh[data-c="se"]')).boundingBox();
       await page.mouse.move(hb.x + 8, hb.y + 8); await page.mouse.down(); await page.mouse.move(hb.x + 8 + dx, hb.y + 8 + dy, { steps: 4 }); await page.mouse.up(); await page.waitForTimeout(400);
@@ -1053,6 +1063,7 @@ try {
     assert.ok(w2 > w1 && h2 === h1, `free ${w2}x${h2}`);
     const png = await page.$eval('#canvas', c => c.toDataURL('image/png'));
     assert.ok(png.length > 1000);
+    await page.setViewportSize({ width: 1600, height: 1000 });
   });
 
   await check('player special: tick columns and move them together as a unit (and put them back)', async () => {
