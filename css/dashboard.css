@@ -146,9 +146,9 @@ a{color:#74c9ff}#h2hHistory a{color:#73d5e2!important}
 #sourcesTab a{color:#84d5ff!important}
 #syncStatus{color:#b9edcb!important}
 #dataQualityNotice{margin-top:28px!important;background:#17283c!important;border:1px solid #425671!important;color:#b8cadd!important;border-radius:12px!important;font-size:12px!important}
-.club-ribbon{margin-left:120px;display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:3px;padding:7px 24px;background:linear-gradient(#1a2b41,#111e30);border-bottom:1px solid #3c526d;align-items:center}.club-ribbon .ribbon-team{display:flex;justify-content:center;align-items:center;min-width:0;height:64px;border-bottom:3px solid transparent;border-radius:6px;cursor:default}.club-ribbon .ribbon-team:hover{background:#ffffff13}.club-ribbon .club-mark{width:52px;height:52px}.club-ribbon .club-mark img{width:100%;height:100%}
-@media(max-width:960px){.club-ribbon{grid-template-columns:repeat(7,minmax(0,1fr))}.club-ribbon .ribbon-team{height:50px}.club-ribbon .club-mark{width:42px;height:42px}}
-@media(max-width:720px){header{position:relative;padding:12px!important}.wrap{margin-left:0!important;padding:14px 12px 45px!important}nav{position:sticky;top:0;left:auto;bottom:auto;width:auto;flex-direction:row;overflow-x:auto;padding:7px!important;margin:0 0 12px!important;border:1px solid #405571;border-radius:11px}nav button{min-width:110px;min-height:48px;padding:9px!important}.club-ribbon{margin-left:0;grid-template-columns:repeat(7,minmax(0,1fr));padding:4px}.club-ribbon .ribbon-team{height:41px}.club-ribbon .club-mark{width:35px;height:35px}.hero{padding:15px!important}.matchup-brands .club-mark{width:54px!important;height:54px!important}}
+
+@media(max-width:960px){}
+@media(max-width:720px){header{position:relative;padding:12px!important}.wrap{margin-left:0!important;padding:14px 12px 45px!important}nav{position:sticky;top:0;left:auto;bottom:auto;width:auto;flex-direction:row;overflow-x:auto;padding:7px!important;margin:0 0 12px!important;border:1px solid #405571;border-radius:11px}nav button{min-width:110px;min-height:48px;padding:9px!important}.hero{padding:15px!important}.matchup-brands .club-mark{width:54px!important;height:54px!important}}
 @media print{header,.club-ribbon,nav{display:none!important}.wrap{margin:0!important}.card{background:white!important;color:#111!important}.brief-bulletin li{border-color:#bbb!important}}
 
 /* ══ light-editorial-2026 ══ */
@@ -202,16 +202,15 @@ a,#h2hHistory a{color:#075aa4!important}
 .news-item h3 a{color:#123c69!important}.news-item .tag{background:#eef3fb!important;color:#23436b!important}
 #sourcesTab a{color:#075aa4!important}#syncStatus{color:#16634b!important}
 #dataQualityNotice{background:#f3f6fa!important;border:1px solid #d7e2ef!important;color:#5c6e83!important}
-/* The club ribbon shows crests ONLY: no abbreviated names. */
-.club-ribbon{background:#fff!important;border-bottom:1px solid #d5e0ed!important;box-shadow:0 4px 15px #18344c0b!important;gap:4px!important;padding:9px 18px!important}
-.club-ribbon .ribbon-team{height:91px!important;border:0!important;background:transparent!important}
-.club-ribbon .ribbon-team:hover{background:#eff5fc!important}
-.club-ribbon .club-mark{width:77px!important;height:77px!important;max-width:100%!important}
-.club-ribbon .club-mark>span{display:none!important}
-.club-ribbon .club-mark img{width:100%!important;height:100%!important;object-fit:contain!important}
-@media(max-width:1100px){.club-ribbon .ribbon-team{height:73px!important}.club-ribbon .club-mark{width:62px!important;height:62px!important}}
-@media(max-width:960px){.club-ribbon{grid-template-columns:repeat(7,minmax(0,1fr))!important}}
-@media(max-width:720px){nav{background:#fff!important;border:1px solid #d7e2ef!important}.club-ribbon{padding:6px!important}.club-ribbon .ribbon-team{height:53px!important}.club-ribbon .club-mark{width:47px!important;height:47px!important}.matchup-brands .club-mark{width:56px!important;height:56px!important}.matchup-brands .matchup-side{min-height:100px!important;font-size:13px!important}.hero>span.small{margin:-15px -15px 12px!important}}
+
+
+
+
+
+
+@media(max-width:1100px){}
+@media(max-width:960px){}
+@media(max-width:720px){nav{background:#fff!important;border:1px solid #d7e2ef!important}.matchup-brands .club-mark{width:56px!important;height:56px!important}.matchup-brands .matchup-side{min-height:100px!important;font-size:13px!important}.hero>span.small{margin:-15px -15px 12px!important}}
 @media print{body,.card,.hero{background:#fff!important;color:#111!important}.club-ribbon{display:none!important}}
 
 /* ══ matchup-ux-2026 ══ */
@@ -398,3 +397,32 @@ a,#h2hHistory a{color:#075aa4!important}
   .control select,.control button,.fb-toolbar input,.fb-toolbar select,.news-controls input,.news-controls select,
   .league-team-picker select,.league-team-picker button,.topline button,.comparison-print-button,#sharedNotesReload,#refreshNews,#newsMore{min-height:44px}
 }
+
+/* ══ club crest rail (the logo line under the header) ══
+   Crests only – no abbreviated names (agreed). Clean transparent crests from graphics/logos, each in a white tile, optically
+   normalised in JS (ribbonFit); league accent: men green, women red; swipeable single row on phones. */
+.club-ribbon{--rail:#0b9444;position:relative;display:flex;align-items:center;gap:clamp(12px,2vw,26px);margin:0;padding:14px clamp(14px,3vw,34px) 16px;background:linear-gradient(180deg,#fff 0%,#f3f7fb 100%);border-bottom:1px solid #d6e1ec;box-shadow:0 14px 28px -22px #16324d66}
+.club-ribbon[data-league="women"]{--rail:#ef4036}
+.club-ribbon::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--rail),color-mix(in srgb,var(--rail) 30%,#fff) 55%,transparent)}
+.club-ribbon .ribbon-label{flex:0 0 auto;display:grid;gap:3px;padding-right:clamp(12px,2vw,26px);border-right:1px solid #d9e4ef;line-height:1.15;white-space:nowrap}
+.club-ribbon .ribbon-label b{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#17324d}
+.club-ribbon .ribbon-label b::before{content:"";display:inline-block;width:8px;height:8px;margin-right:7px;border-radius:50%;background:var(--rail);vertical-align:1px}
+.club-ribbon .ribbon-label span{font-size:11px;color:#6a7d91}
+.club-ribbon .ribbon-track{flex:1 1 auto;min-width:0;display:flex;justify-content:space-evenly;gap:clamp(6px,.9vw,14px)}
+.club-ribbon .ribbon-team{position:relative;flex:1 1 0;min-width:0;max-width:96px;align-self:flex-start;aspect-ratio:1;display:block;padding:0;border:1px solid #e1e9f2;border-radius:24%;background:#fff;box-shadow:0 1px 2px #1b3a5a14,0 10px 20px -14px #1b3a5a55;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;animation:ribbonIn .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*28ms)}
+.club-ribbon .ribbon-team img{position:absolute;inset:0;margin:auto;max-width:84%;max-height:84%;display:block;object-fit:contain;filter:drop-shadow(0 1px 1px #0d1f3320);transition:transform .25s ease}
+.club-ribbon .ribbon-team .ribbon-init{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:clamp(13px,1.4vw,18px);color:var(--club,#294969)}
+.club-ribbon .ribbon-team::after{content:"";position:absolute;left:24%;right:24%;bottom:7%;height:3px;border-radius:3px;background:var(--club,#294969);opacity:0;transform:scaleX(.3);transition:opacity .2s ease,transform .2s ease}
+.club-ribbon .ribbon-team:hover,.club-ribbon .ribbon-team:focus-visible{transform:translateY(-4px);border-color:color-mix(in srgb,var(--club,#294969) 55%,#fff);box-shadow:0 1px 2px #1b3a5a14,0 16px 26px -14px color-mix(in srgb,var(--club,#294969) 75%,transparent);outline:none}
+.club-ribbon .ribbon-team:hover img,.club-ribbon .ribbon-team:focus-visible img{transform:scale(1.07)}
+.club-ribbon .ribbon-team:hover::after,.club-ribbon .ribbon-team:focus-visible::after{opacity:1;transform:scaleX(1)}
+.club-ribbon .ribbon-team:active{transform:translateY(-1px) scale(.98)}
+@keyframes ribbonIn{from{opacity:0;transform:translateY(8px) scale(.94)}to{opacity:1;transform:none}}
+@media(max-width:720px){
+ .club-ribbon{flex-direction:column;align-items:stretch;gap:8px;padding:12px 0 6px}
+ .club-ribbon .ribbon-label{display:flex;gap:9px;align-items:baseline;padding:0 16px;border:0}
+ .club-ribbon .ribbon-track{justify-content:flex-start;gap:10px;overflow-x:auto;padding:6px 16px 14px;scroll-snap-type:x proximity;scroll-padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 34px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 34px),transparent 100%)}
+ .club-ribbon .ribbon-track::-webkit-scrollbar{display:none}
+ .club-ribbon .ribbon-team{flex:0 0 68px;max-width:none;scroll-snap-align:start}
+}
+@media(prefers-reduced-motion:reduce){.club-ribbon .ribbon-team,.club-ribbon .ribbon-team img,.club-ribbon .ribbon-team::after{animation:none!important;transition:none!important}}

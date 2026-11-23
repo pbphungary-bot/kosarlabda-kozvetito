@@ -1,9 +1,6 @@
 name: Tests
 on:
-  pull_request:
-  push:
-    branches: ['claude/**']
-    paths: ['graphics/**', 'tests/**', 'index.html', 'css/**', 'scripts/**', '.github/workflows/tests.yml']
+  pull_request: # every push to a pull request branch runs the tests once (no separate push run: it only doubled the runs and the e-mails)
 permissions:
   contents: read
 concurrency:
