@@ -17,7 +17,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - run: python -m pip install beautifulsoup4 lxml
       - name: Every team name in the live data resolves to a known club; collectors produced complete files
         run: |
           DATA_DIR=data node --test tests/identity.test.mjs
           DATA_DIR=data python tests/team_pages_parser.test.py
+          DATA_DIR=data python tests/player_pages_parser.test.py
