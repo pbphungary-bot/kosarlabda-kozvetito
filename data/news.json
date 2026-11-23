@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T05:02:03.601683+00:00",
+  "checked_at": "2026-11-23T06:05:45.379045+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 1,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -12375,6 +12375,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Mérkőzés nélküli hét, fókuszban a munka és a közösség!",
+      "summary": "Mérkőzés nélküli hét, fókuszban a munka és a közösség!",
+      "url": "https://falcokc.com/merkozes-nelkuli-het-fokuszban-a-munka-es-a-kozosseg/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
