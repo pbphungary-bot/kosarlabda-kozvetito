@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T12:54:37.788482+00:00",
+  "checked_at": "2026-11-23T14:17:27.388507+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -263,8 +263,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 15,
+      "added": 1,
+      "repaired": 14,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -549,14 +551,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 30,
+      "candidates": 28,
+      "attempted": 28,
       "already_saved": 0,
       "added": 0,
-      "repaired": 30,
+      "repaired": 28,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 30,
+      "usable_articles": 28,
       "source_coverage": true
     }
   ],
@@ -585,6 +587,19 @@
       "league": "women",
       "teams": [
         "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Három negyeden keresztül vezettünk, mégis a kecskemétiek örültek a végén",
+      "summary": "Kadett/B csapatunk vasárnap a Kecskeméti KC-t fogadta hazai pályán.",
+      "url": "https://vasasbasket.hu/index.php/harom-negyeden-keresztul-vezettunk-megis-a-kecskemetiek-orultek-a-vegen/",
+      "published_at": "2026-11-23T12:57:01+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
       ]
     },
     {
@@ -12806,6 +12821,19 @@
       "league": "men",
       "teams": [
         "men|Körmend"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Két játékosunk is a hét csapatában a HUNBASKET Fantasy League-ben",
+      "summary": "Török Ágnes és Nadija Smailbegovic is bekerült a hét álomcsapatának kezdőötösébe a HUNBASKET Fantasy League-ben.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Ket-jatekosunk-is-a-het-csapataban-a-HUNBASKET-Fantasy-League-ben/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
       ]
     },
     {
