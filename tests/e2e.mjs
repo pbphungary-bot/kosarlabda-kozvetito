@@ -1100,7 +1100,7 @@ try {
     for (const id of ['form-men', 'h2h-men', 'roster-men', 'results-women', 'playerspecial-men', 'comparison-men', 'intro-women']) {
       await page.click(`.league-toggle button[data-league="${id.endsWith('women') ? 'women' : 'men'}"]`);
       await page.click(`#templateList button[data-id="${id}"]`);
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(1800);
       await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
       if (!(await page.$eval('#editMode', e => e.checked))) await page.check('#editMode');
       const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
@@ -1121,7 +1121,7 @@ try {
   await check('frame = court + outline as one unit: moving the panel carries the court with it (pixel-identical)', async () => {
     await page.click('.league-toggle button[data-league="men"]');
     await page.click('#templateList button[data-id="roster-men"]');
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1800);
     await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
     if (!(await page.$eval('#editMode', e => e.checked))) await page.check('#editMode');
     const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded(); const bb = await hit.boundingBox();
