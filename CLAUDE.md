@@ -31,3 +31,21 @@ There is no build step and no package.json: everything is static files (ES modul
 **Tests** are hermetic: unit tests load `tests/fixtures/data` through `tests/helpers.mjs` (`loadStore`); e2e routes `/data/*.json` to the same fixtures. Update the fixtures (copy from `data/`) when a collector's output format changes. CI (`.github/workflows/tests.yml`) runs unit + Python + e2e on pull requests.
 
 **Data conventions:** matching is club-scoped (`clubIdStrict`), never fuzzy across leagues; collectors use a polite User-Agent, are low-frequency, and `mkosz.hu`, `webpont`, `facebook` and `eredmenyek.com` are not reachable from the sandbox (use workflow probes or pasted data). Shared dashboard notes use Supabase (row-level security not yet reviewed).
+
+## Lessons learned (do not repeat these)
+**Session hygiene**
+- One feature per session and one pull request per feature; check whether the previous PR is already merged before pointing the owner at it. When a session gets long (many features, big context), say so and suggest a fresh session instead of pushing on; end every task by updating `MANIFEST.md` so the next session starts from facts, not memory.
+- Before a big change, restate the rule in one sentence ("the court's upper/lower edge sits on the frame's borders, centred") and build exactly that. The frame work was done three times (baked backgrounds → shapes → PSD offsets → the owner's actual rule) because the rule came last. If the owner skips or denies a question, pick the sensible default, say which one, and continue.
+- Look in the repo before asking for uploads or re-deriving things: the court, outline colours and stroke widths were already inside the PSDs the owner had uploaded.
+- Do what was asked and verify it; put adjacent ideas into the "Open items" of `MANIFEST.md` instead of building them unasked.
+
+**Tests and CI**
+- CI runners are slower than the dev sandbox: never rely on fixed `waitForTimeout` after a state change, on window size or on pixel clicks near the viewport edge. Wait for a selector/condition, use a tall viewport for editor-handle tests, and retry clicking a spot that may be covered. Three browser-test failures only on GitHub (template list not rebuilt yet, panel not selectable, `fetch` keep-alive crash on server start) all came from this.
+- A new workflow or dependency must be proven in a clean environment: the daily data-health job failed for two days because `bs4` was never installed there.
+- Run both `node --test tests/*.test.mjs` and `node tests/e2e.mjs` before every push, and confirm the CI result after pushing; a red CI is never left for the owner to find.
+
+**Repo and data safety**
+- Collectors overwrite `data/*.json` when run locally: run them on a copy, then restore (`git checkout -- data`); never `git checkout origin/main -- <path>` into the working tree and leave it staged.
+- A blanket PSD extraction, a force-push or deleting files the owner uploaded are never acceptable without asking.
+- Before replacing a pipeline stage (e.g. baked backgrounds → shapes), measure old vs new pixel-by-pixel and keep that check as a test.
+- The sandbox cannot reach `mkosz.hu`, `webpont`, `facebook`, `eredmenyek.com` or the AI model/CDN hosts; probe from a workflow or use pasted data instead of guessing.
