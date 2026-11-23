@@ -1058,6 +1058,25 @@ try {
     assert.equal(await shot(), base);
   });
 
+  await check('background removal (AI, in the browser): the photo gets a transparent background, the slider and undo work', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="playerspecial-men"]');
+    await page.waitForTimeout(600);
+    await page.setInputFiles('#psPhoto', path.join(ROOT, 'tests/fixtures/img/bg-test.png'));
+    await page.waitForTimeout(500);
+    await page.click('.bgrow[data-k="photo"] .bgGo');
+    await page.waitForFunction(() => document.querySelector('.bgrow[data-k="photo"] .bgMsg')?.textContent.startsWith('Kész'), null, { timeout: 120000 });
+    assert.equal(await page.$eval('.bgrow[data-k="photo"] .bgCut', e => e.disabled), false);
+    const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
+    const a = await shot();
+    await page.$eval('.bgrow[data-k="photo"] .bgCut', e => { e.value = 95; e.dispatchEvent(new Event('input', { bubbles: true })); });
+    await page.waitForTimeout(500);
+    assert.notEqual(await shot(), a, 'the slider changes the cut-out');
+    await page.click('.bgrow[data-k="photo"] .bgUndo');
+    await page.waitForTimeout(500);
+    assert.equal(await page.$eval('.bgrow[data-k="photo"] .bgCut', e => e.disabled), true);
+  });
+
 } finally {
   await browser.close();
   server.kill();

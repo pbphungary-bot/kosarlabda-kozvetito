@@ -204,3 +204,5 @@ label.inline { display: flex; gap: 6px; align-items: flex-start; }
 .psnudge { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .psnudge input { width: 64px; }
 .psnudge [data-d] { min-width: 36px; font-size: 16px; }
+.bgrow { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin: 4px 0 8px; }
+.bgrow .bgMsg { flex-basis: 100%; }

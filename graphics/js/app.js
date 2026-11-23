@@ -5,6 +5,7 @@ import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey }
 import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
+import { segment, compose } from './bgremove.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
   bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
@@ -253,6 +254,35 @@ function rowOffHtml(s, rows) {
   return Array.from({ length: rows }, (_, r) => `<span class="rowoff"><b>${names[r] || (r + 1) + '. sor'}</b> <label>↔ <input type="number" class="rowOff" data-r="${r}" data-a="0" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[0] || 0}"></label><label>↕ <input type="number" class="rowOff" data-r="${r}" data-a="1" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[1] || 0}"></label></span>`).join('') + '<button type="button" id="rowOffReset" class="ghost">Sorok alaphelyzet</button>';
 }
 
+// ───────────────────────── background removal of uploaded photos (AI, in the browser) ─────────────────────────
+const bgState = {}; // key ('photo' | 'extraA') -> { orig, seg, cut }
+function bgHtml(key) {
+  const st = bgState[key], has = !!images['upload/' + key];
+  return `<div class="bgrow" data-k="${key}"><button type="button" class="bgGo" ${has ? '' : 'disabled'}>Háttér eltávolítása (AI)</button>
+    <button type="button" class="bgUndo ghost" ${st?.seg ? '' : 'disabled'}>Eredeti kép vissza</button>
+    <label>Vágás erőssége <input type="range" class="bgCut" min="0" max="100" value="${st?.cut ?? 50}" ${st?.seg ? '' : 'disabled'}></label>
+    <small class="hint bgMsg">Az első használatkor egyszeri ~44 MB-os modellt tölt le, utána gyors; a kép nem hagyja el a böngészőt.</small></div>`;
+}
+function wireBg(key) {
+  const row = document.querySelector(`.bgrow[data-k="${key}"]`);
+  if (!row) return;
+  const msg = t => { row.querySelector('.bgMsg').textContent = t; };
+  const apply = () => { const st = bgState[key]; images['upload/' + key] = compose(st.seg, st.cut); update(false); };
+  row.querySelector('.bgGo').onclick = async () => {
+    const btn = row.querySelector('.bgGo'); btn.disabled = true;
+    try {
+      const orig = bgState[key]?.orig || images['upload/' + key];
+      const seg = await segment(orig, { onStatus: msg });
+      bgState[key] = { orig, seg, cut: bgState[key]?.cut ?? 50 };
+      apply();
+      renderSelection(); // buttons / slider enabled
+      document.querySelector(`.bgrow[data-k="${key}"] .bgMsg`).textContent = 'Kész – a „Vágás erőssége” csúszkával finomíthatod a szélét.';
+    } catch (e) { msg('Nem sikerült: ' + (e.message || e)); btn.disabled = false; }
+  };
+  row.querySelector('.bgUndo').onclick = () => { const st = bgState[key]; if (!st) return; images['upload/' + key] = st.orig; delete bgState[key]; renderSelection(); update(true); };
+  row.querySelector('.bgCut').oninput = e => { bgState[key].cut = +e.target.value; apply(); };
+}
+
 // ───────────────────────── Extra (MKOSZ): photo frame + QR frame ─────────────────────────
 const EXTRA_FILLS = [['', 'Alap (barna)'], ['#ffffff', 'Fehér'], ['#000000', 'Fekete'], ['transparent', 'Átlátszó']];
 function extraPanelHtml(s) {
@@ -261,6 +291,7 @@ function extraPanelHtml(s) {
     const b = lastReport?.boxes?.[id], w = b ? Math.round(b[2]) : '', h = b ? Math.round(b[3]) : '';
     return `<fieldset class="xbox" data-k="${k}"><legend>${title}</legend>
       <label>${hint}<span class="import-row"><input type="file" class="xFile" accept="image/png,image/webp,image/jpeg"> <button type="button" class="xClear ghost" ${has ? '' : 'disabled'}>Kép törlése</button></span></label>
+      ${k === 'A' ? bgHtml('extraA') : ''}
       <div class="row2"><label>Illesztés<select class="xFit"><option value="cover" ${fit === 'cover' ? 'selected' : ''}>Kitölti a keretet (levágva)</option><option value="contain" ${fit === 'contain' ? 'selected' : ''}>Egészben belefér</option></select></label>
         <label>Keret háttere<select class="xFill">${EXTRA_FILLS.map(([v, n]) => `<option value="${v}" ${(c.fill ?? '') === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label></div>
       <div class="row2"><label>Kép nagyítása (%)<input type="number" class="xZoom" min="10" max="500" step="5" value="${c.zoom || 100}"></label>
@@ -279,16 +310,17 @@ function wireExtraPanel(s) {
   const box = $('selection');
   s.extra ||= { A: {}, B: {} };
   $('xLock').onchange = e => { state.lockAspect = e.target.checked; renderOverlay(); };
+  wireBg('extraA');
   box.querySelectorAll('.xbox').forEach(fs => {
     const k = fs.dataset.k, id = k === 'A' ? 'frameA' : 'frameB', c = (s.extra[k] ||= {});
     const set = (key, val) => { c[key] = val; update(false); };
     fs.querySelector('.xFile').onchange = e => {
       const f = e.target.files[0]; if (!f) return;
       const img = new Image();
-      img.onload = () => { images['upload/extra' + k] = img; c.name = f.name; renderSelection(); update(true); };
+      img.onload = () => { images['upload/extra' + k] = img; delete bgState['extra' + k]; c.name = f.name; renderSelection(); update(true); };
       img.src = URL.createObjectURL(f);
     };
-    fs.querySelector('.xClear').onclick = () => { delete images['upload/extra' + k]; renderSelection(); update(true); };
+    fs.querySelector('.xClear').onclick = () => { delete images['upload/extra' + k]; delete bgState['extra' + k]; renderSelection(); update(true); };
     fs.querySelector('.xFit').onchange = e => set('fit', e.target.value);
     fs.querySelector('.xFill').onchange = e => set('fill', e.target.value);
     fs.querySelector('.xZoom').onchange = e => set('zoom', Math.max(10, Math.min(500, +e.target.value || 100)));
@@ -358,6 +390,7 @@ function renderSelection(extra = {}) {
       <label>Játékos<select id="psPlayer">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)}</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label></div>
       <label>Fotó (áttetsző PNG kivágás; csak a böngészőben marad)
         <span class="import-row"><input type="file" id="psPhoto" accept="image/png,image/webp,image/jpeg"> <button id="psPhotoClear" class="ghost" ${images['upload/photo'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
+      ${bgHtml('photo')}
       ${psConfigHtml(s)}
       <small class="hint">A név és az idei átlagok (az utolsó oszlop) az adatokból jönnek; a sztori, a többi oszlop és a fotó a tiéd. A fotó mozgatása/nagyítása: Elrendezés doboz.</small>`;
     $('teamSel').onchange = e => { s.teamId = e.target.value; s.ps = null; resetMatchOverrides(); update(true); };
@@ -366,11 +399,12 @@ function renderSelection(extra = {}) {
       const f = e.target.files[0];
       if (!f) return;
       const url = URL.createObjectURL(f), img = new Image();
-      img.onload = () => { images['upload/photo'] = img; state.photoName = f.name; renderSelection(); update(true); };
+      img.onload = () => { images['upload/photo'] = img; delete bgState.photo; state.photoName = f.name; renderSelection(); update(true); };
       img.onerror = () => toast('A képet nem sikerült beolvasni.');
       img.src = url;
     };
-    $('psPhotoClear').onclick = () => { delete images['upload/photo']; renderSelection(); update(true); };
+    $('psPhotoClear').onclick = () => { delete images['upload/photo']; delete bgState.photo; renderSelection(); update(true); };
+    wireBg('photo');
     wirePsConfig(s);
   } else if (t.type === 'referees') {
     $('selectTitle').textContent = '2. Mérkőzés';
