@@ -1,7 +1,7 @@
 // Loads the NB I/A Közvetítőhub data files (../data/*.json) – the same files the
 // dashboard reads – and indexes them per league by club id. Nothing is invented:
 // a value that is not in the data stays null and is reported as missing.
-import { clubId, club, CLUBS } from './clubs.js';
+import { clubId, club, CLUBS, clubIdStrict } from './clubs.js';
 
 export const LEAGUES = {
   men: { label: 'Férfi NB I/A', short: 'Férfi' },
@@ -14,6 +14,7 @@ export const SOURCES = {
   referees: { men: 'referees_men.json', women: 'referees_women.json', label: 'Játékvezetők, ellenőr, helyszín (Hunbasket)' },
   cups: { men: 'cups_men.json', women: 'cups_women.json', label: 'Európai / kupameccsek (FIBA)', optional: true },
   playerPages: { men: 'player_pages_men.json', women: 'player_pages_women.json', label: 'Játékosoldalak (Hunbasket)', optional: true, lazy: true },
+  h2h: { men: 'h2h_hunbasket.json', women: 'h2h_hunbasket.json', label: 'Egymás elleni meccsek (Hunbasket, 2020/21–)', optional: true, lazy: true },
   teamPages: { men: 'team_pages_men.json', women: 'team_pages_women.json', label: 'Keretek (Hunbasket)', optional: true },
   teamStats: { men: 'team_stats_men.json', women: 'team_stats_women.json', label: 'Csapatstatisztika' },
   players: { men: 'player_stats_men.json', women: 'player_stats_women.json', label: 'Játékosstatisztika (Hunbasket)' },
@@ -58,7 +59,7 @@ export class Store {
   }
 
   #index(lg, r) {
-    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], checked: {}, teamPages: {}, playerPages: {}, statSource: null };
+    const L = { updated: {}, fixtures: [], standings: {}, teamStats: {}, players: {}, referees: {}, cups: [], checked: {}, teamPages: {}, playerPages: {}, h2h: [], statSource: null };
     if (r.fixtures) {
       L.updated.fixtures = r.fixtures.updated_at || null;
       const today = this.now.toISOString().slice(0, 10);
@@ -269,8 +270,27 @@ export class Store {
     (this.lazyLoaded ||= {})[lg + key] = true;
     try {
       const j = await fetchJson(def[lg]);
+      if (key === 'h2h') this.leagues[lg].h2h = (j.matches || []).filter(m => m.league === lg); // the file holds both leagues
       if (key === 'playerPages') { this.leagues[lg].playerPages = j.players || {}; this.leagues[lg].updated.playerPages = j.updated_at || null; }
     } catch (e) { this.errors.push({ league: lg, dataset: key, file: def[lg], error: String(e.message || e) }); }
+  }
+
+  /** Games between two clubs (newest first): the collected Hunbasket history plus the played games of the current schedule; no duplicates. */
+  h2hGames(lg, idA, idB) {
+    const out = new Map(), L = this.leagues[lg];
+    const add = (date, homeId, awayId, h, a, season, url) => {
+      if (!date || !Number.isFinite(h) || !Number.isFinite(a)) return;
+      if (!((homeId === idA && awayId === idB) || (homeId === idB && awayId === idA))) return;
+      out.set(`${date}|${homeId}|${awayId}`, { date, homeId, awayId, home: h, away: a, season, url });
+    };
+    this.h2hIds ||= new Map();
+    const idOf = name => { const k = lg + name; if (!this.h2hIds.has(k)) this.h2hIds.set(k, clubIdStrict(lg, name) || null); return this.h2hIds.get(k); };
+    for (const m of L.h2h || []) {
+      const sc = String(m.score || '').match(/(\d+)\s*[–-]\s*(\d+)/);
+      if (sc) add(m.date, idOf(m.home), idOf(m.away), +sc[1], +sc[2], m.season, m.url);
+    }
+    for (const g of L.fixtures || []) if (g.score && g.date) add(String(g.date).slice(0, 10), g.homeId, g.awayId, g.score.home, g.score.away, 'idei', null);
+    return [...out.values()].sort((a, b) => b.date.localeCompare(a.date));
   }
 
   /** Season / game log / career of a player from the Hunbasket player page (null when not collected). */

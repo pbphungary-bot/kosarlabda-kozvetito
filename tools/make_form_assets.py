@@ -55,4 +55,5 @@ if __name__ == '__main__':
         src = os.path.join(G, 'templates', f'roster-{lg}', 'background.png')
         panel(src, (40, 40, 1000, 303), border, os.path.join(G, 'templates', f'form-{lg}', 'background.png'))
         panel(src, (40, 40, 1000, 518), border, os.path.join(G, 'templates', f'formpair-{lg}', 'background.png'))
+        panel(src, (40, 40, 720, 518), border, os.path.join(G, 'templates', f'h2h-{lg}', 'background.png'))  # head to head: 5 rows
     print('ok')

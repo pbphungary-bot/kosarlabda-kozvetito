@@ -56,8 +56,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 15 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 15);
+    await check(`${lg}: 16 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 16);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -1034,6 +1034,47 @@ try {
     assert.ok(w2 > w1 && h2 === h1, `free ${w2}x${h2}`);
     const png = await page.$eval('#canvas', c => c.toDataURL('image/png'));
     assert.ok(png.length > 1000);
+  });
+
+  await check('player special: tick columns and move them together as a unit (and put them back)', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="playerspecial-men"]');
+    await page.waitForTimeout(800);
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
+    const base = await shot();
+    await page.check('.psUnit[data-g="3. oszlop"]');
+    await page.fill('#psStep', '30'); await page.dispatchEvent('#psStep', 'change');
+    await page.click('.psnudge [data-d="1,0"]');
+    await page.waitForTimeout(400);
+    const moved = await shot();
+    assert.notEqual(moved, base, 'the ticked column moved');
+    await page.click('#psUnitReset');
+    await page.waitForTimeout(400);
+    assert.equal(await shot(), base, 'back at the PSD position');
+    await page.uncheck('.psUnit[data-g="3. oszlop"]');
+    await page.click('.psnudge [data-d="1,0"]'); // nothing ticked: nothing moves
+    await page.waitForTimeout(300);
+    assert.equal(await shot(), base);
+  });
+
+  await check('background removal (AI, in the browser): the photo gets a transparent background, the slider and undo work', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="playerspecial-men"]');
+    await page.waitForTimeout(600);
+    await page.setInputFiles('#psPhoto', path.join(ROOT, 'tests/fixtures/img/bg-test.png'));
+    await page.waitForTimeout(500);
+    await page.click('.bgrow[data-k="photo"] .bgGo');
+    await page.waitForFunction(() => document.querySelector('.bgrow[data-k="photo"] .bgMsg')?.textContent.startsWith('Kész'), null, { timeout: 120000 });
+    assert.equal(await page.$eval('.bgrow[data-k="photo"] .bgCut', e => e.disabled), false);
+    const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
+    const a = await shot();
+    await page.$eval('.bgrow[data-k="photo"] .bgCut', e => { e.value = 95; e.dispatchEvent(new Event('input', { bubbles: true })); });
+    await page.waitForTimeout(500);
+    assert.notEqual(await shot(), a, 'the slider changes the cut-out');
+    await page.click('.bgrow[data-k="photo"] .bgUndo');
+    await page.waitForTimeout(500);
+    assert.equal(await page.$eval('.bgrow[data-k="photo"] .bgCut', e => e.disabled), true);
   });
 
 } finally {

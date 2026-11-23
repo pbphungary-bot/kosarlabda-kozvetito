@@ -162,3 +162,13 @@ Sablon: *Extra (MKOSZ)* (az „Background for extra graphics + QR code outliner.
 - **Fotókeret** (álló): tölts fel egy képet; a keretbe illeszkedik (a szegélyen belül marad). *Illesztés*: kitölti a keretet (levágva) vagy egészben belefér; nagyítás, eltolás, belső margó, a keret háttere (barna / fehér / fekete / átlátszó).
 - **QR-keret** (négyzet): a QR-kód feltöltése külön mezőből; alapból egészben, 14 px margóval; ha a kód átlátszó hátterű, válassz fehér keret-hátteret.
 - **Mozgatás / méretezés:** kattints a keretre az előnézeten (a szerkesztés itt mindig be van kapcsolva) – húzással mozgatható, a sarok-fogantyúkkal méretezhető. A *Arány rögzítve* jelölőnégyzet: bekapcsolva a keret mindkét irányban ugyanúgy nő/fogy (Alt lenyomva: szabad húzás), kikapcsolva szabadon húzható. Számmal is megadható (szélesség/magasság), és az Elrendezés „alap”-ként menthető.
+
+### Egymás ellen (head to head)
+
+Sablon: *Egymás ellen* – a kiválasztott mérkőzés két csapatának **utolsó 5 egymás elleni meccse**, legfrissebb felül: dátum · hazai címer · eredmény · vendég címer (a sorban a meccs tényleges hazai csapata áll balra). Forrás: a Hunbasket 2020/21-től összegyűjtött meccsei (`data/h2h_hunbasket.json`, a dashboard is ezt használja) + az idei menetrend; ami nincs az adatokban, az üres marad (nincs kitalált meccs). Része a meccs ZIP-csomagjának. Bal felső sarok, 680×478 px, az Elrendezés fülön mozgatható.
+
+**Oszlopok együtt mozgatása (Játékos-különleges):** a „Grafika felépítése” dobozban az *Együtt mozgatás* sorban jelöld ki, mit mozgass egyben (oszlop = fejléc + az összes száma; a sorfeliratok és a név külön egység), állítsd be a lépést (px), és a nyilakkal mozgasd. Az egység elemei külön-külön is állíthatók maradnak; a *Kijelöltek helye: alap* gomb visszateszi a kijelölteket a PSD helyére. A mozgatás a megszokott elrendezésbe kerül, így „Mentés alapként” megőrzi.
+
+### Háttér eltávolítása (AI)
+
+A Játékos-különleges fotómezője és az Extra (MKOSZ) fotókerete alatt a **Háttér eltávolítása (AI)** gomb a feltöltött fotó hátterét eltünteti (átlátszó PNG lesz belőle). Teljesen a böngészőben fut: nincs szerver, fiók vagy díj, a kép nem hagyja el a gépet. Az első használatkor betölti a modellt (`models/silueta.onnx`, 44 MB, utána a böngésző gyorsítótárazza), egy fotó pár másodperc. A **Vágás erőssége** csúszka a szél keménységét állítja (nem kell újra futtatni), az **Eredeti kép vissza** gomb visszaadja a feltöltött képet. Egyszínű / stúdióháttéren a legpontosabb; nagyon zsúfolt háttérnél a haj körül kézi utómunka kellhet. A modell és a futtató licence: `models/README.md`.

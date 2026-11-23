@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadStore, readJson, DATA_DIR } from './helpers.mjs';
-import { bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
+import { bindH2H, bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
 import { templateById, STAT_ROWS, TEAMSTAT_COLS } from '../graphics/js/templates.js';
 import { clubId } from '../graphics/js/clubs.js';
 import { gameKey } from '../graphics/js/data.js';
@@ -294,4 +294,20 @@ test('form graphic: last five played games, latest on the right, Gy / V from the
   // two rows for a match
   const pair = bindForm(store, 'men', ['szolnok', 'falcokc']);
   assert.ok(pair['t1.g4.score'].text && pair['t1.logo'].src === 'men/falcokc');
+});
+
+test('head to head: past meetings of two clubs, newest first, both orientations, no invented games', async () => {
+  const store = await loadStore();
+  await store.loadLazy('men', 'h2h', f => readJson(DATA_DIR + '/' + f));
+  const g = store.h2hGames('men', 'kecskemet', 'nkapecs');
+  assert.ok(g.length >= 3, 'history between Kecskemét and Pécs');
+  for (let i = 1; i < g.length; i++) assert.ok(g[i - 1].date >= g[i].date, 'newest first');
+  assert.ok(g.every(x => [x.homeId, x.awayId].sort().join() === ['kecskemet', 'nkapecs'].join()));
+  assert.equal(new Set(g.map(x => `${x.date}|${x.homeId}`)).size, g.length, 'no duplicates');
+  const v = bindH2H(store, 'men', 'kecskemet', 'nkapecs');
+  assert.equal(v['h0.score'].text, `${g[0].home}–${g[0].away}`);
+  assert.equal(v['h0.home'].src, `men/${g[0].homeId}`);
+  // fewer than five meetings: the missing rows stay empty
+  const none = bindH2H({ h2hGames: () => g.slice(0, 2) }, 'men', 'kecskemet', 'nkapecs');
+  assert.equal(none['h1.score'].text !== '', true); assert.equal(none['h2.score'].text, ''); assert.equal(none['h4.home'].src, '');
 });

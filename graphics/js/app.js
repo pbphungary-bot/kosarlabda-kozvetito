@@ -5,9 +5,10 @@ import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey }
 import { club, CLUBS, clubIdStrict } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, PS_STATS, PS_MAX_COLS, PS_MAX_ROWS, PS_GROUPS } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
+import { segment, compose } from './bgremove.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip, ascii as asciiName } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, teamstatPlayers,
 } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -167,6 +168,43 @@ function psSet(s, patch) {
   renderSelection(); update(true);
 }
 
+// ── move whole columns as units: tick the parts, then nudge them together (stored as the usual per-element moves, so "save as base" keeps them)
+function psUnits() {
+  const out = [];
+  for (const el of tpl().elements) if (el.type === 'text' && !out.some(u => u.name === el.group)) out.push({ name: el.group });
+  for (const u of out) u.ids = tpl().elements.filter(e => e.type === 'text' && e.group === u.name).map(e => e.id);
+  return out;
+}
+function psMoveHtml() {
+  const on = state.psMove ||= new Set(), step = state.psStep || 10;
+  const units = psUnits().map(u => `<label class="chk"><input type="checkbox" class="psUnit" data-g="${esc(u.name)}" ${on.has(u.name) ? 'checked' : ''}> ${esc(u.name === 'Sorok' ? 'Sorfeliratok' : u.name)}</label>`).join('');
+  return `<label>Együtt mozgatás: jelöld ki, mit mozgass egyben (oszlop = fejléc + az összes száma), majd használd a nyilakat</label>
+    <div class="psgroups">${units}</div>
+    <div class="import-row psnudge"><button type="button" class="ghost" id="psAllUnits">Mind</button><button type="button" class="ghost" id="psNoUnits">Egyik sem</button>
+      <label>Lépés (px) <input type="number" id="psStep" min="1" max="200" value="${step}"></label>
+      <button type="button" data-d="-1,0" title="Balra">←</button><button type="button" data-d="0,-1" title="Fel">↑</button><button type="button" data-d="0,1" title="Le">↓</button><button type="button" data-d="1,0" title="Jobbra">→</button>
+      <button type="button" class="ghost" id="psUnitReset" title="A kijelöltek vissza a PSD helyére">Kijelöltek helye: alap</button></div>`;
+}
+function wirePsMove() {
+  const on = state.psMove ||= new Set();
+  document.querySelectorAll('.psUnit').forEach(el => el.onchange = () => { el.checked ? on.add(el.dataset.g) : on.delete(el.dataset.g); });
+  const units = () => psUnits().filter(u => on.has(u.name));
+  $('psAllUnits').onclick = () => { psUnits().forEach(u => on.add(u.name)); document.querySelectorAll('.psUnit').forEach(c => { c.checked = true; }); };
+  $('psNoUnits').onclick = () => { on.clear(); document.querySelectorAll('.psUnit').forEach(c => { c.checked = false; }); };
+  $('psStep').onchange = e => { state.psStep = Math.max(1, Math.min(200, +e.target.value || 10)); };
+  document.querySelectorAll('.psnudge [data-d]').forEach(b => b.onclick = () => {
+    const us = units();
+    if (!us.length) return toast('Jelölj ki legalább egy oszlopot / csoportot.');
+    const [dx, dy] = b.dataset.d.split(',').map(Number), k = state.psStep || 10;
+    for (const u of us) for (const id of u.ids) { const o = ovFor(id), e = effOf(id); o.dx = (e.dx || 0) + dx * k; o.dy = (e.dy || 0) + dy * k; }
+    update(false); saveState(); renderInspector(); renderLayoutState();
+  });
+  $('psUnitReset').onclick = () => {
+    for (const u of units()) for (const id of u.ids) Object.assign(ovFor(id), { dx: 0, dy: 0 });
+    update(false); saveState(); renderInspector(); renderLayoutState();
+  };
+}
+
 function psConfigHtml(s) {
   const c = psConfig(s), lg = state.league;
   const num = (id, v, min, max, step = 1) => `<input type="number" id="${id}" min="${min}" max="${max}" step="${step}" value="${v}">`;
@@ -189,11 +227,13 @@ function psConfigHtml(s) {
     <small class="hint">Egyes elemek mérete külön is állítható a Mezők listában (Betűméret / Balra-jobbra / Fel-le).</small>
     <label>Réteg: a kipipált csoportok a <b>fotó előtt</b> jelennek meg, a többi a fotó mögött</label>
     <div class="psgroups">${groups}</div>
+    ${psMoveHtml()}
     <div class="import-row"><button id="psReset" class="ghost">Alaphelyzet (${lg === 'men' ? 'férfi' : 'női'} design)</button></div>
   </details>`;
 }
 
 function wirePsConfig(s) {
+  wirePsMove();
   $('psBox').ontoggle = e => { s.psOpen = e.target.open; };
   const n = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(+$(id).value || 0)));
   $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), colSrc: Array.from({ length: cols }, (_, i) => c.colSrc[i] || 'manual') }); };
@@ -214,6 +254,35 @@ function rowOffHtml(s, rows) {
   return Array.from({ length: rows }, (_, r) => `<span class="rowoff"><b>${names[r] || (r + 1) + '. sor'}</b> <label>↔ <input type="number" class="rowOff" data-r="${r}" data-a="0" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[0] || 0}"></label><label>↕ <input type="number" class="rowOff" data-r="${r}" data-a="1" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[1] || 0}"></label></span>`).join('') + '<button type="button" id="rowOffReset" class="ghost">Sorok alaphelyzet</button>';
 }
 
+// ───────────────────────── background removal of uploaded photos (AI, in the browser) ─────────────────────────
+const bgState = {}; // key ('photo' | 'extraA') -> { orig, seg, cut }
+function bgHtml(key) {
+  const st = bgState[key], has = !!images['upload/' + key];
+  return `<div class="bgrow" data-k="${key}"><button type="button" class="bgGo" ${has ? '' : 'disabled'}>Háttér eltávolítása (AI)</button>
+    <button type="button" class="bgUndo ghost" ${st?.seg ? '' : 'disabled'}>Eredeti kép vissza</button>
+    <label>Vágás erőssége <input type="range" class="bgCut" min="0" max="100" value="${st?.cut ?? 50}" ${st?.seg ? '' : 'disabled'}></label>
+    <small class="hint bgMsg">Az első használatkor egyszeri ~44 MB-os modellt tölt le, utána gyors; a kép nem hagyja el a böngészőt.</small></div>`;
+}
+function wireBg(key) {
+  const row = document.querySelector(`.bgrow[data-k="${key}"]`);
+  if (!row) return;
+  const msg = t => { row.querySelector('.bgMsg').textContent = t; };
+  const apply = () => { const st = bgState[key]; images['upload/' + key] = compose(st.seg, st.cut); update(false); };
+  row.querySelector('.bgGo').onclick = async () => {
+    const btn = row.querySelector('.bgGo'); btn.disabled = true;
+    try {
+      const orig = bgState[key]?.orig || images['upload/' + key];
+      const seg = await segment(orig, { onStatus: msg });
+      bgState[key] = { orig, seg, cut: bgState[key]?.cut ?? 50 };
+      apply();
+      renderSelection(); // buttons / slider enabled
+      document.querySelector(`.bgrow[data-k="${key}"] .bgMsg`).textContent = 'Kész – a „Vágás erőssége” csúszkával finomíthatod a szélét.';
+    } catch (e) { msg('Nem sikerült: ' + (e.message || e)); btn.disabled = false; }
+  };
+  row.querySelector('.bgUndo').onclick = () => { const st = bgState[key]; if (!st) return; images['upload/' + key] = st.orig; delete bgState[key]; renderSelection(); update(true); };
+  row.querySelector('.bgCut').oninput = e => { bgState[key].cut = +e.target.value; apply(); };
+}
+
 // ───────────────────────── Extra (MKOSZ): photo frame + QR frame ─────────────────────────
 const EXTRA_FILLS = [['', 'Alap (barna)'], ['#ffffff', 'Fehér'], ['#000000', 'Fekete'], ['transparent', 'Átlátszó']];
 function extraPanelHtml(s) {
@@ -222,6 +291,7 @@ function extraPanelHtml(s) {
     const b = lastReport?.boxes?.[id], w = b ? Math.round(b[2]) : '', h = b ? Math.round(b[3]) : '';
     return `<fieldset class="xbox" data-k="${k}"><legend>${title}</legend>
       <label>${hint}<span class="import-row"><input type="file" class="xFile" accept="image/png,image/webp,image/jpeg"> <button type="button" class="xClear ghost" ${has ? '' : 'disabled'}>Kép törlése</button></span></label>
+      ${k === 'A' ? bgHtml('extraA') : ''}
       <div class="row2"><label>Illesztés<select class="xFit"><option value="cover" ${fit === 'cover' ? 'selected' : ''}>Kitölti a keretet (levágva)</option><option value="contain" ${fit === 'contain' ? 'selected' : ''}>Egészben belefér</option></select></label>
         <label>Keret háttere<select class="xFill">${EXTRA_FILLS.map(([v, n]) => `<option value="${v}" ${(c.fill ?? '') === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label></div>
       <div class="row2"><label>Kép nagyítása (%)<input type="number" class="xZoom" min="10" max="500" step="5" value="${c.zoom || 100}"></label>
@@ -240,16 +310,17 @@ function wireExtraPanel(s) {
   const box = $('selection');
   s.extra ||= { A: {}, B: {} };
   $('xLock').onchange = e => { state.lockAspect = e.target.checked; renderOverlay(); };
+  wireBg('extraA');
   box.querySelectorAll('.xbox').forEach(fs => {
     const k = fs.dataset.k, id = k === 'A' ? 'frameA' : 'frameB', c = (s.extra[k] ||= {});
     const set = (key, val) => { c[key] = val; update(false); };
     fs.querySelector('.xFile').onchange = e => {
       const f = e.target.files[0]; if (!f) return;
       const img = new Image();
-      img.onload = () => { images['upload/extra' + k] = img; c.name = f.name; renderSelection(); update(true); };
+      img.onload = () => { images['upload/extra' + k] = img; delete bgState['extra' + k]; c.name = f.name; renderSelection(); update(true); };
       img.src = URL.createObjectURL(f);
     };
-    fs.querySelector('.xClear').onclick = () => { delete images['upload/extra' + k]; renderSelection(); update(true); };
+    fs.querySelector('.xClear').onclick = () => { delete images['upload/extra' + k]; delete bgState['extra' + k]; renderSelection(); update(true); };
     fs.querySelector('.xFit').onchange = e => set('fit', e.target.value);
     fs.querySelector('.xFill').onchange = e => set('fill', e.target.value);
     fs.querySelector('.xZoom').onchange = e => set('zoom', Math.max(10, Math.min(500, +e.target.value || 100)));
@@ -284,7 +355,7 @@ function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
   $('sizeBar').hidden = true; // only the roster templates show it (set below)
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     $('selectTitle').textContent = '2. Mérkőzés';
     const showPast = !!s.showPast;
     const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
@@ -319,6 +390,7 @@ function renderSelection(extra = {}) {
       <label>Játékos<select id="psPlayer">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)}</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label></div>
       <label>Fotó (áttetsző PNG kivágás; csak a böngészőben marad)
         <span class="import-row"><input type="file" id="psPhoto" accept="image/png,image/webp,image/jpeg"> <button id="psPhotoClear" class="ghost" ${images['upload/photo'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
+      ${bgHtml('photo')}
       ${psConfigHtml(s)}
       <small class="hint">A név és az idei átlagok (az utolsó oszlop) az adatokból jönnek; a sztori, a többi oszlop és a fotó a tiéd. A fotó mozgatása/nagyítása: Elrendezés doboz.</small>`;
     $('teamSel').onchange = e => { s.teamId = e.target.value; s.ps = null; resetMatchOverrides(); update(true); };
@@ -327,11 +399,12 @@ function renderSelection(extra = {}) {
       const f = e.target.files[0];
       if (!f) return;
       const url = URL.createObjectURL(f), img = new Image();
-      img.onload = () => { images['upload/photo'] = img; state.photoName = f.name; renderSelection(); update(true); };
+      img.onload = () => { images['upload/photo'] = img; delete bgState.photo; state.photoName = f.name; renderSelection(); update(true); };
       img.onerror = () => toast('A képet nem sikerült beolvasni.');
       img.src = url;
     };
-    $('psPhotoClear').onclick = () => { delete images['upload/photo']; renderSelection(); update(true); };
+    $('psPhotoClear').onclick = () => { delete images['upload/photo']; delete bgState.photo; renderSelection(); update(true); };
+    wireBg('photo');
     wirePsConfig(s);
   } else if (t.type === 'referees') {
     $('selectTitle').textContent = '2. Mérkőzés';
@@ -462,10 +535,11 @@ function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
   let v = {};
-  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair') {
+  if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
     if (!m) { info.notices.push({ bad: true, text: 'Nincs kiválasztható mérkőzés ebben a bajnokságban.' }); return { v, info }; }
     if (t.type === 'formpair') v = bindForm(store, lg, [m.homeId, m.awayId]);
+    else if (t.type === 'h2h') { v = bindH2H(store, lg, m.homeId, m.awayId); if (!store.h2hGames(lg, m.homeId, m.awayId).length) info.notices.push({ text: 'Ennek a két csapatnak nincs korábbi egymás elleni meccse az adatokban (Hunbasket 2020/21-től).' }); }
     else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId);
     else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, s.pc || {});
@@ -640,7 +714,7 @@ let current = { values: null };
 function fileName(values) {
   const t = tpl(), lg = state.league, s = sel();
   let who;
-  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair') {
+  if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
   } else who = club(lg, s.teamId)?.short || 'csapat';
@@ -658,6 +732,7 @@ const fetchData = async f => {
 };
 async function update(full) {
   const seq = ++updateSeq;
+  if (tpl().type === 'h2h') await store.loadLazy(state.league, 'h2h', fetchData);
   if (tpl().type === 'playerspecial') { // the big player-page files are only needed here
     const had = store.lazyLoaded?.[state.league + 'playerPages'];
     await store.loadLazy(state.league, 'playerPages', fetchData);
@@ -811,6 +886,7 @@ async function renderForPackage(item, m) {
     state.template[lg] = t0.id;
     state.overrides[t0.id] = {}; // no typed overrides: the package is the pure automatic result
     if (item.who !== 'match') { s.teamId = item.who === 'home' ? m.homeId : m.awayId; s.games = null; s.customRows = null; s.players = null; }
+    if (t0.type === 'h2h') await store.loadLazy(lg, 'h2h', fetchData);
     const t = tpl();
     const { v: auto, info } = autoValues();
     const values = mergedValues(auto);

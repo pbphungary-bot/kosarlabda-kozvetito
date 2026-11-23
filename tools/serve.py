@@ -9,6 +9,6 @@ class H(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
     def log_message(self, *a): pass
 port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-H.extensions_map.update({'.js': 'text/javascript', '.mjs': 'text/javascript', '.otf': 'font/otf'})
+H.extensions_map.update({'.wasm': 'application/wasm', '.onnx': 'application/octet-stream', '.js': 'text/javascript', '.mjs': 'text/javascript', '.otf': 'font/otf'})
 print(f'Grafika Stúdió: http://localhost:{port}/graphics/')
 http.server.ThreadingHTTPServer(('127.0.0.1', port), H).serve_forever()
