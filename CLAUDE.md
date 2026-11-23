@@ -9,6 +9,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Work on the branch you are given and open pull requests; the owner merges, never merge/deploy yourself. Push only when tests pass and CI is green. The repo is public.
 - Never run `tools/psd_extract.py` without `--only <template-id>` (it regenerates every template and logo).
 
+- Session shortcuts live in `.claude/commands/`: `/start <task>`, `/finish`, `/check` (owner types these instead of long prompts).
+
 ## Commands
 There is no build step and no package.json: everything is static files (ES modules) plus Python/Node scripts.
 - Serve the studio locally: `python3 tools/serve.py [port]` → `http://localhost:8000/graphics/` (dashboard: `/index.html`). Hosted as static pages on GitHub Pages.
