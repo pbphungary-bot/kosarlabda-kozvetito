@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T08:55:14.367626+00:00",
+  "checked_at": "2026-11-23T10:06:42.646324+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -81,22 +81,15 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 4,
-      "attempted": 4,
+      "candidates": 6,
+      "attempted": 6,
       "already_saved": 0,
-      "added": 4,
+      "added": 6,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 4,
-      "source_coverage": true,
-      "fallback": [
-        "wp-json:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:0"
-      ]
+      "usable_articles": 6,
+      "source_coverage": true
     },
     {
       "source": "Klub: DEAC",
@@ -123,8 +116,8 @@
       "candidates": 40,
       "attempted": 30,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 29,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -301,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -472,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -561,8 +552,8 @@
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 2,
+      "repaired": 28,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -570,6 +561,41 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Eredmények, 47. hét",
+      "summary": "2026. november 22., vasárnap, Fót, Phoenix Sportcsarnok Fót SE - DVTK U23 87-58 (27-21,21-11,19-9,20-17) - Statisztika",
+      "url": "http://dvtk.eu/37696-Palyan_a_kosarlabda_utanpotlas_Eredmenyek_47_het-cikk-kosarlabda/",
+      "published_at": "2026-11-23T10:32:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Kiss Angelika: Eddig nem kellett ilyen erős karakternek lennem",
+      "summary": "Kiss Angelika: Eddig nem kellett ilyen erős karakternek lennem",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/kiss-angelika-eddig-nem-kellett-ilyen-eros-karakternek-lennem/",
+      "published_at": "2026-11-23T10:11:22+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Ezúttal sem tört meg a negatív széria",
+      "summary": "Junior/A csapatunk a bajnoki csoportelső Csata DSE-t fogadta hazai pályán csütörtökön, a a 7. fordulón.",
+      "url": "https://vasasbasket.hu/index.php/ezuttal-sem-tort-meg-a-negativ-szeria/",
+      "published_at": "2026-11-23T09:26:40+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Jegyek a DVTK HUNTHERM – ŽKK Brod na Savi mérkőzésre",
@@ -11316,6 +11342,19 @@
     },
     {
       "source": "Klub: TFSE",
+      "title": "Óriási fordítás Szegeden!",
+      "summary": "Férfi NB I Liga-csapatunk a Vidux-Szegedi RSE vendégeként lépett pályára, és egy hatalmas fordítással, öt játszmában nyert.",
+      "url": "https://tfse.hu/oriasi-forditas-szegeden/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
       "title": "Értékes győzelmet arattunk Debrecenben!",
       "summary": "Női csapatunk négygólos győzelmet aratott a DVSC SKYLINE U20 otthonában.",
       "url": "https://tfse.hu/ertekes-gyozelmet-arattunk-debrecenben/",
@@ -13637,6 +13676,19 @@
       "published_at": null,
       "summary_method": "headline_fallback",
       "teams": []
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Erős MÁV Előre ellen maradtunk alul",
+      "summary": "Férfi csapatunk hazai pályán, a Dr.",
+      "url": "https://tfse.hu/eros-mav-elore-ellen-maradtunk-alul/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (férfi)",
