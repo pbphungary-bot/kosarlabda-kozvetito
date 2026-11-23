@@ -7,6 +7,13 @@ See also: `DESIGN-SYSTEM.md` (look & feel rules), `graphics/README.md` (feature 
 ## 0. Platform priority (owner decision 2026-11-23)
 **Desktop first.** The tools are used on desktop; design, polish and test the desktop version only. The mobile/phone versions stay as they are (existing tests keep passing) but get no new work, no real-phone testing and no mobile screenshots unless the owner asks.
 
+## 0b. Handoff (where we stopped, 2026-11-23)
+- Everything is committed and pushed on `claude/focused-dirac-vkihwr`; PR #28 holds the latest work (head to head 6 rows, photo roster in the ZIP, intro rank shown, package defaults, sidebar splitter, key-players fixes). The owner merges; check CI is green first (`/check`).
+- Awaiting the owner's review (REVIEW rows below): resizable frames with the court fit rule, key players (photos, upload, ranks), logo line, Csapatok layout + printable team sheet, studio sidebar splitter.
+- Owner's view on weak spots: **Kulcsjátékosok** (data gaps – ask for a concrete match to analyse), **Játékos-különleges**, **Intro** (position line now shown) – unticked in the ZIP by default.
+- Working style the owner wants: short sessions, one feature per session, restate the rule first, desktop only, no rework of LOCKED items, fewer e-mails (CI runs on pull requests only).
+- Start a new session with `/start <task>`; end with `/finish`.
+
 ## 1. Purpose
 Basketball commentator tool for the Hungarian NB I/A (men + women, always separate):
 1. **Közvetítőhub** (`index.html`, `css/dashboard.css`) – match preparation dashboard (schedule/results, standings, team pages, head-to-head, notes, news, match sheet).
