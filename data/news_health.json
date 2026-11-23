@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-23T07:16:06.940093+00:00",
+  "checked_at": "2026-11-23T08:55:14.367626+00:00",
   "statistics": {
-    "total": 1230,
+    "total": 1231,
     "fresh": 561,
     "fresh_with_summary": 369,
-    "missing_dates": 280,
+    "missing_dates": 281,
     "headline_only": 557,
     "untagged": 502,
-    "sources_ok": 19,
-    "sources_partial": 1,
-    "sources_failed": 11,
-    "new_articles": 4,
+    "sources_ok": 22,
+    "sources_partial": 0,
+    "sources_failed": 9,
+    "new_articles": 5,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 15,
+    "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
   },
   "sources": [
@@ -138,8 +138,8 @@
       "candidates": 40,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 1,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -379,28 +379,19 @@
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 1,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
-      "listing_errors": [
-        "https://szedeak.com/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:TimeoutError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:0"
-      ]
+      "listing_errors": [],
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: Endo Plus Service-Honvéd",
@@ -497,6 +488,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -516,29 +508,19 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
-      "already_saved": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 24,
+      "attempted": 24,
+      "already_saved": 24,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [
-        "https://etobasket.hu/hu/hirek/1: TimeoutError: The read operation timed out",
-        "https://etobasket.hu/hu/hirek/2: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:TimeoutError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
-        "sitemap:0"
-      ]
+      "listing_errors": [],
+      "usable_articles": 24,
+      "source_coverage": true
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -587,22 +569,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 30,
+      "attempted": 30,
       "already_saved": 0,
       "added": 0,
-      "repaired": 6,
-      "article_errors": 2,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/dokumentumok/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/labdabiztonsag-es-lepattanozas-fontos-feladatok-a-beac-elleni-fovarosi-rangadon/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 6,
+      "repaired": 30,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 30,
       "source_coverage": true
     }
   ],
@@ -610,12 +588,10 @@
     "Kezdő5.hu",
     "Klub: PHOENIX Fóti Tigrisek",
     "Klub: Atomerőmű SE",
-    "Klub: Délút-SZTE-Szedeák",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
     "Klub: OSE Lions",
     "Klub: ELTE BEAC Újbuda",
-    "Klub: ETO Basket",
     "Klub: KSC Szekszárd",
     "Klub: Sopron Basket"
   ],
