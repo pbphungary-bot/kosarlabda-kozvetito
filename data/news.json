@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-23T11:54:25.370499+00:00",
+  "checked_at": "2026-11-23T12:54:37.788482+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 6,
-      "attempted": 6,
+      "candidates": 7,
+      "attempted": 7,
       "already_saved": 0,
-      "added": 6,
+      "added": 7,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 6,
+      "usable_articles": 7,
       "source_coverage": true
     },
     {
@@ -247,8 +247,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -465,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -563,6 +561,32 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Pályán a kosárlabda utánpótlás - Heti program 48. hét",
+      "summary": "2026. november 26, csütörtök, Budapest, Pasaréti Sportcentrum Vasas Akadémia II. - DVTK U23 - Közvetítés 2026. november 29., vasárnap, DVTK Aréna 16.30 DVTK U23 - Radobasket - Közvetítés",
+      "url": "http://dvtk.eu/37700-Palyan_a_kosarlabda_utanpotlas_Heti_program_48_het-cikk-kosarlabda/",
+      "published_at": "2026-11-23T13:31:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Három DVTK-játékos kapott meghívót",
+      "summary": "A Magyar Kosárlabdázók Országos Szövetségének (MKOSZ) hivatalos értesítése alapján három DVTK-s fiatal is ott lehet a korosztályos válogatott év végi edzőtáborában.",
+      "url": "http://dvtk.eu/37699-Harom_DVTK_jatekos_kapott_meghivot-cikk-kosarlabda/",
+      "published_at": "2026-11-23T13:19:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Heti program: Svédországban lép pályára a válogatott",
