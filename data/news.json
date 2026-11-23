@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-23T14:17:27.388507+00:00",
+  "checked_at": "2026-11-23T15:21:48.234221+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -263,8 +263,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 14,
+      "added": 0,
+      "repaired": 15,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -466,7 +466,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -551,18 +550,36 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 28,
-      "attempted": 28,
+      "candidates": 30,
+      "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 28,
+      "added": 1,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 28,
+      "usable_articles": 30,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Az Európai Kosárlabda-szövetség fenntartja az orosz válogatottak felfüggesztését",
+      "summary": "Az Európai Kosárlabda-szövetség fenntartja az orosz válogatottak felfüggesztését",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/az-europai-kosarlabda-szovetseg-fenntartja-az-orosz-valogatottak-felfuggeszteset/",
+      "published_at": "2026-11-23T15:52:47+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Egyre sűrűbb a mezőny a Piros csoportban",
+      "summary": "Sorozatban harmadszor nyert a Vasas, közvetlen riválist vert a PVSK, a Veszprém és a Jászberény.",
+      "url": "https://bball1.hu/egyre-surubb-a-mezony-a-piros-csoportban/",
+      "published_at": "2026-11-23T15:21:08+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Pályán a kosárlabda utánpótlás - Heti program 48. hét",
@@ -13978,6 +13995,19 @@
       "league": "men",
       "teams": [
         "men|DEAC"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "Bátran küzdöttünk az éllovas ellen",
+      "summary": "Női csapatunk a bajnokság éllovasa ellen lépett pályára a hétvégén, és bár végül nem sikerült pontot szereznie, remek hozzáállással és nagy küzdőszellemmel tette szorossá a találkozót.",
+      "url": "https://tfse.hu/batran-kuzdottunk-az-ellovas-ellen/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
       ]
     },
     {
