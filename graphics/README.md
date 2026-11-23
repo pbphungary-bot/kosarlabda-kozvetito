@@ -166,3 +166,5 @@ Sablon: *Extra (MKOSZ)* (az „Background for extra graphics + QR code outliner.
 ### Egymás ellen (head to head)
 
 Sablon: *Egymás ellen* – a kiválasztott mérkőzés két csapatának **utolsó 5 egymás elleni meccse**, legfrissebb felül: dátum · hazai címer · eredmény · vendég címer (a sorban a meccs tényleges hazai csapata áll balra). Forrás: a Hunbasket 2020/21-től összegyűjtött meccsei (`data/h2h_hunbasket.json`, a dashboard is ezt használja) + az idei menetrend; ami nincs az adatokban, az üres marad (nincs kitalált meccs). Része a meccs ZIP-csomagjának. Bal felső sarok, 680×478 px, az Elrendezés fülön mozgatható.
+
+**Oszlopok együtt mozgatása (Játékos-különleges):** a „Grafika felépítése” dobozban az *Együtt mozgatás* sorban jelöld ki, mit mozgass egyben (oszlop = fejléc + az összes száma; a sorfeliratok és a név külön egység), állítsd be a lépést (px), és a nyilakkal mozgasd. Az egység elemei külön-külön is állíthatók maradnak; a *Kijelöltek helye: alap* gomb visszateszi a kijelölteket a PSD helyére. A mozgatás a megszokott elrendezésbe kerül, így „Mentés alapként” megőrzi.

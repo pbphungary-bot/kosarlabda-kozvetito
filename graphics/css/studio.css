@@ -201,3 +201,6 @@ details.pkg .chk { display: flex; flex-direction: row; gap: 6px; align-items: ce
 .xbox { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 10px; padding: 8px 10px; }
 .xbox legend { padding: 0 6px; font-weight: 600; }
 label.inline { display: flex; gap: 6px; align-items: flex-start; }
+.psnudge { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.psnudge input { width: 64px; }
+.psnudge [data-d] { min-width: 36px; font-size: 16px; }

@@ -167,6 +167,43 @@ function psSet(s, patch) {
   renderSelection(); update(true);
 }
 
+// ── move whole columns as units: tick the parts, then nudge them together (stored as the usual per-element moves, so "save as base" keeps them)
+function psUnits() {
+  const out = [];
+  for (const el of tpl().elements) if (el.type === 'text' && !out.some(u => u.name === el.group)) out.push({ name: el.group });
+  for (const u of out) u.ids = tpl().elements.filter(e => e.type === 'text' && e.group === u.name).map(e => e.id);
+  return out;
+}
+function psMoveHtml() {
+  const on = state.psMove ||= new Set(), step = state.psStep || 10;
+  const units = psUnits().map(u => `<label class="chk"><input type="checkbox" class="psUnit" data-g="${esc(u.name)}" ${on.has(u.name) ? 'checked' : ''}> ${esc(u.name === 'Sorok' ? 'Sorfeliratok' : u.name)}</label>`).join('');
+  return `<label>Együtt mozgatás: jelöld ki, mit mozgass egyben (oszlop = fejléc + az összes száma), majd használd a nyilakat</label>
+    <div class="psgroups">${units}</div>
+    <div class="import-row psnudge"><button type="button" class="ghost" id="psAllUnits">Mind</button><button type="button" class="ghost" id="psNoUnits">Egyik sem</button>
+      <label>Lépés (px) <input type="number" id="psStep" min="1" max="200" value="${step}"></label>
+      <button type="button" data-d="-1,0" title="Balra">←</button><button type="button" data-d="0,-1" title="Fel">↑</button><button type="button" data-d="0,1" title="Le">↓</button><button type="button" data-d="1,0" title="Jobbra">→</button>
+      <button type="button" class="ghost" id="psUnitReset" title="A kijelöltek vissza a PSD helyére">Kijelöltek helye: alap</button></div>`;
+}
+function wirePsMove() {
+  const on = state.psMove ||= new Set();
+  document.querySelectorAll('.psUnit').forEach(el => el.onchange = () => { el.checked ? on.add(el.dataset.g) : on.delete(el.dataset.g); });
+  const units = () => psUnits().filter(u => on.has(u.name));
+  $('psAllUnits').onclick = () => { psUnits().forEach(u => on.add(u.name)); document.querySelectorAll('.psUnit').forEach(c => { c.checked = true; }); };
+  $('psNoUnits').onclick = () => { on.clear(); document.querySelectorAll('.psUnit').forEach(c => { c.checked = false; }); };
+  $('psStep').onchange = e => { state.psStep = Math.max(1, Math.min(200, +e.target.value || 10)); };
+  document.querySelectorAll('.psnudge [data-d]').forEach(b => b.onclick = () => {
+    const us = units();
+    if (!us.length) return toast('Jelölj ki legalább egy oszlopot / csoportot.');
+    const [dx, dy] = b.dataset.d.split(',').map(Number), k = state.psStep || 10;
+    for (const u of us) for (const id of u.ids) { const o = ovFor(id), e = effOf(id); o.dx = (e.dx || 0) + dx * k; o.dy = (e.dy || 0) + dy * k; }
+    update(false); saveState(); renderInspector(); renderLayoutState();
+  });
+  $('psUnitReset').onclick = () => {
+    for (const u of units()) for (const id of u.ids) Object.assign(ovFor(id), { dx: 0, dy: 0 });
+    update(false); saveState(); renderInspector(); renderLayoutState();
+  };
+}
+
 function psConfigHtml(s) {
   const c = psConfig(s), lg = state.league;
   const num = (id, v, min, max, step = 1) => `<input type="number" id="${id}" min="${min}" max="${max}" step="${step}" value="${v}">`;
@@ -189,11 +226,13 @@ function psConfigHtml(s) {
     <small class="hint">Egyes elemek mérete külön is állítható a Mezők listában (Betűméret / Balra-jobbra / Fel-le).</small>
     <label>Réteg: a kipipált csoportok a <b>fotó előtt</b> jelennek meg, a többi a fotó mögött</label>
     <div class="psgroups">${groups}</div>
+    ${psMoveHtml()}
     <div class="import-row"><button id="psReset" class="ghost">Alaphelyzet (${lg === 'men' ? 'férfi' : 'női'} design)</button></div>
   </details>`;
 }
 
 function wirePsConfig(s) {
+  wirePsMove();
   $('psBox').ontoggle = e => { s.psOpen = e.target.open; };
   const n = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(+$(id).value || 0)));
   $('psCols').onchange = () => { const cols = n('psCols', 1, PS_MAX_COLS), c = psConfig(s); psSet(s, { cols, labelAfter: Math.min(cols, c.labelAfter), colSrc: Array.from({ length: cols }, (_, i) => c.colSrc[i] || 'manual') }); };

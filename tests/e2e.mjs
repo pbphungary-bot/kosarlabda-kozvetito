@@ -1036,6 +1036,28 @@ try {
     assert.ok(png.length > 1000);
   });
 
+  await check('player special: tick columns and move them together as a unit (and put them back)', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="playerspecial-men"]');
+    await page.waitForTimeout(800);
+    await page.evaluate(() => { document.getElementById('psBox').open = true; });
+    const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
+    const base = await shot();
+    await page.check('.psUnit[data-g="3. oszlop"]');
+    await page.fill('#psStep', '30'); await page.dispatchEvent('#psStep', 'change');
+    await page.click('.psnudge [data-d="1,0"]');
+    await page.waitForTimeout(400);
+    const moved = await shot();
+    assert.notEqual(moved, base, 'the ticked column moved');
+    await page.click('#psUnitReset');
+    await page.waitForTimeout(400);
+    assert.equal(await shot(), base, 'back at the PSD position');
+    await page.uncheck('.psUnit[data-g="3. oszlop"]');
+    await page.click('.psnudge [data-d="1,0"]'); // nothing ticked: nothing moves
+    await page.waitForTimeout(300);
+    assert.equal(await shot(), base);
+  });
+
 } finally {
   await browser.close();
   server.kill();
