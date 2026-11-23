@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T20:29:38.399128+00:00",
+  "checked_at": "2026-11-23T22:25:40.838819+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -173,18 +173,20 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
       "candidates": 16,
       "attempted": 16,
       "already_saved": 0,
       "added": 0,
-      "repaired": 16,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 16,
+      "repaired": 15,
+      "article_errors": 1,
+      "listing_errors": [
+        "article https://sopronkc.hu/suti-tajekoztato/: HTTPError: HTTP Error 503: Service Unavailable"
+      ],
+      "usable_articles": 15,
       "source_coverage": true
     },
     {
@@ -465,6 +467,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
