@@ -1143,6 +1143,26 @@ try {
     await page.setViewportSize({ width: 1600, height: 1000 });
   });
 
+  await check('dashboard: logo line shows every club of the league as a crest tile (men 14, women 11), league label, clean logos, click opens the player report', async () => {
+    const dp = await (await hermetic(await browser.newContext({ viewport: { width: 1440, height: 900 } }))).newPage();
+    await dp.goto(`${URL}/index.html`);
+    await dp.waitForSelector('.club-ribbon .ribbon-team');
+    for (const [lg, n, label] of [['men', 14, 'Férfi NB I/A'], ['women', 11, 'Női NB I/A']]) {
+      if (lg === 'women') await dp.selectOption('#league', 'women');
+      await dp.waitForFunction(c => document.querySelectorAll('.club-ribbon .ribbon-team').length === c && document.querySelector('.club-ribbon').dataset.league, n, { timeout: 15000 });
+      assert.equal((await dp.$eval('.ribbon-label b', e => e.textContent)), label);
+      assert.equal(await dp.$eval('.club-ribbon', e => e.dataset.league), lg);
+      await dp.waitForFunction(() => [...document.querySelectorAll('.ribbon-team img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 15000 });
+      const srcs = await dp.$$eval('.ribbon-team img', is => is.map(i => i.getAttribute('src')));
+      assert.ok(srcs.every(x => x.startsWith(`graphics/logos/${lg}/`)), 'transparent studio logos');
+      const sizes = await dp.$$eval('.ribbon-team', ts => ts.map(t => t.offsetWidth));
+      assert.ok(Math.max(...sizes) - Math.min(...sizes) <= 1, 'all tiles equal');
+    }
+    await dp.click('.ribbon-team >> nth=0');
+    await dp.waitForSelector('.player-modal, #playerReport, .player-report', { timeout: 10000 });
+    await dp.context().close();
+  });
+
 } finally {
   await browser.close();
   server.kill();

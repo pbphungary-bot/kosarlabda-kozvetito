@@ -37,4 +37,5 @@ Text outlines: 3–4 px (PSD stroke), club logos carry the white outline stored 
 Transparent PNG 1920×1080, deterministic render, no browser-side fonts other than League Gothic; mobile layout of the studio is a CSS-only variant (`graphics/css/mobile.css`) with a manual auto/desktop switch.
 
 ## Dashboard (Közvetítőhub)
+**Logo line (crest rail):** crests only, no club names (agreed). One white rounded tile per club (equal size, max 96 px, radius 24 %), the clean transparent crest from `graphics/logos/<league>/<id>.png` centred and optically normalised (equal visual area for wide / tall / round crests, max 84 % of the tile); league label with accent dot (men `#0b9444`, women `#ef4036`) and team count on the left; hover/focus lifts the tile, ring + underline in the club's colour; staggered fade-in; phones: one swipeable row of 68 px tiles with edge fade. Rail background is a soft white→`#f3f7fb` gradient with a league-coloured top line.
 Light editorial theme with club-branding header, dark-mode overrides, mobile rules inside media queries only; all styles live in `css/dashboard.css` (new rules go to the end of the file).

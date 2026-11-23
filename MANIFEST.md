@@ -45,6 +45,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 | Menetrend: newest result first, last 2 rounds, next 3 rounds | **LOCKED** |
 | Csapatok tab: Keret + all Hunbasket team/player stats | **LOCKED** (data refresh every 3 h) |
 | Meccslap (one-page A4 match sheet) | REVIEW |
+| Logo line (club crest rail under the header, men + women) | REVIEW | tiles with the clean transparent studio logos, optical size normalisation, league label + accent (men green / women red), hover accent in the club colour, swipeable row on phones, click = player statistics |
 | Mobile version + view switch | REVIEW (not yet tested on a real phone) |
 | Shared notes (Supabase) | OPEN – row-level-security review needs the owner's `pg_policies` output (never keys) |
 
