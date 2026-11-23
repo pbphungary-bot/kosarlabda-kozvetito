@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-23T17:27:18.342002+00:00",
+  "checked_at": "2026-11-23T18:28:39.436253+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 36,
-      "added": 0,
+      "candidates": 34,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -611,6 +611,16 @@
       ]
     },
     {
+      "source": "WBasket.hu",
+      "title": "Takács-Kiss Virágék magabiztos győzelemmel tértek vissza",
+      "summary": "A hétvégén teljes fordulót rendeztek a spanyol élvonalban.",
+      "url": "https://wbasket.hu/takacs-kiss-viragek-magabiztos-gyozelemmel-tertek-vissza/",
+      "published_at": "2026.11.23. 14:38",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Pályán a kosárlabda utánpótlás - Heti program 48. hét",
       "summary": "2026. november 26, csütörtök, Budapest, Pasaréti Sportcentrum Vasas Akadémia II. - DVTK U23 - Közvetítés 2026. november 29., vasárnap, DVTK Aréna 16.30 DVTK U23 - Radobasket - Közvetítés",
@@ -668,6 +678,16 @@
       "league": "women"
     },
     {
+      "source": "WBasket.hu",
+      "title": "Juhász Dorkáék magabiztosan nyertek, Lelik Rékáéknak nem sikerült jól a visszatérés",
+      "summary": "A válogatott szünet után a hétvégén Törökországban is teljes fordulóra került sor.",
+      "url": "https://wbasket.hu/juhasz-dorkaek-magabiztosan-nyertek-lelik-rekaeknak-nem-sikerult-jol-a-visszateres/",
+      "published_at": "2026.11.23. 12:01",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Hazai pályán folytatódik a menetelés?",
       "summary": "A DVTK HUNTHERM négy forduló után három győzelemmel és egy vereséggel az E-csoport második helyén áll, míg a horvát együttes négy vereséggel sereghajtó.",
@@ -692,6 +712,16 @@
       "teams": [
         "women|Csata TTK"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Kiélezett meccsen maradtak alul Papp Diáék",
+      "summary": "A hétvégén a francia bajnokság 9. fordulójának mérkőzéseit rendezték.",
+      "url": "https://wbasket.hu/kielezett-meccsen-maradtak-alul-papp-diaek/",
+      "published_at": "2026.11.23. 10:52",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Klub: DVTK HUNTHERM",
@@ -729,6 +759,16 @@
       ]
     },
     {
+      "source": "WBasket.hu",
+      "title": "Sitku-Varga Alíz és Böröndy Vivi is győzelmet ünnepelhetett Olaszországban",
+      "summary": "Az Autosped G BCC Derthona 68-51-re verte az Alama San Martino di Lupari együttesét.",
+      "url": "https://wbasket.hu/sitku-varga-aliz-es-borondy-vivi-is-gyozelmet-unnepelhetett-olaszorszagban/",
+      "published_at": "2026.11.23. 09:09",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Jegyek a DVTK HUNTHERM – ŽKK Brod na Savi mérkőzésre",
       "summary": "2026. november 25., szerda 18:00 (Miskolc, DVTK Aréna) DVTK HUNTHERM – ŽKK Brod na Savi",
@@ -740,6 +780,16 @@
       "teams": [
         "women|DVTK HUNTHERM"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Értékelések a vasárnapi bajnoki mérkőzések után",
+      "summary": "Vasárnap két mérkőzést rendeztek a hazai élvonalban.",
+      "url": "https://wbasket.hu/ertekelesek-a-vasarnapi-bajnoki-merkozesek-utan/",
+      "published_at": "2026.11.23. 07:15",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
