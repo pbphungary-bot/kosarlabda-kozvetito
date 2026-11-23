@@ -4,6 +4,9 @@ Living record of **what exists, what was agreed and what is finished**. Kept up 
 Rule: anything under **LOCKED** is finished and agreed – it is used as it is and is **not reworked** unless the owner explicitly asks.
 See also: `DESIGN-SYSTEM.md` (look & feel rules), `graphics/README.md` (feature guide, Hungarian), `graphics/HASZNALATI-UTMUTATO.md` (user guide).
 
+## 0. Platform priority (owner decision 2026-11-23)
+**Desktop first.** The tools are used on desktop; design, polish and test the desktop version only. The mobile/phone versions stay as they are (existing tests keep passing) but get no new work, no real-phone testing and no mobile screenshots unless the owner asks.
+
 ## 1. Purpose
 Basketball commentator tool for the Hungarian NB I/A (men + women, always separate):
 1. **Közvetítőhub** (`index.html`, `css/dashboard.css`) – match preparation dashboard (schedule/results, standings, team pages, head-to-head, notes, news, match sheet).
@@ -50,7 +53,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 | Csapatok tab layout: open button in the card's header row (top right), "← Vissza a csapatokhoz" back button, "Teljes csapatlap nyomtatása" (one A4 landscape team sheet: last games, roster, 3 stat tables, records/zones, matches), clean transparent crests everywhere (`graphics/logos`, old `logos/` only as fallback) | REVIEW |
 | Meccslap (one-page A4 match sheet) | REVIEW |
 | Logo line (club crest rail under the header, men + women) | REVIEW | tiles with the clean transparent studio logos, optical size normalisation, league label + accent (men green / women red), hover accent in the club colour, swipeable row on phones, click = player statistics |
-| Mobile version + view switch | REVIEW (not yet tested on a real phone) |
+| Mobile version + view switch | PARKED (desktop first; kept working, no further work) |
 | Shared notes (Supabase, project "Kosárlabda Jegyzetek") | REVIEWED read-only (2026-11-23), nothing changed: one table `public.matchup_notes` (5 rows, RLS on, length checks, version column). Anyone with the public anon key can read, insert and update every row (policies `using true`); delete is blocked. **Owner decision (2026-11-23): leave it as it is** – only the commentators who work with the owner use it. Not to be raised again unless the audience changes (then: access code or login). |
 
 ## 5. LOCKED decisions (do not revisit without being asked)
@@ -63,7 +66,7 @@ Other studio features: ZIP package of all graphics of a match, presets, layout e
 - Working agreement: work on a branch, open PRs, **the owner merges** (never merge/deploy by the assistant); CI (unit + browser tests) must be green; docs (this file, README) updated with every change.
 
 ## 6. Open items / ideas
-Real-phone test of both mobile versions · Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
+Supabase RLS review · women's all-time head-to-head (eredmenyek.com paste would help) · more graphics (streak, social-media sizes).
 
 ## 7. Repo map
 `index.html`+`css/dashboard.css` dashboard · `graphics/` studio (`js/` app, engine, templates, binders, panels, bgremove; `templates/<id>/` statics+thumbs; `assets/court/court.png`; `players/` photos; `models/`+`vendor/ort/` background removal) · `data/` collected JSON · `scripts/` collectors · `tools/` PSD extraction (`psd_extract.py`, `psd_frames.py`) · `tests/` (unit + browser) · `.github/workflows/` collectors + CI · `BROADCAST GRAPHICS/` the owner's PSDs (read-only source).
