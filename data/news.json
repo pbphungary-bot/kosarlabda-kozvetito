@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-23T06:05:45.379045+00:00",
+  "checked_at": "2026-11-23T07:16:06.940093+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 29,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -364,19 +364,28 @@
     },
     {
       "source": "Klub: Délút-SZTE-Szedeák",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 1,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://szedeak.com/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:TimeoutError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Endo Plus Service-Honvéd",
@@ -473,7 +482,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -493,19 +501,29 @@
     },
     {
       "source": "Klub: ETO Basket",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 24,
-      "attempted": 24,
-      "already_saved": 24,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
+      "already_saved": 0,
       "added": 0,
       "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 24,
-      "source_coverage": true
+      "listing_errors": [
+        "https://etobasket.hu/hu/hirek/1: TimeoutError: The read operation timed out",
+        "https://etobasket.hu/hu/hirek/2: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:TimeoutError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: KSC Szekszárd",
@@ -554,22 +572,39 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 30,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
       "added": 0,
-      "repaired": 30,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 30,
+      "repaired": 6,
+      "article_errors": 2,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/dokumentumok/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/labdabiztonsag-es-lepattanozas-fontos-feladatok-a-beac-elleni-fovarosi-rangadon/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 6,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Jegyek a DVTK HUNTHERM – ŽKK Brod na Savi mérkőzésre",
+      "summary": "2026. november 25., szerda 18:00 (Miskolc, DVTK Aréna) DVTK HUNTHERM – ŽKK Brod na Savi",
+      "url": "http://dvtk.eu/37691-Jegyek_a_DVTK_HUNTHERM_ZKK_Brod_na_Savi_merkozesre-cikk-kosarlabda/",
+      "published_at": "2026-11-23T07:50:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "WBasket.hu",
       "title": "Hosszabbítás után nyert a Csata a DVTK otthonában",
