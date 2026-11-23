@@ -1163,6 +1163,30 @@ try {
     await dp.context().close();
   });
 
+  await check('dashboard Csapatok: open button sits in the card header row, way back, printable team sheet, clean crests', async () => {
+    const dp = await (await hermetic(await browser.newContext({ viewport: { width: 1440, height: 900 } }))).newPage();
+    await dp.addInitScript(() => { window.__printed = 0; window.print = () => { window.__printed++; }; });
+    await dp.goto(`${URL}/index.html`);
+    await dp.click('nav [data-tab="teams"]');
+    await dp.waitForSelector('#teamCards .club-panel .club-panel-head .open-team');
+    const same = await dp.$eval('#teamCards .club-panel', c => { const h = c.querySelector('h3').getBoundingClientRect(), b = c.querySelector('.open-team').getBoundingClientRect(); return Math.abs((h.top + h.bottom) / 2 - (b.top + b.bottom) / 2) < 30 && b.left > h.right; });
+    assert.ok(same, 'button on the same line as the team name, to its right');
+    await dp.waitForFunction(() => [...document.querySelectorAll('#teamCards .club-mark img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 15000 });
+    assert.ok((await dp.$$eval('#teamCards .club-mark img', is => is.every(i => i.getAttribute('src').startsWith('graphics/logos/')))), 'transparent studio logos');
+    await dp.click('.open-team >> nth=0');
+    await dp.waitForSelector('.team-back');
+    await dp.click('.team-print');
+    assert.equal(await dp.evaluate(() => window.__printed), 1);
+    const secs = await dp.$$eval('#teamPrint h3', h => h.map(x => x.textContent));
+    for (const k of ['Keret', 'Rekordok és zónák', 'Mérkőzések']) assert.ok(secs.includes(k), k);
+    assert.ok(secs.filter(x => x.startsWith('Statisztika')).length >= 1);
+    await dp.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+    assert.equal(await dp.evaluate(() => document.body.classList.contains('team-printing') || !!document.getElementById('teamPageStyle')), false, 'print mode cleaned up');
+    await dp.click('.team-back');
+    await dp.waitForFunction(() => document.getElementById('teamDetail').innerHTML === '' && getComputedStyle(document.getElementById('teamCards')).display !== 'none');
+    await dp.context().close();
+  });
+
 } finally {
   await browser.close();
   server.kill();

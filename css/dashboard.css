@@ -426,3 +426,25 @@ a,#h2hHistory a{color:#075aa4!important}
  .club-ribbon .ribbon-team{flex:0 0 68px;max-width:none;scroll-snap-align:start}
 }
 @media(prefers-reduced-motion:reduce){.club-ribbon .ribbon-team,.club-ribbon .ribbon-team img,.club-ribbon .ribbon-team::after{animation:none!important;transition:none!important}}
+
+/* ══ team cards: header row + detail actions + printable team sheet ══ */
+.club-panel .club-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;margin-bottom:6px}
+.club-panel .club-panel-head h3{margin:0;min-width:0}
+.club-panel .club-panel-head .open-team{margin:0;white-space:nowrap;flex:0 0 auto}
+.team-detail-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin:0 0 14px}
+.team-detail-actions button{font:inherit;font-weight:700;padding:10px 15px;border:1px solid #c9d7e6;border-radius:10px;background:#fff;color:#17324d;cursor:pointer;min-height:44px}
+.team-detail-actions button:hover{background:#eef4fb;border-color:#9fb6cf}
+.team-detail-actions .team-back{background:#0f2a44;color:#fff;border-color:#0f2a44}.team-detail-actions .team-back:hover{background:#17395b}
+#teamPrint{display:none}
+@media print{
+ body.team-printing>*:not(#teamPrint){display:none!important}
+ body.team-printing #teamPrint{display:block!important;padding:0;font-family:Inter,system-ui,sans-serif;color:#111;background:#fff;font-size:10px}
+ body.team-printing{background:#fff!important}
+ #teamPrint h2{margin:0 0 2px;font-size:20px}#teamPrint h3{margin:14px 0 5px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #e8761c;padding-bottom:2px;break-after:avoid}
+ #teamPrint .team-detail-head{display:flex;align-items:center;gap:12px}
+ #teamPrint table{width:100%;border-collapse:collapse;font-size:9px}#teamPrint th,#teamPrint td{padding:2px 4px;border-bottom:1px solid #ddd;text-align:center}#teamPrint td:first-child,#teamPrint th:first-child{text-align:left}
+ #teamPrint .stat-table-wrap,#teamPrint .tablewrap{overflow:visible!important}
+ #teamPrint tr{break-inside:avoid}#teamPrint .team-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+ #teamPrint a{color:inherit;text-decoration:none}
+}
+@media(max-width:720px){.club-panel .club-panel-head .open-team{flex:1 1 100%;text-align:center}.team-detail-actions button{flex:1 1 100%}}
