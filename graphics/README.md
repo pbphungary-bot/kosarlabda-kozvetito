@@ -176,3 +176,5 @@ A Játékos-különleges fotómezője és az Extra (MKOSZ) fotókerete alatt a *
 ## Fejlesztői jegyzet (kód szerkezete)
 - `js/app.js` – a stúdió fő vezérlője (állapot, mezők, renderelés, elrendezés-szerkesztő, mobil nézet); `js/panels.js` – az önálló oldalpanelek (Játékos-különleges beállítások + oszlopok együtt mozgatása, AI háttéreltávolítás, Extra keretek); `js/bgremove.js` – a háttéreltávolító motor.
 - A dashboard stílusai a `css/dashboard.css`-ben vannak (korábban 18 beágyazott `<style>` blokk, ugyanabban a sorrendben összefűzve; a megjelenés pixelre azonos). Új szabály a fájl végére kerül.
+
+**Átméretezhető panelek (Forma, Forma két csapat, Egymás ellen):** a panel (pályatextúrás háttér + szegély) alakzat, nem kép, ezért szabadon méretezhető: Elrendezés fül → *Szerkesztés* bekapcsolva → kattints a panel szélére, és húzd a sarkait (alapból szabadon; Shift = arányosan), vagy írd be a szélességet / magasságot a kijelölt elem mezőibe. A tartalom (sorok, címerek) nem méreteződik vele – azt a *Tartalom mozgatása / nagyítása* mozgatja. A panel követi az „Alap átlátszósága” csúszkát. Az Extra (MKOSZ) kereteihez hasonlóan.

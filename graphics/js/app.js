@@ -58,6 +58,11 @@ async function ensureImages(values) {
   await Promise.all(jobs);
 }
 
+/** Court textures of resizable panels (element.texture = path; stored under 'tex/<path>'). */
+async function ensureTextures(t) {
+  for (const el of t.elements) if (el.texture && !images['tex/' + el.texture]) { try { await loadImage('tex/' + el.texture, el.texture); } catch { /* the panel falls back to its plain fill */ } }
+}
+
 function loadImage(key, url) {
   if (images[key]) return Promise.resolve(images[key]);
   return new Promise(resolve => {
@@ -350,6 +355,7 @@ const measureFn = (el, text) => measure(measureCanvas, el, text);
 function autoValues() {
   const t = tpl(), lg = state.league, s = sel();
   const info = { notices: [] };
+  if (t.elements.some(e => e.id === 'panel' && e.type === 'framed')) info.notices.push({ text: 'A panel mérete szabadon állítható: Elrendezés fül → „Szerkesztés” bekapcsolva → kattints a panel szélére, és húzd a sarkait – alapból szabadon; Shift lenyomva tartva arányosan.' });
   let v = {};
   if (t.type === 'comparison' || t.type === 'playercompare' || t.type === 'intro' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
@@ -613,6 +619,7 @@ async function update(full) {
   }
   $('notices').innerHTML = info.notices.map(n => `<div class="notice ${n.bad ? 'bad' : ''}">${esc(n.text)}</div>`).join('');
   const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+  await ensureTextures(t);
   await ensureImages(values);
   if (seq !== updateSeq) return;
   const canvas = $('canvas');
@@ -702,6 +709,7 @@ async function renderForPackage(item, m) {
     const { v: auto, info } = autoValues();
     const values = mergedValues(auto);
     const bg = t.background ? await loadImage('bg/' + t.id, t.background) : null;
+  await ensureTextures(t);
     await ensureImages(values);
     const canvas = document.createElement('canvas');
     const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
@@ -985,7 +993,8 @@ function wireLayoutEditor() {
       const r = resize, rect = $('canvas').getBoundingClientRect(), k = 1920 / rect.width / (lastReport?.global?.scale || 1);
       const sx = r.c.includes('e') ? 1 : -1, sy = r.c.includes('s') ? 1 : -1;
       let w = Math.max(40, r.b[2] + sx * (e.clientX - r.x0) * k), h = Math.max(40, r.b[3] + sy * (e.clientY - r.y0) * k);
-      if (state.lockAspect !== false && !e.altKey) { const f = Math.max(w / r.b[2], h / r.b[3]); w = r.b[2] * f; h = r.b[3] * f; } // the same growth in both directions (Alt = free)
+      const lock = (elById(r.id).lockAspect ?? state.lockAspect !== false) !== (e.altKey || e.shiftKey); // Shift / Alt flips the lock for this drag
+      if (lock) { const f = Math.max(w / r.b[2], h / r.b[3]); w = r.b[2] * f; h = r.b[3] * f; } // the same growth in both directions (Alt = free)
       const left = sx === 1 ? r.b[0] : r.b[0] + r.b[2] - w, top = sy === 1 ? r.b[1] : r.b[1] + r.b[3] - h; // the opposite corner stays
       const base = elById(r.id).box, o = ovFor(r.id);
       o.w = Math.round(w / r.k0); o.h = Math.round(h / r.k0); o.dx = Math.round(left + w / 2 - base[0]); o.dy = Math.round(top + h / 2 - base[1]);
@@ -1043,7 +1052,7 @@ function wireLayoutEditor() {
     } else if (['iW', 'iH'].includes(id) && selectedId) {
       const b = lastReport.boxes[selectedId], o = ovFor(selectedId), base = elById(selectedId).box, kk = effOf(selectedId).scale > 0 ? effOf(selectedId).scale : 1;
       let w = id === 'iW' ? n : b[2], h = id === 'iH' ? n : b[3];
-      if (state.lockAspect !== false) { if (id === 'iW') h = w * b[3] / b[2]; else w = h * b[2] / b[3]; }
+      if (elById(selectedId).lockAspect ?? state.lockAspect !== false) { if (id === 'iW') h = w * b[3] / b[2]; else w = h * b[2] / b[3]; }
       o.w = Math.round(w / kk); o.h = Math.round(h / kk);
       o.dx = Math.round(b[0] + b[2] / 2 - base[0]); o.dy = Math.round(b[1] + b[3] / 2 - base[1]);
       renderInspector(); refreshExtraSizes();

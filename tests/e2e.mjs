@@ -13,7 +13,7 @@ const out = process.argv[2] || path.join(ROOT, 'tests/output/e2e');
 mkdirSync(out, { recursive: true });
 const port = 8890 + Math.floor(Math.random() * 100);
 const server = spawn('python3', [path.join(ROOT, 'tools/serve.py'), String(port)], { stdio: 'ignore' });
-for (let i = 0; i < 60; i++) { try { await fetch(`http://127.0.0.1:${port}/`); break; } catch { await new Promise(r => setTimeout(r, 100)); } } // wait until the server answers
+for (let i = 0; i < 60; i++) { try { await (await fetch(`http://127.0.0.1:${port}/`, { headers: { connection: 'close' } })).arrayBuffer(); break; } catch { await new Promise(r => setTimeout(r, 100)); } } // wait until the server answers
 const URL = `http://127.0.0.1:${port}`;
 
 function pngInfo(buf) {
@@ -1075,6 +1075,28 @@ try {
     await page.click('.bgrow[data-k="photo"] .bgUndo');
     await page.waitForTimeout(500);
     assert.equal(await page.$eval('.bgrow[data-k="photo"] .bgCut', e => e.disabled), true);
+  });
+
+  await check('form / head-to-head panels: the frame is a resizable shape (edit mode, corner handle)', async () => {
+    for (const id of ['form-men', 'h2h-men']) {
+      await page.click('.league-toggle button[data-league="men"]');
+      await page.click(`#templateList button[data-id="${id}"]`);
+      await page.waitForTimeout(700);
+      await page.evaluate(() => { document.getElementById('layoutBox').open = true; });
+      if (!(await page.$eval('#editMode', e => e.checked))) await page.check('#editMode');
+      const shot = () => page.$eval('#canvas', c => c.toDataURL('image/png'));
+      const before = await shot();
+      const hit = await page.$('.hit[data-id="panel"]'); await hit.scrollIntoViewIfNeeded(); const bb = await hit.boundingBox();
+      await page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height - 4);
+      await page.waitForTimeout(300);
+      const hb = await (await page.$('.hit[data-id="panel"] .rh[data-c="se"]')).boundingBox();
+      await page.mouse.move(hb.x + 8, hb.y + 8); await page.mouse.down(); await page.mouse.move(hb.x + 8 + 90, hb.y + 8 + 40, { steps: 4 }); await page.mouse.up();
+      await page.waitForTimeout(500);
+      const after = await page.$eval('.hit[data-id="panel"]', e => e.getBoundingClientRect().width);
+      assert.ok(after > bb.width + 40, `${id}: panel grew (${bb.width} -> ${after})`);
+      assert.notEqual(await shot(), before);
+      await page.uncheck('#editMode');
+    }
   });
 
 } finally {

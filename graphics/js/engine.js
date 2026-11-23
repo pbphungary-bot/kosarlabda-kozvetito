@@ -208,9 +208,20 @@ function drawFramed(ctx, el, v, assets, report) {
   report.boxes[el.id] = [x0, y0, w, h];
   const sw = el.sw ?? 6, r = Math.min(el.r ?? 18, w / 2, h / 2);
   const fill = v.fill !== undefined ? v.fill : el.fill;
+  const tex = el.texture && assets.images['tex/' + el.texture];
   ctx.save();
-  ctx.globalAlpha = el.opacity ?? 1;
-  if (fill) { ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.fillStyle = fill; ctx.fill(); }
+  ctx.globalAlpha = (el.useBase && assets.baseOpacity != null ? assets.baseOpacity : el.opacity) ?? 1; // panels follow the "base opacity" slider
+  if (tex && fill !== '') { // court texture at its natural scale (a bigger panel shows more of it); cover-scaled when the panel outgrows it
+    ctx.save(); ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.clip();
+    if (w <= tex.width && h <= tex.height) {
+      const [ox, oy] = el.texOrigin || [0, 0];
+      ctx.drawImage(tex, Math.min(ox, tex.width - w), Math.min(oy, tex.height - h), w, h, x0, y0, w, h);
+    } else {
+      const k = Math.max(w / tex.width, h / tex.height);
+      ctx.drawImage(tex, x0 - (tex.width * k - w) / 2, y0 - (tex.height * k - h) / 2, tex.width * k, tex.height * k);
+    }
+    ctx.restore();
+  } else if (fill) { ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.fillStyle = fill; ctx.fill(); }
   const img = v.src ? assets.images[v.src] : null;
   if (img) {
     const pad = sw + (v.pad ?? el.pad ?? 0);
@@ -342,7 +353,7 @@ export function render(canvas, template, values, assets) {
     if (!visible) continue;
     const clip = el.clipInner && template.inner; // the panel's outline is untouchable: the clip stays put even when the content moves
     if (clip) { ctx.save(); ctx.beginPath(); roundRectPath(ctx, template.inner.box, template.inner.r); ctx.clip(); }
-    const moved = contentOn && (el.id !== 'photo' || C.photo !== false);
+    const moved = contentOn && !el.fixedFrame && (el.id !== 'photo' || C.photo !== false);
     if (moved) { ctx.save(); ctx.translate(ccx + cdx, ccy + cdy); ctx.scale(cs, cs); ctx.translate(-ccx, -ccy); }
     if (el.type === 'text') drawText(ctx, el, v, report);
     else if (el.type === 'image') drawImage(ctx, el, v, assets, report, template.inner);

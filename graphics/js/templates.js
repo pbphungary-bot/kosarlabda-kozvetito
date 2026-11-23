@@ -443,9 +443,15 @@ function rosterEntry(id, league, type, psd, label, bgId) {
 // A compact corner graphic (at most a quarter of the picture: 960 × 263 for one team, 960 × 478 for two): per game a Gy / V badge,
 // the opponent's logo (or its name when there is no logo) and the score; the latest game on the right.
 const FORM_PANEL = { x: 40, y: 40, w: 960, row: 215, pad: 24 };
+// The panel of the compact graphics (form, head to head) is a shape filled with the court texture, so it can be resized freely.
+const BORDER = { men: '#0b9444', women: '#ec4036' };
+function panelFrame(league, x, y, w, h) {
+  return { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [x + w / 2, y + h / 2, w, h], texture: `assets/court/${league}.jpg`, texOrigin: [610, 20],
+    stroke: BORDER[league], sw: 6, r: 28, useBase: true, opacity: 0.965, fixedFrame: true, lockAspect: false };
+}
 function formTpl(id, league, rows) {
   const { x, y, w, row, pad } = FORM_PANEL, op = 0.9882, h = pad * 2 + row * rows;
-  const els = [];
+  const els = [panelFrame(league, x, y, w, h)];
   for (let r = 0; r < rows; r++) {
     const top = y + pad + r * row, k = `t${r}`;
     els.push({ id: `${k}.logo`, type: 'image', label: rows > 1 ? `${r + 1}. csapat logója` : 'Csapat logója', group: rows > 1 ? `${r + 1}. csapat` : 'Csapat', box: [x + pad + 85, top + 100, 140, 140], fit: 'contain', opacity: op, logoOutline: true });
@@ -460,7 +466,7 @@ function formTpl(id, league, rows) {
     }
   }
   const t = base(id, league, rows > 1 ? 'formpair' : 'form', 'Forma', rows > 1 ? 'Forma (két csapat)' : 'Forma', {
-    elements: els, background: `templates/${rows > 1 ? 'formpair' : 'form'}-${league}/background.png`, reference: null, thumb: `templates/${rows > 1 ? 'formpair' : 'form'}-${league}/thumb.jpg`,
+    elements: els, background: null, reference: null, thumb: `templates/${rows > 1 ? 'formpair' : 'form'}-${league}/thumb.jpg`,
   });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
@@ -471,7 +477,7 @@ function formTpl(id, league, rows) {
 // One row per meeting, newest on top: date · home badge · score · away badge. Panel 680x478 (top-left, like the form graphic).
 const H2H_PANEL = { x: 40, y: 40, w: 680, row: 86, pad: 24, rows: 5 };
 function h2hTpl(id, league) {
-  const { x, y, w, row, pad, rows } = H2H_PANEL, op = 0.9882, h = pad * 2 + row * rows, els = [];
+  const { x, y, w, row, pad, rows } = H2H_PANEL, op = 0.9882, h = pad * 2 + row * rows, els = [panelFrame(league, x, y, w, h)];
   for (let r = 0; r < rows; r++) {
     const cy = y + pad + row * r + row / 2, g = `${r + 1}. meccs`, base = y + pad + row * r + row / 2;
     const txt = (size, extra) => ({ type: 'text', group: g, size, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, adjust: true, ...extra });
@@ -482,7 +488,7 @@ function h2hTpl(id, league) {
       { id: `h${r}.away`, type: 'image', label: `${r + 1}. meccs – vendég`, group: g, box: [x + 590, cy, 84, 72], fit: 'contain', opacity: op, logoOutline: true },
     );
   }
-  const t = base(id, league, 'h2h', 'Forma-panel (saját)', 'Egymás ellen', { elements: els, background: `templates/${id}/background.png`, reference: null, thumb: `templates/${id}/thumb.jpg` });
+  const t = base(id, league, 'h2h', 'Forma-panel (saját)', 'Egymás ellen', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
   return t;
