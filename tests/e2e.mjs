@@ -813,7 +813,7 @@ try {
   await check('phone: no sideways scrolling in any tab, for several templates', async () => {
     for (const [lg, id] of [['men', 'comparison-men'], ['men', 'teamstats-men'], ['women', 'schedule-women'], ['women', 'playerspecial-women'], ['men', 'intro-men']]) {
       await mp.evaluate(l => document.querySelector(`.league-toggle button[data-league="${l}"]`).click(), lg);
-      await mp.waitForTimeout(300);
+      await mp.waitForFunction(i => document.querySelector(`#templateList button[data-id="${i}"]`), id, { timeout: 15000 }); // the list is rebuilt for the league
       await mp.evaluate(i => document.querySelector(`#templateList button[data-id="${i}"]`).click(), id);
       await mp.waitForTimeout(600);
       for (const tab of ['data', 'fields', 'layout', 'export']) {
@@ -1097,6 +1097,7 @@ try {
   });
 
   await check('all panels (frames) are resizable shapes: form, head to head and the PSD graphics (edit mode, corner handle)', async () => {
+    await page.setViewportSize({ width: 1600, height: 1500 }); // the preview and all four corner handles are on screen on any runner
     for (const id of ['form-men', 'h2h-men', 'roster-men', 'results-women', 'playerspecial-men', 'comparison-men', 'intro-women']) {
       await page.click(`.league-toggle button[data-league="${id.endsWith('women') ? 'women' : 'men'}"]`);
       await page.click(`#templateList button[data-id="${id}"]`);
@@ -1116,9 +1117,11 @@ try {
       assert.notEqual(await shot(), before);
       await page.uncheck('#editMode');
     }
+    await page.setViewportSize({ width: 1600, height: 1000 });
   });
 
   await check('frame = court + outline as one unit: moving the panel carries the court with it (pixel-identical)', async () => {
+    await page.setViewportSize({ width: 1600, height: 1500 });
     await page.click('.league-toggle button[data-league="men"]');
     await page.click('#templateList button[data-id="roster-men"]');
     await page.waitForTimeout(1800);
@@ -1137,6 +1140,7 @@ try {
     for (let i = 0; i < before.length; i++) diff += Math.abs(before[i] - after[i]);
     assert.ok(diff / before.length < 1, `the court moved with the frame (mean diff ${diff / before.length})`);
     await page.uncheck('#editMode');
+    await page.setViewportSize({ width: 1600, height: 1000 });
   });
 
 } finally {
