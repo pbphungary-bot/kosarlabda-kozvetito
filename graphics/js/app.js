@@ -176,9 +176,10 @@ function playerSelects() {
   const one = (side, id, label) => {
     const opts = playerOptions(store, lg, id);
     const cur = pickPlayer(store, lg, id, s.pc?.[side]);
-    return `<label>${label}<select id="pc_${side}">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)} (${esc(o.p['P.'] ?? '?')} pont/meccs)</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label>`;
+    return `<label>${label}<select id="pc_${side}">${opts.map(o => `<option value="${esc(o.key)}" ${o.key === cur?.key ? 'selected' : ''}>${esc(o.name)} (${esc(o.p['P.'] ?? '?')} pont/meccs · ${esc(o.p['M.'] ?? '?')} meccs)</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label>`;
   };
-  return `<div class="row2">${one('home', m.homeId, 'Hazai játékos')}${one('away', m.awayId, 'Vendég játékos')}</div><small class="hint">Alapból a legjobb pontszerző; a helyezés a liga játékosai között értendő.</small>`;
+  const up = (side, label) => `<fieldset class="xbox"><legend>${label} – saját fotó</legend><span class="import-row"><input type="file" class="pcUp" data-side="${side}" accept="image/png,image/webp,image/jpeg"> <button type="button" class="pcUpClear ghost" data-side="${side}" ${images['upload/pc' + (side === 'home' ? 'Home' : 'Away')] ? '' : 'disabled'}>Fotó törlése</button></span>${bgHtml('pc' + (side === 'home' ? 'Home' : 'Away'))}</fieldset>`;
+  return `<div class="row2">${one('home', m.homeId, 'Hazai játékos')}${one('away', m.awayId, 'Vendég játékos')}</div><div class="row2">${up('home', 'Hazai')}${up('away', 'Vendég')}</div><small class="hint">A feltöltött fotó mindig előnyt élvez a Hunbasket-fotóval és a logóval szemben (átlátszó PNG a legjobb, vagy használd a háttéreltávolítót). Alapból a legjobb pontszerző; a helyezés a liga játékosai között értendő.</small>`;
 }
 
 
@@ -203,6 +204,18 @@ function renderSelection(extra = {}) {
       <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
       ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}${t.type === 'playercompare' ? playerSelects() : ''}${t.type === 'comparison' || t.type === 'playercompare' ? cmpOptionsHtml(s, t) : ''}`;
     if (t.type === 'comparison' || t.type === 'playercompare') wireCmpOptions(s);
+    if (t.type === 'playercompare') {
+      document.querySelectorAll('.pcUp').forEach(inp => inp.onchange = e => {
+        const f = e.target.files[0], k = 'pc' + (inp.dataset.side === 'home' ? 'Home' : 'Away');
+        if (!f) return;
+        const img = new Image();
+        img.onload = () => { images['upload/' + k] = img; delete bgState[k]; renderSelection(); update(true); };
+        img.onerror = () => toast('A képet nem sikerült beolvasni.');
+        img.src = URL.createObjectURL(f);
+      });
+      document.querySelectorAll('.pcUpClear').forEach(btn => btn.onclick = () => { const k = 'pc' + (btn.dataset.side === 'home' ? 'Home' : 'Away'); delete images['upload/' + k]; delete bgState[k]; renderSelection(); update(true); });
+      wireBg('pcHome'); wireBg('pcAway');
+    }
     if (t.type === 'playercompare') {
       for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetMatchOverrides(); update(true); };
     }
@@ -381,7 +394,7 @@ function autoValues() {
     else if (t.type === 'h2h') { v = bindH2H(store, lg, m.homeId, m.awayId); if (!store.h2hGames(lg, m.homeId, m.awayId).length) info.notices.push({ text: 'Ennek a két csapatnak nincs korábbi egymás elleni meccse az adatokban (Hunbasket 2020/21-től).' }); }
     else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId, s.srcColor);
-    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, { ...(s.pc || {}), photoIds, srcColor: s.srcColor });
+    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, { ...(s.pc || {}), photoIds, srcColor: s.srcColor, uploads: { home: !!images['upload/pcHome'], away: !!images['upload/pcAway'] } });
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
   } else if (t.type === 'form') {

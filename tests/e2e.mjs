@@ -1187,6 +1187,22 @@ try {
     await dp.context().close();
   });
 
+  await check('key players: the dropdown shows the chosen player, ranks stay for a low-game player, own photo upload works with background removal controls', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="playercompare-men"]');
+    await page.waitForSelector('#pc_home');
+    const n = await page.$$eval('#pc_home option', o => o.length);
+    await page.selectOption('#pc_home', { index: n - 2 });
+    await page.waitForTimeout(800);
+    const shown = await page.$eval('#pc_home', e => e.selectedIndex);
+    assert.equal(shown, n - 2, 'the dropdown keeps the player the graphic uses');
+    await page.setInputFiles('.pcUp[data-side="home"]', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await page.waitForSelector('.bgrow[data-k="pcHome"] .bgGo:not([disabled])', { timeout: 15000 });
+    const src = await page.evaluate(() => [...document.querySelectorAll('#fields .field')].find(f => f.querySelector('.lbl span')?.textContent.startsWith('Hazai logó'))?.querySelector('.lbl em')?.title);
+    assert.equal(src, 'Feltöltött fotó');
+    await page.click('.pcUpClear[data-side="home"]');
+  });
+
 } finally {
   await browser.close();
   server.kill();

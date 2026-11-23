@@ -337,3 +337,20 @@ test('key players graphic: photos instead of logos (with fallback), source colou
   assert.equal(withPhoto.subtitle.runs.at(-1).color, '#ff00aa');
   assert.ok(bindPlayerCompare(store, 'men', hid, aid, { photoIds: new Set([pid]), mode: 'logo' })['home.logo'].src.startsWith('men/'));
 });
+
+test('key players: a chosen player with few games still gets ranks (among all who played), uploads win over Hunbasket photos', async () => {
+  const store = await loadStore();
+  const { playerOptions } = await import('../graphics/js/binders.js');
+  const opts = playerOptions(store, 'men', 'kecskemet');
+  const few = opts.find(o => (Number(o.p['M.']) || 0) >= 1 && (Number(o.p['M.']) || 0) < 5) || opts.at(-1);
+  const v = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', { home: few.key });
+  assert.ok(v.subtitle.text.includes(few.name));
+  if ((Number(few.p['M.']) || 0) >= 1) {
+    assert.ok(v['home.rank.ppg'].text, 'rank present for a player who played');
+    assert.match(v['home.rank.ppg'].source, /Kevés meccs|Helyezés a liga/);
+  }
+  const up = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', { photoIds: new Set(['x']), uploads: { home: true } });
+  assert.equal(up['home.logo'].src, 'upload/pcHome');
+  assert.equal(up['home.logo'].geom.fit, 'contain');
+  assert.ok(up['away.logo'].src.startsWith('men/'), 'no upload for the other side: logo stays');
+});

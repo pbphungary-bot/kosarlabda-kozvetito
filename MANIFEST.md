@@ -18,6 +18,7 @@ Basketball commentator tool for the Hungarian NB I/A (men + women, always separa
 | FIBA | European/cup fixtures | collector `scripts/update_cups.mjs` |
 | KosárStat | all-time head-to-head, **men only** | collector |
 | Hunbasket photos | player photos (MKOSZ gave permission) | `graphics/players/` (4 players have none → placeholder) |
+| Flags (roster graphics) | one SVG per nationality in `graphics/assets/flags/`; Hungarian players get no flag by design; the team-pages job now downloads the flag of any new nationality automatically; Hunbasket lists no nationality (`-`) for one player (Sopron Basket, JANKOVIC Masa) → no flag |
 
 ## 3. Graphics Studio – templates (16 per league)
 Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting for the owner's check · **OPEN** = not done.
@@ -25,7 +26,7 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Graphic | Status | Notes |
 |---|---|---|
 | Csapatok összevetése (comparison) | REVIEW | frame resizable; Excel/Hunbasket data; source-name colour option |
-| Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | player photos instead of logos (option), levelled + mirrored rows, source-name colour |
+| Csillagjátékosok / Kulcsjátékosok (playercompare) | REVIEW | any player selectable (dropdown bug fixed), ranks also for players with few games (among all who played, noted in the field), own photo upload per side (wins over Hunbasket photo/logo, with background removal), photos instead of logos (option), levelled + mirrored rows, source-name colour |
 | Csapatstatisztika | REVIEW | |
 | Eredmények / Eredmények (színes sorok) / Menetrend | REVIEW | editable rows (delete/add/reorder at once); schedule starts with the game after the next; rows reset on team change |
 | Intro | REVIEW | |

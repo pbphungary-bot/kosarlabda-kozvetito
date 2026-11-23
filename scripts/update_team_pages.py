@@ -137,6 +137,26 @@ def collect(league, old):
     return teams, errors
 
 
+def fetch_missing_flags(teams):
+    """Roster flags are shown on the studio's roster graphics from graphics/assets/flags/<xx>.svg: download the ones a new signing needs."""
+    out = ROOT / 'graphics' / 'assets' / 'flags'
+    out.mkdir(parents=True, exist_ok=True)
+    for t in teams:
+        for p in t.get('roster', []):
+            m = re.search(r'/([a-z]{2})\.svg$', p.get('flag') or '')
+            if not m or (out / f'{m.group(1)}.svg').exists():
+                continue
+            try:
+                req = urllib.request.Request(p['flag'], headers={'User-Agent': UA})
+                data = urllib.request.urlopen(req, timeout=30).read()
+                if b'<svg' in data[:2000]:
+                    (out / f'{m.group(1)}.svg').write_bytes(data)
+                    print(f'flag downloaded: {m.group(1)} ({p.get("nationality")})')
+            except Exception as e:  # a missing flag only means no flag on the graphic; the data stays valid
+                print(f'flag {m.group(1)} not available: {e}')
+            time.sleep(0.5)
+
+
 def main():
     changed = False
     for league in LEAGUES:
@@ -148,6 +168,7 @@ def main():
         if not teams or (old and len(teams) < len(old.get('teams', [])) // 2):
             print(f'{league}: too little data, keeping the old file')
             continue
+        fetch_missing_flags(teams)
         if old and old.get('teams') == teams:
             print(f'{league}: unchanged')
             continue  # no rewrite → no commit noise
