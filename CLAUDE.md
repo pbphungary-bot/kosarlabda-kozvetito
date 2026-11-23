@@ -1,8 +1,33 @@
-# Instructions for the assistant (read first)
+# CLAUDE.md
 
-1. Read `MANIFEST.md` and `DESIGN-SYSTEM.md` before changing anything.
-2. Anything marked **LOCKED** is finished and agreed: use it as it is, do **not** redo or restyle it unless the owner explicitly asks.
-3. Keep `MANIFEST.md` (status, decisions, open items) and `DESIGN-SYSTEM.md` (look & feel) up to date in the same change as the work. When the owner says something is finished/approved, mark it LOCKED in the same commit.
-4. Never invent data; men and women stay separate; League Gothic only; transparent 1920×1080 output.
-5. Work on a branch and open pull requests; the owner merges. Run `node --test tests/*.test.mjs` and `node tests/e2e.mjs` before pushing; CI must be green.
-6. Never run `tools/psd_extract.py` without `--only <id>`.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Working agreement (read first)
+- Read `MANIFEST.md` (what exists, status, decisions) and `DESIGN-SYSTEM.md` (look & feel) before changing anything.
+- Anything marked **LOCKED** there is finished and agreed: use it as it is, do **not** redo or restyle it unless the owner explicitly asks. When the owner says something is finished/approved, mark it LOCKED in the same commit. Keep both files (and `graphics/README.md`, Hungarian) up to date with every change.
+- Product rules: never invent data (missing data is flagged, freshness shown); men and women always separate; League Gothic Regular/Italic only; graphics export as transparent 1920×1080 PNG.
+- Work on the branch you are given and open pull requests; the owner merges, never merge/deploy yourself. Push only when tests pass and CI is green. The repo is public.
+- Never run `tools/psd_extract.py` without `--only <template-id>` (it regenerates every template and logo).
+
+## Commands
+There is no build step and no package.json: everything is static files (ES modules) plus Python/Node scripts.
+- Serve the studio locally: `python3 tools/serve.py [port]` → `http://localhost:8000/graphics/` (dashboard: `/index.html`). Hosted as static pages on GitHub Pages.
+- Unit tests: `node --test tests/*.test.mjs`; one file: `node --test tests/layout.test.mjs`; one test: `node --test --test-name-pattern "head to head" tests/bindings.test.mjs`.
+- Browser tests (Playwright Chromium, starts its own server, ~4 min): `node tests/e2e.mjs [outDir]`. Needs the `playwright` npm package; it runs against the frozen data in `tests/fixtures/data` with a fixed clock (`FIXED_NOW` in `tests/helpers.mjs`), so results do not depend on live data.
+- Same tests on live data (what the daily `data-health` workflow does): `DATA_DIR=data node --test tests/identity.test.mjs`, `DATA_DIR=data python tests/team_pages_parser.test.py`, `DATA_DIR=data python tests/player_pages_parser.test.py` (needs `pip install beautifulsoup4 lxml`).
+- No linter is configured. For a quick undefined-variable check run ESLint ad hoc with `no-undef` (`--no-eslintrc`) over `graphics/js/*.js`.
+- Collectors (`scripts/update_*.py|mjs`) write `data/*.json` only when something changed; they run from GitHub Actions (`.github/workflows/`), run them locally only to test.
+- Regenerate template assets from the PSDs in `BROADCAST GRAPHICS/` (read-only): `python3 tools/psd_extract.py --only <id>` (backgrounds, reference, layers.json, logos), `python3 tools/psd_frames.py` (panel geometry → `graphics/js/frames.js`, `templates/<id>/statics.png`, court), `python3 tools/make_form_assets.py` (form badges). Needs `psd-tools numpy pillow`.
+
+## Architecture (big picture)
+**Two independent static apps over one data folder.** `index.html` + `css/dashboard.css` (Közvetítőhub, vanilla JS inline) and `graphics/` (Graphics Studio) both read `data/*.json`, which the collectors keep fresh (Hunbasket is the primary source; a FullField.info Excel uploaded in the studio overrides team/player stats; European games come from FIBA or pasted eredmenyek.com text).
+
+**Studio pipeline** (`graphics/js/`): `data.js` (`Store`: loads the JSON, club-scoped name matching via `clubs.js`, freshness, lazy sources like player pages/h2h via `loadLazy`) → `binders.js` (`bind*` functions turn store data into per-element values `{text|runs|src, source, missing…}` for one template type) → `templates.js` (geometry from the PSDs: elements with x/y/size/tracking/outline; dynamic builders `psBuild`, `rosterBuild`, `formTpl`, `h2hTpl`, `extraTpl`; registry `TEMPLATES`) → `engine.js` (deterministic Canvas 2D `render(canvas, template, values, assets)`: text fitting, image outlines, `framed` shapes, content/global transforms). `app.js` orchestrates UI, state (localStorage), overrides, the layout editor (`layout.js`: per-element dx/dy/size/scale/w/h, saved "alap" benchmarks), mobile/desktop switch, ZIP package (`package.js`); `panels.js` holds the self-contained side panels; `bgremove.js` runs in-browser AI background removal (ONNX Runtime in `vendor/ort`, model in `models/`).
+
+**Frames:** every graphic's panel is a `framed` element with id `panel` (court `assets/court/court.png` + outline, drawn by `drawFramed` in `engine.js`); the fixed rest of the PSD (titles, logo strip) is `templates/<id>/statics.png`, drawn on top of the panel (`staticsOnTop`). Panel geometry comes from `frames.js` (generated by `tools/psd_frames.py`); the compact Form / Head-to-head panels are built in `templates.js` (`panelFrame`). Resizing, moving and content-clipping all key off this element — see the frame rules in `DESIGN-SYSTEM.md`.
+
+**Template ids** are `<type>-<men|women>`; types and labels are in `TEMPLATE_TYPES`. Adding a graphic means: builder in `templates.js` + registry entry, a `bind*` in `binders.js`, a branch in `app.js` (`autoValues`, selection panel, filename), optionally `package.js`, and tests (the e2e template count assertion must be updated).
+
+**Tests** are hermetic: unit tests load `tests/fixtures/data` through `tests/helpers.mjs` (`loadStore`); e2e routes `/data/*.json` to the same fixtures. Update the fixtures (copy from `data/`) when a collector's output format changes. CI (`.github/workflows/tests.yml`) runs unit + Python + e2e on pull requests.
+
+**Data conventions:** matching is club-scoped (`clubIdStrict`), never fuzzy across leagues; collectors use a polite User-Agent, are low-frequency, and `mkosz.hu`, `webpont`, `facebook` and `eredmenyek.com` are not reachable from the sandbox (use workflow probes or pasted data). Shared dashboard notes use Supabase (row-level security not yet reviewed).
