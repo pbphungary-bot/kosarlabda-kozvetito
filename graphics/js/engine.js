@@ -211,19 +211,10 @@ function drawFramed(ctx, el, v, assets, report) {
   const tex = el.texture && assets.images['tex/' + el.texture];
   ctx.save();
   ctx.globalAlpha = (el.useBase && assets.baseOpacity != null ? assets.baseOpacity : el.opacity) ?? 1; // panels follow the "base opacity" slider
-  if (tex && fill !== '') { // court texture at its natural scale (a bigger panel shows more of it); cover-scaled when the panel outgrows it
+  if (tex && fill !== '') { // the court: its upper and lower edge sit on the frame's upper and lower border, centred on the frame's axes; if the frame is wider than that, the court grows to cover it (aspect ratio always locked)
     ctx.save(); ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.clip();
-    if (el.texRect) { // the court is part of the frame: it moves with it and scales with it (uniformly, so circles stay round; it always covers the frame)
-      const [tx, ty, tw, th] = el.texRect, [bx, by, bw, bh] = el.box0 || el.box;
-      const k = Math.max(w / bw, h / bh), tcx = cx + (tx + tw / 2 - bx) * k, tcy = cy + (ty + th / 2 - by) * k;
-      ctx.drawImage(tex, tcx - tw * k / 2, tcy - th * k / 2, tw * k, th * k);
-    } else if (w <= tex.width && h <= tex.height) {
-      const [ox, oy] = el.texOrigin || [0, 0];
-      ctx.drawImage(tex, Math.min(ox, tex.width - w), Math.min(oy, tex.height - h), w, h, x0, y0, w, h);
-    } else {
-      const k = Math.max(w / tex.width, h / tex.height);
-      ctx.drawImage(tex, x0 - (tex.width * k - w) / 2, y0 - (tex.height * k - h) / 2, tex.width * k, tex.height * k);
-    }
+    const k = Math.max(h / tex.height, w / tex.width);
+    ctx.drawImage(tex, cx - tex.width * k / 2, cy - tex.height * k / 2, tex.width * k, tex.height * k);
     ctx.restore();
   } else if (fill) { ctx.beginPath(); roundRectPath(ctx, [x0, y0, x1, y1], r); ctx.fillStyle = fill; ctx.fill(); }
   const img = v.src ? assets.images[v.src] : null;
