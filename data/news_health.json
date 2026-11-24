@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T02:08:34.510649+00:00",
+  "checked_at": "2026-11-24T02:59:00.469778+00:00",
   "statistics": {
     "total": 1256,
     "fresh": 576,
@@ -480,8 +480,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
