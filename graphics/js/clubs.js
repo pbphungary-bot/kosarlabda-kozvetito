@@ -66,6 +66,9 @@ const EXACT = {
     szolnoki: 'szolnok', szolnokiolajbanyasz: 'szolnok', olajbanyasz: 'szolnok', egis: 'kormend',
     skc: 'sopron', olaj: 'szolnok', ose: 'oroszlany', nka: 'nkapecs',
     budapestihonvedsportegyesulet: 'bphonved', phoenixmtfot: 'fot', szteszedeak: 'szedeak',
+    // earlier names of the same clubs (sponsor / name changes) as they appear in the Hunbasket head-to-head history (2020/21–): the club slot of a season
+    // is exactly filled by the old name, so these are the same club. Clubs that are no longer in the league (Zalakerámia ZTE KK, HÜBNER Nyíregyháza BS, Jászberényi KSE) stay unresolved.
+    arconicalbafehervar: 'albafehervar', deactungsram: 'deac', falcovolvoalpokautoszombathely: 'falcokc', naturtexszteszedeak: 'szedeak',
   },
   women: {
     bkgprimaszigetszentmiklos: 'bkgprimaszigetszentmiklos', bkgprima: 'bkgprimaszigetszentmiklos',
@@ -84,6 +87,11 @@ const EXACT = {
     diosgyor: 'dvtkhuntherm', huntherm: 'dvtkhuntherm', pecs: 'nkauniversitaspecs', bkg: 'bkgprimaszigetszentmiklos',
     szigetszentmiklos: 'bkgprimaszigetszentmiklos', akademia: 'vasasakademia',
     sopron: 'sopronbasket', nka: 'nkauniversitaspecs',
+    // earlier names of the same clubs (see the men's block); NOT the same club: PINKK Pécsi 424 (another women's club in Pécs, owner 2026-11-24); not mapped: "Darazsak Sportakadémia", "ZTE Női Kosárlabda Klub" (unknown / not in the league)
+    aluinventdvtk: 'dvtkhuntherm', atomeromukscszekszard: 'tarrkscszekszard', bkgprimanaturaszigetszentmiklos: 'bkgprimaszigetszentmiklos',
+    eoneltebeac: 'eltebeacujbuda', ludovikacsata: 'csatattk', ludovikafcsmcsata: 'csatattk',
+    nkauniversitaspeac: 'nkauniversitaspecs', peacpecs: 'nkauniversitaspecs', tfsemtk: 'tfse',
+    unigyor: 'sercounigyor', unigyormelyut: 'sercounigyor',
   },
 };
 
@@ -97,6 +105,15 @@ export function clubIdStrict(league, name) {
   if (clubs[n]) return n;
   const hit = Object.entries(clubs).find(([, c]) => [c.official, c.short, c.intro].filter(Boolean).some(x => normalizeTeamName(x) === n));
   return hit ? hit[0] : null;
+}
+
+// In the head-to-head history "Dávid Kornél KA" / "Dávid Kornél Kosárlabda Akadémia" is ANOTHER club (it plays against VBW CEKK Cegléd in 2024/25 and 2025/26):
+// its games must never be counted as Cegléd's (the club id `davidkornelka` and the older alias `dkka` stay as they are for the other data sources).
+const HISTORY_OTHER = { women: new Set(['davidkornelka', 'davidkornelkosarlabdaakademia', 'dkka']) };
+/** Club of a name in the Hunbasket head-to-head history (clubIdStrict minus the names that denote another, former club there). */
+export function historyClubId(league, name) {
+  if (HISTORY_OTHER[league]?.has(normalizeTeamName(name))) return null;
+  return clubIdStrict(league, name);
 }
 
 /** Which league an exact name belongs to (for warnings), or null. */

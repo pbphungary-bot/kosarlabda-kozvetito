@@ -939,11 +939,32 @@ try {
     const pngs = Object.keys(z).filter(n => n.endsWith('.png'));
     assert.ok(pngs.length >= 9, pngs.length + ' images');
     assert.ok(pngs.some(n => /Keret_fotokkal/.test(n)), 'the photo roster is in the package');
-    for (const off of ['Intro', 'Csillagjatekosok', 'Jatekos_kulonleges']) assert.ok(!pngs.some(n => n.includes(off)), `${off} is unticked by default`);
+    for (const off of ['Intro', 'Kulcsjatekosok', 'Jatekos_kulonleges', 'Vezetoedzo_nyilatkozata']) assert.ok(!pngs.some(n => n.includes(off)), `${off} is unticked by default`);
     for (const n of pngs) { const info = pngInfo(Buffer.from(z[n])); assert.equal(info.width, 1920); assert.equal(info.height, 1080); }
     const readme = strFromU8(z['_OLVASSEL.txt']);
     assert.match(readme, /Adatok frissessége/); assert.match(readme, /GRAFIKAI CSOMAG/);
     assert.equal(await page.evaluate(() => JSON.stringify(window.__studio.state.template)), before, 'what is on screen is untouched');
+  });
+
+  await check('package: the coach graphics are in the list, unticked by default, and can be ticked (statement of the team, warnings for the missing photo)', async () => {
+    await page.evaluate(() => { localStorage.removeItem('nbia.studio.packageItems.v2'); });
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.waitForTimeout(400);
+    await page.evaluate(() => { document.getElementById('pkgItems').innerHTML = ''; });
+    await page.evaluate(() => window.__studio.renderPackageItems?.());
+    const state0 = await page.evaluate(() => [...document.querySelectorAll('.pkgItem')].map(x => [x.value, x.checked]));
+    assert.ok(state0.length >= 20, 'list rebuilt');
+    for (const id of ['coach-home', 'coach-away']) assert.deepEqual(state0.find(x => x[0] === id), [id, false], `${id} is in the list and unticked by default`);
+    await page.evaluate(() => document.querySelectorAll('.pkgItem').forEach(x => { x.checked = x.value === 'coach-home' || x.value === 'coach-away'; }));
+    const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 120000 }), page.click('#pkgBtn')]);
+    const file = path.join(out, 'package-coach.zip'); await dl.saveAs(file);
+    const { unzipSync, strFromU8 } = await import('../graphics/vendor/fflate.js');
+    const z = unzipSync(new Uint8Array(readFileSync(file)));
+    const pngs = Object.keys(z).filter(n => n.endsWith('.png'));
+    assert.equal(pngs.length, 2, 'one coach graphic per team'); assert.ok(pngs.every(n => /Vezetoedzo_nyilatkozata/.test(n)));
+    for (const n of pngs) { const info = pngInfo(Buffer.from(z[n])); assert.equal(info.width, 1920); assert.equal(info.height, 1080); }
+    assert.match(strFromU8(z['_OLVASSEL.txt']), /nincs fotó/, 'the package says that the photo is missing');
+    await page.evaluate(() => localStorage.removeItem('nbia.studio.packageItems.v2'));
   });
 
   await check('dashboard: schedule starts with the newest result, last 2 rounds of results and at most 3 upcoming rounds', async () => {

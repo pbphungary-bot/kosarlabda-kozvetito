@@ -1,7 +1,7 @@
 // Loads the NB I/A Közvetítőhub data files (../data/*.json) – the same files the
 // dashboard reads – and indexes them per league by club id. Nothing is invented:
 // a value that is not in the data stays null and is reported as missing.
-import { clubId, club, CLUBS, clubIdStrict } from './clubs.js';
+import { clubId, club, CLUBS, clubIdStrict, historyClubId } from './clubs.js';
 
 export const LEAGUES = {
   men: { label: 'Férfi NB I/A', short: 'Férfi' },
@@ -320,7 +320,7 @@ export class Store {
       out.set(`${date}|${homeId}|${awayId}`, { date, homeId, awayId, home: h, away: a, season, url });
     };
     this.h2hIds ||= new Map();
-    const idOf = name => { const k = lg + name; if (!this.h2hIds.has(k)) this.h2hIds.set(k, clubIdStrict(lg, name) || null); return this.h2hIds.get(k); };
+    const idOf = name => { const k = lg + name; if (!this.h2hIds.has(k)) this.h2hIds.set(k, historyClubId(lg, name) || null); return this.h2hIds.get(k); };
     for (const m of L.h2h || []) {
       const sc = String(m.score || '').match(/(\d+)\s*[–-]\s*(\d+)/);
       if (sc) add(m.date, idOf(m.home), idOf(m.away), +sc[1], +sc[2], m.season, m.url);
