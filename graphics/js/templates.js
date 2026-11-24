@@ -524,8 +524,8 @@ function h2hTpl(id, league) {
     const txt = (size, extra) => ({ type: 'text', group: g, size, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, adjust: true, ...extra });
     els.push(
       { ...txt(34, { id: `h${r}.date`, label: `${r + 1}. meccs – dátum`, x: x + pad + 20, y: base + 0.3715 * 34, align: 'left', maxWidth: 190, minScale: 0.6 }) },
-      // competition under the date, half its size, in brackets – only for playoff / cup meetings (owner 2026-11-24); bindH2H lifts the date by H2H_COMP_LIFT then
-      { ...txt(17, { id: `h${r}.comp`, label: `${r + 1}. meccs – sorozat (Playoff / Kupa)`, x: x + pad + 20, y: base - H2H_COMP_LIFT + 0.3715 * 34 + 6 + 0.743 * 17, align: 'left', maxWidth: 190, minScale: 0.6 }) },
+      // competition under the date (centred on the middle of the date), half its size, in brackets – only for playoff / cup meetings (owner 2026-11-24); bindH2H lifts the date by H2H_COMP_LIFT then
+      { ...txt(17, { id: `h${r}.comp`, label: `${r + 1}. meccs – sorozat (Playoff / Kupa)`, centerOn: `h${r}.date`, x: x + pad + 20, y: base - H2H_COMP_LIFT + 0.3715 * 34 + 6 + 0.743 * 17, align: 'left', maxWidth: 190, minScale: 0.6 }) },
       { id: `h${r}.home`, type: 'image', label: `${r + 1}. meccs – hazai`, group: g, box: [x + 290, cy, 84, 72], fit: 'contain', opacity: op, logoOutline: true },
       { ...txt(54, { id: `h${r}.score`, label: `${r + 1}. meccs – eredmény`, x: x + 440, y: base + 0.3715 * 54, align: 'center', maxWidth: 150, minScale: 0.6 }) },
       { id: `h${r}.away`, type: 'image', label: `${r + 1}. meccs – vendég`, group: g, box: [x + 590, cy, 84, 72], fit: 'contain', opacity: op, logoOutline: true },
