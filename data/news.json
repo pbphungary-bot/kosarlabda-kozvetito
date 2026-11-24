@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-24T16:05:38.531104+00:00",
+  "checked_at": "2026-11-24T17:03:59.855568+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -466,6 +466,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -546,22 +547,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 29,
       "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 26,
-      "article_errors": 3,
-      "listing_errors": [
-        "article https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/szekszardon-zarjuk-a-valogatott-szunet-elotti-bajnoki-szakaszt/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 26,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
