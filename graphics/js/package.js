@@ -7,7 +7,7 @@ export const PACKAGE_ITEMS = [
   { id: 'intro', type: 'intro', who: 'match', label: 'Intro', defaultOn: false },
   { id: 'nextmatch', type: 'nextmatch', who: 'match', label: 'Kovetkezik' },
   { id: 'comparison', type: 'comparison', who: 'match', label: 'Csapatok_osszevetese' },
-  { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Csillagjatekosok', defaultOn: false },
+  { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Kulcsjatekosok', defaultOn: false },
   { id: 'referees', type: 'referees', who: 'match', label: 'Jatekvezetok' },
   { id: 'formpair', type: 'formpair', who: 'match', label: 'Forma' },
   { id: 'h2h', type: 'h2h', who: 'match', label: 'Egymas_ellen' },
@@ -23,6 +23,8 @@ export const PACKAGE_ITEMS = [
   { id: 'rostergrid-away', type: 'rostergrid', who: 'away', label: 'Keret_fotokkal' },
   { id: 'playerspecial-home', type: 'playerspecial', who: 'home', label: 'Jatekos_kulonleges', defaultOn: false },
   { id: 'playerspecial-away', type: 'playerspecial', who: 'away', label: 'Jatekos_kulonleges', defaultOn: false },
+  { id: 'coach-home', type: 'coach', who: 'home', label: 'Vezetoedzo_nyilatkozata', defaultOn: false }, // needs a photo + text: unticked by default
+  { id: 'coach-away', type: 'coach', who: 'away', label: 'Vezetoedzo_nyilatkozata', defaultOn: false },
   { id: 'teamstats-home', type: 'teamstats', who: 'home', label: 'Csapatstat' },
   { id: 'teamstats-away', type: 'teamstats', who: 'away', label: 'Csapatstat' },
 ];

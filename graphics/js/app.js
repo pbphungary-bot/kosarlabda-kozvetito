@@ -625,7 +625,7 @@ function autoValues() {
       v[id] = { src: has ? 'upload/extra' + k : '', source: has ? (c.name || 'Feltöltött kép') : 'Nincs kép feltöltve (üres keret)', fit: c.fit, zoom: (c.zoom || 100) / 100, px: c.px || 0, py: c.py || 0, pad: c.pad, fill: c.fill };
     }
   } else if (t.type === 'coach') {
-    v = bindCoach(store, lg, s.teamId, s.coach || {}, !!images['upload/coachPhoto']);
+    v = bindCoach(store, lg, s.teamId, s.coach || {}, !!images['upload/coachPhoto'] && (!pkgCtx || pkgCtx.photoTeam === s.teamId));
     if (!store.teamPage(lg, s.teamId)) info.notices.push({ bad: true, text: 'Ehhez a csapathoz nincs Hunbasket csapatoldal-adat (vezetőedző): a nevet kézzel írd be.' });
     if (!s.coach?.quote?.trim()) info.notices.push({ text: 'Még nincs nyilatkozat: illeszd be a szöveget a „Nyilatkozat” mezőbe (a Hunbasket-előzetesből vagy a BB1-cikkből).' });
     if (!images['upload/coachPhoto']) info.notices.push({ text: 'Nincs fotó feltöltve: tölts fel egy áttetsző PNG kivágást az edzőről (a háttéreltávolító segít).' });
@@ -941,11 +941,12 @@ function sharePng() {
 
 // ───────────────────────── full graphic package of a match (ZIP) ─────────────────────────
 function packageItemsHtml() {
-  const on = lsGet('nbia.studio.packageItems.v2', null); // v2: Intro, Csillagjátékosok and Játékos-különleges are unticked by default
+  const on = lsGet('nbia.studio.packageItems.v2', null); // v2: Intro, Kulcsjátékosok, Játékos-különleges and the coach graphics are unticked by default (a new item missing from the saved list is unticked)
   return PACKAGE_ITEMS.map(it => `<label class="chk"><input type="checkbox" class="pkgItem" value="${it.id}" ${on ? (on.includes(it.id) ? 'checked' : '') : (it.defaultOn === false ? '' : 'checked')}> ${esc(it.label.replace(/_/g, ' '))}${it.who === 'home' ? ' – hazai csapat' : it.who === 'away' ? ' – vendég csapat' : ''}</label>`).join('');
 }
 
 /** Renders one template with the automatic data (+ saved layout) without touching what is on screen. */
+let pkgCtx = null; // set while a package item is rendered (the coach photo upload belongs to one team only)
 async function renderForPackage(item, m) {
   const lg = state.league, t0 = templateById(`${item.type}-${lg}`);
   const saved = { tpl: state.template[lg], sel: JSON.parse(JSON.stringify(state.sel[lg])), ov: state.overrides[t0.id] };
@@ -955,6 +956,12 @@ async function renderForPackage(item, m) {
     state.overrides[t0.id] = {}; // no typed overrides: the package is the pure automatic result
     if (item.who !== 'match') { s.teamId = item.who === 'home' ? m.homeId : m.awayId; s.games = null; s.customRows = null; s.players = null; }
     if (t0.type === 'h2h') await store.loadLazy(lg, 'h2h', fetchData);
+    if (t0.type === 'coach') { // the team's latest collected pre-match statement (text + speaker); the photo upload only for the team it was made for
+      await store.loadLazy(lg, 'previews', fetchData);
+      const st = store.previewStatements(lg, s.teamId)[0], look = saved.sel.coach?.look;
+      s.coach = st ? { quote: st.text, name: st.speaker, srcTitle: st.title, srcUrl: st.url, look } : { look };
+      pkgCtx = { photoTeam: saved.sel.teamId };
+    }
     const t = tpl();
     const { v: auto, info } = autoValues();
     const values = mergedValues(auto);
@@ -969,9 +976,11 @@ async function renderForPackage(item, m) {
       ...info.notices.filter(n => n.bad).map(n => n.text),
       ...(missing.length ? [`${missing.length} hiányzó adat („${MISSING}”): ${missing.slice(0, 6).join(', ')}${missing.length > 6 ? ' …' : ''}`] : []),
       ...(rep.overflow.length ? [`kilógó szöveg: ${rep.overflow.join(', ')}`] : []),
+      ...(t0.type === 'coach' ? [...(values.quote?.text ? [] : ['nincs nyilatkozat (nincs gyűjtött előzetes ehhez a csapathoz): a szöveg üres']), ...(values.photo?.src ? [] : ['nincs fotó: töltsd fel a Vezetőedző nyilatkozata sablonban'])] : []),
     ];
     return { blob, warns, what: TEMPLATE_TYPES[t.type] };
   } finally {
+    pkgCtx = null;
     state.template[lg] = saved.tpl; state.sel[lg] = saved.sel;
     if (saved.ov === undefined) delete state.overrides[t0.id]; else state.overrides[t0.id] = saved.ov;
   }
@@ -1587,7 +1596,7 @@ async function main() {
   });
   if (store.unresolved.length) console.warn('Unresolved team names', store.unresolved);
   restoreExcel();
-  window.__studio = { state, store, images, selectElement, setTab, setStageZoom, applyView, viewMode, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
+  window.__studio = { state, store, images, selectElement, renderPackageItems: () => { $('pkgItems').innerHTML = packageItemsHtml(); }, setTab, setStageZoom, applyView, viewMode, render: () => update(true), current: () => current, report: () => lastReport, fontsOk: () => fontsOk };
   await switchLeague(state.league, true);
   document.body.dataset.ready = '1';
 }

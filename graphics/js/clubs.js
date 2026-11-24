@@ -66,6 +66,10 @@ const EXACT = {
     szolnoki: 'szolnok', szolnokiolajbanyasz: 'szolnok', olajbanyasz: 'szolnok', egis: 'kormend',
     skc: 'sopron', olaj: 'szolnok', ose: 'oroszlany', nka: 'nkapecs',
     budapestihonvedsportegyesulet: 'bphonved', phoenixmtfot: 'fot', szteszedeak: 'szedeak',
+    // earlier names of the same clubs (sponsor / name changes) as they appear in the Hunbasket head-to-head history (2020/21–): the club slot of a season
+    // is exactly filled by the old name, so these are the same club. Clubs that are no longer in the league (Zalakerámia ZTE KK, HÜBNER Nyíregyháza BS, Jászberényi KSE) stay unresolved.
+    arconicalbafehervar: 'albafehervar', deactungsram: 'deac', falcovolvoalpokautoszombathely: 'falcokc', naturtexszteszedeak: 'szedeak',
+    pvskveolia: 'nkapecs', pecsivskveolia: 'nkapecs',
   },
   women: {
     bkgprimaszigetszentmiklos: 'bkgprimaszigetszentmiklos', bkgprima: 'bkgprimaszigetszentmiklos',
@@ -84,6 +88,11 @@ const EXACT = {
     diosgyor: 'dvtkhuntherm', huntherm: 'dvtkhuntherm', pecs: 'nkauniversitaspecs', bkg: 'bkgprimaszigetszentmiklos',
     szigetszentmiklos: 'bkgprimaszigetszentmiklos', akademia: 'vasasakademia',
     sopron: 'sopronbasket', nka: 'nkauniversitaspecs',
+    // earlier names of the same clubs (see the men's block); "Darazsak Sportakadémia" and "ZTE Női Kosárlabda Klub" are not mapped (unknown / not in the league)
+    aluinventdvtk: 'dvtkhuntherm', atomeromukscszekszard: 'tarrkscszekszard', bkgprimanaturaszigetszentmiklos: 'bkgprimaszigetszentmiklos',
+    davidkornelkosarlabdaakademia: 'davidkornelka', eoneltebeac: 'eltebeacujbuda', ludovikacsata: 'csatattk', ludovikafcsmcsata: 'csatattk',
+    nkauniversitaspeac: 'nkauniversitaspecs', peacpecs: 'nkauniversitaspecs', pinkkpecsi424: 'nkauniversitaspecs', tfsemtk: 'tfse',
+    unigyor: 'sercounigyor', unigyormelyut: 'sercounigyor',
   },
 };
 

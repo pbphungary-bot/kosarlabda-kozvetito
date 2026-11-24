@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
-import { clubId, CLUBS } from '../graphics/js/clubs.js';
+import { clubId, clubIdStrict, CLUBS } from '../graphics/js/clubs.js';
 import { ROOT, readJson, loadStore, DATA_DIR } from './helpers.mjs';
 
 const LG = ['men', 'women'];
@@ -54,4 +54,34 @@ test('similar names stay in their own league', () => {
 test('every club has a logo from the designers logo sheet', () => {
   for (const lg of LG) for (const id of Object.keys(CLUBS[lg]))
     assert.ok(existsSync(path.join(ROOT, 'graphics/logos', lg, id + '.png')), `${lg}/${id}.png`);
+});
+
+// Head-to-head history (Hunbasket, 2020/21–): clubs changed their names with their sponsors. A name the studio does not know drops every meeting under it
+// (the graphic then shows only a few games), so every name must resolve – except clubs that are no longer in the league. The daily data-health job runs this on the live file.
+const GONE = { men: ['Zalakerámia ZTE KK', 'HÜBNER Nyíregyháza BS', 'Jászberényi KSE'], women: ['Darazsak Sportakadémia', 'ZTE Női Kosárlabda Klub'] };
+test('head-to-head history: every club name (also the earlier sponsor names) resolves to a current club, except clubs that left the league', async () => {
+  const raw = await readJson(`${DATA_DIR}/h2h_hunbasket.json`);
+  for (const lg of LG) {
+    const names = new Set();
+    raw.matches.filter(m => m.league === lg).forEach(m => { names.add(m.home); names.add(m.away); });
+    const unknown = [...names].filter(n => !clubIdStrict(lg, n) && !GONE[lg].includes(n));
+    assert.deepEqual(unknown, [], `${lg}: unknown club names in the head-to-head file (a rename? add it to EXACT in clubs.js, or to GONE here if the club left the league)`);
+  }
+});
+
+test('head-to-head history: earlier names of the same club are the same club', () => {
+  const same = {
+    women: [['Aluinvent DVTK', 'dvtkhuntherm'], ['UNI Győr', 'sercounigyor'], ['Uni Győr MÉLY-ÚT', 'sercounigyor'], ['PINKK Pécsi 424', 'nkauniversitaspecs'], ['PEAC-Pécs', 'nkauniversitaspecs'],
+      ['E.ON ELTE BEAC', 'eltebeacujbuda'], ['Ludovika-FCSM Csata', 'csatattk'], ['TFSE-MTK', 'tfse'], ['Atomerőmű KSC Szekszárd', 'tarrkscszekszard'], ['Dávid Kornél Kosárlabda Akadémia', 'davidkornelka']],
+    men: [['Arconic-Alba Fehérvár', 'albafehervar'], ['DEAC-Tungsram', 'deac'], ['Falco-Volvo Alpok Autó Szombathely', 'falcokc'], ['Naturtex-SZTE-Szedeák', 'szedeak'], ['PVSK-VEOLIA', 'nkapecs'], ['Pécsi VSK-VEOLIA', 'nkapecs']],
+  };
+  for (const lg of LG) for (const [name, id] of same[lg]) assert.equal(clubIdStrict(lg, name), id, `${lg}: ${name}`);
+  assert.equal(clubIdStrict('men', 'UNI Győr'), null, 'club ids stay league-scoped');
+});
+
+test('head-to-head history: pairs of current clubs have their meetings of all seasons (not only the ones under the current names)', async () => {
+  const store = await loadStore();
+  for (const lg of LG) await store.loadLazy(lg, 'h2h', f => readJson(`${DATA_DIR}/${f}`));
+  assert.ok(store.h2hGames('women', 'sercounigyor', 'eltebeacujbuda').length >= 10, 'ETO – BEAC across the earlier names (was 2)');
+  assert.ok(store.h2hGames('men', 'kecskemet', 'nkapecs').length >= 10, 'Kecskemét – NKA Pécs men across the earlier names (was 6)');
 });
