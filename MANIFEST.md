@@ -46,7 +46,7 @@ Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting
 | Egymás ellen (head to head) | **LOCKED** (look) | last up to **6** meetings: date · badge · score · badge; the box is exactly as tall as the list; score green / red from the match's HOME team's point of view ("we work for the home team"); data covers 7 seasons only |
 | Extra (MKOSZ) | **LOCKED** | photo frame + QR frame, free / proportional resize, uploads |
 | Következik | REVIEW | |
-| Élő statisztika (játékos) (livestat) | REVIEW | **new 2026-11-23:** compact court-frame panel (top-left, ≤ 960×540): official roster photo, name (Hungarian "SURNAME Given" / foreign "Given SURNAME" from the Hunbasket roster), `#number · score · period`, club logo, and stats of the chosen live-game player; variants **Alap** (PTS·REB·AST), **Dobások** (2P·3P·BT with %), **Teljes sor** (PERC·PTS·REB·AST·STL·BLK·TOV·FAULT·EFF). Data = live boxscore (section 5b); loaded by link/code (auto refresh 5 s via the local relay) or pasted; every value carries the freshness in its source label; nothing is invented. Not in the ZIP package (it is a live insert). |
+| Élő statisztika (játékos) (livestat) | REVIEW | **new 2026-11-23, resized 2026-11-24 ("way too big" → small pop-up 614×269, corner top-left or bottom-left, clear of the broadcaster's score bug zone bottom-right):** compact court-frame panel: official roster photo, name (Hungarian "SURNAME Given" / foreign "Given SURNAME" from the Hunbasket roster), `#number · score · period`, club logo, and stats of the chosen live-game player; variants **Alap** (PTS·REB·AST), **Dobások** (2P·3P·BT with %), **Teljes sor** (PERC·PTS·REB·AST·STL·BLK·TOV·FAULT·EFF). Data = live boxscore (section 5b); loaded by link/code (auto refresh 5 s via the local relay) or pasted; every value carries the freshness in its source label; nothing is invented. Not in the ZIP package (it is a live insert). |
 | Játékvezetők | REVIEW | men's PSD uses Satoshi, but the font rule is League Gothic only (owner's decision: everything in League Gothic) – rendered in League Gothic |
 
 Studio layout: desktop sidebar width is draggable (splitter, remembered, double click resets); controls wrap instead of overflowing – REVIEW.
@@ -72,6 +72,8 @@ Other studio features: ZIP package of all graphics of a match (includes the phot
 - Forma look (see table), no text caption, never larger than a quarter of 1920×1080.
 - Team-page / stat tables: "all the stats available on Hunbasket should be reachable".
 - Working agreement: work on a branch, open PRs; the assistant may merge **only** what the owner asked for, once it is finished, tested and CI is green (owner decision 2026-11-23) – nothing unrequested; CI (unit + browser tests) must be green; docs (this file, README) updated with every change.
+
+- **Score bug zone (owner 2026-11-24):** both feed versions carry the broadcaster's score bug bottom-right; no graphic may cover x ≥ 1200 / y ≥ 925 (rule in `DESIGN-SYSTEM.md`, preview guide in the studio). Only the live insert has been checked/resized so far; the big graphics (comparison, roster, intro …) are full-picture designs – ask the owner whether they need a safe-area variant.
 
 ## 5b. Live statistics insert (in progress, owner request 2026-11-23)
 Goal: during timeouts / quarter breaks pick a player of the running game and show basic live statistics with the official roster photo, as transparent PNG (and later maybe an OBS browser source).

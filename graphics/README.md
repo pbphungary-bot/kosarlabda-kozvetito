@@ -197,7 +197,7 @@ Előállítás: `python3 tools/psd_frames.py` (a PSD-kből: keret-adatok → `js
 
 
 ## Élő statisztika (játékos)
-Időkérésnél / negyedszünetben egy játékos élő statisztikája, a hivatalos keretfotóval (ugyanaz, mint a Keret fotókkal grafikán). Kis, sarokba illő panel (legfeljebb a kép negyede), átlátszó PNG.
+Időkérésnél / negyedszünetben egy játékos élő statisztikája, a hivatalos keretfotóval (ugyanaz, mint a Keret fotókkal grafikán). Kis felugró panel (614 × 269 px, a *Teljes sor* változat 614 × 346 px), átlátszó PNG. A *Hely a képen* választóval **bal felül** vagy **bal alul** jelenik meg: az adás eredményjelzője (mindkét változat) a jobb alsó sarokban van, azt a grafika sosem takarja. Az előnézetben az *Adásbeli eredményjelző zónája* jelölőnégyzet egy satírozott sávot mutat ott (csak az előnézetben látszik, az exportban nem).
 
 **Adat:** az MKOSZ élő boxscore-ja (`https://netcasting4.webpont.com/?whun_135563` – a `whun_` a női, a `hun_` a férfi mérkőzés). A stúdió a hírcsatorna eseménylistájából számolja a statisztikát (pont, 2P/3P/BT dobások, lepattanó, gólpassz, szerzett és eladott labda, blokk, fault, játékperc, EFF); a pontok egyeznek a hivatalos állással. A hírcsatorna kb. 5 másodpercenként frissül.
 

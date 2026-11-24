@@ -6,7 +6,7 @@ import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
 import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
-import { LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, liveVariant, liveCorner, BROADCAST_ZONE, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -77,19 +77,35 @@ test('live feed: game clock from elapsed seconds (4 x 10 min, overtimes 5 min)',
   assert.equal(gameClock(2701).period, 6);
 });
 
-test('live graphic: every variant is a compact panel (at most a quarter of the picture), cells = elements', () => {
+test('live graphic: a small pop-up, never in the broadcaster\'s score bug zone, in either corner', () => {
+  const [zx0, zy0, zx1, zy1] = BROADCAST_ZONE.box;
   for (const id of ['livestat-men', 'livestat-women']) {
     assert.equal(templateById(id).type, 'livestat');
-    for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
-      const t = LIVE_BUILDERS[id](k), panel = t.elements.find(e => e.id === 'panel');
-      assert.ok(panel.box[2] <= 960 && panel.box[3] <= 540, `${id}/${k}: panel ${panel.box[2]}x${panel.box[3]} fits a quarter of 1920x1080`);
+    for (const corner of Object.keys(LIVE_CORNERS)) for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
+      const t = LIVE_BUILDERS[id](k, corner), panel = t.elements.find(e => e.id === 'panel');
+      const [cx, cy, w, h] = panel.box, x0 = cx - w / 2, y0 = cy - h / 2, x1 = x0 + w, y1 = y0 + h;
+      assert.ok(w <= 640 && h <= 400, `${id}/${k}/${corner}: pop-up ${w}x${h} is small (was 960x420)`);
+      assert.ok(x1 <= zx0 || y1 <= zy0 || x0 >= zx1 || y0 >= zy1, `${id}/${k}/${corner}: clear of the score bug zone`);
+      assert.ok(x0 >= 0 && y0 >= 0 && x1 <= 1920 && y1 <= 1080, 'inside the picture');
+      assert.equal(corner === 'bl' ? y1 > 700 : y0 < 100, true, `${corner}: at the ${corner === 'bl' ? 'bottom' : 'top'}`);
+      // every element lies inside the panel
+      for (const e of t.elements) {
+        if (e.id === 'panel') continue;
+        const [bx, by, bw] = e.type === 'image' ? e.box : [e.x, e.y, e.maxWidth || 0];
+        const ex0 = e.type === 'image' ? bx - bw / 2 : (e.align === 'left' ? bx : bx - bw / 2), ex1 = e.type === 'image' ? bx + bw / 2 : (e.align === 'left' ? bx + bw : bx + bw / 2);
+        assert.ok(ex0 >= x0 - 1 && ex1 <= x1 + 1 && by <= y1 + 1 && by >= y0 - 1, `${id}/${k}/${corner}: ${e.id} inside the panel`);
+      }
       assert.equal(t.elements.filter(e => /^c\d+\.value$/.test(e.id)).length, V.cells.length);
       assert.ok(t.elements.some(e => e.id === 'photo') && t.elements.some(e => e.id === 'name'));
-      assert.deepEqual(panel.stroke, id.endsWith('men') && !id.endsWith('women') ? '#0b9444' : '#ef4036', 'league outline colour');
+      assert.deepEqual(panel.stroke, id.endsWith('women') ? '#ef4036' : '#0b9444', 'league outline colour');
     }
   }
   assert.equal(liveVariant('nonsense'), 'basic');
+  assert.equal(liveCorner('nonsense'), 'tl');
   assert.ok(TEMPLATE_TYPES.livestat);
+  // the zone really covers both score bug versions measured on the owner's screenshots
+  assert.ok(zx0 <= 1211 && zy0 <= 931 && zx1 >= 1886 && zy1 >= 1044, 'bug version 1 (1211–1886 x 931–1044)');
+  assert.ok(zx0 <= 1425 && zy0 <= 956 && zx1 >= 1876 && zy1 >= 1034, 'bug version 2 (1425–1876 x 956–1034)');
 });
 
 test('live graphic: values of the chosen player, roster-style name, official photo only when there is one', async () => {

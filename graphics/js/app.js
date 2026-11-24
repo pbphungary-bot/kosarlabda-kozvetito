@@ -3,7 +3,7 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BROADCAST_ZONE } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
@@ -101,8 +101,8 @@ const tpl = () => {
     return psCache.get(key);
   }
   if (t.type === 'livestat') { // live player insert: the statistics shown = the chosen variant
-    const variant = liveVariant(state.sel[t.league]?.live?.variant), key = t.id + '|' + variant;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](variant)); }
+    const variant = liveVariant(state.sel[t.league]?.live?.variant), corner = liveCorner(state.sel[t.league]?.live?.corner), key = `${t.id}|${variant}|${corner}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](variant, corner)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -259,7 +259,8 @@ function livePanelHtml(s) {
     <small id="liveInfo" class="hint">${liveInfoHtml()}</small>
     <div class="row2"><label>Csapat<select id="liveSide"><option value="home" ${side === 'home' ? 'selected' : ''}>Hazai${g ? ' – ' + esc(g.teams.home.short) : ''}</option><option value="away" ${side === 'away' ? 'selected' : ''}>Vendég${g ? ' – ' + esc(g.teams.away.short) : ''}</option></select></label>
       <label>Játékos<select id="livePlayer">${ch ? ch.players.map(p => `<option value="${esc(p.code)}" ${ch.player && p.code === ch.player.code ? 'selected' : ''}>${esc((p.number ? '#' + p.number + ' ' : '') + p.name)} – ${p.stat.pts} p</option>`).join('') : '<option>nincs betöltött meccs</option>'}</select></label></div>
-    <label>Változat<select id="liveVariant">${variants}</select></label>
+    <div class="row2"><label>Változat<select id="liveVariant">${variants}</select></label>
+      <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
     <details ${live.error ? 'open' : ''}><summary>Beillesztés (ha az élő lekérés nem működik)</summary>
       <textarea id="livePaste" rows="3" style="width:100%" placeholder="A böngészőben nyisd meg: https://netcasting4.webpont.com/storage/full<kód>.html – Ctrl+A, Ctrl+C, majd illeszd be ide."></textarea>
       <button type="button" id="livePasteGo" class="ghost">Beillesztett adat használata</button></details>
@@ -288,6 +289,7 @@ function wireLivePanel(s) {
   $('liveSide').onchange = e => { L().side = e.target.value; L().player = null; resetMatchOverrides(); renderSelection(); update(true); };
   $('livePlayer').onchange = e => { L().player = e.target.value; resetMatchOverrides(); update(true); };
   $('liveVariant').onchange = e => { L().variant = e.target.value; resetMatchOverrides(); update(true); };
+  $('liveCorner').onchange = e => { L().corner = e.target.value; resetMatchOverrides(); update(true); };
 }
 
 function renderSelection(extra = {}) {
@@ -558,7 +560,7 @@ function autoValues() {
   }
   const f = store.freshness(lg);
   const stale = Object.entries(f).filter(([, x]) => x.stale).map(([k]) => ({ fixtures: 'menetrend', standings: 'tabella', teamStats: 'csapatstatisztika', players: 'játékosstatisztika' }[k]));
-  if (stale.length && t.type !== 'referees') info.notices.push({ text: `Régi adat (48 óránál régebbi): ${stale.join(', ')}. Adás előtt ellenőrizd az értékeket.` });
+  if (stale.length && t.type !== 'referees' && t.type !== 'livestat') info.notices.push({ text: `Régi adat (48 óránál régebbi): ${stale.join(', ')}. Adás előtt ellenőrizd az értékeket.` });
   return { v, info };
 }
 
@@ -1385,6 +1387,13 @@ async function main() {
   initMobile();
   try { const r = await fetch('players/index.json', { cache: 'no-store' }); if (r.ok) photoIds = new Set((await r.json()).ids); } catch { /* no photos downloaded */ }
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
+  // preview-only guide of the broadcaster's score bug zone (position in percent of the 1920 x 1080 picture)
+  const zb = BROADCAST_ZONE.box, zg = $('zoneGuide');
+  Object.assign(zg.style, { left: `${zb[0] / 19.2}%`, top: `${zb[1] / 10.8}%`, width: `${(zb[2] - zb[0]) / 19.2}%`, height: `${(zb[3] - zb[1]) / 10.8}%` });
+  zg.title = BROADCAST_ZONE.label;
+  const zoneOn = lsGet('nbia.studio.zoneGuide.v1', true) !== false;
+  $('zoneToggle').checked = zoneOn; zg.classList.toggle('on', zoneOn);
+  $('zoneToggle').onchange = e => { zg.classList.toggle('on', e.target.checked); lsSet('nbia.studio.zoneGuide.v1', e.target.checked); };
   $('fields').addEventListener('click', e => {
     const id = e.target.id;
     if (id !== 'eqNames' && id !== 'eqRanks') return;

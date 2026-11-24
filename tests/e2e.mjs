@@ -1267,6 +1267,17 @@ try {
     await page.selectOption('#liveSide', 'away');
     await until(6, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 });
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
+    // small pop-up, top-left by default; bottom-left on request; the score bug zone guide is preview-only and can be switched off
+    const pb = () => page.evaluate(() => window.__studio.report().boxes['panel']);
+    let bx = await pb(); assert.ok(bx[2] <= 640 && bx[3] <= 400 && bx[1] < 100, `compact, top-left (${bx})`);
+    await page.selectOption('#liveCorner', 'bl');
+    await until(10, () => window.__studio.report().boxes['panel'][1] > 600, null, { timeout: 15000 });
+    bx = await pb(); assert.ok(bx[1] + bx[3] <= 1080 && bx[0] + bx[2] < 1200, 'bottom-left, left of the score bug zone');
+    assert.equal(await page.isVisible('#zoneGuide'), true, 'zone guide shown by default');
+    await page.uncheck('#zoneToggle'); assert.equal(await page.isVisible('#zoneGuide'), false);
+    await page.check('#zoneToggle'); assert.equal(await page.isVisible('#zoneGuide'), true);
+    await page.selectOption('#liveCorner', 'tl');
+    await until(11, () => window.__studio.report().boxes['panel'][1] < 100, null, { timeout: 15000 });
     const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
     const file = path.join(out, 'livestat-women-away.png'); await dl.saveAs(file);
     const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.colorType, 6);

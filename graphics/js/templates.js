@@ -535,52 +535,60 @@ function h2hTpl(id, league) {
 }
 
 // ───────────────────────── Élő statisztika (live player insert) ─────────────────────────
-// A compact corner graphic (top-left, at most 960 × 540 = a quarter of the picture) for timeouts / quarter breaks: the official roster photo of the chosen
-// player, name, game state and a few statistics from the live boxscore. Variants = which statistics (cells) are shown; the panel height follows the variant.
-export const LIVE_PANEL = { x: 40, y: 40, w: 960, pad: 24 };
+// A small pop-up for timeouts / quarter breaks: the official roster photo of the chosen player, name, game state and a few statistics from the live
+// boxscore. It must not hide the broadcaster's score bug: both versions of it sit in the bottom-right corner (measured on the owner's screenshots of the
+// two feeds: x 1211–1886, y 931–1044 and x 1425–1876, y 956–1034), so the pop-up lives on the left (top or bottom) and BROADCAST_ZONE marks the keep-out area.
+export const BROADCAST_ZONE = { box: [1200, 925, 1920, 1080], label: 'Adásbeli eredményjelző zónája (két változat: 1211–1886 × 931–1044 és 1425–1876 × 956–1034 px)' };
+export const LIVE_SCALE = 0.64; // the first version (960 px wide) was too big: everything is laid out at 960 px and shrunk by this factor
+export const LIVE_PANEL = { x: 40, y: 40, w: Math.round(960 * LIVE_SCALE), pad: 24, margin: 40 };
+export const LIVE_CORNERS = { tl: 'Bal felül', bl: 'Bal alul' };
+export const liveCorner = c => (LIVE_CORNERS[c] ? c : 'tl');
 export const LIVE_VARIANTS = {
   basic: { label: 'Alap (PTS · REB · AST)', cols: 3, h: 420, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
   shooting: { label: 'Dobások (2P · 3P · BT)', cols: 3, h: 420, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
   full: { label: 'Teljes sor', cols: 3, h: 540, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
 };
 export const liveVariant = v => (LIVE_VARIANTS[v] ? v : 'basic');
-export const LIVE_BUILDERS = {}; // template id → (variant) => template (see app.js tpl())
+export const LIVE_BUILDERS = {}; // template id → (variant, corner) => template (see app.js tpl())
 
-function liveTpl(id, league, variantIn) {
-  const variant = liveVariant(variantIn), V = LIVE_VARIANTS[variant], { x, y, w, pad } = LIVE_PANEL, h = V.h, op = 0.9882;
-  const txt = (size, extra) => ({ type: 'text', size, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, adjust: true, ...extra });
-  const left = x + 300, right = x + w - pad, rowsN = Math.ceil(V.cells.length / V.cols);
-  const els = [panelFrame(league, x, y, w, h)];
-  const photoH = h - 16;
-  els.push(
-    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [right - 70, y + pad + 78, 140, 130], fit: 'contain', opacity: op, logoOutline: true },
-    { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 8 + 140, y + h - 8 - photoH / 2, 280, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
-    txt(88, { id: 'name', label: 'Név', group: 'Fejléc', x: left, y: y + pad + 82, align: 'left', runs: true, maxWidth: right - left - 160, minScale: 0.5, tracking: 40, outline: ol(4, '#000000', 1) }),
-    txt(40, { id: 'sub', label: 'Mezszám · állás · negyed', group: 'Fejléc', x: left, y: y + pad + 132, align: 'left', font: 'italic', maxWidth: right - left - 150, minScale: 0.5 }),
-  );
+function liveTpl(id, league, variantIn, cornerIn) {
+  const variant = liveVariant(variantIn), corner = liveCorner(cornerIn), V = LIVE_VARIANTS[variant], S = LIVE_SCALE, k = n => n * S;
+  const { pad: pad0, margin } = LIVE_PANEL, pad = k(pad0), w = LIVE_PANEL.w, h = Math.round(k(V.h)), op = 0.9882;
+  const x = margin, y = corner === 'bl' ? 1080 - margin - h : margin;
+  const sw = 4; // thinner outline than the big frames (the pop-up is small)
+  const txt = (size, extra) => ({ type: 'text', size: Math.round(size * 10) / 10, tracking: 25, color: '#ffffff', outline: ol(2.5, '#000000'), opacity: op, adjust: true, ...extra });
+  const left = x + k(300), right = x + w - pad, rowsN = Math.ceil(V.cells.length / V.cols);
+  const frame = { ...panelFrame(league, x, y, w, h), sw, r: 20 };
+  const photoH = h - 12, photoW = k(280);
+  const els = [frame,
+    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [right - k(70), y + pad + k(78), k(140), k(130)], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
+    { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 6 + photoW / 2, y + h - 6 - photoH / 2, photoW, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
+    txt(k(88), { id: 'name', label: 'Név', group: 'Fejléc', x: left, y: y + pad + k(82), align: 'left', runs: true, maxWidth: right - left - k(160), minScale: 0.5, tracking: 40, outline: ol(3, '#000000', 1) }),
+    txt(k(40), { id: 'sub', label: 'Mezszám · állás · negyed', group: 'Fejléc', x: left, y: y + pad + k(132), align: 'left', font: 'italic', maxWidth: right - left - k(150), minScale: 0.5 }),
+  ];
   const colW = (right - left) / V.cols;
-  // per variant: value size, label size and the baselines inside a row band (digits are 0.743 em tall); `after` = where the percentage goes (shooting)
+  // per variant: value size, label size and the baselines inside a row band (digits are 0.743 em tall); `sub` = the percentage line (shooting)
   const L = { basic: { val: 150, lab: 54 }, shooting: { val: 104, lab: 46, sub: 46 }, full: { val: 76, lab: 34 } }[variant];
-  const top = y + pad + 170, bottom = y + h - pad;
+  const top = y + pad + k(170), bottom = y + h - pad;
   V.cells.forEach((c, i) => {
     const col = i % V.cols, row = Math.floor(i / V.cols), cx = left + colW * (col + 0.5), band = (bottom - top) / rowsN;
-    const b0 = top + band * row, val = b0 + L.val * 0.743 + (variant === 'full' ? 6 : 6), lab = val + L.lab + (variant === 'full' ? 4 : 8);
+    const b0 = top + band * row, val = b0 + k(L.val) * 0.743 + k(6), lab = val + k(L.lab) + k(variant === 'full' ? 4 : 8);
     const g = `${i + 1}. statisztika`;
     els.push(
-      txt(L.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', maxWidth: colW - 14, minScale: 0.5, tracking: 25 }),
-      txt(L.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', maxWidth: colW - 14 }),
+      txt(k(L.val), { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', maxWidth: colW - 8, minScale: 0.5, tracking: 25 }),
+      txt(k(L.lab), { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', maxWidth: colW - 8 }),
     );
-    if (L.sub) els.push(txt(L.sub, { id: `c${i}.sub`, label: `${c.label} – százalék`, group: g, x: cx, y: lab + L.sub + 6, align: 'center', maxWidth: colW - 14 }));
+    if (L.sub) els.push(txt(k(L.sub), { id: `c${i}.sub`, label: `${c.label} – százalék`, group: g, x: cx, y: lab + k(L.sub) + k(6), align: 'center', maxWidth: colW - 8 }));
   });
   const t = base(id, league, 'livestat', 'Élő statisztika (saját)', 'Élő statisztika', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
-  t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
-  t.live = { variant };
+  t.inner = { box: [x + sw + 2, y + sw + 2, x + w - sw - 2, y + h - sw - 2], r: 16 };
+  t.live = { variant, corner };
   return t;
 }
 function liveEntry(id, league) {
-  LIVE_BUILDERS[id] = v => liveTpl(id, league, v);
-  return LIVE_BUILDERS[id]('basic');
+  LIVE_BUILDERS[id] = (v, c) => liveTpl(id, league, v, c);
+  return LIVE_BUILDERS[id]('basic', 'tl');
 }
 
 // ───────────────────────── Extra (MKOSZ) – freely sized frames ─────────────────────────
