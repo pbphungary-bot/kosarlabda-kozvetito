@@ -10,7 +10,7 @@ import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './pac
 import {
   bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, liveChoice
 } from './binders.js';
-import { decodeFeed, parseGame, gameCode } from './live.js';
+import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -284,13 +284,27 @@ function livePanelHtml(s) {
       <label>Játékos<select id="livePlayer">${ch ? ch.players.map(p => `<option value="${esc(p.code)}" ${ch.player && p.code === ch.player.code ? 'selected' : ''}>${esc((p.number ? '#' + p.number + ' ' : '') + p.name)} – ${p.stat.pts} p</option>`).join('') : '<option>nincs betöltött meccs</option>'}</select></label></div>
     <div class="row2"><label>Változat<select id="liveVariant">${variants}</select></label>
       <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
-    <details ${live.error ? 'open' : ''}><summary>Beillesztés (ha az élő lekérés nem működik)</summary>
+    <details ${live.error || !live.game ? 'open' : ''}><summary>Beillesztés (ha az élő lekérés nem működik)</summary>
+      <small class="hint" id="liveOpenRow">${liveOpenHtml(L.code)}</small>
       <textarea id="livePaste" rows="3" style="width:100%" placeholder="A böngészőben nyisd meg: https://netcasting4.webpont.com/storage/full<kód>.html – Ctrl+A, Ctrl+C, majd illeszd be ide."></textarea>
       <button type="button" id="livePasteGo" class="ghost">Beillesztett adat használata</button></details>
     <small class="hint">A fotó a keretgrafikáéval azonos hivatalos Hunbasket-fotó, a név a Hunbasket-keret írásmódja szerint. A statisztikát a stúdió az élő boxscore eseménylistájából számolja (a pontok egyeznek a hivatalos állással).</small>`;
 }
+/** Step 1 of the paste way: a ready-made link to the feed of the game (typing that address by hand is easy to get wrong). */
+function liveOpenHtml(code) {
+  const u = feedUrl(code);
+  return u ? `1. <a href="${esc(u)}" target="_blank" rel="noopener">A hírcsatorna megnyitása új lapon ↗</a> (${esc(gameCode(code))}) &nbsp;2. a megnyílt lapon Ctrl+A, Ctrl+C &nbsp;3. illeszd be ide`
+    : 'Előbb írd be fent a meccs linkjét vagy kódját (pl. whun_135563): ide kerül a hírcsatorna megnyitásának hivatkozása.';
+}
+const LIVE_PROBLEM = {
+  empty: 'A beillesztő mező üres.',
+  html: 'Ez egy weboldal (HTML) szövege, nem a hírcsatorna. Használd a fenti hivatkozást („A hírcsatorna megnyitása”): azon a lapon egyetlen hosszú szöveg látszik, ABBÓL másold ki az egészet (Ctrl+A, Ctrl+C).',
+  truncated: 'A beillesztett szöveg csonka (félbeszakadt): másold ki újra az egészet (Ctrl+A, Ctrl+C a hírcsatorna lapján).',
+  unknown: 'A beillesztett szöveg nem hírcsatorna. A fenti hivatkozás megnyitja a helyes címet; onnan másold ki az egészet.',
+};
 function wireLivePanel(s) {
   const L = () => (s.live ||= {});
+  $('liveCode').oninput = e => { $('liveOpenRow').innerHTML = liveOpenHtml(e.target.value); };
   $('liveCode').onchange = e => { L().code = e.target.value.trim(); };
   $('liveLoad').onclick = async () => {
     L().code = $('liveCode').value.trim();
@@ -304,7 +318,8 @@ function wireLivePanel(s) {
   $('liveAuto').onchange = e => { L().auto = e.target.checked; saveState(); liveTimer(); };
   $('livePasteGo').onclick = () => {
     const code = gameCode(L().code), prev = live.game?.id;
-    if (!liveApply($('livePaste').value.trim(), code)) { live.error = 'A beillesztett szöveg nem értelmezhető hírcsatorna (csonka lehet: másold ki újra az egészet).'; }
+    const txt = $('livePaste').value.trim();
+    if (!liveApply(txt, code)) { const why = feedProblem(txt); live.error = `A beillesztett szöveg nem értelmezhető hírcsatorna. ${LIVE_PROBLEM[why] || LIVE_PROBLEM.unknown}`; }
     live.players = live.game?.players.length || 0;
     if (live.game && live.game.id !== prev) { L().player = null; L().side = 'home'; resetMatchOverrides(); }
     renderSelection(); update(true);

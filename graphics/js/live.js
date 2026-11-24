@@ -12,6 +12,19 @@ export function decodeFeed(text) {
   return d && typeof d.i === 'object' && d.i && Array.isArray(d.f) ? d : null;
 }
 
+/** The address of the feed of a game (what has to be opened in the browser, copied entirely and pasted into the studio). */
+export const feedUrl = (code, kind = 'full') => (gameCode(code) ? `https://netcasting4.webpont.com/storage/${kind}${gameCode(code)}.html` : null);
+
+/** Why a pasted text is not a usable feed: 'empty' | 'html' (the page itself, not the feed) | 'truncated' (starts like the feed but is cut) | 'unknown'; null = fine. */
+export function feedProblem(text) {
+  const t = String(text ?? '').trim();
+  if (!t) return 'empty';
+  if (decodeFeed(t)) return null;
+  if (/^</.test(t) || /<html|<!doctype|<body|<script/i.test(t.slice(0, 2000))) return 'html';
+  if (/^\{"i"/.test(t)) return 'truncated';
+  return 'unknown';
+}
+
 /** The game code of a netcasting link / code: "https://netcasting4.webpont.com/?whun_135563" → "whun_135563". */
 export function gameCode(s) {
   const m = String(s || '').match(/\b(w?hun_\d{3,8})\b/i);

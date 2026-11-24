@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { ROOT } from './helpers.mjs';
 import path from 'node:path';
-import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss } from '../graphics/js/live.js';
+import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
 import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
 import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, BUG, liveVariant, liveCorner, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
@@ -136,4 +136,17 @@ test('live graphic: values of the chosen player, roster-style name, official pho
   // nothing loaded: nothing invented
   const none = bindLiveStat(store, 'women', null, {}, ids);
   assert.equal(none.name.missing, true);
+});
+
+test('live feed: the address to open, and what is wrong with a pasted text', () => {
+  assert.equal(feedUrl('https://netcasting4.webpont.com/?whun_135563'), 'https://netcasting4.webpont.com/storage/fullwhun_135563.html');
+  assert.equal(feedUrl('hun_134947', 'last'), 'https://netcasting4.webpont.com/storage/lasthun_134947.html');
+  assert.equal(feedUrl('nothing'), null);
+  assert.equal(feedProblem(raw), null, 'a complete feed is fine');
+  assert.equal(feedProblem(''), 'empty');
+  assert.equal(feedProblem('   '), 'empty');
+  assert.equal(feedProblem('<!DOCTYPE html><html><head><title>ETO BASKET</title></head>'), 'html', 'the page itself, not the feed');
+  assert.equal(feedProblem('ETO BASKET - VBW CEKK CEGLÉD <script>x</script>'), 'html');
+  assert.equal(feedProblem(raw.slice(0, 5000)), 'truncated', 'a feed cut in the middle');
+  assert.equal(feedProblem('just some words'), 'unknown');
 });
