@@ -3,12 +3,12 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, liveChoice
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
 import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
 
@@ -379,6 +379,36 @@ function renderSelection(extra = {}) {
     $('selectTitle').textContent = '2. Képek és keretek';
     box.innerHTML = extraPanelHtml(s);
     wireExtraPanel(s);
+  } else if (t.type === 'coach') {
+    $('selectTitle').textContent = '2. Edző, nyilatkozat és fotó';
+    const C = s.coach ||= {}, oppDefault = coachOpponent(store, lg, s.teamId);
+    box.innerHTML = `<div class="row2"><label>Csapat (az edzője)<select id="teamSel">${teamOptions(s.teamId)}</select></label>
+      <label>Ellenfél (az alcím javaslatához)<select id="coachOpp"><option value="">– nincs –</option>${teamOptions(C.oppId === undefined ? oppDefault : C.oppId)}</select></label></div>
+      <label>Nyilatkozat (a Hunbasket-előzetes / BB1-cikk szövege; új bekezdés = új sor)
+        <textarea id="coachQuote" rows="8" style="width:100%" placeholder="Illeszd be az edző nyilatkozatát…">${esc(C.quote || '')}</textarea></label>
+      <div class="row2"><label>A szöveg stílusa<select id="coachLook">${Object.entries(COACH_LOOKS).map(([k, v]) => `<option value="${k}" ${coachLook(C.look) === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
+        <span class="import-row" style="align-items:end"><button type="button" id="coachQuoteClear" class="ghost">Szöveg törlése</button></span></div>
+      <label>Az edző fotója (áttetsző PNG kivágás; csak a böngészőben marad)
+        <span class="import-row"><input type="file" id="coachPhoto" accept="image/png,image/webp,image/jpeg"> <button id="coachPhotoClear" type="button" class="ghost" ${images['upload/coachPhoto'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
+      ${bgHtml('coachPhoto')}
+      <small class="hint">A név és a klublogó az adatokból jön (Hunbasket vezetőedző), az alcím javaslat: átírható a Mezők között. A szöveg hosszától függően a betűméret automatikusan csökken, hogy elférjen; a fotó mozgatása / nagyítása az Elrendezés dobozban.</small>`;
+    $('teamSel').onchange = e => { s.teamId = e.target.value; C.oppId = undefined; resetMatchOverrides(); renderSelection(); update(true); };
+    $('coachOpp').onchange = e => { C.oppId = e.target.value; update(true); };
+    let quoteTimer = null;
+    $('coachQuote').oninput = e => { C.quote = e.target.value; clearTimeout(quoteTimer); quoteTimer = setTimeout(() => update(false), 200); };
+    $('coachQuote').onchange = e => { C.quote = e.target.value; update(true); };
+    $('coachLook').onchange = e => { C.look = e.target.value; update(true); };
+    $('coachQuoteClear').onclick = () => { C.quote = ''; renderSelection(); update(true); };
+    $('coachPhoto').onchange = e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const img = new Image();
+      img.onload = () => { images['upload/coachPhoto'] = img; delete bgState.coachPhoto; renderSelection(); update(true); };
+      img.onerror = () => toast('A képet nem sikerült beolvasni.');
+      img.src = URL.createObjectURL(f);
+    };
+    $('coachPhotoClear').onclick = () => { delete images['upload/coachPhoto']; delete bgState.coachPhoto; renderSelection(); update(true); };
+    wireBg('coachPhoto');
   } else if (t.type === 'playerspecial') {
     $('selectTitle').textContent = '2. Csapat és játékos';
     const opts = playerOptions(store, lg, s.teamId);
@@ -570,6 +600,11 @@ function autoValues() {
       const c = s.extra?.[k] || {}, has = !!images['upload/extra' + k];
       v[id] = { src: has ? 'upload/extra' + k : '', source: has ? (c.name || 'Feltöltött kép') : 'Nincs kép feltöltve (üres keret)', fit: c.fit, zoom: (c.zoom || 100) / 100, px: c.px || 0, py: c.py || 0, pad: c.pad, fill: c.fill };
     }
+  } else if (t.type === 'coach') {
+    v = bindCoach(store, lg, s.teamId, s.coach || {}, !!images['upload/coachPhoto']);
+    if (!store.teamPage(lg, s.teamId)) info.notices.push({ bad: true, text: 'Ehhez a csapathoz nincs Hunbasket csapatoldal-adat (vezetőedző): a nevet kézzel írd be.' });
+    if (!s.coach?.quote?.trim()) info.notices.push({ text: 'Még nincs nyilatkozat: illeszd be a szöveget a „Nyilatkozat” mezőbe (a Hunbasket-előzetesből vagy a BB1-cikkből).' });
+    if (!images['upload/coachPhoto']) info.notices.push({ text: 'Nincs fotó feltöltve: tölts fel egy áttetsző PNG kivágást az edzőről (a háttéreltávolító segít).' });
   } else if (t.type === 'playerspecial') {
     v = bindPlayerSpecial(store, lg, s.teamId, s.ps?.player, t);
     v.photo = { src: images['upload/photo'] ? 'upload/photo' : '', source: images['upload/photo'] ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };

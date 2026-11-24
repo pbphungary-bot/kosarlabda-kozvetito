@@ -77,8 +77,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 17 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 17);
+    await check(`${lg}: 18 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 18);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -1339,6 +1339,48 @@ try {
     const file = path.join(out, 'referees-men-fitted.png'); await dl.saveAs(file);
     const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.height, 1080);
     await page.selectOption('#bugMode', 'off');
+  });
+
+  await check('coach interview graphic: name + logo from the data, quote typed in both looks, long text shrinks, own photo, export', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="coach-women"]');
+    await page.waitForSelector('#coachQuote');
+    await page.selectOption('#teamSel', 'sercounigyor');
+    await page.waitForSelector('#coachQuote');
+    const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
+    const wait = (label, fn, arg) => page.waitForFunction(fn, arg, { timeout: 15000 }).catch(e => { throw new Error(`coach test: ${label} timed out`); });
+    await wait('name', () => !!window.__studio.current().values?.name?.text);
+    assert.ok(await val('name'), 'the head coach comes from the Hunbasket team page');
+    assert.equal(await val('logo', 'src'), 'women/sercounigyor');
+    assert.match(await page.textContent('#notices'), /Még nincs nyilatkozat/, 'no quote yet: stated, nothing invented');
+    assert.equal(await val('quote'), '', 'an empty quote draws nothing');
+    // typed quote, the PSD's small caps by default, plain capitals on request
+    await page.fill('#coachQuote', 'Els\u0151 bekezd\u00e9s a mérk\u0151z\u00e9sr\u0151l.\nM\u00e1sodik bekezd\u00e9s.'); await page.dispatchEvent('#coachQuote', 'change');
+    await wait('quote', () => /Második/.test(window.__studio.current().values?.quote?.text || ''));
+    assert.equal(await val('quote', 'caseMode'), 'smallcaps');
+    await page.selectOption('#coachLook', 'caps');
+    await wait('look', () => window.__studio.current().values?.quote?.caseMode === 'caps');
+    // a long text shrinks to fit the box (it is reported as scaled), a short one keeps the PSD size
+    const sizeOf = () => page.evaluate(() => window.__studio.report().sizes.quote);
+    assert.ok(Math.abs(await sizeOf() - 45.83) < 0.01, 'short text: the PSD size');
+    const long = Array.from({ length: 90 }, (_, i) => 'hosszú mondat a felkészülésről ' + i + '.').join(' ');
+    await page.fill('#coachQuote', long); await page.dispatchEvent('#coachQuote', 'change');
+    await wait('shrink', () => window.__studio.report().sizes.quote < 40);
+    assert.ok(await sizeOf() < 40 && await sizeOf() >= 45.83 * 0.45 - 0.01, `long text shrinks (${await sizeOf()})`);
+    // own photo (cut-out upload): drawn in the PSD's photo box, standing on the panel bottom
+    await page.fill('#coachQuote', 'Röv\u00eddebb sz\u00f6veg.'); await page.dispatchEvent('#coachQuote', 'change');
+    await page.setInputFiles('#coachPhoto', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await wait('photo', () => window.__studio.current().values?.photo?.src === 'upload/coachPhoto' && !!window.__studio.report().boxes.photo);
+    const pb = await page.evaluate(() => window.__studio.report().boxes.photo);
+    assert.ok(Math.abs(pb[1] + pb[3] - 936) < 1 && pb[0] >= 43 - 1 && pb[0] + pb[2] <= 613 + 1, `photo in the PSD's box, feet on the panel bottom (${pb})`);
+    // export
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    const file = path.join(out, 'coach-women.png'); await dl.saveAs(file);
+    const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.height, 1080); assert.equal(info.colorType, 6);
+    assert.match(dl.suggestedFilename(), /^Noi_Vezetoedzo_nyilatkozata_/);
+    await page.click('#coachQuoteClear');
+    await wait('clear', () => window.__studio.current().values?.quote?.text === '');
+    await page.click('#coachPhotoClear');
   });
 
   await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {

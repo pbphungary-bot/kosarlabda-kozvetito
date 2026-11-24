@@ -8,6 +8,7 @@
 // exactly as a dilated silhouette drawn behind the element.
 
 import { safeFit, foldFit } from './layout.js';
+import { fitParagraphs } from './paragraph.js';
 export const FONT_FAMILIES = {
   regular: 'League Gothic Studio',
   italic: 'League Gothic Studio Italic',
@@ -131,7 +132,31 @@ export function layoutText(ctx, el, text) {
   return { lines, size, scaled: size !== el.size, overflow };
 }
 
+/** Paragraph text (el.paragraph: the coach's quote): paragraphs wrapped on their own, small caps or plain capitals (v.caseMode), shrunk to fit el.maxHeight. */
+function drawParagraph(ctx, el, v, report) {
+  const text = v.text ?? '';
+  if (!String(text).trim()) return;
+  const mode = v.caseMode || el.caseMode || 'caps';
+  const style = { ...el, outline: v.outline === null ? null : (v.outline || el.outline) };
+  const width = (t, sz) => { setup(ctx, style, sz); return ctx.measureText(t).width * (style.hscale || 1); };
+  const lh0 = el.lineHeight || el.size * 1.2;
+  const { s, lines, overflow } = fitParagraphs(text, mode, el.size, el.maxWidth || Infinity, el.maxHeight || Infinity, lh0, width, { minScale: el.minScale ?? 0.45, locked: !!el.fitLocked });
+  const sz = el.size * s, lh = lh0 * s;
+  if (overflow) report.overflow.push(el.id);
+  if (s < 1) report.scaled.push(el.id);
+  report.sizes[el.id] = sz;
+  const placed = lines.map((ln, i) => ({ runs: ln.runs.map(r => ({ text: r.text, size: r.f === 1 ? undefined : sz * r.f })), x: el.x, y: el.y + i * lh, w: ln.w }));
+  if (placed.length) report.boxes[el.id] = [el.x, el.y - sz * 0.8, Math.max(...placed.map(p => p.w)), lines.length * lh];
+  ctx.save();
+  ctx.globalAlpha = el.opacity ?? 1;
+  const color = v.color || el.color;
+  if (style.outline && style.outline.size > 0) for (const p of placed) drawRuns(ctx, p.runs, p.x, p.y, sz, style, color, true);
+  for (const p of placed) drawRuns(ctx, p.runs, p.x, p.y, sz, style, color, false);
+  ctx.restore();
+}
+
 function drawText(ctx, el, v, report) {
+  if (el.paragraph) return drawParagraph(ctx, el, v, report);
   const text = v.text ?? '';
   if (text === '') return;
   const { lines, size, overflow, scaled } = layoutText(ctx, el, text);

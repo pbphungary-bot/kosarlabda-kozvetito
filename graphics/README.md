@@ -219,3 +219,15 @@ Az adásban a közvetítő saját eredményjelzője a **jobb alsó sarokban** va
 * **Automatikus kitérés:** ahol egy grafika panelje belelógna a zónába, a stúdió a lehető legkisebb változtatással elmozgatja: feljebb vagy balra tolja, vagy egészen kicsit kicsinyíti (a bal felső sarka körül). Néhány példa a nagy eredményjelzőnél: Csapatok összevetése / Kulcsjátékosok ~0,3% (a női 40 px-szel balra), Eredmények / Menetrend / Színes sorok 4,4%, Intro 2,3%, Játékvezetők 51 px-szel feljebb, Játékos-különleges (női) 6,7%. A Keret, Csapatstatisztika, Forma és Egymás ellen nem érinti a zónát, azok nem változnak. A változtatást az előnézet alatti sor kiírja („Az adásbeli eredményjelző miatt …”); a kézi Elrendezés (mozgatás / méret) ezen felül is használható, és a ZIP csomag is ugyanígy kitér.
 * **Zóna mutatása:** a *Zóna mutatása* jelölőnégyzet satírozott sávot rajzol az előnézetre ott, ahol az eredményjelző van (csak az előnézetben látszik, az exportban nem).
 * Az *Élő statisztika* sáv saját magát az eredményjelző szintjére, a kép bal széle és az eredményjelző közti rés közepére teszi (nagy eredményjelzőnél x = 600, kicsinél x = 712).
+
+
+## Vezetőedző nyilatkozata (edzői interjú)
+Meccs előtti (vagy utáni) edzői nyilatkozat nagy grafikán, a *Hegedűs ITW BEAC előtt* PSD alapján (női és férfi külön; a férfi ugyanaz az elrendezés a férfi keretszínnel). Átlátszó 1920×1080 PNG.
+
+1. Válaszd a *Vezetőedző nyilatkozata* sablont, és a **Csapat** listában a csapatot. Az **edző neve** (Hunbasket vezetőedző) és a **klublogó** az adatokból jön; ha a Hunbasket másképp írja a nevet (pl. „Hegedüs” a „Hegedűs” helyett), a Mezők között átírható.
+2. **Alcím:** javaslat a csapat következő mérkőzéséből („<ellenfél> elleni mérkőzés előtt”); az *Ellenfél* listával váltható, vagy a Mezők között szabadon átírható.
+3. **Nyilatkozat:** másold be a szöveget a *Nyilatkozat* mezőbe (a Hunbasket-előzetesből, a BB1-cikkből – új bekezdés = új sor). Üresen nem jelenik meg semmi. A betűméret a szöveg hosszához igazodik (a PSD mérete 13 sorig, hosszabb szövegnél automatikusan kisebb, hogy elférjen). A **szöveg stílusa**: *Kiskapitális (mint a PSD-ben)* vagy *Nagybetű (egyforma méret)* – mindkettő választható.
+4. **Fotó:** tölts fel egy áttetsző PNG kivágást az edzőről (vagy használd a *Háttér eltávolítása (AI)* gombot); a fotó a keret alsó szélén áll, mozgatása / nagyítása az Elrendezés dobozban. Fotó nélkül a grafika fotó nélkül jelenik meg (figyelmeztetéssel).
+5. Exportálás mint a többi grafika. A nagy panel az **adásbeli eredményjelzőt** is kikerüli (lásd az Eredményjelző részt: nagyon kicsit, ~2%-kal kisebb lesz, ahol kell). A csomagba (ZIP) nem kerül be, mert fotót és szöveget igényel.
+
+A logósor (Hunbasket · Tippmix · Play by Play) fix, a PSD-ből.

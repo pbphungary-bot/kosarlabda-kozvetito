@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, mmss } from './live.js';
-import { LIVE_VARIANTS, H2H_PANEL, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { LIVE_VARIANTS, coachLook, H2H_PANEL, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -630,3 +630,29 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
   return v;
 }
 const tplVariant = k => (LIVE_VARIANTS[k] ? k : 'basic');
+
+// ───────────────────────── coach interview (Vezetőedző nyilatkozata) ─────────────────────────
+/** The opponent of a club in its next scheduled game (club id) or null. */
+export function coachOpponent(store, lg, teamId) {
+  const m = store.upcoming(lg).find(g => g.homeId === teamId || g.awayId === teamId);
+  return m ? (m.homeId === teamId ? m.awayId : m.homeId) : null;
+}
+
+/**
+ * Name + club logo come from the Hunbasket team page (head coach); the subtitle is a suggestion the operator can overwrite; the quote is typed / pasted
+ * (nothing is invented: an empty quote draws nothing); the photo is always an upload. sel = { quote, look, oppId, subtitle }.
+ */
+export function bindCoach(store, lg, teamId, sel = {}, hasPhoto = false) {
+  const v = {}, page = store.teamPage(lg, teamId), head = page?.coaches?.find(x => /vezető/i.test(x.role));
+  const src = 'Hunbasket csapatoldal (vezetőedző)';
+  v.name = head ? { text: head.name, source: src } : field(null, src);
+  const oppId = sel.oppId === undefined ? coachOpponent(store, lg, teamId) : sel.oppId, opp = oppId ? club(lg, oppId)?.short : null;
+  v.subtitle = sel.subtitle !== undefined && sel.subtitle !== null
+    ? { text: sel.subtitle, source: 'Kézzel írt alcím' }
+    : { text: opp ? `${opp} elleni mérkőzés előtt` : '', source: opp ? 'Javaslat a következő mérkőzésből (átírható)' : 'Kézzel írandó (nincs következő mérkőzés az adatokban)' };
+  v.quote = { text: String(sel.quote ?? '').trim(), caseMode: coachLook(sel.look), source: sel.quote ? 'Beillesztett / beírt nyilatkozat' : 'Kézzel beillesztendő (a Hunbasket-előzetes / BB1-cikk szövege)' };
+  v.logo = logo(lg, teamId);
+  v.photo = { src: hasPhoto ? 'upload/coachPhoto' : '', source: hasPhoto ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };
+  v.strip = { src: 'strip/coach', source: 'Fix logósor a PSD-ből' };
+  return v;
+}

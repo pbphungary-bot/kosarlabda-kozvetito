@@ -602,6 +602,32 @@ function liveEntry(id, league) {
   return LIVE_BUILDERS[id]('basic', 'gap', 'large');
 }
 
+// ───────────────────────── Vezetőedző nyilatkozata (coach interview) ─────────────────────────
+// Geometry and type of the owner's prototype "Hegedűs ITW BEAC előtt - 0924.psd" (women); the men's graphic has the same layout with the men's outline colour.
+// Left: the coach's cut-out photo (always an upload); right: the quote (small caps like the PSD or plain capitals, shrinks to fit), name, subtitle; club logo
+// bottom right; Hunbasket · Tippmix · Play by Play strip under the panel (templates/coach/strip.png, taken from the PSD).
+export const COACH_PANEL = { x0: 45, y0: 14, x1: 1455, y1: 944 };
+export const COACH_LOOKS = { smallcaps: 'Kiskapitális (mint a PSD-ben)', caps: 'Nagybetű (egyforma méret)' };
+export const coachLook = l => (COACH_LOOKS[l] ? l : 'smallcaps');
+function coachTpl(id, league) {
+  const op = 0.9882, { x0, y0, x1, y1 } = COACH_PANEL, w = x1 - x0, h = y1 - y0, sw = 8;
+  const txt = (extra) => ({ type: 'text', align: 'left', color: '#ffffff', opacity: op, adjust: true, ...extra });
+  const els = [
+    { id: 'panel', type: 'framed', label: 'Panel (háttér + szegély)', group: 'Panel', box: [(x0 + x1) / 2, (y0 + y1) / 2, w, h], texture: 'assets/court/court.png', stroke: BORDER[league], sw, r: 25, useBase: true, opacity: op, fixedFrame: true, lockAspect: false },
+    { id: 'photo', type: 'image', label: 'Edző fotója (feltöltött, áttetsző PNG)', group: 'Fotó', box: [328, 488.5, 570, 895], fit: 'contain', anchor: 'bottom', clipInner: true, fixedSrc: true, opacity: op },
+    txt({ id: 'quote', label: 'Nyilatkozat', group: 'Szöveg', x: 475.5, y: 60.4, size: 45.83, tracking: 10, lineHeight: 58.3, maxWidth: 963, maxHeight: 735, minScale: 0.45, paragraph: true, outline: ol(4, '#000000', 1) }),
+    txt({ id: 'name', label: 'Név', group: 'Szöveg', x: 475.5, y: 873.25, size: 108.33, tracking: -20, color: '#010101', outline: ol(4, '#ffffff'), caps: true, maxWidth: 780, minScale: 0.5 }),
+    txt({ id: 'subtitle', label: 'Alcím', group: 'Szöveg', x: 476.5, y: 927, size: 45.83, tracking: -20, outline: ol(3, '#000000'), caps: true, maxWidth: 790, minScale: 0.6 }),
+    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [1348.5, 838, 124, 124], fit: 'contain', opacity: op, logoOutline: true },
+    { id: 'strip', type: 'image', label: 'Logósor (Hunbasket · Tippmix · Play by Play)', group: 'Panel', box: [750.5, 1024, 467, 80], fit: 'contain', fixedSrc: true, fixedFrame: true },
+  ];
+  const t = base(id, league, 'coach', 'Hegedűs ITW BEAC előtt - 0924.psd', 'Vezetőedző nyilatkozata', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
+  t.elements.find(e => e.id === 'quote').hscale = 0.8336; // the PSD stretches the quote vertically (x 1.786, y 2.142): size = the taller scale, width squeezed
+  t.panel = { box: [x0, y0, x1, y1], alpha: op };
+  t.inner = { box: [x0 + sw, y0 + sw, x1 - sw, y1 - sw], r: 17 };
+  return t;
+}
+
 // ───────────────────────── Extra (MKOSZ) – freely sized frames ─────────────────────────
 // "Background for extra graphics + QR code outliner.psd": a tall photo frame and a square QR frame (brown fill, gold border, radius 18).
 // Both are drawn as shapes (not as a picture), so they can be moved and resized freely; the uploaded photo / QR code sits inside.
@@ -712,6 +738,8 @@ export const TEMPLATES = [
   formTpl('formpair-women', 'women', 2),
   h2hTpl('h2h-men', 'men'),
   h2hTpl('h2h-women', 'women'),
+  coachTpl('coach-men', 'men'),
+  coachTpl('coach-women', 'women'),
   liveEntry('livestat-men', 'men'),
   liveEntry('livestat-women', 'women'),
   extraTpl('extra-men', 'men'),
@@ -745,6 +773,7 @@ export const TEMPLATE_TYPES = {
   h2h: 'Egymás ellen',
   extra: 'Extra (MKOSZ)',
   livestat: 'Élő statisztika (játékos)',
+  coach: 'Vezetőedző nyilatkozata',
 };
 
 export function templateById(id) { return TEMPLATES.find(t => t.id === id); }
