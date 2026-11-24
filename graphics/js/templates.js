@@ -669,10 +669,9 @@ function liveTeamTpl(id, league, keysIn) {
     const d = LIVE_TEAM_STATS.find(q => q.key === k), ry = y + LT.head + i * ROW, g = `${i + 1}. statisztika`, bh = ROW - 14, by = ry + 7, cy = by + bh / 2;
     const lx = x + LT.pad, rx = x + w - LT.pad - LT.box;
     els.push(
-      { id: `r${i}.bg`, type: 'framed', label: `${d.label} – sáv`, group: g, box: [x + w / 2, ry + ROW / 2, w - 2 * 14, ROW - 8], fill: C.strip, sw: 0, r: 10, opacity: 0.9 },
       box(`r${i}.h.box`, `${d.label} – hazai doboz`, g, lx, by, LT.box, bh),
       txt(40, { id: `r${i}.h`, label: `${d.label} – hazai`, group: g, x: lx + LT.box / 2, y: cy + 0.3715 * 40, runs: true, color: C.digit, maxWidth: LT.box - 14, minScale: 0.5 }),
-      txt(30, { id: `r${i}.label`, label: `${d.label} – felirat`, group: g, x: x + w / 2, y: cy + 0.3715 * 30, maxWidth: w - 2 * (LT.pad + LT.box) - 16, minScale: 0.6 }),
+      txt(30, { id: `r${i}.label`, label: `${d.label} – felirat`, group: g, x: x + w / 2, y: cy + 0.3715 * 30, outline: ol(3, '#000000', 1), maxWidth: w - 2 * (LT.pad + LT.box) - 16, minScale: 0.6 }),
       box(`r${i}.a.box`, `${d.label} – vendég doboz`, g, rx, by, LT.box, bh),
       txt(40, { id: `r${i}.a`, label: `${d.label} – vendég`, group: g, x: rx + LT.box / 2, y: cy + 0.3715 * 40, runs: true, color: C.digit, maxWidth: LT.box - 14, minScale: 0.5 }),
     );
