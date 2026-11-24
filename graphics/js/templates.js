@@ -629,7 +629,7 @@ function liveEntry(id, league) {
 }
 
 // ───────────────────────── Élő csapat-összevetés (live team comparison) ─────────────────────────
-// Styled like the broadcaster's own score bug (owner's screenshots of the feed): dark glossy bar, team logos instead of the abbreviations, the score in a
+// Styled like the broadcaster's own score bug (owner's screenshots of the feed) on the PlayByPlay court with the league's outlined box: dark glossy strips, team logos instead of the abbreviations, the score in a
 // white box with black digits next to each logo, a period / clock line in the middle, then one dark strip per ticked statistic with the two values in
 // white boxes and the name between them; the better value is marked in red. League Gothic only (project rule).
 export const LIVE_TEAM_STATS = [ // canonical order; shoot = made/attempted with the percentage in ( ); low = a lower value is the better one
@@ -652,7 +652,7 @@ function liveTeamTpl(id, league, keysIn) {
   const txt = (size, extra) => ({ type: 'text', size, tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: 7, opacity: op, ...extra });
   const els = [
-    { id: 'panel', type: 'framed', label: 'Panel (háttér)', group: 'Panel', box: [x + w / 2, y + h / 2, w, h], fill: C.bar, stroke: C.edge, sw: 3, r: 18, useBase: true, opacity: 0.965, fixedFrame: true, lockAspect: false },
+    panelFrame(league, x, y, w, h), // the PlayByPlay court (red-black-green) with the league's outlined box, like every other graphic
   ];
   // header: logo + white score box on each side, period / clock in the middle
   const hy = y + 22, hh = 94, sb = 130;
@@ -669,7 +669,7 @@ function liveTeamTpl(id, league, keysIn) {
     const d = LIVE_TEAM_STATS.find(q => q.key === k), ry = y + LT.head + i * ROW, g = `${i + 1}. statisztika`, bh = ROW - 14, by = ry + 7, cy = by + bh / 2;
     const lx = x + LT.pad, rx = x + w - LT.pad - LT.box;
     els.push(
-      { id: `r${i}.bg`, type: 'framed', label: `${d.label} – sáv`, group: g, box: [x + w / 2, ry + ROW / 2, w - 2 * 14, ROW - 8], fill: C.strip, sw: 0, r: 10, opacity: op },
+      { id: `r${i}.bg`, type: 'framed', label: `${d.label} – sáv`, group: g, box: [x + w / 2, ry + ROW / 2, w - 2 * 14, ROW - 8], fill: C.strip, sw: 0, r: 10, opacity: 0.9 },
       box(`r${i}.h.box`, `${d.label} – hazai doboz`, g, lx, by, LT.box, bh),
       txt(40, { id: `r${i}.h`, label: `${d.label} – hazai`, group: g, x: lx + LT.box / 2, y: cy + 0.3715 * 40, runs: true, color: C.digit, maxWidth: LT.box - 14, minScale: 0.5 }),
       txt(30, { id: `r${i}.label`, label: `${d.label} – felirat`, group: g, x: x + w / 2, y: cy + 0.3715 * 30, maxWidth: w - 2 * (LT.pad + LT.box) - 16, minScale: 0.6 }),
@@ -679,7 +679,7 @@ function liveTeamTpl(id, league, keysIn) {
   });
   const t = base(id, league, 'liveteam', 'Élő csapat-összevetés (saját)', 'Élő csapat-összevetés', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
-  t.inner = { box: [x + 3, y + 3, x + w - 3, y + h - 3], r: 15 };
+  t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
   t.liveTeam = { keys };
   return t;
 }
