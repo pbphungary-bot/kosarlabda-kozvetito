@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-24T15:01:56.911374+00:00",
+  "checked_at": "2026-11-24T16:05:38.531104+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -466,7 +466,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -549,23 +548,33 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 7,
-      "article_errors": 1,
+      "repaired": 26,
+      "article_errors": 3,
       "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/elerhetosegek/: TimeoutError: The read operation timed out"
+        "article https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/szekszardon-zarjuk-a-valogatott-szunet-elotti-bajnoki-szakaszt/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 7,
+      "usable_articles": 26,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Gasper Okorn: Nem egyszerű a helyzet, de tudjuk, mi a feladatunk",
+      "summary": "A magyar bajnokság erőviszonyairól, a keret összeállításáról és a novemberi vb-selejtezőkről beszélgettünk a kapitánnyal.",
+      "url": "https://bball1.hu/gasper-okorn-nem-egyszeru-a-helyzet-de-tudjuk-mi-a-feladatunk/",
+      "published_at": "2026-11-24T16:00:17+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "Klub: Csata TKK",
       "title": "Hosszabbításban harcoltuk ki a győzelmet Miskolcon",

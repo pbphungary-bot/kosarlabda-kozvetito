@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-24T15:01:56.911374+00:00",
+  "checked_at": "2026-11-24T16:05:38.531104+00:00",
   "statistics": {
-    "total": 1266,
-    "fresh": 582,
-    "fresh_with_summary": 392,
+    "total": 1267,
+    "fresh": 583,
+    "fresh_with_summary": 393,
     "missing_dates": 288,
     "headline_only": 563,
-    "untagged": 521,
+    "untagged": 522,
     "sources_ok": 21,
     "sources_partial": 1,
     "sources_failed": 9,
-    "new_articles": 6,
+    "new_articles": 7,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -481,7 +481,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -564,19 +563,20 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 7,
-      "article_errors": 1,
+      "repaired": 26,
+      "article_errors": 3,
       "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/elerhetosegek/: TimeoutError: The read operation timed out"
+        "article https://tfse.hu/hetbol-het-gyozelemmel-rajtoltak-a-tfse-egyetemi-kosarcsapatai-a-mefob-on/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/szekszardon-zarjuk-a-valogatott-szunet-elotti-bajnoki-szakaszt/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 7,
+      "usable_articles": 26,
       "source_coverage": true
     }
   ],
