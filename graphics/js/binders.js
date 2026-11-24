@@ -640,17 +640,18 @@ export function coachOpponent(store, lg, teamId) {
 
 /**
  * Name + club logo come from the Hunbasket team page (head coach); the subtitle is a suggestion the operator can overwrite; the quote is typed / pasted
- * (nothing is invented: an empty quote draws nothing); the photo is always an upload. sel = { quote, look, oppId, subtitle }.
+ * (nothing is invented: an empty quote draws nothing); the photo is always an upload. sel = { quote, look, oppId, subtitle, name, srcTitle, srcUrl } (name / src* = a chosen BB1 statement).
  */
 export function bindCoach(store, lg, teamId, sel = {}, hasPhoto = false) {
   const v = {}, page = store.teamPage(lg, teamId), head = page?.coaches?.find(x => /vezető/i.test(x.role));
   const src = 'Hunbasket csapatoldal (vezetőedző)';
-  v.name = head ? { text: head.name, source: src } : field(null, src);
+  v.name = sel.name ? { text: sel.name, source: sel.srcTitle ? `BB1.hu előzetes – a nyilatkozat mondója (${sel.srcTitle})` : 'Kézzel megadott név' }
+    : head ? { text: head.name, source: src } : field(null, src);
   const oppId = sel.oppId === undefined ? coachOpponent(store, lg, teamId) : sel.oppId, opp = oppId ? club(lg, oppId)?.short : null;
   v.subtitle = sel.subtitle !== undefined && sel.subtitle !== null
     ? { text: sel.subtitle, source: 'Kézzel írt alcím' }
     : { text: opp ? `${opp} elleni mérkőzés előtt` : '', source: opp ? 'Javaslat a következő mérkőzésből (átírható)' : 'Kézzel írandó (nincs következő mérkőzés az adatokban)' };
-  v.quote = { text: String(sel.quote ?? '').trim(), caseMode: coachLook(sel.look), source: sel.quote ? 'Beillesztett / beírt nyilatkozat' : 'Kézzel beillesztendő (a Hunbasket-előzetes / BB1-cikk szövege)' };
+  v.quote = { text: String(sel.quote ?? '').trim(), caseMode: coachLook(sel.look), source: sel.quote ? (sel.srcTitle ? `BB1.hu előzetes: ${sel.srcTitle}${sel.srcUrl ? ' – ' + sel.srcUrl : ''}` : 'Beillesztett / beírt nyilatkozat') : 'Kézzel beillesztendő (válassz egy gyűjtött előzetes-nyilatkozatot, vagy illeszd be a szöveget)' };
   v.logo = logo(lg, teamId);
   v.photo = { src: hasPhoto ? 'upload/coachPhoto' : '', source: hasPhoto ? 'Feltöltött fotó' : 'Nincs fotó feltöltve' };
   v.strip = { src: 'strip/coach', source: 'Fix logósor a PSD-ből' };

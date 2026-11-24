@@ -330,6 +330,26 @@ function wireLivePanel(s) {
   $('liveCorner').onchange = e => { L().corner = e.target.value; resetMatchOverrides(); update(true); };
 }
 
+/** The collected BB1 pre-match statements of the chosen team: one click puts the text into the quote box and the speaker's name on the graphic. */
+async function renderCoachStatements(C) {
+  const draw = () => {
+    const el = $('coachStmts');
+    if (!el) return; // the panel changed meanwhile
+    const list = store.previewStatements(state.league, sel().teamId).slice(0, 8);
+    el.innerHTML = list.length
+      ? '<span class="stmts">' + list.map((x, i) => `<button type="button" class="ghost stmt" data-i="${i}" title="${esc(x.text.slice(0, 400))}"><b>${esc(x.speaker)}</b> · ${esc(fmtDate(String(x.published_at).slice(0, 10)))} · ${esc(x.title)}<br><small>${esc(x.text.slice(0, 120))}…</small></button>`).join('') + '</span>'
+      : 'Ehhez a csapathoz nincs gyűjtött előzetes-nyilatkozat (a hub a BB1 „A – B” előzetes-cikkeit gyűjti, 15 percenként). A szöveg kézzel is beilleszthető.';
+    el.querySelectorAll('.stmt').forEach(b => b.onclick = () => {
+      const x = list[+b.dataset.i];
+      C.quote = x.text; C.name = x.speaker; C.srcTitle = x.title; C.srcUrl = x.url;
+      renderSelection(); update(true);
+    });
+  };
+  draw();
+  await store.loadLazy(state.league, 'previews', fetchData);
+  draw();
+}
+
 function renderSelection(extra = {}) {
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
@@ -384,7 +404,9 @@ function renderSelection(extra = {}) {
     const C = s.coach ||= {}, oppDefault = coachOpponent(store, lg, s.teamId);
     box.innerHTML = `<div class="row2"><label>Csapat (az edzője)<select id="teamSel">${teamOptions(s.teamId)}</select></label>
       <label>Ellenfél (az alcím javaslatához)<select id="coachOpp"><option value="">– nincs –</option>${teamOptions(C.oppId === undefined ? oppDefault : C.oppId)}</select></label></div>
-      <label>Nyilatkozat (a Hunbasket-előzetes / BB1-cikk szövege; új bekezdés = új sor)
+      <div class="stmtbox"><b>Gyűjtött előzetes-nyilatkozatok (BB1.hu)</b> <span id="coachStmts" class="hint">betöltés…</span></div>
+      ${C.name ? `<small class="hint">A név a kiválasztott nyilatkozat mondójától jön: <b>${esc(C.name)}</b> <button type="button" id="coachNameReset" class="ghost">Vissza a Hunbasket-névre</button></small>` : ''}
+      <label>Nyilatkozat (a gyűjtöttek közül választva vagy kézzel beillesztve; új bekezdés = új sor)
         <textarea id="coachQuote" rows="8" style="width:100%" placeholder="Illeszd be az edző nyilatkozatát…">${esc(C.quote || '')}</textarea></label>
       <div class="row2"><label>A szöveg stílusa<select id="coachLook">${Object.entries(COACH_LOOKS).map(([k, v]) => `<option value="${k}" ${coachLook(C.look) === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
         <span class="import-row" style="align-items:end"><button type="button" id="coachQuoteClear" class="ghost">Szöveg törlése</button></span></div>
@@ -392,13 +414,15 @@ function renderSelection(extra = {}) {
         <span class="import-row"><input type="file" id="coachPhoto" accept="image/png,image/webp,image/jpeg"> <button id="coachPhotoClear" type="button" class="ghost" ${images['upload/coachPhoto'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
       ${bgHtml('coachPhoto')}
       <small class="hint">A név és a klublogó az adatokból jön (Hunbasket vezetőedző), az alcím javaslat: átírható a Mezők között. A szöveg hosszától függően a betűméret automatikusan csökken, hogy elférjen; a fotó mozgatása / nagyítása az Elrendezés dobozban.</small>`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; C.oppId = undefined; resetMatchOverrides(); renderSelection(); update(true); };
+    $('teamSel').onchange = e => { s.teamId = e.target.value; C.oppId = undefined; if (C.srcTitle) { C.quote = ''; C.name = null; C.srcTitle = null; C.srcUrl = null; } resetMatchOverrides(); renderSelection(); update(true); };
+    if ($('coachNameReset')) $('coachNameReset').onclick = () => { C.name = null; renderSelection(); update(true); };
+    renderCoachStatements(C);
     $('coachOpp').onchange = e => { C.oppId = e.target.value; update(true); };
     let quoteTimer = null;
     $('coachQuote').oninput = e => { C.quote = e.target.value; clearTimeout(quoteTimer); quoteTimer = setTimeout(() => update(false), 200); };
     $('coachQuote').onchange = e => { C.quote = e.target.value; update(true); };
     $('coachLook').onchange = e => { C.look = e.target.value; update(true); };
-    $('coachQuoteClear').onclick = () => { C.quote = ''; renderSelection(); update(true); };
+    $('coachQuoteClear').onclick = () => { C.quote = ''; C.srcTitle = null; C.srcUrl = null; renderSelection(); update(true); };
     $('coachPhoto').onchange = e => {
       const f = e.target.files[0];
       if (!f) return;

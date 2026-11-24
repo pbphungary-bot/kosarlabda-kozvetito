@@ -1381,6 +1381,26 @@ try {
     await page.click('#coachQuoteClear');
     await wait('clear', () => window.__studio.current().values?.quote?.text === '');
     await page.click('#coachPhotoClear');
+    // the collected BB1 pre-match statements (men): one click fills the quote and the speaker's name; the name can go back to the Hunbasket coach
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="coach-men"]');
+    await page.waitForSelector('#coachQuote');
+    await page.selectOption('#teamSel', 'kecskemet');
+    await wait('statements listed', () => document.querySelectorAll('#coachStmts .stmt').length >= 1);
+    assert.match(await page.textContent('#coachStmts .stmt'), /Sztojan Ivkovics/);
+    const hbName = await val('name');
+    await page.click('#coachStmts .stmt');
+    await wait('statement used', () => window.__studio.current().values?.name?.text === 'Sztojan Ivkovics' && (window.__studio.current().values?.quote?.text || '').length > 100);
+    assert.match(await val('quote', 'source'), /BB1\.hu előzetes/);
+    assert.ok((await page.inputValue('#coachQuote')).length > 100, 'the text is in the quote box (editable)');
+    await page.click('#coachNameReset');
+    await wait('name reset', () => window.__studio.current().values?.name?.text && window.__studio.current().values.name.text !== 'Sztojan Ivkovics');
+    assert.equal(await val('name'), hbName, 'back to the Hunbasket head coach');
+    // a team without collected statements says so (women: BB1 covers the men)
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="coach-women"]');
+    await page.waitForSelector('#coachStmts');
+    await wait('none message', () => /nincs gyűjtött előzetes-nyilatkozat/.test(document.getElementById('coachStmts')?.textContent || ''));
   });
 
   await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {
