@@ -205,6 +205,7 @@ test('live team comparison graphic: sized by the ticked stats, inside the pictur
       assert.deepEqual([w, h], [liveTeamSize(keys).w, liveTeamSize(keys).h]);
       assert.equal(t.elements.filter(e => /^r\d+\.label$/.test(e.id)).length, n);
       const x0 = cx - w / 2, y0 = cy - h / 2;
+      assert.deepEqual([x0, y0], [60, 2], 'same place as Csapatok összevetése (top-left)');
       assert.ok(x0 >= 0 && y0 >= 0 && x0 + w <= 1920 && y0 + h <= 1080, 'inside the picture');
       for (const size of ['large', 'small']) { const [zx0, zy0, zx1, zy1] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `${n} stats: clear of the ${size} score bug zone`); }
       for (const e of t.elements.filter(e => e.type === 'text')) assert.equal(e.font, undefined, 'League Gothic (default) only');

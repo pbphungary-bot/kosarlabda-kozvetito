@@ -648,7 +648,7 @@ const LT = { w: 760, head: 138, pad: 26, box: 200 };
 const ltRow = n => (n <= 9 ? 64 : 54); // many ticked stats: narrower rows, so the panel never reaches the score bug zone
 export const liveTeamSize = keys => { const n = liveTeamKeys(keys).length; return { w: LT.w, h: LT.head + n * ltRow(n) + LT.pad }; };
 function liveTeamTpl(id, league, keysIn) {
-  const keys = liveTeamKeys(keysIn), { w, h } = liveTeamSize(keys), ROW = ltRow(keys.length), x = Math.round((1920 - w) / 2), y = 60, C = LIVE_TEAM_COLORS, op = 0.9882;
+  const keys = liveTeamKeys(keysIn), { w, h } = liveTeamSize(keys), ROW = ltRow(keys.length), x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
   const txt = (size, extra) => ({ type: 'text', size, tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: 7, opacity: op, ...extra });
   const els = [
