@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadStore } from './helpers.mjs';
+import { loadStore, readJson, DATA_DIR } from './helpers.mjs';
 import { capRuns, wordRuns, wrapParagraphs, fitParagraphs, SMALL_CAPS } from '../graphics/js/paragraph.js';
 import { templateById, TEMPLATES, TEMPLATE_TYPES, COACH_PANEL, COACH_LOOKS, coachLook } from '../graphics/js/templates.js';
 import { bindCoach, coachOpponent } from '../graphics/js/binders.js';
@@ -84,4 +84,28 @@ test('coach binder: name + logo from the data, subtitle suggestion, quote only w
   assert.ok(men.name.text && /\s/.test(men.name.text));
   // a club without a team page: flagged, not invented
   assert.equal(bindCoach(store, 'women', 'no-such-club', {}).name.missing, true);
+});
+
+test('coach: pre-match statements of the collected BB1 previews, per club, newest first (also for a short club name)', async () => {
+  const store = await loadStore();
+  assert.deepEqual(store.previewStatements('men', 'kecskemet'), [], 'not loaded yet: nothing');
+  await store.loadLazy('men', 'previews', f => readJson(DATA_DIR + '/' + f));
+  const kec = store.previewStatements('men', 'kecskemet');
+  assert.ok(kec.length >= 1 && kec[0].speaker === 'Sztojan Ivkovics' && kec[0].text.length > 100, 'the Kecskemét coach\'s statement');
+  assert.match(kec[0].url, /^https:\/\/bball1\.hu\//); assert.ok(kec[0].title.includes('Kecskemét'));
+  // "Falco-Vulcano Energia KC" (BB1's short form) is not a known club name: the leftover statement of the two-team article is still found
+  const falco = store.previewStatements('men', 'falcokc');
+  assert.ok(falco.length >= 2 && falco.every(x => x.speaker === 'Milos Konakov'), 'both Falco previews, short names included');
+  assert.ok(falco.every((x, i) => i === 0 || falco[i - 1].published_at >= x.published_at), 'newest first');
+  assert.deepEqual(store.previewStatements('women', 'sercounigyor'), [], 'women: none collected (BB1 covers the men)');
+  assert.deepEqual(store.previewStatements('men', 'nobody'), []);
+});
+
+test('coach binder: a chosen statement sets the quote and the speaker\'s name, with the source of both', async () => {
+  const store = await loadStore();
+  const v = bindCoach(store, 'men', 'kecskemet', { quote: 'Egy nyilatkozat.', name: 'Sztojan Ivkovics', srcTitle: 'A \u2013 B', srcUrl: 'https://bball1.hu/x/' }, false);
+  assert.equal(v.name.text, 'Sztojan Ivkovics'); assert.match(v.name.source, /BB1\.hu előzetes/);
+  assert.match(v.quote.source, /BB1\.hu előzetes: A \u2013 B – https:\/\/bball1\.hu\/x\//);
+  const own = bindCoach(store, 'men', 'kecskemet', { quote: 'Saját szöveg.' }, false);
+  assert.match(own.quote.source, /Beillesztett/); assert.ok(own.name.text, 'back to the Hunbasket head coach');
 });

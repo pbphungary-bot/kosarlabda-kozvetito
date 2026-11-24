@@ -14,6 +14,7 @@ export const SOURCES = {
   referees: { men: 'referees_men.json', women: 'referees_women.json', label: 'Játékvezetők, ellenőr, helyszín (Hunbasket)' },
   cups: { men: 'cups_men.json', women: 'cups_women.json', label: 'Európai / kupameccsek (FIBA)', optional: true },
   playerPages: { men: 'player_pages_men.json', women: 'player_pages_women.json', label: 'Játékosoldalak (Hunbasket)', optional: true, lazy: true },
+  previews: { men: 'previews.json', women: 'previews.json', label: 'Előzetes-nyilatkozatok (BB1)', optional: true, lazy: true },
   h2h: { men: 'h2h_hunbasket.json', women: 'h2h_hunbasket.json', label: 'Egymás elleni meccsek (Hunbasket, 2020/21–)', optional: true, lazy: true },
   teamPages: { men: 'team_pages_men.json', women: 'team_pages_women.json', label: 'Keretek (Hunbasket)', optional: true },
   teamStats: { men: 'team_stats_men.json', women: 'team_stats_women.json', label: 'Csapatstatisztika' },
@@ -283,9 +284,31 @@ export class Store {
     (this.lazyLoaded ||= {})[lg + key] = true;
     try {
       const j = await fetchJson(def[lg]);
+      if (key === 'previews') { this.previews = { items: j.items || [], updated_at: j.updated_at || null }; } // one file for both leagues
       if (key === 'h2h') this.leagues[lg].h2h = (j.matches || []).filter(m => m.league === lg); // the file holds both leagues
       if (key === 'playerPages') { this.leagues[lg].playerPages = j.players || {}; this.leagues[lg].updated.playerPages = j.updated_at || null; }
     } catch (e) { this.errors.push({ league: lg, dataset: key, file: def[lg], error: String(e.message || e) }); }
+  }
+
+  /**
+   * Pre-match coach statements (collected from the preview articles of BB1.hu, data/previews.json) of one club, newest first:
+   * [{ speaker, club, text, title, url, published_at, source }]. The club of a statement is matched by its name; when a name is a short form
+   * we do not know, the one statement left over in a two-team article belongs to the team that no other statement claimed.
+   */
+  previewStatements(lg, clubIdWanted) {
+    const out = [];
+    for (const it of this.previews?.items || []) {
+      if ((it.league || lg) !== lg) continue;
+      const tagIds = (it.teams || []).map(t => clubIdStrict(lg, String(t).split('|')[1] || '')).filter(Boolean);
+      const ids = (it.statements || []).map(s => clubIdStrict(lg, s.club) || null);
+      const claimed = new Set(ids.filter(Boolean)), free = tagIds.filter(i => !claimed.has(i));
+      const unknown = ids.filter(i => !i).length;
+      (it.statements || []).forEach((s, k) => {
+        const id = ids[k] || (unknown === 1 && free.length === 1 ? free[0] : null);
+        if (id === clubIdWanted) out.push({ speaker: s.speaker, club: s.club, text: s.text, title: it.title, url: it.url, published_at: it.published_at, source: it.source });
+      });
+    }
+    return out.sort((a, b) => String(b.published_at).localeCompare(String(a.published_at)));
   }
 
   /** Games between two clubs (newest first): the collected Hunbasket history plus the played games of the current schedule; no duplicates. */
