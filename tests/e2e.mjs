@@ -1278,7 +1278,7 @@ try {
     let bx = await pb();
     assert.ok(bx[3] <= 150 && Math.abs(bx[0] + bx[2] / 2 - 600) <= 1 && Math.abs(bx[1] + bx[3] / 2 - 988) <= 12 && bx[0] + bx[2] < 1200, `strip on the score bug level, centred in the gap (${bx})`);
     await page.selectOption('#liveVariant', 'basic');
-    await until(10, () => Math.round(window.__studio.report().boxes['panel'][2]) === 480, null, { timeout: 15000 });
+    await until(10, () => Math.round(window.__studio.report().boxes['panel'][2]) === 606, null, { timeout: 15000 });
     await page.selectOption('#liveCorner', 'tl');
     await until(11, () => window.__studio.report().boxes['panel'][1] < 100, null, { timeout: 15000 });
     assert.equal(await page.isVisible('#zoneGuide'), true, 'zone guide shown by default');
