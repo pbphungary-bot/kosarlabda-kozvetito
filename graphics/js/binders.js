@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, mmss } from './live.js';
-import { LIVE_VARIANTS, coachLook, H2H_PANEL, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { LIVE_VARIANTS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -571,6 +571,7 @@ export function bindForm(store, lg, teamIds) {
 // ───────────────────────── head to head ─────────────────────────
 /** The last meetings of the two clubs of a match (newest on top, up to 6): date, badges, score. The score is coloured from the point of view of
  *  the match's HOME team (green = it won that meeting, red = it lost); the panel is exactly as tall as the list. Nothing is invented. */
+const H2H_COMP_LABEL = { playoff: 'Playoff', cup: 'Magyar Kupa' };
 export function bindH2H(store, lg, homeId, awayId, rows = H2H_PANEL.rows) {
   const v = {}, games = homeId && awayId ? store.h2hGames(lg, homeId, awayId) : [];
   const src = 'Hunbasket (2020/21-től) + az idei menetrend';
@@ -580,7 +581,9 @@ export function bindH2H(store, lg, homeId, awayId, rows = H2H_PANEL.rows) {
     const g = games[r], e = ['date', 'home', 'away', 'score'].map(k => `h${r}.${k}`);
     if (!g) { v[e[0]] = { text: '', source: 'Nincs ennyi korábbi meccs az adatokban' }; v[e[1]] = { src: '' }; v[e[2]] = { src: '' }; v[e[3]] = { text: '' }; continue; }
     const own = g.homeId === homeId ? g.home : g.away, opp = g.homeId === homeId ? g.away : g.home;
-    v[e[0]] = { text: g.date.replace(/-/g, '.') + '.', source: `${src}${g.season ? ' – ' + g.season : ''}` };
+    const comp = H2H_COMP_LABEL[g.comp] || ''; // regular season: no label (owner 2026-11-24)
+    v[e[0]] = { text: g.date.replace(/-/g, '.') + '.', source: `${src}${g.season ? ' – ' + g.season : ''}`, ...(comp ? { geom: { y: y + pad + row * r + row / 2 + 0.3715 * 34 - H2H_COMP_LIFT } } : {}) };
+    v[`h${r}.comp`] = { text: comp ? `(${comp})` : '', source: `Hunbasket – a meccs oldala (${g.comp === 'playoff' ? '…_ply' : g.comp === 'cup' ? '…_cup' : 'alapszakasz'})` };
     v[e[1]] = logo(lg, g.homeId); v[e[2]] = logo(lg, g.awayId);
     v[e[3]] = { text: `${g.home}–${g.away}`, color: own > opp ? WIN : own < opp ? RED : WHITE_TXT, source: `${src} – ${own > opp ? 'a mérkőzés hazai csapatának győzelme' : own < opp ? 'a mérkőzés hazai csapatának veresége' : 'döntetlen'}` };
   }

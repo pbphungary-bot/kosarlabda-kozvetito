@@ -3,6 +3,9 @@
 // a value that is not in the data stays null and is reported as missing.
 import { clubId, club, CLUBS, clubIdStrict, historyClubId } from './clubs.js';
 
+/** Competition of a Hunbasket match url: 'playoff' (…/whun_ply/…), 'cup' (…/whun_cup/…), otherwise 'rs' (regular season). */
+const compOfUrl = url => { const m = String(url || '').match(/\/(?:w?hun)(_ply|_cup)\//); return m ? (m[1] === '_ply' ? 'playoff' : 'cup') : 'rs'; };
+
 export const LEAGUES = {
   men: { label: 'Férfi NB I/A', short: 'Férfi' },
   women: { label: 'Női NB I/A', short: 'Női' },
@@ -314,16 +317,16 @@ export class Store {
   /** Games between two clubs (newest first): the collected Hunbasket history plus the played games of the current schedule; no duplicates. */
   h2hGames(lg, idA, idB) {
     const out = new Map(), L = this.leagues[lg];
-    const add = (date, homeId, awayId, h, a, season, url) => {
+    const add = (date, homeId, awayId, h, a, season, url, comp) => {
       if (!date || !Number.isFinite(h) || !Number.isFinite(a)) return;
       if (!((homeId === idA && awayId === idB) || (homeId === idB && awayId === idA))) return;
-      out.set(`${date}|${homeId}|${awayId}`, { date, homeId, awayId, home: h, away: a, season, url });
+      out.set(`${date}|${homeId}|${awayId}`, { date, homeId, awayId, home: h, away: a, season, url, comp: comp || compOfUrl(url) });
     };
     this.h2hIds ||= new Map();
     const idOf = name => { const k = lg + name; if (!this.h2hIds.has(k)) this.h2hIds.set(k, historyClubId(lg, name) || null); return this.h2hIds.get(k); };
     for (const m of L.h2h || []) {
       const sc = String(m.score || '').match(/(\d+)\s*[–-]\s*(\d+)/);
-      if (sc) add(m.date, idOf(m.home), idOf(m.away), +sc[1], +sc[2], m.season, m.url);
+      if (sc) add(m.date, idOf(m.home), idOf(m.away), +sc[1], +sc[2], m.season, m.url, m.competition);
     }
     for (const g of L.fixtures || []) if (g.score && g.date) add(String(g.date).slice(0, 10), g.homeId, g.awayId, g.score.home, g.score.away, 'idei', null);
     return [...out.values()].sort((a, b) => b.date.localeCompare(a.date));
