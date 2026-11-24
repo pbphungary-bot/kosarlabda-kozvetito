@@ -6,7 +6,7 @@ import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
 import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
-import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, liveVariant, liveCorner, BROADCAST_ZONE, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_PLACE, liveVariant, liveCorner, BROADCAST_ZONE, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -77,31 +77,36 @@ test('live feed: game clock from elapsed seconds (4 x 10 min, overtimes 5 min)',
   assert.equal(gameClock(2701).period, 6);
 });
 
-test('live graphic: a small pop-up, never in the broadcaster\'s score bug zone, in either corner', () => {
+test('live graphic: a thin strip on the score bug\'s level, centred in the gap left of it, never in the score bug zone', () => {
   const [zx0, zy0, zx1, zy1] = BROADCAST_ZONE.box;
   for (const id of ['livestat-men', 'livestat-women']) {
     assert.equal(templateById(id).type, 'livestat');
-    for (const corner of Object.keys(LIVE_CORNERS)) for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
-      const t = LIVE_BUILDERS[id](k, corner), panel = t.elements.find(e => e.id === 'panel');
+    for (const place of Object.keys(LIVE_CORNERS)) for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
+      const t = LIVE_BUILDERS[id](k, place), panel = t.elements.find(e => e.id === 'panel');
       const [cx, cy, w, h] = panel.box, x0 = cx - w / 2, y0 = cy - h / 2, x1 = x0 + w, y1 = y0 + h;
-      assert.ok(w <= 640 && h <= 400, `${id}/${k}/${corner}: pop-up ${w}x${h} is small (was 960x420)`);
-      assert.ok(x1 <= zx0 || y1 <= zy0 || x0 >= zx1 || y0 >= zy1, `${id}/${k}/${corner}: clear of the score bug zone`);
+      assert.ok(w <= 900 && h <= 150, `${id}/${k}/${place}: strip ${w}x${h}`);
+      if (k !== 'full') assert.ok(w <= 480, `${k}: compact`);
+      assert.ok(x1 <= zx0 || y1 <= zy0 || x0 >= zx1 || y0 >= zy1, `${id}/${k}/${place}: clear of the score bug zone`);
       assert.ok(x0 >= 0 && y0 >= 0 && x1 <= 1920 && y1 <= 1080, 'inside the picture');
-      assert.equal(corner === 'bl' ? y1 > 700 : y0 < 100, true, `${corner}: at the ${corner === 'bl' ? 'bottom' : 'top'}`);
-      // every element lies inside the panel
-      for (const e of t.elements) {
+      if (place === 'gap') {
+        assert.ok(Math.abs(cx - LIVE_PLACE.cx) <= 1, `${k}: centred in the gap between the picture's left edge and the score bug (${cx} vs ${LIVE_PLACE.cx})`);
+        assert.ok(Math.abs(cy - 988) <= 12, `${k}: on the score bug's level (centre ${cy})`);
+        assert.ok(y1 <= 1060, 'not at the very edge of the picture');
+      } else assert.ok(y0 < 100, 'top-left');
+      for (const e of t.elements) { // every element lies inside the strip
         if (e.id === 'panel') continue;
         const [bx, by, bw] = e.type === 'image' ? e.box : [e.x, e.y, e.maxWidth || 0];
         const ex0 = e.type === 'image' ? bx - bw / 2 : (e.align === 'left' ? bx : bx - bw / 2), ex1 = e.type === 'image' ? bx + bw / 2 : (e.align === 'left' ? bx + bw : bx + bw / 2);
-        assert.ok(ex0 >= x0 - 1 && ex1 <= x1 + 1 && by <= y1 + 1 && by >= y0 - 1, `${id}/${k}/${corner}: ${e.id} inside the panel`);
+        assert.ok(ex0 >= x0 - 1 && ex1 <= x1 + 1 && by <= y1 + 1 && by >= y0 - 1, `${id}/${k}/${place}: ${e.id} inside the strip`);
       }
       assert.equal(t.elements.filter(e => /^c\d+\.value$/.test(e.id)).length, V.cells.length);
       assert.ok(t.elements.some(e => e.id === 'photo') && t.elements.some(e => e.id === 'name'));
+      assert.ok(!t.elements.some(e => e.id === 'sub') && !t.elements.some(e => /\.sub$/.test(e.id)), 'no status line under the name');
       assert.deepEqual(panel.stroke, id.endsWith('women') ? '#ef4036' : '#0b9444', 'league outline colour');
     }
   }
   assert.equal(liveVariant('nonsense'), 'basic');
-  assert.equal(liveCorner('nonsense'), 'tl');
+  assert.equal(liveCorner('nonsense'), 'gap', 'default = on the score bug level');
   assert.ok(TEMPLATE_TYPES.livestat);
   // the zone really covers both score bug versions measured on the owner's screenshots
   assert.ok(zx0 <= 1211 && zy0 <= 931 && zx1 >= 1886 && zy1 >= 1044, 'bug version 1 (1211–1886 x 931–1044)');
@@ -118,11 +123,11 @@ test('live graphic: values of the chosen player, roster-style name, official pho
   assert.equal(v.name.text, 'GÁLOS Hanna Andrea', 'surname in capitals, Hunbasket roster spelling');
   assert.equal(v['c0.value'].text, '15'); assert.equal(v['c1.value'].text, '5'); assert.equal(v['c2.value'].text, '1');
   assert.equal(v.photo.src, 'photo/B203034');
-  assert.match(v.sub.text, /^#11 · ETO Basket 90–48 VBW CEKK Cegléd · végeredmény$/);
+  assert.equal(v.sub, undefined, 'no status line under the name');
   assert.match(v['c0.value'].source, /22:41:03/, 'freshness is in the source label');
   const sh = bindLiveStat(store, 'women', g, { side: 'home', variant: 'shooting' }, ids);
-  assert.deepEqual([sh['c1.value'].text, sh['c1.sub'].text], ['4/5', '80.0%']);
-  assert.equal(sh['c0.sub'].text, '0.0%');
+  assert.deepEqual([sh['c1.value'].text, sh['c1.label'].text], ['4/5', '3P · 80.0%'], 'made/attempted, percentage on the label line');
+  assert.equal(sh['c0.label'].text, '2P · 0.0%');
   const full = bindLiveStat(store, 'women', g, { side: 'home', variant: 'full' }, ids);
   assert.equal(full['c0.value'].text, '25:18'); assert.equal(full['c8.value'].text, '20', 'EFF');
   // another player of the other team (not in the photo list: no photo, never a made-up one); a wrong code falls back to the best scorer

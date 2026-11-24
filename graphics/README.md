@@ -197,14 +197,14 @@ Előállítás: `python3 tools/psd_frames.py` (a PSD-kből: keret-adatok → `js
 
 
 ## Élő statisztika (játékos)
-Időkérésnél / negyedszünetben egy játékos élő statisztikája, a hivatalos keretfotóval (ugyanaz, mint a Keret fotókkal grafikán). Kis felugró panel (614 × 269 px, a *Teljes sor* változat 614 × 346 px), átlátszó PNG. A *Hely a képen* választóval **bal felül** vagy **bal alul** jelenik meg: az adás eredményjelzője (mindkét változat) a jobb alsó sarokban van, azt a grafika sosem takarja. Az előnézetben az *Adásbeli eredményjelző zónája* jelölőnégyzet egy satírozott sávot mutat ott (csak az előnézetben látszik, az exportban nem).
+Időkérésnél / negyedszünetben egy játékos élő statisztikája, a hivatalos keretfotóval (ugyanaz, mint a Keret fotókkal grafikán). Vékony sáv (*Alap* 480 × 150 px, *Dobások* 480 × 140 px, *Teljes sor* 900 × 130 px), átlátszó PNG. A név alatt nincs állás-sor (az adás saját eredményjelzője mutatja az állást és a negyedet). Alapból **az eredményjelző szintjén, a kép bal széle és az eredményjelző közti rés közepén** jelenik meg (*Hely a képen*: *Alul…* vagy *Bal felül*); az adás eredményjelzője (mindkét változat) a jobb alsó sarokban van, azt a grafika sosem takarja. Az előnézetben az *Adásbeli eredményjelző zónája* jelölőnégyzet egy satírozott sávot mutat ott (csak az előnézetben látszik, az exportban nem).
 
 **Adat:** az MKOSZ élő boxscore-ja (`https://netcasting4.webpont.com/?whun_135563` – a `whun_` a női, a `hun_` a férfi mérkőzés). A stúdió a hírcsatorna eseménylistájából számolja a statisztikát (pont, 2P/3P/BT dobások, lepattanó, gólpassz, szerzett és eladott labda, blokk, fault, játékperc, EFF); a pontok egyeznek a hivatalos állással. A hírcsatorna kb. 5 másodpercenként frissül.
 
 **Használat:**
 1. Válaszd az *Élő statisztika (játékos)* sablont (a megfelelő Férfi / Női fülön).
 2. A *Meccs* mezőbe írd a netcasting linket vagy a kódot (pl. `whun_135563`), majd *Betöltés*. Az *Automatikus frissítés* 5 másodpercenként hozza az újat.
-3. Válassz csapatot és játékost (a lista pontszerzés szerint rendezett), és egy változatot: **Alap** (PTS · REB · AST), **Dobások** (2P · 3P · BT, százalékkal), **Teljes sor** (perc, pont, lepattanó, gólpassz, szerzett labda, blokk, eladott labda, fault, EFF).
+3. Válassz csapatot és játékost (a lista pontszerzés szerint rendezett), és egy változatot: **Alap** (PTS · REB · AST), **Dobások** (2P · 3P · BT: dobott/kísérlet, a százalék a felirat sorában), **Teljes sor** (perc, pont, lepattanó, gólpassz, szerzett labda, blokk, eladott labda, fault, EFF).
 4. Exportálás mint a többi grafika (a fájlnévben a játékos és a csapat).
 
 **Fontos – az élő lekérés a helyi szerverrel működik:** a hírcsatorna szervere nem engedi, hogy egy weboldal (pl. a GitHub Pages) közvetlenül olvassa, és a felhős szolgáltatások (pl. Supabase) hálózatát elutasítja. Ezért indítsd a stúdiót a gépeden: `python3 tools/serve.py`, majd nyisd meg a `http://localhost:8000/graphics/` címet – a szerver `/live` címen továbbítja a hírcsatornát (csak ezt az egy URL-formát kéri le). Ha ez nem megy, a *Beillesztés* ágon kézzel is használható: a böngészőben nyisd meg a `https://netcasting4.webpont.com/storage/full<kód>.html` címet, Ctrl+A, Ctrl+C, és illeszd be a stúdió mezőjébe.

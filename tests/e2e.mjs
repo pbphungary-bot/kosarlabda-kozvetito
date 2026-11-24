@@ -1259,7 +1259,7 @@ try {
     assert.equal(await val('c0.value'), '15'); assert.equal(await val('c1.value'), '5');
     assert.equal(await val('photo', 'src'), 'photo/B203034', 'the official roster photo');
     await page.selectOption('#liveVariant', 'shooting');
-    await until(3, () => window.__studio.current().values?.['c1.sub']?.text === '80.0%', null, { timeout: 15000 });
+    await until(3, () => window.__studio.current().values?.['c1.label']?.text === '3P · 80.0%', null, { timeout: 15000 });
     await page.selectOption('#liveVariant', 'full');
     await until(4, () => window.__studio.current().values?.['c0.value']?.text === '25:18', null, { timeout: 15000 });
     await page.selectOption('#livePlayer', 'B20186');
@@ -1267,17 +1267,19 @@ try {
     await page.selectOption('#liveSide', 'away');
     await until(6, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 });
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
-    // small pop-up, top-left by default; bottom-left on request; the score bug zone guide is preview-only and can be switched off
+    // a thin strip, on the score bug's level and centred in the gap left of it (full variant is the wide one); top-left on request; the zone guide is preview-only
     const pb = () => page.evaluate(() => window.__studio.report().boxes['panel']);
-    let bx = await pb(); assert.ok(bx[2] <= 640 && bx[3] <= 400 && bx[1] < 100, `compact, top-left (${bx})`);
-    await page.selectOption('#liveCorner', 'bl');
-    await until(10, () => window.__studio.report().boxes['panel'][1] > 600, null, { timeout: 15000 });
-    bx = await pb(); assert.ok(bx[1] + bx[3] <= 1080 && bx[0] + bx[2] < 1200, 'bottom-left, left of the score bug zone');
+    let bx = await pb();
+    assert.ok(bx[3] <= 150 && Math.abs(bx[0] + bx[2] / 2 - 600) <= 1 && Math.abs(bx[1] + bx[3] / 2 - 988) <= 12 && bx[0] + bx[2] < 1200, `strip on the score bug level, centred in the gap (${bx})`);
+    await page.selectOption('#liveVariant', 'basic');
+    await until(10, () => Math.round(window.__studio.report().boxes['panel'][2]) === 480, null, { timeout: 15000 });
+    await page.selectOption('#liveCorner', 'tl');
+    await until(11, () => window.__studio.report().boxes['panel'][1] < 100, null, { timeout: 15000 });
     assert.equal(await page.isVisible('#zoneGuide'), true, 'zone guide shown by default');
     await page.uncheck('#zoneToggle'); assert.equal(await page.isVisible('#zoneGuide'), false);
     await page.check('#zoneToggle'); assert.equal(await page.isVisible('#zoneGuide'), true);
-    await page.selectOption('#liveCorner', 'tl');
-    await until(11, () => window.__studio.report().boxes['panel'][1] < 100, null, { timeout: 15000 });
+    await page.selectOption('#liveCorner', 'gap');
+    await until(12, () => window.__studio.report().boxes['panel'][1] > 800, null, { timeout: 15000 });
     const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
     const file = path.join(out, 'livestat-women-away.png'); await dl.saveAs(file);
     const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.colorType, 6);

@@ -613,9 +613,7 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
   v.name = { runs, text: runs.map(x => x.text).join(''), source: r ? 'Hunbasket csapatoldal (keret) – a név írásmódja' : 'Élő boxscore – a játékos nincs a Hunbasket keretben, a hírcsatorna írásmódja' };
   v.logo = teamId ? logo(lg, teamId) : { src: '', source: 'A klub logója nem található' };
   v.photo = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
-  const h = game.teams.home, a = game.teams.away, st = p.stat;
-  const c = game.clock, state = game.finished ? 'végeredmény' : c.period <= 4 ? `${c.period}. negyed` : `${c.period - 4}. hosszabbítás`;
-  v.sub = { text: `${p.number ? '#' + p.number + ' · ' : ''}${h.short} ${game.score.home}–${game.score.away} ${a.short} · ${state}`, source: src };
+  const st = p.stat; // (no status line under the name: the broadcast's own score bug shows the score and the period)
   const variant = tplVariant(sel.variant);
   const cells = {
     pts: () => [String(st.pts)], reb: () => [String(p.reb)], ast: () => [String(st.ast)], stl: () => [String(st.stl)], blk: () => [String(st.blk)],
@@ -626,8 +624,8 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
   LIVE_VARIANTS[variant].cells.forEach((cell, i) => {
     const [value, sub] = cells[cell.key]();
     v[`c${i}.value`] = field(value, `${src} – ${cell.label}`);
-    v[`c${i}.label`] = { text: cell.label, source: 'Fix felirat (átírható)' };
-    if (variant === 'shooting') v[`c${i}.sub`] = { text: sub ?? '', source: sub ? src : 'Nincs kísérlet – nincs százalék' };
+    // shooting cells: the percentage goes on the label line ("3P · 80.0%"), the made/attempted figures are the value
+    v[`c${i}.label`] = { text: variant === 'shooting' && sub ? `${cell.label} · ${sub}` : cell.label, source: variant === 'shooting' ? (sub ? src : 'Nincs kísérlet – nincs százalék') : 'Fix felirat (átírható)' };
   });
   return v;
 }

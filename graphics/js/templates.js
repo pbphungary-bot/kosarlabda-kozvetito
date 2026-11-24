@@ -535,60 +535,53 @@ function h2hTpl(id, league) {
 }
 
 // ───────────────────────── Élő statisztika (live player insert) ─────────────────────────
-// A small pop-up for timeouts / quarter breaks: the official roster photo of the chosen player, name, game state and a few statistics from the live
-// boxscore. It must not hide the broadcaster's score bug: both versions of it sit in the bottom-right corner (measured on the owner's screenshots of the
-// two feeds: x 1211–1886, y 931–1044 and x 1425–1876, y 956–1034), so the pop-up lives on the left (top or bottom) and BROADCAST_ZONE marks the keep-out area.
+// A thin pop-up strip for timeouts / quarter breaks: the official roster photo of the chosen player, name and a few statistics from the live boxscore.
+// It must not hide the broadcaster's score bug: both versions of it sit in the bottom-right corner (measured on the owner's screenshots of the two feeds:
+// x 1211–1886, y 931–1044 and x 1425–1876, y 956–1034). Owner's placement (2026-11-24): on the score bug's level, in the middle of the space between the
+// left edge of the picture and the score bug. BROADCAST_ZONE marks the keep-out area.
 export const BROADCAST_ZONE = { box: [1200, 925, 1920, 1080], label: 'Adásbeli eredményjelző zónája (két változat: 1211–1886 × 931–1044 és 1425–1876 × 956–1034 px)' };
-export const LIVE_SCALE = 0.64; // the first version (960 px wide) was too big: everything is laid out at 960 px and shrunk by this factor
-export const LIVE_PANEL = { x: 40, y: 40, w: Math.round(960 * LIVE_SCALE), pad: 24, margin: 40 };
-export const LIVE_CORNERS = { tl: 'Bal felül', bl: 'Bal alul' };
-export const liveCorner = c => (LIVE_CORNERS[c] ? c : 'tl');
+export const LIVE_PLACE = { cx: BROADCAST_ZONE.box[0] / 2, cy: 988, maxBottom: 1060, tl: 40 }; // cx = middle of the gap left of the score bug; cy = the score bug's vertical centre
+export const LIVE_CORNERS = { gap: 'Alul, az eredményjelző szintjén (a rés közepén)', tl: 'Bal felül' };
+export const liveCorner = c => (LIVE_CORNERS[c] ? c : 'gap');
+const LIVE_PAD = 10, LIVE_PHOTO_W = 120;
 export const LIVE_VARIANTS = {
-  basic: { label: 'Alap (PTS · REB · AST)', cols: 3, h: 420, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
-  shooting: { label: 'Dobások (2P · 3P · BT)', cols: 3, h: 420, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
-  full: { label: 'Teljes sor', cols: 3, h: 540, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
+  basic: { label: 'Alap (PTS · REB · AST)', w: 480, h: 150, cols: 3, val: 60, lab: 26, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
+  shooting: { label: 'Dobások (2P · 3P · BT)', w: 480, h: 140, cols: 3, val: 52, lab: 24, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
+  full: { label: 'Teljes sor', w: 900, h: 130, cols: 9, val: 40, lab: 22, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
 };
 export const liveVariant = v => (LIVE_VARIANTS[v] ? v : 'basic');
-export const LIVE_BUILDERS = {}; // template id → (variant, corner) => template (see app.js tpl())
+export const LIVE_BUILDERS = {}; // template id → (variant, place) => template (see app.js tpl())
 
-function liveTpl(id, league, variantIn, cornerIn) {
-  const variant = liveVariant(variantIn), corner = liveCorner(cornerIn), V = LIVE_VARIANTS[variant], S = LIVE_SCALE, k = n => n * S;
-  const { pad: pad0, margin } = LIVE_PANEL, pad = k(pad0), w = LIVE_PANEL.w, h = Math.round(k(V.h)), op = 0.9882;
-  const x = margin, y = corner === 'bl' ? 1080 - margin - h : margin;
-  const sw = 4; // thinner outline than the big frames (the pop-up is small)
-  const txt = (size, extra) => ({ type: 'text', size: Math.round(size * 10) / 10, tracking: 25, color: '#ffffff', outline: ol(2.5, '#000000'), opacity: op, adjust: true, ...extra });
-  const left = x + k(300), right = x + w - pad, rowsN = Math.ceil(V.cells.length / V.cols);
-  const frame = { ...panelFrame(league, x, y, w, h), sw, r: 20 };
-  const photoH = h - 12, photoW = k(280);
-  const els = [frame,
-    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [right - k(70), y + pad + k(78), k(140), k(130)], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
-    { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 6 + photoW / 2, y + h - 6 - photoH / 2, photoW, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
-    txt(k(88), { id: 'name', label: 'Név', group: 'Fejléc', x: left, y: y + pad + k(82), align: 'left', runs: true, maxWidth: right - left - k(160), minScale: 0.5, tracking: 40, outline: ol(3, '#000000', 1) }),
-    txt(k(40), { id: 'sub', label: 'Mezszám · állás · negyed', group: 'Fejléc', x: left, y: y + pad + k(132), align: 'left', font: 'italic', maxWidth: right - left - k(150), minScale: 0.5 }),
+function liveTpl(id, league, variantIn, placeIn) {
+  const variant = liveVariant(variantIn), place = liveCorner(placeIn), V = LIVE_VARIANTS[variant], { w, h } = V, pad = LIVE_PAD, op = 0.9882;
+  const x = place === 'tl' ? LIVE_PLACE.tl : Math.round(LIVE_PLACE.cx - w / 2);
+  const y = place === 'tl' ? LIVE_PLACE.tl : Math.min(Math.round(LIVE_PLACE.cy - h / 2), LIVE_PLACE.maxBottom - h);
+  const sw = 3;
+  const txt = (size, extra) => ({ type: 'text', size, tracking: 25, color: '#ffffff', outline: ol(2, '#000000'), opacity: op, adjust: true, ...extra });
+  const left = x + pad + LIVE_PHOTO_W + 8, right = x + w - pad, photoH = h - 8;
+  const els = [
+    { ...panelFrame(league, x, y, w, h), sw, r: 14 },
+    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [right - 22, y + pad + 24, 44, 44], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 1 },
+    { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 6 + LIVE_PHOTO_W / 2, y + h - 4 - photoH / 2, LIVE_PHOTO_W, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
+    txt(46, { id: 'name', label: 'Név', group: 'Fejléc', x: left, y: y + pad + 38, align: 'left', runs: true, maxWidth: right - left - 54, minScale: 0.5, tracking: 30, outline: ol(2.5, '#000000', 1) }),
   ];
-  const colW = (right - left) / V.cols;
-  // per variant: value size, label size and the baselines inside a row band (digits are 0.743 em tall); `sub` = the percentage line (shooting)
-  const L = { basic: { val: 150, lab: 54 }, shooting: { val: 104, lab: 46, sub: 46 }, full: { val: 76, lab: 34 } }[variant];
-  const top = y + pad + k(170), bottom = y + h - pad;
+  const colW = (right - left) / V.cols, top = y + 58;
   V.cells.forEach((c, i) => {
-    const col = i % V.cols, row = Math.floor(i / V.cols), cx = left + colW * (col + 0.5), band = (bottom - top) / rowsN;
-    const b0 = top + band * row, val = b0 + k(L.val) * 0.743 + k(6), lab = val + k(L.lab) + k(variant === 'full' ? 4 : 8);
-    const g = `${i + 1}. statisztika`;
+    const cx = left + colW * (i + 0.5), val = top + V.val * 0.743, lab = val + V.lab + 5, g = `${i + 1}. statisztika`;
     els.push(
-      txt(k(L.val), { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', maxWidth: colW - 8, minScale: 0.5, tracking: 25 }),
-      txt(k(L.lab), { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', maxWidth: colW - 8 }),
+      txt(V.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', maxWidth: colW - 4, minScale: 0.5 }),
+      txt(V.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', maxWidth: colW - 4, minScale: 0.6 }),
     );
-    if (L.sub) els.push(txt(k(L.sub), { id: `c${i}.sub`, label: `${c.label} – százalék`, group: g, x: cx, y: lab + k(L.sub) + k(6), align: 'center', maxWidth: colW - 8 }));
   });
   const t = base(id, league, 'livestat', 'Élő statisztika (saját)', 'Élő statisztika', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
-  t.inner = { box: [x + sw + 2, y + sw + 2, x + w - sw - 2, y + h - sw - 2], r: 16 };
-  t.live = { variant, corner };
+  t.inner = { box: [x + sw + 1, y + sw + 1, x + w - sw - 1, y + h - sw - 1], r: 11 };
+  t.live = { variant, place };
   return t;
 }
 function liveEntry(id, league) {
-  LIVE_BUILDERS[id] = (v, c) => liveTpl(id, league, v, c);
-  return LIVE_BUILDERS[id]('basic', 'tl');
+  LIVE_BUILDERS[id] = (v, p) => liveTpl(id, league, v, p);
+  return LIVE_BUILDERS[id]('basic', 'gap');
 }
 
 // ───────────────────────── Extra (MKOSZ) – freely sized frames ─────────────────────────
