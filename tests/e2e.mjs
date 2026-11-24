@@ -1252,7 +1252,10 @@ try {
     assert.match(await page.textContent('#liveInfo'), /Még nincs élő meccs/, 'nothing loaded: stated, nothing invented');
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     await page.fill('#liveCode', 'https://netcasting4.webpont.com/?whun_135563'); await page.dispatchEvent('#liveCode', 'change');
-    await page.click('details:has(#livePaste) > summary');
+    if (!(await page.isVisible('#livePaste'))) await page.click('details:has(#livePaste) > summary'); // open by default while no game is loaded
+    assert.equal(await page.getAttribute('#liveOpenRow a', 'href'), 'https://netcasting4.webpont.com/storage/fullwhun_135563.html', 'ready-made link to the feed of the entered game');
+    await page.fill('#livePaste', '<!DOCTYPE html><html><head><title>ETO BASKET - VBW CEKK CEGLÉD</title></head></html>'); await page.click('#livePasteGo');
+    await until(13, () => /weboldal \(HTML\)/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
     await page.fill('#livePaste', 'half a feed {"i":'); await page.click('#livePasteGo');
     await until(1, () => /nem értelmezhető/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
     await page.fill('#livePaste', feed); await page.click('#livePasteGo');
