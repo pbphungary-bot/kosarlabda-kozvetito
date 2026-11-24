@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, mmss } from './live.js';
-import { liveDims, liveTeamKeys, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { liveDims, liveTeamKeys, liveTeamSize, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -636,8 +636,14 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
 }
 
 // ───────────────────────── live team comparison (Élő csapat-összevetés) ─────────────────────────
-/** Period label of the live game: "2. NEGYED", "HOSSZABBÍTÁS" or "VÉGE" (the exact clock is not shown: the feed's last event can be a few seconds old). */
-export const livePeriodLabel = g => (g.finished ? 'VÉGE' : g.clock.period > 4 ? (g.clock.period > 5 ? `${g.clock.period - 4}. HOSSZABBÍTÁS` : 'HOSSZABBÍTÁS') : `${g.clock.period}. NEGYED`);
+/** Period label of the live game: "2. NEGYED" / "HOSSZABBÍTÁS" (empty when the game is over). */
+export const livePeriodLabel = g => (g.finished ? '' : g.clock.period > 4 ? (g.clock.period > 5 ? `${g.clock.period - 4}. HOSSZABBÍTÁS` : 'HOSSZABBÍTÁS') : `${g.clock.period}. NEGYED`);
+/** Game time left in the period ("9:26"), or "VÉGE" when the game is over. The feed gives the elapsed game seconds of its LAST EVENT, so this can run a few seconds behind the real clock. */
+export const liveTimeLabel = g => {
+  if (g.finished) return 'VÉGE';
+  const len = g.clock.period <= 4 ? 600 : 300, left = Math.max(0, Math.round(len - g.clock.elapsed));
+  return `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+};
 
 export function bindLiveTeam(store, lg, game, sel = {}) {
   const v = {}, when = sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : '', src = LIVE_SRC + when;
@@ -647,8 +653,8 @@ export function bindLiveTeam(store, lg, game, sel = {}) {
   v.logoH = ids.home ? logo(lg, ids.home) : { src: '', source: 'A hazai klub logója nem található' };
   v.logoA = ids.away ? logo(lg, ids.away) : { src: '', source: 'A vendég klub logója nem található' };
   v.scoreH = field(String(game.score.home), `${src} – állás`); v.scoreA = field(String(game.score.away), `${src} – állás`);
-  v.clock = { text: livePeriodLabel(game), source: src };
-  const big = 40, small = Math.round(big * 2 / 3), mk = (m, a) => ({ m, a, pct: a > 0 ? m / a : null });
+  v.clock = { text: livePeriodLabel(game), source: src }; v.time = { text: liveTimeLabel(game), source: `${src} – a hátralévő idő az utolsó esemény ideje alapján (néhány másodperc késés lehet)` };
+  const big = 40 * liveTeamSize(sel.teamStats).scale, small = Math.round(big * 2 / 3 * 100) / 100, mk = (m, a) => ({ m, a, pct: a > 0 ? m / a : null });
   const val = (side, k) => {
     const t = T[side].team;
     switch (k) {

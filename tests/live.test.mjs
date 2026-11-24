@@ -5,7 +5,7 @@ import { ROOT } from './helpers.mjs';
 import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
-import { bindLiveStat, bindLiveTeam, livePeriodLabel, liveChoice } from '../graphics/js/binders.js';
+import { bindLiveStat, bindLiveTeam, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
 import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES, LIVE_TEAM_BUILDERS, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, liveTeamKeys, liveTeamSize } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
@@ -181,7 +181,10 @@ test('live team comparison: quarter points add up to the score, team totals, bet
   assert.equal(g.quarters.home.length, 4);
   assert.equal(g.foulsByPeriod.home.reduce((a, b) => a + b, 0), g.teams.home.team.pf, 'team fouls per period add up to the total');
   assert.equal(g.teams.home.team.reb, g.teams.home.team.oreb + g.teams.home.team.dreb);
-  assert.equal(livePeriodLabel(g), 'VÉGE');
+  assert.equal(liveTimeLabel(g), 'VÉGE'); assert.equal(livePeriodLabel(g), '', 'finished game: no period, just VÉGE');
+  const mid = { finished: false, clock: gameClock(1234) }; // 34 s into the 3rd quarter
+  assert.deepEqual([livePeriodLabel(mid), liveTimeLabel(mid)], ['3. NEGYED', '9:26'], 'live game: period + time left');
+  assert.deepEqual([livePeriodLabel({ finished: false, clock: gameClock(2450) }), liveTimeLabel({ finished: false, clock: gameClock(2450) })], ['HOSSZABBÍTÁS', '4:10']);
   const v = bindLiveTeam(store, 'women', g, { teamStats: ['fg3', 'reb', 'tov'], fetchedAt: '22:41:03' });
   assert.equal(v.scoreH.text, '90'); assert.equal(v.scoreA.text, '48');
   assert.equal(v.logoH.src, 'women/sercounigyor');
@@ -189,7 +192,8 @@ test('live team comparison: quarter points add up to the score, team totals, bet
   const t = g.teams.home.team, a = g.teams.away.team;
   assert.equal(v['r0.h'].text, `${t.fg3m}/${t.fg3a} (${Math.round(100 * t.fg3m / t.fg3a)}%)`);
   assert.deepEqual(v['r0.h'].runs.map(r => r.text), [`${t.fg3m}/${t.fg3a}`, ` (${Math.round(100 * t.fg3m / t.fg3a)}%)`]);
-  assert.equal(v['r0.h'].runs[1].size, 27, '2/3 of the 40 px figures');
+  assert.equal(v['r0.h'].runs[1].size, Math.round(40 * liveTeamSize(['fg3', 'reb', 'tov']).scale * 2 / 3 * 100) / 100, '2/3 of the (scaled) figures');
+  assert.equal(v.time.text, 'VÉGE');
   assert.equal(v['r1.h'].text, String(t.reb)); assert.equal(v['r1.a'].text, String(a.reb));
   assert.equal(v['r1.h.box'].fill, t.reb > a.reb ? LIVE_TEAM_COLORS.best : LIVE_TEAM_COLORS.box, 'more rebounds = better');
   assert.equal(v['r2.h.box'].fill, t.tov < a.tov ? LIVE_TEAM_COLORS.best : LIVE_TEAM_COLORS.box, 'fewer turnovers = better');
@@ -197,18 +201,26 @@ test('live team comparison: quarter points add up to the score, team totals, bet
   assert.deepEqual(liveTeamKeys(['nope']), ['fg', 'fg3', 'ft', 'reb', 'ast', 'tov'], 'nothing valid ticked: the default set');
 });
 
-test('live team comparison graphic: sized by the ticked stats, inside the picture, clear of the score bug zones', () => {
+test('live team comparison graphic: about 2x bigger, columns / scores close to the middle, top-left, inside the picture, clear of the score bug zones', () => {
   for (const id of ['liveteam-men', 'liveteam-women']) {
     assert.equal(templateById(id).type, 'liveteam');
-    for (const n of [1, 6, LIVE_TEAM_STATS.length]) {
-      const keys = LIVE_TEAM_STATS.slice(0, n).map(x => x.key), t = LIVE_TEAM_BUILDERS[id](keys), [cx, cy, w, h] = t.elements.find(e => e.id === 'panel').box;
-      assert.deepEqual([w, h], [liveTeamSize(keys).w, liveTeamSize(keys).h]);
+    for (const n of [1, 3, 6, LIVE_TEAM_STATS.length]) {
+      const keys = LIVE_TEAM_STATS.slice(0, n).map(x => x.key), t = LIVE_TEAM_BUILDERS[id](keys), [cx, cy, w, h] = t.elements.find(e => e.id === 'panel').box, S = liveTeamSize(keys);
+      assert.deepEqual([w, h], [S.w, S.h]);
       assert.equal(t.elements.filter(e => /^r\d+\.label$/.test(e.id)).length, n);
       const x0 = cx - w / 2, y0 = cy - h / 2;
       assert.deepEqual([x0, y0], [60, 2], 'same place as Csapatok összevetése (top-left)');
-      assert.ok(x0 >= 0 && y0 >= 0 && x0 + w <= 1920 && y0 + h <= 1080, 'inside the picture');
-      for (const size of ['large', 'small']) { const [zx0, zy0, zx1, zy1] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `${n} stats: clear of the ${size} score bug zone`); }
-      for (const e of t.elements.filter(e => e.type === 'text')) assert.equal(e.font, undefined, 'League Gothic (default) only');
+      assert.ok(x0 + w <= 1920 && y0 + h <= 1078, 'inside the picture');
+      for (const size of ['large', 'small']) { const [zx0, zy0] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `${n} stats: clear of the ${size} score bug zone`); }
+      if (n <= 6) assert.ok(S.scale >= 1.9, `${n} stats: about 2x bigger (${S.scale})`);
+      assert.ok(S.scale <= 2);
+      const el = i => t.elements.find(e => e.id === i), mid = x0 + w / 2;
+      assert.ok(Math.abs(el('clock').x - mid) < 1 && Math.abs(el('time').x - mid) < 1, 'period and time in the middle');
+      const gap = (el('scoreA.box').box[0] - el('scoreH.box').box[0]) / S.scale; // distance between the two score boxes, in base units: close together
+      assert.ok(gap < 300, `scores close together (${gap})`);
+      const colGap = (el('r0.a.box').box[0] - el('r0.h.box').box[0]) / S.scale;
+      assert.ok(colGap < 400, `value columns close together (${colGap})`);
+      for (const e of t.elements.filter(e => e.type === 'text')) assert.ok([undefined, 'italic'].includes(e.font), 'League Gothic only');
     }
   }
   assert.ok(TEMPLATE_TYPES.liveteam);

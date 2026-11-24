@@ -1343,9 +1343,10 @@ try {
     assert.equal(await val('r0.label'), 'FG'); assert.match(await val('r0.h'), /^\d+\/\d+ \(\d+%\)$/);
     await page.uncheck('.liveTeamStat[value="fg"]'); await page.check('.liveTeamStat[value="stl"]');
     await until(2, () => window.__studio.current().values?.['r0.label']?.text === '3P', null, { timeout: 15000 });
-    const h = () => page.evaluate(() => window.__studio.report().boxes['panel'][3]);
-    const h6 = await h(); await page.check('.liveTeamStat[value="blk"]');
-    await until(3, h6 => window.__studio.report().boxes['panel'][3] > h6, h6, { timeout: 15000 }); // one more ticked stat: the panel grows by one row
+    assert.equal(await val('r6.label'), undefined, 'six rows so far');
+    await page.check('.liveTeamStat[value="blk"]');
+    await until(3, () => window.__studio.current().values?.['r6.label']?.text === 'TOV' && window.__studio.current().values?.['r5.label']?.text === 'BLK', null, { timeout: 15000 }); // one more ticked stat: one more row
+    assert.equal(await val('time'), 'VÉGE', 'a finished game says VÉGE instead of a clock');
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
     await page.click('#exportBtn', { trial: true }).catch(() => {});
   });
