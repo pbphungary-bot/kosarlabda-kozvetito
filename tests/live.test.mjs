@@ -5,8 +5,8 @@ import { ROOT } from './helpers.mjs';
 import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
-import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
-import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
+import { bindLiveStat, bindLiveTeam, livePeriodLabel, liveChoice } from '../graphics/js/binders.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES, LIVE_TEAM_BUILDERS, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, liveTeamKeys, liveTeamSize } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -173,4 +173,42 @@ test('live feed: the address to open, and what is wrong with a pasted text', () 
   assert.equal(feedProblem('ETO BASKET - VBW CEKK CEGLÉD <script>x</script>'), 'html');
   assert.equal(feedProblem(raw.slice(0, 5000)), 'truncated', 'a feed cut in the middle');
   assert.equal(feedProblem('just some words'), 'unknown');
+});
+
+test('live team comparison: quarter points add up to the score, team totals, better value marked, shooting as made/att (pct)', async () => {
+  const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563');
+  for (const s of ['home', 'away']) assert.equal(g.quarters[s].reduce((a, b) => a + b, 0), g.score[s], `${s}: quarter points = official score`);
+  assert.equal(g.quarters.home.length, 4);
+  assert.equal(g.foulsByPeriod.home.reduce((a, b) => a + b, 0), g.teams.home.team.pf, 'team fouls per period add up to the total');
+  assert.equal(g.teams.home.team.reb, g.teams.home.team.oreb + g.teams.home.team.dreb);
+  assert.equal(livePeriodLabel(g), 'VÉGE');
+  const v = bindLiveTeam(store, 'women', g, { teamStats: ['fg3', 'reb', 'tov'], fetchedAt: '22:41:03' });
+  assert.equal(v.scoreH.text, '90'); assert.equal(v.scoreA.text, '48');
+  assert.equal(v.logoH.src, 'women/sercounigyor');
+  assert.deepEqual([0, 1, 2].map(i => v[`r${i}.label`].text), ['3P', 'REB', 'TOV'], 'ticked stats in canonical order');
+  const t = g.teams.home.team, a = g.teams.away.team;
+  assert.equal(v['r0.h'].text, `${t.fg3m}/${t.fg3a} (${Math.round(100 * t.fg3m / t.fg3a)}%)`);
+  assert.deepEqual(v['r0.h'].runs.map(r => r.text), [`${t.fg3m}/${t.fg3a}`, ` (${Math.round(100 * t.fg3m / t.fg3a)}%)`]);
+  assert.equal(v['r0.h'].runs[1].size, 27, '2/3 of the 40 px figures');
+  assert.equal(v['r1.h'].text, String(t.reb)); assert.equal(v['r1.a'].text, String(a.reb));
+  assert.equal(v['r1.h.box'].fill, t.reb > a.reb ? LIVE_TEAM_COLORS.best : LIVE_TEAM_COLORS.box, 'more rebounds = better');
+  assert.equal(v['r2.h.box'].fill, t.tov < a.tov ? LIVE_TEAM_COLORS.best : LIVE_TEAM_COLORS.box, 'fewer turnovers = better');
+  assert.match(v['r0.h'].source, /22:41:03/, 'freshness is in the source label');
+  assert.deepEqual(liveTeamKeys(['nope']), ['fg', 'fg3', 'ft', 'reb', 'ast', 'tov'], 'nothing valid ticked: the default set');
+});
+
+test('live team comparison graphic: sized by the ticked stats, inside the picture, clear of the score bug zones', () => {
+  for (const id of ['liveteam-men', 'liveteam-women']) {
+    assert.equal(templateById(id).type, 'liveteam');
+    for (const n of [1, 6, LIVE_TEAM_STATS.length]) {
+      const keys = LIVE_TEAM_STATS.slice(0, n).map(x => x.key), t = LIVE_TEAM_BUILDERS[id](keys), [cx, cy, w, h] = t.elements.find(e => e.id === 'panel').box;
+      assert.deepEqual([w, h], [liveTeamSize(keys).w, liveTeamSize(keys).h]);
+      assert.equal(t.elements.filter(e => /^r\d+\.label$/.test(e.id)).length, n);
+      const x0 = cx - w / 2, y0 = cy - h / 2;
+      assert.ok(x0 >= 0 && y0 >= 0 && x0 + w <= 1920 && y0 + h <= 1080, 'inside the picture');
+      for (const size of ['large', 'small']) { const [zx0, zy0, zx1, zy1] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `${n} stats: clear of the ${size} score bug zone`); }
+      for (const e of t.elements.filter(e => e.type === 'text')) assert.equal(e.font, undefined, 'League Gothic (default) only');
+    }
+  }
+  assert.ok(TEMPLATE_TYPES.liveteam);
 });

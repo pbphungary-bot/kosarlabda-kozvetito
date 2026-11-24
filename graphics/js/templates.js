@@ -628,6 +628,66 @@ function liveEntry(id, league) {
   return LIVE_BUILDERS[id]('basic', 'gap', 'large');
 }
 
+// ───────────────────────── Élő csapat-összevetés (live team comparison) ─────────────────────────
+// Styled like the broadcaster's own score bug (owner's screenshots of the feed): dark glossy bar, team logos instead of the abbreviations, the score in a
+// white box with black digits next to each logo, a period / clock line in the middle, then one dark strip per ticked statistic with the two values in
+// white boxes and the name between them; the better value is marked in red. League Gothic only (project rule).
+export const LIVE_TEAM_STATS = [ // canonical order; shoot = made/attempted with the percentage in ( ); low = a lower value is the better one
+  { key: 'fg', label: 'FG', shoot: true }, { key: 'fg2', label: '2P', shoot: true }, { key: 'fg3', label: '3P', shoot: true }, { key: 'ft', label: 'BT', shoot: true },
+  { key: 'reb', label: 'REB' }, { key: 'oreb', label: 'TÁMADÓ REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' },
+  { key: 'tov', label: 'TOV', low: true }, { key: 'pf', label: 'FAULT', low: true }, { key: 'eff', label: 'EFF' },
+];
+export const LIVE_TEAM_DEFAULT = ['fg', 'fg3', 'ft', 'reb', 'ast', 'tov'];
+export const liveTeamKeys = keys => {
+  const k = LIVE_TEAM_STATS.map(x => x.key).filter(x => (keys || []).includes(x));
+  return k.length ? k : LIVE_TEAM_DEFAULT.slice();
+};
+export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', best: '#d4202b', edge: '#3b3b40' };
+export const LIVE_TEAM_BUILDERS = {}; // template id → (keys) => template
+const LT = { w: 760, head: 138, pad: 26, box: 200 };
+const ltRow = n => (n <= 9 ? 64 : 54); // many ticked stats: narrower rows, so the panel never reaches the score bug zone
+export const liveTeamSize = keys => { const n = liveTeamKeys(keys).length; return { w: LT.w, h: LT.head + n * ltRow(n) + LT.pad }; };
+function liveTeamTpl(id, league, keysIn) {
+  const keys = liveTeamKeys(keysIn), { w, h } = liveTeamSize(keys), ROW = ltRow(keys.length), x = Math.round((1920 - w) / 2), y = 60, C = LIVE_TEAM_COLORS, op = 0.9882;
+  const txt = (size, extra) => ({ type: 'text', size, tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
+  const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: 7, opacity: op, ...extra });
+  const els = [
+    { id: 'panel', type: 'framed', label: 'Panel (háttér)', group: 'Panel', box: [x + w / 2, y + h / 2, w, h], fill: C.bar, stroke: C.edge, sw: 3, r: 18, useBase: true, opacity: 0.965, fixedFrame: true, lockAspect: false },
+  ];
+  // header: logo + white score box on each side, period / clock in the middle
+  const hy = y + 22, hh = 94, sb = 130;
+  els.push(
+    { id: 'logoH', type: 'image', label: 'Hazai logó', group: 'Fejléc', box: [x + 76, hy + hh / 2, 96, 96], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
+    box('scoreH.box', 'Hazai eredmény – doboz', 'Fejléc', x + 140, hy + 6, sb, hh - 12),
+    txt(66, { id: 'scoreH', label: 'Hazai eredmény', group: 'Fejléc', x: x + 140 + sb / 2, y: hy + hh / 2 + 0.3715 * 66, color: C.digit, maxWidth: sb - 12, minScale: 0.6 }),
+    txt(30, { id: 'clock', label: 'Negyed / idő', group: 'Fejléc', x: x + w / 2, y: hy + hh / 2 + 0.3715 * 30, maxWidth: 190, minScale: 0.6 }),
+    box('scoreA.box', 'Vendég eredmény – doboz', 'Fejléc', x + w - 140 - sb, hy + 6, sb, hh - 12),
+    txt(66, { id: 'scoreA', label: 'Vendég eredmény', group: 'Fejléc', x: x + w - 140 - sb / 2, y: hy + hh / 2 + 0.3715 * 66, color: C.digit, maxWidth: sb - 12, minScale: 0.6 }),
+    { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [x + w - 76, hy + hh / 2, 96, 96], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
+  );
+  keys.forEach((k, i) => {
+    const d = LIVE_TEAM_STATS.find(q => q.key === k), ry = y + LT.head + i * ROW, g = `${i + 1}. statisztika`, bh = ROW - 14, by = ry + 7, cy = by + bh / 2;
+    const lx = x + LT.pad, rx = x + w - LT.pad - LT.box;
+    els.push(
+      { id: `r${i}.bg`, type: 'framed', label: `${d.label} – sáv`, group: g, box: [x + w / 2, ry + ROW / 2, w - 2 * 14, ROW - 8], fill: C.strip, sw: 0, r: 10, opacity: op },
+      box(`r${i}.h.box`, `${d.label} – hazai doboz`, g, lx, by, LT.box, bh),
+      txt(40, { id: `r${i}.h`, label: `${d.label} – hazai`, group: g, x: lx + LT.box / 2, y: cy + 0.3715 * 40, runs: true, color: C.digit, maxWidth: LT.box - 14, minScale: 0.5 }),
+      txt(30, { id: `r${i}.label`, label: `${d.label} – felirat`, group: g, x: x + w / 2, y: cy + 0.3715 * 30, maxWidth: w - 2 * (LT.pad + LT.box) - 16, minScale: 0.6 }),
+      box(`r${i}.a.box`, `${d.label} – vendég doboz`, g, rx, by, LT.box, bh),
+      txt(40, { id: `r${i}.a`, label: `${d.label} – vendég`, group: g, x: rx + LT.box / 2, y: cy + 0.3715 * 40, runs: true, color: C.digit, maxWidth: LT.box - 14, minScale: 0.5 }),
+    );
+  });
+  const t = base(id, league, 'liveteam', 'Élő csapat-összevetés (saját)', 'Élő csapat-összevetés', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
+  t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
+  t.inner = { box: [x + 3, y + 3, x + w - 3, y + h - 3], r: 15 };
+  t.liveTeam = { keys };
+  return t;
+}
+function liveTeamEntry(id, league) {
+  LIVE_TEAM_BUILDERS[id] = keys => liveTeamTpl(id, league, keys);
+  return LIVE_TEAM_BUILDERS[id](LIVE_TEAM_DEFAULT);
+}
+
 // ───────────────────────── Vezetőedző nyilatkozata (coach interview) ─────────────────────────
 // Geometry and type of the owner's prototype "Hegedűs ITW BEAC előtt - 0924.psd" (women); the men's graphic has the same layout with the men's outline colour.
 // Left: the coach's cut-out photo (always an upload); right: the quote (small caps like the PSD or plain capitals, shrinks to fit), name, subtitle; club logo
@@ -768,6 +828,8 @@ export const TEMPLATES = [
   coachTpl('coach-women', 'women'),
   liveEntry('livestat-men', 'men'),
   liveEntry('livestat-women', 'women'),
+  liveTeamEntry('liveteam-men', 'men'),
+  liveTeamEntry('liveteam-women', 'women'),
   extraTpl('extra-men', 'men'),
   extraTpl('extra-women', 'women'),
   nextmatch('nextmatch-men', 'men'),
@@ -799,6 +861,7 @@ export const TEMPLATE_TYPES = {
   h2h: 'Egymás ellen',
   extra: 'Extra (MKOSZ)',
   livestat: 'Élő statisztika (játékos)',
+  liveteam: 'Élő statisztika (csapat-összevetés)',
   coach: 'Vezetőedző nyilatkozata',
 };
 

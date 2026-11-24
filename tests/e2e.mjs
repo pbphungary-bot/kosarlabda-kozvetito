@@ -77,8 +77,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 18 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 18);
+    await check(`${lg}: 19 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 19);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -1326,6 +1326,28 @@ try {
     await until(9, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 }); // a refresh keeps the chosen player
     await page.unroute('**/live?*');
     await page.selectOption('#bugMode', 'off');
+  });
+
+  await check('live team comparison: scoreboard look, ticked statistics, values from the pasted feed, export', async () => {
+    const until = (n, fn, arg, o) => page.waitForFunction(fn, arg, o).catch(e => { throw new Error(`live team test: wait #${n} timed out (${e.message.split('\n')[0]})`); });
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="liveteam-women"]');
+    await page.waitForSelector('#liveCode');
+    assert.equal(await page.isVisible('#livePlayer'), false, 'no player choice on the team comparison');
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
+    if (!(await page.isVisible('#livePaste'))) await page.click('details:has(#livePaste) > summary');
+    await page.fill('#livePaste', feed); await page.click('#livePasteGo');
+    await until(1, () => window.__studio.current().values?.scoreH?.text === '90', null, { timeout: 15000 });
+    const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
+    assert.equal(await val('scoreA'), '48'); assert.equal(await val('logoH', 'src'), 'women/sercounigyor');
+    assert.equal(await val('r0.label'), 'FG'); assert.match(await val('r0.h'), /^\d+\/\d+ \(\d+%\)$/);
+    await page.uncheck('.liveTeamStat[value="fg"]'); await page.check('.liveTeamStat[value="stl"]');
+    await until(2, () => window.__studio.current().values?.['r0.label']?.text === '3P', null, { timeout: 15000 });
+    const h = () => page.evaluate(() => window.__studio.report().boxes['panel'][3]);
+    const h6 = await h(); await page.check('.liveTeamStat[value="blk"]');
+    await until(3, h6 => window.__studio.report().boxes['panel'][3] > h6, h6, { timeout: 15000 }); // one more ticked stat: the panel grows by one row
+    assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
+    await page.click('#exportBtn', { trial: true }).catch(() => {});
   });
 
   await check('score bug: graphics keep out of the zone (large / small / off), the setting is remembered, the zone guide follows', async () => {

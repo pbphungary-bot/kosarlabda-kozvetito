@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, mmss } from './live.js';
-import { liveDims, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { liveDims, liveTeamKeys, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -631,6 +631,44 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
     if (cell.shoot && value && pct) { const t = ` (${pct})`; v[`c${i}.value`] = { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] }; }
     else v[`c${i}.value`] = cell.shoot && value ? { ...f, source: `${src} – ${cell.label}: nincs kísérlet, nincs százalék` } : f;
     v[`c${i}.label`] = { text: cell.label, source: 'Fix felirat (átírható)' };
+  });
+  return v;
+}
+
+// ───────────────────────── live team comparison (Élő csapat-összevetés) ─────────────────────────
+/** Period label of the live game: "2. NEGYED", "HOSSZABBÍTÁS" or "VÉGE" (the exact clock is not shown: the feed's last event can be a few seconds old). */
+export const livePeriodLabel = g => (g.finished ? 'VÉGE' : g.clock.period > 4 ? (g.clock.period > 5 ? `${g.clock.period - 4}. HOSSZABBÍTÁS` : 'HOSSZABBÍTÁS') : `${g.clock.period}. NEGYED`);
+
+export function bindLiveTeam(store, lg, game, sel = {}) {
+  const v = {}, when = sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : '', src = LIVE_SRC + when;
+  if (!game) { v.scoreH = field(null, src); return v; }
+  const C = LIVE_TEAM_COLORS, T = { home: game.teams.home, away: game.teams.away };
+  const ids = { home: clubIdStrict(lg, T.home.short) || clubIdStrict(lg, T.home.name) || null, away: clubIdStrict(lg, T.away.short) || clubIdStrict(lg, T.away.name) || null };
+  v.logoH = ids.home ? logo(lg, ids.home) : { src: '', source: 'A hazai klub logója nem található' };
+  v.logoA = ids.away ? logo(lg, ids.away) : { src: '', source: 'A vendég klub logója nem található' };
+  v.scoreH = field(String(game.score.home), `${src} – állás`); v.scoreA = field(String(game.score.away), `${src} – állás`);
+  v.clock = { text: livePeriodLabel(game), source: src };
+  const big = 40, small = Math.round(big * 2 / 3), mk = (m, a) => ({ m, a, pct: a > 0 ? m / a : null });
+  const val = (side, k) => {
+    const t = T[side].team;
+    switch (k) {
+      case 'fg': return mk(t.fg2m + t.fg3m, t.fg2a + t.fg3a); case 'fg2': return mk(t.fg2m, t.fg2a); case 'fg3': return mk(t.fg3m, t.fg3a); case 'ft': return mk(t.ftm, t.fta);
+      case 'reb': return t.reb; case 'oreb': return t.oreb; default: return t[k];
+    }
+  };
+  liveTeamKeys(sel.teamStats).forEach((k, i) => {
+    const d = LIVE_TEAM_STATS.find(x => x.key === k), a = val('home', k), b = val('away', k);
+    const key = x => (d.shoot ? x.pct : x), ka = key(a), kb = key(b);
+    const better = ka === null || kb === null || ka === kb ? null : ((ka > kb) !== !!d.low ? 'home' : 'away'); // equal or no attempts: nobody is marked
+    v[`r${i}.label`] = { text: d.label, source: 'Fix felirat (átírható)' };
+    for (const [side, x, id] of [['home', a, `r${i}.h`], ['away', b, `r${i}.a`]]) {
+      const hit = better === side, o = { color: hit ? '#ffffff' : C.digit };
+      v[`${id}.box`] = { fill: hit ? C.best : C.box, source: 'Jelölés: a jobb érték' };
+      if (d.shoot) {
+        const main = `${x.m}/${x.a}`, pc = x.pct === null ? null : ` (${Math.round(100 * x.pct)}%)`;
+        v[id] = { ...o, text: main + (pc || ''), runs: [{ text: main }, ...(pc ? [{ text: pc, size: small, dy: -(big - small) * 0.3715 }] : [])], source: `${src} – ${d.label}${pc ? '' : ': nincs kísérlet, nincs százalék'}` };
+      } else v[id] = { ...o, text: String(x), source: `${src} – ${d.label}` };
+    }
   });
   return v;
 }
