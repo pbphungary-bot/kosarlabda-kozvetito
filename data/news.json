@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T09:48:15.714656+00:00",
+  "checked_at": "2026-11-24T10:47:16.974103+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 34,
-      "added": 0,
+      "candidates": 35,
+      "added": 3,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -562,6 +562,16 @@
   ],
   "articles": [
     {
+      "source": "WBasket.hu",
+      "title": "Újabb gátat is átlépett a magyar válogatott a novemberi FIBA-ablakban – Völgyi Péterrel értékeltünk",
+      "summary": "Mindhárom novemberi mérkőzését megnyerte a magyar válogatott a 2027-es Európa-bajnokság selejtezőjében.",
+      "url": "https://wbasket.hu/ujabb-gatat-is-atlepett-a-magyar-valogatott-a-novemberi-fiba-ablakban-volgyi-peterrel-ertekeltunk/",
+      "published_at": "2026.11.24. 11:21",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "BB1.hu",
       "title": "Ez történt eddig a magyar válogatottal a vb-selejtezősorozatban",
       "summary": "Pénteken folytatódik a világbajnoki selejtező a magyar válogatott számára, előbb Svédországban lép pályára a csapat, majd hétfőn a szlovéneket fogadjuk.",
@@ -569,6 +579,16 @@
       "published_at": "2026-11-24T07:57:45+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Videós összefoglalók a hétvégi bajnoki mérkőzésekről",
+      "summary": "A hétvégén a 8. forduló összecsapásait rendezték a magyar bajnokságban.",
+      "url": "https://wbasket.hu/videos-osszefoglalok-a-hetvegi-bajnoki-merkozesekrol-9/",
+      "published_at": "2026.11.23. 18:59",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -587,6 +607,16 @@
       "published_at": "2026-11-23T17:00:49+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Ők voltak a hétvége legjobbjai",
+      "summary": "A válogatott szünet után folytatódtak a bajnoki küzdelmek.",
+      "url": "https://wbasket.hu/ok-voltak-a-hetvege-legjobbjai-6/",
+      "published_at": "2026.11.23. 16:21",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "Nemzeti Sport",
