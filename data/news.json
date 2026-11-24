@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-24T12:51:09.792699+00:00",
+  "checked_at": "2026-11-24T14:10:26.719806+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -247,8 +247,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -545,24 +547,35 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 13,
-      "attempted": 13,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 13,
+      "added": 1,
+      "repaired": 28,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 13,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Csata TKK",
+      "title": "Hosszabbításban harcoltuk ki a győzelmet Miskolcon",
+      "summary": "Nagy csatát hozott a bajnokság 8. fordulójának rangadója, amelyen a Csata TKK hosszabbítás után 86-77-re […]",
+      "url": "https://csatatkk.hu/2026/11/24/hosszabbitasban-harcoltuk-ki-a-gyozelmet-miskolcon/",
+      "published_at": "2026-11-24T12:48:44+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Csata TKK",
+      "league": "women",
+      "teams": [
+        "women|Csata TTK"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Nate Reuvers nem épült fel sérüléséből, kihagyja a novemberi vb-selejtezőket",
@@ -14610,6 +14623,19 @@
       "title": "A harmadik negyedben került döntő előnybe a Budafok",
       "summary": "Férfi kosárlabdacsapatunk 103–86-os vereséget szenvedett a Budafok otthonában az NB I.",
       "url": "https://tfse.hu/a-harmadik-negyedben-kerult-donto-elonybe-a-budafok/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "TFSE",
+      "league": "women",
+      "teams": [
+        "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: TFSE",
+      "title": "A címvédő ellen játsszuk az év utolsó hazai bajnokiját",
+      "summary": "Koltai Jenő Sportközpontban lép pályára női kosárlabdacsapatunk: november 27-én 18 órától az NKA Universitas Pécset fogadjuk az NB I.",
+      "url": "https://tfse.hu/a-cimvedo-ellen-jatsszuk-az-ev-utolso-hazai-bajnokijat/",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "TFSE",
