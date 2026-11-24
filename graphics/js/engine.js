@@ -157,6 +157,8 @@ function drawParagraph(ctx, el, v, report) {
 
 function drawText(ctx, el, v, report) {
   if (el.paragraph) return drawParagraph(ctx, el, v, report);
+  const ref = el.centerOn && report.boxes[el.centerOn]; // centred on the middle of another (earlier drawn) text, e.g. the head-to-head competition label under its date
+  if (ref) el = { ...el, x: ref[0] + ref[2] / 2, align: 'center' };
   const text = v.text ?? '';
   if (text === '') return;
   const { lines, size, overflow, scaled } = layoutText(ctx, el, text);
