@@ -3,7 +3,7 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BROADCAST_ZONE } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
@@ -101,8 +101,8 @@ const tpl = () => {
     return psCache.get(key);
   }
   if (t.type === 'livestat') { // live player insert: the statistics shown = the chosen variant
-    const variant = liveVariant(state.sel[t.league]?.live?.variant), corner = liveCorner(state.sel[t.league]?.live?.corner), key = `${t.id}|${variant}|${corner}`;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](variant, corner)); }
+    const variant = liveVariant(state.sel[t.league]?.live?.variant), corner = liveCorner(state.sel[t.league]?.live?.corner), size = bugSizeNow() || 'large', key = `${t.id}|${variant}|${corner}|${size}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](variant, corner, size)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -163,6 +163,29 @@ function currentMatch() {
   const s = sel();
   if (s.custom) return s.custom.homeId && s.custom.awayId ? { custom: true, homeId: s.custom.homeId, awayId: s.custom.awayId, home: club(state.league, s.custom.homeId).official, away: club(state.league, s.custom.awayId).official, roundNo: null, date: null, time: null } : null;
   return store.league(state.league).fixtures.find(m => matchKey(m) === s.matchKey) || null;
+}
+
+// Which score bug the broadcast carries (large: the broadcasts of ETO Basket and Falco, small: all other partners): by the host club of the chosen match / live game,
+// or set by hand. Unknown host → the large zone (it contains the small one). Graphics are kept out of that zone (engine: assets.safeZone).
+const BUG_KEY = 'nbia.studio.bug.v1';
+let bugMode = lsGet(BUG_KEY, 'auto');
+function bugSizeNow() {
+  if (bugMode === 'large' || bugMode === 'small') return bugMode;
+  if (bugMode === 'off') return null;
+  const lg = state.league, tt = templateById(state.template[lg]);
+  let homeId = null;
+  if (tt?.type === 'livestat') { const h = live.game?.teams.home; homeId = h ? (clubIdStrict(lg, h.short) || clubIdStrict(lg, h.name)) : null; }
+  else homeId = currentMatch()?.homeId || null;
+  return homeId ? bugSizeOf(lg, homeId) : 'large';
+}
+const bugZoneNow = () => { const z = bugSizeNow(); return z ? BUG[z].zone : null; };
+/** Preview-only hatched marking of the zone (never part of the exported PNG). */
+function applyZoneGuide() {
+  const size = bugSizeNow(), zg = $('zoneGuide');
+  if (!size || !$('zoneToggle').checked) { zg.classList.remove('on'); return; }
+  const zb = BUG[size].zone;
+  Object.assign(zg.style, { left: `${zb[0] / 19.2}%`, top: `${zb[1] / 10.8}%`, width: `${(zb[2] - zb[0]) / 19.2}%`, height: `${(zb[3] - zb[1]) / 10.8}%` });
+  zg.title = BUG[size].label; zg.dataset.size = size; zg.classList.add('on');
 }
 
 /** Options of the comparison graphics: colour of the data-source name; key players: photos instead of logos. */
@@ -774,7 +797,8 @@ async function update(full) {
   await ensureImages(values);
   if (seq !== updateSeq) return;
   const canvas = $('canvas');
-  lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+  lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity, safeZone: bugZoneNow() });
+  applyZoneGuide();
   refreshExtraSizes();
   renderOverlay();
   renderLayoutState();
@@ -801,6 +825,7 @@ async function update(full) {
     if (out.length) msgs.push(`A keret vonalát átlépi: ${out.map(el => el.label).slice(0, 6).join(', ')}${out.length > 6 ? ' …' : ''} – told beljebb vagy csökkentsd`);
   }
   if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg, kilóg a keretből (csökkentsd a betűméretet): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
+  if (lastReport.fit) { const f = lastReport.fit; msgs.push(`Az adásbeli eredményjelző miatt ${f.kind === 'up' ? Math.round(-f.dy) + ' px-szel feljebb tolva' : f.kind === 'left' ? Math.round(-f.dx) + ' px-szel balra tolva' : (100 * (1 - f.s)).toFixed(1) + '%-kal kicsinyítve'} (eredményjelző: ${bugSizeNow() === 'small' ? 'kicsi' : 'nagy'})`); }
   if (lastReport.scaled.length) msgs.push(`Automatikusan kicsinyítve: ${lastReport.scaled.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   $('renderReport').textContent = msgs.join(' · ');
   $('dims').textContent = `${canvas.width} × ${canvas.height} px · PNG, átlátszó háttér · forrás: ${t.psd}`;
@@ -863,7 +888,7 @@ async function renderForPackage(item, m) {
   await ensureTextures(t);
     await ensureImages(values);
     const canvas = document.createElement('canvas');
-    const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+    const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity, safeZone: bugZoneNow() });
     const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
     const missing = t.elements.filter(el => values[el.id]?.missing && (values[el.id].visible ?? el.visible ?? true)).map(el => el.label);
     const warns = [
@@ -1387,13 +1412,11 @@ async function main() {
   initMobile();
   try { const r = await fetch('players/index.json', { cache: 'no-store' }); if (r.ok) photoIds = new Set((await r.json()).ids); } catch { /* no photos downloaded */ }
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
-  // preview-only guide of the broadcaster's score bug zone (position in percent of the 1920 x 1080 picture)
-  const zb = BROADCAST_ZONE.box, zg = $('zoneGuide');
-  Object.assign(zg.style, { left: `${zb[0] / 19.2}%`, top: `${zb[1] / 10.8}%`, width: `${(zb[2] - zb[0]) / 19.2}%`, height: `${(zb[3] - zb[1]) / 10.8}%` });
-  zg.title = BROADCAST_ZONE.label;
-  const zoneOn = lsGet('nbia.studio.zoneGuide.v1', true) !== false;
-  $('zoneToggle').checked = zoneOn; zg.classList.toggle('on', zoneOn);
-  $('zoneToggle').onchange = e => { zg.classList.toggle('on', e.target.checked); lsSet('nbia.studio.zoneGuide.v1', e.target.checked); };
+  // the broadcast's score bug: which one (setting) and the preview-only guide of its zone
+  $('bugMode').value = ['auto', 'large', 'small', 'off'].includes(bugMode) ? bugMode : 'auto';
+  $('bugMode').onchange = e => { bugMode = e.target.value; lsSet(BUG_KEY, bugMode); update(true); };
+  $('zoneToggle').checked = lsGet('nbia.studio.zoneGuide.v1', true) !== false;
+  $('zoneToggle').onchange = e => { lsSet('nbia.studio.zoneGuide.v1', e.target.checked); applyZoneGuide(); };
   $('fields').addEventListener('click', e => {
     const id = e.target.id;
     if (id !== 'eqNames' && id !== 'eqRanks') return;

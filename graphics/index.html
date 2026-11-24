@@ -76,7 +76,9 @@
         <button data-zoom="fit" class="on">Igazítás</button>
         <button data-zoom="1">100%</button>
         <label><input type="checkbox" id="checker" checked> Átlátszóság rácsa</label>
-        <label title="Az adás eredményjelzője (mindkét változat) a jobb alsó sarokban van: oda ne kerüljön grafika. Csak az előnézetben látszik, az exportban nem."><input type="checkbox" id="zoneToggle" checked> Adásbeli eredményjelző zónája</label>
+        <label title="Melyik eredményjelző van az adásban (jobb alsó sarok). Automatikus: a mérkőzés hazai csapata szerint – a nagy az ETO Basket és a Falco adásain van, a többi partnernél a kicsi. A grafikák úgy kerülnek a képre, hogy ne takarják.">Eredményjelző
+          <select id="bugMode"><option value="auto">automatikus</option><option value="large">nagy (ETO Basket, Falco)</option><option value="small">kicsi (a többi)</option><option value="off">nincs (nem tér ki)</option></select></label>
+        <label title="Az eredményjelző zónájának satírozott jelölése az előnézetben. Az exportban nem látszik."><input type="checkbox" id="zoneToggle" checked> Zóna mutatása</label>
         <label><input type="checkbox" id="showRef"> PSD minta összevetés</label>
         <label class="base-opacity" title="A pálya/panel átlátszatlansága az exportált PNG-n. A PSD-kben sablononként 95%, 98,8%, 98% vagy 100% volt.">Alap átlátszatlansága
           <input type="range" id="baseOpacity" min="85" max="100" step="0.5"> <b id="baseOpacityVal"></b></label>

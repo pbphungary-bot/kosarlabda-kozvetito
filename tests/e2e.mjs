@@ -51,6 +51,8 @@ async function hermetic(c) {
   });
   await c.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   if (FIXED_NOW) await c.clock.setFixedTime(new Date(FIXED_NOW));
+  // the score bug fit moves / shrinks big graphics: the frame / layout mechanics tests run with it switched off (the score bug tests choose their own setting)
+  await c.addInitScript(() => { try { if (localStorage.getItem('nbia.studio.bug.v1') === null) localStorage.setItem('nbia.studio.bug.v1', '"off"'); } catch { /* storage unavailable */ } });
   return c;
 }
 
@@ -1246,6 +1248,7 @@ try {
     await page.click('.league-toggle button[data-league="women"]');
     await page.click('#templateList button[data-id="livestat-women"]');
     await page.waitForSelector('#liveCode');
+    await page.selectOption('#bugMode', 'auto'); // the strip is placed for the score bug of the game's host
     assert.match(await page.textContent('#liveInfo'), /Még nincs élő meccs/, 'nothing loaded: stated, nothing invented');
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     await page.fill('#liveCode', 'https://netcasting4.webpont.com/?whun_135563'); await page.dispatchEvent('#liveCode', 'change');
@@ -1296,6 +1299,43 @@ try {
     await until(8, () => /végeredmény · frissítve/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
     await until(9, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 }); // a refresh keeps the chosen player
     await page.unroute('**/live?*');
+    await page.selectOption('#bugMode', 'off');
+  });
+
+  await check('score bug: graphics keep out of the zone (large / small / off), the setting is remembered, the zone guide follows', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="results-men"]');
+    await page.waitForSelector('#bugMode');
+    const panel = () => page.evaluate(() => { // the panel on the canvas, after the global move / scale (which includes the fit)
+      const r = window.__studio.report(), b = r.boxes.panel, g = r.global, X = x => (x - 960) * g.scale + 960 + g.dx, Y = y => (y - 540) * g.scale + 540 + g.dy;
+      return { fit: r.fit, box: [X(b[0]), Y(b[1]), X(b[0] + b[2]), Y(b[1] + b[3])] };
+    });
+    await page.selectOption('#bugMode', 'off');
+    await page.waitForFunction(() => window.__studio.report().fit === null, null, { timeout: 15000 });
+    let r = await panel(); assert.ok(r.box[2] > 1410 && r.box[3] > 945, `off: the results panel covers the corner (${r.box})`);
+    assert.equal(await page.isVisible('#zoneGuide'), false, 'no zone guide when switched off');
+    await page.selectOption('#bugMode', 'large');
+    await page.waitForFunction(() => window.__studio.report().fit !== null, null, { timeout: 15000 });
+    r = await panel(); assert.ok(r.box[3] <= 925.5 || r.box[2] <= 1200.5, `large: out of the large zone (${r.box})`);
+    assert.match(await page.textContent('#renderReport'), /eredményjelző miatt/, 'the change is stated');
+    assert.equal(await page.getAttribute('#zoneGuide', 'data-size'), 'large');
+    await page.selectOption('#bugMode', 'small');
+    await page.waitForFunction(() => window.__studio.report().fit !== null && window.__studio.report().fit.s > 0.97, null, { timeout: 15000 });
+    r = await panel(); assert.ok(r.box[3] <= 945.5 || r.box[2] <= 1410.5, `small: out of the small zone (${r.box})`);
+    assert.equal(await page.getAttribute('#zoneGuide', 'data-size'), 'small');
+    assert.equal(await page.evaluate(() => localStorage.getItem('nbia.studio.bug.v1')), '"small"', 'the setting is remembered');
+    // a graphic that does not reach the zone is not touched
+    await page.click('#templateList button[data-id="form-men"]');
+    await page.waitForFunction(() => window.__studio.report().boxes.panel && window.__studio.report().boxes.panel[2] > 900 && window.__studio.report().boxes.panel[1] < 100, null, { timeout: 15000 });
+    assert.equal(await page.evaluate(() => window.__studio.report().fit), null, 'the form graphic (top-left corner) is clear of the zone: unchanged');
+    // the export itself is the fitted picture (a PNG of the standard size)
+    await page.click('#templateList button[data-id="referees-men"]');
+    await page.selectOption('#bugMode', 'large');
+    await page.waitForFunction(() => window.__studio.report().fit?.kind === 'up', null, { timeout: 15000 });
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    const file = path.join(out, 'referees-men-fitted.png'); await dl.saveAs(file);
+    const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.height, 1080);
+    await page.selectOption('#bugMode', 'off');
   });
 
   await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {
