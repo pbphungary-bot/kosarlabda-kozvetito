@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-24T18:46:20.786707+00:00",
+  "checked_at": "2026-11-24T19:52:45.357343+00:00",
   "statistics": {
-    "total": 1268,
-    "fresh": 583,
-    "fresh_with_summary": 393,
+    "total": 1269,
+    "fresh": 584,
+    "fresh_with_summary": 394,
     "missing_dates": 288,
     "headline_only": 564,
-    "untagged": 523,
+    "untagged": 524,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -480,6 +480,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -564,14 +565,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 28,
-      "attempted": 28,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 28,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 28,
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],

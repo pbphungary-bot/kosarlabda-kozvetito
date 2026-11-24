@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-24T18:46:20.786707+00:00",
+  "checked_at": "2026-11-24T19:52:45.357343+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -465,6 +465,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -549,18 +550,27 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 28,
-      "attempted": 28,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 28,
+      "repaired": 29,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 28,
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Pallai Tamás sem állhat a válogatott rendelkezésére a következő mérkőzéseken",
+      "summary": "Ahogy arról korábban már beszámoltunk, Nate Reuvers sérülése nem jött rendbe , így a Valencia centere nem csatlakozott Gasper Okorn keretéhez Szombathelyen.",
+      "url": "https://bball1.hu/pallai-tamas-sem-allhat-a-valogatott-rendelkezesere-a-kovetkezo-merkozeseken/",
+      "published_at": "2026-11-24T19:47:16+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Itt van a nagy esély a magyar férfi kosárlabda-válogatottnak!",
