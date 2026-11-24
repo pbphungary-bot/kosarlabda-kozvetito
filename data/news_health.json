@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T19:52:45.357343+00:00",
+  "checked_at": "2026-11-24T20:40:57.850125+00:00",
   "statistics": {
     "total": 1269,
     "fresh": 584,
@@ -10,7 +10,7 @@
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 7,
+    "new_articles": 6,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -480,6 +480,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:TimeoutError",
         "sitemap:0"
       ],

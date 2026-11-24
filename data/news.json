@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-24T19:52:45.357343+00:00",
+  "checked_at": "2026-11-24T20:40:57.850125+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -465,6 +465,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:TimeoutError",
         "sitemap:0"
       ],
