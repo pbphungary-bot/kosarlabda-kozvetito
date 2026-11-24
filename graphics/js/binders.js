@@ -2,8 +2,9 @@
 // Each field gets {text|src|color, source, missing, note}. A value that is not
 // in the data is never filled in: it renders as "—" and is flagged `missing`
 // until the operator types an override.
-import { club } from './clubs.js';
-import { H2H_PANEL, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { club, clubIdStrict } from './clubs.js';
+import { playedPlayers, mmss } from './live.js';
+import { LIVE_VARIANTS, H2H_PANEL, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -585,3 +586,47 @@ export function bindH2H(store, lg, homeId, awayId, rows = H2H_PANEL.rows) {
   }
   return v;
 }
+
+// ───────────────────────── live player insert (Élő statisztika) ─────────────────────────
+const LIVE_SRC = 'Élő boxscore (MKOSZ netcasting)';
+const pct1 = (m, a) => (a > 0 ? (100 * m / a).toFixed(1) + '%' : null);
+
+/** What the live graphic needs to know about the game: the club ids, the players that played and the chosen one. */
+export function liveChoice(store, lg, game, side, code) {
+  const tid = game ? (clubIdStrict(lg, game.teams[side].short) || clubIdStrict(lg, game.teams[side].name) || null) : null;
+  const list = game ? playedPlayers(game, side) : [];
+  const player = list.find(p => p.code === code) || list[0] || null;
+  return { teamId: tid, players: list, player };
+}
+
+export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
+  const v = {}, side = sel.side === 'away' ? 'away' : 'home';
+  const { teamId, player: p } = liveChoice(store, lg, game, side, sel.player);
+  const when = sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : '';
+  const src = LIVE_SRC + when;
+  if (!game || !p) { v.name = field(null, src); return v; }
+  // name: the designs' rule (Hungarian "SURNAME Given", foreign "Given SURNAME") from the Hunbasket roster; the feed's own spelling only when the player is not on the roster
+  const r = teamId ? rosterPlayers(store, lg, teamId).find(x => idOf(x.url) === p.code) : null;
+  const parts = parseName(r ? r.name : p.name), foreign = r ? isForeign(r) : false;
+  const words = foreign ? [{ t: parts.given[0], sur: false }, { t: parts.surname, sur: true }] : [{ t: parts.surname, sur: true }, ...parts.given.slice(0, 2).map(t => ({ t, sur: false }))];
+  const runs = words.filter(w => w.t).flatMap((w, i) => [...(i ? [{ text: ' ' }] : []), { text: w.sur ? w.t.toLocaleUpperCase('hu') : w.t }]); // the surname in capitals, as on the player cards
+  v.name = { runs, text: runs.map(x => x.text).join(''), source: r ? 'Hunbasket csapatoldal (keret) – a név írásmódja' : 'Élő boxscore – a játékos nincs a Hunbasket keretben, a hírcsatorna írásmódja' };
+  v.logo = teamId ? logo(lg, teamId) : { src: '', source: 'A klub logója nem található' };
+  v.photo = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
+  const st = p.stat; // (no status line under the name: the broadcast's own score bug shows the score and the period)
+  const variant = tplVariant(sel.variant);
+  const cells = {
+    pts: () => [String(st.pts)], reb: () => [String(p.reb)], ast: () => [String(st.ast)], stl: () => [String(st.stl)], blk: () => [String(st.blk)],
+    tov: () => [String(st.tov)], pf: () => [String(st.pf)], eff: () => [String(p.eff)],
+    min: () => [p.seconds === null || p.seconds === undefined ? null : mmss(p.seconds)],
+    fg2: () => [`${st.fg2m}/${st.fg2a}`, pct1(st.fg2m, st.fg2a)], fg3: () => [`${st.fg3m}/${st.fg3a}`, pct1(st.fg3m, st.fg3a)], ft: () => [`${st.ftm}/${st.fta}`, pct1(st.ftm, st.fta)],
+  };
+  LIVE_VARIANTS[variant].cells.forEach((cell, i) => {
+    const [value, sub] = cells[cell.key]();
+    v[`c${i}.value`] = field(value, `${src} – ${cell.label}`);
+    // shooting cells: the percentage goes on the label line ("3P · 80.0%"), the made/attempted figures are the value
+    v[`c${i}.label`] = { text: variant === 'shooting' && sub ? `${cell.label} · ${sub}` : cell.label, source: variant === 'shooting' ? (sub ? src : 'Nincs kísérlet – nincs százalék') : 'Fix felirat (átírható)' };
+  });
+  return v;
+}
+const tplVariant = k => (LIVE_VARIANTS[k] ? k : 'basic');

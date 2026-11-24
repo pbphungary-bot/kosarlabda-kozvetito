@@ -51,6 +51,8 @@ async function hermetic(c) {
   });
   await c.route(/\/data\/cups_[a-z]+\.json/, r => r.fulfill({ contentType: 'application/json', body: '{"updated_at":null,"games":[]}' }));
   if (FIXED_NOW) await c.clock.setFixedTime(new Date(FIXED_NOW));
+  // the score bug fit moves / shrinks big graphics: the frame / layout mechanics tests run with it switched off (the score bug tests choose their own setting)
+  await c.addInitScript(() => { try { if (localStorage.getItem('nbia.studio.bug.v1') === null) localStorage.setItem('nbia.studio.bug.v1', '"off"'); } catch { /* storage unavailable */ } });
   return c;
 }
 
@@ -75,8 +77,8 @@ try {
     await page.click(`.league-toggle button[data-league="${lg}"]`);
     await page.waitForTimeout(400);
     const ids = await page.$$eval('#templateList button', bs => bs.map(b => b.dataset.id));
-    await check(`${lg}: 16 templates offered, all of this league`, async () => {
-      assert.equal(ids.length, 16);
+    await check(`${lg}: 17 templates offered, all of this league`, async () => {
+      assert.equal(ids.length, 17);
       assert.ok(ids.every(id => id.endsWith('-' + lg)));
     });
     for (const id of ids) {
@@ -1239,6 +1241,101 @@ try {
     assert.equal(await page.evaluate(() => Object.keys(window.__studio.report().boxes).filter(id => /^label\./.test(id)).length), 4);
     for (const k of ['fg2_pct', 'fg3_pct', 'ft_pct', 'stl', 'tov']) await page.check(`.pcRow[data-k="${k}"]`);
     await page.waitForFunction(h => Math.abs(window.__studio.report().boxes['panel'][3] - h) < 1, h9, { timeout: 15000 });
+  });
+
+  await check('live statistics: paste the feed, pick team / player / variant, values follow, no relay = clear message', async () => {
+    const until = (n, fn, arg, o) => page.waitForFunction(fn, arg, o).catch(e => { throw new Error(`live test: wait #${n} timed out (${e.message.split('\n')[0]})`); });
+    await page.click('.league-toggle button[data-league="women"]');
+    await page.click('#templateList button[data-id="livestat-women"]');
+    await page.waitForSelector('#liveCode');
+    await page.selectOption('#bugMode', 'auto'); // the strip is placed for the score bug of the game's host
+    assert.match(await page.textContent('#liveInfo'), /Még nincs élő meccs/, 'nothing loaded: stated, nothing invented');
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
+    await page.fill('#liveCode', 'https://netcasting4.webpont.com/?whun_135563'); await page.dispatchEvent('#liveCode', 'change');
+    await page.click('details:has(#livePaste) > summary');
+    await page.fill('#livePaste', 'half a feed {"i":'); await page.click('#livePasteGo');
+    await until(1, () => /nem értelmezhető/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
+    await page.fill('#livePaste', feed); await page.click('#livePasteGo');
+    await page.waitForSelector('#livePlayer option[value="B203034"]', { state: 'attached' });
+    const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
+    await until(2, () => window.__studio.current().values?.name?.text === 'GÁLOS Hanna Andrea', null, { timeout: 15000 });
+    assert.equal(await val('c0.value'), '15'); assert.equal(await val('c1.value'), '5');
+    assert.equal(await val('photo', 'src'), 'photo/B203034', 'the official roster photo');
+    await page.selectOption('#liveVariant', 'shooting');
+    await until(3, () => window.__studio.current().values?.['c1.label']?.text === '3P · 80.0%', null, { timeout: 15000 });
+    await page.selectOption('#liveVariant', 'full');
+    await until(4, () => window.__studio.current().values?.['c0.value']?.text === '25:18', null, { timeout: 15000 });
+    await page.selectOption('#livePlayer', 'B20186');
+    await until(5, () => /WENINGER/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 });
+    await page.selectOption('#liveSide', 'away');
+    await until(6, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 });
+    assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
+    // a thin strip, on the score bug's level and centred in the gap left of it (full variant is the wide one); top-left on request; the zone guide is preview-only
+    const pb = () => page.evaluate(() => window.__studio.report().boxes['panel']);
+    let bx = await pb();
+    assert.ok(bx[3] <= 150 && Math.abs(bx[0] + bx[2] / 2 - 600) <= 1 && Math.abs(bx[1] + bx[3] / 2 - 988) <= 12 && bx[0] + bx[2] < 1200, `strip on the score bug level, centred in the gap (${bx})`);
+    await page.selectOption('#liveVariant', 'basic');
+    await until(10, () => Math.round(window.__studio.report().boxes['panel'][2]) === 480, null, { timeout: 15000 });
+    await page.selectOption('#liveCorner', 'tl');
+    await until(11, () => window.__studio.report().boxes['panel'][1] < 100, null, { timeout: 15000 });
+    assert.equal(await page.isVisible('#zoneGuide'), true, 'zone guide shown by default');
+    await page.uncheck('#zoneToggle'); assert.equal(await page.isVisible('#zoneGuide'), false);
+    await page.check('#zoneToggle'); assert.equal(await page.isVisible('#zoneGuide'), true);
+    await page.selectOption('#liveCorner', 'gap');
+    await until(12, () => window.__studio.report().boxes['panel'][1] > 800, null, { timeout: 15000 });
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    const file = path.join(out, 'livestat-women-away.png'); await dl.saveAs(file);
+    const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.colorType, 6);
+    // the relay (tools/serve.py /live) is intercepted so the test never touches the network: first it fails, then it answers with the saved feed
+    let relayUrl = '';
+    await page.route('**/live?*', route => { relayUrl = route.request().url(); route.fulfill({ status: 502, contentType: 'text/plain', body: 'upstream unreachable' }); });
+    await page.click('#liveLoad');
+    await until(7, () => /nem érhető el/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
+    assert.match(relayUrl, /\/live\?game=whun_135563&kind=full$/, 'asks the relay for the full feed of the game code');
+    assert.ok(await val('name'), 'the game stays loaded when the relay fails');
+    await page.unroute('**/live?*');
+    await page.route('**/live?*', route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
+    await page.click('#liveLoad');
+    await until(8, () => /végeredmény · frissítve/.test(document.getElementById('liveInfo').textContent), null, { timeout: 15000 });
+    await until(9, () => /KOBOL/.test(window.__studio.current().values?.name?.text || ''), null, { timeout: 15000 }); // a refresh keeps the chosen player
+    await page.unroute('**/live?*');
+    await page.selectOption('#bugMode', 'off');
+  });
+
+  await check('score bug: graphics keep out of the zone (large / small / off), the setting is remembered, the zone guide follows', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="results-men"]');
+    await page.waitForSelector('#bugMode');
+    const panel = () => page.evaluate(() => { // the panel on the canvas, after the global move / scale (which includes the fit)
+      const r = window.__studio.report(), b = r.boxes.panel, g = r.global, X = x => (x - 960) * g.scale + 960 + g.dx, Y = y => (y - 540) * g.scale + 540 + g.dy;
+      return { fit: r.fit, box: [X(b[0]), Y(b[1]), X(b[0] + b[2]), Y(b[1] + b[3])] };
+    });
+    await page.selectOption('#bugMode', 'off');
+    await page.waitForFunction(() => window.__studio.report().fit === null, null, { timeout: 15000 });
+    let r = await panel(); assert.ok(r.box[2] > 1410 && r.box[3] > 945, `off: the results panel covers the corner (${r.box})`);
+    assert.equal(await page.isVisible('#zoneGuide'), false, 'no zone guide when switched off');
+    await page.selectOption('#bugMode', 'large');
+    await page.waitForFunction(() => window.__studio.report().fit !== null, null, { timeout: 15000 });
+    r = await panel(); assert.ok(r.box[3] <= 925.5 || r.box[2] <= 1200.5, `large: out of the large zone (${r.box})`);
+    assert.match(await page.textContent('#renderReport'), /eredményjelző miatt/, 'the change is stated');
+    assert.equal(await page.getAttribute('#zoneGuide', 'data-size'), 'large');
+    await page.selectOption('#bugMode', 'small');
+    await page.waitForFunction(() => window.__studio.report().fit !== null && window.__studio.report().fit.s > 0.97, null, { timeout: 15000 });
+    r = await panel(); assert.ok(r.box[3] <= 945.5 || r.box[2] <= 1410.5, `small: out of the small zone (${r.box})`);
+    assert.equal(await page.getAttribute('#zoneGuide', 'data-size'), 'small');
+    assert.equal(await page.evaluate(() => localStorage.getItem('nbia.studio.bug.v1')), '"small"', 'the setting is remembered');
+    // a graphic that does not reach the zone is not touched
+    await page.click('#templateList button[data-id="form-men"]');
+    await page.waitForFunction(() => window.__studio.report().boxes.panel && window.__studio.report().boxes.panel[2] > 900 && window.__studio.report().boxes.panel[1] < 100, null, { timeout: 15000 });
+    assert.equal(await page.evaluate(() => window.__studio.report().fit), null, 'the form graphic (top-left corner) is clear of the zone: unchanged');
+    // the export itself is the fitted picture (a PNG of the standard size)
+    await page.click('#templateList button[data-id="referees-men"]');
+    await page.selectOption('#bugMode', 'large');
+    await page.waitForFunction(() => window.__studio.report().fit?.kind === 'up', null, { timeout: 15000 });
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#exportBtn')]);
+    const file = path.join(out, 'referees-men-fitted.png'); await dl.saveAs(file);
+    const info = pngInfo(readFileSync(file)); assert.equal(info.width, 1920); assert.equal(info.height, 1080);
+    await page.selectOption('#bugMode', 'off');
   });
 
   await check('desktop studio: the sidebar width can be dragged, is remembered and resets on double click; nothing overflows sideways', async () => {

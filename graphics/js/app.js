@@ -3,13 +3,14 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate 
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, liveChoice
 } from './binders.js';
+import { decodeFeed, parseGame, gameCode } from './live.js';
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -99,6 +100,11 @@ const tpl = () => {
     if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, PC_BUILDERS[t.id](rows)); }
     return psCache.get(key);
   }
+  if (t.type === 'livestat') { // live player insert: the statistics shown = the chosen variant
+    const variant = liveVariant(state.sel[t.league]?.live?.variant), corner = liveCorner(state.sel[t.league]?.live?.corner), size = bugSizeNow() || 'large', key = `${t.id}|${variant}|${corner}|${size}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](variant, corner, size)); }
+    return psCache.get(key);
+  }
   if (t.type !== 'playerspecial') return t;
   // the player-special graphic is built from the operator's settings (columns, rows, photo, layering)
   const cfg = psNormalize(t.league, state.sel[t.league]?.psCfg);
@@ -159,6 +165,29 @@ function currentMatch() {
   return store.league(state.league).fixtures.find(m => matchKey(m) === s.matchKey) || null;
 }
 
+// Which score bug the broadcast carries (large: the broadcasts of ETO Basket and Falco, small: all other partners): by the host club of the chosen match / live game,
+// or set by hand. Unknown host → the large zone (it contains the small one). Graphics are kept out of that zone (engine: assets.safeZone).
+const BUG_KEY = 'nbia.studio.bug.v1';
+let bugMode = lsGet(BUG_KEY, 'auto');
+function bugSizeNow() {
+  if (bugMode === 'large' || bugMode === 'small') return bugMode;
+  if (bugMode === 'off') return null;
+  const lg = state.league, tt = templateById(state.template[lg]);
+  let homeId = null;
+  if (tt?.type === 'livestat') { const h = live.game?.teams.home; homeId = h ? (clubIdStrict(lg, h.short) || clubIdStrict(lg, h.name)) : null; }
+  else homeId = currentMatch()?.homeId || null;
+  return homeId ? bugSizeOf(lg, homeId) : 'large';
+}
+const bugZoneNow = () => { const z = bugSizeNow(); return z ? BUG[z].zone : null; };
+/** Preview-only hatched marking of the zone (never part of the exported PNG). */
+function applyZoneGuide() {
+  const size = bugSizeNow(), zg = $('zoneGuide');
+  if (!size || !$('zoneToggle').checked) { zg.classList.remove('on'); return; }
+  const zb = BUG[size].zone;
+  Object.assign(zg.style, { left: `${zb[0] / 19.2}%`, top: `${zb[1] / 10.8}%`, width: `${(zb[2] - zb[0]) / 19.2}%`, height: `${(zb[3] - zb[1]) / 10.8}%` });
+  zg.title = BUG[size].label; zg.dataset.size = size; zg.classList.add('on');
+}
+
 /** Options of the comparison graphics: colour of the data-source name; key players: photos instead of logos. */
 function cmpOptionsHtml(s, t) {
   const col = s.srcColor || SRC_COLOR;
@@ -198,6 +227,92 @@ function playerSelects() {
 function rowOffHtml(s, rows) {
   const names = ['Felső sor', 'Középső sor', 'Alsó sor', '4. sor', '5. sor'];
   return Array.from({ length: rows }, (_, r) => `<span class="rowoff"><b>${names[r] || (r + 1) + '. sor'}</b> <label>↔ <input type="number" class="rowOff" data-r="${r}" data-a="0" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[0] || 0}"></label><label>↕ <input type="number" class="rowOff" data-r="${r}" data-a="1" min="-300" max="300" step="2" value="${s.rowOff?.[r]?.[1] || 0}"></label></span>`).join('') + '<button type="button" id="rowOffReset" class="ghost">Sorok alaphelyzet</button>';
+}
+
+// ───────────────────────── live statistics (Élő statisztika) ─────────────────────────
+// The feed of the MKOSZ netcasting page cannot be read by a browser directly (no CORS header, cloud networks are refused): tools/serve.py relays it at /live.
+// Without the relay the operator pastes the feed text (open …/storage/full<code>.html, Ctrl+A, Ctrl+C).
+const live = { game: null, fetchedAt: '', error: '', busy: false, timer: null, players: 0 };
+const liveRelay = (code, kind = 'full') => new URL(`../live?game=${code}&kind=${kind}`, location.href).href;
+function liveApply(text, code) {
+  const feed = decodeFeed(text);
+  if (!feed) return false;
+  live.game = parseGame(feed, code);
+  live.fetchedAt = new Date().toLocaleTimeString('hu-HU');
+  live.error = '';
+  return true;
+}
+async function liveFetchNow() {
+  const code = gameCode(sel().live?.code);
+  if (!code) { live.error = 'Adj meg egy meccs-linket vagy kódot (pl. whun_135563).'; return false; }
+  if (live.busy) return false;
+  live.busy = true;
+  try {
+    const r = await fetch(liveRelay(code), { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    if (!liveApply(await r.text(), code)) throw new Error('a hírcsatorna válasza nem értelmezhető (csonka vagy más formátum)');
+    return true;
+  } catch (e) {
+    live.error = `Az élő hírcsatorna innen nem érhető el (${e.message}). Indítsd a stúdiót a helyi szerverrel (python3 tools/serve.py), vagy illeszd be a hírcsatorna szövegét lent.`;
+    return false;
+  } finally { live.busy = false; }
+}
+function liveTimer() {
+  clearInterval(live.timer); live.timer = null;
+  if (tpl().type !== 'livestat' || !sel().live?.auto || !live.game) return;
+  live.timer = setInterval(async () => {
+    if (tpl().type !== 'livestat') return liveTimer();
+    if (await liveFetchNow()) { const n = live.game.players.length; if (n !== live.players) { live.players = n; renderSelection(); } update(false); }
+    else $('liveInfo') && ($('liveInfo').innerHTML = liveInfoHtml());
+  }, 5000);
+}
+function liveInfoHtml() {
+  if (live.error) return `<span style="color:var(--warn)">${esc(live.error)}</span>`;
+  const g = live.game;
+  if (!g) return 'Még nincs élő meccs betöltve.';
+  const c = g.clock, state = g.finished ? 'végeredmény' : c.period <= 4 ? `${c.period}. negyed` : `${c.period - 4}. hosszabbítás`;
+  return `${esc(g.teams.home.short)} ${g.score.home}–${g.score.away} ${esc(g.teams.away.short)} · ${state} · frissítve: ${esc(live.fetchedAt)}`;
+}
+function livePanelHtml(s) {
+  const L = s.live || {}, g = live.game, side = L.side === 'away' ? 'away' : 'home';
+  const ch = g ? liveChoice(store, state.league, g, side, L.player) : null;
+  const variants = Object.entries(LIVE_VARIANTS).map(([k, v]) => `<option value="${k}" ${liveVariant(L.variant) === k ? 'selected' : ''}>${esc(v.label)}</option>`).join('');
+  return `<label>Élő meccs (netcasting link vagy kód)<span class="import-row"><input type="text" id="liveCode" style="flex:1;min-width:0" placeholder="https://netcasting4.webpont.com/?whun_135563" value="${esc(L.code || '')}"> <button type="button" id="liveLoad">Betöltés</button></span></label>
+    <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="liveAuto" ${L.auto ? 'checked' : ''}> Automatikus frissítés 5 másodpercenként</label>
+    <small id="liveInfo" class="hint">${liveInfoHtml()}</small>
+    <div class="row2"><label>Csapat<select id="liveSide"><option value="home" ${side === 'home' ? 'selected' : ''}>Hazai${g ? ' – ' + esc(g.teams.home.short) : ''}</option><option value="away" ${side === 'away' ? 'selected' : ''}>Vendég${g ? ' – ' + esc(g.teams.away.short) : ''}</option></select></label>
+      <label>Játékos<select id="livePlayer">${ch ? ch.players.map(p => `<option value="${esc(p.code)}" ${ch.player && p.code === ch.player.code ? 'selected' : ''}>${esc((p.number ? '#' + p.number + ' ' : '') + p.name)} – ${p.stat.pts} p</option>`).join('') : '<option>nincs betöltött meccs</option>'}</select></label></div>
+    <div class="row2"><label>Változat<select id="liveVariant">${variants}</select></label>
+      <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
+    <details ${live.error ? 'open' : ''}><summary>Beillesztés (ha az élő lekérés nem működik)</summary>
+      <textarea id="livePaste" rows="3" style="width:100%" placeholder="A böngészőben nyisd meg: https://netcasting4.webpont.com/storage/full<kód>.html – Ctrl+A, Ctrl+C, majd illeszd be ide."></textarea>
+      <button type="button" id="livePasteGo" class="ghost">Beillesztett adat használata</button></details>
+    <small class="hint">A fotó a keretgrafikáéval azonos hivatalos Hunbasket-fotó, a név a Hunbasket-keret írásmódja szerint. A statisztikát a stúdió az élő boxscore eseménylistájából számolja (a pontok egyeznek a hivatalos állással).</small>`;
+}
+function wireLivePanel(s) {
+  const L = () => (s.live ||= {});
+  $('liveCode').onchange = e => { L().code = e.target.value.trim(); };
+  $('liveLoad').onclick = async () => {
+    L().code = $('liveCode').value.trim();
+    $('liveInfo').textContent = 'Betöltés…';
+    const prev = live.game?.id;
+    await liveFetchNow();
+    live.players = live.game?.players.length || 0;
+    if (live.game && live.game.id !== prev) { L().player = null; L().side = 'home'; resetMatchOverrides(); } // a refresh keeps the chosen player, another game starts over
+    renderSelection(); update(true); liveTimer();
+  };
+  $('liveAuto').onchange = e => { L().auto = e.target.checked; saveState(); liveTimer(); };
+  $('livePasteGo').onclick = () => {
+    const code = gameCode(L().code), prev = live.game?.id;
+    if (!liveApply($('livePaste').value.trim(), code)) { live.error = 'A beillesztett szöveg nem értelmezhető hírcsatorna (csonka lehet: másold ki újra az egészet).'; }
+    live.players = live.game?.players.length || 0;
+    if (live.game && live.game.id !== prev) { L().player = null; L().side = 'home'; resetMatchOverrides(); }
+    renderSelection(); update(true);
+  };
+  $('liveSide').onchange = e => { L().side = e.target.value; L().player = null; resetMatchOverrides(); renderSelection(); update(true); };
+  $('livePlayer').onchange = e => { L().player = e.target.value; resetMatchOverrides(); update(true); };
+  $('liveVariant').onchange = e => { L().variant = e.target.value; resetMatchOverrides(); update(true); };
+  $('liveCorner').onchange = e => { L().corner = e.target.value; resetMatchOverrides(); update(true); };
 }
 
 function renderSelection(extra = {}) {
@@ -240,6 +355,11 @@ function renderSelection(extra = {}) {
       $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
       $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
     }
+  } else if (t.type === 'livestat') {
+    $('selectTitle').textContent = '2. Élő meccs és játékos';
+    box.innerHTML = livePanelHtml(s);
+    wireLivePanel(s);
+    liveTimer();
   } else if (t.type === 'extra') {
     $('selectTitle').textContent = '2. Képek és keretek';
     box.innerHTML = extraPanelHtml(s);
@@ -419,6 +539,16 @@ function autoValues() {
       info.notices.push({ text: 'A keret a Hunbasket csapatoldaláról jön (mezszám szerint rendezve). A kapitány-jelölés (©) az adatokban nincs: kézzel írd a név mögé, ha kell. A nevek hosszú, több keresztnevesek lerövidülnek (3 szó).' });
       if (t.type === 'rostergrid') info.notices.push({ text: 'A fotók a Hunbasketről valók (az MKOSZ engedélyével, letöltve a repóba). Ahol nincs fotó, helyőrző jelenik meg.' });
     }
+  } else if (t.type === 'livestat') {
+    const g = live.game;
+    if (!g) info.notices.push({ bad: true, text: 'Még nincs élő meccs betöltve: add meg a netcasting linket / kódot a Meccs mezőben, vagy illeszd be a hírcsatorna szövegét.' });
+    else {
+      const gl = /^w/.test(g.id || '') ? 'women' : 'men';
+      if (g.id && gl !== lg) info.notices.push({ bad: true, text: `Ez a meccs a ${gl === 'women' ? 'női' : 'férfi'} bajnokságé (${g.id}): válts át a ${gl === 'women' ? 'Női' : 'Férfi'} NB I/A fülre, különben a klub / fotó nem egyezik.` });
+      v = bindLiveStat(store, lg, g, { ...(s.live || {}), fetchedAt: live.fetchedAt }, photoIds);
+      info.notices.push({ text: `Élő adat – ${g.teams.home.short} ${g.score.home}–${g.score.away} ${g.teams.away.short}, frissítve: ${live.fetchedAt}. A hírcsatorna kb. 5 másodpercenként frissül; a „Betöltés” gomb vagy az automatikus frissítés hozza az újat.` });
+      if (v.photo && !v.photo.src) info.notices.push({ text: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó: a grafika fotó nélkül jelenik meg.' });
+    }
   } else if (t.type === 'extra') {
     v = {};
     for (const [id, k] of [['frameA', 'A'], ['frameB', 'B']]) {
@@ -453,7 +583,7 @@ function autoValues() {
   }
   const f = store.freshness(lg);
   const stale = Object.entries(f).filter(([, x]) => x.stale).map(([k]) => ({ fixtures: 'menetrend', standings: 'tabella', teamStats: 'csapatstatisztika', players: 'játékosstatisztika' }[k]));
-  if (stale.length && t.type !== 'referees') info.notices.push({ text: `Régi adat (48 óránál régebbi): ${stale.join(', ')}. Adás előtt ellenőrizd az értékeket.` });
+  if (stale.length && t.type !== 'referees' && t.type !== 'livestat') info.notices.push({ text: `Régi adat (48 óránál régebbi): ${stale.join(', ')}. Adás előtt ellenőrizd az értékeket.` });
   return { v, info };
 }
 
@@ -575,6 +705,9 @@ function fileName(values) {
   if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
+  } else if (t.type === 'livestat') {
+    const ch = live.game ? liveChoice(store, lg, live.game, s.live?.side === 'away' ? 'away' : 'home', s.live?.player) : null;
+    who = ch?.player ? `${ch.player.name}-${live.game.teams[s.live?.side === 'away' ? 'away' : 'home'].short}` : 'jatekos';
   } else who = club(lg, s.teamId)?.short || 'csapat';
   const date = new Date().toISOString().slice(0, 10);
   const ascii = x => x.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9-]+/g, '_').replace(/_+/g, '_');
@@ -664,7 +797,8 @@ async function update(full) {
   await ensureImages(values);
   if (seq !== updateSeq) return;
   const canvas = $('canvas');
-  lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+  lastReport = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity, safeZone: bugZoneNow() });
+  applyZoneGuide();
   refreshExtraSizes();
   renderOverlay();
   renderLayoutState();
@@ -691,6 +825,7 @@ async function update(full) {
     if (out.length) msgs.push(`A keret vonalát átlépi: ${out.map(el => el.label).slice(0, 6).join(', ')}${out.length > 6 ? ' …' : ''} – told beljebb vagy csökkentsd`);
   }
   if (lastReport.overflow.length) msgs.push(`Túl hosszú szöveg, kilóg a keretből (csökkentsd a betűméretet): ${lastReport.overflow.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
+  if (lastReport.fit) { const f = lastReport.fit; msgs.push(`Az adásbeli eredményjelző miatt ${f.kind === 'up' ? Math.round(-f.dy) + ' px-szel feljebb tolva' : f.kind === 'left' ? Math.round(-f.dx) + ' px-szel balra tolva' : (100 * (1 - f.s)).toFixed(1) + '%-kal kicsinyítve'} (eredményjelző: ${bugSizeNow() === 'small' ? 'kicsi' : 'nagy'})`); }
   if (lastReport.scaled.length) msgs.push(`Automatikusan kicsinyítve: ${lastReport.scaled.map(id => t.elements.find(e => e.id === id)?.label || id).join(', ')}`);
   $('renderReport').textContent = msgs.join(' · ');
   $('dims').textContent = `${canvas.width} × ${canvas.height} px · PNG, átlátszó háttér · forrás: ${t.psd}`;
@@ -753,7 +888,7 @@ async function renderForPackage(item, m) {
   await ensureTextures(t);
     await ensureImages(values);
     const canvas = document.createElement('canvas');
-    const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity });
+    const rep = render(canvas, t, values, { background: bg, images, outlines, baseOpacity: state.baseOpacity, safeZone: bugZoneNow() });
     const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
     const missing = t.elements.filter(el => values[el.id]?.missing && (values[el.id].visible ?? el.visible ?? true)).map(el => el.label);
     const warns = [
@@ -1277,6 +1412,11 @@ async function main() {
   initMobile();
   try { const r = await fetch('players/index.json', { cache: 'no-store' }); if (r.ok) photoIds = new Set((await r.json()).ids); } catch { /* no photos downloaded */ }
   $('checker').onchange = e => $('stage').classList.toggle('checker', e.target.checked);
+  // the broadcast's score bug: which one (setting) and the preview-only guide of its zone
+  $('bugMode').value = ['auto', 'large', 'small', 'off'].includes(bugMode) ? bugMode : 'auto';
+  $('bugMode').onchange = e => { bugMode = e.target.value; lsSet(BUG_KEY, bugMode); update(true); };
+  $('zoneToggle').checked = lsGet('nbia.studio.zoneGuide.v1', true) !== false;
+  $('zoneToggle').onchange = e => { lsSet('nbia.studio.zoneGuide.v1', e.target.checked); applyZoneGuide(); };
   $('fields').addEventListener('click', e => {
     const id = e.target.id;
     if (id !== 'eqNames' && id !== 'eqRanks') return;

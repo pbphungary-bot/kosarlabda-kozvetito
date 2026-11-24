@@ -92,3 +92,32 @@ export function toCanvas(box, g, w = 1920, h = 1080, c = null) {
   const gs = g?.scale > 0 ? g.scale : 1, gdx = g?.dx || 0, gdy = g?.dy || 0;
   return [(x - w / 2) * gs + w / 2 + gdx, (y - h / 2) * gs + h / 2 + gdy, bw * gs, bh * gs];
 }
+
+/**
+ * The smallest change that keeps a graphic's panel out of a keep-out zone (the broadcaster's score bug). `box` = the panel on the canvas [x0, y0, x1, y1],
+ * `zone` = [x0, y0, x1, y1]. Returns null when they do not touch, otherwise an affine change of the canvas { kind, s, ax, ay, dx, dy }: p' = a + s (p - a) + d.
+ * Candidates: shift UP, shift LEFT (both only if the panel stays inside the picture, `margin` px kept) and scale about the panel's top-left corner. The one
+ * that moves the picture least wins (a scale counts by how far its far corner travels); on a tie a shift is preferred (the size stays). The panel is the
+ * whole graphic: everything else lies inside it.
+ */
+export function safeFit(box, zone, margin = 6) {
+  if (!box || !zone || !(box[0] < zone[2] && box[2] > zone[0] && box[1] < zone[3] && box[3] > zone[1])) return null;
+  const cands = [];
+  const up = box[3] - zone[1];
+  if (box[1] - up >= margin) cands.push({ cost: up, kind: 'up', s: 1, ax: 0, ay: 0, dx: 0, dy: -up });
+  const left = box[2] - zone[0];
+  if (box[0] - left >= margin) cands.push({ cost: left, kind: 'left', s: 1, ax: 0, ay: 0, dx: -left, dy: 0 });
+  const sy = (zone[1] - box[1]) / (box[3] - box[1]), sx = (zone[0] - box[0]) / (box[2] - box[0]);
+  const s = Math.max(0.5, Math.min(1, Math.max(sx, sy)));
+  cands.push({ cost: (1 - s) * Math.max(box[2] - box[0], box[3] - box[1]) + 0.01, kind: 'scale', s, ax: box[0], ay: box[1], dx: 0, dy: 0 });
+  const best = cands.sort((a, b) => a.cost - b.cost)[0];
+  const { cost, ...f } = best;
+  return f;
+}
+
+/** Folds a canvas-space change (safeFit) into the global move / scale of a graphic (the engine's global transform: p' = c + gs (p - c) + gd, c = canvas centre). */
+export function foldFit(g, f, w = 1920, h = 1080) {
+  const gs = g?.scale > 0 ? g.scale : 1, gdx = g?.dx || 0, gdy = g?.dy || 0;
+  if (!f) return { dx: gdx, dy: gdy, scale: gs };
+  return { scale: f.s * gs, dx: f.ax * (1 - f.s) + f.s * (w / 2 + gdx) - w / 2 + f.dx, dy: f.ay * (1 - f.s) + f.s * (h / 2 + gdy) - h / 2 + f.dy };
+}

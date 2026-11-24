@@ -534,6 +534,67 @@ function h2hTpl(id, league) {
   return t;
 }
 
+// ───────────────────────── Élő statisztika (live player insert) ─────────────────────────
+// A thin pop-up strip for timeouts / quarter breaks: the official roster photo of the chosen player, name and a few statistics from the live boxscore.
+// It must not hide the broadcaster's score bug: both versions of it sit in the bottom-right corner (measured on the owner's screenshots of the two feeds:
+// x 1211–1886, y 931–1044 and x 1425–1876, y 956–1034). Owner's placement (2026-11-24): on the score bug's level, in the middle of the space between the
+// left edge of the picture and the score bug (which one depends on the broadcast: BUG.large / BUG.small).
+// Two versions of the broadcaster's score bug exist (owner, 2026-11-24): the LARGE one is used on the broadcasts of ETO Basket (women) and Falco (men) only,
+// every other partner uses the SMALL one. Zones = keep-out areas [x0, y0, x1, y1] (incl. a little margin and the credit line below the bug);
+// the large zone also contains the small one, so it is the safe choice whenever the host is unknown.
+export const BUG = {
+  large: { zone: [1200, 925, 1920, 1080], cy: 988, label: 'Nagy eredményjelző (ETO Basket, Falco): 1211–1886 × 931–1044 px' },
+  small: { zone: [1410, 945, 1920, 1080], cy: 995, label: 'Kis eredményjelző (a többi partner): 1425–1876 × 956–1034 px' },
+};
+export const LARGE_BUG_CLUBS = { women: ['sercounigyor'], men: ['falcokc'] }; // club ids (clubs.js) that broadcast with the large score bug
+export const bugSizeOf = (league, homeId) => (LARGE_BUG_CLUBS[league] || []).includes(homeId) ? 'large' : 'small';
+export const bugOf = size => BUG[size] || BUG.large;
+export const LIVE_CORNERS = { gap: 'Alul, az eredményjelző szintjén (a rés közepén)', tl: 'Bal felül' };
+export const liveCorner = c => (LIVE_CORNERS[c] ? c : 'gap');
+const LIVE_PAD = 10, LIVE_PHOTO_W = 120;
+export const LIVE_VARIANTS = {
+  basic: { label: 'Alap (PTS · REB · AST)', w: 480, h: 150, cols: 3, val: 60, lab: 26, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
+  shooting: { label: 'Dobások (2P · 3P · BT)', w: 480, h: 140, cols: 3, val: 52, lab: 24, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
+  full: { label: 'Teljes sor', w: 900, h: 130, cols: 9, val: 40, lab: 22, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
+};
+export const liveVariant = v => (LIVE_VARIANTS[v] ? v : 'basic');
+export const LIVE_BUILDERS = {}; // template id → (variant, place, bugSize) => template (see app.js tpl())
+export const livePlace = (w, h, place, size = 'large') => { // top-left corner of the strip: in the middle of the gap left of the score bug, on its level
+  const z = bugOf(size);
+  return place === 'tl' ? [40, 40] : [Math.round(z.zone[0] / 2 - w / 2), Math.min(Math.round(z.cy - h / 2), 1060 - h)];
+};
+
+function liveTpl(id, league, variantIn, placeIn, sizeIn) {
+  const variant = liveVariant(variantIn), place = liveCorner(placeIn), size = BUG[sizeIn] ? sizeIn : 'large', V = LIVE_VARIANTS[variant], { w, h } = V, pad = LIVE_PAD, op = 0.9882;
+  const [x, y] = livePlace(w, h, place, size);
+  const sw = 3;
+  const txt = (size, extra) => ({ type: 'text', size, tracking: 25, color: '#ffffff', outline: ol(2, '#000000'), opacity: op, adjust: true, ...extra });
+  const left = x + pad + LIVE_PHOTO_W + 8, right = x + w - pad, photoH = h - 8;
+  const els = [
+    { ...panelFrame(league, x, y, w, h), sw, r: 14 },
+    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [right - 22, y + pad + 24, 44, 44], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 1 },
+    { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 6 + LIVE_PHOTO_W / 2, y + h - 4 - photoH / 2, LIVE_PHOTO_W, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
+    txt(46, { id: 'name', label: 'Név', group: 'Fejléc', x: left, y: y + pad + 38, align: 'left', runs: true, maxWidth: right - left - 54, minScale: 0.5, tracking: 30, outline: ol(2.5, '#000000', 1) }),
+  ];
+  const colW = (right - left) / V.cols, top = y + 58;
+  V.cells.forEach((c, i) => {
+    const cx = left + colW * (i + 0.5), val = top + V.val * 0.743, lab = val + V.lab + 5, g = `${i + 1}. statisztika`;
+    els.push(
+      txt(V.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', maxWidth: colW - 4, minScale: 0.5 }),
+      txt(V.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', maxWidth: colW - 4, minScale: 0.6 }),
+    );
+  });
+  const t = base(id, league, 'livestat', 'Élő statisztika (saját)', 'Élő statisztika', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
+  t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
+  t.inner = { box: [x + sw + 1, y + sw + 1, x + w - sw - 1, y + h - sw - 1], r: 11 };
+  t.live = { variant, place, size };
+  return t;
+}
+function liveEntry(id, league) {
+  LIVE_BUILDERS[id] = (v, p, z) => liveTpl(id, league, v, p, z);
+  return LIVE_BUILDERS[id]('basic', 'gap', 'large');
+}
+
 // ───────────────────────── Extra (MKOSZ) – freely sized frames ─────────────────────────
 // "Background for extra graphics + QR code outliner.psd": a tall photo frame and a square QR frame (brown fill, gold border, radius 18).
 // Both are drawn as shapes (not as a picture), so they can be moved and resized freely; the uploaded photo / QR code sits inside.
@@ -644,6 +705,8 @@ export const TEMPLATES = [
   formTpl('formpair-women', 'women', 2),
   h2hTpl('h2h-men', 'men'),
   h2hTpl('h2h-women', 'women'),
+  liveEntry('livestat-men', 'men'),
+  liveEntry('livestat-women', 'women'),
   extraTpl('extra-men', 'men'),
   extraTpl('extra-women', 'women'),
   nextmatch('nextmatch-men', 'men'),
@@ -674,6 +737,7 @@ export const TEMPLATE_TYPES = {
   referees: 'Játékvezetők',
   h2h: 'Egymás ellen',
   extra: 'Extra (MKOSZ)',
+  livestat: 'Élő statisztika (játékos)',
 };
 
 export function templateById(id) { return TEMPLATES.find(t => t.id === id); }

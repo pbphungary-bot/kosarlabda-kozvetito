@@ -211,3 +211,8 @@ label.inline { display: flex; gap: 6px; align-items: flex-start; }
 .psnudge [data-d] { min-width: 36px; font-size: 16px; }
 .bgrow { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin: 4px 0 8px; }
 .bgrow .bgMsg { flex-basis: 100%; }
+
+/* preview-only guide: where the broadcaster's score bug sits (never part of the exported PNG) */
+.zone-guide { position: absolute; pointer-events: none; display: none; border: 2px dashed rgba(255, 90, 90, .9); background: repeating-linear-gradient(135deg, rgba(255, 70, 70, .16) 0 10px, rgba(255, 70, 70, .06) 10px 20px); box-sizing: border-box; }
+.zone-guide::after { content: 'eredményjelző – ide ne kerüljön grafika'; position: absolute; left: 6px; top: 4px; font-size: 11px; color: #ffb0b0; text-shadow: 0 0 3px #000; }
+.zone-guide.on { display: block; }

@@ -7,6 +7,7 @@
 // document's global angle 0° → shifted 1 px to the left). That is reproduced
 // exactly as a dilated silhouette drawn behind the element.
 
+import { safeFit, foldFit } from './layout.js';
 export const FONT_FAMILIES = {
   regular: 'League Gothic Studio',
   italic: 'League Gothic Studio Italic',
@@ -308,14 +309,28 @@ export function render(canvas, template, values, assets) {
     applyBaseOpacity(bctx, template, assets.baseOpacity);
   }
   const G = values.__global || {};
-  const gs = G.scale > 0 ? G.scale : 1, gdx = G.dx || 0, gdy = G.dy || 0;
+  let gs = G.scale > 0 ? G.scale : 1, gdx = G.dx || 0, gdy = G.dy || 0;
+  // keep the panel out of the broadcaster's score bug zone (assets.safeZone): the smallest shift / scale, folded into the global transform
+  let fit = null;
+  const pel = assets.safeZone && template.elements.find(e => e.id === 'panel' && e.type === 'framed');
+  const psd = assets.safeZone && !pel && template.panel?.box; // designs without a frame shape (e.g. referees): the PSD's panel area
+  if (pel || psd) {
+    let cx, cy, w, h;
+    if (pel) {
+      const pv = values.panel || {}, e0 = pv.geom ? { ...pel, ...pv.geom } : pel, k = pv.scale > 0 ? pv.scale : 1, [pcx, pcy, pw, ph] = e0.box;
+      w = (pv.w > 0 ? pv.w : pw) * k; h = (pv.h > 0 ? pv.h : ph) * k; cx = pcx + (pv.dx || 0); cy = pcy + (pv.dy || 0);
+    } else { w = psd[2] - psd[0]; h = psd[3] - psd[1]; cx = (psd[0] + psd[2]) / 2; cy = (psd[1] + psd[3]) / 2; }
+    const W = template.width, H = template.height, X = x => (x - W / 2) * gs + W / 2 + gdx, Y = y => (y - H / 2) * gs + H / 2 + gdy;
+    fit = safeFit([X(cx - w / 2), Y(cy - h / 2), X(cx + w / 2), Y(cy + h / 2)], assets.safeZone);
+    if (fit) { const g2 = foldFit({ dx: gdx, dy: gdy, scale: gs }, fit, W, H); gs = g2.scale; gdx = g2.dx; gdy = g2.dy; }
+  }
   // content move / scale: everything inside the frame moves, the frame (background + outline) stays; the photo may be excluded
   const C = values.__content || {};
   const cs = C.scale > 0 ? C.scale : 1, cdx = C.dx || 0, cdy = C.dy || 0;
   const pb = template.panel?.box;
   const ccx = pb ? (pb[0] + pb[2]) / 2 : template.width / 2, ccy = pb ? (pb[1] + pb[3]) / 2 : template.height / 2;
   const contentOn = cs !== 1 || cdx !== 0 || cdy !== 0;
-  const report = { overflow: [], scaled: [], sizes: {}, boxes: {}, global: { dx: gdx, dy: gdy, scale: gs }, content: { dx: cdx, dy: cdy, scale: cs, cx: ccx, cy: ccy, photo: C.photo !== false } };
+  const report = { overflow: [], scaled: [], sizes: {}, boxes: {}, global: { dx: gdx, dy: gdy, scale: gs }, fit, content: { dx: cdx, dy: cdy, scale: cs, cx: ccx, cy: ccy, photo: C.photo !== false } };
   ctx.save();
   ctx.translate(template.width / 2 + gdx, template.height / 2 + gdy);
   ctx.scale(gs, gs);

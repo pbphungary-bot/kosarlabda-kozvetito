@@ -194,3 +194,28 @@ Előállítás: `python3 tools/psd_frames.py` (a PSD-kből: keret-adatok → `js
 - **Sorok:** a helyezés-sorok mostantól ugyanazon az alapvonalon vannak, mint az értékek (a PSD-ben 1–9 px-et csúsztak), és az értékek / helyezések / fotók a felirat-oszlop közepére szimmetrikusak.
 
 **Oldalsáv szélessége (asztali nézet):** a bal oldalsáv és az előnézet közti függőleges sávot (a vékony vonalat) megfogva az oldalsáv szélessége szabadon húzható (320–1000 px); a böngésző megjegyzi, dupla kattintás vagy a *Home* billentyű az alaphelyzetre (480 px) állítja, a ←/→ nyilak 24 px-et lépnek. A mezők „Betűméret / Balra-jobbra / Fel-le” sora keskeny oldalsávban új sorba tör, nem lóg ki.
+
+
+## Élő statisztika (játékos)
+Időkérésnél / negyedszünetben egy játékos élő statisztikája, a hivatalos keretfotóval (ugyanaz, mint a Keret fotókkal grafikán). Vékony sáv (*Alap* 480 × 150 px, *Dobások* 480 × 140 px, *Teljes sor* 900 × 130 px), átlátszó PNG. A név alatt nincs állás-sor (az adás saját eredményjelzője mutatja az állást és a negyedet). Alapból **az eredményjelző szintjén, a kép bal széle és az eredményjelző közti rés közepén** jelenik meg (*Hely a képen*: *Alul…* vagy *Bal felül*); az adás eredményjelzője (mindkét változat) a jobb alsó sarokban van, azt a grafika sosem takarja. Az előnézetben az *Adásbeli eredményjelző zónája* jelölőnégyzet egy satírozott sávot mutat ott (csak az előnézetben látszik, az exportban nem).
+
+**Adat:** az MKOSZ élő boxscore-ja (`https://netcasting4.webpont.com/?whun_135563` – a `whun_` a női, a `hun_` a férfi mérkőzés). A stúdió a hírcsatorna eseménylistájából számolja a statisztikát (pont, 2P/3P/BT dobások, lepattanó, gólpassz, szerzett és eladott labda, blokk, fault, játékperc, EFF); a pontok egyeznek a hivatalos állással. A hírcsatorna kb. 5 másodpercenként frissül.
+
+**Használat:**
+1. Válaszd az *Élő statisztika (játékos)* sablont (a megfelelő Férfi / Női fülön).
+2. A *Meccs* mezőbe írd a netcasting linket vagy a kódot (pl. `whun_135563`), majd *Betöltés*. Az *Automatikus frissítés* 5 másodpercenként hozza az újat.
+3. Válassz csapatot és játékost (a lista pontszerzés szerint rendezett), és egy változatot: **Alap** (PTS · REB · AST), **Dobások** (2P · 3P · BT: dobott/kísérlet, a százalék a felirat sorában), **Teljes sor** (perc, pont, lepattanó, gólpassz, szerzett labda, blokk, eladott labda, fault, EFF).
+4. Exportálás mint a többi grafika (a fájlnévben a játékos és a csapat).
+
+**Fontos – az élő lekérés a helyi szerverrel működik:** a hírcsatorna szervere nem engedi, hogy egy weboldal (pl. a GitHub Pages) közvetlenül olvassa, és a felhős szolgáltatások (pl. Supabase) hálózatát elutasítja. Ezért indítsd a stúdiót a gépeden: `python3 tools/serve.py`, majd nyisd meg a `http://localhost:8000/graphics/` címet – a szerver `/live` címen továbbítja a hírcsatornát (csak ezt az egy URL-formát kéri le). Ha ez nem megy, a *Beillesztés* ágon kézzel is használható: a böngészőben nyisd meg a `https://netcasting4.webpont.com/storage/full<kód>.html` címet, Ctrl+A, Ctrl+C, és illeszd be a stúdió mezőjébe.
+
+A név írásmódja a Hunbasket-keret szerint (magyar: VEZETÉKNÉV Keresztnév, külföldi: Keresztnév VEZETÉKNÉV); ahol nincs letöltött fotó, a grafika fotó nélkül jelenik meg. Hiányzó adatot a stúdió nem talál ki.
+
+
+## Eredményjelző (az adás jobb alsó sarkában)
+Az adásban a közvetítő saját eredményjelzője a **jobb alsó sarokban** van, két méretben: a **nagy** az **ETO Basket és a Falco** adásain, a **kicsi** az összes többi partnernél. A grafikák nem takarhatják.
+
+* **Beállítás:** az előnézet felett az *Eredményjelző* választó: **automatikus** (a kiválasztott mérkőzés / élő meccs hazai csapata szerint: ETO Basket vagy Falco = nagy, különben kicsi; ha nincs mérkőzés kiválasztva, a nagy zónával dolgozik, mert az tartalmazza a kicsit), **nagy**, **kicsi**, **nincs** (nem tér ki). A beállítást a böngésző megjegyzi.
+* **Automatikus kitérés:** ahol egy grafika panelje belelógna a zónába, a stúdió a lehető legkisebb változtatással elmozgatja: feljebb vagy balra tolja, vagy egészen kicsit kicsinyíti (a bal felső sarka körül). Néhány példa a nagy eredményjelzőnél: Csapatok összevetése / Kulcsjátékosok ~0,3% (a női 40 px-szel balra), Eredmények / Menetrend / Színes sorok 4,4%, Intro 2,3%, Játékvezetők 51 px-szel feljebb, Játékos-különleges (női) 6,7%. A Keret, Csapatstatisztika, Forma és Egymás ellen nem érinti a zónát, azok nem változnak. A változtatást az előnézet alatti sor kiírja („Az adásbeli eredményjelző miatt …”); a kézi Elrendezés (mozgatás / méret) ezen felül is használható, és a ZIP csomag is ugyanígy kitér.
+* **Zóna mutatása:** a *Zóna mutatása* jelölőnégyzet satírozott sávot rajzol az előnézetre ott, ahol az eredményjelző van (csak az előnézetben látszik, az exportban nem).
+* Az *Élő statisztika* sáv saját magát az eredményjelző szintjére, a kép bal széle és az eredményjelző közti rés közepére teszi (nagy eredményjelzőnél x = 600, kicsinél x = 705).
