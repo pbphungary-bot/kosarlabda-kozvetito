@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T10:47:16.974103+00:00",
+  "checked_at": "2026-11-24T11:45:31.544939+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 35,
-      "added": 3,
+      "candidates": 36,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -304,19 +304,29 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:URLError",
+        "sitemap:URLError",
+        "sitemap:URLError",
+        "sitemap:URLError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -465,6 +475,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -562,11 +574,30 @@
   ],
   "articles": [
     {
+      "source": "Nemzeti Sport",
+      "title": "Minden fronton optimista az Olaj irányítója",
+      "summary": "Minden fronton optimista az Olaj irányítója",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/minden-fronton-optimista-az-olaj-iranyitoja/",
+      "published_at": "2026-11-24T12:24:39+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
       "source": "WBasket.hu",
       "title": "Újabb gátat is átlépett a magyar válogatott a novemberi FIBA-ablakban – Völgyi Péterrel értékeltünk",
       "summary": "Mindhárom novemberi mérkőzését megnyerte a magyar válogatott a 2027-es Európa-bajnokság selejtezőjében.",
       "url": "https://wbasket.hu/ujabb-gatat-is-atlepett-a-magyar-valogatott-a-novemberi-fiba-ablakban-volgyi-peterrel-ertekeltunk/",
       "published_at": "2026.11.24. 11:21",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Fantasy: Nneka Ezeigbo volt a heti legjobb, megvan a novemberi férfi győztes",
+      "summary": "Újabb hét telt el a HUNBASKET Fantasy League-ben, és bőven volt mozgás a heti ranglistán – írja a Hunbasket összefoglalója.",
+      "url": "https://wbasket.hu/fantasy-nneka-ezeigbo-volt-a-heti-legjobb-megvan-a-novemberi-ferfi-gyoztes/",
+      "published_at": "2026.11.24. 09:43",
       "summary_method": "article_body",
       "teams": [],
       "league": "women"
@@ -579,6 +610,16 @@
       "published_at": "2026-11-24T07:57:45+01:00",
       "summary_method": "article_body",
       "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Négy kategóriában is helyezést ért el az MKOSZ a Sport Forum Awards 2026-on",
+      "summary": "Sport Forum Awards a közép-európai sportmarketing és sportüzlet kiemelkedő teljesítményeit ismeri el: sportolókat, csapatokat, szervezeteket és kezdeményezéseket díjaznak.",
+      "url": "https://wbasket.hu/negy-kategoriaban-is-helyezest-ert-el-az-mkosz-a-sport-forum-awards-2026-on/",
+      "published_at": "2026.11.24. 07:27",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "WBasket.hu",
