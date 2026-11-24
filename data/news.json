@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T06:00:18.307849+00:00",
+  "checked_at": "2026-11-24T07:01:13.020737+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -545,18 +545,24 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
       "added": 0,
-      "repaired": 30,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 30,
+      "repaired": 25,
+      "article_errors": 5,
+      "listing_errors": [
+        "article https://tfse.hu/44474-2/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/ismerjetek-meg-a-tfse-oregfiukat/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/szekszardon-zarjuk-a-valogatott-szunet-elotti-bajnoki-szakaszt/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/a-tfse-ami-osszekot-csapatunk-az-mkosz-a-het-csapata-sorozataban/: HTTPError: HTTP Error 508: Loop Detected"
+      ],
+      "usable_articles": 25,
       "source_coverage": true
     }
   ],
