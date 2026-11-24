@@ -16,6 +16,9 @@ test('live feed: game code from a netcasting link / plain code', () => {
   assert.equal(gameCode('  WHUN_135563 '), 'whun_135563');
   assert.equal(gameCode('hun_134947'), 'hun_134947');
   assert.equal(gameCode('nothing'), null);
+  assert.equal(gameCode('https://netcasting4.webpont.com/?hunu18_142679'), 'hunu18_142679', 'junior games (hunu18_…)');
+  assert.equal(feedUrl('hunu18_142679'), 'https://netcasting4.webpont.com/storage/fullhunu18_142679.html');
+  assert.equal(gameCode('https://hunbasket.hu/merkozes/x2324/whun_ply/whun_ply_68632'), null, 'a playoff match page is not a netcasting code');
   assert.equal(gameCode(''), null);
 });
 
