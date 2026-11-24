@@ -322,6 +322,22 @@ test('head to head: past meetings of two clubs, newest first, both orientations,
   assert.equal(bindH2H({ h2hGames: () => [] }, 'men', 'kecskemet', 'nkapecs').panel.visible, false, 'no meetings: no box');
 });
 
+test('head to head: playoff and cup meetings are included and labelled; regular season has no label', async () => {
+  const store = await loadStore();
+  await store.loadLazy('women', 'h2h', f => readJson(DATA_DIR + '/' + f));
+  const g = store.h2hGames('women', 'sercounigyor', 'vasasakademia');
+  const comps = new Set(g.map(x => x.comp));
+  assert.ok(comps.has('rs') && comps.has('playoff'), 'ETO – Vasas: regular season and playoff meetings (' + [...comps] + ')');
+  const v = bindH2H(store, 'women', 'sercounigyor', 'vasasakademia', 12);
+  g.slice(0, 12).forEach((x, i) => {
+    const want = x.comp === 'playoff' ? '(Playoff)' : x.comp === 'cup' ? '(Magyar Kupa)' : '';
+    assert.equal(v[`h${i}.comp`].text, want, `row ${i} ${x.date}`);
+    assert.equal(!!v[`h${i}.date`].geom, !!want, 'the date moves up only when there is a label');
+  });
+  const mk = bindH2H({ h2hGames: () => [{ date: '2024-03-17', homeId: 'a', awayId: 'b', home: 54, away: 79, season: '2023/2024', url: 'x', comp: 'cup' }] }, 'women', 'a', 'b');
+  assert.equal(mk['h0.comp'].text, '(Magyar Kupa)');
+});
+
 test('key players graphic: photos instead of logos (with fallback), source colour, rows level and mirrored', async () => {
   const store = await loadStore();
   const t = templateById('playercompare-men'), el = id => t.elements.find(e => e.id === id);

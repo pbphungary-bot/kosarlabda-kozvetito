@@ -516,6 +516,7 @@ function formTpl(id, league, rows) {
 // ───────────────────────── Head to head (last five meetings) ─────────────────────────
 // One row per meeting, newest on top: date · home badge · score · away badge. Panel 680x478 (top-left, like the form graphic).
 export const H2H_PANEL = { x: 40, y: 40, w: 680, row: 86, pad: 24, rows: 6 }; // up to 6 meetings; the panel height follows the real number (bindH2H)
+export const H2H_COMP_LIFT = 8; // px the date moves up when a competition label sits under it
 function h2hTpl(id, league) {
   const { x, y, w, row, pad, rows } = H2H_PANEL, op = 0.9882, h = pad * 2 + row * rows, els = [panelFrame(league, x, y, w, h)];
   for (let r = 0; r < rows; r++) {
@@ -523,6 +524,8 @@ function h2hTpl(id, league) {
     const txt = (size, extra) => ({ type: 'text', group: g, size, tracking: 25, color: '#ffffff', outline: ol(3, '#000000'), opacity: op, adjust: true, ...extra });
     els.push(
       { ...txt(34, { id: `h${r}.date`, label: `${r + 1}. meccs – dátum`, x: x + pad + 20, y: base + 0.3715 * 34, align: 'left', maxWidth: 190, minScale: 0.6 }) },
+      // competition under the date, half its size, in brackets – only for playoff / cup meetings (owner 2026-11-24); bindH2H lifts the date by H2H_COMP_LIFT then
+      { ...txt(17, { id: `h${r}.comp`, label: `${r + 1}. meccs – sorozat (Playoff / Kupa)`, x: x + pad + 20, y: base - H2H_COMP_LIFT + 0.3715 * 34 + 6 + 0.743 * 17, align: 'left', maxWidth: 190, minScale: 0.6 }) },
       { id: `h${r}.home`, type: 'image', label: `${r + 1}. meccs – hazai`, group: g, box: [x + 290, cy, 84, 72], fit: 'contain', opacity: op, logoOutline: true },
       { ...txt(54, { id: `h${r}.score`, label: `${r + 1}. meccs – eredmény`, x: x + 440, y: base + 0.3715 * 54, align: 'center', maxWidth: 150, minScale: 0.6 }) },
       { id: `h${r}.away`, type: 'image', label: `${r + 1}. meccs – vendég`, group: g, box: [x + 590, cy, 84, 72], fit: 'contain', opacity: op, logoOutline: true },

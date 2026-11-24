@@ -17,14 +17,20 @@ SEASONS = ['2627', '2526', '2425', '2324', '2223', '2122', '2021']
 LEAGUES = {'men': ('ferfi', 'hun'), 'women': ('noi', 'whun')}
 DATE = re.compile(r'20\d{2}\.\s*\d{1,2}\.\s*\d{1,2}\.')
 SCORE = re.compile(r'\b(\d{1,3})\s*[-–:]\s*(\d{1,3})\b')
-URL_RE = re.compile(r'/merkozes/(?:x\d{4}/)?(?:hun|whun)/(?:hun|whun)_\d+', re.I)
+URL_RE = re.compile(r'/merkozes/(?:x\d{4}/)?(?:hun|whun)(?:_ply|_cup)?/(?:hun|whun)(?:_ply|_cup)?_\d+', re.I)
+# Hunbasket keeps one schedule page per competition: <code> = regular season, <code>_ply = playoff, <code>_cup = Magyar Kupa (the match url has the same suffix)
+COMPETITIONS = (('', 'rs'), ('_ply', 'playoff'), ('_cup', 'cup'))
+
+def competition_of(url, default='rs'):
+    m = re.search(r'/(?:hun|whun)(_ply|_cup)?/', url or '')
+    return {'_ply': 'playoff', '_cup': 'cup'}.get(m.group(1), 'rs') if m else default
 
 def get(url):
     req = urllib.request.Request(url, headers={'User-Agent':'Mozilla/5.0 (compatible; BasketballDashboard/1.0)'})
     with urllib.request.urlopen(req, timeout=35) as res:
         return BeautifulSoup(res.read(), 'html.parser')
 
-def parse(soup, league, season):
+def parse(soup, league, season, comp='rs', suffix=''):
     output = []
     for row in soup.select('table.desktop-only tbody tr'):
         d = row.select_one('.data-group.game-date')
@@ -51,11 +57,11 @@ def parse(soup, league, season):
             found=URL_RE.search(markup.replace('\\/','/'))
             if found: links.append(urljoin(BASE,found.group(0)))
         if not links:
-            ident=re.search(r'\b(?:hun|whun)_\d{5,7}\b',markup,re.I)
-            if ident: links.append(f'{BASE}/merkozes/x{season}/{LEAGUES[league][1]}/{ident.group(0)}')
+            ident=re.search(r'\b(?:hun|whun)(?:_ply|_cup)?_\d{1,7}\b',markup,re.I)
+            if ident: links.append(f'{BASE}/merkozes/x{season}/{LEAGUES[league][1]}{suffix}/{ident.group(0)}')
         output.append({'league':league,'season':f'20{season[:2]}/20{season[2:]}' if len(season)==4 else season,
                        'home':home,'away':away,'date':iso,'score':f'{sm.group(1)}–{sm.group(2)}',
-                       'url':links[0] if links else '', 'source':'Hunbasket'})
+                       'url':links[0] if links else '', 'competition':competition_of(links[0], comp) if links else comp, 'source':'Hunbasket'})
     return output
 
 def main():
@@ -63,15 +69,16 @@ def main():
     for league,(gender,code) in LEAGUES.items():
         for season in SEASONS:
             if len(season)!=4:continue
-            url=f'{BASE}/menetrend-teljes/{gender}/x{season}/{code}'
-            try:
-                games=parse(get(url),league,season)
-                coverage.append({'league':league,'season':season,'count':len(games),'url':url})
-                print(f'{league} {season}: {len(games)} finished matches',flush=True)
-                all_games.extend(games)
-            except Exception as exc:
-                print(f'WARNING {league} {season}: {exc}',file=sys.stderr,flush=True)
-                coverage.append({'league':league,'season':season,'count':0,'error':str(exc)})
+            for suffix,comp in COMPETITIONS:
+                url=f'{BASE}/menetrend-teljes/{gender}/x{season}/{code}{suffix}'
+                try:
+                    games=parse(get(url),league,season,comp,suffix)
+                    coverage.append({'league':league,'season':season,'competition':comp,'count':len(games),'url':url})
+                    print(f'{league} {season} {comp}: {len(games)} finished matches',flush=True)
+                    all_games.extend(games)
+                except Exception as exc:
+                    print(f'WARNING {league} {season} {comp}: {exc}',file=sys.stderr,flush=True)
+                    coverage.append({'league':league,'season':season,'competition':comp,'count':0,'error':str(exc)})
     # Merge current-season results from the already-working fixtures JSON.
     for league in LEAGUES:
         path=Path(f'data/{league}.json')
@@ -85,7 +92,7 @@ def main():
             if len(bits)!=3:continue
             all_games.append({'league':league,'season':'2026/2027','home':m['home'],'away':m['away'],
               'date':f'{bits[0]:04d}-{bits[1]:02d}-{bits[2]:02d}',
-              'score':f'{sm.group(1)}–{sm.group(2)}','url':m.get('url',''),'source':'Hunbasket'})
+              'score':f'{sm.group(1)}–{sm.group(2)}','url':m.get('url',''),'competition':competition_of(m.get('url','')),'source':'Hunbasket'})
     # Deduplicate by date, score and team names; prefer entries with a match URL.
     unique={}
     for m in all_games:
