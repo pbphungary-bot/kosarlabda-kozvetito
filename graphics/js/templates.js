@@ -642,7 +642,7 @@ export const liveTeamKeys = keys => {
   const k = LIVE_TEAM_STATS.map(x => x.key).filter(x => (keys || []).includes(x));
   return k.length ? k : LIVE_TEAM_DEFAULT.slice();
 };
-export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', best: '#d4202b', edge: '#3b3b40' };
+export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', better: GREEN, worse: RED, edge: '#3b3b40' }; // the better value's box is green, the worse red (as on all the other stat graphics); a tie stays white
 export const LIVE_TEAM_BUILDERS = {}; // template id → (keys) => template
 // Layout in base units, then everything is scaled (owner 2026-11-24: 2 times bigger, columns and scores closer together): S = 2 where the rows fit under 1074 px, less when many stats are ticked.
 const LT = { w: 560, head: 138, pad: 20, box: 190 };

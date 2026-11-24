@@ -668,8 +668,8 @@ export function bindLiveTeam(store, lg, game, sel = {}) {
     const better = ka === null || kb === null || ka === kb ? null : ((ka > kb) !== !!d.low ? 'home' : 'away'); // equal or no attempts: nobody is marked
     v[`r${i}.label`] = { text: d.label, source: 'Fix felirat (átírható)' };
     for (const [side, x, id] of [['home', a, `r${i}.h`], ['away', b, `r${i}.a`]]) {
-      const hit = better === side, o = { color: hit ? '#ffffff' : C.digit };
-      v[`${id}.box`] = { fill: hit ? C.best : C.box, source: 'Jelölés: a jobb érték' };
+      const o = better === null ? { color: C.digit } : { color: '#ffffff' }, fill = better === null ? C.box : better === side ? C.better : C.worse; // better = green box, worse = red box (white digits), tie / nothing to compare = white box
+      v[`${id}.box`] = { fill, source: 'Jelölés: a jobb érték zöld, a rosszabb piros' };
       if (d.shoot) {
         const main = `${x.m}/${x.a}`, pc = x.pct === null ? null : ` (${Math.round(100 * x.pct)}%)`;
         v[id] = { ...o, text: main + (pc || ''), runs: [{ text: main }, ...(pc ? [{ text: pc, size: small, dy: -(big - small) * 0.3715 }] : [])], source: `${src} – ${d.label}${pc ? '' : ': nincs kísérlet, nincs százalék'}` };

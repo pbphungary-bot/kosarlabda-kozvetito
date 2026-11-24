@@ -195,8 +195,12 @@ test('live team comparison: quarter points add up to the score, team totals, bet
   assert.equal(v['r0.h'].runs[1].size, Math.round(40 * liveTeamSize(['fg3', 'reb', 'tov']).scale * 2 / 3 * 100) / 100, '2/3 of the (scaled) figures');
   assert.equal(v.time.text, 'VÉGE');
   assert.equal(v['r1.h'].text, String(t.reb)); assert.equal(v['r1.a'].text, String(a.reb));
-  assert.equal(v['r1.h.box'].fill, t.reb > a.reb ? LIVE_TEAM_COLORS.best : LIVE_TEAM_COLORS.box, 'more rebounds = better');
-  assert.equal(v['r2.h.box'].fill, t.tov < a.tov ? LIVE_TEAM_COLORS.best : LIVE_TEAM_COLORS.box, 'fewer turnovers = better');
+  const homeBetterReb = t.reb > a.reb;
+  assert.equal(v['r1.h.box'].fill, homeBetterReb ? LIVE_TEAM_COLORS.better : LIVE_TEAM_COLORS.worse, 'more rebounds = better = green box, the other side red');
+  assert.equal(v['r1.a.box'].fill, homeBetterReb ? LIVE_TEAM_COLORS.worse : LIVE_TEAM_COLORS.better);
+  assert.equal(v['r2.h.box'].fill, t.tov < a.tov ? LIVE_TEAM_COLORS.better : LIVE_TEAM_COLORS.worse, 'fewer turnovers = better');
+  assert.equal(v['r1.h'].color, '#ffffff', 'white digits on the green / red boxes');
+  assert.equal(LIVE_TEAM_COLORS.better, '#0b9444'); assert.equal(LIVE_TEAM_COLORS.worse, '#ec4036');
   assert.match(v['r0.h'].source, /22:41:03/, 'freshness is in the source label');
   assert.deepEqual(liveTeamKeys(['nope']), ['fg', 'fg3', 'ft', 'reb', 'ast', 'tov'], 'nothing valid ticked: the default set');
 });
