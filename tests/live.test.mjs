@@ -6,7 +6,7 @@ import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
 import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
-import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -90,7 +90,7 @@ test('live graphic: a thin strip on the score bug\'s level, centred in the gap l
         const [cx, cy, w, h] = panel.box, x0 = cx - w / 2, y0 = cy - h / 2, x1 = x0 + w, y1 = y0 + h;
         assert.ok(w <= 1040 && h <= 150, `${id}/${k}/${place}/${size}: strip ${w}x${h}`);
         assert.equal(w, liveWidth(k), 'photo | name + figures | club logo');
-        if (k !== 'full') assert.ok(w <= 610, `${k}: compact`);
+        if (k === 'basic') assert.ok(w <= 610, `${k}: compact`);
         assert.ok(x1 <= zx0 || y1 <= zy0 || x0 >= zx1 || y0 >= zy1, `${id}/${k}/${place}/${size}: clear of the score bug zone`);
         assert.ok(x0 >= 0 && y0 >= 0 && x1 <= 1920 && y1 <= 1080, 'inside the picture');
         if (place === 'gap') {
@@ -104,7 +104,7 @@ test('live graphic: a thin strip on the score bug\'s level, centred in the gap l
           const ex0 = e.type === 'image' ? bx - bw / 2 : (e.align === 'left' ? bx : bx - bw / 2), ex1 = e.type === 'image' ? bx + bw / 2 : (e.align === 'left' ? bx + bw : bx + bw / 2);
           assert.ok(ex0 >= x0 - 1 && ex1 <= x1 + 1 && by <= y1 + 1 && by >= y0 - 1, `${id}/${k}/${place}/${size}: ${e.id} inside the strip`);
         }
-        assert.equal(t.elements.filter(e => /^c\d+\.value$/.test(e.id)).length, V.cells.length);
+        assert.equal(t.elements.filter(e => /^c\d+\.value$/.test(e.id)).length, V.keys.length);
         // layout: photo at the left end, club logo at the right end (about as big as the photo), the name centred on the middle of the figures row
         const el = i => t.elements.find(e => e.id === i), ph = el('photo').box, lg = el('logo').box, vals = t.elements.filter(e => /^c\d+\.value$/.test(e.id));
         assert.ok(ph[0] < x0 + 200 && lg[0] > x1 - 200, 'photo left, logo right');
@@ -140,8 +140,17 @@ test('live graphic: values of the chosen player, roster-style name, official pho
   assert.equal(v.sub, undefined, 'no status line under the name');
   assert.match(v['c0.value'].source, /22:41:03/, 'freshness is in the source label');
   const sh = bindLiveStat(store, 'women', g, { side: 'home', variant: 'shooting' }, ids);
-  assert.deepEqual([sh['c1.value'].text, sh['c1.label'].text], ['4/5', '3P · 80.0%'], 'made/attempted, percentage on the label line');
-  assert.equal(sh['c0.label'].text, '2P · 0.0%');
+  assert.deepEqual([sh['c1.value'].text, sh['c1.label'].text], ['4/5 (80%)', '3P'], 'made/attempted, the percentage in ( ) after it');
+  assert.deepEqual(sh['c1.value'].runs.map(r => r.text), ['4/5', ' (80%)']);
+  const big = liveDims('shooting').val, r = sh['c1.value'].runs[1];
+  assert.equal(r.size, Math.round(big * 2 / 3), 'the percentage is 2/3 of the figures');
+  assert.ok(Math.abs(r.dy + (big - r.size) * 0.3715) < 1e-9, 'vertically centred on the figures');
+  assert.equal(sh['c0.label'].text, '2P'); assert.equal(sh['c0.value'].text, '0/1 (0%)', 'missed everything: 0%');
+  const pick = bindLiveStat(store, 'women', g, { side: 'home', stats: ['pts', 'fg', 'min'] }, ids);
+  assert.deepEqual([pick['c0.label'].text, pick['c1.label'].text, pick['c2.label'].text], ['PERC', 'PTS', 'FG'], 'ticked stats in canonical order');
+  assert.match(pick['c2.value'].text, /^\d+\/\d+ \(\d+%\)$/);
+  assert.deepEqual(liveKeys(['nope']), ['pts', 'reb', 'ast'], 'nothing valid ticked: the basic preset');
+  assert.ok(liveDims(LIVE_STATS.map(x => x.key)).stats + 276 <= 1040, 'everything ticked still fits');
   const full = bindLiveStat(store, 'women', g, { side: 'home', variant: 'full' }, ids);
   assert.equal(full['c0.value'].text, '25:18'); assert.equal(full['c8.value'].text, '20', 'EFF');
   // another player of the other team (not in the photo list: no photo, never a made-up one); a wrong code falls back to the best scorer

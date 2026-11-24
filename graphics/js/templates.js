@@ -560,21 +560,42 @@ export const liveCorner = c => (LIVE_CORNERS[c] ? c : 'gap');
 const LIVE_PAD = 10, LIVE_PHOTO_W = 120, LIVE_LOGO_W = 120, LIVE_GAP = 8, LIVE_LOGO_D = 100; // LIVE_LOGO_D: the club logo is 100 px (owner 2026-11-24, chosen over 75), centred in its column
 // colours (owner 2026-11-24): the name and the category labels share one colour (white), the numbers stand out in gold
 export const LIVE_COLORS = { name: '#ffffff', label: '#ffffff', value: '#ffc929' };
+// The stats of the live player insert are ticked by the commentator (owner 2026-11-24); the old fixed sets stay as presets that tick a ready-made selection.
+export const LIVE_STATS = [ // canonical order = the order on the graphic; shoot = made/attempted figure with the percentage in ( )
+  { key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' },
+  { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' },
+  { key: 'fg', label: 'FG', shoot: true }, { key: 'fg2', label: '2P', shoot: true }, { key: 'fg3', label: '3P', shoot: true }, { key: 'ft', label: 'BT', shoot: true },
+];
 export const LIVE_VARIANTS = {
-  basic: { label: 'Alap (PTS · REB · AST)', stats: 330, h: 150, cols: 3, val: 60, lab: 26, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
-  shooting: { label: 'Dobások (2P · 3P · BT)', stats: 330, h: 140, cols: 3, val: 52, lab: 24, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
-  full: { label: 'Teljes sor', stats: 756, h: 130, cols: 9, val: 40, lab: 22, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
+  basic: { label: 'Alap (PTS · REB · AST)', keys: ['pts', 'reb', 'ast'] },
+  shooting: { label: 'Dobások (2P · 3P · BT)', keys: ['fg2', 'fg3', 'ft'] },
+  full: { label: 'Teljes sor', keys: ['min', 'pts', 'reb', 'ast', 'stl', 'blk', 'tov', 'pf', 'eff'] },
 };
-export const liveWidth = v => LIVE_PAD * 2 + LIVE_PHOTO_W + LIVE_LOGO_W + LIVE_GAP * 2 + LIVE_VARIANTS[liveVariant(v)].stats; // photo | name + figures | club logo
 export const liveVariant = v => (LIVE_VARIANTS[v] ? v : 'basic');
+/** The ticked stat keys in canonical order: a preset name or an array of keys (unknown keys dropped, empty → the basic preset). */
+export const liveKeys = spec => {
+  const want = Array.isArray(spec) ? spec : LIVE_VARIANTS[liveVariant(spec)].keys;
+  const keys = LIVE_STATS.map(s => s.key).filter(k => want.includes(k));
+  return keys.length ? keys : LIVE_VARIANTS.basic.keys.slice();
+};
+/** Sizes follow the number of ticked stats (the strip is at most 1040 px wide and 150 px high): font sizes, the width of every column, the height. */
+export function liveDims(spec) {
+  const keys = liveKeys(spec), n = keys.length, val = n <= 3 ? 56 : n <= 5 ? 48 : 40, lab = val >= 56 ? 26 : val >= 48 ? 24 : 22, h = n <= 3 ? 150 : n <= 5 ? 140 : 130;
+  const base = n <= 3 ? 110 : n <= 5 ? 100 : 84;
+  let cells = keys.map(k => { const d = LIVE_STATS.find(s => s.key === k); return { ...d, w: d.shoot ? Math.round(val * 3.6) + 10 : base }; });
+  const max = 1040 - (LIVE_PAD * 2 + LIVE_PHOTO_W + LIVE_LOGO_W + LIVE_GAP * 2), sum = cells.reduce((a, c) => a + c.w, 0);
+  if (sum > max) cells = cells.map(c => ({ ...c, w: c.w * max / sum })); // too many ticked: every column narrows (the text fits itself)
+  return { keys, cells, val, lab, h, stats: Math.round(cells.reduce((a, c) => a + c.w, 0)) };
+}
+export const liveWidth = spec => LIVE_PAD * 2 + LIVE_PHOTO_W + LIVE_LOGO_W + LIVE_GAP * 2 + liveDims(spec).stats; // photo | name + figures | club logo
 export const LIVE_BUILDERS = {}; // template id → (variant, place, bugSize) => template (see app.js tpl())
 export const livePlace = (w, h, place, size = 'large') => { // top-left corner of the strip: in the middle of the gap left of the score bug, on its level
   const z = bugOf(size);
   return place === 'tl' ? [40, 40] : [Math.round(z.cx - w / 2), Math.min(Math.round(z.cy - h / 2), 1060 - h)];
 };
 
-function liveTpl(id, league, variantIn, placeIn, sizeIn) {
-  const variant = liveVariant(variantIn), place = liveCorner(placeIn), size = BUG[sizeIn] ? sizeIn : 'large', V = LIVE_VARIANTS[variant], h = V.h, w = liveWidth(variant), pad = LIVE_PAD, op = 0.9882;
+function liveTpl(id, league, specIn, placeIn, sizeIn) {
+  const V = liveDims(specIn), place = liveCorner(placeIn), size = BUG[sizeIn] ? sizeIn : 'large', h = V.h, w = liveWidth(V.keys), pad = LIVE_PAD, op = 0.9882;
   const [x, y] = livePlace(w, h, place, size);
   const sw = 3, C = LIVE_COLORS;
   const txt = (size2, extra) => ({ type: 'text', size: size2, tracking: 25, color: '#ffffff', outline: ol(2, '#000000'), opacity: op, adjust: true, ...extra });
@@ -586,18 +607,20 @@ function liveTpl(id, league, variantIn, placeIn, sizeIn) {
     { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 6 + LIVE_PHOTO_W / 2, y + h - 4 - photoH / 2, LIVE_PHOTO_W, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
     txt(46, { id: 'name', label: 'Név', group: 'Fejléc', x: mid, y: y + pad + 38, align: 'center', runs: true, color: C.name, maxWidth: V.stats - 6, minScale: 0.5, tracking: 30, outline: ol(2.5, '#000000', 1) }),
   ];
-  const colW = V.stats / V.cols, top = y + 58;
+  const top = y + 58;
+  let cx0 = left;
   V.cells.forEach((c, i) => {
-    const cx = left + colW * (i + 0.5), val = top + V.val * 0.743, lab = val + V.lab + 5, g = `${i + 1}. statisztika`;
+    const cx = cx0 + c.w / 2, val = top + V.val * 0.743, lab = val + V.lab + 5, g = `${i + 1}. statisztika`;
+    cx0 += c.w;
     els.push(
-      txt(V.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', color: C.value, maxWidth: colW - 4, minScale: 0.5 }),
-      txt(V.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', color: C.label, maxWidth: colW - 4, minScale: 0.6 }),
+      txt(V.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', runs: true, color: C.value, maxWidth: c.w - 4, minScale: 0.5 }),
+      txt(V.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', color: C.label, maxWidth: c.w - 4, minScale: 0.6 }),
     );
   });
   const t = base(id, league, 'livestat', 'Élő statisztika (saját)', 'Élő statisztika', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + sw + 1, y + sw + 1, x + w - sw - 1, y + h - sw - 1], r: 11 };
-  t.live = { variant, place, size };
+  t.live = { keys: V.keys, place, size, val: V.val };
   return t;
 }
 function liveEntry(id, league) {

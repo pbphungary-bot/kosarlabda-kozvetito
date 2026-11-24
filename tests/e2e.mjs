@@ -1286,7 +1286,7 @@ try {
     assert.equal(await val('c0.value'), '15'); assert.equal(await val('c1.value'), '5');
     assert.equal(await val('photo', 'src'), 'photo/B203034', 'the official roster photo');
     await page.selectOption('#liveVariant', 'shooting');
-    await until(3, () => window.__studio.current().values?.['c1.label']?.text === '3P · 80.0%', null, { timeout: 15000 });
+    await until(3, () => window.__studio.current().values?.['c1.value']?.text === '4/5 (80%)', null, { timeout: 15000 });
     await page.selectOption('#liveVariant', 'full');
     await until(4, () => window.__studio.current().values?.['c0.value']?.text === '25:18', null, { timeout: 15000 });
     await page.selectOption('#livePlayer', 'B20186');
@@ -1300,6 +1300,8 @@ try {
     assert.ok(bx[3] <= 150 && Math.abs(bx[0] + bx[2] / 2 - 600) <= 1 && Math.abs(bx[1] + bx[3] / 2 - 988) <= 12 && bx[0] + bx[2] < 1200, `strip on the score bug level, centred in the gap (${bx})`);
     await page.selectOption('#liveVariant', 'basic');
     await until(10, () => Math.round(window.__studio.report().boxes['panel'][2]) === 606, null, { timeout: 15000 });
+    await page.check('.liveStat[value="stl"]'); // the commentator ticks one more stat
+    await until(12, () => Math.round(window.__studio.report().boxes['panel'][2]) === 676, null, { timeout: 15000 });
     await page.selectOption('#liveCorner', 'tl');
     await until(11, () => window.__studio.report().boxes['panel'][1] < 100, null, { timeout: 15000 });
     assert.equal(await page.isVisible('#zoneGuide'), true, 'zone guide shown by default');

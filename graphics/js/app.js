@@ -3,7 +3,7 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_VARIANTS, LIVE_STATS, liveKeys, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
@@ -101,8 +101,8 @@ const tpl = () => {
     return psCache.get(key);
   }
   if (t.type === 'livestat') { // live player insert: the statistics shown = the chosen variant
-    const variant = liveVariant(state.sel[t.league]?.live?.variant), corner = liveCorner(state.sel[t.league]?.live?.corner), size = bugSizeNow() || 'large', key = `${t.id}|${variant}|${corner}|${size}`;
-    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](variant, corner, size)); }
+    const keys = liveKeys(liveSpec(state.sel[t.league]?.live)), corner = liveCorner(state.sel[t.league]?.live?.corner), size = bugSizeNow() || 'large', key = `${t.id}|${keys.join()}|${corner}|${size}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_BUILDERS[t.id](keys, corner, size)); }
     return psCache.get(key);
   }
   if (t.type !== 'playerspecial') return t;
@@ -273,17 +273,21 @@ function liveInfoHtml() {
   const c = g.clock, state = g.finished ? 'végeredmény' : c.period <= 4 ? `${c.period}. negyed` : `${c.period - 4}. hosszabbítás`;
   return `${esc(g.teams.home.short)} ${g.score.home}–${g.score.away} ${esc(g.teams.away.short)} · ${state} · frissítve: ${esc(live.fetchedAt)}`;
 }
+/** The ticked stats of the live player insert: the saved list, else the chosen preset. */
+const liveSpec = L => (Array.isArray(L?.stats) && L.stats.length ? L.stats : L?.variant);
 function livePanelHtml(s) {
   const L = s.live || {}, g = live.game, side = L.side === 'away' ? 'away' : 'home';
   const ch = g ? liveChoice(store, state.league, g, side, L.player) : null;
-  const variants = Object.entries(LIVE_VARIANTS).map(([k, v]) => `<option value="${k}" ${liveVariant(L.variant) === k ? 'selected' : ''}>${esc(v.label)}</option>`).join('');
+  const ticked = liveKeys(liveSpec(L)), variants = `<option value="">Saját választás</option>` + Object.entries(LIVE_VARIANTS).map(([k, v]) => `<option value="${k}" ${liveKeys(k).join() === ticked.join() ? 'selected' : ''}>${esc(v.label)}</option>`).join('');
+  const tickHtml = LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveStat" value="${x.key}" ${ticked.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('');
   return `<label>Élő meccs (netcasting link vagy kód)<span class="import-row"><input type="text" id="liveCode" style="flex:1;min-width:0" placeholder="https://netcasting4.webpont.com/?whun_135563" value="${esc(L.code || '')}"> <button type="button" id="liveLoad">Betöltés</button></span></label>
     <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="liveAuto" ${L.auto ? 'checked' : ''}> Automatikus frissítés 5 másodpercenként</label>
     <small id="liveInfo" class="hint">${liveInfoHtml()}</small>
     <div class="row2"><label>Csapat<select id="liveSide"><option value="home" ${side === 'home' ? 'selected' : ''}>Hazai${g ? ' – ' + esc(g.teams.home.short) : ''}</option><option value="away" ${side === 'away' ? 'selected' : ''}>Vendég${g ? ' – ' + esc(g.teams.away.short) : ''}</option></select></label>
       <label>Játékos<select id="livePlayer">${ch ? ch.players.map(p => `<option value="${esc(p.code)}" ${ch.player && p.code === ch.player.code ? 'selected' : ''}>${esc((p.number ? '#' + p.number + ' ' : '') + p.name)} – ${p.stat.pts} p</option>`).join('') : '<option>nincs betöltött meccs</option>'}</select></label></div>
-    <div class="row2"><label>Változat<select id="liveVariant">${variants}</select></label>
+    <div class="row2"><label>Statisztikák (kész csomag)<select id="liveVariant">${variants}</select></label>
       <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
+    <div id="liveStats"><small class="hint">Pipáld be, mi látsszon (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${tickHtml}</div>
     <details ${live.error || !live.game ? 'open' : ''}><summary>Beillesztés (ha az élő lekérés nem működik)</summary>
       <small class="hint" id="liveOpenRow">${liveOpenHtml(L.code)}</small>
       <textarea id="livePaste" rows="3" style="width:100%" placeholder="A böngészőben nyisd meg: https://netcasting4.webpont.com/storage/full<kód>.html – Ctrl+A, Ctrl+C, majd illeszd be ide."></textarea>
@@ -326,7 +330,8 @@ function wireLivePanel(s) {
   };
   $('liveSide').onchange = e => { L().side = e.target.value; L().player = null; resetMatchOverrides(); renderSelection(); update(true); };
   $('livePlayer').onchange = e => { L().player = e.target.value; resetMatchOverrides(); update(true); };
-  $('liveVariant').onchange = e => { L().variant = e.target.value; resetMatchOverrides(); update(true); };
+  $('liveVariant').onchange = e => { if (e.target.value) { L().variant = e.target.value; L().stats = liveKeys(e.target.value); } resetMatchOverrides(); renderSelection(); update(true); };
+  document.querySelectorAll('.liveStat').forEach(cb => { cb.onchange = () => { L().stats = [...document.querySelectorAll('.liveStat:checked')].map(x => x.value); if (!L().stats.length) L().stats = liveKeys('basic'); resetMatchOverrides(); renderSelection(); update(true); }; });
   $('liveCorner').onchange = e => { L().corner = e.target.value; resetMatchOverrides(); update(true); };
 }
 

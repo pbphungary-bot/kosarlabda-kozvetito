@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, mmss } from './live.js';
-import { LIVE_VARIANTS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { liveDims, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -592,7 +592,6 @@ export function bindH2H(store, lg, homeId, awayId, rows = H2H_PANEL.rows) {
 
 // ───────────────────────── live player insert (Élő statisztika) ─────────────────────────
 const LIVE_SRC = 'Élő boxscore (MKOSZ netcasting)';
-const pct1 = (m, a) => (a > 0 ? (100 * m / a).toFixed(1) + '%' : null);
 
 /** What the live graphic needs to know about the game: the club ids, the players that played and the chosen one. */
 export function liveChoice(store, lg, game, side, code) {
@@ -617,22 +616,24 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
   v.logo = teamId ? logo(lg, teamId) : { src: '', source: 'A klub logója nem található' };
   v.photo = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
   const st = p.stat; // (no status line under the name: the broadcast's own score bug shows the score and the period)
-  const variant = tplVariant(sel.variant);
+  const D = liveDims(Array.isArray(sel.stats) && sel.stats.length ? sel.stats : sel.variant), big = D.val, small = Math.round(big * 2 / 3);
+  const shoot = (m, a) => [`${m}/${a}`, a > 0 ? `${Math.round(100 * m / a)}%` : null];
   const cells = {
     pts: () => [String(st.pts)], reb: () => [String(p.reb)], ast: () => [String(st.ast)], stl: () => [String(st.stl)], blk: () => [String(st.blk)],
     tov: () => [String(st.tov)], pf: () => [String(st.pf)], eff: () => [String(p.eff)],
     min: () => [p.seconds === null || p.seconds === undefined ? null : mmss(p.seconds)],
-    fg2: () => [`${st.fg2m}/${st.fg2a}`, pct1(st.fg2m, st.fg2a)], fg3: () => [`${st.fg3m}/${st.fg3a}`, pct1(st.fg3m, st.fg3a)], ft: () => [`${st.ftm}/${st.fta}`, pct1(st.ftm, st.fta)],
+    fg: () => shoot(st.fg2m + st.fg3m, st.fg2a + st.fg3a), fg2: () => shoot(st.fg2m, st.fg2a), fg3: () => shoot(st.fg3m, st.fg3a), ft: () => shoot(st.ftm, st.fta),
   };
-  LIVE_VARIANTS[variant].cells.forEach((cell, i) => {
-    const [value, sub] = cells[cell.key]();
-    v[`c${i}.value`] = field(value, `${src} – ${cell.label}`);
-    // shooting cells: the percentage goes on the label line ("3P · 80.0%"), the made/attempted figures are the value
-    v[`c${i}.label`] = { text: variant === 'shooting' && sub ? `${cell.label} · ${sub}` : cell.label, source: variant === 'shooting' ? (sub ? src : 'Nincs kísérlet – nincs százalék') : 'Fix felirat (átírható)' };
+  D.cells.forEach((cell, i) => {
+    const [value, pct] = cells[cell.key]();
+    // shooting cells: made/attempted, then the percentage in ( ) at 2/3 of the size, vertically centred on the figures (digits are 0.743 em high: centre 0.3715 em above the baseline)
+    const f = field(value, `${src} – ${cell.label}`);
+    if (cell.shoot && value && pct) { const t = ` (${pct})`; v[`c${i}.value`] = { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] }; }
+    else v[`c${i}.value`] = cell.shoot && value ? { ...f, source: `${src} – ${cell.label}: nincs kísérlet, nincs százalék` } : f;
+    v[`c${i}.label`] = { text: cell.label, source: 'Fix felirat (átírható)' };
   });
   return v;
 }
-const tplVariant = k => (LIVE_VARIANTS[k] ? k : 'basic');
 
 // ───────────────────────── coach interview (Vezetőedző nyilatkozata) ─────────────────────────
 /** The opponent of a club in its next scheduled game (club id) or null. */
