@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T17:54:35.043489+00:00",
+  "checked_at": "2026-11-24T18:46:20.786707+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -549,18 +549,28 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 29,
-      "attempted": 29,
+      "candidates": 28,
+      "attempted": 28,
       "already_saved": 0,
       "added": 0,
-      "repaired": 29,
+      "repaired": 28,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 29,
+      "usable_articles": 28,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Itt van a nagy esély a magyar férfi kosárlabda-válogatottnak!",
+      "summary": "Itt van a nagy esély a magyar férfi kosárlabda-válogatottnak!",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/itt-van-a-nagy-esely-a-magyar-ferfi-kosarlabda-valogatottnak/",
+      "published_at": "2026-11-24T19:23:28+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Gasper Okorn: Nem egyszerű a helyzet, de tudjuk, mi a feladatunk",
