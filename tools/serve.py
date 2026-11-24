@@ -3,7 +3,7 @@ Usage: python3 tools/serve.py [port]   then open http://localhost:8000/graphics/
 """
 import http.server, sys, os, functools, re, urllib.request, urllib.parse
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-GAME = re.compile(r'^w?hun_\d{3,8}$')
+GAME = re.compile(r'^w?hun[a-z0-9]*_\d{3,8}$')
 class H(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         # /live?game=whun_135563&kind=full|last : relay of the public MKOSZ live boxscore feed (the feed server sends no CORS header,

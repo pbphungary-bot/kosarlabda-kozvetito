@@ -27,7 +27,7 @@ export function feedProblem(text) {
 
 /** The game code of a netcasting link / code: "https://netcasting4.webpont.com/?whun_135563" → "whun_135563". */
 export function gameCode(s) {
-  const m = String(s || '').match(/\b(w?hun_\d{3,8})\b/i);
+  const m = String(s || '').match(/\b(w?hun[a-z0-9]*_\d{3,8})\b/i);
   return m ? m[1].toLowerCase() : null;
 }
 

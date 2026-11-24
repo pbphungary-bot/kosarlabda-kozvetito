@@ -244,7 +244,7 @@ function liveApply(text, code) {
 }
 async function liveFetchNow() {
   const code = gameCode(sel().live?.code);
-  if (!code) { live.error = 'Adj meg egy meccs-linket vagy kódot (pl. whun_135563).'; return false; }
+  if (!code) { live.error = 'Adj meg egy meccs-linket vagy kódot (pl. whun_135563, junior: hunu18_142679).'; return false; }
   if (live.busy) return false;
   live.busy = true;
   try {
@@ -294,7 +294,7 @@ function livePanelHtml(s) {
 function liveOpenHtml(code) {
   const u = feedUrl(code);
   return u ? `1. <a href="${esc(u)}" target="_blank" rel="noopener">A hírcsatorna megnyitása új lapon ↗</a> (${esc(gameCode(code))}) &nbsp;2. a megnyílt lapon Ctrl+A, Ctrl+C &nbsp;3. illeszd be ide`
-    : 'Előbb írd be fent a meccs linkjét vagy kódját (pl. whun_135563): ide kerül a hírcsatorna megnyitásának hivatkozása.';
+    : 'Előbb írd be fent a meccs linkjét vagy kódját (pl. whun_135563, junior: hunu18_142679): ide kerül a hírcsatorna megnyitásának hivatkozása.';
 }
 const LIVE_PROBLEM = {
   empty: 'A beillesztő mező üres.',
