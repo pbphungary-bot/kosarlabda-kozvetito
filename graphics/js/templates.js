@@ -542,46 +542,53 @@ function h2hTpl(id, league) {
 // Two versions of the broadcaster's score bug exist (owner, 2026-11-24): the LARGE one is used on the broadcasts of ETO Basket (women) and Falco (men) only,
 // every other partner uses the SMALL one. Zones = keep-out areas [x0, y0, x1, y1] (incl. a little margin and the credit line below the bug);
 // the large zone also contains the small one, so it is the safe choice whenever the host is unknown.
+// The size follows the ORIGIN OF THE FEED: ETO Basket and Falco produce with hand cameras (large bug), everyone else has the automated production (small bug).
+// cx / cy = the middle of the gap between the picture's left edge and the bug (x) and the bug's vertical middle (y): where the live strip is centred (owner 2026-11-24).
+// Measured heights: large bug 931–1045 (115 px) + credit line down to ≈ 1070 (together ≈ 139 px); small bug 958–1034 (77 px) + credit line to ≈ 1051 (together ≈ 94 px).
 export const BUG = {
-  large: { zone: [1200, 925, 1920, 1080], cy: 988, label: 'Nagy eredményjelző (ETO Basket, Falco): 1211–1886 × 931–1044 px' },
-  small: { zone: [1410, 945, 1920, 1080], cy: 995, label: 'Kis eredményjelző (a többi partner): 1425–1876 × 956–1034 px' },
+  large: { zone: [1200, 925, 1920, 1080], cx: 600, cy: 988, label: 'Nagy eredményjelző (ETO Basket, Falco): 1213–1887 × 931–1045 px' },
+  small: { zone: [1410, 945, 1920, 1080], cx: 712, cy: 995, label: 'Kis eredményjelző (a többi partner): 1425–1874 × 958–1034 px' },
 };
 export const LARGE_BUG_CLUBS = { women: ['sercounigyor'], men: ['falcokc'] }; // club ids (clubs.js) that broadcast with the large score bug
 export const bugSizeOf = (league, homeId) => (LARGE_BUG_CLUBS[league] || []).includes(homeId) ? 'large' : 'small';
 export const bugOf = size => BUG[size] || BUG.large;
 export const LIVE_CORNERS = { gap: 'Alul, az eredményjelző szintjén (a rés közepén)', tl: 'Bal felül' };
 export const liveCorner = c => (LIVE_CORNERS[c] ? c : 'gap');
-const LIVE_PAD = 10, LIVE_PHOTO_W = 120;
+const LIVE_PAD = 10, LIVE_PHOTO_W = 120, LIVE_LOGO_W = 120, LIVE_GAP = 8, LIVE_LOGO_D = 100; // LIVE_LOGO_D: the club logo is 100 px (owner 2026-11-24, chosen over 75), centred in its column
+// colours (owner 2026-11-24): the name and the category labels share one colour (white), the numbers stand out in gold
+export const LIVE_COLORS = { name: '#ffffff', label: '#ffffff', value: '#ffc929' };
 export const LIVE_VARIANTS = {
-  basic: { label: 'Alap (PTS · REB · AST)', w: 480, h: 150, cols: 3, val: 60, lab: 26, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
-  shooting: { label: 'Dobások (2P · 3P · BT)', w: 480, h: 140, cols: 3, val: 52, lab: 24, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
-  full: { label: 'Teljes sor', w: 900, h: 130, cols: 9, val: 40, lab: 22, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
+  basic: { label: 'Alap (PTS · REB · AST)', stats: 330, h: 150, cols: 3, val: 60, lab: 26, cells: [{ key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }] },
+  shooting: { label: 'Dobások (2P · 3P · BT)', stats: 330, h: 140, cols: 3, val: 52, lab: 24, cells: [{ key: 'fg2', label: '2P' }, { key: 'fg3', label: '3P' }, { key: 'ft', label: 'BT' }] },
+  full: { label: 'Teljes sor', stats: 756, h: 130, cols: 9, val: 40, lab: 22, cells: [{ key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' }, { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' }] },
 };
+export const liveWidth = v => LIVE_PAD * 2 + LIVE_PHOTO_W + LIVE_LOGO_W + LIVE_GAP * 2 + LIVE_VARIANTS[liveVariant(v)].stats; // photo | name + figures | club logo
 export const liveVariant = v => (LIVE_VARIANTS[v] ? v : 'basic');
 export const LIVE_BUILDERS = {}; // template id → (variant, place, bugSize) => template (see app.js tpl())
 export const livePlace = (w, h, place, size = 'large') => { // top-left corner of the strip: in the middle of the gap left of the score bug, on its level
   const z = bugOf(size);
-  return place === 'tl' ? [40, 40] : [Math.round(z.zone[0] / 2 - w / 2), Math.min(Math.round(z.cy - h / 2), 1060 - h)];
+  return place === 'tl' ? [40, 40] : [Math.round(z.cx - w / 2), Math.min(Math.round(z.cy - h / 2), 1060 - h)];
 };
 
 function liveTpl(id, league, variantIn, placeIn, sizeIn) {
-  const variant = liveVariant(variantIn), place = liveCorner(placeIn), size = BUG[sizeIn] ? sizeIn : 'large', V = LIVE_VARIANTS[variant], { w, h } = V, pad = LIVE_PAD, op = 0.9882;
+  const variant = liveVariant(variantIn), place = liveCorner(placeIn), size = BUG[sizeIn] ? sizeIn : 'large', V = LIVE_VARIANTS[variant], h = V.h, w = liveWidth(variant), pad = LIVE_PAD, op = 0.9882;
   const [x, y] = livePlace(w, h, place, size);
-  const sw = 3;
-  const txt = (size, extra) => ({ type: 'text', size, tracking: 25, color: '#ffffff', outline: ol(2, '#000000'), opacity: op, adjust: true, ...extra });
-  const left = x + pad + LIVE_PHOTO_W + 8, right = x + w - pad, photoH = h - 8;
+  const sw = 3, C = LIVE_COLORS;
+  const txt = (size2, extra) => ({ type: 'text', size: size2, tracking: 25, color: '#ffffff', outline: ol(2, '#000000'), opacity: op, adjust: true, ...extra });
+  const left = x + pad + LIVE_PHOTO_W + LIVE_GAP, right = left + V.stats, photoH = h - 8, logoD = LIVE_LOGO_D;
+  const mid = (left + right) / 2; // the middle of the figures row: the name is centred on it
   const els = [
     { ...panelFrame(league, x, y, w, h), sw, r: 14 },
-    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [right - 22, y + pad + 24, 44, 44], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 1 },
+    { id: 'logo', type: 'image', label: 'Klublogó', group: 'Fejléc', box: [x + w - pad - LIVE_LOGO_W / 2, y + h / 2, logoD, logoD], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
     { id: 'photo', type: 'image', label: 'Játékos fotó (hivatalos)', group: 'Fotó', box: [x + 6 + LIVE_PHOTO_W / 2, y + h - 4 - photoH / 2, LIVE_PHOTO_W, photoH], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
-    txt(46, { id: 'name', label: 'Név', group: 'Fejléc', x: left, y: y + pad + 38, align: 'left', runs: true, maxWidth: right - left - 54, minScale: 0.5, tracking: 30, outline: ol(2.5, '#000000', 1) }),
+    txt(46, { id: 'name', label: 'Név', group: 'Fejléc', x: mid, y: y + pad + 38, align: 'center', runs: true, color: C.name, maxWidth: V.stats - 6, minScale: 0.5, tracking: 30, outline: ol(2.5, '#000000', 1) }),
   ];
-  const colW = (right - left) / V.cols, top = y + 58;
+  const colW = V.stats / V.cols, top = y + 58;
   V.cells.forEach((c, i) => {
     const cx = left + colW * (i + 0.5), val = top + V.val * 0.743, lab = val + V.lab + 5, g = `${i + 1}. statisztika`;
     els.push(
-      txt(V.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', maxWidth: colW - 4, minScale: 0.5 }),
-      txt(V.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', maxWidth: colW - 4, minScale: 0.6 }),
+      txt(V.val, { id: `c${i}.value`, label: `${c.label} – érték`, group: g, x: cx, y: val, align: 'center', color: C.value, maxWidth: colW - 4, minScale: 0.5 }),
+      txt(V.lab, { id: `c${i}.label`, label: `${c.label} – felirat`, group: g, x: cx, y: lab, align: 'center', color: C.label, maxWidth: colW - 4, minScale: 0.6 }),
     );
   });
   const t = base(id, league, 'livestat', 'Élő statisztika (saját)', 'Élő statisztika', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });

@@ -68,7 +68,7 @@ test('live strip: centred in the gap left of the score bug that applies, on its 
     const z = BUG[size].zone;
     for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
       const t = LIVE_BUILDERS['livestat-women'](k, 'gap', size), [cx, cy, w, h] = t.elements.find(e => e.id === 'panel').box;
-      assert.ok(Math.abs(cx - z[0] / 2) <= 1, `${size}/${k}: centre x ${cx} = half of ${z[0]}`);
+      assert.ok(Math.abs(cx - BUG[size].cx) <= 1, `${size}/${k}: centre x ${cx} = ${BUG[size].cx} (large: 600 for ETO / Falco, small: 712 for the others)`);
       assert.ok(Math.abs(cy - BUG[size].cy) <= 12, `${size}/${k}: on the score bug level (${cy})`);
       assert.ok(!hits([cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2], z), `${size}/${k}: clear of the zone`);
     }

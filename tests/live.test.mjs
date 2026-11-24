@@ -6,7 +6,7 @@ import path from 'node:path';
 import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
 import { bindLiveStat, liveChoice } from '../graphics/js/binders.js';
-import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, BUG, liveVariant, liveCorner, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, templateById, TEMPLATE_TYPES } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -85,12 +85,13 @@ test('live graphic: a thin strip on the score bug\'s level, centred in the gap l
       for (const place of Object.keys(LIVE_CORNERS)) for (const [k, V] of Object.entries(LIVE_VARIANTS)) {
         const t = LIVE_BUILDERS[id](k, place, size), panel = t.elements.find(e => e.id === 'panel');
         const [cx, cy, w, h] = panel.box, x0 = cx - w / 2, y0 = cy - h / 2, x1 = x0 + w, y1 = y0 + h;
-        assert.ok(w <= 900 && h <= 150, `${id}/${k}/${place}/${size}: strip ${w}x${h}`);
-        if (k !== 'full') assert.ok(w <= 480, `${k}: compact`);
+        assert.ok(w <= 1040 && h <= 150, `${id}/${k}/${place}/${size}: strip ${w}x${h}`);
+        assert.equal(w, liveWidth(k), 'photo | name + figures | club logo');
+        if (k !== 'full') assert.ok(w <= 610, `${k}: compact`);
         assert.ok(x1 <= zx0 || y1 <= zy0 || x0 >= zx1 || y0 >= zy1, `${id}/${k}/${place}/${size}: clear of the score bug zone`);
         assert.ok(x0 >= 0 && y0 >= 0 && x1 <= 1920 && y1 <= 1080, 'inside the picture');
         if (place === 'gap') {
-          assert.ok(Math.abs(cx - zx0 / 2) <= 1, `${size}/${k}: centred in the gap between the picture's left edge and the score bug (${cx} vs ${zx0 / 2})`);
+          assert.ok(Math.abs(cx - BUG[size].cx) <= 1, `${size}/${k}: centred in the gap between the picture's left edge and the score bug (${cx} vs ${BUG[size].cx})`);
           assert.ok(Math.abs(cy - BUG[size].cy) <= 12, `${size}/${k}: on the score bug's level (centre ${cy})`);
           assert.ok(y1 <= 1060, 'not at the very edge of the picture');
         } else assert.ok(y0 < 100, 'top-left');
@@ -101,12 +102,23 @@ test('live graphic: a thin strip on the score bug\'s level, centred in the gap l
           assert.ok(ex0 >= x0 - 1 && ex1 <= x1 + 1 && by <= y1 + 1 && by >= y0 - 1, `${id}/${k}/${place}/${size}: ${e.id} inside the strip`);
         }
         assert.equal(t.elements.filter(e => /^c\d+\.value$/.test(e.id)).length, V.cells.length);
+        // layout: photo at the left end, club logo at the right end (about as big as the photo), the name centred on the middle of the figures row
+        const el = i => t.elements.find(e => e.id === i), ph = el('photo').box, lg = el('logo').box, vals = t.elements.filter(e => /^c\d+\.value$/.test(e.id));
+        assert.ok(ph[0] < x0 + 200 && lg[0] > x1 - 200, 'photo left, logo right');
+        assert.deepEqual([lg[2], lg[3]], [100, 100], 'the club logo is 100 px');
+        assert.ok(Math.abs(lg[1] - (y0 + y1) / 2) <= 1 && lg[0] - 50 >= x1 - 10 - 120 && lg[0] + 50 <= x1 - 10, `logo centred vertically, inside the right column (${lg})`);
+        assert.ok(Math.abs(el('name').x - (vals[0].x + vals.at(-1).x) / 2) <= 0.5 && el('name').align === 'center', 'the name is centred on the middle of the figures row');
+        assert.equal(el('name').color, LIVE_COLORS.name); assert.ok(vals.every(v => v.color === LIVE_COLORS.value), 'figures in their own colour');
+        assert.ok(t.elements.filter(e => /^c\d+\.label$/.test(e.id)).every(l => l.color === LIVE_COLORS.label), 'labels in the name colour');
         assert.ok(t.elements.some(e => e.id === 'photo') && t.elements.some(e => e.id === 'name'));
         assert.ok(!t.elements.some(e => e.id === 'sub') && !t.elements.some(e => /\.sub$/.test(e.id)), 'no status line under the name');
         assert.deepEqual(panel.stroke, id.endsWith('women') ? '#ef4036' : '#0b9444', 'league outline colour');
       }
     }
   }
+  assert.equal(LIVE_COLORS.name, LIVE_COLORS.label, 'name and category share a colour');
+  assert.notEqual(LIVE_COLORS.value, LIVE_COLORS.name, 'the figures stand out');
+  assert.equal(BUG.large.cx, 600); assert.equal(BUG.small.cx, 712);
   assert.equal(liveVariant('nonsense'), 'basic');
   assert.equal(liveCorner('nonsense'), 'gap', 'default = on the score bug level');
   assert.ok(TEMPLATE_TYPES.livestat);
