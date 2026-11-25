@@ -6,11 +6,14 @@ The one central computer of the broadcast runs this (behind a tunnel, see MANIFE
 so any number of OBS browser sources (any number of games) cost one request per game and refresh to the feed server, not one per source.
 With --token (or the LIVE_TOKEN environment variable) /live only answers requests that carry &token=SECRET: nobody else can use this machine as a relay.
 """
-import http.server, sys, os, re, time, threading, gzip, urllib.request, urllib.parse
+import http.server, sys, os, re, time, threading, gzip, json, urllib.request, urllib.parse
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import mkosz_names
 GAME = re.compile(r'^w?hun[a-z0-9]*_\d{3,8}$')
 CACHE_TTL = {'full': 3.0, 'last': 1.5}  # seconds a fetched feed is reused (the feed itself changes about every 5 s)
 STALE_OK = 60.0                         # if the feed server fails, a copy younger than this is still served (marked with X-Live-Stale)
+_names = {}                             # game -> {'t': time, 'body': bytes}: the official player names from the mkosz.hu match page (10 minutes)
 _cache = {}                             # (game, kind) -> {'t': time, 'body': bytes, 'gz': bytes}
 _locks = {}
 _glock = threading.Lock()
@@ -32,11 +35,24 @@ def fetch_feed(game, kind):
             if hit and time.time() - hit['t'] < STALE_OK: return hit['body'], hit['gz'], True
             raise
 
+def official_names(game):
+    """{player number: correctly spelled name} of a game (the feed writes ő / ű as '?'), cached; a copy up to 6 hours old is served when mkosz.hu does not answer."""
+    hit = _names.get(game)
+    if hit and time.time() - hit['t'] < 600: return hit['body']
+    try:
+        body = json.dumps({'names': mkosz_names.fetch_names(game)}, ensure_ascii=False).encode('utf-8')
+        _names[game] = {'t': time.time(), 'body': body}
+        return body
+    except Exception:
+        if hit and time.time() - hit['t'] < 21600: return hit['body']
+        raise
+
 class H(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         # /live?game=whun_135563&kind=full|last[&token=..] : relay of the public MKOSZ live boxscore feed (the feed server sends no CORS header,
         # so a browser cannot read it directly, and it refuses cloud networks; this machine's own connection is accepted). Only that one URL shape is fetched.
         u = urllib.parse.urlparse(self.path)
+        if u.path == '/mkosz': return self._mkosz(u)
         if u.path != '/live': return super().do_GET()
         q = urllib.parse.parse_qs(u.query); game = (q.get('game') or [''])[0]; kind = (q.get('kind') or ['full'])[0]
         if TOKEN and (q.get('token') or [''])[0] != TOKEN: return self._reply(403, b'token missing or wrong')
@@ -46,9 +62,16 @@ class H(http.server.SimpleHTTPRequestHandler):
             self._reply(200, body, gz if 'gzip' in (self.headers.get('Accept-Encoding') or '') else None, stale)
         except Exception as e:
             self._reply(502, f'upstream unreachable: {e}'.encode('utf-8', 'replace')[:300])
-    def _reply(self, code, body, gz=None, stale=False):
+    def _mkosz(self, u):
+        # /mkosz?game=whunu18_142813[&token=..] : the official spelling of the players' names (JSON), see tools/mkosz_names.py
+        q = urllib.parse.parse_qs(u.query); game = (q.get('game') or [''])[0]
+        if TOKEN and (q.get('token') or [''])[0] != TOKEN: return self._reply(403, b'token missing or wrong')
+        if not GAME.match(game): return self._reply(400, b'bad request')
+        try: self._reply(200, official_names(game), ctype='application/json; charset=utf-8')
+        except Exception as e: self._reply(502, f'mkosz.hu unreachable: {e}'.encode('utf-8', 'replace')[:300])
+    def _reply(self, code, body, gz=None, stale=False, ctype='text/plain; charset=utf-8'):
         self.send_response(code)
-        self.send_header('Content-Type', 'text/plain; charset=utf-8')
+        self.send_header('Content-Type', ctype)
         self.send_header('Access-Control-Allow-Origin', '*')
         if stale: self.send_header('X-Live-Stale', '1')
         if gz is not None: self.send_header('Content-Encoding', 'gzip'); body = gz

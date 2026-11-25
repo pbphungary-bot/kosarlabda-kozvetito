@@ -10,7 +10,7 @@ import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './pac
 import {
   bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, LEADER_SHADOW_DEFAULT, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
-import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
+import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem, applyOfficialNames, needsOfficialNames } from './live.js';
 import { imageUrl } from './image-urls.js';
 
 const $ = id => document.getElementById(id);
@@ -259,16 +259,28 @@ function rowOffHtml(s, rows) {
 // The feed of the MKOSZ netcasting page cannot be read by a browser directly (no CORS header, cloud networks are refused): tools/serve.py relays it at /live.
 // Without the relay the operator pastes the feed text (open …/storage/full<code>.html, Ctrl+A, Ctrl+C).
 function isLiveType(t) { return t === 'livestat' || t === 'liveteam' || t === 'liveleaders'; }
-const live = { game: null, fetchedAt: '', error: '', busy: false, timer: null, players: 0 };
+const live = { game: null, fetchedAt: '', error: '', busy: false, timer: null, players: 0, names: null, namesFor: '', namesTried: 0 };
 const liveToken = () => { try { return localStorage.getItem('nbia.live.token') || ''; } catch { return ''; } };
 const liveRelay = (code, kind = 'full') => new URL(`../live?game=${code}&kind=${kind}${liveToken() ? '&token=' + encodeURIComponent(liveToken()) : ''}`, location.href).href;
 function liveApply(text, code) {
   const feed = decodeFeed(text);
   if (!feed) return false;
   live.game = parseGame(feed, code);
+  if (live.namesFor === code) applyOfficialNames(live.game, live.names); // ő / ű the feed lost, from the mkosz.hu page
   live.fetchedAt = new Date().toLocaleTimeString('hu-HU');
   live.error = '';
   return true;
+}
+/** The official spelling of the names (the feed writes ő / ű as "?"): asked from the server only when a name needs it, once a minute at most. */
+async function liveNames(code) {
+  if (live.namesFor === code || Date.now() - live.namesTried < 60000 || !needsOfficialNames(live.game)) return;
+  live.namesTried = Date.now();
+  try {
+    const r = await fetch(new URL(`../mkosz?game=${code}${liveToken() ? '&token=' + encodeURIComponent(liveToken()) : ''}`, location.href), { cache: 'no-store' });
+    if (!r.ok) return;
+    live.names = (await r.json()).names || {}; live.namesFor = code;
+    applyOfficialNames(live.game, live.names);
+  } catch { /* the feed's own spelling stays */ }
 }
 async function liveFetchNow() {
   const code = gameCode(sel().live?.code);
@@ -279,6 +291,7 @@ async function liveFetchNow() {
     const r = await fetch(liveRelay(code), { cache: 'no-store' });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     if (!liveApply(await r.text(), code)) throw new Error('a hírcsatorna válasza nem értelmezhető (csonka vagy más formátum)');
+    await liveNames(code);
     return true;
   } catch (e) {
     live.error = `Az élő hírcsatorna innen nem érhető el (${e.message}). Indítsd a stúdiót a helyi szerverrel (python3 tools/serve.py), vagy illeszd be a hírcsatorna szövegét lent.`;
