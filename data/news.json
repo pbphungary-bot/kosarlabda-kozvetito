@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T11:48:10.128794+00:00",
+  "checked_at": "2026-11-25T12:53:07.393290+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 36,
-      "added": 2,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -561,6 +563,29 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "„Ez sokkal több annál, mint egy egyszerűen jól sikerült selejtezőablak” – Takács-Kiss Virággal értékeltük a novemberi válogatott mérkőzéseket",
+      "summary": "A magyar válogatott veretlenül teljesítette a 2027-es Európa-bajnokság selejtezőjének novemberi FIBA-ablakát.",
+      "url": "https://wbasket.hu/ez-sokkal-tobb-annal-mint-egy-egyszeruen-jol-sikerult-selejtezoablak-takacs-kiss-viraggal-ertekeltuk-a-novemberi-valogatott-merkozeseket/",
+      "published_at": "2026.11.25. 12:41",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Dupla győzelemmel mutatkoztak be a Bolhák",
+      "summary": "A Vasas Bolhák U11-es csapata a hétvégén debütált a kenguru bajnokságban, sok gyereknek ez volt élete első kosaras megmérettetése.",
+      "url": "https://vasasbasket.hu/index.php/dupla-gyozelemmel-mutatkoztak-be-a-bolhak/",
+      "published_at": "2026-11-25T12:34:37+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
     {
       "source": "WBasket.hu",
       "title": "Válogatott szünet után folytatódik az Európa Kupa – Károlyi Andreával elemeztünk",
