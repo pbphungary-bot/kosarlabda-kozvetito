@@ -68,6 +68,8 @@ export function parseGame(feed, code = null) {
   // everybody of the two rosters is a player of the game (the feed lists a "played" event, code 2, for those who got on the floor)
   for (const ha of ['h', 'a']) for (const r of roster[side(ha)]) get(r.Jatekos, ha);
   const team = { home: blank(), away: blank() };
+  const quarters = { home: [], away: [] }, foulsByPeriod = { home: [], away: [] }; // points and team fouls per period (index 0 = 1st quarter)
+  const addTo = (arr, period, n) => { while (arr.length < period) arr.push(0); arr[period - 1] += n; };
   let periodEnds = 0, lastGt = 0, timeouts = { home: 0, away: 0 };
   for (const e of feed.f) {
     const ha = e[1] === '1' ? 'h' : 'a', s = side(ha), kod = Number(e[2]), type = Number(e[6]);
@@ -75,14 +77,14 @@ export function parseGame(feed, code = null) {
     const p = e[3] ? get(e[3], ha) : null;
     const bump = (k, n = 1) => { if (p) p.stat[k] += n; team[s][k] += n; };
     switch (kod) {
-      case 1000: { const pts = SHOT_POINTS[type] ?? 2; const k = pts === 3 ? 'fg3' : pts === 1 ? 'ft' : 'fg2'; bump(k + 'm'); bump(k + 'a'); bump('pts', pts); break; }
+      case 1000: { const pts = SHOT_POINTS[type] ?? 2; addTo(quarters[s], gameClock(gt).period, pts); const k = pts === 3 ? 'fg3' : pts === 1 ? 'ft' : 'fg2'; bump(k + 'm'); bump(k + 'a'); bump('pts', pts); break; }
       case 1001: { const pts = SHOT_POINTS[type] ?? 2; bump((pts === 3 ? 'fg3' : pts === 1 ? 'ft' : 'fg2') + 'a'); break; }
       case 1002: bump('dreb'); break;
       case 1003: bump('oreb'); break;
       case 1004: bump('stl'); break;
       case 1005: bump('tov'); break;
       case 1006: bump('fouled'); break;
-      case 1007: bump('pf'); break;
+      case 1007: bump('pf'); addTo(foulsByPeriod[s], gameClock(gt).period, 1); break;
       case 1008: bump('ast'); break;
       case 1009: bump('blk'); break;
       case 1010: bump('blkAgainst'); break;
@@ -98,6 +100,7 @@ export function parseGame(feed, code = null) {
   }
   const list = order.map(c => players.get(c));
   for (const p of list) { p.reb = p.stat.oreb + p.stat.dreb; p.eff = efficiency(p.stat); }
+  for (const t of [team.home, team.away]) { t.reb = t.oreb + t.dreb; t.eff = efficiency(t); } // team totals include the team-only rebounds / turnovers the feed counts for no player
   const hp = Number(i.hp), vp = Number(i.vp);
   const clubColor = c => (c?.bg ? `#${c.bg}` : null);
   const scoreFromEvents = { home: team.home.pts, away: team.away.pts };
@@ -114,6 +117,7 @@ export function parseGame(feed, code = null) {
       home: { hunbasketId: i.hid || null, name: clean(i.h2 || i.h), short: clean(i.h), color: clubColor(i.hcolors), team: team.home, timeouts: timeouts.home },
       away: { hunbasketId: i.aid || null, name: clean(i.a2 || i.a), short: clean(i.a), color: clubColor(i.acolors), team: team.away, timeouts: timeouts.away },
     },
+    quarters, foulsByPeriod,
     players: list,
     eventCount: feed.f.length,
   };
@@ -137,6 +141,11 @@ export function playedPlayers(game, side) {
   const acted = p => Object.values(p.stat).some(v => v > 0);
   return game.players.filter(p => p.side === side && ((p.seconds ?? 0) > 0 || acted(p)))
     .sort((a, b) => b.stat.pts - a.stat.pts || b.reb - a.reb || a.name.localeCompare(b.name, 'hu'));
+}
+
+/** The n players of one side with the best VAL (efficiency) among those who played: this is only the RULE that picks them, VAL is not the headline of the graphic (owner 2026-11-25). Ties: more points, then name. */
+export function topByEff(game, side, n = 3) {
+  return playedPlayers(game, side).slice().sort((a, b) => b.eff - a.eff || b.stat.pts - a.stat.pts || a.name.localeCompare(b.name, 'hu')).slice(0, n);
 }
 
 /** "23:25" from seconds. */

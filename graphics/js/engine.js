@@ -216,10 +216,15 @@ export function fitBox(slot, w, h) {
   return [cx - dw / 2, cy - dh / 2, dw, dh];
 }
 
-function silhouette(img, w, h, color) {
+function silhouette(img, w, h, color, alphaMin = 0) {
   const c = mkCanvas(Math.ceil(w), Math.ceil(h));
   const g = c.getContext('2d');
   g.drawImage(img, 0, 0, w, h);
+  if (alphaMin > 0) { // ignore the faint, nearly transparent halo some photos carry: only pixels at least this opaque count as the picture's shape
+    const d = g.getImageData(0, 0, c.width, c.height), px = d.data;
+    for (let i = 3; i < px.length; i += 4) px[i] = px[i] >= alphaMin ? 255 : 0;
+    g.putImageData(d, 0, 0);
+  }
   g.globalCompositeOperation = 'source-in';
   g.fillStyle = color;
   g.fillRect(0, 0, c.width, c.height);
@@ -280,7 +285,7 @@ function drawImage(ctx, el, v, assets, report, inner) {
   const g = layer.getContext('2d');
   g.imageSmoothingQuality = 'high';
   if (outline && outline.size > 0) {
-    const sil = silhouette(img, w, h, outline.color);
+    const sil = silhouette(img, w, h, outline.color, el.outlineAlphaMin || 0);
     const r = outline.size;
     const dx = outline.dx || 0, dy = outline.dy || 0;
     // dilation: stamp the silhouette around a disc of radius r
@@ -294,6 +299,8 @@ function drawImage(ctx, el, v, assets, report, inner) {
   g.drawImage(img, x, y, w, h);
   ctx.save();
   ctx.globalAlpha = el.opacity ?? 1;
+  const sh = v.shadow !== undefined ? v.shadow : el.shadow; // optional drop shadow that follows the picture's shape (incl. its outline): { color, blur, dx, dy }
+  if (sh) { ctx.shadowColor = sh.color; ctx.shadowBlur = sh.blur ?? 0; ctx.shadowOffsetX = sh.dx || 0; ctx.shadowOffsetY = sh.dy || 0; }
   ctx.drawImage(layer, 0, 0);
   ctx.restore();
 }

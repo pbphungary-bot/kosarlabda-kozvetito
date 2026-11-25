@@ -3,8 +3,8 @@
 // in the data is never filled in: it renders as "—" and is flagged `missing`
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
-import { playedPlayers, mmss } from './live.js';
-import { LIVE_VARIANTS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { playedPlayers, topByEff, mmss } from './live.js';
+import { liveDims, liveKeys, LIVE_LEADER_TITLE, liveLeaderCells, liveLeaderSize, liveTeamKeys, liveTeamSize, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -592,7 +592,6 @@ export function bindH2H(store, lg, homeId, awayId, rows = H2H_PANEL.rows) {
 
 // ───────────────────────── live player insert (Élő statisztika) ─────────────────────────
 const LIVE_SRC = 'Élő boxscore (MKOSZ netcasting)';
-const pct1 = (m, a) => (a > 0 ? (100 * m / a).toFixed(1) + '%' : null);
 
 /** What the live graphic needs to know about the game: the club ids, the players that played and the chosen one. */
 export function liveChoice(store, lg, game, side, code) {
@@ -602,37 +601,139 @@ export function liveChoice(store, lg, game, side, code) {
   return { teamId: tid, players: list, player };
 }
 
+/** The player's name as on the player cards: the Hunbasket roster spelling (Hungarian "SURNAME Given", foreign "Given SURNAME"), the feed's own spelling only when the player is not on the roster. */
+function liveNameField(store, lg, teamId, p) {
+  const r = teamId ? rosterPlayers(store, lg, teamId).find(x => idOf(x.url) === p.code) : null;
+  const parts = parseName(r ? r.name : p.name), foreign = r ? isForeign(r) : false;
+  const words = foreign ? [{ t: parts.given[0], sur: false }, { t: parts.surname, sur: true }] : [{ t: parts.surname, sur: true }, ...parts.given.slice(0, 2).map(t => ({ t, sur: false }))];
+  const runs = words.filter(w => w.t).flatMap((w, i) => [...(i ? [{ text: ' ' }] : []), { text: w.sur ? w.t.toLocaleUpperCase('hu') : w.t }]); // the surname in capitals, as on the player cards
+  return { runs, text: runs.map(x => x.text).join(''), source: r ? 'Hunbasket csapatoldal (keret) – a név írásmódja' : 'Élő boxscore – a játékos nincs a Hunbasket keretben, a hírcsatorna írásmódja' };
+}
+/** What each live stat shows for a player: [text, percentage text or undefined]. */
+function liveCellFns(p) {
+  const st = p.stat, shoot = (m, a) => [`${m}/${a}`, a > 0 ? `${Math.round(100 * m / a)}%` : null];
+  return {
+    pts: () => [String(st.pts)], reb: () => [String(p.reb)], ast: () => [String(st.ast)], stl: () => [String(st.stl)], blk: () => [String(st.blk)],
+    tov: () => [String(st.tov)], pf: () => [String(st.pf)], eff: () => [String(p.eff)],
+    min: () => [p.seconds === null || p.seconds === undefined ? null : mmss(p.seconds)],
+    fg: () => shoot(st.fg2m + st.fg3m, st.fg2a + st.fg3a), fg2: () => shoot(st.fg2m, st.fg2a), fg3: () => shoot(st.fg3m, st.fg3a), ft: () => shoot(st.ftm, st.fta),
+  };
+}
 export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
   const v = {}, side = sel.side === 'away' ? 'away' : 'home';
   const { teamId, player: p } = liveChoice(store, lg, game, side, sel.player);
   const when = sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : '';
   const src = LIVE_SRC + when;
   if (!game || !p) { v.name = field(null, src); return v; }
-  // name: the designs' rule (Hungarian "SURNAME Given", foreign "Given SURNAME") from the Hunbasket roster; the feed's own spelling only when the player is not on the roster
-  const r = teamId ? rosterPlayers(store, lg, teamId).find(x => idOf(x.url) === p.code) : null;
-  const parts = parseName(r ? r.name : p.name), foreign = r ? isForeign(r) : false;
-  const words = foreign ? [{ t: parts.given[0], sur: false }, { t: parts.surname, sur: true }] : [{ t: parts.surname, sur: true }, ...parts.given.slice(0, 2).map(t => ({ t, sur: false }))];
-  const runs = words.filter(w => w.t).flatMap((w, i) => [...(i ? [{ text: ' ' }] : []), { text: w.sur ? w.t.toLocaleUpperCase('hu') : w.t }]); // the surname in capitals, as on the player cards
-  v.name = { runs, text: runs.map(x => x.text).join(''), source: r ? 'Hunbasket csapatoldal (keret) – a név írásmódja' : 'Élő boxscore – a játékos nincs a Hunbasket keretben, a hírcsatorna írásmódja' };
+  v.name = liveNameField(store, lg, teamId, p);
   v.logo = teamId ? logo(lg, teamId) : { src: '', source: 'A klub logója nem található' };
   v.photo = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
   const st = p.stat; // (no status line under the name: the broadcast's own score bug shows the score and the period)
-  const variant = tplVariant(sel.variant);
-  const cells = {
-    pts: () => [String(st.pts)], reb: () => [String(p.reb)], ast: () => [String(st.ast)], stl: () => [String(st.stl)], blk: () => [String(st.blk)],
-    tov: () => [String(st.tov)], pf: () => [String(st.pf)], eff: () => [String(p.eff)],
-    min: () => [p.seconds === null || p.seconds === undefined ? null : mmss(p.seconds)],
-    fg2: () => [`${st.fg2m}/${st.fg2a}`, pct1(st.fg2m, st.fg2a)], fg3: () => [`${st.fg3m}/${st.fg3a}`, pct1(st.fg3m, st.fg3a)], ft: () => [`${st.ftm}/${st.fta}`, pct1(st.ftm, st.fta)],
-  };
-  LIVE_VARIANTS[variant].cells.forEach((cell, i) => {
-    const [value, sub] = cells[cell.key]();
-    v[`c${i}.value`] = field(value, `${src} – ${cell.label}`);
-    // shooting cells: the percentage goes on the label line ("3P · 80.0%"), the made/attempted figures are the value
-    v[`c${i}.label`] = { text: variant === 'shooting' && sub ? `${cell.label} · ${sub}` : cell.label, source: variant === 'shooting' ? (sub ? src : 'Nincs kísérlet – nincs százalék') : 'Fix felirat (átírható)' };
+  const D = liveDims(Array.isArray(sel.stats) && sel.stats.length ? sel.stats : sel.variant), big = D.val, small = Math.round(big * 2 / 3);
+  const cells = liveCellFns(p);
+  D.cells.forEach((cell, i) => {
+    const [value, pct] = cells[cell.key]();
+    // shooting cells: made/attempted, then the percentage in ( ) at 2/3 of the size, vertically centred on the figures (digits are 0.743 em high: centre 0.3715 em above the baseline)
+    const f = field(value, `${src} – ${cell.label}`);
+    if (cell.shoot && value && pct) { const t = ` (${pct})`; v[`c${i}.value`] = { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] }; }
+    else v[`c${i}.value`] = cell.shoot && value ? { ...f, source: `${src} – ${cell.label}: nincs kísérlet, nincs százalék` } : f;
+    v[`c${i}.label`] = { text: cell.label, source: 'Fix felirat (átírható)' };
   });
   return v;
 }
-const tplVariant = k => (LIVE_VARIANTS[k] ? k : 'basic');
+
+// ───────────────────────── live team comparison (Élő csapat-összevetés) ─────────────────────────
+/** Period label of the live game: "2. NEGYED" / "HOSSZABBÍTÁS" (empty when the game is over). */
+export const livePeriodLabel = g => (g.finished ? '' : g.clock.period > 4 ? (g.clock.period > 5 ? `${g.clock.period - 4}. HOSSZABBÍTÁS` : 'HOSSZABBÍTÁS') : `${g.clock.period}. NEGYED`);
+/** Game time left in the period ("9:26"), or "VÉGE" when the game is over. The feed gives the elapsed game seconds of its LAST EVENT, so this can run a few seconds behind the real clock. */
+export const liveTimeLabel = g => {
+  if (g.finished) return 'VÉGE';
+  const len = g.clock.period <= 4 ? 600 : 300, left = Math.max(0, Math.round(len - g.clock.elapsed));
+  return `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+};
+
+/** The header values both live team graphics share: the club logos, the live score, the period and the game time left. */
+function liveHeaderValues(store, lg, game, sel = {}) {
+  const v = {}, src = LIVE_SRC + (sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : '');
+  if (!game) { v.scoreH = field(null, src); return v; }
+  const T = { home: game.teams.home, away: game.teams.away };
+  const ids = { home: clubIdStrict(lg, T.home.short) || clubIdStrict(lg, T.home.name) || null, away: clubIdStrict(lg, T.away.short) || clubIdStrict(lg, T.away.name) || null };
+  v.logoH = ids.home ? logo(lg, ids.home) : { src: '', source: 'A hazai klub logója nem található' };
+  v.logoA = ids.away ? logo(lg, ids.away) : { src: '', source: 'A vendég klub logója nem található' };
+  v.scoreH = field(String(game.score.home), `${src} – állás`); v.scoreA = field(String(game.score.away), `${src} – állás`);
+  v.clock = { text: livePeriodLabel(game), source: src }; v.time = { text: liveTimeLabel(game), source: `${src} – a hátralévő idő az utolsó esemény ideje alapján (néhány másodperc késés lehet)` };
+  return v;
+}
+
+export function bindLiveTeam(store, lg, game, sel = {}) {
+  const v = liveHeaderValues(store, lg, game, sel), when = sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : '', src = LIVE_SRC + when;
+  if (!game) return v;
+  const C = LIVE_TEAM_COLORS, T = { home: game.teams.home, away: game.teams.away };
+  const big = 40 * liveTeamSize(sel.teamStats).scale, small = Math.round(big * 2 / 3 * 100) / 100, mk = (m, a) => ({ m, a, pct: a > 0 ? m / a : null });
+  const val = (side, k) => {
+    const t = T[side].team;
+    switch (k) {
+      case 'fg': return mk(t.fg2m + t.fg3m, t.fg2a + t.fg3a); case 'fg2': return mk(t.fg2m, t.fg2a); case 'fg3': return mk(t.fg3m, t.fg3a); case 'ft': return mk(t.ftm, t.fta);
+      case 'reb': return t.reb; case 'oreb': return t.oreb; default: return t[k];
+    }
+  };
+  liveTeamKeys(sel.teamStats).forEach((k, i) => {
+    const d = LIVE_TEAM_STATS.find(x => x.key === k), a = val('home', k), b = val('away', k);
+    const key = x => (d.shoot ? x.pct : x), ka = key(a), kb = key(b);
+    const better = ka === null || kb === null || ka === kb ? null : ((ka > kb) !== !!d.low ? 'home' : 'away'); // equal or no attempts: nobody is marked
+    v[`r${i}.label`] = { text: d.label, source: 'Fix felirat (átírható)' };
+    for (const [side, x, id] of [['home', a, `r${i}.h`], ['away', b, `r${i}.a`]]) {
+      const o = better === null ? { color: C.digit } : { color: '#ffffff' }, fill = better === null ? C.box : better === side ? C.better : C.worse; // better = green box, worse = red box (white digits), tie / nothing to compare = white box
+      v[`${id}.box`] = { fill, source: 'Jelölés: a jobb érték zöld, a rosszabb piros' };
+      if (d.shoot) {
+        const main = `${x.m}/${x.a}`, pc = x.pct === null ? null : ` (${Math.round(100 * x.pct)}%)`;
+        v[id] = { ...o, text: main + (pc || ''), runs: [{ text: main }, ...(pc ? [{ text: pc, size: small, dy: -(big - small) * 0.3715 }] : [])], source: `${src} – ${d.label}${pc ? '' : ': nincs kísérlet, nincs százalék'}` };
+      } else v[id] = { ...o, text: String(x), source: `${src} – ${d.label}` };
+    }
+  });
+  return v;
+}
+
+// ───────────────────────── live three leaders (Élő három vezető) ─────────────────────────
+/** A hex colour typed by the commentator ("#ff8800", "ff8800", "f80") → "#rrggbb", or null when it is not one. */
+export function normHex(s) {
+  const m = String(s ?? '').trim().replace(/^#/, '').match(/^([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (!m) return null;
+  const h = m[1].length === 3 ? m[1].split('').map(c => c + c).join('') : m[1];
+  return '#' + h.toLowerCase();
+}
+export const LEADER_SHADOW_DEFAULT = 12; // blur in px; the offset follows it (a quarter right, a third down)
+/** Soft shadow behind the player photos with an adjustable size (owner 2026-11-25); 0 = no shadow. */
+export const leaderShadow = size => (size > 0 ? { color: 'rgba(0,0,0,0.65)', blur: size, dx: Math.round(size * 0.25), dy: Math.round(size * 0.33) } : null);
+export const LEADER_COLOR_DEFAULTS = { name: '#ffffff', label: '#ffffff', value: '#ffffff', outline: '#ffffff' }; // outline = the 3 px line around the player photos
+/** The colours of the three leaders graphic (names, stat categories, numbers, photo outline): the same for every player; a missing or wrong hex falls back to white. */
+export const leaderColors = sel => ({ ...Object.fromEntries(Object.entries(LEADER_COLOR_DEFAULTS).map(([k, d]) => [k, normHex(sel?.[k]) || d])) });
+export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set()) {
+  const v = liveHeaderValues(store, lg, game, sel), CL = leaderColors(sel.leaderColors);
+  delete v.scoreH; delete v.scoreA; delete v.clock; delete v.time; // no big scores and no game time: the broadcast's score bug shows them; the title is fixed (owner 2026-11-25)
+  v.title1 = { text: LIVE_LEADER_TITLE[0], source: 'Fix cím (átírható)' }; v.title2 = { text: LIVE_LEADER_TITLE[1], source: 'Fix cím (átírható)' };
+  if (!game) return v;
+  const src = LIVE_SRC + (sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : ''), cells = liveLeaderCells(sel.leaderStats), S = liveLeaderSize().scale, big = 32 * S, small = Math.round(big * 2 / 3 * 100) / 100;
+  const sides = { home: topByEff(game, 'home', 3), away: topByEff(game, 'away', 3) }, tids = {};
+  for (const side of ['home', 'away']) tids[side] = clubIdStrict(lg, game.teams[side].short) || clubIdStrict(lg, game.teams[side].name) || null;
+  const all = [...sides.home.map((p, i) => ({ p, i, side: 'home' })), ...sides.away.map((p, i) => ({ p, i, side: 'away' }))];
+  cells.forEach((c, j) => { // plain white boxes: no good / bad colouring (best of six players is not a meaningful judgement here, owner 2026-11-25)
+    for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {
+      const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
+      v[`${id}.c${j}.label`] = { text: p ? c.label : '', color: CL.label, source: 'Fix felirat (átírható)' };
+      if (!p) { v[`${id}.c${j}.value`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.c${j}.box`] = { fill: '', source: '' }; continue; }
+      const [value, pct] = liveCellFns(p)[c.key](), f = field(value, `${src} – ${c.label}`), t = pct ? ` (${pct})` : '';
+      v[`${id}.c${j}.value`] = { ...(c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f), color: CL.value };
+    }
+  });
+  for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {
+    const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
+    if (!p) { v[`${id}.name`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.photo`] = { src: '', source: '' }; continue; }
+    v[`${id}.name`] = { ...liveNameField(store, lg, tids[side], p), color: CL.name };
+    v[`${id}.photo`] = photoIds.has(p.code) ? { src: `photo/${p.code}`, outline: sel.leaderOutlineOn === false ? null : { size: 3, color: CL.outline }, shadow: sel.leaderShadowOn === false ? null : leaderShadow(Number.isFinite(Number(sel.leaderShadowSize)) && sel.leaderShadowSize !== '' && sel.leaderShadowSize != null ? Math.min(40, Math.max(0, Number(sel.leaderShadowSize))) : LEADER_SHADOW_DEFAULT), source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
+  }
+  return v;
+}
 
 // ───────────────────────── coach interview (Vezetőedző nyilatkozata) ─────────────────────────
 /** The opponent of a club in its next scheduled game (club id) or null. */
