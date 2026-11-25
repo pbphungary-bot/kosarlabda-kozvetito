@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, topByEff, mmss } from './live.js';
-import { liveDims, liveKeys, liveLeaderCells, liveLeaderSize, liveTeamKeys, liveTeamSize, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { liveDims, liveKeys, LIVE_LEADER_TITLE, liveLeaderCells, liveLeaderSize, liveTeamKeys, liveTeamSize, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -695,9 +695,20 @@ export function bindLiveTeam(store, lg, game, sel = {}) {
 }
 
 // ───────────────────────── live three leaders (Élő három vezető) ─────────────────────────
+/** A hex colour typed by the commentator ("#ff8800", "ff8800", "f80") → "#rrggbb", or null when it is not one. */
+export function normHex(s) {
+  const m = String(s ?? '').trim().replace(/^#/, '').match(/^([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (!m) return null;
+  const h = m[1].length === 3 ? m[1].split('').map(c => c + c).join('') : m[1];
+  return '#' + h.toLowerCase();
+}
+export const LEADER_COLOR_DEFAULTS = { name: '#ffffff', label: '#ffffff', value: '#ffffff' };
+/** The three colours of the three leaders graphic (names, stat categories, numbers): the same for every player; a missing or wrong hex falls back to white. */
+export const leaderColors = sel => ({ ...Object.fromEntries(Object.entries(LEADER_COLOR_DEFAULTS).map(([k, d]) => [k, normHex(sel?.[k]) || d])) });
 export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set()) {
-  const v = liveHeaderValues(store, lg, game, sel);
-  delete v.scoreH; delete v.scoreA; // the broadcast's own score bug shows the score (owner 2026-11-25)
+  const v = liveHeaderValues(store, lg, game, sel), CL = leaderColors(sel.leaderColors);
+  delete v.scoreH; delete v.scoreA; delete v.clock; delete v.time; // no big scores and no game time: the broadcast's score bug shows them; the title is fixed (owner 2026-11-25)
+  v.title = { text: LIVE_LEADER_TITLE, source: 'Fix cím (átírható)' };
   if (!game) return v;
   const src = LIVE_SRC + (sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : ''), cells = liveLeaderCells(sel.leaderStats), S = liveLeaderSize().scale, big = 32 * S, small = Math.round(big * 2 / 3 * 100) / 100;
   const sides = { home: topByEff(game, 'home', 3), away: topByEff(game, 'away', 3) }, tids = {};
@@ -706,16 +717,16 @@ export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set())
   cells.forEach((c, j) => { // plain white boxes: no good / bad colouring (best of six players is not a meaningful judgement here, owner 2026-11-25)
     for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {
       const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
-      v[`${id}.c${j}.label`] = { text: p ? c.label : '', source: 'Fix felirat (átírható)' };
+      v[`${id}.c${j}.label`] = { text: p ? c.label : '', color: CL.label, source: 'Fix felirat (átírható)' };
       if (!p) { v[`${id}.c${j}.value`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.c${j}.box`] = { fill: '', source: '' }; continue; }
       const [value, pct] = liveCellFns(p)[c.key](), f = field(value, `${src} – ${c.label}`), t = pct ? ` (${pct})` : '';
-      v[`${id}.c${j}.value`] = { ...(c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f), color: '#ffffff' };
+      v[`${id}.c${j}.value`] = { ...(c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f), color: CL.value };
     }
   });
   for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {
     const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
     if (!p) { v[`${id}.name`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.photo`] = { src: '', source: '' }; continue; }
-    v[`${id}.name`] = liveNameField(store, lg, tids[side], p);
+    v[`${id}.name`] = { ...liveNameField(store, lg, tids[side], p), color: CL.name };
     v[`${id}.photo`] = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
   }
   return v;

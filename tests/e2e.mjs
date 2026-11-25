@@ -1360,12 +1360,14 @@ try {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     if (!(await page.isVisible('#livePaste'))) await page.click('details:has(#livePaste) > summary');
     await page.fill('#livePaste', feed); await page.click('#livePasteGo');
-    await until(1, () => window.__studio.current().values?.time?.text === 'VÉGE', null, { timeout: 15000 });
+    await until(1, () => window.__studio.current().values?.title?.text === 'TOP TELJESÍTMÉNYEK', null, { timeout: 15000 });
     const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
     assert.equal(await val('h0.name'), 'GÁLOS Hanna Andrea', 'the best VAL of the home team first');
     assert.deepEqual([await val('h0.c0.label'), await val('h0.c1.label'), await val('h0.c2.label')], ['PTS', 'REB', 'AST'], 'default stats, no VAL');
     assert.equal(await val('h0.c3.label'), undefined);
-    assert.equal(await val('scoreH'), undefined, 'no big scores on this graphic');
+    assert.equal(await val('scoreH'), undefined, 'no big scores on this graphic'); assert.equal(await val('time'), undefined, 'no game time either');
+    await page.fill('.liveLeaderHex[data-k="name"]', '#ff0000'); await page.fill('.liveLeaderHex[data-k="label"]', '#00ff00'); await page.fill('.liveLeaderHex[data-k="value"]', '0000ff');
+    await until(3, () => { const v = window.__studio.current().values; return v?.['h0.name']?.color === '#ff0000' && v?.['a2.name']?.color === '#ff0000' && v?.['h1.c0.label']?.color === '#00ff00' && v?.['a0.c2.value']?.color === '#0000ff'; }, null, { timeout: 15000 }); // one colour per category, the same for every player
     await page.check('.liveLeaderStat[value="eff"]');
     await until(2, () => window.__studio.current().values?.['h0.c3.label']?.text === 'EFF', null, { timeout: 15000 }); // VAL ticked: one more box, like any other stat
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);

@@ -5,7 +5,7 @@ import { ROOT } from './helpers.mjs';
 import path from 'node:path';
 import { decodeFeed, parseGame, topByEff, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
-import { bindLiveStat, bindLiveTeam, bindLiveLeaders, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
+import { bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
 import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, liveLeaderSize, liveLeaderCells, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, liveTeamKeys, liveTeamSize } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
@@ -242,14 +242,20 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   assert.deepEqual(labels, ['PTS', 'REB', 'AST'], 'default: points, rebounds, assists – VAL is not shown');
   assert.ok(!Object.values(v).some(x => x && x.text === 'EFF'), 'no VAL on the graphic unless ticked');
   assert.equal(v['h0.name'].text, `${topByEff(g, 'home', 1)[0].name}`.length ? v['h0.name'].text : '', 'names come from the roster binder');
-  assert.equal(v.time.text, 'VÉGE'); assert.ok(v.logoH.src && v.logoA.src, 'both logos stay');
+  assert.equal(v.title.text, 'TOP TELJESÍTMÉNYEK', 'fixed title instead of the game time'); assert.equal(v.time, undefined); assert.equal(v.clock, undefined);
+  assert.ok(v.logoH.src && v.logoA.src, 'both logos stay');
+  assert.ok([0, 1, 2].every(j => v[`h0.c${j}.label`].color === '#ffffff') && v['h0.name'].color === '#ffffff' && v['h0.c0.value'].color === '#ffffff', 'default colours: white');
+  const col = bindLiveLeaders(store, 'women', g, { leaderColors: { name: '#ff0000', label: '0f0', value: 'nonsense' } }, ids);
+  for (const id of ['h0', 'h2', 'a1']) { assert.equal(col[`${id}.name`].color, '#ff0000', 'names red for every player'); assert.equal(col[`${id}.c0.label`].color, '#00ff00', 'stat categories green (short hex)'); assert.equal(col[`${id}.c1.value`].color, '#ffffff', 'a wrong hex falls back to white'); }
+  assert.equal(normHex('FF8800'), '#ff8800'); assert.equal(normHex('#f80'), '#ff8800'); assert.equal(normHex('red'), null); assert.equal(normHex(''), null);
+  assert.deepEqual(leaderColors({ name: '#123456' }), { name: '#123456', label: '#ffffff', value: '#ffffff' });
   for (const id of ['h0', 'h1', 'h2', 'a0', 'a1', 'a2']) for (const j of [0, 1, 2]) assert.equal(v[`${id}.c${j}.box`], undefined, 'plain boxes: no per-value colouring (the white box is the template default)');
   assert.equal(v.scoreH, undefined); assert.equal(v.scoreA, undefined, 'no big scores: the broadcast score bug shows them');
   const sh = bindLiveLeaders(store, 'women', g, { leaderStats: ['fg3', 'eff'] }, ids);
   assert.deepEqual([sh['h0.c0.label'].text, sh['h0.c1.label'].text], ['EFF', '3P'], 'VAL can be ticked: one stat like the others, in the usual order');
   assert.match(sh['h0.c1.value'].text, /^\d+\/\d+ \(\d+%\)$/); assert.equal(sh['h0.c1.value'].runs[1].size, Math.round(32 * liveLeaderSize().scale * 2 / 3 * 100) / 100);
   const none = bindLiveLeaders(store, 'women', null, {}, ids);
-  assert.deepEqual(Object.keys(none), [], 'no game: nothing to show (the studio says so in a notice)');
+  assert.deepEqual(Object.keys(none), ['title'], 'no game: only the fixed title (the studio says so in a notice)');
 });
 
 test('live three leaders graphic: top-left, inside the picture, clear of the score bug zones, the same size for every ticked stat count', () => {
@@ -261,6 +267,12 @@ test('live three leaders graphic: top-left, inside the picture, clear of the sco
       assert.ok(x0 + w <= 1920 && y0 + h <= 1078);
       for (const size of ['large', 'small']) { const [zx0, zy0] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `clear of the ${size} score bug zone`); }
       assert.equal(t.elements.filter(e => /^[ha]\d\.c\d+\.value$/.test(e.id)).length, 6 * liveLeaderCells(keys).length);
+      const el = i => t.elements.find(e => e.id === i), midX = x0 + w / 2, cellsH = ['h0.c0.box', `h0.c${liveLeaderCells(keys).length - 1}.box`].map(i => el(i).box), cellsA = ['a0.c0.box', `a0.c${liveLeaderCells(keys).length - 1}.box`].map(i => el(i).box);
+      const mid = ([l, r]) => (l[0] - l[2] / 2 + r[0] + r[2] / 2) / 2; // middle of the stat boxes of a column
+      assert.ok(Math.abs(el('logoH').box[0] - mid(cellsH)) < 1 && Math.abs(el('logoA').box[0] - mid(cellsA)) < 1, 'each logo centred over the stat boxes of its own team');
+      assert.ok(el('logoH').box[1] < el('h0.photo').box[1] && el('logoA').box[1] < el('a0.photo').box[1], 'logos in the header, above the players');
+      assert.ok(Math.abs(el('title').x - midX) < 1, 'title in the middle');
+      assert.equal(el('title').type, 'text');
       for (const e of t.elements) { const [bx, by, bw, bh] = e.type === 'image' || e.type === 'framed' ? e.box : [e.x, e.y, 0, 0]; assert.ok(bx >= x0 - 1 && bx <= x0 + w + 1 && by >= y0 - 1 && by <= y0 + h + 1, `${e.id} inside the panel`); }
     }
   }

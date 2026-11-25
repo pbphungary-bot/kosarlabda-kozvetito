@@ -8,7 +8,7 @@ import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, liveChoice, bindCoach, coachOpponent
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
 import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
 
@@ -297,7 +297,7 @@ function livePanelHtml(s) {
       <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
     <div id="liveStats"><small class="hint">Pipáld be, mi látsszon (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${tickHtml}</div>`;
   const tt = liveTeamKeys(L.teamStats), teamTicks = `<div id="liveTeamStats"><small class="hint">Pipáld be, mely statisztikák látsszanak (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${LIVE_TEAM_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveTeamStat" value="${x.key}" ${tt.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}</div>`;
-  const lk = liveKeys(L.leaderStats), leaderTicks = `<div id="liveLeaderStats"><small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa jelenik meg (a VAL csak a kiválasztás szabálya). Pipáld be, mely statisztikák látsszanak:</small><br>${LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveLeaderStat" value="${x.key}" ${lk.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}</div>`;
+  const lk = liveKeys(L.leaderStats), lc = leaderColors(L.leaderColors), leaderTicks = `<div id="liveLeaderStats"><small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa jelenik meg (a VAL csak a kiválasztás szabálya). Pipáld be, mely statisztikák látsszanak:</small><br>${LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveLeaderStat" value="${x.key}" ${lk.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}<br><small class="hint">Színek (hex-kód, pl. #ff8800; mindenhol egyformán, nem játékosonként):</small><div class="row2" style="flex-wrap:wrap">${[['name', 'Nevek'], ['label', 'Statisztika-nevek (PTS, REB…)'], ['value', 'Számok']].map(([k, lab]) => `<label>${lab}<span class="import-row"><input type="color" class="liveLeaderPick" data-k="${k}" value="${lc[k]}" style="width:38px;padding:0"> <input type="text" class="liveLeaderHex" data-k="${k}" value="${lc[k]}" maxlength="7" placeholder="#ffffff" style="flex:1;min-width:0"></span></label>`).join('')}</div><button type="button" id="liveLeaderColorReset" class="ghost">Színek visszaállítása (fehér)</button></div>`;
   return `<label>Élő meccs (netcasting link vagy kód)<span class="import-row"><input type="text" id="liveCode" style="flex:1;min-width:0" placeholder="https://netcasting4.webpont.com/?whun_135563" value="${esc(L.code || '')}"> <button type="button" id="liveLoad">Betöltés</button></span></label>
     <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="liveAuto" ${L.auto ? 'checked' : ''}> Automatikus frissítés 5 másodpercenként</label>
     <small id="liveInfo" class="hint">${liveInfoHtml()}</small>
@@ -343,6 +343,13 @@ function wireLivePanel(s) {
     renderSelection(); update(true);
   };
   if (!$('liveSide')) { // team comparison / three leaders: only the ticked statistics
+    const setColor = (k, hex) => { L().leaderColors = { ...(L().leaderColors || {}), [k]: hex }; update(true); };
+    document.querySelectorAll('.liveLeaderPick').forEach(el => { el.oninput = () => { const h = normHex(el.value); if (!h) return; const tx = document.querySelector(`.liveLeaderHex[data-k="${el.dataset.k}"]`); if (tx) tx.value = h; setColor(el.dataset.k, h); }; });
+    document.querySelectorAll('.liveLeaderHex').forEach(el => {
+      el.oninput = () => { const h = normHex(el.value); el.style.outline = h || !el.value ? '' : '2px solid #c00'; if (h) { const pk = document.querySelector(`.liveLeaderPick[data-k="${el.dataset.k}"]`); if (pk) pk.value = h; setColor(el.dataset.k, h); } };
+      el.onchange = () => { const h = normHex(el.value); el.value = h || leaderColors(L().leaderColors)[el.dataset.k]; el.style.outline = ''; };
+    });
+    const rs = $('liveLeaderColorReset'); if (rs) rs.onclick = () => { L().leaderColors = {}; renderSelection(); update(true); };
     document.querySelectorAll('.liveLeaderStat').forEach(cb => { cb.onchange = () => { L().leaderStats = [...document.querySelectorAll('.liveLeaderStat:checked')].map(x => x.value); if (!L().leaderStats.length) L().leaderStats = liveKeys('basic'); resetMatchOverrides(); renderSelection(); update(true); }; });
     document.querySelectorAll('.liveTeamStat').forEach(cb => { cb.onchange = () => { L().teamStats = [...document.querySelectorAll('.liveTeamStat:checked')].map(x => x.value); if (!L().teamStats.length) L().teamStats = liveTeamKeys(null); resetMatchOverrides(); renderSelection(); update(true); }; });
     return;
