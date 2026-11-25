@@ -1415,6 +1415,8 @@ try {
     // a graphic that does not reach the zone is not touched
     await page.click('#templateList button[data-id="form-men"]');
     await page.waitForFunction(() => window.__studio.report().boxes.panel && window.__studio.report().boxes.panel[2] > 900 && window.__studio.report().boxes.panel[1] < 100, null, { timeout: 15000 });
+    // wait for the form graphic's own fit (a stale report of the results panel's fit can still be there right after the template switch), then it must be null
+    await page.waitForFunction(() => window.__studio.report().fit === null, null, { timeout: 15000 }).catch(() => {});
     assert.equal(await page.evaluate(() => window.__studio.report().fit), null, 'the form graphic (top-left corner) is clear of the zone: unchanged');
     // the export itself is the fitted picture (a PNG of the standard size)
     await page.click('#templateList button[data-id="referees-men"]');
