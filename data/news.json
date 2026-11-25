@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T15:06:55.035389+00:00",
+  "checked_at": "2026-11-25T16:04:30.166542+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -77,20 +77,18 @@
     },
     {
       "source": "Klub: DVTK HUNTHERM",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
       "candidates": 5,
       "attempted": 5,
       "already_saved": 0,
-      "added": 4,
+      "added": 5,
       "repaired": 0,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://dvtk.eu/37697-Ma_itthon_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/: HTTPError: HTTP Error 404: Not Found"
-      ],
-      "usable_articles": 4,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 5,
       "source_coverage": true
     },
     {
@@ -467,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -563,6 +563,38 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Ezek voltak az elmúlt hétvége legszebb jelenetei",
+      "summary": "Elmúlt hétvégén rendezték a Női NB I.",
+      "url": "https://wbasket.hu/209612-2/",
+      "published_at": "2026.11.25. 16:16",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Távozik a Szolnok légiós centere",
+      "summary": "Chevez Goodwin összesen 16 mérkőzésen lépett pályára a csapatban.",
+      "url": "https://bball1.hu/tavozik-a-szolnok-legios-centere/",
+      "published_at": "2026-11-25T16:14:24+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "„A legfontosabb, hogy ilyenkor is összetartsunk, és szem előtt tartsuk, milyen irányt szeretnénk képviselni”",
+      "summary": "A válogatott szünetet követő első bajnoki fordulóban a DVTK HUNTHERM hazai pályán hosszabbítás után 86-77-re alulmaradt közvetlen üldözője a Csata TKK-val szemben.",
+      "url": "https://wbasket.hu/a-legfontosabb-hogy-ilyenkor-is-osszetartsunk-es-szem-elott-tartsuk-milyen-iranyt-szeretnenk-kepviselni/",
+      "published_at": "2026.11.25. 16:08",
+      "summary_method": "article_body",
+      "teams": [
+        "women|DVTK HUNTHERM",
+        "women|Csata TTK"
+      ],
+      "league": "women"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "DVTK HUNTHERM - ŽKK Brod na Savi élőben",
