@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T00:23:50.962187+00:00",
+  "checked_at": "2026-11-25T01:43:34.662230+00:00",
   "statistics": {
     "total": 1269,
     "fresh": 584,
@@ -564,21 +564,18 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 26,
+      "attempted": 26,
       "already_saved": 0,
       "added": 0,
-      "repaired": 5,
-      "article_errors": 3,
+      "repaired": 25,
+      "article_errors": 1,
       "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/egy-ponttal-maradtunk-alul-a-budapesti-bikak-ellen/: HTTPError: HTTP Error 508: Loop Detected"
+        "article https://tfse.hu/oriasi-forditas-szegeden/: HTTPError: HTTP Error 503: Service Unavailable"
       ],
-      "usable_articles": 5,
+      "usable_articles": 25,
       "source_coverage": true
     }
   ],
