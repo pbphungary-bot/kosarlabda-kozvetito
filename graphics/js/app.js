@@ -152,7 +152,7 @@ function renderFreshness() {
     return `<span class="${x.stale ? 'stale' : ''}" title="Frissítve: ${esc(x.updated_at)}">${names[k]}: ${fmt(x.updated_at)} (${age})</span>`;
   });
   const xi = store.excelInfo(lg);
-  if (xi) parts.push(`<span class="${xi.enabled ? '' : 'stale'}" title="${esc(xi.file)} – módosítva: ${esc(xi.modified || '?')}">Excel: ${esc(xi.file)} (${xi.modified ? fmt(xi.modified) : 'ismeretlen dátum'})${xi.enabled ? '' : ' – kikapcsolva'}</span>`);
+  if (xi) { const off = excelOffParts(xi); parts.push(`<span class="${off.length ? 'stale' : ''}" title="${esc(xi.file)} – módosítva: ${esc(xi.modified || '?')}">Excel: ${esc(xi.file)} (${xi.modified ? fmt(xi.modified) : 'ismeretlen dátum'})${off.length ? ' – kikapcsolva: ' + off.join(', ') : ''}</span>`); }
   for (const e of store.errors.filter(e => e.league === lg)) parts.push(`<span class="err">${esc(e.file)}: ${esc(e.error)}</span>`);
   $('freshness').innerHTML = parts.join('');
 }
@@ -1081,7 +1081,7 @@ async function exportPackage() {
   const names = { fixtures: 'Menetrend', standings: 'Tabella', teamStats: 'Csapatstat', players: 'Játékosstat', referees: 'Játékvezetők', cups: 'Európai meccsek' };
   const freshness = Object.entries(f).map(([k, x]) => `${names[k] || k}: ${x.updated_at ? new Date(x.updated_at).toLocaleString('hu-HU') : 'ismeretlen'}${x.stale ? '  (RÉGI, 48 óránál régebbi!)' : ''}`);
   const xi = store.excelInfo(lg);
-  if (xi) freshness.push(`Feltöltött Excel: ${xi.file}${xi.enabled ? '' : ' (kikapcsolva)'}`);
+  if (xi) { const off = excelOffParts(xi); freshness.push(`Feltöltött Excel: ${xi.file}${off.length ? ` (kikapcsolva: ${off.join(', ')})` : ''}`); }
   const readme = readmeText({ title: `${hs} – ${as} (${LEAGUES[lg].label})`, date, made: new Date().toLocaleString('hu-HU'), rendered, skipped, warnings, freshness });
   const zip = buildZip(files, readme);
   const a = document.createElement('a');
@@ -1136,11 +1136,18 @@ function persistExcel() {
   lsSet(LS.excel, out);
 }
 
+/** Which kinds of the uploaded Excel data are switched off (only those that were uploaded): ['csapatstatisztika', 'játékosstatisztika', 'kupameccsek']. */
+function excelOffParts(xi) {
+  return [[!xi.enabledTeam && xi.teams, 'csapatstatisztika'], [!xi.enabledPlayers && xi.playerTeams, 'játékosstatisztika'], [!xi.enabledCups && xi.cups, 'kupameccsek']].filter(([c]) => c).map(([, n]) => n);
+}
+
 function renderImportState() {
   const xi = store.excelInfo(state.league);
   $('importState').textContent = xi ? `– ${xi.teams} csapat, ${xi.playerTeams} csapat játékosai${xi.cups ? `, ${xi.cups} kupameccs` : ''} (${xi.files.length} fájl)` : '';
-  $('excelOn').checked = xi ? xi.enabled : true;
-  $('excelOn').disabled = !xi;
+  for (const [id, part, count] of [['excelOnTeam', 'Team', xi?.teams], ['excelOnPlayers', 'Players', xi?.playerTeams], ['excelOnCups', 'Cups', xi?.cups]]) { // three independent switches (team stats / player stats / cup games)
+    $(id).checked = xi ? xi['enabled' + part] : true;
+    $(id).disabled = !xi || !count; // nothing of that kind uploaded: nothing to switch
+  }
   $('excelClear').disabled = !xi;
 }
 
@@ -1646,7 +1653,9 @@ async function main() {
     const box = $('addGame');
     if (box) { box.open = true; box.scrollIntoView({ block: 'center' }); $('agOpp')?.focus(); }
   };
-  $('excelOn').onchange = e => { const x = store.excel[state.league]; if (x) { x.enabled = e.target.checked; persistExcel(); renderImportState(); renderFreshness(); update(true); } };
+  for (const [id, part] of [['excelOnTeam', 'Team'], ['excelOnPlayers', 'Players'], ['excelOnCups', 'Cups']]) {
+    $(id).onchange = e => { store.setExcelPart(state.league, part, e.target.checked); persistExcel(); renderImportState(); renderFreshness(); update(true); };
+  }
   $('excelClear').onclick = () => { if (confirm('Törlöd a feltöltött Excel adatokat ennél a bajnokságnál?')) { store.setExcel(state.league, null); persistExcel(); renderImportState(); renderFreshness(); update(true); } };
   $('stage').classList.add('checker');
   applyZoom();

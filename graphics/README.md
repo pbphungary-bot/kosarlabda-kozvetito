@@ -72,6 +72,7 @@ Kupa-/európai meccsek: lásd lent.
 * A bajnokságot a fájl tartalmából ismeri fel (férfi/női), nem a kiválasztott fülből.
 * A csapatot **pontos névvel** egyezteti; nem egyeztethető név kimarad és jelezve van (nem találgat).
 * A feltöltött érték előnyt élvez a dashboard adataival szemben („Excel” címke a mezőn); a feltöltés a böngészőben marad.
+* **Három külön kapcsoló** van a feltöltő dobozban: **Csapatstatisztika (Excel)** (Csapatok összevetése), **Játékosstatisztika (Excel)** (Csapatstatisztika-táblázat, Kulcsjátékosok, Játékos-különleges) és **Kupameccsek (Excel + kézzel)**. Mindegyik külön ki-be kapcsolható, a többit nem érinti (pl. a csapat-Excel kikapcsolva marad a játékos-Excel). Egy új feltöltés csak azokat a részeket kapcsolja be, amiket a fájl hoz; a felső sávban látszik, mi van kikapcsolva („kikapcsolva: csapatstatisztika”). Egy kapcsoló inaktív, ha abból a fajtából nincs feltöltött adat.
 * A helyezések „(n.)” a feltöltött csapatok között számolódnak (TOV: kevesebb = jobb).
 
 ### Elrendezés: minden elem mozgatható, „alap” (benchmark)

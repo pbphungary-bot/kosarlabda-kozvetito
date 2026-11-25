@@ -367,3 +367,42 @@ test('FullField "Efficiency" column is read as EFF; unknown team names are repor
   assert.match(v.subtitle.note, /Csata TKK/); // the team that is not in the Excel is named
   assert.equal(v['home.val'].text, '102.8');
 });
+
+test('the uploaded Excel has three independent switches: team statistics, player statistics, cup games', async () => {
+  const store = await loadStore();
+  store.mergeExcel('women', importWorkbook(sample(), 'women'), { name: 'both.xlsx' });
+  store.mergeExcel('women', importWorkbook(readXlsx(bytes('cups-women.xlsx')), 'women'), { name: 'cups.xlsx' });
+  const info = () => store.excelInfo('women');
+  assert.deepEqual([info().enabledTeam, info().enabledPlayers, info().enabledCups, info().enabled], [true, true, true, true]);
+  const ppg = () => store.statSource('women', 'dvtkhuntherm', 'ppg'), pl = () => store.players('women', 'dvtkhuntherm').source, cups = () => store.cupFixtures('women', 'dvtkhuntherm').length;
+  assert.deepEqual([ppg(), pl()], ['excel', 'excel']); const withCups = cups(); assert.ok(withCups > 0);
+  // team statistics off: they come from the dashboard again, the players and the cup games stay from the Excel
+  store.setExcelPart('women', 'Team', false);
+  assert.deepEqual([ppg(), pl(), cups()], ['dashboard', 'excel', withCups]);
+  // players off, team on
+  store.setExcelPart('women', 'Team', true); store.setExcelPart('women', 'Players', false);
+  assert.deepEqual([ppg(), pl(), cups()], ['excel', 'dashboard', withCups]);
+  // cup games off
+  store.setExcelPart('women', 'Players', true); store.setExcelPart('women', 'Cups', false);
+  assert.deepEqual([ppg(), pl(), cups()], ['excel', 'excel', 0]);
+  assert.equal(info().enabled, true, 'something is still on');
+  for (const p of ['Team', 'Players', 'Cups']) store.setExcelPart('women', p, false);
+  assert.equal(info().enabled, false);
+  // a new file switches only the parts it brings; the others keep their switch (team file in, player switch stays off)
+  store.setExcelPart('women', 'Players', false); store.setExcelPart('women', 'Team', false); store.setExcelPart('women', 'Cups', false);
+  store.mergeExcel('women', { team: { dvtkhuntherm: { ppg: 99.9 } }, players: {} }, { name: 'team-only.xlsx' });
+  assert.deepEqual([info().enabledTeam, info().enabledPlayers, info().enabledCups], [true, false, false], 'a team-only upload switches only the team statistics on');
+  assert.equal(store.stat('women', 'dvtkhuntherm', 'ppg'), 99.9);
+  // the switches are saved with the data (JSON round trip) and the men's league is not touched
+  const again = await loadStore(); again.setExcel('women', JSON.parse(JSON.stringify(store.excel.women)));
+  assert.deepEqual([again.excelInfo('women').enabledTeam, again.excelInfo('women').enabledPlayers], [true, false]);
+  assert.equal(store.excelInfo('men'), null);
+});
+
+test('old saved Excel data with only the single enabled flag still works (all parts follow it)', async () => {
+  const store = await loadStore();
+  store.setExcel('women', { team: { dvtkhuntherm: { ppg: 88.8 } }, players: {}, cups: {}, enabled: false, meta: { files: [{ name: 'old.xlsx' }] } });
+  assert.equal(store.excelInfo('women').enabled, false); assert.equal(store.statSource('women', 'dvtkhuntherm', 'ppg'), 'dashboard');
+  store.excel.women.enabled = true;
+  assert.equal(store.statSource('women', 'dvtkhuntherm', 'ppg'), 'excel');
+});
