@@ -241,5 +241,13 @@ Mindkét csapatból **a három legjobb VAL-értékű játékos** jelenik meg (a 
 
 **Emlékezés:** az élő grafikák beállításait (pipált statisztikák, kész csomag, hely, színek, körvonal, árnyék és mérete) a stúdió megjegyzi a böngészőben, és a Férfi és a Női fül **közösen használja** – amit egyszer beállítasz, az marad (újratöltés után is). A meccs maga (kód, csapat, játékos, automatikus frissítés) fülenként külön marad.
 
+### Élő grafikák az OBS-ben (minden meccs egyszerre, csak egy link kell)
+A közvetítők **nem a Stúdiót használják adás közben**: minden meccshez és grafikához saját **link** van, amit az OBS-ben *Böngésző* forrásként (1920×1080, átlátszó) kell felvenni – és a grafika magától „életre kel”, 5 másodpercenként frissül.
+1. Nyisd meg a központi gép `…/graphics/live.html` oldalát (a **Linkek az OBS-hez** oldal): illeszd be a netcasting linket vagy kódot, válaszd ki a grafikát (játékos-betét / csapatok összevetése / három vezető), pipáld be a statisztikákat. A játékos-betétnél a játékost is itt választod.
+2. Másold ki a linket (*Link másolása*), az OBS-ben: Források → + → Böngésző → URL, szélesség 1920, magasság 1080.
+3. Kész. Az OBS „oldal gyorsítótárának frissítése” gombja (vagy bármilyen újratöltés) nem okoz gondot: a link mindent tartalmaz, az oldal újratöltés után ugyanazt mutatja. Ha a hírcsatorna egy pillanatra nem érhető el, az utolsó jó kép marad (hibaüzenet soha nem kerül adásba; a link végére írt `&debug=1` állapotsort mutat).
+* **Egy gép szolgál ki mindenkit:** a központi gépen fut a `python3 tools/serve.py --host 127.0.0.1 --token <titkos-kulcs>` és egy alagút (pl. Cloudflare Tunnel), így a közvetítők az ország bármely pontjáról használhatják. A szerver minden meccs hírcsatornáját **csak egyszer kéri le** és megosztja (nem forrásonként), a `--token` nélkül senki más nem használhatja átjátszónak. A kulcs a linkben van (`&token=`).
+* A link az élő grafika **alapbeállításait** használja (a Stúdióban elmentett egyéni elrendezés még nem megy át a linkbe), a kiválasztott statisztikák viszont igen.
+
 ## Csapatstatisztika (játékos-táblázat)
 A táblázatban **legfeljebb 20 játékos** jeleníthető meg (nincs már a PSD 12 / 13 soros korlátja); alapból a csapat összes játékosa látszik, a listában (Megjelenő játékosok) kipipálhatod / kivehetsz játékosokat. A PSD sorainak száma fölött a sorok **összébb húzódnak és a szöveg kisebb lesz** (az első és az utolsó sor helye nem változik, a keret ugyanaz; a keretet kézzel nagyíthatod az Elrendezés dobozban). A **külföldi játékosok neve „Keresztnév VEZETÉKNÉV”** sorrendben jelenik meg (a nemzetiséget a csapatoldal kerete adja), a magyaroké és azoké, akik nincsenek a keretben, úgy, ahogy a statisztikában szerepel.

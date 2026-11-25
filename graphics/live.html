@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Élő grafikák – OBS linkek</title>
+<link rel="stylesheet" href="css/studio.css">
+<style>
+  body { max-width: 1100px; margin: 0 auto; padding: 18px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .box { background: var(--panel, #1b2129); border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ticks label { display: inline-flex; flex-direction: row; gap: 4px; align-items: center; margin: 0 10px 4px 0; }
+  #link { width: 100%; font: 13px monospace; }
+  #prev { width: 960px; height: 540px; border: 0; transform-origin: 0 0; background: repeating-conic-gradient(#8a8f96 0% 25%, #6c7178 0% 50%) 0 0 / 24px 24px; }
+  #prevWrap { width: 960px; height: 540px; overflow: hidden; max-width: 100%; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<h1>Élő grafikák – OBS linkek</h1>
+<p class="hint">Válaszd ki a meccset és a grafikát, másold ki a linket, és az OBS-ben vedd fel <b>Böngésző</b> forrásként (1920×1080). A grafika magától frissül; az OBS „oldal gyorsítótárának frissítése” gombja nem árt (ugyanazt a linket tölti újra). Minden meccsnek és grafikának saját linkje van – tetszőleges számú fut egyszerre.</p>
+<div class="box">
+  <div class="grid">
+    <label>Meccs (netcasting link vagy kód)<input type="text" id="game" placeholder="https://netcasting4.webpont.com/?whun_135563"></label>
+    <label>Grafika<select id="graphic"></select></label>
+  </div>
+  <div id="gameInfo" class="hint"></div>
+  <label>Hozzáférési kulcs (ha a szerver kéri; a link tartalmazza)<input type="text" id="token" autocomplete="off"></label>
+</div>
+<div class="box" id="opts"></div>
+<div class="box">
+  <label>Link az OBS Böngésző forrásához<input id="link" readonly></label>
+  <div class="import-row"><button id="copy" class="primary">Link másolása</button> <span id="copied" class="hint"></span></div>
+</div>
+<div class="box"><b>Előnézet</b> <small class="hint">(a checker minta az átlátszóságot jelzi)</small><div id="prevWrap"><iframe id="prev" title="előnézet"></iframe></div></div>
+<script type="module" src="js/livelinks.js"></script>
+</body>
+</html>

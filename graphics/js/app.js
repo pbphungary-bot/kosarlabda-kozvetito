@@ -11,6 +11,7 @@ import {
   bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, LEADER_SHADOW_DEFAULT, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
 import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
+import { imageUrl } from './image-urls.js';
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -59,7 +60,6 @@ const saveState = () => { syncLiveSettings(); lsSet(LS.state, { league: state.le
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
 let photoIds = new Set(); // ids of the downloaded player photos (players/index.json); a missing photo shows the placeholder
-const imageUrl = key => key.startsWith('strip/') ? `templates/${key.slice(6)}/strip.png` : key.startsWith('form/') ? `assets/form/${key.slice(5)}.png` : key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;
 /** Loads the flags / photos a set of values refers to (the renderer draws only what is already loaded). */
 async function ensureImages(values) {
   const jobs = [];
@@ -260,7 +260,8 @@ function rowOffHtml(s, rows) {
 // Without the relay the operator pastes the feed text (open …/storage/full<code>.html, Ctrl+A, Ctrl+C).
 function isLiveType(t) { return t === 'livestat' || t === 'liveteam' || t === 'liveleaders'; }
 const live = { game: null, fetchedAt: '', error: '', busy: false, timer: null, players: 0 };
-const liveRelay = (code, kind = 'full') => new URL(`../live?game=${code}&kind=${kind}`, location.href).href;
+const liveToken = () => { try { return localStorage.getItem('nbia.live.token') || ''; } catch { return ''; } };
+const liveRelay = (code, kind = 'full') => new URL(`../live?game=${code}&kind=${kind}${liveToken() ? '&token=' + encodeURIComponent(liveToken()) : ''}`, location.href).href;
 function liveApply(text, code) {
   const feed = decodeFeed(text);
   if (!feed) return false;
