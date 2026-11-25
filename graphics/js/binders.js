@@ -106,6 +106,15 @@ export function teamstatPlayers(store, lg, teamId, rows, selected) {
   return { all, shown: shown.slice(0, rows) };
 }
 
+/** The name of a player of the statistics table the way the designs write it: a FOREIGN player (nationality from the team page's roster) as "Given SURNAME", everyone else as the table has it ("Surname Given"). Matching by name words (accents ignored); a player who is not on the roster keeps the table's spelling. */
+const nameWords = n => String(n || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
+export function teamstatName(roster, statName) {
+  const w = nameWords(statName);
+  if (!w.length) return statName;
+  const m = roster.find(r => { const t = nameWords(r.name); return t.length && (w.every(x => t.includes(x)) || t.every(x => w.includes(x))); });
+  return m && isForeign(m) ? displayName(m) : statName;
+}
+
 export function bindTeamstats(store, lg, teamId, tpl, measure, selected) {
   const c = club(lg, teamId);
   const cols = TEAMSTAT_COLS[lg];
@@ -133,12 +142,13 @@ export function bindTeamstats(store, lg, teamId, tpl, measure, selected) {
   }
   // jersey numbers: the feed repeats numbers (many players listed as 0) – a
   // number shared by several players of the team is not shown as fact
+  const rosterList = rosterPlayers(store, lg, teamId);
   const numCount = {};
   for (const x of all) numCount[x.p['#']] = (numCount[x.p['#']] || 0) + 1;
   shown.forEach((x, r) => {
     const unique = numCount[x.p['#']] === 1;
     v[`r${r}.num`] = field(unique ? x.p['#'] : null, src, unique ? {} : { note: `A mezszám („${x.p['#']}”) az adatokban több játékosnál is szerepel – kézzel add meg.` });
-    v[`r${r}.name`] = field(x.p['Játékos'], src);
+    v[`r${r}.name`] = field(teamstatName(rosterList, x.p['Játékos']), src);
     for (const col of cols) {
       const n = num(x.p[col.key]);
       const text = col.key === 'M.' ? (n === null ? null : String(Math.round(n))) : fmt1(n);

@@ -157,27 +157,37 @@ export const TEAMSTAT_COLS = {
   ],
 };
 
-function teamstats(id, league, psd, g) {
+export const TEAMSTATS_MAX = 20; // the player table takes up to this many players (owner 2026-11-25: the old limit of the PSD's 12 / 13 rows was "a rule I hate")
+export const TEAMSTATS_BUILDERS = {}; // template id → (number of players) => template
+function teamstats(id, league, psd, g0) {
   const cols = TEAMSTAT_COLS[league];
-  const hdr = { type: 'text', group: 'Fejléc', y: g.headerY, size: g.headerSize, tracking: -20, color: '#dba234', caps: true, outline: ol(4, '#000000'), fixed: true };
-  const els = [
-    { id: 'team.logo', type: 'image', label: 'Csapat logó', group: 'Csapat', box: g.logoBox, fit: 'contain', logoOutline: true, maxOutline: 2 },
-    { id: 'team.name', type: 'text', label: 'Csapatnév', group: 'Csapat', x: g.nameX, y: g.nameY, size: 100, tracking: 50, caps: true,
-      color: '#ffffff', outline: ol(3, '#ffffff'), maxWidth: g.nameMax, minScale: 0.5 },
-    { id: 'hdr.num', label: 'Fejléc #', ...hdr, x: g.numX, align: 'center', defaultText: '#' },
-    { id: 'hdr.name', label: 'Fejléc Játékos', ...hdr, x: g.hdrNameX, align: 'left', defaultText: 'Játékos' },
-    ...cols.map(c => ({ id: `hdr.${c.key}`, label: `Fejléc ${c.label}`, ...hdr, x: c.hx, align: 'center', defaultText: c.label })),
-  ];
-  for (let r = 0; r < g.rows; r++) {
-    const y = g.rowY + r * g.pitch;
-    const cell = { type: 'text', group: `${r + 1}. sor`, y, size: g.rowSize, tracking: 25, color: '#ffffff', caps: true, outline: ol(4, '#000000') };
-    els.push(
-      { id: `r${r}.num`, label: `${r + 1}. mezszám`, ...cell, x: g.numX, align: 'center', maxWidth: 60 },
-      { id: `r${r}.name`, label: `${r + 1}. játékos`, ...cell, x: g.playerX, align: 'left', maxWidth: g.playerMax, minScale: 0.7 },
-      ...cols.map(c => ({ id: `r${r}.${c.key}`, label: `${r + 1}. ${c.label}`, ...cell, x: c.x, align: 'center', maxWidth: 95 })),
-    );
-  }
-  return base(id, league, 'teamstats', psd, 'Csapatstatisztika (játékosok)', { elements: els, rows: g.rows, geometry: g, sample: g.sample });
+  const build = n => {
+    const total = Math.min(TEAMSTATS_MAX, Math.max(g0.rows, n || 0));
+    // more players than the PSD has rows: the rows get tighter and the text smaller, the first and the last row keep the PSD's positions (so everything stays inside the same frame)
+    const k = total > g0.rows ? (g0.rows - 1) / (total - 1) : 1;
+    const g = { ...g0, rows: total, pitch: g0.pitch * k, rowSize: g0.rowSize * k };
+    const hdr = { type: 'text', group: 'Fejléc', y: g.headerY, size: g.headerSize, tracking: -20, color: '#dba234', caps: true, outline: ol(4, '#000000'), fixed: true };
+    const els = [
+      { id: 'team.logo', type: 'image', label: 'Csapat logó', group: 'Csapat', box: g.logoBox, fit: 'contain', logoOutline: true, maxOutline: 2 },
+      { id: 'team.name', type: 'text', label: 'Csapatnév', group: 'Csapat', x: g.nameX, y: g.nameY, size: 100, tracking: 50, caps: true,
+        color: '#ffffff', outline: ol(3, '#ffffff'), maxWidth: g.nameMax, minScale: 0.5 },
+      { id: 'hdr.num', label: 'Fejléc #', ...hdr, x: g.numX, align: 'center', defaultText: '#' },
+      { id: 'hdr.name', label: 'Fejléc Játékos', ...hdr, x: g.hdrNameX, align: 'left', defaultText: 'Játékos' },
+      ...cols.map(c => ({ id: `hdr.${c.key}`, label: `Fejléc ${c.label}`, ...hdr, x: c.hx, align: 'center', defaultText: c.label })),
+    ];
+    for (let r = 0; r < g.rows; r++) {
+      const y = g.rowY + r * g.pitch;
+      const cell = { type: 'text', group: `${r + 1}. sor`, y, size: g.rowSize, tracking: 25, color: '#ffffff', caps: true, outline: ol(4, '#000000') };
+      els.push(
+        { id: `r${r}.num`, label: `${r + 1}. mezszám`, ...cell, x: g.numX, align: 'center', maxWidth: 60 },
+        { id: `r${r}.name`, label: `${r + 1}. játékos`, ...cell, x: g.playerX, align: 'left', maxWidth: g.playerMax, minScale: 0.7 },
+        ...cols.map(c => ({ id: `r${r}.${c.key}`, label: `${r + 1}. ${c.label}`, ...cell, x: c.x, align: 'center', maxWidth: 95 })),
+      );
+    }
+    return base(id, league, 'teamstats', psd, 'Csapatstatisztika (játékosok)', { elements: els, rows: total, geometry: g, sample: g.sample });
+  };
+  TEAMSTATS_BUILDERS[id] = build;
+  return build(g0.rows);
 }
 
 // ───────────────────────── Eredmények / Menetrend (row lists) ─────────────────────────
