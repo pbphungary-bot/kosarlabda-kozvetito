@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-25T14:09:57.624937+00:00",
+  "checked_at": "2026-11-25T15:06:55.035389+00:00",
   "statistics": {
-    "total": 1281,
-    "fresh": 591,
-    "fresh_with_summary": 401,
+    "total": 1285,
+    "fresh": 595,
+    "fresh_with_summary": 405,
     "missing_dates": 292,
     "headline_only": 566,
-    "untagged": 528,
-    "sources_ok": 22,
-    "sources_partial": 0,
+    "untagged": 530,
+    "sources_ok": 21,
+    "sources_partial": 1,
     "sources_failed": 9,
-    "new_articles": 6,
+    "new_articles": 7,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -28,8 +28,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 36,
-      "added": 0,
+      "candidates": 35,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -92,18 +92,20 @@
     },
     {
       "source": "Klub: DVTK HUNTHERM",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
       "candidates": 5,
       "attempted": 5,
       "already_saved": 0,
-      "added": 5,
+      "added": 4,
       "repaired": 0,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 5,
+      "article_errors": 1,
+      "listing_errors": [
+        "article https://dvtk.eu/37697-Ma_itthon_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/: HTTPError: HTTP Error 404: Not Found"
+      ],
+      "usable_articles": 4,
       "source_coverage": true
     },
     {
@@ -309,8 +311,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -480,8 +482,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [

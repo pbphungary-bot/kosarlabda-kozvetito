@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-25T14:09:57.624937+00:00",
+  "checked_at": "2026-11-25T15:06:55.035389+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 36,
-      "added": 0,
+      "candidates": 35,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -77,18 +77,20 @@
     },
     {
       "source": "Klub: DVTK HUNTHERM",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
       "candidates": 5,
       "attempted": 5,
       "already_saved": 0,
-      "added": 5,
+      "added": 4,
       "repaired": 0,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 5,
+      "article_errors": 1,
+      "listing_errors": [
+        "article https://dvtk.eu/37697-Ma_itthon_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/: HTTPError: HTTP Error 404: Not Found"
+      ],
+      "usable_articles": 4,
       "source_coverage": true
     },
     {
@@ -294,8 +296,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 9,
-      "added": 1,
+      "already_saved": 10,
+      "added": 0,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -465,8 +467,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -563,6 +563,52 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "DVTK HUNTHERM - ŽKK Brod na Savi élőben",
+      "summary": "November 25., szerda 18:00 (Miskolc, DVTK Aréna) DVTK HUNTHERM – ŽKK Brod na Savi",
+      "url": "http://dvtk.eu/37698-DVTK_HUNTHERM_ZKK_Brod_na_Savi_eloben-cikk-kosarlabda/",
+      "published_at": "2026-11-25T16:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Nagyon örültem a visszatérésnek, remekül éreztem magam a pályán – Miklós Melinda lejátszotta első tétmeccsét soproni színekben",
+      "summary": "Szombaton a KSC Szekszárd elleni bajnoki rangadón lejátszotta első tétmeccsét a Sopron Basket színeiben Miklós Melinda.",
+      "url": "https://wbasket.hu/nagyon-orultem-a-visszateresnek-remekul-ereztem-magam-a-palyan-miklos-melinda-lejatszotta-elso-tetmeccset-soproni-szinekben/",
+      "published_at": "2026.11.25. 15:53",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket",
+        "women|TARR KSC Szekszárd"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Konferenciát rendezett a FIBA az amerikai egyetemi kosárlabda globális hatásairól",
+      "summary": "Az Atlanti-óceán mindkét partjáról érkeztek döntéshozók, klubvezetők és szakértők a svájci Miesbe, hogy megvitassák az NCAA-ben bevezetett NIL-szabályok európai és nemzetközi utánpótlás-nevelésre gyakorolt hatásait – írja a Nemzetközi Kosárlabda Szövetség (FIBA) közleménye.",
+      "url": "https://wbasket.hu/konferenciat-rendezett-a-fiba-az-amerikai-egyetemi-kosarlabda-globalis-hatasairol/",
+      "published_at": "2026.11.25. 15:18",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Férfi egyetemi bajnokság: A Mosonmagyaróvár nyerte a hét rangadóját",
+      "summary": "Csonka fordulót rendeztek, mindössze négy mérkőzést játszottak a héten a férfiaknál a Nemzeti Egyetemi Kosárlabda Bajnokságban.",
+      "url": "https://bball1.hu/ferfi-egyetemi-bajnoksag-a-mosonmagyarovar-nyerte-a-het-rangadojat/",
+      "published_at": "2026-11-25T15:05:42+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "Klub: Vasas Akadémia",
       "title": "Parádés formában voltak az Amazonok",
