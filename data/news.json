@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T04:57:54.134238+00:00",
+  "checked_at": "2026-11-25T05:57:44.379144+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -81,14 +81,14 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 6,
-      "attempted": 6,
+      "candidates": 5,
+      "attempted": 5,
       "already_saved": 0,
-      "added": 6,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 6,
+      "usable_articles": 5,
       "source_coverage": true
     },
     {
@@ -465,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -563,6 +561,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Ma itthon játszik a DVTK HUNTHERM",
+      "summary": "Magyar Gergely: - A nemzetközi mezőny kiváló lehetőséget teremt arra, hogy a magyar bajnokikra felkészüljünk, és éles szituációban is tudjunk gyakorolni, komoly ellenfelekkel szemben.",
+      "url": "http://dvtk.eu/37697-Ma_itthon_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-25T06:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Pallai Tamás sem állhat a válogatott rendelkezésére a következő mérkőzéseken",
