@@ -1521,6 +1521,45 @@ try {
     await sp.context().close();
   });
 
+  // OBS overlay: any game / graphic from a link alone, transparent, self-updating, survives a reload (the OBS "refresh cache" hotkey)
+  await check('OBS overlay: three graphics of one game at once, from the link only, reload keeps working', async () => {
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
+    const octx = await hermetic(await browser.newContext({ viewport: { width: 1920, height: 1080 } }));
+    let relayHits = 0;
+    await octx.route('**/live?*', route => { relayHits++; route.fulfill({ status: 200, contentType: 'text/plain', body: feed }); });
+    const pages = [];
+    for (const g of ['liveteam', 'liveleaders', 'livestat']) {
+      const op = await octx.newPage(); pages.push(op);
+      await op.goto(`${URL}/graphics/overlay.html?game=whun_135563&g=${g}&refresh=2`);
+      await op.waitForFunction(() => /90–48/.test(window.__overlay?.status() || ''), null, { timeout: 30000 });
+    }
+    const opaque = op => op.evaluate(() => { const c = document.getElementById('c'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return [c.width, c.height, n, d[3]]; });
+    for (const op of pages) { const [w, h, n, corner] = await opaque(op); assert.equal(w, 1920); assert.equal(h, 1080); assert.ok(n > 50000, 'something is drawn'); assert.equal(corner, 0, 'the rest is transparent'); }
+    await pages[0].reload(); // a reload starts over from the same link
+    await pages[0].waitForFunction(() => /90–48/.test(window.__overlay?.status() || ''), null, { timeout: 30000 });
+    assert.ok((await opaque(pages[0]))[2] > 50000);
+    const before = relayHits; await pages[1].waitForTimeout(2600); assert.ok(relayHits > before, 'polls the relay by itself');
+    // a failing relay keeps the last picture and never shows an error on screen
+    await octx.unroute('**/live?*'); await octx.route('**/live?*', route => route.fulfill({ status: 502, body: 'down' }));
+    await pages[2].waitForFunction(() => /hiba/.test(window.__overlay.status()), null, { timeout: 15000 });
+    assert.ok((await opaque(pages[2]))[2] > 5000, 'the last good picture stays');
+    await octx.close();
+  });
+  await check('OBS link maker builds a working overlay link', async () => {
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
+    const lctx = await hermetic(await browser.newContext({ viewport: { width: 1400, height: 1000 } }));
+    await lctx.route('**/live?*', route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
+    const lp = await lctx.newPage();
+    await lp.goto(`${URL}/graphics/live.html`);
+    await lp.fill('#game', 'https://netcasting4.webpont.com/?whun_135563'); await lp.dispatchEvent('#game', 'change');
+    await lp.waitForFunction(() => /90–48/.test(document.getElementById('gameInfo').textContent));
+    await lp.selectOption('#graphic', 'liveteam');
+    await lp.check('.tStat[value="fg3"]'); await lp.check('.tStat[value="reb"]');
+    const link = await lp.inputValue('#link');
+    assert.match(link, /overlay\.html\?game=whun_135563&g=liveteam&teamStats=fg3%2Creb$/);
+    await lctx.close();
+  });
+
 } finally {
   await browser.close();
   server.kill();

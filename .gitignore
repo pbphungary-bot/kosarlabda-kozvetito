@@ -4,3 +4,4 @@ tests/output/
 
 node_modules/
 .playwright-mcp/
+.live-server.json

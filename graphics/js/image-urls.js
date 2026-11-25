@@ -1,0 +1,2 @@
+// Where the image keys used by the binders live (shared by the studio and the OBS overlay).
+export const imageUrl = key => key.startsWith('strip/') ? `templates/${key.slice(6)}/strip.png` : key.startsWith('form/') ? `assets/form/${key.slice(5)}.png` : key.startsWith('flag/') ? `assets/flags/${key.slice(5)}.svg` : key === 'photo/none' ? 'assets/player-placeholder.webp' : key.startsWith('photo/') ? `players/${key.slice(6)}.webp` : null;

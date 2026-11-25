@@ -153,9 +153,9 @@ test('live graphic: values of the chosen player, roster-style name, official pho
   assert.ok(liveDims(LIVE_STATS.map(x => x.key)).stats + 276 <= 1040, 'everything ticked still fits');
   const full = bindLiveStat(store, 'women', g, { side: 'home', variant: 'full' }, ids);
   assert.equal(full['c0.value'].text, '25:18'); assert.equal(full['c8.value'].text, '20', 'EFF');
-  // another player of the other team (not in the photo list: no photo, never a made-up one); a wrong code falls back to the best scorer
+  // another player of the other team (not in the photo list: the grey Hunbasket placeholder, never a made-up photo); a wrong code falls back to the best scorer
   const away = bindLiveStat(store, 'women', g, { side: 'away', player: 'B12490', variant: 'basic' }, ids);
-  assert.equal(away.photo.src, ''); assert.equal(away['c0.value'].text, '10');
+  assert.equal(away.photo.src, 'photo/none'); assert.equal(away['c0.value'].text, '10');
   assert.equal(bindLiveStat(store, 'women', g, { side: 'away', player: 'nope' }, ids)['c0.value'].text, '10');
   // nothing loaded: nothing invented
   const none = bindLiveStat(store, 'women', null, {}, ids);
