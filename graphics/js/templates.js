@@ -573,7 +573,7 @@ export const LIVE_COLORS = { name: '#ffffff', label: '#ffffff', value: '#ffc929'
 // The stats of the live player insert are ticked by the commentator (owner 2026-11-24); the old fixed sets stay as presets that tick a ready-made selection.
 export const LIVE_STATS = [ // canonical order = the order on the graphic; shoot = made/attempted figure with the percentage in ( )
   { key: 'min', label: 'PERC' }, { key: 'pts', label: 'PTS' }, { key: 'reb', label: 'REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' },
-  { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'EFF' },
+  { key: 'tov', label: 'TOV' }, { key: 'pf', label: 'FAULT' }, { key: 'eff', label: 'VAL' },
   { key: 'fg', label: 'FG', shoot: true }, { key: 'fg2', label: '2P', shoot: true }, { key: 'fg3', label: '3P', shoot: true }, { key: 'ft', label: 'BT', shoot: true },
 ];
 export const LIVE_VARIANTS = {
@@ -645,7 +645,7 @@ function liveEntry(id, league) {
 export const LIVE_TEAM_STATS = [ // canonical order; shoot = made/attempted with the percentage in ( ); low = a lower value is the better one
   { key: 'fg', label: 'FG', shoot: true }, { key: 'fg2', label: '2P', shoot: true }, { key: 'fg3', label: '3P', shoot: true }, { key: 'ft', label: 'BT', shoot: true },
   { key: 'reb', label: 'REB' }, { key: 'oreb', label: 'TÁMADÓ REB' }, { key: 'ast', label: 'AST' }, { key: 'stl', label: 'STL' }, { key: 'blk', label: 'BLK' },
-  { key: 'tov', label: 'TOV', low: true }, { key: 'pf', label: 'FAULT', low: true }, { key: 'eff', label: 'EFF' },
+  { key: 'tov', label: 'TOV', low: true }, { key: 'pf', label: 'FAULT', low: true }, { key: 'eff', label: 'VAL' },
 ];
 export const LIVE_TEAM_DEFAULT = ['fg', 'fg3', 'ft', 'reb', 'ast', 'tov'];
 export const liveTeamKeys = keys => {
@@ -740,7 +740,7 @@ function liveLeaderTpl(id, league, keysIn) {
       const cl = x0 + u(LL.photo + 10);
       els.push(
         { id: `${p}.photo`, type: 'image', label: `${g} – fotó`, group: g, box: [x0 + u(LL.photo) / 2, ry + u(LL.row) / 2, u(LL.photo), u(LL.row - 10)], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1, outlineAlphaMin: 90 },
-        txt(34, { id: `${p}.name`, label: `${g} – név`, group: g, x: cl, y: ry + u(32), align: 'left', runs: true, outline: ol(3, '#000000', 1), maxWidth: u(LL.content), minScale: 0.5 }),
+        txt(34, { id: `${p}.name`, label: `${g} – név`, group: g, x: cl + u(LL.content) / 2, y: ry + u(32), align: 'center', runs: true, outline: ol(3, '#000000', 1), maxWidth: u(LL.content), minScale: 0.5 }),
       );
       let cx0 = cl;
       cells.forEach((c, j) => {
