@@ -38,7 +38,11 @@
       <p class="hint">Egy fájlban lehet csapatstatisztika, játékosstatisztika és kupa-/európai meccsek lista is (külön munkalapon; minta: <a href="minta-kupameccsek.xlsx">minta-kupameccsek.xlsx</a>). A bajnokságot a fájl tartalmából ismerem fel. A feltöltött érték előnyt élvez a dashboard adataival szemben, és „Excel” címkét kap; a következő forduló fájljai felülírják az előzőket. A fájl nem kerül fel sehova – a böngészőben dolgozom vele.</p>
       <div class="import-row">
         <label class="ghost file">Fájlok kiválasztása (.xlsx, .csv) – egyszerre több is<input type="file" id="excelFile" accept=".xlsx,.csv,.txt" multiple></label>
-        <label><input type="checkbox" id="excelOn" checked> Excel adatok használata</label>
+        <span class="excel-parts" style="display:inline-flex;flex-wrap:wrap;gap:4px 14px;align-items:center">
+          <label title="A Csapatok összevetése és a többi csapat-szintű grafika adatai"><input type="checkbox" id="excelOnTeam" checked> Csapatstatisztika (Excel)</label>
+          <label title="A Csapatstatisztika táblázat, a Kulcsjátékosok és a Játékos-különleges grafika adatai"><input type="checkbox" id="excelOnPlayers" checked> Játékosstatisztika (Excel)</label>
+          <label title="Feltöltött és kézzel hozzáadott kupa-/európai meccsek"><input type="checkbox" id="excelOnCups" checked> Kupameccsek (Excel + kézzel)</label>
+        </span>
         <button id="excelClear" class="ghost">Feltöltött adatok törlése</button>
       </div>
       <label class="paste-label">Vagy illessz be szöveget az eredmenyek.com csapatoldaláról („Meccsek” fül – jelöld ki, másold, illeszd be):

@@ -46,6 +46,8 @@ function num(v) {
   return Number.isFinite(n) ? n : null;
 }
 
+const EXCEL_PARTS = ['Team', 'Players', 'Cups']; // team statistics / player statistics / cup games of an Excel import
+
 export class Store {
   constructor(raw, now = new Date()) {
     this.now = now;
@@ -157,7 +159,7 @@ export class Store {
     const k = g => `${g.date}|${g.homeId || g.home}|${g.awayId || g.away}`;
     const all = {};
     for (const g of this.leagues[lg].cups) all[k(g)] = { ...g, auto: true }; // automatic (FIBA) …
-    const x = this.#excelOn(lg);
+    const x = this.#excelOn(lg, 'Cups');
     if (x?.cups) for (const [key, g] of Object.entries(x.cups)) all[key] = g; // … the operator's own entry wins
     return Object.entries(all).filter(([, g]) => g.homeId === id || g.awayId === id).map(([cupKey, g]) => ({
       cupKey, idx: -1, round: null, roundNo: null, home: g.home, away: g.away, homeId: g.homeId, awayId: g.awayId,
@@ -172,7 +174,7 @@ export class Store {
     const x = this.excel[lg] || { team: {}, players: {}, cups: {}, enabled: true, meta: { files: [] } };
     x.cups = x.cups || {};
     x.cups[`${g.date}|${g.homeId || g.home}|${g.awayId || g.away}`] = g;
-    x.enabled = true;
+    Store.#reenable(x, ['Cups']); // adding a game switches the cup games on, the other parts keep their state
     x.meta = x.meta || { files: [] };
     const name = 'Kézzel hozzáadott meccsek';
     x.meta.files = [...(x.meta.files || []).filter(f => f.name !== name), { name, modified: new Date().toISOString(), importedAt: new Date().toISOString() }];
@@ -230,21 +232,40 @@ export class Store {
     for (const g of imp.cups || []) x.cups[`${g.date}|${g.homeId || g.home}|${g.awayId || g.away}`] = g;
     x.meta = x.meta || { files: [] };
     x.meta.files = [...(x.meta.files || []).filter(f => f.name !== file.name), { name: file.name, modified: file.modified || null, importedAt: new Date().toISOString() }];
-    x.enabled = true;
+    Store.#reenable(x, [['Team', imp.team && Object.keys(imp.team).length], ['Players', imp.players && Object.keys(imp.players).length], ['Cups', (imp.cups || []).length]].filter(([, n]) => n).map(([p]) => p)); // the parts this file brings are switched on, the others keep their own switch
     this.excel[lg] = x;
   }
 
-  #excelOn(lg) { const x = this.excel[lg]; return x && x.enabled !== false ? x : null; }
+  /** The uploaded Excel data when it is switched on for this PART ('Team' statistics, 'Players', 'Cups'): the three parts have their own switches (owner 2026-11-25: team and player Excels are different files). A part without its own flag follows the old single `enabled` flag. */
+  #excelOn(lg, part) {
+    const x = this.excel[lg];
+    return x && Store.excelPartOn(x, part) ? x : null;
+  }
+  static excelPartOn(x, part) { const f = x['enabled' + part]; return f !== undefined ? f : x.enabled !== false; }
+  /** Writes every part's effective state into its own flag (so a later change of one part does not move the others). */
+  static #materialise(x) { for (const p of EXCEL_PARTS) x['enabled' + p] = Store.excelPartOn(x, p); }
+  /** An upload / a hand-added game switches the parts it touches on; the parts it does not touch keep their state (old data with only the single `enabled` flag is converted first). */
+  static #reenable(x, parts) {
+    if (x.enabled === false || EXCEL_PARTS.some(p => x['enabled' + p] !== undefined)) { Store.#materialise(x); for (const p of parts) x['enabled' + p] = true; }
+    x.enabled = true;
+  }
+  /** Switches one part of a league's uploaded Excel data on / off. */
+  setExcelPart(lg, part, on) {
+    const x = this.excel[lg];
+    if (!x) return;
+    Store.#materialise(x);
+    x['enabled' + part] = !!on;
+  }
 
   stat(lg, id, key) {
-    const x = this.#excelOn(lg)?.team?.[id]?.[key];
+    const x = this.#excelOn(lg, 'Team')?.team?.[id]?.[key];
     if (x !== undefined && x !== null) return num(x);
     return num(this.leagues[lg].teamStats[id]?.season?.[key]);
   }
 
   /** 'excel' when the value comes from the imported file, 'dashboard' otherwise. */
   statSource(lg, id, key) {
-    const x = this.#excelOn(lg)?.team?.[id]?.[key];
+    const x = this.#excelOn(lg, 'Team')?.team?.[id]?.[key];
     return x !== undefined && x !== null ? 'excel' : 'dashboard';
   }
 
@@ -257,7 +278,7 @@ export class Store {
   }
 
   players(lg, id) {
-    const x = this.#excelOn(lg)?.players?.[id];
+    const x = this.#excelOn(lg, 'Players')?.players?.[id];
     const d = this.leagues[lg].players[id];
     if (x && x.length) {
       // the Excel wins, but a column it does not have (e.g. 2P % / 3P % / BT %) is completed from the Hunbasket row of the same player
@@ -277,7 +298,7 @@ export class Store {
   }
 
   /** Is the uploaded Excel switched on and does it hold team statistics (any team) / this team? */
-  excelTeams(lg) { const x = this.#excelOn(lg); return x?.team ? Object.keys(x.team).filter(id => Object.keys(x.team[id] || {}).length) : []; }
+  excelTeams(lg) { const x = this.#excelOn(lg, 'Team'); return x?.team ? Object.keys(x.team).filter(id => Object.keys(x.team[id] || {}).length) : []; }
   excelHasTeam(lg, id) { return this.excelTeams(lg).includes(id); }
 
   /** Loads the lazy sources (player pages) of a league into the store; fetchJson(file) as for loadDashboard. */
@@ -345,7 +366,7 @@ export class Store {
     const files = m.files || (m.file ? [{ name: m.file, modified: m.modified }] : []);
     const times = files.map(f => f.modified).filter(Boolean).sort();
     return {
-      enabled: x.enabled !== false, files, file: files.map(f => f.name).join(', ') || '—', modified: times.at(-1) || null,
+      enabled: EXCEL_PARTS.some(p => Store.excelPartOn(x, p)), enabledTeam: Store.excelPartOn(x, 'Team'), enabledPlayers: Store.excelPartOn(x, 'Players'), enabledCups: Store.excelPartOn(x, 'Cups'), files, file: files.map(f => f.name).join(', ') || '—', modified: times.at(-1) || null,
       teams: Object.keys(x.team || {}).length, playerTeams: Object.keys(x.players || {}).length, cups: Object.keys(x.cups || {}).length,
     };
   }

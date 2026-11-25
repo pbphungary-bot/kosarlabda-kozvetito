@@ -245,10 +245,17 @@ try {
     assert.equal(x.files.length, 2);
     // switch off → dashboard values return; clear removes it
     await page.locator('#importBox summary').click();
-    await page.uncheck('#excelOn');
-    await page.waitForTimeout(300);
-    assert.equal((await page.evaluate(() => window.__studio.store.excelInfo('women'))).enabled, false);
-    await page.check('#excelOn'); await page.click('#excelClear');
+    // three independent switches: team statistics / player statistics / cup games – switching one off leaves the others on
+    await page.uncheck('#excelOnTeam');
+    await page.waitForFunction(() => window.__studio.store.excelInfo('women').enabledTeam === false, null, { timeout: 15000 });
+    let xi = await page.evaluate(() => window.__studio.store.excelInfo('women'));
+    assert.deepEqual([xi.enabledTeam, xi.enabledPlayers], [false, true], 'the player Excel stays on when the team Excel is switched off');
+    assert.match(await page.locator('#freshness').innerText(), /kikapcsolva: csapatstatisztika/);
+    await page.uncheck('#excelOnPlayers');
+    await page.waitForFunction(() => window.__studio.store.excelInfo('women').enabledPlayers === false, null, { timeout: 15000 });
+    await page.check('#excelOnTeam'); await page.check('#excelOnPlayers');
+    await page.waitForFunction(() => { const x = window.__studio.store.excelInfo('women'); return x.enabledTeam && x.enabledPlayers; }, null, { timeout: 15000 });
+    await page.click('#excelClear');
     await page.waitForTimeout(300);
     assert.equal(await page.evaluate(() => window.__studio.store.excelInfo('women')), null);
     assert.notEqual(await page.evaluate(() => window.__studio.store.excelInfo('men')), null, 'men data untouched by clearing women');
