@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-24T23:38:09.354981+00:00",
+  "checked_at": "2026-11-25T00:23:50.962187+00:00",
   "statistics": {
     "total": 1269,
     "fresh": 584,
@@ -7,8 +7,8 @@
     "missing_dates": 288,
     "headline_only": 564,
     "untagged": 524,
-    "sources_ok": 22,
-    "sources_partial": 0,
+    "sources_ok": 21,
+    "sources_partial": 1,
     "sources_failed": 9,
     "new_articles": 6,
     "sources_total": 31,
@@ -480,6 +480,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -560,18 +562,23 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 29,
-      "attempted": 29,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
       "added": 0,
-      "repaired": 29,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 29,
+      "repaired": 5,
+      "article_errors": 3,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/egy-ponttal-maradtunk-alul-a-budapesti-bikak-ellen/: HTTPError: HTTP Error 508: Loop Detected"
+      ],
+      "usable_articles": 5,
       "source_coverage": true
     }
   ],
