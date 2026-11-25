@@ -68,7 +68,7 @@ test('live feed: played players, best scorer first; efficiency formula', () => {
   const home = playedPlayers(g, 'home');
   assert.ok(home.length >= 8 && home.every(p => p.side === 'home'));
   assert.ok(home.every((p, i) => i === 0 || home[i - 1].stat.pts >= p.stat.pts), 'sorted by points');
-  assert.equal(efficiency({ pts: 10, oreb: 1, dreb: 2, ast: 3, stl: 1, blk: 0, fouled: 2, fg2a: 5, fg2m: 3, fg3a: 2, fg3m: 1, fta: 2, ftm: 2, tov: 2, blkAgainst: 0, pf: 3 }), 10 + 1 + 2 + 3 + 1 + 0 + 2 - (2 + 1 + 0) - 2 - 0 - 3);
+  assert.equal(efficiency({ pts: 10, oreb: 1, dreb: 2, ast: 3, stl: 1, blk: 0, fouled: 2, fg2a: 5, fg2m: 3, fg3a: 2, fg3m: 1, fta: 2, ftm: 2, tov: 2, blkAgainst: 0, pf: 3 }), 10 + 1 + 2 + 3 + 1 + 0 + 2 - (2 + 1 + 0) - 2 /* no deduction for fouls or blocks against: the page's VAL */);
 });
 
 test('live feed: game clock from elapsed seconds (4 x 10 min, overtimes 5 min)', () => {
@@ -152,7 +152,7 @@ test('live graphic: values of the chosen player, roster-style name, official pho
   assert.deepEqual(liveKeys(['nope']), ['pts', 'reb', 'ast'], 'nothing valid ticked: the basic preset');
   assert.ok(liveDims(LIVE_STATS.map(x => x.key)).stats + 276 <= 1040, 'everything ticked still fits');
   const full = bindLiveStat(store, 'women', g, { side: 'home', variant: 'full' }, ids);
-  assert.equal(full['c0.value'].text, '25:18'); assert.equal(full['c8.value'].text, '20', 'EFF');
+  assert.equal(full['c0.value'].text, '25:18'); assert.equal(full['c8.value'].text, '22', 'VAL (the page counts fouls drawn, never subtracts fouls)');
   // another player of the other team (not in the photo list: the grey Hunbasket placeholder, never a made-up photo); a wrong code falls back to the best scorer
   const away = bindLiveStat(store, 'women', g, { side: 'away', player: 'B12490', variant: 'basic' }, ids);
   assert.equal(away.photo.src, 'photo/none'); assert.equal(away['c0.value'].text, '10');
@@ -240,7 +240,7 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   const v = bindLiveLeaders(store, 'women', g, { fetchedAt: '22:41:03' }, ids);
   const labels = [0, 1, 2].map(j => v[`h0.c${j}.label`].text);
   assert.deepEqual(labels, ['PTS', 'REB', 'AST'], 'default: points, rebounds, assists – VAL is not shown');
-  assert.ok(!Object.values(v).some(x => x && x.text === 'EFF'), 'no VAL on the graphic unless ticked');
+  assert.ok(!Object.values(v).some(x => x && x.text === 'VAL'), 'no VAL on the graphic unless ticked');
   assert.equal(v['h0.name'].text, `${topByEff(g, 'home', 1)[0].name}`.length ? v['h0.name'].text : '', 'names come from the roster binder');
   assert.deepEqual([v.title1.text, v.title2.text], ['TOP', 'TELJESÍTMÉNYEK'], 'fixed two-line title instead of the game time'); assert.equal(v.time, undefined); assert.equal(v.clock, undefined);
   assert.ok(v.logoH.src && v.logoA.src, 'both logos stay');
@@ -259,7 +259,7 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   for (const id of ['h0', 'h1', 'h2', 'a0', 'a1', 'a2']) for (const j of [0, 1, 2]) assert.equal(v[`${id}.c${j}.box`], undefined, 'plain boxes: no per-value colouring (the white box is the template default)');
   assert.equal(v.scoreH, undefined); assert.equal(v.scoreA, undefined, 'no big scores: the broadcast score bug shows them');
   const sh = bindLiveLeaders(store, 'women', g, { leaderStats: ['fg3', 'eff'] }, ids);
-  assert.deepEqual([sh['h0.c0.label'].text, sh['h0.c1.label'].text], ['EFF', '3P'], 'VAL can be ticked: one stat like the others, in the usual order');
+  assert.deepEqual([sh['h0.c0.label'].text, sh['h0.c1.label'].text], ['VAL', '3P'], 'VAL can be ticked: one stat like the others, in the usual order');
   assert.match(sh['h0.c1.value'].text, /^\d+\/\d+ \(\d+%\)$/); assert.equal(sh['h0.c1.value'].runs[1].size, Math.round(32 * liveLeaderSize().scale * 2 / 3 * 100) / 100);
   const none = bindLiveLeaders(store, 'women', null, {}, ids);
   assert.deepEqual(Object.keys(none), ['title1', 'title2'], 'no game: only the fixed title (the studio says so in a notice)');
@@ -285,4 +285,12 @@ test('live three leaders graphic: top-left, inside the picture, clear of the sco
     }
   }
   assert.ok(TEMPLATE_TYPES.liveleaders);
+});
+
+test('VAL equals the netcasting page (owner 2026-11-25: Forray 35, Mester 18 although she had 1 block against and 4 fouls)', () => {
+  // real stat lines of a live game, VAL as shown on the page at that moment
+  const line = (pts, fg2m, fg2a, fg3m, fg3a, ftm, fta, oreb, dreb, ast, stl, tov, blk, blkAgainst, pf, fouled) => ({ pts, fg2m, fg2a, fg3m, fg3a, ftm, fta, oreb, dreb, ast, stl, tov, blk, blkAgainst, pf, fouled });
+  assert.equal(efficiency(line(6, 2, 4, 0, 0, 2, 2, 2, 3, 3, 1, 1, 0, 1, 4, 6)), 18, 'Mester');
+  assert.equal(efficiency(line(11, 2, 3, 2, 2, 1, 2, 2, 3, 3, 2, 4, 0, 0, 4, 3)), 18, 'Halasy');
+  assert.equal(efficiency(line(19, 3, 6, 1, 2, 10, 10, 1, 4, 6, 3, 3, 1, 0, 1, 8)), 35, 'Forray');
 });

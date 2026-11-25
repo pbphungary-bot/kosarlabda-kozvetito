@@ -130,10 +130,11 @@ export function gameClock(gt) {
   return { period, elapsed: Math.max(0, gt - start), seconds: gt };
 }
 
-/** Efficiency (Val) with the usual formula: pts + reb + ast + stl + blk + fouls drawn − missed shots − turnovers − blocks against − fouls. */
+/** VAL as the netcasting page counts it (owner 2026-11-25; checked player by player against the page): pts + reb + ast + stl + blk + FOULS DRAWN − missed shots − turnovers.
+ *  Fouls committed and blocks against are NOT subtracted. FullField's EFF is the same without the fouls drawn (the pre-game team comparison keeps that EFF). The property is still called `eff` internally. */
 export function efficiency(s) {
   const missed = (s.fg2a - s.fg2m) + (s.fg3a - s.fg3m) + (s.fta - s.ftm);
-  return s.pts + s.oreb + s.dreb + s.ast + s.stl + s.blk + s.fouled - missed - s.tov - s.blkAgainst - s.pf;
+  return s.pts + s.oreb + s.dreb + s.ast + s.stl + s.blk + s.fouled - missed - s.tov;
 }
 
 /** Players of one side that actually played (seconds on court > 0 or any counted action), best scorer first. */

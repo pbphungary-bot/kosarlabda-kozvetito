@@ -1389,7 +1389,7 @@ try {
     await page.fill('.liveLeaderHex[data-k="name"]', '#ff0000'); await page.fill('.liveLeaderHex[data-k="label"]', '#00ff00'); await page.fill('.liveLeaderHex[data-k="value"]', '0000ff');
     await until(3, () => { const v = window.__studio.current().values; return v?.['h0.name']?.color === '#ff0000' && v?.['a2.name']?.color === '#ff0000' && v?.['h1.c0.label']?.color === '#00ff00' && v?.['a0.c2.value']?.color === '#0000ff'; }, null, { timeout: 15000 }); // one colour per category, the same for every player
     await page.check('.liveLeaderStat[value="eff"]');
-    await until(2, () => window.__studio.current().values?.['h0.c3.label']?.text === 'EFF', null, { timeout: 15000 }); // VAL ticked: one more box, like any other stat
+    await until(2, () => window.__studio.current().values?.['h0.c3.label']?.text === 'VAL', null, { timeout: 15000 }); // VAL ticked: one more box, like any other stat
     await page.evaluate(() => { const r = document.getElementById('liveLeaderShadowSize'); r.value = '30'; r.dispatchEvent(new Event('input', { bubbles: true })); }); // adjustable shadow size
     await until(7, () => window.__studio.current().values?.['h0.photo']?.shadow?.blur === 30, null, { timeout: 15000 });
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
