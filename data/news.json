@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T09:53:01.997878+00:00",
+  "checked_at": "2026-11-25T10:49:55.455457+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 1,
-      "repaired": 11,
+      "added": 0,
+      "repaired": 12,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -180,8 +180,8 @@
       "candidates": 16,
       "attempted": 16,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 16,
+      "added": 1,
+      "repaired": 15,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 16,
@@ -466,6 +466,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -546,22 +547,45 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 29,
-      "attempted": 29,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 29,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 29,
-      "source_coverage": true
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:TimeoutError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Sopron KC",
+      "title": "Legyél Te is dobozoló!",
+      "summary": "Csapatunk az idei esztendőben is csatlakozik a karácsonyi Cipősdoboz akcióhoz, melynek keretében rászoruló gyermekeket ajándékozhatunk meg egy-egy cipősdoboznyi ajándékkal.",
+      "url": "https://sopronkc.hu/legyel-te-is-dobozolo/",
+      "published_at": "2026-11-25T10:31:50+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Sopron KC",
+      "league": "men",
+      "teams": [
+        "men|Sopron"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Valerio-Bodon Vincent: Bármilyen szerepet szán nekem a stáb, abban igyekszem a maximumot nyújtani",
