@@ -24,7 +24,7 @@ export function parseOverlay(search) {
   };
   for (const k of Object.keys(live)) if (live[k] === undefined) delete live[k];
   const refresh = Math.min(60, Math.max(2, Number(q.get('refresh')) || 5));
-  return { game, graphic, league: game ? gameLeague(game) : 'men', templateId: game ? `${graphic}-${gameLeague(game)}` : null, live, refresh, token: q.get('token') || '', debug: q.get('debug') === '1' };
+  return { game, graphic, fixed: q.has('g'), league: game ? gameLeague(game) : 'men', templateId: game ? `${graphic}-${gameLeague(game)}` : null, live, refresh, token: q.get('token') || '', debug: q.get('debug') === '1' };
 }
 
 /** Settings → query string (the link maker). Only what differs from the defaults is written, so the links stay short. */
@@ -43,4 +43,24 @@ export function overlayQuery({ game, graphic, live = {}, token = '', refresh = 5
   if (refresh !== 5) q.set('refresh', String(refresh));
   if (token) q.set('token', token);
   return q.toString();
+}
+
+/** The fixed link of a game (what goes into OBS once): the game and the key only. The builder decides what is on air; the overlay follows it (server: /live-state). */
+export function fixedLinkQuery({ game, token = '' }) {
+  const q = new URLSearchParams();
+  q.set('game', gameCode(game) || '');
+  if (token) q.set('token', token);
+  return q.toString();
+}
+
+/** What the builder puts on air, from the server's JSON: { graphic: 'off' | livestat | liveteam | liveleaders, live: { the ticked stats, player, side… } } (unknown / broken values fall back to "off" and the defaults). */
+export function normOnAir(raw) {
+  const r = raw && typeof raw === 'object' ? raw : {};
+  const keys = a => (Array.isArray(a) ? a.map(String).filter(k => /^[a-z0-9]{1,12}$/.test(k)).slice(0, 20) : []);
+  const live = { side: r.side === 'away' ? 'away' : 'home' };
+  if (typeof r.player === 'string' && /^[A-Za-z0-9_-]{1,20}$/.test(r.player)) live.player = r.player;
+  if (r.corner === 'gap' || r.corner === 'tl') live.corner = r.corner;
+  if (typeof r.variant === 'string' && /^[a-z0-9]{1,20}$/.test(r.variant)) live.variant = r.variant;
+  for (const k of ['stats', 'teamStats', 'leaderStats']) if (keys(r[k]).length) live[k] = keys(r[k]);
+  return { graphic: OVERLAY_GRAPHICS[r.graphic] ? r.graphic : 'off', live };
 }

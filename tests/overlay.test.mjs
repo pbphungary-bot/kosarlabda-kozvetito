@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseOverlay, overlayQuery, gameLeague } from '../graphics/js/overlay-params.js';
+import { parseOverlay, overlayQuery, gameLeague, fixedLinkQuery, normOnAir } from '../graphics/js/overlay-params.js';
 
 test('overlay link: game, graphic and league come from the link', () => {
   const p = parseOverlay('?game=https://netcasting4.webpont.com/?whun_135563&g=liveleaders');
@@ -34,4 +34,18 @@ test('one game code everywhere: netcasting, mkosz.hu and Hunbasket links give th
     ['https://hunbasket.hu/merkozes/x2627/whun/whun_135479', 'whun_135479'],
     ['https://netcasting4.webpont.com/?whun_135579', 'whun_135579'],
   ]) assert.equal(gameCode(url), code, url);
+});
+
+test('fixed link: game and key only; without &g the overlay follows the builder', () => {
+  assert.equal(fixedLinkQuery({ game: 'https://mkosz.hu/merkozes/x2627/hunu18/hunu18_142733' }), 'game=hunu18_142733');
+  assert.equal(fixedLinkQuery({ game: 'whun_135579', token: 'k y' }), 'game=whun_135579&token=k+y');
+  assert.equal(parseOverlay('?game=whun_135579').fixed, false, 'the fixed link has no graphic of its own');
+  assert.equal(parseOverlay('?game=whun_135579&g=liveteam').fixed, true, 'an old direct link keeps its graphic');
+});
+test('on-air state from the server: unknown or broken values are safe', () => {
+  assert.equal(normOnAir(undefined).graphic, 'off'); assert.equal(normOnAir({}).graphic, 'off'); assert.equal(normOnAir({ graphic: 'rm -rf' }).graphic, 'off');
+  const n = normOnAir({ graphic: 'liveleaders', side: 'away', player: 'B203034', corner: 'tl', teamStats: ['fg3', '<script>', 'reb'], leaderStats: 'pts', stats: [] });
+  assert.equal(n.graphic, 'liveleaders'); assert.equal(n.live.side, 'away'); assert.equal(n.live.player, 'B203034'); assert.equal(n.live.corner, 'tl');
+  assert.deepEqual(n.live.teamStats, ['fg3', 'reb'], 'only plain stat keys pass'); assert.equal(n.live.leaderStats, undefined); assert.equal(n.live.stats, undefined);
+  assert.equal(normOnAir({ graphic: 'livestat', player: '<img onerror>' }).live.player, undefined);
 });

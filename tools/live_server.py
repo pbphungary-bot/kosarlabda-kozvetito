@@ -20,11 +20,21 @@ def load_token(given):
         except Exception: pass
     return token
 
+def update_repo():
+    """If this folder is a git clone (not an unzipped download), fetch the newest version before starting; a failure never stops the server."""
+    if not os.path.isdir(os.path.join(ROOT, '.git')) or not shutil.which('git'):
+        print('Frissítés: kihagyva (a mappa nem git-másolat; lásd a leírást a git telepítéséhez).'); return
+    try:
+        r = subprocess.run(['git', 'pull', '--ff-only'], cwd=ROOT, capture_output=True, text=True, timeout=90)
+        print('Frissítés (git pull):', (r.stdout.strip() or r.stderr.strip() or 'kész').splitlines()[-1])
+    except Exception as e:
+        print('Frissítés nem sikerült, a meglévő változattal indulok:', e)
+
 def show(base, token):
     print('\n' + '=' * 70)
-    print(' KÉSZ. Közvetítők, innen kérjétek a linkeket (egy meccs = egy link az OBS-hez):')
+    print(' KÉSZ. Közvetítők, ezen az oldalon vezérlitek az élő grafikákat (egy meccs = egy állandó link az OBS-hez):')
     print(f'\n   {base}/graphics/live.html?token={token}\n')
-    print(' A linket az OBS-ben Böngésző forrásként kell felvenni (1920×1080). A link maga tartalmazza a kulcsot.')
+    print(' A meccs linkjét egyszer kell az OBS-ben Böngésző forrásként felvenni (1920×1080); utána csak az oldalon kattintjátok ki, melyik grafika legyen adásban.')
     print(' Leállítás: Ctrl+C. Ne add ki a linket kívülállónak (a kulcs azt védi, hogy mások ne használják a gépet).')
     print('=' * 70 + '\n', flush=True)
 
@@ -33,9 +43,11 @@ def main():
     ap.add_argument('--port', type=int, default=8000)
     ap.add_argument('--token', default=os.environ.get('LIVE_TOKEN', ''))
     ap.add_argument('--no-tunnel', action='store_true')
+    ap.add_argument('--no-update', action='store_true', help='do not run git pull before starting')
     ap.add_argument('--tunnel-token', default='', help='token of a named Cloudflare tunnel (fixed address)')
     ap.add_argument('--public-url', default='', help='the fixed address of the named tunnel, e.g. https://live.pelda.hu')
     a = ap.parse_args()
+    if not a.no_update: update_repo()
     token = load_token(a.token)
     server = subprocess.Popen([sys.executable, os.path.join(ROOT, 'tools', 'serve.py'), str(a.port), '--token', token])
     procs = [server]
