@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-21T15:03:13.544Z",
+ "updated_at": "2026-11-25T18:18:38.130Z",
  "source": "FIBA / Basketball Champions League (hivatalos játéklista)",
  "games": [
   {
@@ -192,8 +192,11 @@
    "away": "ZKK Brod Na Savi",
    "homeId": "dvtkhuntherm",
    "awayId": null,
-   "status": "scheduled",
-   "score": null,
+   "status": "finished",
+   "score": {
+    "home": 50,
+    "away": 44
+   },
    "venue": "DVTK Arena",
    "round": "Regular Season 2"
   },
@@ -207,8 +210,11 @@
    "away": "Saarlouis Royals",
    "homeId": "sopronbasket",
    "awayId": null,
-   "status": "scheduled",
-   "score": null,
+   "status": "finished",
+   "score": {
+    "home": 47,
+    "away": 34
+   },
    "venue": "Arena Sopron",
    "round": "Regular Season 2"
   },
