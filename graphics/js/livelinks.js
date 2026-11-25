@@ -10,6 +10,7 @@ const S = { game: null, players: [], side: 'home', teams: null, player: '', corn
 
 $('graphic').innerHTML = Object.entries(OVERLAY_GRAPHICS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('');
 $('graphic').value = ls.get('nbia.live.graphic') || 'liveteam';
+{ const qt = new URLSearchParams(location.search).get('token'); if (qt) ls.set('nbia.live.token', qt); } // the launcher prints a link that already carries the key
 $('token').value = ls.get('nbia.live.token');
 $('game').value = ls.get('nbia.live.game');
 
@@ -81,4 +82,24 @@ $('opts').addEventListener('change', e => { if (e.target.id === 'side') { S.side
 $('game').onchange = loadGame;
 $('token').onchange = () => { ls.set('nbia.live.token', $('token').value.trim()); loadGame(); };
 $('copy').onclick = async () => { try { await navigator.clipboard.writeText($('link').value); $('copied').textContent = 'Kimásolva.'; } catch { $('link').select(); $('copied').textContent = 'Jelöld ki és másold (Ctrl+C).'; } };
+
+// Today's and the coming games of the two NB I/A leagues: the Hunbasket match address ends in the very code the netcasting feed uses (…/whun/whun_135579 → ?whun_135579)
+async function loadSchedule() {
+  const pick = $('gamePick'), rows = [], now = new Date(), from = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1), to = new Date(+from + 9 * 864e5);
+  for (const [lg, label] of [['men', 'Férfi'], ['women', 'Női']]) {
+    try {
+      const j = await (await fetch(`../data/${lg}.json`, { cache: 'no-store' })).json();
+      for (const m of j.matches || []) {
+        const d = String(m.date || '').match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})/), code = gameCode(m.url);
+        if (!d || !code) continue;
+        const dt = new Date(+d[1], +d[2] - 1, +d[3]);
+        if (dt >= from && dt <= to) rows.push({ dt, code, text: `${label} · ${d[2]}.${d[3]}. ${m.time || ''} · ${m.home} – ${m.away}${m.status === 'finished' ? ' (vége)' : ''}` });
+      }
+    } catch { /* offline: the code can still be pasted */ }
+  }
+  rows.sort((a, b) => a.dt - b.dt || a.text.localeCompare(b.text, 'hu'));
+  pick.innerHTML = `<option value="">${rows.length ? '– válassz meccset –' : '(nincs közelgő meccs az adatokban)'}</option>` + rows.map(r => `<option value="${r.code}">${esc(r.text)}</option>`).join('');
+}
+$('gamePick').onchange = e => { if (e.target.value) { $('game').value = e.target.value; loadGame(); } };
+loadSchedule();
 loadGame();

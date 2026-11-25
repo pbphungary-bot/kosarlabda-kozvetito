@@ -637,7 +637,7 @@ export function bindLiveStat(store, lg, game, sel = {}, photoIds = new Set()) {
   if (!game || !p) { v.name = field(null, src); return v; }
   v.name = liveNameField(store, lg, teamId, p);
   v.logo = teamId ? logo(lg, teamId) : { src: '', source: 'A klub logója nem található' };
-  v.photo = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
+  v.photo = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: 'photo/none', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó: a Hunbasket szürke helyőrzője (mint a kereten)' }; // never a made-up photo: the grey unknown-player silhouette, as on the rosters
   const st = p.stat; // (no status line under the name: the broadcast's own score bug shows the score and the period)
   const D = liveDims(Array.isArray(sel.stats) && sel.stats.length ? sel.stats : sel.variant), big = D.val, small = Math.round(big * 2 / 3);
   const cells = liveCellFns(p);
@@ -740,7 +740,7 @@ export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set())
     const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
     if (!p) { v[`${id}.name`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.photo`] = { src: '', source: '' }; continue; }
     v[`${id}.name`] = { ...liveNameField(store, lg, tids[side], p), color: CL.name };
-    v[`${id}.photo`] = photoIds.has(p.code) ? { src: `photo/${p.code}`, outline: sel.leaderOutlineOn === false ? null : { size: 3, color: CL.outline }, shadow: sel.leaderShadowOn === false ? null : leaderShadow(Number.isFinite(Number(sel.leaderShadowSize)) && sel.leaderShadowSize !== '' && sel.leaderShadowSize != null ? Math.min(40, Math.max(0, Number(sel.leaderShadowSize))) : LEADER_SHADOW_DEFAULT), source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
+    v[`${id}.photo`] = { src: photoIds.has(p.code) ? `photo/${p.code}` : 'photo/none', outline: sel.leaderOutlineOn === false ? null : { size: 3, color: CL.outline }, shadow: sel.leaderShadowOn === false ? null : leaderShadow(Number.isFinite(Number(sel.leaderShadowSize)) && sel.leaderShadowSize !== '' && sel.leaderShadowSize != null ? Math.min(40, Math.max(0, Number(sel.leaderShadowSize))) : LEADER_SHADOW_DEFAULT), source: photoIds.has(p.code) ? 'Hunbasket fotó (a keretgrafikáéval azonos)' : 'Ehhez a játékoshoz nincs letöltött hivatalos fotó: a Hunbasket szürke helyőrzője' };
   }
   return v;
 }

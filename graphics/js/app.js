@@ -667,7 +667,7 @@ function autoValues() {
       if (g.id && gl !== lg) info.notices.push({ bad: true, text: `Ez a meccs a ${gl === 'women' ? 'női' : 'férfi'} bajnokságé (${g.id}): válts át a ${gl === 'women' ? 'Női' : 'Férfi'} NB I/A fülre, különben a klubok / logók nem egyeznek.` });
       v = bindLiveLeaders(store, lg, g, { ...(s.live || {}), fetchedAt: live.fetchedAt }, photoIds);
       info.notices.push({ text: `Élő adat – ${g.teams.home.short} ${g.score.home}–${g.score.away} ${g.teams.away.short}, frissítve: ${live.fetchedAt}. Csapatonként a három legjobb VAL-értékű játékos; a hat játékos közül a legjobb érték zöld, a legrosszabb piros.` });
-      if (Object.entries(v).some(([k, x]) => /\.photo$/.test(k) && x && x.src === '' && x.source && /nincs letöltött/.test(x.source))) info.notices.push({ text: 'Egyes játékosokhoz nincs letöltött hivatalos fotó: a grafika náluk fotó nélkül jelenik meg.' });
+      if (Object.entries(v).some(([k, x]) => /\.photo$/.test(k) && x && x.src === 'photo/none')) info.notices.push({ text: 'Egyes játékosokhoz nincs letöltött hivatalos fotó: a grafika náluk a Hunbasket szürke helyőrzője jelenik meg.' });
     }
   } else if (t.type === 'liveteam') {
     const g = live.game;
@@ -686,7 +686,7 @@ function autoValues() {
       if (g.id && gl !== lg) info.notices.push({ bad: true, text: `Ez a meccs a ${gl === 'women' ? 'női' : 'férfi'} bajnokságé (${g.id}): válts át a ${gl === 'women' ? 'Női' : 'Férfi'} NB I/A fülre, különben a klub / fotó nem egyezik.` });
       v = bindLiveStat(store, lg, g, { ...(s.live || {}), fetchedAt: live.fetchedAt }, photoIds);
       info.notices.push({ text: `Élő adat – ${g.teams.home.short} ${g.score.home}–${g.score.away} ${g.teams.away.short}, frissítve: ${live.fetchedAt}. A hírcsatorna kb. 5 másodpercenként frissül; a „Betöltés” gomb vagy az automatikus frissítés hozza az újat.` });
-      if (v.photo && !v.photo.src) info.notices.push({ text: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó: a grafika fotó nélkül jelenik meg.' });
+      if (v.photo && v.photo.src === 'photo/none') info.notices.push({ text: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó: a Hunbasket szürke helyőrzője jelenik meg.' });
     }
   } else if (t.type === 'extra') {
     v = {};

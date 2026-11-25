@@ -210,7 +210,7 @@ Időkérésnél / negyedszünetben egy játékos élő statisztikája, a hivatal
 
 **Fontos – az élő lekérés a helyi szerverrel működik:** a hírcsatorna szervere nem engedi, hogy egy weboldal (pl. a GitHub Pages) közvetlenül olvassa, és a felhős szolgáltatások (pl. Supabase) hálózatát elutasítja. Ezért indítsd a stúdiót a gépeden: `python3 tools/serve.py`, majd nyisd meg a `http://localhost:8000/graphics/` címet – a szerver `/live` címen továbbítja a hírcsatornát (csak ezt az egy URL-formát kéri le). Ha ez nem megy, a *Beillesztés* ágon kézzel is használható: a stúdió a megadott kódból **kész hivatkozást** ad („A hírcsatorna megnyitása új lapon”, pl. `https://netcasting4.webpont.com/storage/fullwhun_135563.html` – a `full` és a kód egybe van írva, `.html` a végén). A megnyíló lapon egyetlen hosszú szöveg látszik: Ctrl+A, Ctrl+C, majd illeszd be a stúdió mezőjébe és *Beillesztett adat használata*. Ha mást illesztesz be (pl. a netcasting oldal szövegét, vagy csonka szöveget), a stúdió megmondja, mi a baj, és mit tegyél.
 
-A név írásmódja a Hunbasket-keret szerint (magyar: VEZETÉKNÉV Keresztnév, külföldi: Keresztnév VEZETÉKNÉV); ahol nincs letöltött fotó, a grafika fotó nélkül jelenik meg. Hiányzó adatot a stúdió nem talál ki.
+A név írásmódja a Hunbasket-keret szerint (magyar: VEZETÉKNÉV Keresztnév, külföldi: Keresztnév VEZETÉKNÉV); ahol nincs letöltött fotó, a Hunbasket szürke „ismeretlen játékos” helyőrzője jelenik meg. Hiányzó adatot a stúdió nem talál ki.
 
 
 ## Eredményjelző (az adás jobb alsó sarkában)
@@ -243,10 +243,10 @@ Mindkét csapatból **a három legjobb VAL-értékű játékos** jelenik meg (a 
 
 ### Élő grafikák az OBS-ben (minden meccs egyszerre, csak egy link kell)
 A közvetítők **nem a Stúdiót használják adás közben**: minden meccshez és grafikához saját **link** van, amit az OBS-ben *Böngésző* forrásként (1920×1080, átlátszó) kell felvenni – és a grafika magától „életre kel”, 5 másodpercenként frissül.
-1. Nyisd meg a központi gép `…/graphics/live.html` oldalát (a **Linkek az OBS-hez** oldal): illeszd be a netcasting linket vagy kódot, válaszd ki a grafikát (játékos-betét / csapatok összevetése / három vezető), pipáld be a statisztikákat. A játékos-betétnél a játékost is itt választod.
+1. Nyisd meg a központi gép `…/graphics/live.html` oldalát (a **Linkek az OBS-hez** oldal): válassz a mai és közelgő NB I/A meccsek közül, vagy illeszd be a meccs linkjét (a netcasting, az mkosz.hu és a Hunbasket linkben **ugyanaz a meccskód** van, pl. `whun_135579`, utánpótlásnál `hunu18_142733`), válaszd ki a grafikát (játékos-betét / csapatok összevetése / három vezető), pipáld be a statisztikákat. A játékos-betétnél a játékost is itt választod.
 2. Másold ki a linket (*Link másolása*), az OBS-ben: Források → + → Böngésző → URL, szélesség 1920, magasság 1080.
 3. Kész. Az OBS „oldal gyorsítótárának frissítése” gombja (vagy bármilyen újratöltés) nem okoz gondot: a link mindent tartalmaz, az oldal újratöltés után ugyanazt mutatja. Ha a hírcsatorna egy pillanatra nem érhető el, az utolsó jó kép marad (hibaüzenet soha nem kerül adásba; a link végére írt `&debug=1` állapotsort mutat).
-* **Egy gép szolgál ki mindenkit:** a központi gépen fut a `python3 tools/serve.py --host 127.0.0.1 --token <titkos-kulcs>` és egy alagút (pl. Cloudflare Tunnel), így a közvetítők az ország bármely pontjáról használhatják. A szerver minden meccs hírcsatornáját **csak egyszer kéri le** és megosztja (nem forrásonként), a `--token` nélkül senki más nem használhatja átjátszónak. A kulcs a linkben van (`&token=`).
+* **Egy gép szolgál ki mindenkit:** a központi gépen egyetlen parancs indítja a szervert és az alagutat: `python3 tools/live_server.py` (a Cloudflare-alagúthoz egyszer telepíteni kell a `cloudflared` programot; a parancs kiírja a közvetítőknek adandó címet a kulccsal együtt. Az ingyenes alagút címe minden újraindításkor új, saját állandó címhez Cloudflare-fiók és domain kell), így a közvetítők az ország bármely pontjáról használhatják. A szerver minden meccs hírcsatornáját **csak egyszer kéri le** és megosztja (nem forrásonként), a `--token` nélkül senki más nem használhatja átjátszónak. A kulcs a linkben van (`&token=`).
 * A link az élő grafika **alapbeállításait** használja (a Stúdióban elmentett egyéni elrendezés még nem megy át a linkbe), a kiválasztott statisztikák viszont igen.
 
 ## Csapatstatisztika (játékos-táblázat)

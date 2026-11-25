@@ -25,3 +25,13 @@ test('overlay link: refresh interval is clamped', () => {
   assert.equal(parseOverlay('?game=whun_1234&refresh=1').refresh, 2);
   assert.equal(parseOverlay('?game=whun_1234&refresh=999').refresh, 60);
 });
+test('one game code everywhere: netcasting, mkosz.hu and Hunbasket links give the same code', async () => {
+  const { gameCode } = await import('../graphics/js/live.js');
+  for (const [url, code] of [
+    ['https://netcasting4.webpont.com/?hunu18_142733', 'hunu18_142733'],
+    ['https://mkosz.hu/merkozes/x2627/hunu18/hunu18_142733', 'hunu18_142733'],
+    ['https://hunbasket.hu/merkozesbeharangozo/x2627/whun/whun_135579', 'whun_135579'],
+    ['https://hunbasket.hu/merkozes/x2627/whun/whun_135479', 'whun_135479'],
+    ['https://netcasting4.webpont.com/?whun_135579', 'whun_135579'],
+  ]) assert.equal(gameCode(url), code, url);
+});
