@@ -3,12 +3,12 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_TEAM_BUILDERS, LIVE_TEAM_STATS, liveTeamKeys, LIVE_VARIANTS, LIVE_STATS, liveKeys, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, LIVE_TEAM_STATS, liveTeamKeys, LIVE_VARIANTS, LIVE_STATS, liveKeys, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, liveChoice, bindCoach, coachOpponent
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
 import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
 
@@ -100,6 +100,11 @@ const tpl = () => {
     if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, PC_BUILDERS[t.id](rows)); }
     return psCache.get(key);
   }
+  if (t.type === 'liveleaders') { // live three leaders: the ticked statistics
+    const keys = liveKeys(state.sel[t.league]?.live?.leaderStats), key = `${t.id}|${keys.join()}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_LEADER_BUILDERS[t.id](keys)); }
+    return psCache.get(key);
+  }
   if (t.type === 'liveteam') { // live team comparison: the ticked statistics
     const keys = liveTeamKeys(state.sel[t.league]?.live?.teamStats), key = `${t.id}|${keys.join()}`;
     if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, LIVE_TEAM_BUILDERS[t.id](keys)); }
@@ -179,7 +184,7 @@ function bugSizeNow() {
   if (bugMode === 'off') return null;
   const lg = state.league, tt = templateById(state.template[lg]);
   let homeId = null;
-  if (tt?.type === 'livestat' || tt?.type === 'liveteam') { const h = live.game?.teams.home; homeId = h ? (clubIdStrict(lg, h.short) || clubIdStrict(lg, h.name)) : null; }
+  if (isLiveType(tt?.type)) { const h = live.game?.teams.home; homeId = h ? (clubIdStrict(lg, h.short) || clubIdStrict(lg, h.name)) : null; }
   else homeId = currentMatch()?.homeId || null;
   return homeId ? bugSizeOf(lg, homeId) : 'large';
 }
@@ -237,7 +242,7 @@ function rowOffHtml(s, rows) {
 // ───────────────────────── live statistics (Élő statisztika) ─────────────────────────
 // The feed of the MKOSZ netcasting page cannot be read by a browser directly (no CORS header, cloud networks are refused): tools/serve.py relays it at /live.
 // Without the relay the operator pastes the feed text (open …/storage/full<code>.html, Ctrl+A, Ctrl+C).
-const isLiveType = t => t === 'livestat' || t === 'liveteam';
+function isLiveType(t) { return t === 'livestat' || t === 'liveteam' || t === 'liveleaders'; }
 const live = { game: null, fetchedAt: '', error: '', busy: false, timer: null, players: 0 };
 const liveRelay = (code, kind = 'full') => new URL(`../live?game=${code}&kind=${kind}`, location.href).href;
 function liveApply(text, code) {
@@ -282,7 +287,7 @@ function liveInfoHtml() {
 /** The ticked stats of the live player insert: the saved list, else the chosen preset. */
 const liveSpec = L => (Array.isArray(L?.stats) && L.stats.length ? L.stats : L?.variant);
 function livePanelHtml(s) {
-  const L = s.live || {}, teamMode = tpl().type === 'liveteam', g = live.game, side = L.side === 'away' ? 'away' : 'home';
+  const L = s.live || {}, mode = tpl().type, teamMode = mode === 'liveteam' || mode === 'liveleaders', g = live.game, side = L.side === 'away' ? 'away' : 'home';
   const ch = g ? liveChoice(store, state.league, g, side, L.player) : null;
   const ticked = liveKeys(liveSpec(L)), variants = `<option value="">Saját választás</option>` + Object.entries(LIVE_VARIANTS).map(([k, v]) => `<option value="${k}" ${liveKeys(k).join() === ticked.join() ? 'selected' : ''}>${esc(v.label)}</option>`).join('');
   const tickHtml = LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveStat" value="${x.key}" ${ticked.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('');
@@ -292,10 +297,11 @@ function livePanelHtml(s) {
       <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
     <div id="liveStats"><small class="hint">Pipáld be, mi látsszon (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${tickHtml}</div>`;
   const tt = liveTeamKeys(L.teamStats), teamTicks = `<div id="liveTeamStats"><small class="hint">Pipáld be, mely statisztikák látsszanak (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${LIVE_TEAM_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveTeamStat" value="${x.key}" ${tt.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}</div>`;
+  const lk = liveKeys(L.leaderStats), leaderTicks = `<div id="liveLeaderStats"><small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa jelenik meg (a VAL csak a kiválasztás szabálya). Pipáld be, mely statisztikák látsszanak:</small><br>${LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveLeaderStat" value="${x.key}" ${lk.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}</div>`;
   return `<label>Élő meccs (netcasting link vagy kód)<span class="import-row"><input type="text" id="liveCode" style="flex:1;min-width:0" placeholder="https://netcasting4.webpont.com/?whun_135563" value="${esc(L.code || '')}"> <button type="button" id="liveLoad">Betöltés</button></span></label>
     <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="liveAuto" ${L.auto ? 'checked' : ''}> Automatikus frissítés 5 másodpercenként</label>
     <small id="liveInfo" class="hint">${liveInfoHtml()}</small>
-    ${teamMode ? teamTicks : playerRows}
+    ${mode === 'liveleaders' ? leaderTicks : teamMode ? teamTicks : playerRows}
     <details ${live.error || !live.game ? 'open' : ''}><summary>Beillesztés (ha az élő lekérés nem működik)</summary>
       <small class="hint" id="liveOpenRow">${liveOpenHtml(L.code)}</small>
       <textarea id="livePaste" rows="3" style="width:100%" placeholder="A böngészőben nyisd meg: https://netcasting4.webpont.com/storage/full<kód>.html – Ctrl+A, Ctrl+C, majd illeszd be ide."></textarea>
@@ -336,7 +342,8 @@ function wireLivePanel(s) {
     if (live.game && live.game.id !== prev) { L().player = null; L().side = 'home'; resetMatchOverrides(); }
     renderSelection(); update(true);
   };
-  if (!$('liveSide')) { // team comparison: only the ticked statistics
+  if (!$('liveSide')) { // team comparison / three leaders: only the ticked statistics
+    document.querySelectorAll('.liveLeaderStat').forEach(cb => { cb.onchange = () => { L().leaderStats = [...document.querySelectorAll('.liveLeaderStat:checked')].map(x => x.value); if (!L().leaderStats.length) L().leaderStats = liveKeys('basic'); resetMatchOverrides(); renderSelection(); update(true); }; });
     document.querySelectorAll('.liveTeamStat').forEach(cb => { cb.onchange = () => { L().teamStats = [...document.querySelectorAll('.liveTeamStat:checked')].map(x => x.value); if (!L().teamStats.length) L().teamStats = liveTeamKeys(null); resetMatchOverrides(); renderSelection(); update(true); }; });
     return;
   }
@@ -407,8 +414,8 @@ function renderSelection(extra = {}) {
       $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
       $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
     }
-  } else if (t.type === 'livestat' || t.type === 'liveteam') {
-    $('selectTitle').textContent = t.type === 'liveteam' ? '2. Élő meccs és statisztikák' : '2. Élő meccs és játékos';
+  } else if (isLiveType(t.type)) {
+    $('selectTitle').textContent = t.type === 'livestat' ? '2. Élő meccs és játékos' : '2. Élő meccs és statisztikák';
     box.innerHTML = livePanelHtml(s);
     wireLivePanel(s);
     liveTimer();
@@ -625,6 +632,16 @@ function autoValues() {
       info.notices.push({ text: 'A keret a Hunbasket csapatoldaláról jön (mezszám szerint rendezve). A kapitány-jelölés (©) az adatokban nincs: kézzel írd a név mögé, ha kell. A nevek hosszú, több keresztnevesek lerövidülnek (3 szó).' });
       if (t.type === 'rostergrid') info.notices.push({ text: 'A fotók a Hunbasketről valók (az MKOSZ engedélyével, letöltve a repóba). Ahol nincs fotó, helyőrző jelenik meg.' });
     }
+  } else if (t.type === 'liveleaders') {
+    const g = live.game;
+    if (!g) info.notices.push({ bad: true, text: 'Még nincs élő meccs betöltve: add meg a netcasting linket / kódot a Meccs mezőben, vagy illeszd be a hírcsatorna szövegét.' });
+    else {
+      const gl = /^w/.test(g.id || '') ? 'women' : 'men';
+      if (g.id && gl !== lg) info.notices.push({ bad: true, text: `Ez a meccs a ${gl === 'women' ? 'női' : 'férfi'} bajnokságé (${g.id}): válts át a ${gl === 'women' ? 'Női' : 'Férfi'} NB I/A fülre, különben a klubok / logók nem egyeznek.` });
+      v = bindLiveLeaders(store, lg, g, { ...(s.live || {}), fetchedAt: live.fetchedAt }, photoIds);
+      info.notices.push({ text: `Élő adat – ${g.teams.home.short} ${g.score.home}–${g.score.away} ${g.teams.away.short}, frissítve: ${live.fetchedAt}. Csapatonként a három legjobb VAL-értékű játékos; a hat játékos közül a legjobb érték zöld, a legrosszabb piros.` });
+      if (Object.entries(v).some(([k, x]) => /\.photo$/.test(k) && x && x.src === '' && x.source && /nincs letöltött/.test(x.source))) info.notices.push({ text: 'Egyes játékosokhoz nincs letöltött hivatalos fotó: a grafika náluk fotó nélkül jelenik meg.' });
+    }
   } else if (t.type === 'liveteam') {
     const g = live.game;
     if (!g) info.notices.push({ bad: true, text: 'Még nincs élő meccs betöltve: add meg a netcasting linket / kódot a Meccs mezőben, vagy illeszd be a hírcsatorna szövegét.' });
@@ -805,7 +822,7 @@ function fileName(values) {
   if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'referees' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     const m = currentMatch();
     who = m ? `${club(lg, m.homeId)?.short}-${club(lg, m.awayId)?.short}` : 'meccs';
-  } else if (t.type === 'liveteam') {
+  } else if (t.type === 'liveteam' || t.type === 'liveleaders') {
     who = live.game ? `${live.game.teams.home.short}-${live.game.teams.away.short}` : 'meccs';
   } else if (t.type === 'livestat') {
     const ch = live.game ? liveChoice(store, lg, live.game, s.live?.side === 'away' ? 'away' : 'home', s.live?.player) : null;

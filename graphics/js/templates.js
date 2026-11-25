@@ -649,14 +649,12 @@ const LT = { w: 560, head: 138, pad: 20, box: 190 };
 const ltRow = n => (n <= 9 ? 64 : 54); // many ticked stats: narrower rows
 const ltScale = n => Math.min(2, 1074 / (LT.head + n * ltRow(n) + LT.pad));
 export const liveTeamSize = keys => { const n = liveTeamKeys(keys).length, S = ltScale(n); return { w: Math.round(LT.w * S), h: Math.round((LT.head + n * ltRow(n) + LT.pad) * S), scale: S }; };
-function liveTeamTpl(id, league, keysIn) {
-  const keys = liveTeamKeys(keysIn), { w, h, scale: S } = liveTeamSize(keys), ROW = ltRow(keys.length) * S, x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
-  const u = v => v * S, W = u(LT.w), HEAD = u(LT.head), PAD = u(LT.pad), BOX = u(LT.box);
+/** The header shared by the live team comparison and the three leaders: both logos with the live score next to them, the period and the game time left in the middle. */
+function liveHeader(S, x, y, w, op) {
+  const u = v => v * S, C = LIVE_TEAM_COLORS;
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(7), opacity: op, ...extra });
-  const els = [
-    panelFrame(league, x, y, w, h), // the PlayByPlay court (red-black-green) with the league's outlined box, like every other graphic
-  ];
+  const els = [];
   // header: logo + white score box on each side, the period and the game time in the middle (scores sit close to the middle)
   const hy = y + u(22), hh = u(94), sb = u(110), lg = u(96), mid = x + w / 2;
   els.push(
@@ -669,6 +667,18 @@ function liveTeamTpl(id, league, keysIn) {
     txt(66, { id: 'scoreA', label: 'Vendég eredmény', group: 'Fejléc', x: x + w - u(112) - sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
     { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [x + w - u(58), hy + hh / 2, lg, lg], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
   );
+  return els;
+}
+function liveTeamTpl(id, league, keysIn) {
+  const keys = liveTeamKeys(keysIn), { w, h, scale: S } = liveTeamSize(keys), ROW = ltRow(keys.length) * S, x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
+  const u = v => v * S, W = u(LT.w), HEAD = u(LT.head), PAD = u(LT.pad), BOX = u(LT.box);
+  const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
+  const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(7), opacity: op, ...extra });
+  const els = [
+    panelFrame(league, x, y, w, h), // the PlayByPlay court (red-black-green) with the league's outlined box, like every other graphic
+  ];
+  const mid = x + w / 2;
+  els.push(...liveHeader(S, x, y, w, op));
   keys.forEach((k, i) => {
     const d = LIVE_TEAM_STATS.find(q => q.key === k), ry = y + HEAD + i * ROW, g = `${i + 1}. statisztika`, bh = ROW - u(14), by = ry + u(7), cy = by + bh / 2;
     const lx = x + PAD, rx = x + w - PAD - BOX;
@@ -686,6 +696,52 @@ function liveTeamTpl(id, league, keysIn) {
   t.liveTeam = { keys, scale: S };
   return t;
 }
+// ───────────────────────── Élő három vezető (live three leaders) ─────────────────────────
+// The three best-VAL players of each team (VAL only PICKS them; it is just one more tickable stat, never the headline: owner 2026-11-25), same header and court frame as the team comparison.
+// Per player: official photo, name, and the ticked stats as white boxes with the label above (best value of the six players green, worst red).
+const LL = { cw: 420, gap: 24, pad: 20, head: 138, row: 118, photo: 92, content: 306 };
+const llScale = () => Math.min(2, 1074 / (LL.head + 3 * LL.row + LL.pad), 1140 / (LL.pad * 2 + LL.cw * 2 + LL.gap));
+export const liveLeaderSize = () => { const S = llScale(); return { w: Math.round((LL.pad * 2 + LL.cw * 2 + LL.gap) * S), h: Math.round((LL.head + 3 * LL.row + LL.pad) * S), scale: S }; };
+export const LIVE_LEADER_BUILDERS = {}; // template id → (keys) => template
+/** Weights of the stat boxes in a row: the made/attempted ones (with the percentage) need more room. */
+export const liveLeaderCells = keys => { const k = liveKeys(keys), wts = k.map(key => (LIVE_STATS.find(x => x.key === key)?.shoot ? 1.7 : 1)), sum = wts.reduce((a, b) => a + b, 0); return k.map((key, i) => ({ key, ...LIVE_STATS.find(x => x.key === key), w: wts[i] / sum })); };
+function liveLeaderTpl(id, league, keysIn) {
+  const cells = liveLeaderCells(keysIn), { w, h, scale: S } = liveLeaderSize(), x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882, u = v => v * S;
+  const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
+  const box = (idv, label, group, bx, by, bw, bh) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(6), opacity: op });
+  const els = [panelFrame(league, x, y, w, h), ...liveHeader(S, x, y, w, op)];
+  for (const [side, tag, col] of [['home', 'h', 0], ['away', 'a', 1]]) {
+    const x0 = x + u(LL.pad) + col * u(LL.cw + LL.gap);
+    for (let i = 0; i < 3; i++) {
+      const ry = y + u(LL.head) + i * u(LL.row), g = `${side === 'home' ? 'Hazai' : 'Vendég'} ${i + 1}. játékos`, p = `${tag}${i}`;
+      const cl = x0 + u(LL.photo + 10);
+      els.push(
+        { id: `${p}.photo`, type: 'image', label: `${g} – fotó`, group: g, box: [x0 + u(LL.photo) / 2, ry + u(LL.row) / 2, u(LL.photo), u(LL.row - 10)], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
+        txt(34, { id: `${p}.name`, label: `${g} – név`, group: g, x: cl, y: ry + u(32), align: 'left', runs: true, outline: ol(3, '#000000', 1), maxWidth: u(LL.content), minScale: 0.5 }),
+      );
+      let cx0 = cl;
+      cells.forEach((c, j) => {
+        const cw = u(LL.content) * c.w, gg = `${g} – ${c.label}`;
+        els.push(
+          txt(20, { id: `${p}.c${j}.label`, label: `${gg} – felirat`, group: g, x: cx0 + cw / 2, y: ry + u(60), outline: ol(2, '#000000', 1), maxWidth: cw - u(4), minScale: 0.5 }),
+          box(`${p}.c${j}.box`, `${gg} – doboz`, g, cx0 + u(2), ry + u(66), cw - u(4), u(42)),
+          txt(32, { id: `${p}.c${j}.value`, label: `${gg} – érték`, group: g, x: cx0 + cw / 2, y: ry + u(66) + u(42) / 2 + 0.3715 * u(32), runs: true, color: C.digit, maxWidth: cw - u(10), minScale: 0.45 }),
+        );
+        cx0 += cw;
+      });
+    }
+  }
+  const t = base(id, league, 'liveleaders', 'Élő három vezető (saját)', 'Élő három vezető', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
+  t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
+  t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
+  t.liveLeaders = { keys: cells.map(c => c.key), scale: S };
+  return t;
+}
+function liveLeaderEntry(id, league) {
+  LIVE_LEADER_BUILDERS[id] = keys => liveLeaderTpl(id, league, keys);
+  return LIVE_LEADER_BUILDERS[id](null);
+}
+
 function liveTeamEntry(id, league) {
   LIVE_TEAM_BUILDERS[id] = keys => liveTeamTpl(id, league, keys);
   return LIVE_TEAM_BUILDERS[id](LIVE_TEAM_DEFAULT);
@@ -833,6 +889,8 @@ export const TEMPLATES = [
   liveEntry('livestat-women', 'women'),
   liveTeamEntry('liveteam-men', 'men'),
   liveTeamEntry('liveteam-women', 'women'),
+  liveLeaderEntry('liveleaders-men', 'men'),
+  liveLeaderEntry('liveleaders-women', 'women'),
   extraTpl('extra-men', 'men'),
   extraTpl('extra-women', 'women'),
   nextmatch('nextmatch-men', 'men'),
@@ -865,6 +923,7 @@ export const TEMPLATE_TYPES = {
   extra: 'Extra (MKOSZ)',
   livestat: 'Élő statisztika (játékos)',
   liveteam: 'Élő statisztika (csapat-összevetés)',
+  liveleaders: 'Élő statisztika (három vezető)',
   coach: 'Vezetőedző nyilatkozata',
 };
 

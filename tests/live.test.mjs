@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { ROOT } from './helpers.mjs';
 import path from 'node:path';
-import { decodeFeed, parseGame, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
+import { decodeFeed, parseGame, topByEff, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
-import { bindLiveStat, bindLiveTeam, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
-import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES, LIVE_TEAM_BUILDERS, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, liveTeamKeys, liveTeamSize } from '../graphics/js/templates.js';
+import { bindLiveStat, bindLiveTeam, bindLiveLeaders, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
+import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, liveLeaderSize, liveLeaderCells, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, liveTeamKeys, liveTeamSize } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
 const raw = await readFile(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
@@ -228,4 +228,42 @@ test('live team comparison graphic: about 2x bigger, columns / scores close to t
     }
   }
   assert.ok(TEMPLATE_TYPES.liveteam);
+});
+
+test('live three leaders: the three best VAL of each team are chosen, VAL is only the rule (not shown unless ticked), best green / worst red per stat', async () => {
+  const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563'), ids = new Set(['B203034']);
+  for (const side of ['home', 'away']) {
+    const top = topByEff(g, side, 3), all = playedPlayers(g, side);
+    assert.equal(top.length, 3);
+    assert.deepEqual(top.map(p => p.eff), all.map(p => p.eff).sort((a, b) => b - a).slice(0, 3), `${side}: the three best VAL, best first`);
+  }
+  const v = bindLiveLeaders(store, 'women', g, { fetchedAt: '22:41:03' }, ids);
+  const labels = [0, 1, 2].map(j => v[`h0.c${j}.label`].text);
+  assert.deepEqual(labels, ['PTS', 'REB', 'AST'], 'default: points, rebounds, assists – VAL is not shown');
+  assert.ok(!Object.values(v).some(x => x && x.text === 'EFF'), 'no VAL on the graphic unless ticked');
+  assert.equal(v['h0.name'].text, `${topByEff(g, 'home', 1)[0].name}`.length ? v['h0.name'].text : '', 'names come from the roster binder');
+  assert.equal(v.scoreH.text, '90'); assert.equal(v.time.text, 'VÉGE');
+  const six = [...topByEff(g, 'home', 3), ...topByEff(g, 'away', 3)], pts = six.map(p => p.stat.pts), max = Math.max(...pts), min = Math.min(...pts);
+  const fills = ['h0', 'h1', 'h2', 'a0', 'a1', 'a2'].map(id => v[`${id}.c0.box`].fill);
+  six.forEach((p, i) => assert.equal(fills[i], p.stat.pts === max ? LIVE_TEAM_COLORS.better : p.stat.pts === min ? LIVE_TEAM_COLORS.worse : LIVE_TEAM_COLORS.box, `PTS box of ${p.name}`));
+  const sh = bindLiveLeaders(store, 'women', g, { leaderStats: ['fg3', 'eff'] }, ids);
+  assert.deepEqual([sh['h0.c0.label'].text, sh['h0.c1.label'].text], ['EFF', '3P'], 'VAL can be ticked: one stat like the others, in the usual order');
+  assert.match(sh['h0.c1.value'].text, /^\d+\/\d+ \(\d+%\)$/); assert.equal(sh['h0.c1.value'].runs[1].size, Math.round(32 * liveLeaderSize().scale * 2 / 3 * 100) / 100);
+  const none = bindLiveLeaders(store, 'women', null, {}, ids);
+  assert.equal(Object.keys(none).length, 1, 'no game: only the flagged header value');
+});
+
+test('live three leaders graphic: top-left, inside the picture, clear of the score bug zones, the same size for every ticked stat count', () => {
+  for (const id of ['liveleaders-men', 'liveleaders-women']) {
+    assert.equal(templateById(id).type, 'liveleaders');
+    for (const keys of [['pts'], ['pts', 'reb', 'ast'], LIVE_STATS.map(x => x.key)]) {
+      const t = LIVE_LEADER_BUILDERS[id](keys), [cx, cy, w, h] = t.elements.find(e => e.id === 'panel').box, x0 = cx - w / 2, y0 = cy - h / 2, S = liveLeaderSize();
+      assert.deepEqual([w, h], [S.w, S.h]); assert.deepEqual([x0, y0], [60, 2], 'same place as Csapatok összevetése');
+      assert.ok(x0 + w <= 1920 && y0 + h <= 1078);
+      for (const size of ['large', 'small']) { const [zx0, zy0] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `clear of the ${size} score bug zone`); }
+      assert.equal(t.elements.filter(e => /^[ha]\d\.c\d+\.value$/.test(e.id)).length, 6 * liveLeaderCells(keys).length);
+      for (const e of t.elements) { const [bx, by, bw, bh] = e.type === 'image' || e.type === 'framed' ? e.box : [e.x, e.y, 0, 0]; assert.ok(bx >= x0 - 1 && bx <= x0 + w + 1 && by >= y0 - 1 && by <= y0 + h + 1, `${e.id} inside the panel`); }
+    }
+  }
+  assert.ok(TEMPLATE_TYPES.liveleaders);
 });

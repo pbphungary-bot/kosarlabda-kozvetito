@@ -143,5 +143,10 @@ export function playedPlayers(game, side) {
     .sort((a, b) => b.stat.pts - a.stat.pts || b.reb - a.reb || a.name.localeCompare(b.name, 'hu'));
 }
 
+/** The n players of one side with the best VAL (efficiency) among those who played: this is only the RULE that picks them, VAL is not the headline of the graphic (owner 2026-11-25). Ties: more points, then name. */
+export function topByEff(game, side, n = 3) {
+  return playedPlayers(game, side).slice().sort((a, b) => b.eff - a.eff || b.stat.pts - a.stat.pts || a.name.localeCompare(b.name, 'hu')).slice(0, n);
+}
+
 /** "23:25" from seconds. */
 export const mmss = sec => (Number.isFinite(sec) ? `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, '0')}` : '');
