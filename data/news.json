@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-25T08:35:36.841368+00:00",
+  "checked_at": "2026-11-25T09:53:01.997878+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -311,8 +311,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 2,
-      "repaired": 8,
+      "added": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -465,7 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
         "sitemap:TimeoutError",
         "sitemap:0"
       ],
@@ -13171,6 +13170,15 @@
       "teams": [
         "women|TFSE"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Korai kapunyitás, nyereményjátékok a Szlovénia elleni vb-selejtező előtt",
+      "summary": "Korai kapunyitás, nyereményjátékok a Szlovénia elleni vb-selejtező előtt",
+      "url": "https://hunbasket.hu/hir/77755/korai-kapunyitas-nyeremenyjatekok-a-szlovenia-elleni-vb-selejtezo-elott/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
     },
     {
       "source": "Klub: Egis Körmend",
