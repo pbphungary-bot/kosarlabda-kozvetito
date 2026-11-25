@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-25T19:36:38.880023+00:00",
+  "checked_at": "2026-11-25T20:31:20.579987+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 35,
-      "added": 0,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -561,6 +561,30 @@
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Győzelmével továbbjutott a csoportjából a Sopron Basket az Európa Kupában",
+      "summary": "EuroCup Women 2026/27 - 5. forduló Sopron, Novomatic Aréna PERLIC, Nikola (CRO) SCHOLZOVA, Michaela (CZE) ŞENTÜRK BAYRAKTAR, Özge (TUR), KUZMIAK, Miroslav (SVK)",
+      "url": "https://wbasket.hu/gyozelmevel-tovabbjutott-a-csoportjabol-a-sopron-basket-az-europa-kupaban/",
+      "published_at": "2026.11.25. 20:54",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Meleg Gergő: Nagyon kell nekünk egy idegenbeli siker, hiszem, hogy ezt Svédországban meg tudjuk szerezni",
+      "summary": "Az Alba Fehérvár válogatott magasemberével beszélgettünk.",
+      "url": "https://bball1.hu/meleg-gergo-nagyon-kell-nekunk-egy-idegenbeli-siker-hiszem-hogy-ezt-svedorszagban-meg-tudjuk-szerezni/",
+      "published_at": "2026-11-25T20:43:52+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Alba Fehérvár"
+      ],
+      "league": "men"
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Női kosár Európa-kupa: odahaza nyert a Diósgyőr és a Sopron is",
