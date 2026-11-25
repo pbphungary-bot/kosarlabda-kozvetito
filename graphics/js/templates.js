@@ -701,8 +701,8 @@ function liveTeamTpl(id, league, keysIn) {
 // ───────────────────────── Élő három vezető (live three leaders) ─────────────────────────
 // The three best-VAL players of each team (VAL only PICKS them; it is just one more tickable stat, never the headline: owner 2026-11-25), same header and court frame as the team comparison.
 // Per player: official photo, name, and the ticked stats as white boxes with the label above (best value of the six players green, worst red).
-const LL = { cw: 420, gap: 24, pad: 20, head: 132, row: 118, photo: 92, content: 306, logo: 80 }; // header: the title in the middle, each club logo up there centred over the stat boxes of its own team's column (owner 2026-11-25)
-export const LIVE_LEADER_TITLE = 'TOP TELJESÍTMÉNYEK'; // fixed title (owner 2026-11-25), not the game time
+const LL = { cw: 420, gap: 24, pad: 20, head: 143, row: 118, photo: 92, content: 306, logoPx: 150, logoGap: 40, titleSize: 54 }; // header: the title in the middle, each club logo up there centred over the stat boxes of its own team's column (owner 2026-11-25)
+export const LIVE_LEADER_TITLE = ['TOP', 'TELJESÍTMÉNYEK']; // fixed two-line title (owner 2026-11-25), not the game time
 const llScale = () => Math.min(2, 1074 / (LL.head + 3 * LL.row + LL.pad), 1140 / (LL.pad * 2 + LL.cw * 2 + LL.gap));
 export const liveLeaderSize = () => { const S = llScale(); return { w: Math.round((LL.pad * 2 + LL.cw * 2 + LL.gap) * S), h: Math.round((LL.head + 3 * LL.row + LL.pad) * S), scale: S }; };
 export const LIVE_LEADER_BUILDERS = {}; // template id → (keys) => template
@@ -712,12 +712,16 @@ function liveLeaderTpl(id, league, keysIn) {
   const cells = liveLeaderCells(keysIn), { w, h, scale: S } = liveLeaderSize(), x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882, u = v => v * S;
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], texture: 'assets/court/court.png', stroke: BORDER[league], sw: u(2), r: u(6), opacity: op }); // PREVIEW: the court in every little stat box
-  const midX = x + w / 2, statMid = side => x + u(LL.pad + side * (LL.cw + LL.gap) + LL.photo + 10 + LL.content / 2); // the middle of the stat boxes of a column
+  const midX = x + w / 2, yc = y + u(LL.head) / 2, tPx = u(LL.titleSize), pitch = 0.95 * tPx;
+  // the two-line title is centred; the logos (150 px) sit at a fixed distance (LL.logoGap px) from the title's left / right edge (width estimated from the longer line, TELJESÍTMÉNYEK)
+  const titleW = Math.round(tPx * LIVE_LEADER_TITLE[1].length * 0.37), lgPx = LL.logoPx, logoDx = titleW / 2 + LL.logoGap + lgPx / 2;
+  const title = (n, extra) => ({ type: 'text', group: 'Fejléc', align: 'center', size: tPx, tracking: 10, color: C.text, outline: ol(5, '#000000', 1), opacity: op, adjust: true, maxWidth: Math.round(titleW * 1.05), minScale: 0.5, x: midX, ...extra });
   const els = [
     panelFrame(league, x, y, w, h),
-    { id: 'title', type: 'text', label: 'Cím', group: 'Fejléc', x: midX, y: y + u(80), align: 'center', size: u(42), tracking: 10, color: C.text, outline: ol(4, '#000000', 1), opacity: op, adjust: true, maxWidth: u(320), minScale: 0.5 }, // fixed title; no big scores and no game time here: the broadcast's score bug shows them (owner 2026-11-25)
-    { id: 'logoH', type: 'image', label: 'Hazai logó', group: 'Fejléc', box: [statMid(0), y + u(64), u(LL.logo), u(LL.logo)], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
-    { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [statMid(1), y + u(64), u(LL.logo), u(LL.logo)], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
+    title(1, { id: 'title1', label: 'Cím – 1. sor', y: yc - pitch / 2 + 0.3715 * tPx }), // fixed title; no big scores and no game time here: the broadcast's score bug shows them (owner 2026-11-25)
+    title(2, { id: 'title2', label: 'Cím – 2. sor', y: yc + pitch / 2 + 0.3715 * tPx }),
+    { id: 'logoH', type: 'image', label: 'Hazai logó', group: 'Fejléc', box: [midX - logoDx, yc, lgPx, lgPx], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
+    { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [midX + logoDx, yc, lgPx, lgPx], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
   ];
   for (const [side, tag, col] of [['home', 'h', 0], ['away', 'a', 1]]) {
     const x0 = x + u(LL.pad) + col * u(LL.cw + LL.gap);

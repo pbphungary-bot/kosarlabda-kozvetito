@@ -708,7 +708,7 @@ export const leaderColors = sel => ({ ...Object.fromEntries(Object.entries(LEADE
 export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set()) {
   const v = liveHeaderValues(store, lg, game, sel), CL = leaderColors(sel.leaderColors);
   delete v.scoreH; delete v.scoreA; delete v.clock; delete v.time; // no big scores and no game time: the broadcast's score bug shows them; the title is fixed (owner 2026-11-25)
-  v.title = { text: LIVE_LEADER_TITLE, source: 'Fix cím (átírható)' };
+  v.title1 = { text: LIVE_LEADER_TITLE[0], source: 'Fix cím (átírható)' }; v.title2 = { text: LIVE_LEADER_TITLE[1], source: 'Fix cím (átírható)' };
   if (!game) return v;
   const src = LIVE_SRC + (sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : ''), cells = liveLeaderCells(sel.leaderStats), S = liveLeaderSize().scale, big = 32 * S, small = Math.round(big * 2 / 3 * 100) / 100;
   const sides = { home: topByEff(game, 'home', 3), away: topByEff(game, 'away', 3) }, tids = {};

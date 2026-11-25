@@ -242,7 +242,7 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   assert.deepEqual(labels, ['PTS', 'REB', 'AST'], 'default: points, rebounds, assists – VAL is not shown');
   assert.ok(!Object.values(v).some(x => x && x.text === 'EFF'), 'no VAL on the graphic unless ticked');
   assert.equal(v['h0.name'].text, `${topByEff(g, 'home', 1)[0].name}`.length ? v['h0.name'].text : '', 'names come from the roster binder');
-  assert.equal(v.title.text, 'TOP TELJESÍTMÉNYEK', 'fixed title instead of the game time'); assert.equal(v.time, undefined); assert.equal(v.clock, undefined);
+  assert.deepEqual([v.title1.text, v.title2.text], ['TOP', 'TELJESÍTMÉNYEK'], 'fixed two-line title instead of the game time'); assert.equal(v.time, undefined); assert.equal(v.clock, undefined);
   assert.ok(v.logoH.src && v.logoA.src, 'both logos stay');
   assert.ok([0, 1, 2].every(j => v[`h0.c${j}.label`].color === '#ffffff') && v['h0.name'].color === '#ffffff' && v['h0.c0.value'].color === '#ffffff', 'default colours: white');
   const col = bindLiveLeaders(store, 'women', g, { leaderColors: { name: '#ff0000', label: '0f0', value: 'nonsense' } }, ids);
@@ -255,7 +255,7 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   assert.deepEqual([sh['h0.c0.label'].text, sh['h0.c1.label'].text], ['EFF', '3P'], 'VAL can be ticked: one stat like the others, in the usual order');
   assert.match(sh['h0.c1.value'].text, /^\d+\/\d+ \(\d+%\)$/); assert.equal(sh['h0.c1.value'].runs[1].size, Math.round(32 * liveLeaderSize().scale * 2 / 3 * 100) / 100);
   const none = bindLiveLeaders(store, 'women', null, {}, ids);
-  assert.deepEqual(Object.keys(none), ['title'], 'no game: only the fixed title (the studio says so in a notice)');
+  assert.deepEqual(Object.keys(none), ['title1', 'title2'], 'no game: only the fixed title (the studio says so in a notice)');
 });
 
 test('live three leaders graphic: top-left, inside the picture, clear of the score bug zones, the same size for every ticked stat count', () => {
@@ -267,12 +267,13 @@ test('live three leaders graphic: top-left, inside the picture, clear of the sco
       assert.ok(x0 + w <= 1920 && y0 + h <= 1078);
       for (const size of ['large', 'small']) { const [zx0, zy0] = BUG[size].zone; assert.ok(x0 + w <= zx0 || y0 + h <= zy0, `clear of the ${size} score bug zone`); }
       assert.equal(t.elements.filter(e => /^[ha]\d\.c\d+\.value$/.test(e.id)).length, 6 * liveLeaderCells(keys).length);
-      const el = i => t.elements.find(e => e.id === i), midX = x0 + w / 2, cellsH = ['h0.c0.box', `h0.c${liveLeaderCells(keys).length - 1}.box`].map(i => el(i).box), cellsA = ['a0.c0.box', `a0.c${liveLeaderCells(keys).length - 1}.box`].map(i => el(i).box);
-      const mid = ([l, r]) => (l[0] - l[2] / 2 + r[0] + r[2] / 2) / 2; // middle of the stat boxes of a column
-      assert.ok(Math.abs(el('logoH').box[0] - mid(cellsH)) < 1 && Math.abs(el('logoA').box[0] - mid(cellsA)) < 1, 'each logo centred over the stat boxes of its own team');
-      assert.ok(el('logoH').box[1] < el('h0.photo').box[1] && el('logoA').box[1] < el('a0.photo').box[1], 'logos in the header, above the players');
-      assert.ok(Math.abs(el('title').x - midX) < 1, 'title in the middle');
-      assert.equal(el('title').type, 'text');
+      const el = i => t.elements.find(e => e.id === i), midX = x0 + w / 2;
+      assert.deepEqual([el('logoH').box[2], el('logoH').box[3], el('logoA').box[2], el('logoA').box[3]], [150, 150, 150, 150], 'logos are 150 px');
+      const dH = midX - el('logoH').box[0], dA = el('logoA').box[0] - midX;
+      assert.ok(Math.abs(dH - dA) < 1 && dH > 150, 'logos mirrored around the middle, at a fixed distance from the title');
+      assert.ok(Math.abs(el('title1').x - midX) < 1 && Math.abs(el('title2').x - midX) < 1 && el('title1').y < el('title2').y, 'two centred title lines');
+      assert.ok(el('logoH').box[1] + 75 <= el('h0.photo').box[1] - el('h0.photo').box[3] / 2 + 12, 'logos in the header, above the players');
+      assert.equal(el('title1').type, 'text');
       for (const e of t.elements) { const [bx, by, bw, bh] = e.type === 'image' || e.type === 'framed' ? e.box : [e.x, e.y, 0, 0]; assert.ok(bx >= x0 - 1 && bx <= x0 + w + 1 && by >= y0 - 1 && by <= y0 + h + 1, `${e.id} inside the panel`); }
     }
   }

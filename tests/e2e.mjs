@@ -1360,7 +1360,7 @@ try {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     if (!(await page.isVisible('#livePaste'))) await page.click('details:has(#livePaste) > summary');
     await page.fill('#livePaste', feed); await page.click('#livePasteGo');
-    await until(1, () => window.__studio.current().values?.title?.text === 'TOP TELJESÍTMÉNYEK', null, { timeout: 15000 });
+    await until(1, () => window.__studio.current().values?.title2?.text === 'TELJESÍTMÉNYEK', null, { timeout: 15000 });
     const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
     assert.equal(await val('h0.name'), 'GÁLOS Hanna Andrea', 'the best VAL of the home team first');
     assert.deepEqual([await val('h0.c0.label'), await val('h0.c1.label'), await val('h0.c2.label')], ['PTS', 'REB', 'AST'], 'default stats, no VAL');
