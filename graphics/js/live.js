@@ -137,6 +137,21 @@ export function efficiency(s) {
   return s.pts + s.oreb + s.dreb + s.ast + s.stl + s.blk + s.fouled - missed - s.tov;
 }
 
+/** The feed writes ő / ű as a literal "?" (Enik?, Cs?sz): the letter never reaches us. `names` = {player number: name} from the mkosz.hu match page (tools/mkosz_names.py, relayed at /mkosz).
+ *  A name is replaced only when it is the same name with the ő / ű put back (same player number AND the same letters), so a wrong number can never rename anybody. Returns how many were repaired. */
+const maskLong = s => String(s ?? '').normalize('NFC').replace(/[őűŐŰ]/g, '?').replace(/\s+/g, ' ').trim().toLocaleLowerCase('hu');
+export function applyOfficialNames(game, names) {
+  let n = 0;
+  if (!game || !names) return n;
+  for (const p of game.players) {
+    const official = names[p.code];
+    if (official && p.name.includes('?') && maskLong(official) === maskLong(p.name)) { p.name = official; n++; }
+  }
+  return n;
+}
+/** True when a name of the game still has the "?" of a lost ő / ű (the page of mkosz.hu is only asked then). */
+export const needsOfficialNames = game => !!game && game.players.some(p => p.name.includes('?'));
+
 /** Players of one side that actually played (seconds on court > 0 or any counted action), best scorer first. */
 export function playedPlayers(game, side) {
   const acted = p => Object.values(p.stat).some(v => v > 0);

@@ -1545,6 +1545,21 @@ try {
     assert.ok((await opaque(pages[2]))[2] > 5000, 'the last good picture stays');
     await octx.close();
   });
+  await check('OBS overlay: ő / ű lost in the feed are taken from the mkosz.hu names (by player number)', async () => {
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whunu18_142813.partial.txt'), 'utf8');
+    const nctx = await hermetic(await browser.newContext({ viewport: { width: 1920, height: 1080 } }));
+    let asked = '';
+    await nctx.route('**/live?*', route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
+    await nctx.route('**/mkosz?*', route => { asked = route.request().url(); route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ names: { 201536: 'Halasy Enikő', 245564: 'Csősz Orsolya' } }) }); });
+    const np = await nctx.newPage();
+    await np.goto(`${URL}/graphics/overlay.html?game=whunu18_142813&g=livestat&player=201536&refresh=2`);
+    await np.waitForFunction(() => /–/.test(window.__overlay?.status() || ''), null, { timeout: 30000 });
+    await np.waitForFunction(() => window.__overlay.names && window.__overlay.names().Halasy, null, { timeout: 20000 });
+    assert.match(asked, /\/mkosz\?game=whunu18_142813$/, 'asks the server for the official names of this game');
+    assert.equal(await np.evaluate(() => window.__overlay.names().Halasy), 'Halasy Enikő');
+    await nctx.close();
+  });
+
   await check('OBS link maker builds a working overlay link', async () => {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     const lctx = await hermetic(await browser.newContext({ viewport: { width: 1400, height: 1000 } }));

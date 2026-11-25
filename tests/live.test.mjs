@@ -294,3 +294,21 @@ test('VAL equals the netcasting page (owner 2026-11-25: Forray 35, Mester 18 alt
   assert.equal(efficiency(line(11, 2, 3, 2, 2, 1, 2, 2, 3, 3, 2, 4, 0, 0, 4, 3)), 18, 'Halasy');
   assert.equal(efficiency(line(19, 3, 6, 1, 2, 10, 10, 1, 4, 6, 3, 3, 1, 0, 1, 8)), 35, 'Forray');
 });
+
+test('names with ő / ű: the feed writes "?", the mkosz.hu names are applied by player number and only when the letters fit', async () => {
+  const { applyOfficialNames, needsOfficialNames } = await import('../graphics/js/live.js');
+  const { readFile } = await import('node:fs/promises');
+  const feed = decodeFeed(await readFile(new URL('./fixtures/live/whunu18_142813.partial.txt', import.meta.url), 'utf8'));
+  const g = parseGame(feed, 'whunu18_142813'), by = n => g.players.find(p => p.name.startsWith(n));
+  assert.equal(by('Halasy').name, 'Halasy Enik?', 'the feed lost the ő'); assert.ok(needsOfficialNames(g));
+  // a wrong number or other letters never rename anybody
+  assert.equal(applyOfficialNames(g, { 999: 'Halasy Enikő', 201536: 'Halasy Enikű Mária' }), 0); assert.equal(by('Halasy').name, 'Halasy Enik?');
+  assert.equal(applyOfficialNames(g, { 201536: 'Halasy Enikő', 245564: 'Csősz Orsolya', 188120: 'Valaki Más' }), 2);
+  assert.equal(by('Halasy').name, 'Halasy Enikő'); assert.equal(by('Cs').name, 'Csősz Orsolya');
+  assert.equal(by('Forray').name.includes('?'), false, 'players without "?" are left as they are');
+  assert.equal(needsOfficialNames(g), false);
+  // the graphic writes the official spelling (roster-less junior player: the feed's / mkosz.hu spelling, surname in capitals)
+  const store = await loadStore();
+  const v = bindLiveStat(store, 'women', g, { side: 'home', player: by('Halasy').code, stats: ['pts'] }, new Set());
+  assert.equal(v.name.text, 'HALASY Enikő');
+});

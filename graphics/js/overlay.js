@@ -4,7 +4,7 @@
 import { loadDashboard } from './data.js';
 import { loadFonts, render, logoOutlines } from './engine.js';
 import { CLUBS, clubIdStrict } from './clubs.js';
-import { parseGame, decodeFeed, feedProblem } from './live.js';
+import { parseGame, decodeFeed, feedProblem, applyOfficialNames, needsOfficialNames } from './live.js';
 import { templateById, LIVE_BUILDERS, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, liveKeys, liveTeamKeys, liveCorner, bugSizeOf } from './templates.js';
 import { bindLiveStat, bindLiveTeam, bindLiveLeaders } from './binders.js';
 import { parseOverlay } from './overlay-params.js';
@@ -13,7 +13,7 @@ import { imageUrl } from './image-urls.js';
 const P = parseOverlay(location.search);
 const canvas = document.getElementById('c'), dbg = document.getElementById('dbg');
 const images = {};
-let store = null, outlines = {}, photoIds = new Set(), lastText = null, status = 'indul…';
+let store = null, outlines = {}, photoIds = new Set(), lastText = null, status = 'indul…', officialNames = null, namesTried = 0;
 const say = s => { status = s; if (P.debug) { dbg.style.display = 'block'; dbg.textContent = `${P.game || '—'} · ${P.graphic} · ${s}`; } };
 
 function loadImage(key, url) {
@@ -53,6 +53,8 @@ async function draw(text) {
   if (feedProblem(text) || !feed) throw new Error('a hírcsatorna válasza nem értelmezhető');
   const game = parseGame(feed, P.game);
   if (!game) throw new Error('a meccs nincs a hírcsatornában');
+  applyOfficialNames(game, officialNames); // ő / ű that the feed lost: the official spelling from mkosz.hu (by player number)
+  if (!officialNames && needsOfficialNames(game)) loadOfficialNames();
   const t = buildTemplate(game), auto = bind(game), values = {};
   for (const el of t.elements) {
     const x = { ...(auto[el.id] || (el.defaultText ? { text: el.defaultText } : {})) };
@@ -62,6 +64,18 @@ async function draw(text) {
   await ensureImages(t, values);
   render(canvas, t, values, { background: null, images, outlines, baseOpacity: null, safeZone: null });
   say(`${game.teams.home.short} ${game.score.home}–${game.score.away} ${game.teams.away.short}`);
+}
+
+/** The official spelling of the names (mkosz.hu match page, relayed by the server); asked only when the feed has a "?" in a name, at most once a minute until it works. */
+async function loadOfficialNames() {
+  if (officialNames || Date.now() - namesTried < 60000) return;
+  namesTried = Date.now();
+  try {
+    const r = await fetch(new URL(`../mkosz?game=${P.game}${P.token ? '&token=' + encodeURIComponent(P.token) : ''}`, location.href), { cache: 'no-store' });
+    if (!r.ok) throw new Error(`a kiszolgáló ${r.status}`);
+    officialNames = (await r.json()).names || {};
+    lastText = null; // draw again with the right letters
+  } catch (e) { console.warn('official names', e); }
 }
 
 async function tick() {
@@ -88,4 +102,4 @@ async function main() {
   setInterval(tick, P.refresh * 1000);
 }
 main();
-window.__overlay = { params: P, status: () => status };
+window.__overlay = { params: P, status: () => status, names: () => ({ Halasy: officialNames?.['201536'] }) }; // names(): test hook
