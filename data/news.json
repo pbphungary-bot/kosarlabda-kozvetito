@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T18:40:02.093441+00:00",
+  "checked_at": "2026-11-25T19:36:38.880023+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -561,6 +561,29 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár Európa-kupa: odahaza nyert a Diósgyőr és a Sopron is",
+      "summary": "Női kosár Európa-kupa: odahaza nyert a Diósgyőr és a Sopron is",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-europa-kupa-gyozott-a-diosgyor-es-a-sopron-is/",
+      "published_at": "2026-11-25T20:03:14+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "EK: DVTK HUNTHERM – ŽKK Brod na Savi 79-69",
+      "summary": "Boros triplája nyitotta a mérkőzést.",
+      "url": "http://dvtk.eu/37713-EK_DVTK_HUNTHERM_ZKK_Brod_na_Savi_79_69-cikk-kosarlabda/",
+      "published_at": "2026-11-25T19:53:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "BB1.hu",
       "title": "Extrém helyzetről beszélt a svéd kapitány: Pantzar biztosan hiányzik, Klintman játéka is erősen kérdéses",
