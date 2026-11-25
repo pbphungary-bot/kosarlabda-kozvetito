@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T01:43:34.662230+00:00",
+  "checked_at": "2026-11-25T02:50:48.406571+00:00",
   "statistics": {
     "total": 1269,
     "fresh": 584,
@@ -480,8 +480,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -564,18 +562,24 @@
       "source": "Klub: TFSE",
       "status": "partial",
       "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 26,
-      "attempted": 26,
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
       "added": 0,
-      "repaired": 25,
-      "article_errors": 1,
+      "repaired": 2,
+      "article_errors": 6,
       "listing_errors": [
-        "article https://tfse.hu/oriasi-forditas-szegeden/: HTTPError: HTTP Error 503: Service Unavailable"
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/szunetig-vezettunk-a-masodik-felidoben-forditott-a-nagykoros/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/a-harmadik-negyedben-kerult-donto-elonybe-a-budafok/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: HTTPError: HTTP Error 508: Loop Detected"
       ],
-      "usable_articles": 25,
+      "usable_articles": 2,
       "source_coverage": true
     }
   ],
