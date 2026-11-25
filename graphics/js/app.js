@@ -8,7 +8,7 @@ import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, liveChoice, bindCoach, coachOpponent
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, LEADER_SHADOW_DEFAULT, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
 import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem } from './live.js';
 
@@ -44,7 +44,18 @@ const measureCanvas = document.createElement('canvas').getContext('2d');
 let lastReport = null;
 let outlines = {};
 
-const saveState = () => lsSet(LS.state, { league: state.league, template: state.template, sel: state.sel, overrides: state.overrides, zoom: state.zoom, baseOpacity: state.baseOpacity });
+// The settings of the live graphics are remembered and shared by the men's and the women's tab (what you pick once stays: stats, colours, outline, shadow, preset, corner); the game itself (code, team, player, auto refresh) stays per tab.
+const LIVE_SHARED = ['stats', 'variant', 'corner', 'teamStats', 'leaderStats', 'leaderColors', 'leaderOutlineOn', 'leaderShadowOn', 'leaderShadowSize'];
+function syncLiveSettings() {
+  const from = state.sel[state.league]?.live;
+  if (!from) return;
+  for (const lg of ['men', 'women']) {
+    if (lg === state.league) continue;
+    const to = ((state.sel[lg] ||= {}).live ||= {});
+    for (const k of LIVE_SHARED) if (from[k] !== undefined) to[k] = JSON.parse(JSON.stringify(from[k]));
+  }
+}
+const saveState = () => { syncLiveSettings(); lsSet(LS.state, { league: state.league, template: state.template, sel: state.sel, overrides: state.overrides, zoom: state.zoom, baseOpacity: state.baseOpacity }); };
 const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2600); };
 
 let photoIds = new Set(); // ids of the downloaded player photos (players/index.json); a missing photo shows the placeholder
@@ -297,7 +308,7 @@ function livePanelHtml(s) {
       <label>Hely a képen<select id="liveCorner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${liveCorner(L.corner) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>
     <div id="liveStats"><small class="hint">Pipáld be, mi látsszon (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${tickHtml}</div>`;
   const tt = liveTeamKeys(L.teamStats), teamTicks = `<div id="liveTeamStats"><small class="hint">Pipáld be, mely statisztikák látsszanak (a dobásoknál: betalált/kísérlet és (százalék)):</small><br>${LIVE_TEAM_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveTeamStat" value="${x.key}" ${tt.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}</div>`;
-  const lk = liveKeys(L.leaderStats), lc = leaderColors(L.leaderColors), leaderTicks = `<div id="liveLeaderStats"><small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa jelenik meg (a VAL csak a kiválasztás szabálya). Pipáld be, mely statisztikák látsszanak:</small><br>${LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveLeaderStat" value="${x.key}" ${lk.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}<br><small class="hint">Színek (hex-kód, pl. #ff8800; mindenhol egyformán, nem játékosonként):</small><div class="row2" style="flex-wrap:wrap">${[['name', 'Nevek'], ['label', 'Statisztika-nevek (PTS, REB…)'], ['value', 'Számok']].map(([k, lab]) => `<label>${lab}<span class="import-row"><input type="color" class="liveLeaderPick" data-k="${k}" value="${lc[k]}" style="width:38px;padding:0"> <input type="text" class="liveLeaderHex" data-k="${k}" value="${lc[k]}" maxlength="7" placeholder="#ffffff" style="flex:1;min-width:0"></span></label>`).join('')}</div><button type="button" id="liveLeaderColorReset" class="ghost">Színek visszaállítása (fehér)</button></div>`;
+  const lk = liveKeys(L.leaderStats), lc = leaderColors(L.leaderColors), leaderTicks = `<div id="liveLeaderStats"><small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa jelenik meg (a VAL csak a kiválasztás szabálya). Pipáld be, mely statisztikák látsszanak:</small><br>${LIVE_STATS.map(x => `<label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-right:10px"><input type="checkbox" class="liveLeaderStat" value="${x.key}" ${lk.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('')}<br><label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="liveLeaderOutlineOn" ${L.leaderOutlineOn === false ? '' : 'checked'}> Körvonal a játékosfotók mögött (3 px)</label> <label style="flex-direction:row;display:inline-flex;gap:4px;align-items:center;margin-left:10px"><input type="checkbox" id="liveLeaderShadowOn" ${L.leaderShadowOn === false ? '' : 'checked'}> Árnyék</label> <label style="flex-direction:row;display:inline-flex;gap:6px;align-items:center;margin-left:10px">Árnyék mérete <input type="range" id="liveLeaderShadowSize" min="0" max="40" step="1" value="${L.leaderShadowSize ?? LEADER_SHADOW_DEFAULT}" style="width:110px"><output id="liveLeaderShadowSizeOut">${L.leaderShadowSize ?? LEADER_SHADOW_DEFAULT}</output> px</label><br><small class="hint">Színek (hex-kód, pl. #ff8800; mindenhol egyformán, nem játékosonként):</small><div class="row2" style="flex-wrap:wrap">${[['name', 'Nevek'], ['label', 'Statisztika-nevek (PTS, REB…)'], ['value', 'Számok'], ['outline', 'Fotók körvonala (3 px)']].map(([k, lab]) => `<label>${lab}<span class="import-row"><input type="color" class="liveLeaderPick" data-k="${k}" value="${lc[k]}" style="width:38px;padding:0"> <input type="text" class="liveLeaderHex" data-k="${k}" value="${lc[k]}" maxlength="7" placeholder="#ffffff" style="flex:1;min-width:0"></span></label>`).join('')}</div><button type="button" id="liveLeaderColorReset" class="ghost">Színek visszaállítása (fehér)</button></div>`;
   return `<label>Élő meccs (netcasting link vagy kód)<span class="import-row"><input type="text" id="liveCode" style="flex:1;min-width:0" placeholder="https://netcasting4.webpont.com/?whun_135563" value="${esc(L.code || '')}"> <button type="button" id="liveLoad">Betöltés</button></span></label>
     <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="liveAuto" ${L.auto ? 'checked' : ''}> Automatikus frissítés 5 másodpercenként</label>
     <small id="liveInfo" class="hint">${liveInfoHtml()}</small>
@@ -349,6 +360,9 @@ function wireLivePanel(s) {
       el.oninput = () => { const h = normHex(el.value); el.style.outline = h || !el.value ? '' : '2px solid #c00'; if (h) { const pk = document.querySelector(`.liveLeaderPick[data-k="${el.dataset.k}"]`); if (pk) pk.value = h; setColor(el.dataset.k, h); } };
       el.onchange = () => { const h = normHex(el.value); el.value = h || leaderColors(L().leaderColors)[el.dataset.k]; el.style.outline = ''; };
     });
+    const ol = $('liveLeaderOutlineOn'); if (ol) ol.onchange = () => { L().leaderOutlineOn = ol.checked; update(true); };
+    const sd = $('liveLeaderShadowOn'); if (sd) sd.onchange = () => { L().leaderShadowOn = sd.checked; update(true); };
+    const ss = $('liveLeaderShadowSize'); if (ss) ss.oninput = () => { L().leaderShadowSize = Number(ss.value); $('liveLeaderShadowSizeOut').textContent = ss.value; update(true); };
     const rs = $('liveLeaderColorReset'); if (rs) rs.onclick = () => { L().leaderColors = {}; renderSelection(); update(true); };
     document.querySelectorAll('.liveLeaderStat').forEach(cb => { cb.onchange = () => { L().leaderStats = [...document.querySelectorAll('.liveLeaderStat:checked')].map(x => x.value); if (!L().leaderStats.length) L().leaderStats = liveKeys('basic'); resetMatchOverrides(); renderSelection(); update(true); }; });
     document.querySelectorAll('.liveTeamStat').forEach(cb => { cb.onchange = () => { L().teamStats = [...document.querySelectorAll('.liveTeamStat:checked')].map(x => x.value); if (!L().teamStats.length) L().teamStats = liveTeamKeys(null); resetMatchOverrides(); renderSelection(); update(true); }; });

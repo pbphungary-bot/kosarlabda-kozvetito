@@ -702,8 +702,11 @@ export function normHex(s) {
   const h = m[1].length === 3 ? m[1].split('').map(c => c + c).join('') : m[1];
   return '#' + h.toLowerCase();
 }
-export const LEADER_COLOR_DEFAULTS = { name: '#ffffff', label: '#ffffff', value: '#ffffff' };
-/** The three colours of the three leaders graphic (names, stat categories, numbers): the same for every player; a missing or wrong hex falls back to white. */
+export const LEADER_SHADOW_DEFAULT = 12; // blur in px; the offset follows it (a quarter right, a third down)
+/** Soft shadow behind the player photos with an adjustable size (owner 2026-11-25); 0 = no shadow. */
+export const leaderShadow = size => (size > 0 ? { color: 'rgba(0,0,0,0.65)', blur: size, dx: Math.round(size * 0.25), dy: Math.round(size * 0.33) } : null);
+export const LEADER_COLOR_DEFAULTS = { name: '#ffffff', label: '#ffffff', value: '#ffffff', outline: '#ffffff' }; // outline = the 3 px line around the player photos
+/** The colours of the three leaders graphic (names, stat categories, numbers, photo outline): the same for every player; a missing or wrong hex falls back to white. */
 export const leaderColors = sel => ({ ...Object.fromEntries(Object.entries(LEADER_COLOR_DEFAULTS).map(([k, d]) => [k, normHex(sel?.[k]) || d])) });
 export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set()) {
   const v = liveHeaderValues(store, lg, game, sel), CL = leaderColors(sel.leaderColors);
@@ -727,7 +730,7 @@ export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set())
     const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
     if (!p) { v[`${id}.name`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.photo`] = { src: '', source: '' }; continue; }
     v[`${id}.name`] = { ...liveNameField(store, lg, tids[side], p), color: CL.name };
-    v[`${id}.photo`] = photoIds.has(p.code) ? { src: `photo/${p.code}`, source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
+    v[`${id}.photo`] = photoIds.has(p.code) ? { src: `photo/${p.code}`, outline: sel.leaderOutlineOn === false ? null : { size: 3, color: CL.outline }, shadow: sel.leaderShadowOn === false ? null : leaderShadow(Number.isFinite(Number(sel.leaderShadowSize)) && sel.leaderShadowSize !== '' && sel.leaderShadowSize != null ? Math.min(40, Math.max(0, Number(sel.leaderShadowSize))) : LEADER_SHADOW_DEFAULT), source: 'Hunbasket fotó (a keretgrafikáéval azonos)' } : { src: '', source: 'Ehhez a játékoshoz nincs letöltött hivatalos fotó' };
   }
   return v;
 }

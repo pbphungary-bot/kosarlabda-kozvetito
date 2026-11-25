@@ -5,7 +5,7 @@ import { ROOT } from './helpers.mjs';
 import path from 'node:path';
 import { decodeFeed, parseGame, topByEff, gameCode, gameClock, playedPlayers, efficiency, mmss, feedUrl, feedProblem } from '../graphics/js/live.js';
 import { loadStore } from './helpers.mjs';
-import { bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
+import { bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, leaderShadow, livePeriodLabel, liveTimeLabel, liveChoice } from '../graphics/js/binders.js';
 import { LIVE_BUILDERS, LIVE_VARIANTS, LIVE_CORNERS, LIVE_COLORS, BUG, liveVariant, liveCorner, liveWidth, liveDims, liveKeys, LIVE_STATS, templateById, TEMPLATE_TYPES, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, liveLeaderSize, liveLeaderCells, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, liveTeamKeys, liveTeamSize } from '../graphics/js/templates.js';
 
 // A finished game (ETO Basket – VBW CEKK Cegléd, women, 2026-11-22, final 90–48) saved from the public netcasting feed.
@@ -247,8 +247,15 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   assert.ok([0, 1, 2].every(j => v[`h0.c${j}.label`].color === '#ffffff') && v['h0.name'].color === '#ffffff' && v['h0.c0.value'].color === '#ffffff', 'default colours: white');
   const col = bindLiveLeaders(store, 'women', g, { leaderColors: { name: '#ff0000', label: '0f0', value: 'nonsense' } }, ids);
   for (const id of ['h0', 'h2', 'a1']) { assert.equal(col[`${id}.name`].color, '#ff0000', 'names red for every player'); assert.equal(col[`${id}.c0.label`].color, '#00ff00', 'stat categories green (short hex)'); assert.equal(col[`${id}.c1.value`].color, '#ffffff', 'a wrong hex falls back to white'); }
+  assert.deepEqual(v['h0.photo'].outline, { size: 3, color: '#ffffff' }, 'photos get a 3 px outline, white by default');
+  assert.deepEqual(bindLiveLeaders(store, 'women', g, { leaderColors: { outline: '#ffcc00' } }, ids)['h0.photo'].outline, { size: 3, color: '#ffcc00' }, 'outline colour by hex');
+  assert.equal(bindLiveLeaders(store, 'women', g, { leaderOutlineOn: false }, ids)['h0.photo'].outline, null, 'outline can be switched off');
+  assert.equal(v['h0.photo'].shadow.blur, 12, 'a soft shadow behind the photos by default');
+  assert.deepEqual(bindLiveLeaders(store, 'women', g, { leaderShadowSize: 30 }, ids)['h0.photo'].shadow, { color: 'rgba(0,0,0,0.65)', blur: 30, dx: 8, dy: 10 }, 'adjustable shadow size');
+  assert.equal(bindLiveLeaders(store, 'women', g, { leaderShadowSize: 0 }, ids)['h0.photo'].shadow, null, 'size 0 = no shadow'); assert.equal(bindLiveLeaders(store, 'women', g, { leaderShadowSize: 999 }, ids)['h0.photo'].shadow.blur, 40, 'capped at 40'); assert.equal(leaderShadow(12).dy, 4); assert.equal(bindLiveLeaders(store, 'women', g, { leaderShadowOn: false }, ids)['h0.photo'].shadow, null, 'shadow can be switched off');
+  assert.equal(v.logoH.outline, undefined, 'the logos keep their own outline logic');
   assert.equal(normHex('FF8800'), '#ff8800'); assert.equal(normHex('#f80'), '#ff8800'); assert.equal(normHex('red'), null); assert.equal(normHex(''), null);
-  assert.deepEqual(leaderColors({ name: '#123456' }), { name: '#123456', label: '#ffffff', value: '#ffffff' });
+  assert.deepEqual(leaderColors({ name: '#123456' }), { name: '#123456', label: '#ffffff', value: '#ffffff', outline: '#ffffff' });
   for (const id of ['h0', 'h1', 'h2', 'a0', 'a1', 'a2']) for (const j of [0, 1, 2]) assert.equal(v[`${id}.c${j}.box`], undefined, 'plain boxes: no per-value colouring (the white box is the template default)');
   assert.equal(v.scoreH, undefined); assert.equal(v.scoreA, undefined, 'no big scores: the broadcast score bug shows them');
   const sh = bindLiveLeaders(store, 'women', g, { leaderStats: ['fg3', 'eff'] }, ids);

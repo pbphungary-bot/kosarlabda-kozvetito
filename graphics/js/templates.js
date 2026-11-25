@@ -729,7 +729,7 @@ function liveLeaderTpl(id, league, keysIn) {
       const ry = y + u(LL.head) + i * u(LL.row), g = `${side === 'home' ? 'Hazai' : 'Vendég'} ${i + 1}. játékos`, p = `${tag}${i}`;
       const cl = x0 + u(LL.photo + 10);
       els.push(
-        { id: `${p}.photo`, type: 'image', label: `${g} – fotó`, group: g, box: [x0 + u(LL.photo) / 2, ry + u(LL.row) / 2, u(LL.photo), u(LL.row - 10)], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1 },
+        { id: `${p}.photo`, type: 'image', label: `${g} – fotó`, group: g, box: [x0 + u(LL.photo) / 2, ry + u(LL.row) / 2, u(LL.photo), u(LL.row - 10)], fit: 'contain', anchor: 'bottom', clipInner: true, opacity: 1, outlineAlphaMin: 90 },
         txt(34, { id: `${p}.name`, label: `${g} – név`, group: g, x: cl, y: ry + u(32), align: 'left', runs: true, outline: ol(3, '#000000', 1), maxWidth: u(LL.content), minScale: 0.5 }),
       );
       let cx0 = cl;

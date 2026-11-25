@@ -1366,11 +1366,28 @@ try {
     assert.deepEqual([await val('h0.c0.label'), await val('h0.c1.label'), await val('h0.c2.label')], ['PTS', 'REB', 'AST'], 'default stats, no VAL');
     assert.equal(await val('h0.c3.label'), undefined);
     assert.equal(await val('scoreH'), undefined, 'no big scores on this graphic'); assert.equal(await val('time'), undefined, 'no game time either');
+    await page.fill('.liveLeaderHex[data-k="outline"]', '#ffcc00');
+    await until(4, () => window.__studio.current().values?.['h0.photo']?.outline?.color === '#ffcc00' && window.__studio.current().values['h0.photo'].outline.size === 3, null, { timeout: 15000 }); // 3 px outline behind the photos, colour by hex
+    await page.uncheck('#liveLeaderOutlineOn');
+    await until(5, () => window.__studio.current().values?.['h0.photo']?.outline === null, null, { timeout: 15000 });
+    await page.check('#liveLeaderOutlineOn');
+    assert.equal(await val('h0.photo', 'shadow') !== null, true, 'shadow on by default');
+    await page.uncheck('#liveLeaderShadowOn'); await until(6, () => window.__studio.current().values?.['h0.photo']?.shadow === null, null, { timeout: 15000 }); await page.check('#liveLeaderShadowOn');
     await page.fill('.liveLeaderHex[data-k="name"]', '#ff0000'); await page.fill('.liveLeaderHex[data-k="label"]', '#00ff00'); await page.fill('.liveLeaderHex[data-k="value"]', '0000ff');
     await until(3, () => { const v = window.__studio.current().values; return v?.['h0.name']?.color === '#ff0000' && v?.['a2.name']?.color === '#ff0000' && v?.['h1.c0.label']?.color === '#00ff00' && v?.['a0.c2.value']?.color === '#0000ff'; }, null, { timeout: 15000 }); // one colour per category, the same for every player
     await page.check('.liveLeaderStat[value="eff"]');
     await until(2, () => window.__studio.current().values?.['h0.c3.label']?.text === 'EFF', null, { timeout: 15000 }); // VAL ticked: one more box, like any other stat
+    await page.evaluate(() => { const r = document.getElementById('liveLeaderShadowSize'); r.value = '30'; r.dispatchEvent(new Event('input', { bubbles: true })); }); // adjustable shadow size
+    await until(7, () => window.__studio.current().values?.['h0.photo']?.shadow?.blur === 30, null, { timeout: 15000 });
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);
+    // the live settings are remembered and shared by both tabs: the men's graphic shows the same colours / outline / shadow, and they survive a reload
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="liveleaders-men"]');
+    await page.waitForSelector('.liveLeaderHex[data-k="name"]');
+    assert.equal(await page.inputValue('.liveLeaderHex[data-k="name"]'), '#ff0000'); assert.equal(await page.inputValue('.liveLeaderHex[data-k="outline"]'), '#ffcc00'); assert.equal(await page.inputValue('#liveLeaderShadowSize'), '30');
+    await page.reload(); await page.waitForSelector('body[data-ready="1"]', { timeout: 30000 });
+    await page.waitForSelector('.liveLeaderHex[data-k="name"]', { timeout: 15000 });
+    assert.equal(await page.inputValue('.liveLeaderHex[data-k="value"]'), '#0000ff', 'remembered after a reload'); assert.equal(await page.inputValue('#liveLeaderShadowSize'), '30');
   });
 
   await check('score bug: graphics keep out of the zone (large / small / off), the setting is remembered, the zone guide follows', async () => {
