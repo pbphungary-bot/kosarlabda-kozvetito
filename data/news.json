@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T10:49:55.455457+00:00",
+  "checked_at": "2026-11-25T11:48:10.128794+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 36,
-      "added": 0,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -180,8 +180,8 @@
       "candidates": 16,
       "attempted": 16,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 15,
+      "added": 0,
+      "repaired": 16,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 16,
@@ -465,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -547,32 +545,44 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 29,
       "article_errors": 0,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: TimeoutError: The read operation timed out",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:TimeoutError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:0"
-      ]
+      "listing_errors": [],
+      "usable_articles": 29,
+      "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Válogatott szünet után folytatódik az Európa Kupa – Károlyi Andreával elemeztünk",
+      "summary": "Szerdán három hét szünet után újra pattog a labda az Európa Kupában.",
+      "url": "https://wbasket.hu/valogatott-szunet-utan-folytatodik-az-europa-kupa-karolyi-andreaval-elemeztunk/",
+      "published_at": "2026.11.25. 11:50",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Német riválist fogad az Európa Kupában a Sopron Basket",
+      "summary": "A válogatott szünet után szerdán teljes fordulót rendeznek a női kosárlabda Európa Kupában.",
+      "url": "https://wbasket.hu/nemet-rivalist-fogad-az-europa-kupaban-a-sopron-basket/",
+      "published_at": "2026.11.25. 11:44",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket"
+      ],
+      "league": "women"
+    },
     {
       "source": "Klub: Sopron KC",
       "title": "Legyél Te is dobozoló!",
