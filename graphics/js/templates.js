@@ -710,7 +710,7 @@ export const liveLeaderCells = keys => { const k = liveKeys(keys), wts = k.map(k
 function liveLeaderTpl(id, league, keysIn) {
   const cells = liveLeaderCells(keysIn), { w, h, scale: S } = liveLeaderSize(), x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882, u = v => v * S;
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
-  const box = (idv, label, group, bx, by, bw, bh) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(6), opacity: op });
+  const box = (idv, label, group, bx, by, bw, bh) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], texture: 'assets/court/court.png', stroke: BORDER[league], sw: u(2), r: u(6), opacity: op }); // PREVIEW: the court in every little stat box
   const els = [panelFrame(league, x, y, w, h), ...liveHeader(S, x, y, w, op, { scores: false })]; // no big scores here: the broadcast's own score bug shows them (owner 2026-11-25)
   for (const [side, tag, col] of [['home', 'h', 0], ['away', 'a', 1]]) {
     const x0 = x + u(LL.pad) + col * u(LL.cw + LL.gap);
@@ -727,7 +727,7 @@ function liveLeaderTpl(id, league, keysIn) {
         els.push(
           txt(20, { id: `${p}.c${j}.label`, label: `${gg} – felirat`, group: g, x: cx0 + cw / 2, y: ry + u(60), outline: ol(2, '#000000', 1), maxWidth: cw - u(4), minScale: 0.5 }),
           box(`${p}.c${j}.box`, `${gg} – doboz`, g, cx0 + u(2), ry + u(66), cw - u(4), u(42)),
-          txt(32, { id: `${p}.c${j}.value`, label: `${gg} – érték`, group: g, x: cx0 + cw / 2, y: ry + u(66) + u(42) / 2 + 0.3715 * u(32), runs: true, color: C.digit, maxWidth: cw - u(10), minScale: 0.45 }),
+          txt(32, { id: `${p}.c${j}.value`, label: `${gg} – érték`, group: g, x: cx0 + cw / 2, y: ry + u(66) + u(42) / 2 + 0.3715 * u(32), runs: true, color: C.text, outline: ol(3, '#000000', 1), maxWidth: cw - u(10), minScale: 0.45 }),
         );
         cx0 += cw;
       });

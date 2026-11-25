@@ -709,7 +709,7 @@ export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set())
       v[`${id}.c${j}.label`] = { text: p ? c.label : '', source: 'Fix felirat (átírható)' };
       if (!p) { v[`${id}.c${j}.value`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.c${j}.box`] = { fill: '', source: '' }; continue; }
       const [value, pct] = liveCellFns(p)[c.key](), f = field(value, `${src} – ${c.label}`), t = pct ? ` (${pct})` : '';
-      v[`${id}.c${j}.value`] = c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f;
+      v[`${id}.c${j}.value`] = { ...(c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f), color: '#ffffff' };
     }
   });
   for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {
