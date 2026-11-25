@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T12:53:07.393290+00:00",
+  "checked_at": "2026-11-25T14:09:57.624937+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 36,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -563,6 +563,19 @@
     }
   ],
   "articles": [
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Parádés formában voltak az Amazonok",
+      "summary": "Két száz dobott pont fölötti mérkőzéssel zárta a fordulót a Vasas Amazonok U11-es csapata.",
+      "url": "https://vasasbasket.hu/index.php/parades-formaban-voltak-az-amazonok/",
+      "published_at": "2026-11-25T13:36:03+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
     {
       "source": "WBasket.hu",
       "title": "„Ez sokkal több annál, mint egy egyszerűen jól sikerült selejtezőablak” – Takács-Kiss Virággal értékeltük a novemberi válogatott mérkőzéseket",
