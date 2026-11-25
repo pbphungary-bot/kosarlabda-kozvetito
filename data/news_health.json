@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-25T02:50:48.406571+00:00",
+  "checked_at": "2026-11-25T03:53:37.599846+00:00",
   "statistics": {
     "total": 1269,
     "fresh": 584,
@@ -8,11 +8,11 @@
     "headline_only": 564,
     "untagged": 524,
     "sources_ok": 21,
-    "sources_partial": 1,
-    "sources_failed": 9,
+    "sources_partial": 0,
+    "sources_failed": 10,
     "new_articles": 6,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 17,
+    "clubs_with_direct_source_coverage": 16,
     "clubs_configured": 25
   },
   "sources": [
@@ -319,19 +319,29 @@
     },
     {
       "source": "Klub: VBW CEKK Cegléd",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "listing_errors": [
+        "https://www.cekk.hu/new/index.php: URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "https://www.cekk.hu/new/index.php/hirek/nb1-a-hirek: URLError: <urlopen error [Errno 101] Network is unreachable>"
+      ],
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:URLError",
+        "sitemap:URLError",
+        "sitemap:URLError",
+        "sitemap:URLError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Atomerőmű SE",
@@ -480,6 +490,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -560,32 +571,25 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 2,
-      "article_errors": 6,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/szunetig-vezettunk-a-masodik-felidoben-forditott-a-nagykoros/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/a-zaro-negyed-dontott-bekescsaban/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/a-harmadik-negyedben-kerult-donto-elonybe-a-budafok/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: HTTPError: HTTP Error 508: Loop Detected"
-      ],
-      "usable_articles": 2,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
   "failed_sources": [
     "Kezdő5.hu",
     "Klub: PHOENIX Fóti Tigrisek",
+    "Klub: VBW CEKK Cegléd",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
