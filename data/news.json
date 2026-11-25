@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-25T07:04:48.316970+00:00",
+  "checked_at": "2026-11-25T08:35:36.841368+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
-      "candidates": 31,
-      "added": 0,
+      "candidates": 32,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -311,8 +311,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 2,
+      "repaired": 8,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -561,6 +563,18 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Valerio-Bodon Vincent: Bármilyen szerepet szán nekem a stáb, abban igyekszem a maximumot nyújtani",
+      "summary": "A válogatott játékossal beszélgettünk a Honvéd szezonjáról és a nemzeti csapatra váró feladatokról.",
+      "url": "https://bball1.hu/valerio-bodon-vincent-barmilyen-szerepet-szan-nekem-a-stab-abban-igyekszem-a-maximumot-nyujtani/",
+      "published_at": "2026-11-25T08:03:06+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Bp. Honvéd"
+      ],
+      "league": "men"
+    },
     {
       "source": "Klub: DVTK HUNTHERM",
       "title": "Ma itthon játszik a DVTK HUNTHERM",
@@ -13040,6 +13054,15 @@
       ]
     },
     {
+      "source": "Hunbasket",
+      "title": "Következő vb-selejtezős ellenfelünk: Svédország",
+      "summary": "Következő vb-selejtezős ellenfelünk: Svédország",
+      "url": "https://hunbasket.hu/hir/77753/kovetkezo-vb-selejtezos-ellenfelunk-svedorszag/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
       "source": "Klub: Egis Körmend",
       "title": "Következik az első vasi klasszikus!",
       "summary": "Egis Körmend - A háromszoros magyar bajnok, hétszeres kupagyőztes férfi kosárlabda csapat hivatalos oldala.",
@@ -13643,6 +13666,19 @@
       "league": "men",
       "teams": [
         "men|DEAC"
+      ]
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "Három kulcsjátékosunk nélkül nem ment",
+      "summary": "ETO Basket‒VBW CEKK Cegléd 90‒48 (26‒5, 17‒14, 22‒15, 25‒14) Győr, 200 néző.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/396-harom-kulcsjatekosunk-nelkul-nem-ment/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
       ]
     },
     {
@@ -14598,6 +14634,19 @@
       "league": "women",
       "teams": [
         "women|TFSE"
+      ]
+    },
+    {
+      "source": "Klub: VBW CEKK Cegléd",
+      "title": "A válogatott szünet után Győrbe utazunk",
+      "summary": "Véget ért a válogatott szünet, nemzeti csapatunk mindhárom EB selejtezőjét megnyerte, így ebből a szempontból sikeres volt ez a bajnoki szünet.",
+      "url": "https://www.cekk.hu/new/index.php/hirek/item/395-a-valogatott-szunet-utan-gyorbe-utazunk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "VBW CEKK Cegléd",
+      "league": "women",
+      "teams": [
+        "women|VBW CEKK Cegléd"
       ]
     },
     {
