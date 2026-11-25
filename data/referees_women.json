@@ -3,7 +3,7 @@
  "source": "hunbasket",
  "source_url": "https://hunbasket.hu/menetrend-teljes/noi/x2627/whun",
  "season": "x2627",
- "updated_at": "2026-11-25T08:19:02.530666+00:00",
+ "updated_at": "2026-11-25T17:36:18.441607+00:00",
  "matches": {
   "https://hunbasket.hu/merkozes/x2627/whun/whun_135471": {
    "home": "KSC Szekszárd",
@@ -471,8 +471,12 @@
    "home": "Csata TKK",
    "away": "VBW CEKK Cegléd",
    "venue": "E.ON Sportcsarnok",
-   "referees": [],
-   "controller": ""
+   "referees": [
+    "Dr. Mészáros Balázs",
+    "Lengyel Ádám József",
+    "Dr. Nagy Zsombor"
+   ],
+   "controller": "Hartyáni Zsolt"
   },
   "https://hunbasket.hu/merkozes/x2627/whun/whun_135575": {
    "home": "KSC Szekszárd",
