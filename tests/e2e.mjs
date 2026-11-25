@@ -3,6 +3,7 @@
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { ROOT, DATA_DIR, FIXED_NOW } from './helpers.mjs';
@@ -12,7 +13,7 @@ const { chromium } = require('playwright');
 const out = process.argv[2] || path.join(ROOT, 'tests/output/e2e');
 mkdirSync(out, { recursive: true });
 const port = 8890 + Math.floor(Math.random() * 100);
-const server = spawn('python3', [path.join(ROOT, 'tools/serve.py'), String(port)], { stdio: 'ignore' });
+const server = spawn('python3', [path.join(ROOT, 'tools/serve.py'), String(port)], { stdio: 'ignore', env: { ...process.env, LIVE_STATE_FILE: path.join(os.tmpdir(), `nbia-live-state-${process.pid}.json`) } }); // the builder's on-air choices go to a temp file, never to the real one
 for (let i = 0; i < 60; i++) { try { await (await fetch(`http://127.0.0.1:${port}/`, { headers: { connection: 'close' } })).arrayBuffer(); break; } catch { await new Promise(r => setTimeout(r, 100)); } } // wait until the server answers
 const URL = `http://127.0.0.1:${port}`;
 
@@ -1521,12 +1522,13 @@ try {
     await sp.context().close();
   });
 
+  const isLive = u => u.pathname === '/live'; // exactly the relay: the glob '**/live?*' would also catch /live-state (the ? matches the dash)
   // OBS overlay: any game / graphic from a link alone, transparent, self-updating, survives a reload (the OBS "refresh cache" hotkey)
   await check('OBS overlay: three graphics of one game at once, from the link only, reload keeps working', async () => {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     const octx = await hermetic(await browser.newContext({ viewport: { width: 1920, height: 1080 } }));
     let relayHits = 0;
-    await octx.route('**/live?*', route => { relayHits++; route.fulfill({ status: 200, contentType: 'text/plain', body: feed }); });
+    await octx.route(isLive, route => { relayHits++; route.fulfill({ status: 200, contentType: 'text/plain', body: feed }); });
     const pages = [];
     for (const g of ['liveteam', 'liveleaders', 'livestat']) {
       const op = await octx.newPage(); pages.push(op);
@@ -1540,7 +1542,7 @@ try {
     assert.ok((await opaque(pages[0]))[2] > 50000);
     const before = relayHits; await pages[1].waitForTimeout(2600); assert.ok(relayHits > before, 'polls the relay by itself');
     // a failing relay keeps the last picture and never shows an error on screen
-    await octx.unroute('**/live?*'); await octx.route('**/live?*', route => route.fulfill({ status: 502, body: 'down' }));
+    await octx.unroute(isLive); await octx.route(isLive, route => route.fulfill({ status: 502, body: 'down' }));
     await pages[2].waitForFunction(() => /hiba/.test(window.__overlay.status()), null, { timeout: 15000 });
     assert.ok((await opaque(pages[2]))[2] > 5000, 'the last good picture stays');
     await octx.close();
@@ -1549,7 +1551,7 @@ try {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whunu18_142813.partial.txt'), 'utf8');
     const nctx = await hermetic(await browser.newContext({ viewport: { width: 1920, height: 1080 } }));
     let asked = '';
-    await nctx.route('**/live?*', route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
+    await nctx.route(isLive, route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
     await nctx.route('**/mkosz?*', route => { asked = route.request().url(); route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ names: { 201536: 'Halasy Enikő', 245564: 'Csősz Orsolya' } }) }); });
     const np = await nctx.newPage();
     await np.goto(`${URL}/graphics/overlay.html?game=whunu18_142813&g=livestat&player=201536&refresh=2`);
@@ -1560,19 +1562,38 @@ try {
     await nctx.close();
   });
 
-  await check('OBS link maker builds a working overlay link', async () => {
+  await check('Builder: one fixed link per game; clicking a graphic changes what the fixed overlay shows (no change in OBS)', async () => {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
-    const lctx = await hermetic(await browser.newContext({ viewport: { width: 1400, height: 1000 } }));
-    await lctx.route('**/live?*', route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
-    const lp = await lctx.newPage();
+    const bctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1100 } }));
+    await bctx.route(isLive, route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed })); // the feed is stubbed, /live-state is the real server
+    const lp = await bctx.newPage();
     await lp.goto(`${URL}/graphics/live.html`);
     await lp.fill('#game', 'https://netcasting4.webpont.com/?whun_135563'); await lp.dispatchEvent('#game', 'change');
     await lp.waitForFunction(() => /90–48/.test(document.getElementById('gameInfo').textContent));
-    await lp.selectOption('#graphic', 'liveteam');
-    await lp.check('.tStat[value="fg3"]'); await lp.check('.tStat[value="reb"]');
     const link = await lp.inputValue('#link');
-    assert.match(link, /overlay\.html\?game=whun_135563&g=liveteam&teamStats=fg3%2Creb$/);
-    await lctx.close();
+    assert.match(link, /\/graphics\/overlay\.html\?game=whun_135563$/, 'the link holds the game only');
+    assert.equal(await lp.locator('.onairBtn').count(), 4, 'three graphics + off');
+    // the fixed link of the game in OBS (a second page)
+    const ov = await bctx.newPage(); await ov.goto(link);
+    await ov.waitForFunction(() => document.body.dataset.ready === '1');
+    const opaque = () => ov.evaluate(() => { const c = document.getElementById('c'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return n; });
+    await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off'); assert.equal(await opaque(), 0, 'nothing is on air until the builder picks a graphic: transparent');
+    const pick = async g => { await lp.click(`.onairBtn[data-g="${g}"]`); await ov.waitForFunction(x => window.__overlay.onAir().graphic === x && /90–48/.test(window.__overlay.status()), g, { timeout: 15000 }); };
+    await pick('liveteam'); assert.ok(await opaque() > 50000, 'team comparison drawn');
+    assert.equal(await lp.isChecked('.tStat[value="reb"]'), true, 'the default package is shown ticked'); assert.equal(await lp.isChecked('.tStat[value="fg2"]'), false);
+    await lp.check('.tStat[value="fg2"]'); // a tick travels too
+    await ov.waitForFunction(() => (window.__overlay.onAir().live.teamStats || []).includes('fg2'), null, { timeout: 15000 });
+    await pick('liveleaders'); assert.ok(await opaque() > 50000, 'three leaders drawn');
+    await pick('livestat'); assert.ok(await opaque() > 5000, 'player insert drawn');
+    await lp.click('.onairBtn[data-g="off"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off', null, { timeout: 15000 });
+    await ov.waitForFunction(() => { const c = document.getElementById('c'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 3; i < d.length; i += 4) if (d[i]) return false; return true; }, null, { timeout: 10000 });
+    // a reload of the overlay (OBS cache refresh) keeps the choice: it is on the server
+    await lp.click('.onairBtn[data-g="liveleaders"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'liveleaders', null, { timeout: 15000 });
+    await ov.reload(); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'liveleaders' && /90–48/.test(window.__overlay.status()), null, { timeout: 20000 });
+    // a second builder page of the same game starts from what is on air
+    const lp2 = await bctx.newPage(); await lp2.goto(`${URL}/graphics/live.html`);
+    await lp2.waitForFunction(() => window.__builder && window.__builder.state().graphic === 'liveleaders', null, { timeout: 15000 });
+    await bctx.close();
   });
 
 } finally {

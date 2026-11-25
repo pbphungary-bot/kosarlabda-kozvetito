@@ -18,6 +18,28 @@ _cache = {}                             # (game, kind) -> {'t': time, 'body': by
 _locks = {}
 _glock = threading.Lock()
 TOKEN = os.environ.get('LIVE_TOKEN', '')
+STATE_FILE = os.environ.get('LIVE_STATE_FILE', '.live-state.json')  # what is on air per game (survives a restart; not committed)
+_state = {}                                                         # game -> {'rev': n, 'state': {...}}
+_slock = threading.Lock()
+try: _state = json.load(open(STATE_FILE, encoding='utf-8'))
+except Exception: _state = {}
+
+def get_state(game):
+    """What the builder put on air for a game: {'rev': n, 'state': {...}} (rev 0 = nothing chosen yet)."""
+    with _slock: return dict(_state.get(game) or {'rev': 0, 'state': {}})
+
+def set_state(game, state):
+    """The builder's choice (graphic + settings) of a game; the overlay in OBS follows it. rev rises with every change."""
+    with _slock:
+        rev = int((_state.get(game) or {}).get('rev', 0)) + 1
+        _state[game] = {'rev': rev, 'state': state}
+        while len(_state) > 300: _state.pop(next(iter(_state)))  # the oldest games go
+        try:
+            tmp = STATE_FILE + '.tmp'
+            json.dump(_state, open(tmp, 'w', encoding='utf-8'), ensure_ascii=False); os.replace(tmp, STATE_FILE)
+        except Exception: pass  # the choice still works from memory
+        return dict(_state[game])
+
 
 def fetch_feed(game, kind):
     """The feed text of one game (cached; one upstream request at a time per game and kind). Returns (body, gz, stale)."""
@@ -53,6 +75,7 @@ class H(http.server.SimpleHTTPRequestHandler):
         # so a browser cannot read it directly, and it refuses cloud networks; this machine's own connection is accepted). Only that one URL shape is fetched.
         u = urllib.parse.urlparse(self.path)
         if u.path == '/mkosz': return self._mkosz(u)
+        if u.path == '/live-state': return self._state_get(u)
         if u.path != '/live': return super().do_GET()
         q = urllib.parse.parse_qs(u.query); game = (q.get('game') or [''])[0]; kind = (q.get('kind') or ['full'])[0]
         if TOKEN and (q.get('token') or [''])[0] != TOKEN: return self._reply(403, b'token missing or wrong')
@@ -62,6 +85,27 @@ class H(http.server.SimpleHTTPRequestHandler):
             self._reply(200, body, gz if 'gzip' in (self.headers.get('Accept-Encoding') or '') else None, stale)
         except Exception as e:
             self._reply(502, f'upstream unreachable: {e}'.encode('utf-8', 'replace')[:300])
+    def do_POST(self):
+        # /live-state?game=..[&token=..] with a JSON body {"state": {...}}: the builder puts a graphic on air for a game
+        u = urllib.parse.urlparse(self.path)
+        if u.path != '/live-state': return self._reply(404, b'not found')
+        q = urllib.parse.parse_qs(u.query); game = (q.get('game') or [''])[0]
+        if TOKEN and (q.get('token') or [''])[0] != TOKEN: return self._reply(403, b'token missing or wrong')
+        if not GAME.match(game): return self._reply(400, b'bad request')
+        try:
+            n = int(self.headers.get('Content-Length') or 0)
+            if n <= 0 or n > 4096: return self._reply(400, b'bad size')
+            state = json.loads(self.rfile.read(n).decode('utf-8')).get('state')
+            if not isinstance(state, dict): return self._reply(400, b'bad state')
+        except Exception: return self._reply(400, b'bad json')
+        self._reply(200, json.dumps(set_state(game, state), ensure_ascii=False).encode('utf-8'), ctype='application/json; charset=utf-8')
+    def do_OPTIONS(self):
+        self.send_response(204); self.send_header('Access-Control-Allow-Origin', '*'); self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); self.send_header('Access-Control-Allow-Headers', 'Content-Type'); self.send_header('Content-Length', '0'); self.end_headers()
+    def _state_get(self, u):
+        q = urllib.parse.parse_qs(u.query); game = (q.get('game') or [''])[0]
+        if TOKEN and (q.get('token') or [''])[0] != TOKEN: return self._reply(403, b'token missing or wrong')
+        if not GAME.match(game): return self._reply(400, b'bad request')
+        self._reply(200, json.dumps(get_state(game), ensure_ascii=False).encode('utf-8'), ctype='application/json; charset=utf-8')
     def _mkosz(self, u):
         # /mkosz?game=whunu18_142813[&token=..] : the official spelling of the players' names (JSON), see tools/mkosz_names.py
         q = urllib.parse.parse_qs(u.query); game = (q.get('game') or [''])[0]

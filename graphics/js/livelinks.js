@@ -1,86 +1,126 @@
-// Link maker for the OBS overlays: pick game + graphic (+ ticked statistics), get the link of the browser source and a live preview.
-import { gameCode, decodeFeed, parseGame, playedPlayers } from './live.js';
-import { LIVE_STATS, LIVE_TEAM_STATS, LIVE_VARIANTS, LIVE_CORNERS, liveKeys } from './templates.js';
-import { OVERLAY_GRAPHICS, overlayQuery, gameLeague } from './overlay-params.js';
+// The live builder (adásvezérlő): pick the game, click which graphic is on air and tick its statistics. The choice is stored on the server per game (/live-state);
+// the ONE fixed link of the game in OBS follows it, so nothing has to be changed in OBS. The preview below is that very link (what the server sends).
+import { gameCode, decodeFeed, parseGame, playedPlayers, applyOfficialNames, needsOfficialNames } from './live.js';
+import { LIVE_STATS, LIVE_TEAM_STATS, LIVE_VARIANTS, LIVE_CORNERS, liveKeys, liveTeamKeys } from './templates.js';
+import { OVERLAY_GRAPHICS, fixedLinkQuery, normOnAir, gameLeague } from './overlay-params.js';
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ls = { get: k => { try { return localStorage.getItem(k) || ''; } catch { return ''; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } } };
-const S = { game: null, players: [], side: 'home', teams: null, player: '', corner: '', stats: null, teamStats: null, leaderStats: null };
+const GRAPHICS = { ...OVERLAY_GRAPHICS, off: 'Nincs adásban' };
+// the choice of this game; every graphic keeps its own ticks while the commentator switches between them
+const S = { game: null, graphic: 'off', players: [], teams: null, side: 'home', player: '', corner: '', variant: '', stats: [], teamStats: [], leaderStats: [] };
+let pushTimer = null, loadSeq = 0, touchSeq = 0, lastGame = null; // touchSeq rises with every click of the user: a slower reload of the saved state must never overwrite it
 
-$('graphic').innerHTML = Object.entries(OVERLAY_GRAPHICS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('');
-$('graphic').value = ls.get('nbia.live.graphic') || 'liveteam';
 { const qt = new URLSearchParams(location.search).get('token'); if (qt) ls.set('nbia.live.token', qt); } // the launcher prints a link that already carries the key
 $('token').value = ls.get('nbia.live.token');
 $('game').value = ls.get('nbia.live.game');
 
+const tokenQ = () => { const t = $('token').value.trim(); return t ? `&token=${encodeURIComponent(t)}` : ''; };
 const tick = (cls, list, on) => list.map(x => `<label><input type="checkbox" class="${cls}" value="${x.key}" ${on.includes(x.key) ? 'checked' : ''}> ${x.label}</label>`).join('');
 const ticked = cls => [...document.querySelectorAll('.' + cls + ':checked')].map(e => e.value);
 
+function onAirHtml() {
+  $('onair').innerHTML = Object.entries(GRAPHICS).map(([k, v]) => `<button type="button" class="onairBtn ${S.graphic === k ? 'primary' : ''}" data-g="${k}" ${gameCode($('game').value) ? '' : 'disabled'}>${esc(v)}</button>`).join('');
+}
 function optionsHtml() {
-  const g = $('graphic').value;
-  if (g === 'liveteam') return `<small class="hint">Pipáld be, mely statisztikák látsszanak (ha nincs kipipálva semmi: az alapcsomag):</small><div class="ticks">${tick('tStat', LIVE_TEAM_STATS, S.teamStats || [])}</div>`;
-  if (g === 'liveleaders') return `<small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa (alap: PTS, REB, AST). Pipáld be, mely statisztikák látsszanak:</small><div class="ticks">${tick('lStat', LIVE_STATS, S.leaderStats || [])}</div>`;
-  const pl = S.players.filter(p => p.side === S.side);
-  return `<div class="grid"><label>Csapat<select id="side"><option value="home" ${S.side === 'home' ? 'selected' : ''}>Hazai${S.teams ? ' – ' + esc(S.teams.home) : ''}</option><option value="away" ${S.side === 'away' ? 'selected' : ''}>Vendég${S.teams ? ' – ' + esc(S.teams.away) : ''}</option></select></label>
-    <label>Játékos<select id="player">${pl.length ? pl.map(p => `<option value="${esc(p.code)}" ${p.code === S.player ? 'selected' : ''}>${esc((p.number ? '#' + p.number + ' ' : '') + p.name)}</option>`).join('') : '<option value="">(a meccs betöltése után)</option>'}</select></label>
-    <label>Hely a képen<select id="corner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${S.corner === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
-    <label>Kész csomag<select id="variant"><option value="">Saját (pipák)</option>${Object.entries(LIVE_VARIANTS).map(([k, v]) => `<option value="${k}">${esc(v.label)}</option>`).join('')}</select></label></div>
-    <div class="ticks">${tick('pStat', LIVE_STATS, S.stats || [])}</div>
-    <small class="hint">A játékos-betét egy játékost mutat: másik játékosnál másik linket (vagy forrást) használj.</small>`;
+  const g = S.graphic;
+  if (g === 'liveteam') return `<small class="hint">Pipáld be, mely statisztikák látsszanak (a kipipáltak jelennek meg; alapból egy kész csomag van kipipálva):</small><div class="ticks">${tick('tStat', LIVE_TEAM_STATS, liveTeamKeys(S.teamStats))}</div>`;
+  if (g === 'liveleaders') return `<small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa (alap: PTS, REB, AST). Pipáld be, mely statisztikák látsszanak:</small><div class="ticks">${tick('lStat', LIVE_STATS, liveKeys(S.leaderStats))}</div>`;
+  if (g === 'livestat') {
+    const pl = S.players.filter(p => p.side === S.side);
+    return `<div class="grid"><label>Csapat<select id="side"><option value="home" ${S.side === 'home' ? 'selected' : ''}>Hazai${S.teams ? ' – ' + esc(S.teams.home) : ''}</option><option value="away" ${S.side === 'away' ? 'selected' : ''}>Vendég${S.teams ? ' – ' + esc(S.teams.away) : ''}</option></select></label>
+      <label>Játékos<select id="player">${pl.length ? pl.map(p => `<option value="${esc(p.code)}" ${p.code === S.player ? 'selected' : ''}>${esc((p.number ? '#' + p.number + ' ' : '') + p.name)}</option>`).join('') : '<option value="">(a meccs betöltése után)</option>'}</select></label>
+      <label>Hely a képen<select id="corner">${Object.entries(LIVE_CORNERS).map(([k, v]) => `<option value="${k}" ${(S.corner || 'gap') === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
+      <label>Kész csomag<select id="variant"><option value="">Saját (pipák)</option>${Object.entries(LIVE_VARIANTS).map(([k, v]) => `<option value="${k}">${esc(v.label)}</option>`).join('')}</select></label></div>
+      <div class="ticks">${tick('pStat', LIVE_STATS, liveKeys(S.stats.length ? S.stats : undefined))}</div>`;
+  }
+  return '<small class="hint">Most semmi nincs adásban: az OBS-forrás átlátszó marad. Kattints a fenti gombok egyikére.</small>';
 }
 function readOptions() {
-  const g = $('graphic').value;
-  if (g === 'liveteam') S.teamStats = ticked('tStat');
-  if (g === 'liveleaders') S.leaderStats = ticked('lStat');
-  if (g === 'livestat') {
+  if (S.graphic === 'liveteam') S.teamStats = ticked('tStat');
+  if (S.graphic === 'liveleaders') S.leaderStats = ticked('lStat');
+  if (S.graphic === 'livestat') {
     S.side = $('side')?.value || S.side; S.player = $('player')?.value || S.player; S.corner = $('corner')?.value || S.corner;
     const v = $('variant')?.value; S.stats = v ? liveKeys(v) : ticked('pStat');
   }
 }
-function link() {
+const payload = () => ({ graphic: S.graphic, side: S.side, player: S.player || undefined, corner: S.corner || undefined, stats: S.stats, teamStats: S.teamStats, leaderStats: S.leaderStats });
+
+/** The choice goes to the server (a moment after the last click); the OBS overlay and the preview below pick it up by themselves. */
+function pushSoon() { clearTimeout(pushTimer); pushTimer = setTimeout(push, 250); }
+async function push() {
   const game = gameCode($('game').value);
-  if (!game) return '';
-  const g = $('graphic').value;
-  const q = overlayQuery({ game, graphic: g, token: $('token').value.trim(), live: { side: S.side, player: S.player, corner: S.corner, stats: S.stats || [], teamStats: S.teamStats || [], leaderStats: S.leaderStats || [] } });
-  return new URL(`overlay.html?${q}`, location.href).href;
+  if (!game) return;
+  try {
+    const r = await fetch(`../live-state?game=${game}${tokenQ()}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ state: payload() }) });
+    if (!r.ok) throw new Error(r.status === 403 ? 'hibás vagy hiányzó kulcs' : `a kiszolgáló ${r.status}`);
+    $('pushInfo').textContent = `Elküldve (${GRAPHICS[S.graphic]}) – az OBS-ben egy-két másodpercen belül megjelenik.`;
+  } catch (e) { $('pushInfo').innerHTML = `<span style="color:var(--warn)">Nem sikerült elküldeni: ${esc(e.message)}. Az OBS-ben a régi grafika marad.</span>`; }
 }
-function refresh() {
-  const url = link();
-  $('link').value = url || 'Adj meg egy meccs-linket vagy kódot.';
-  $('copy').disabled = !url;
+
+function fixedLink() {
+  const game = gameCode($('game').value);
+  return game ? new URL(`overlay.html?${fixedLinkQuery({ game, token: $('token').value.trim() })}`, location.href).href : '';
+}
+function refreshView() {
+  onAirHtml(); $('opts').innerHTML = optionsHtml();
+  const url = fixedLink(); $('link').value = url || 'Adj meg egy meccs-linket vagy kódot.'; $('copy').disabled = !url;
   const f = $('prev');
-  if (url && f.dataset.url !== url) { f.dataset.url = url; f.style.width = '1920px'; f.style.height = '1080px'; f.src = url; }
-  if (!url) f.removeAttribute('src');
+  if (url && f.dataset.url !== url) { f.dataset.url = url; f.style.width = '1920px'; f.style.height = '1080px'; f.src = url; } // the link never changes: the preview follows the server
+  if (!url) { f.removeAttribute('src'); delete f.dataset.url; }
   fitPreview();
 }
 function fitPreview() { const w = $('prevWrap').clientWidth || 960, k = Math.min(1, w / 1920); $('prev').style.transform = `scale(${k})`; $('prevWrap').style.height = `${1080 * k}px`; }
 addEventListener('resize', fitPreview);
 
-async function loadGame() {
-  const game = gameCode($('game').value); S.players = []; S.teams = null;
-  ls.set('nbia.live.game', $('game').value);
-  if (!game) { $('gameInfo').textContent = ''; return refreshAll(); }
-  $('gameInfo').textContent = 'Betöltés…';
+/** What is already on air for this game (another laptop, an earlier visit): the controls start from it, unless the user has already clicked something in the meantime. */
+async function loadState(game) {
+  const t0 = touchSeq;
   try {
-    const tk = $('token').value.trim();
-    const r = await fetch(`../live?game=${game}&kind=full${tk ? '&token=' + encodeURIComponent(tk) : ''}`, { cache: 'no-store' });
+    const r = await fetch(`../live-state?game=${game}${tokenQ()}`, { cache: 'no-store' });
+    if (!r.ok || t0 !== touchSeq) return;
+    const j = await r.json(), n = normOnAir(j.state);
+    if (t0 !== touchSeq) return;
+    S.graphic = n.graphic; S.side = n.live.side; S.player = n.live.player || ''; S.corner = n.live.corner || '';
+    S.stats = n.live.stats || []; S.teamStats = n.live.teamStats || []; S.leaderStats = n.live.leaderStats || [];
+  } catch { /* offline: start from nothing */ }
+}
+async function loadGame() {
+  const game = gameCode($('game').value), seq = ++loadSeq;
+  S.players = []; S.teams = null; S.game = game; if (S.game !== lastGame) { S.graphic = 'off'; S.side = 'home'; S.player = ''; S.corner = ''; S.stats = []; S.teamStats = []; S.leaderStats = []; lastGame = game; }
+  ls.set('nbia.live.game', $('game').value); ls.set('nbia.live.token', $('token').value.trim());
+  if (!game) { $('gameInfo').textContent = ''; S.graphic = 'off'; return refreshView(); }
+  $('gameInfo').textContent = 'Betöltés…';
+  await loadState(game);
+  if (seq !== loadSeq) return;
+  refreshView();
+  try {
+    const r = await fetch(`../live?game=${game}&kind=full${tokenQ()}`, { cache: 'no-store' });
     if (!r.ok) throw new Error(r.status === 403 ? 'hibás vagy hiányzó kulcs' : `a kiszolgáló ${r.status}`);
     const g = parseGame(decodeFeed(await r.text()), game);
     if (!g) throw new Error('a hírcsatorna nem értelmezhető');
+    if (needsOfficialNames(g)) { try { const n = await fetch(`../mkosz?game=${game}${tokenQ()}`, { cache: 'no-store' }); if (n.ok) applyOfficialNames(g, (await n.json()).names); } catch { /* the feed's spelling stays */ } }
+    if (seq !== loadSeq) return;
     S.teams = { home: g.teams.home.short, away: g.teams.away.short };
     S.players = ['home', 'away'].flatMap(side => playedPlayers(g, side).map(p => ({ ...p, side })));
-    S.player = S.players.find(p => p.side === S.side)?.code || '';
+    if (!S.players.some(p => p.code === S.player)) S.player = S.players.find(p => p.side === S.side)?.code || '';
     $('gameInfo').textContent = `${g.teams.home.short} ${g.score.home}–${g.score.away} ${g.teams.away.short} (${gameLeague(game) === 'women' ? 'női' : 'férfi'}) – a link akkor is jó, ha a meccs még nem kezdődött el.`;
   } catch (e) { $('gameInfo').textContent = `A meccs adatai most nem tölthetők be (${e.message}); a link ettől még elkészül.`; }
-  refreshAll();
+  refreshView();
 }
-function refreshAll() { $('opts').innerHTML = optionsHtml(); refresh(); }
 
-$('graphic').onchange = () => { ls.set('nbia.live.graphic', $('graphic').value); refreshAll(); };
-$('opts').addEventListener('change', e => { if (e.target.id === 'side') { S.side = e.target.value; S.player = S.players.find(p => p.side === S.side)?.code || ''; readOptions(); $('opts').innerHTML = optionsHtml(); } else readOptions(); refresh(); });
+$('onair').addEventListener('click', e => {
+  const b = e.target.closest('.onairBtn'); if (!b) return;
+  touchSeq++; S.graphic = b.dataset.g; refreshView(); pushSoon();
+});
+$('opts').addEventListener('change', e => {
+  touchSeq++;
+  if (e.target.id === 'side') { S.side = e.target.value; S.player = S.players.find(p => p.side === S.side)?.code || ''; $('opts').innerHTML = optionsHtml(); }
+  readOptions(); pushSoon();
+});
 $('game').onchange = loadGame;
-$('token').onchange = () => { ls.set('nbia.live.token', $('token').value.trim()); loadGame(); };
+$('token').onchange = loadGame;
 $('copy').onclick = async () => { try { await navigator.clipboard.writeText($('link').value); $('copied').textContent = 'Kimásolva.'; } catch { $('link').select(); $('copied').textContent = 'Jelöld ki és másold (Ctrl+C).'; } };
 
 // Today's and the coming games of the two NB I/A leagues: the Hunbasket match address ends in the very code the netcasting feed uses (…/whun/whun_135579 → ?whun_135579)
@@ -101,5 +141,6 @@ async function loadSchedule() {
   pick.innerHTML = `<option value="">${rows.length ? '– válassz meccset –' : '(nincs közelgő meccs az adatokban)'}</option>` + rows.map(r => `<option value="${r.code}">${esc(r.text)}</option>`).join('');
 }
 $('gamePick').onchange = e => { if (e.target.value) { $('game').value = e.target.value; loadGame(); } };
+window.__builder = { state: () => ({ ...S }), link: () => $('link').value };
 loadSchedule();
 loadGame();

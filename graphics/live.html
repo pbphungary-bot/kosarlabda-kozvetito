@@ -18,24 +18,28 @@
 </style>
 </head>
 <body>
-<h1>Élő grafikák – OBS linkek</h1>
-<p class="hint">Válaszd ki a meccset és a grafikát, másold ki a linket, és az OBS-ben vedd fel <b>Böngésző</b> forrásként (1920×1080). A grafika magától frissül; az OBS „oldal gyorsítótárának frissítése” gombja nem árt (ugyanazt a linket tölti újra). Minden meccsnek és grafikának saját linkje van – tetszőleges számú fut egyszerre.</p>
+<h1>Élő grafikák – adásvezérlő</h1>
+<p class="hint">Minden meccsnek <b>egy állandó OBS-linkje</b> van: egyszer vedd fel az OBS-ben <b>Böngésző</b> forrásként (1920×1080), és utána soha nem kell cserélni. Itt kattintod ki, melyik grafika legyen adásban – az OBS-ben csak láthatóvá / láthatatlanná kell tenni a forrást. Az alsó előnézet ugyanaz a link, mint az OBS-ben: pontosan azt látod, amit a szerver ad.</p>
 <div class="box">
   <div class="grid">
     <label>Meccs (a Hunbasket / mkosz.hu / netcasting link vagy a kód – ugyanaz a kód mindenhol)<input type="text" id="game" placeholder="https://netcasting4.webpont.com/?whun_135563"></label>
-    <label>Grafika<select id="graphic"></select></label>
+    <label>…vagy válassz a mai és közelgő NB I/A meccsekből<select id="gamePick"><option value="">Betöltés…</option></select></label>
   </div>
-  <label>…vagy válassz a mai és közelgő NB I/A meccsekből<select id="gamePick"><option value="">Betöltés…</option></select></label>
   <small class="hint">Utánpótlás (U14–U21) meccsnél másold be az mkosz.hu meccs-linkjét (pl. …/hunu18/hunu18_142733) – a kódból a link maga áll össze.</small>
   <div id="gameInfo" class="hint"></div>
   <label>Hozzáférési kulcs (ha a szerver kéri; a link tartalmazza)<input type="text" id="token" autocomplete="off"></label>
 </div>
-<div class="box" id="opts"></div>
 <div class="box">
-  <label>Link az OBS Böngésző forrásához<input id="link" readonly></label>
+  <label>A meccs állandó linkje az OBS Böngésző forrásához<input id="link" readonly></label>
   <div class="import-row"><button id="copy" class="primary">Link másolása</button> <span id="copied" class="hint"></span></div>
 </div>
-<div class="box"><b>Előnézet</b> <small class="hint">(a checker minta az átlátszóságot jelzi)</small><div id="prevWrap"><iframe id="prev" title="előnézet"></iframe></div></div>
+<div class="box">
+  <b>Adásban</b> <small class="hint">(a kattintás azonnal érvényes: az OBS-ben egy-két másodpercen belül vált)</small>
+  <div id="onair" class="import-row" style="flex-wrap:wrap;margin:8px 0"></div>
+  <div id="opts"></div>
+  <div id="pushInfo" class="hint"></div>
+</div>
+<div class="box"><b>Előnézet</b> <small class="hint">(a checker minta az átlátszóságot jelzi; ez az OBS-ben látható kép)</small><div id="prevWrap"><iframe id="prev" title="előnézet"></iframe></div></div>
 <script type="module" src="js/livelinks.js"></script>
 </body>
 </html>
