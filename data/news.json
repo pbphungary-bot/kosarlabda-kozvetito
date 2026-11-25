@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-25T20:31:20.579987+00:00",
+  "checked_at": "2026-11-25T21:37:23.232408+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 32,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -562,6 +564,16 @@
   ],
   "articles": [
     {
+      "source": "Nemzeti Sport",
+      "title": "Női kosárlabda Euroliga: Lelik Réka dupla duplája",
+      "summary": "Női kosárlabda Euroliga: Lelik Réka dupla duplája",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosarlabda-euroliga-lelik-reka-dupla-duplaja/",
+      "published_at": "2026-11-25T22:19:05+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
       "source": "WBasket.hu",
       "title": "Győzelmével továbbjutott a csoportjából a Sopron Basket az Európa Kupában",
       "summary": "EuroCup Women 2026/27 - 5. forduló Sopron, Novomatic Aréna PERLIC, Nikola (CRO) SCHOLZOVA, Michaela (CZE) ŞENTÜRK BAYRAKTAR, Özge (TUR), KUZMIAK, Miroslav (SVK)",
@@ -607,6 +619,16 @@
       "teams": [
         "women|DVTK HUNTHERM"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Az odavágónál szorosabb küzdelemben, de végig vezetve nyert a DVTK",
+      "summary": "Európa Kupa, 5. forduló Miskolc, DVTK Aréna PACEK, Pawel (POL) BLAHOUT, Petr (CZE) SHCHERBAK, Yurii (UKR) - BRZIAK, Milan (SVK)",
+      "url": "https://wbasket.hu/az-odavagonal-szorosabb-kuzdelemben-de-vegig-vezetve-nyert-a-dvtk/",
+      "published_at": "2026.11.25. 19:49",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
