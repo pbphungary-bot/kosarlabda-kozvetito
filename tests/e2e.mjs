@@ -179,13 +179,19 @@ try {
     assert.ok(fresh >= 1);
     await page.screenshot({ path: path.join(out, 'ui-results-women.png') });
   });
-  await check('teamstats: player selection limited to the rows of the design', async () => {
+  await check('teamstats: all players of the team are shown (no 13-row limit), rows get tighter above the design\'s rows, selection can be changed', async () => {
     await page.click('.league-toggle button[data-league="men"]');
     await page.click('#templateList button[data-id="teamstats-men"]');
     await page.waitForTimeout(300);
     await page.selectOption('#teamSel', 'kecskemet');
-    await page.waitForTimeout(400);
-    assert.equal(await page.locator('.players input:checked').count(), 13);
+    await page.waitForFunction(() => document.querySelectorAll('.players input').length > 0, null, { timeout: 15000 });
+    const total = await page.locator('.players input').count();
+    assert.ok(total > 13, `Kecskemét has more players than the design's 13 rows (${total})`);
+    assert.equal(await page.locator('.players input:checked').count(), Math.min(total, 20), 'default: every player of the team is shown');
+    await page.waitForFunction(() => window.__studio.current().values?.['r13.name']?.text, null, { timeout: 15000 }); // the 14th row exists and is filled
+    await page.uncheck('.players input >> nth=0'); // taking a player out works
+    await page.waitForFunction(n => document.querySelectorAll('.players input:checked').length === n, Math.min(total, 20) - 1, { timeout: 15000 });
+    await page.check('.players input >> nth=0');
     await page.screenshot({ path: path.join(out, 'ui-teamstats-men.png') });
   });
   await check('excel import: several files at once, league auto-detected, graphic uses Excel values, persists, can be switched off', async () => {

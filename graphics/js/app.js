@@ -3,7 +3,7 @@ import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
 import { club, CLUBS, clubIdStrict } from './clubs.js';
-import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, LIVE_TEAM_STATS, liveTeamKeys, LIVE_VARIANTS, LIVE_STATS, liveKeys, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
+import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, TEAMSTATS_BUILDERS, TEAMSTATS_MAX, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, LIVE_TEAM_STATS, liveTeamKeys, LIVE_VARIANTS, LIVE_STATS, liveKeys, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
@@ -109,6 +109,11 @@ const tpl = () => {
   if (t.type === 'playercompare') { // key players: only the chosen rows, the panel is as tall as they are
     const rows = pcRowKeys(state.sel[t.league]?.pc?.rows), key = t.id + '|' + rows.join();
     if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, PC_BUILDERS[t.id](rows)); }
+    return psCache.get(key);
+  }
+  if (t.type === 'teamstats') { // player table: as many rows as players are shown (up to TEAMSTATS_MAX); more than the PSD's rows make the rows tighter
+    const sl = state.sel[t.league], n = sl?.players ? sl.players.length : (store?.players(t.league, sl?.teamId)?.players.length || 0), key = `${t.id}|${n}`;
+    if (!psCache.has(key)) { if (psCache.size > 40) psCache.clear(); psCache.set(key, TEAMSTATS_BUILDERS[t.id](n)); }
     return psCache.get(key);
   }
   if (t.type === 'liveleaders') { // live three leaders: the ticked statistics
@@ -605,7 +610,7 @@ function renderSelection(extra = {}) {
     if (extra.players) {
       box.querySelectorAll('.players input').forEach(cb => cb.onchange = () => {
         const keys = [...box.querySelectorAll('.players input:checked')].map(x => x.value);
-        if (keys.length > t.rows) { cb.checked = false; toast(`Legfeljebb ${t.rows} játékos fér el a sablonon.`); return; }
+        if (keys.length > TEAMSTATS_MAX) { cb.checked = false; toast(`Legfeljebb ${TEAMSTATS_MAX} játékos fér el a táblán.`); return; }
         s.players = keys; update(false);
       });
     }
@@ -702,7 +707,7 @@ function autoValues() {
     const r = bindTeamstats(store, lg, s.teamId, t, measureFn, s.players);
     v = r.values;
     info.players = r.players; info.shown = r.shown;
-    if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a sablonon ${t.rows} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
+    if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a táblán legfeljebb ${TEAMSTATS_MAX} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
   } else if (t.type === 'results' || t.type === 'schedule' || t.type === 'resultrows') {
     const grp = t.type === 'schedule' ? 'schedule' : 'results';
     const r = bindRowList(store, lg, s.teamId, t, s.games?.[grp] || null, s.customRows?.[grp] || []);
@@ -880,7 +885,7 @@ async function update(full) {
     let playersHtml = '';
     if (t.type === 'teamstats' && info.players?.length) {
       const shownKeys = new Set(info.shown.map(x => x.key));
-      playersHtml = `<label>Megjelenő játékosok (max. ${t.rows})</label><div class="players">${info.players.map(x => `<label><input type="checkbox" value="${esc(x.key)}" ${shownKeys.has(x.key) ? 'checked' : ''}> #${esc(x.p['#'])} ${esc(x.p['Játékos'])} <small>(${esc(x.p['M.'])} m., ${esc(x.p['Idő'])} perc)</small></label>`).join('')}</div>`;
+      playersHtml = `<label>Megjelenő játékosok (max. ${TEAMSTATS_MAX}; 12 fölött a sorok összébb húzódnak)</label><div class="players">${info.players.map(x => `<label><input type="checkbox" value="${esc(x.key)}" ${shownKeys.has(x.key) ? 'checked' : ''}> #${esc(x.p['#'])} ${esc(x.p['Játékos'])} <small>(${esc(x.p['M.'])} m., ${esc(x.p['Idő'])} perc)</small></label>`).join('')}</div>`;
     }
     let gamesHtml = '';
     if (info.candidates) {

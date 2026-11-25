@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadStore, readJson, DATA_DIR } from './helpers.mjs';
-import { bindPlayerCompare, bindH2H, bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers } from '../graphics/js/binders.js';
-import { templateById, STAT_ROWS, TEAMSTAT_COLS, PC_BUILDERS, pcRowKeys } from '../graphics/js/templates.js';
+import { bindPlayerCompare, bindH2H, bindComparison, bindRowList, bindIntro, bindReferees, bindTeamstats, MISSING, teamstatPlayers, teamstatName, rosterPlayers as rosterOf } from '../graphics/js/binders.js';
+import { templateById, STAT_ROWS, TEAMSTAT_COLS, PC_BUILDERS, pcRowKeys, TEAMSTATS_BUILDERS, TEAMSTATS_MAX } from '../graphics/js/templates.js';
 import { clubId } from '../graphics/js/clubs.js';
 import { gameKey } from '../graphics/js/data.js';
 
@@ -120,7 +120,7 @@ test('team stats: values copied verbatim, leaders highlighted, duplicate jersey 
       const nums = {};
       r.players.forEach(x => { nums[x.p['#']] = (nums[x.p['#']] || 0) + 1; });
       r.shown.forEach((x, i) => {
-        assert.equal(r.values[`r${i}.name`].text, x.p['Játékos']);
+        assert.equal(r.values[`r${i}.name`].text, teamstatName(rosterOf(store, lg, c.id), x.p['Játékos'])); // verbatim, except foreign players: "Given SURNAME"
         if (nums[x.p['#']] > 1) assert.equal(r.values[`r${i}.num`].text, MISSING);
         else assert.equal(r.values[`r${i}.num`].text, x.p['#']);
         for (const col of TEAMSTAT_COLS[lg]) {
@@ -418,4 +418,33 @@ test('key players: the chosen rows only, the panel is exactly as tall as the row
   const v = bindPlayerCompare(store, 'men', hid, aid, {});
   assert.equal(v['label.ppg'].text, 'PTS');
   assert.equal(v.strip.src, 'strip/playercompare-men');
+});
+
+test('team stats table: foreign players as "Given SURNAME" (nationality from the team page), Hungarians and unknown players as in the table', async () => {
+  const store = await loadStore();
+  const roster = rosterOf(store, 'women', 'bkgprimaszigetszentmiklos');
+  assert.ok(roster.length, 'roster of the fixture team');
+  assert.equal(teamstatName(roster, 'Madankova Zlatka Krasteva'), 'Zlatka MADANKOVA', 'BUL: given name first, surname in capitals, first given name only');
+  assert.equal(teamstatName(roster, 'Kucowski Natalie Marie'), 'Natalie KUCOWSKI');
+  assert.equal(teamstatName(roster, 'Takács Dorina'), 'Takács Dorina', 'a Hungarian keeps the table\'s order');
+  assert.equal(teamstatName(roster, 'Nobody Known'), 'Nobody Known', 'not on the roster: unchanged');
+  assert.equal(teamstatName([], 'Madankova Zlatka Krasteva'), 'Madankova Zlatka Krasteva', 'no roster at all: unchanged');
+  const t = templateById('teamstats-women'), r = bindTeamstats(store, 'women', 'bkgprimaszigetszentmiklos', t, measure);
+  const row = r.shown.findIndex(x => /Madankova/i.test(x.p['Játékos']));
+  assert.ok(row >= 0); assert.equal(r.values[`r${row}.name`].text, 'Zlatka MADANKOVA');
+});
+
+test('team stats table: more than the PSD rows – up to TEAMSTATS_MAX players, the rows get tighter but keep the first and the last position', () => {
+  for (const id of ['teamstats-men', 'teamstats-women']) {
+    const b = TEAMSTATS_BUILDERS[id], base = b(0), psdRows = base.rows;
+    assert.ok(psdRows === 12 || psdRows === 13);
+    assert.equal(b(psdRows).rows, psdRows, 'up to the PSD rows nothing changes');
+    const big = b(TEAMSTATS_MAX), gb = base.geometry, gg = big.geometry;
+    assert.equal(big.rows, TEAMSTATS_MAX); assert.equal(b(99).rows, TEAMSTATS_MAX, 'capped');
+    assert.ok(gg.pitch < gb.pitch && gg.rowSize < gb.rowSize, 'tighter rows, smaller text');
+    const y = (t, r) => t.elements.find(e => e.id === `r${r}.name`).y;
+    assert.equal(y(big, 0), y(base, 0), 'first row where the PSD has it');
+    assert.ok(Math.abs(y(big, TEAMSTATS_MAX - 1) - y(base, psdRows - 1)) < 0.01, 'last row where the PSD has its last row: same frame');
+    assert.equal(big.elements.filter(e => /^r\d+\.name$/.test(e.id)).length, TEAMSTATS_MAX);
+  }
 });
