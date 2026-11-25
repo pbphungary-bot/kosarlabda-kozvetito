@@ -695,34 +695,21 @@ export function bindLiveTeam(store, lg, game, sel = {}) {
 }
 
 // ───────────────────────── live three leaders (Élő három vezető) ─────────────────────────
-/** The value a stat is compared by (higher = better, except for the stats in LOW): null when there is nothing to compare. */
-const LEADER_LOW = new Set(['tov', 'pf']);
-const leaderNum = (p, key) => {
-  const st = p.stat, pct = (m, a) => (a > 0 ? m / a : null);
-  switch (key) {
-    case 'pts': return st.pts; case 'reb': return p.reb; case 'ast': return st.ast; case 'stl': return st.stl; case 'blk': return st.blk; case 'tov': return st.tov; case 'pf': return st.pf; case 'eff': return p.eff;
-    case 'min': return p.seconds ?? null;
-    case 'fg': return pct(st.fg2m + st.fg3m, st.fg2a + st.fg3a); case 'fg2': return pct(st.fg2m, st.fg2a); case 'fg3': return pct(st.fg3m, st.fg3a); case 'ft': return pct(st.ftm, st.fta);
-    default: return null;
-  }
-};
 export function bindLiveLeaders(store, lg, game, sel = {}, photoIds = new Set()) {
   const v = liveHeaderValues(store, lg, game, sel);
+  delete v.scoreH; delete v.scoreA; // the broadcast's own score bug shows the score (owner 2026-11-25)
   if (!game) return v;
   const src = LIVE_SRC + (sel.fetchedAt ? ` – frissítve: ${sel.fetchedAt}` : ''), cells = liveLeaderCells(sel.leaderStats), S = liveLeaderSize().scale, big = 32 * S, small = Math.round(big * 2 / 3 * 100) / 100;
   const sides = { home: topByEff(game, 'home', 3), away: topByEff(game, 'away', 3) }, tids = {};
   for (const side of ['home', 'away']) tids[side] = clubIdStrict(lg, game.teams[side].short) || clubIdStrict(lg, game.teams[side].name) || null;
   const all = [...sides.home.map((p, i) => ({ p, i, side: 'home' })), ...sides.away.map((p, i) => ({ p, i, side: 'away' }))];
-  cells.forEach((c, j) => { // best / worst of the (up to) six shown players, per ticked stat
-    const nums = all.map(a => leaderNum(a.p, c.key)).filter(n => n !== null), best = LEADER_LOW.has(c.key) ? Math.min(...nums) : Math.max(...nums), worst = LEADER_LOW.has(c.key) ? Math.max(...nums) : Math.min(...nums), mark = nums.length >= 2 && best !== worst;
+  cells.forEach((c, j) => { // plain white boxes: no good / bad colouring (best of six players is not a meaningful judgement here, owner 2026-11-25)
     for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {
       const id = `${side === 'home' ? 'h' : 'a'}${i}`, p = sides[side][i];
       v[`${id}.c${j}.label`] = { text: p ? c.label : '', source: 'Fix felirat (átírható)' };
       if (!p) { v[`${id}.c${j}.value`] = { text: '', source: 'Nincs ennyi pályára lépett játékos' }; v[`${id}.c${j}.box`] = { fill: '', source: '' }; continue; }
-      const [value, pct] = liveCellFns(p)[c.key](), n = leaderNum(p, c.key), tag = !mark || n === null ? null : n === best ? 'best' : n === worst ? 'worst' : null;
-      const f = field(value, `${src} – ${c.label}`), t = pct ? ` (${pct})` : '';
-      v[`${id}.c${j}.value`] = { ...(c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f), color: tag ? '#ffffff' : LIVE_TEAM_COLORS.digit };
-      v[`${id}.c${j}.box`] = { fill: tag === 'best' ? LIVE_TEAM_COLORS.better : tag === 'worst' ? LIVE_TEAM_COLORS.worse : LIVE_TEAM_COLORS.box, source: 'A hat játékos közül a legjobb zöld, a legrosszabb piros' };
+      const [value, pct] = liveCellFns(p)[c.key](), f = field(value, `${src} – ${c.label}`), t = pct ? ` (${pct})` : '';
+      v[`${id}.c${j}.value`] = c.shoot && value && pct ? { ...f, text: value + t, runs: [{ text: value }, { text: t, size: small, dy: -(big - small) * 0.3715 }] } : f;
     }
   });
   for (const side of ['home', 'away']) for (let i = 0; i < 3; i++) {

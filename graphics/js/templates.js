@@ -650,7 +650,7 @@ const ltRow = n => (n <= 9 ? 64 : 54); // many ticked stats: narrower rows
 const ltScale = n => Math.min(2, 1074 / (LT.head + n * ltRow(n) + LT.pad));
 export const liveTeamSize = keys => { const n = liveTeamKeys(keys).length, S = ltScale(n); return { w: Math.round(LT.w * S), h: Math.round((LT.head + n * ltRow(n) + LT.pad) * S), scale: S }; };
 /** The header shared by the live team comparison and the three leaders: both logos with the live score next to them, the period and the game time left in the middle. */
-function liveHeader(S, x, y, w, op) {
+function liveHeader(S, x, y, w, op, { scores = true } = {}) {
   const u = v => v * S, C = LIVE_TEAM_COLORS;
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(7), opacity: op, ...extra });
@@ -659,13 +659,15 @@ function liveHeader(S, x, y, w, op) {
   const hy = y + u(22), hh = u(94), sb = u(110), lg = u(96), mid = x + w / 2;
   els.push(
     { id: 'logoH', type: 'image', label: 'Hazai logó', group: 'Fejléc', box: [x + u(58), hy + hh / 2, lg, lg], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
-    box('scoreH.box', 'Hazai eredmény – doboz', 'Fejléc', x + u(112), hy + u(6), sb, hh - u(12)),
-    txt(66, { id: 'scoreH', label: 'Hazai eredmény', group: 'Fejléc', x: x + u(112) + sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
     txt(24, { id: 'clock', label: 'Negyed', group: 'Fejléc', x: mid, y: hy + hh / 2 - u(8), maxWidth: u(110), minScale: 0.6 }),
     txt(44, { id: 'time', label: 'Játékidő', group: 'Fejléc', x: mid, y: hy + hh / 2 + u(34), maxWidth: u(110), minScale: 0.6 }),
+    { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [x + w - u(58), hy + hh / 2, lg, lg], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
+  );
+  if (scores) els.push(
+    box('scoreH.box', 'Hazai eredmény – doboz', 'Fejléc', x + u(112), hy + u(6), sb, hh - u(12)),
+    txt(66, { id: 'scoreH', label: 'Hazai eredmény', group: 'Fejléc', x: x + u(112) + sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
     box('scoreA.box', 'Vendég eredmény – doboz', 'Fejléc', x + w - u(112) - sb, hy + u(6), sb, hh - u(12)),
     txt(66, { id: 'scoreA', label: 'Vendég eredmény', group: 'Fejléc', x: x + w - u(112) - sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
-    { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [x + w - u(58), hy + hh / 2, lg, lg], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
   );
   return els;
 }
@@ -709,7 +711,7 @@ function liveLeaderTpl(id, league, keysIn) {
   const cells = liveLeaderCells(keysIn), { w, h, scale: S } = liveLeaderSize(), x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882, u = v => v * S;
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(6), opacity: op });
-  const els = [panelFrame(league, x, y, w, h), ...liveHeader(S, x, y, w, op)];
+  const els = [panelFrame(league, x, y, w, h), ...liveHeader(S, x, y, w, op, { scores: false })]; // no big scores here: the broadcast's own score bug shows them (owner 2026-11-25)
   for (const [side, tag, col] of [['home', 'h', 0], ['away', 'a', 1]]) {
     const x0 = x + u(LL.pad) + col * u(LL.cw + LL.gap);
     for (let i = 0; i < 3; i++) {

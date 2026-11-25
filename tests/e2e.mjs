@@ -1351,7 +1351,7 @@ try {
     await page.click('#exportBtn', { trial: true }).catch(() => {});
   });
 
-  await check('live three leaders: top three by VAL per team, ticked stats, VAL not shown unless ticked, best green / worst red', async () => {
+  await check('live three leaders: top three by VAL per team, ticked stats, VAL not shown unless ticked, plain white boxes, no scores', async () => {
     const until = (n, fn, arg, o) => page.waitForFunction(fn, arg, o).catch(e => { throw new Error(`live leaders test: wait #${n} timed out (${e.message.split('\n')[0]})`); });
     await page.click('.league-toggle button[data-league="women"]');
     await page.click('#templateList button[data-id="liveleaders-women"]');
@@ -1360,11 +1360,12 @@ try {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     if (!(await page.isVisible('#livePaste'))) await page.click('details:has(#livePaste) > summary');
     await page.fill('#livePaste', feed); await page.click('#livePasteGo');
-    await until(1, () => window.__studio.current().values?.scoreH?.text === '90', null, { timeout: 15000 });
+    await until(1, () => window.__studio.current().values?.time?.text === 'VÉGE', null, { timeout: 15000 });
     const val = (id, k = 'text') => page.evaluate(([i, kk]) => window.__studio.current().values?.[i]?.[kk], [id, k]);
     assert.equal(await val('h0.name'), 'GÁLOS Hanna Andrea', 'the best VAL of the home team first');
     assert.deepEqual([await val('h0.c0.label'), await val('h0.c1.label'), await val('h0.c2.label')], ['PTS', 'REB', 'AST'], 'default stats, no VAL');
     assert.equal(await val('h0.c3.label'), undefined);
+    assert.equal(await val('scoreH'), undefined, 'no big scores on this graphic');
     await page.check('.liveLeaderStat[value="eff"]');
     await until(2, () => window.__studio.current().values?.['h0.c3.label']?.text === 'EFF', null, { timeout: 15000 }); // VAL ticked: one more box, like any other stat
     assert.match(await page.inputValue('#fileName'), /^Noi_Elo_statisztika_/);

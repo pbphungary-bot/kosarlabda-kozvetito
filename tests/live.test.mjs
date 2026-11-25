@@ -230,7 +230,7 @@ test('live team comparison graphic: about 2x bigger, columns / scores close to t
   assert.ok(TEMPLATE_TYPES.liveteam);
 });
 
-test('live three leaders: the three best VAL of each team are chosen, VAL is only the rule (not shown unless ticked), best green / worst red per stat', async () => {
+test('live three leaders: the three best VAL of each team are chosen, VAL is only the rule (not shown unless ticked), plain white boxes, no scores', async () => {
   const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563'), ids = new Set(['B203034']);
   for (const side of ['home', 'away']) {
     const top = topByEff(g, side, 3), all = playedPlayers(g, side);
@@ -242,15 +242,14 @@ test('live three leaders: the three best VAL of each team are chosen, VAL is onl
   assert.deepEqual(labels, ['PTS', 'REB', 'AST'], 'default: points, rebounds, assists – VAL is not shown');
   assert.ok(!Object.values(v).some(x => x && x.text === 'EFF'), 'no VAL on the graphic unless ticked');
   assert.equal(v['h0.name'].text, `${topByEff(g, 'home', 1)[0].name}`.length ? v['h0.name'].text : '', 'names come from the roster binder');
-  assert.equal(v.scoreH.text, '90'); assert.equal(v.time.text, 'VÉGE');
-  const six = [...topByEff(g, 'home', 3), ...topByEff(g, 'away', 3)], pts = six.map(p => p.stat.pts), max = Math.max(...pts), min = Math.min(...pts);
-  const fills = ['h0', 'h1', 'h2', 'a0', 'a1', 'a2'].map(id => v[`${id}.c0.box`].fill);
-  six.forEach((p, i) => assert.equal(fills[i], p.stat.pts === max ? LIVE_TEAM_COLORS.better : p.stat.pts === min ? LIVE_TEAM_COLORS.worse : LIVE_TEAM_COLORS.box, `PTS box of ${p.name}`));
+  assert.equal(v.time.text, 'VÉGE'); assert.ok(v.logoH.src && v.logoA.src, 'both logos stay');
+  for (const id of ['h0', 'h1', 'h2', 'a0', 'a1', 'a2']) for (const j of [0, 1, 2]) assert.equal(v[`${id}.c${j}.box`], undefined, 'plain boxes: no per-value colouring (the white box is the template default)');
+  assert.equal(v.scoreH, undefined); assert.equal(v.scoreA, undefined, 'no big scores: the broadcast score bug shows them');
   const sh = bindLiveLeaders(store, 'women', g, { leaderStats: ['fg3', 'eff'] }, ids);
   assert.deepEqual([sh['h0.c0.label'].text, sh['h0.c1.label'].text], ['EFF', '3P'], 'VAL can be ticked: one stat like the others, in the usual order');
   assert.match(sh['h0.c1.value'].text, /^\d+\/\d+ \(\d+%\)$/); assert.equal(sh['h0.c1.value'].runs[1].size, Math.round(32 * liveLeaderSize().scale * 2 / 3 * 100) / 100);
   const none = bindLiveLeaders(store, 'women', null, {}, ids);
-  assert.equal(Object.keys(none).length, 1, 'no game: only the flagged header value');
+  assert.deepEqual(Object.keys(none), [], 'no game: nothing to show (the studio says so in a notice)');
 });
 
 test('live three leaders graphic: top-left, inside the picture, clear of the score bug zones, the same size for every ticked stat count', () => {
