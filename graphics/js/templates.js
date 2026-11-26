@@ -652,7 +652,7 @@ export const liveTeamKeys = keys => {
   const k = LIVE_TEAM_STATS.map(x => x.key).filter(x => (keys || []).includes(x));
   return k.length ? k : LIVE_TEAM_DEFAULT.slice();
 };
-export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', better: GREEN, worse: RED, edge: '#3b3b40', back: 'rgba(0,0,0,0.78)', goodText: '#27d64a', badText: '#ff4d42', labelGrey: '#c9cbd1' }; // the better value's box is green, the worse red (as on all the other stat graphics); a tie stays white
+export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', better: GREEN, worse: RED, edge: '#3b3b40', back: '#121215', goodText: '#27d64a', badText: '#ff4d42', labelGrey: '#c9cbd1' }; // the better value's box is green, the worse red (as on all the other stat graphics); a tie stays white
 export const LIVE_TEAM_BUILDERS = {}; // template id → (keys) => template
 // Layout in base units, then everything is scaled (owner 2026-11-24: 2 times bigger, columns and scores closer together): S = 2 where the rows fit under 1074 px, less when many stats are ticked.
 const LT = { w: 560, head: 138, pad: 20, box: 190, outlineW: 6 }; // outlineW: width of the green / red outline in the outline look (base px, scaled; owner 2026-11-26: thicker)
@@ -690,7 +690,8 @@ function liveTeamTpl(id, league, keysIn, look) {
   const els = [
     panelFrame(league, x, y, w, h), // the PlayByPlay court (red-black-green) with the league's outlined box, like every other graphic
   ];
-  const mid = x + w / 2;
+  const mid = x + w / 2, midW = w - 2 * (PAD + BOX) - u(16);
+  const lbW = label => Math.min(midW, u(30 * 0.4 * label.length + 24)), lbH = bh => Math.min(bh * 0.66, u(40)); // the label box hugs the text (about 0.4 x the type size per letter)
   els.push(...liveHeader(S, x, y, w, op));
   keys.forEach((k, i) => {
     const d = LIVE_TEAM_STATS.find(q => q.key === k), ry = y + HEAD + i * ROW, g = `${i + 1}. statisztika`, bh = ROW - u(14), by = ry + u(7), cy = by + bh / 2;
@@ -698,7 +699,7 @@ function liveTeamTpl(id, league, keysIn, look) {
     els.push(
       box(`r${i}.h.box`, `${d.label} – hazai doboz`, g, lx, by, BOX, bh),
       txt(40, { id: `r${i}.h`, label: `${d.label} – hazai`, group: g, x: lx + BOX / 2, y: cy + 0.3715 * u(40), runs: true, color: backed ? C.text : C.digit, maxWidth: BOX - u(12), minScale: 0.5 }),
-      ...(backed ? [box(`r${i}.label.box`, `${d.label} – felirat doboz`, g, mid - (w - 2 * (PAD + BOX) - u(16)) / 2, cy - bh * 0.36, w - 2 * (PAD + BOX) - u(16), bh * 0.72, { r: u(6) })] : []), // the stat name sits on its own darker shaded box (owner 2026-11-26)
+      ...(backed ? [box(`r${i}.label.box`, `${d.label} – felirat doboz`, g, mid - lbW(d.label) / 2, cy - lbH(bh) / 2, lbW(d.label), lbH(bh), { r: u(6) })] : []), // the stat name sits on its own dark box, fitted to the text (owner 2026-11-26: not that big), as opaque as the usual stat boxes
       txt(30, { id: `r${i}.label`, label: `${d.label} – felirat`, group: g, x: mid, y: cy + 0.3715 * u(30), ...(backed ? { color: C.labelGrey } : { outline: ol(3, '#000000', 1) }), maxWidth: w - 2 * (PAD + BOX) - u(28), minScale: 0.5 }),
       box(`r${i}.a.box`, `${d.label} – vendég doboz`, g, rx, by, BOX, bh),
       txt(40, { id: `r${i}.a`, label: `${d.label} – vendég`, group: g, x: rx + BOX / 2, y: cy + 0.3715 * u(40), runs: true, color: backed ? C.text : C.digit, maxWidth: BOX - u(12), minScale: 0.5 }),
