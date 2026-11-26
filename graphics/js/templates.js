@@ -652,7 +652,7 @@ export const liveTeamKeys = keys => {
   const k = LIVE_TEAM_STATS.map(x => x.key).filter(x => (keys || []).includes(x));
   return k.length ? k : LIVE_TEAM_DEFAULT.slice();
 };
-export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', better: GREEN, worse: RED, edge: '#3b3b40', back: '#121215', goodText: '#27d64a', badText: '#ff4d42', labelGrey: '#c9cbd1' }; // the better value's box is green, the worse red (as on all the other stat graphics); a tie stays white
+export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', better: GREEN, worse: RED, edge: '#3b3b40', back: '#121215', goodText: '#27d64a', badText: '#ff4d42', labelGrey: '#c9cbd1', scoreBack: '#17171a', scoreGold: '#ffc929', scoreOpacity: 0.965 }; // the better value's box is green, the worse red (as on all the other stat graphics); a tie stays white
 export const LIVE_TEAM_BUILDERS = {}; // template id → (keys) => template
 // Layout in base units, then everything is scaled (owner 2026-11-24: 2 times bigger, columns and scores closer together): S = 2 where the rows fit under 1074 px, less when many stats are ticked.
 const LT = { w: 560, head: 138, pad: 20, box: 190, outlineW: 6 }; // outlineW: width of the green / red outline in the outline look (base px, scaled; owner 2026-11-26: thicker)
@@ -660,7 +660,7 @@ const ltRow = n => (n <= 9 ? 64 : 54); // many ticked stats: narrower rows
 const ltScale = n => Math.min(2, 1074 / (LT.head + n * ltRow(n) + LT.pad));
 export const liveTeamSize = keys => { const n = liveTeamKeys(keys).length, S = ltScale(n); return { w: Math.round(LT.w * S), h: Math.round((LT.head + n * ltRow(n) + LT.pad) * S), scale: S }; };
 /** The header shared by the live team comparison and the three leaders: both logos with the live score next to them, the period and the game time left in the middle. */
-function liveHeader(S, x, y, w, op, { scores = true, dark = false } = {}) { // dark (the optional team looks, owner 2026-11-26): the score boxes are dark like the stat boxes, the digits white (the big white blocks looked odd)
+function liveHeader(S, x, y, w, op, { scores = true, dark = false } = {}) { // dark (the optional team looks, owner 2026-11-26): the score boxes are near-black at 96.5 % opacity with gold digits (the big white blocks looked odd)
   const u = v => v * S, C = LIVE_TEAM_COLORS;
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(7), opacity: op, ...extra });
@@ -674,10 +674,10 @@ function liveHeader(S, x, y, w, op, { scores = true, dark = false } = {}) { // d
     { id: 'logoA', type: 'image', label: 'Vendég logó', group: 'Fejléc', box: [x + w - u(58), hy + hh / 2, lg, lg], fit: 'contain', opacity: op, logoOutline: true, maxOutline: 2 },
   );
   if (scores) els.push(
-    box('scoreH.box', 'Hazai eredmény – doboz', 'Fejléc', x + u(112), hy + u(6), sb, hh - u(12), dark ? { fill: C.back } : {}),
-    txt(66, { id: 'scoreH', label: 'Hazai eredmény', group: 'Fejléc', x: x + u(112) + sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: dark ? C.text : C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
-    box('scoreA.box', 'Vendég eredmény – doboz', 'Fejléc', x + w - u(112) - sb, hy + u(6), sb, hh - u(12), dark ? { fill: C.back } : {}),
-    txt(66, { id: 'scoreA', label: 'Vendég eredmény', group: 'Fejléc', x: x + w - u(112) - sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: dark ? C.text : C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
+    box('scoreH.box', 'Hazai eredmény – doboz', 'Fejléc', x + u(112), hy + u(6), sb, hh - u(12), dark ? { fill: C.scoreBack, opacity: C.scoreOpacity } : {}),
+    txt(66, { id: 'scoreH', label: 'Hazai eredmény', group: 'Fejléc', x: x + u(112) + sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: dark ? C.scoreGold : C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
+    box('scoreA.box', 'Vendég eredmény – doboz', 'Fejléc', x + w - u(112) - sb, hy + u(6), sb, hh - u(12), dark ? { fill: C.scoreBack, opacity: C.scoreOpacity } : {}),
+    txt(66, { id: 'scoreA', label: 'Vendég eredmény', group: 'Fejléc', x: x + w - u(112) - sb / 2, y: hy + hh / 2 + 0.3715 * u(66), color: dark ? C.scoreGold : C.digit, maxWidth: sb - u(10), minScale: 0.6 }),
   );
   return els;
 }
