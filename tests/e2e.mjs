@@ -1587,6 +1587,28 @@ try {
     await pick('livestat'); assert.ok(await opaque() > 5000, 'player insert drawn');
     await lp.click('.onairBtn[data-g="off"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off', null, { timeout: 15000 });
     await ov.waitForFunction(() => { const c = document.getElementById('c'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 3; i < d.length; i += 4) if (d[i]) return false; return true; }, null, { timeout: 10000 });
+    // the look options of the builder reach the overlay: a picked colour changes the pixels, the outline look replaces the filled boxes
+    const countPx = (test) => ov.evaluate(t => { const c = document.getElementById('c'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data, f = new Function('r', 'g', 'b', 'a', 'return ' + t); let n = 0; for (let i = 0; i < d.length; i += 4) if (f(d[i], d[i + 1], d[i + 2], d[i + 3])) n++; return n; }, test);
+    await pick('liveleaders');
+    const reds0 = await countPx('a > 200 && r > 220 && g < 60 && b < 60');
+    await lp.evaluate(() => { const e = document.querySelector('.lColor[data-k="name"]'); e.value = '#ff0000'; e.dispatchEvent(new Event('input', { bubbles: true })); });
+    await ov.waitForFunction(() => window.__overlay.onAir().live.leaderColors?.name === '#ff0000', null, { timeout: 15000 });
+    await ov.waitForFunction(() => /90–48/.test(window.__overlay.status()));
+    await new Promise(r => setTimeout(r, 1500));
+    assert.ok(await countPx('a > 200 && r > 220 && g < 60 && b < 60') > reds0 + 300, 'the red name colour is drawn');
+    await lp.evaluate(() => { const e = document.querySelector('#lShadowSize'); e.value = '30'; e.dispatchEvent(new Event('input', { bubbles: true })); });
+    await ov.waitForFunction(() => window.__overlay.onAir().live.leaderShadowSize === 30, null, { timeout: 15000 });
+    await lp.evaluate(() => { const e = document.querySelector('#lOutlineOn'); e.checked = false; e.dispatchEvent(new Event('change', { bubbles: true })); });
+    await ov.waitForFunction(() => window.__overlay.onAir().live.leaderOutlineOn === false, null, { timeout: 15000 });
+    await pick('liveteam');
+    const greens = () => countPx('a > 200 && r < 40 && g > 120 && g < 170 && b < 90');
+    const filled = await greens();
+    await lp.selectOption('#teamLook', 'outline');
+    await ov.waitForFunction(() => window.__overlay.onAir().live.teamLook === 'outline', null, { timeout: 15000 });
+    await new Promise(r => setTimeout(r, 1500));
+    const outlined = await greens();
+    assert.ok(filled > 20000, `filled look: big green boxes (${filled})`); assert.ok(outlined > 500 && outlined < filled / 3, `outline look: only thin green outlines (${outlined} vs ${filled})`);
+    await lp.selectOption('#teamLook', 'fill'); await lp.click('.onairBtn[data-g="off"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off', null, { timeout: 15000 });
     // a reload of the overlay (OBS cache refresh) keeps the choice: it is on the server
     await lp.click('.onairBtn[data-g="liveleaders"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'liveleaders', null, { timeout: 15000 });
     await ov.reload(); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'liveleaders' && /90–48/.test(window.__overlay.status()), null, { timeout: 20000 });

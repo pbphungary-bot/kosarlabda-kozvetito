@@ -41,7 +41,7 @@ async function ensureImages(t, values) {
 function buildTemplate(game) {
   const t = templateById(`${onAir.graphic}-${P.league}`), L = onAir.live;
   if (onAir.graphic === 'liveleaders') return LIVE_LEADER_BUILDERS[t.id](liveKeys(L.leaderStats));
-  if (onAir.graphic === 'liveteam') return LIVE_TEAM_BUILDERS[t.id](liveTeamKeys(L.teamStats));
+  if (onAir.graphic === 'liveteam') return LIVE_TEAM_BUILDERS[t.id](liveTeamKeys(L.teamStats), L.teamLook);
   const h = game.teams.home, homeId = clubIdStrict(P.league, h.short) || clubIdStrict(P.league, h.name); // which score bug the broadcast carries (the host club decides)
   return LIVE_BUILDERS[t.id](liveKeys(Array.isArray(L.stats) && L.stats.length ? L.stats : L.variant), liveCorner(L.corner), homeId ? bugSizeOf(P.league, homeId) : 'large');
 }

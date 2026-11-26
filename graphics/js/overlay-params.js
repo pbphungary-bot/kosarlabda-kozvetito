@@ -21,6 +21,7 @@ export function parseOverlay(search) {
     stats: list(q.get('stats')).length ? list(q.get('stats')) : undefined,
     teamStats: list(q.get('teamStats')).length ? list(q.get('teamStats')) : undefined,
     leaderStats: list(q.get('leaderStats')).length ? list(q.get('leaderStats')) : undefined,
+    teamLook: q.get('teamLook') === 'outline' ? 'outline' : undefined,
   };
   for (const k of Object.keys(live)) if (live[k] === undefined) delete live[k];
   const refresh = Math.min(60, Math.max(2, Number(q.get('refresh')) || 5));
@@ -57,10 +58,18 @@ export function fixedLinkQuery({ game, token = '' }) {
 export function normOnAir(raw) {
   const r = raw && typeof raw === 'object' ? raw : {};
   const keys = a => (Array.isArray(a) ? a.map(String).filter(k => /^[a-z0-9]{1,12}$/.test(k)).slice(0, 20) : []);
+  const hex = s => (/^#[0-9a-f]{6}$/i.test(String(s ?? '')) ? String(s).toLowerCase() : null);
   const live = { side: r.side === 'away' ? 'away' : 'home' };
   if (typeof r.player === 'string' && /^[A-Za-z0-9_-]{1,20}$/.test(r.player)) live.player = r.player;
   if (r.corner === 'gap' || r.corner === 'tl') live.corner = r.corner;
   if (typeof r.variant === 'string' && /^[a-z0-9]{1,20}$/.test(r.variant)) live.variant = r.variant;
   for (const k of ['stats', 'teamStats', 'leaderStats']) if (keys(r[k]).length) live[k] = keys(r[k]);
+  // the look of the three leaders (names, stat names, numbers, photo outline: hex colours; outline / shadow on-off; shadow size 0–40 px) and of the team comparison
+  const colors = {}; for (const k of ['name', 'label', 'value', 'outline']) { const c = hex(r.leaderColors?.[k]); if (c) colors[k] = c; }
+  if (Object.keys(colors).length) live.leaderColors = colors;
+  if (r.leaderOutlineOn === false) live.leaderOutlineOn = false;
+  if (r.leaderShadowOn === false) live.leaderShadowOn = false;
+  if (r.leaderShadowSize !== undefined && r.leaderShadowSize !== null && r.leaderShadowSize !== '' && Number.isFinite(Number(r.leaderShadowSize))) live.leaderShadowSize = Math.min(40, Math.max(0, Number(r.leaderShadowSize)));
+  if (r.teamLook === 'outline') live.teamLook = 'outline';
   return { graphic: OVERLAY_GRAPHICS[r.graphic] ? r.graphic : 'off', live };
 }

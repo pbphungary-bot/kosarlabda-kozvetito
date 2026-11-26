@@ -655,7 +655,7 @@ export const liveTeamKeys = keys => {
 export const LIVE_TEAM_COLORS = { bar: '#17171a', strip: '#26262a', box: '#f4f4f4', digit: '#0b0b0c', text: '#ffffff', better: GREEN, worse: RED, edge: '#3b3b40' }; // the better value's box is green, the worse red (as on all the other stat graphics); a tie stays white
 export const LIVE_TEAM_BUILDERS = {}; // template id → (keys) => template
 // Layout in base units, then everything is scaled (owner 2026-11-24: 2 times bigger, columns and scores closer together): S = 2 where the rows fit under 1074 px, less when many stats are ticked.
-const LT = { w: 560, head: 138, pad: 20, box: 190 };
+const LT = { w: 560, head: 138, pad: 20, box: 190, outlineW: 4 }; // outlineW: width of the green / red outline in the outline look (base px, scaled)
 const ltRow = n => (n <= 9 ? 64 : 54); // many ticked stats: narrower rows
 const ltScale = n => Math.min(2, 1074 / (LT.head + n * ltRow(n) + LT.pad));
 export const liveTeamSize = keys => { const n = liveTeamKeys(keys).length, S = ltScale(n); return { w: Math.round(LT.w * S), h: Math.round((LT.head + n * ltRow(n) + LT.pad) * S), scale: S }; };
@@ -681,11 +681,12 @@ function liveHeader(S, x, y, w, op, { scores = true } = {}) {
   );
   return els;
 }
-function liveTeamTpl(id, league, keysIn) {
-  const keys = liveTeamKeys(keysIn), { w, h, scale: S } = liveTeamSize(keys), ROW = ltRow(keys.length) * S, x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
+function liveTeamTpl(id, league, keysIn, look) {
+  const outline = look === 'outline', keys = liveTeamKeys(keysIn), { w, h, scale: S } = liveTeamSize(keys), ROW = ltRow(keys.length) * S, x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
   const u = v => v * S, W = u(LT.w), HEAD = u(LT.head), PAD = u(LT.pad), BOX = u(LT.box);
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
-  const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: C.box, sw: 0, r: u(7), opacity: op, ...extra });
+  // look 'outline' (experiment, owner 2026-11-26): no filled boxes, the numbers stand on the court and the better / worse value gets a green / red OUTLINE (the colour comes from the binder)
+  const box = (idv, label, group, bx, by, bw, bh, extra) => ({ id: idv, type: 'framed', label, group, box: [bx + bw / 2, by + bh / 2, bw, bh], fill: outline ? '' : C.box, sw: outline ? u(LT.outlineW) : 0, r: u(7), opacity: op, ...extra });
   const els = [
     panelFrame(league, x, y, w, h), // the PlayByPlay court (red-black-green) with the league's outlined box, like every other graphic
   ];
@@ -696,16 +697,16 @@ function liveTeamTpl(id, league, keysIn) {
     const lx = x + PAD, rx = x + w - PAD - BOX;
     els.push(
       box(`r${i}.h.box`, `${d.label} – hazai doboz`, g, lx, by, BOX, bh),
-      txt(40, { id: `r${i}.h`, label: `${d.label} – hazai`, group: g, x: lx + BOX / 2, y: cy + 0.3715 * u(40), runs: true, color: C.digit, maxWidth: BOX - u(12), minScale: 0.5 }),
+      txt(40, { id: `r${i}.h`, label: `${d.label} – hazai`, group: g, x: lx + BOX / 2, y: cy + 0.3715 * u(40), runs: true, color: outline ? C.text : C.digit, ...(outline ? { outline: ol(3, '#000000', 1) } : {}), maxWidth: BOX - u(12), minScale: 0.5 }),
       txt(30, { id: `r${i}.label`, label: `${d.label} – felirat`, group: g, x: mid, y: cy + 0.3715 * u(30), outline: ol(3, '#000000', 1), maxWidth: w - 2 * (PAD + BOX) - u(12), minScale: 0.5 }),
       box(`r${i}.a.box`, `${d.label} – vendég doboz`, g, rx, by, BOX, bh),
-      txt(40, { id: `r${i}.a`, label: `${d.label} – vendég`, group: g, x: rx + BOX / 2, y: cy + 0.3715 * u(40), runs: true, color: C.digit, maxWidth: BOX - u(12), minScale: 0.5 }),
+      txt(40, { id: `r${i}.a`, label: `${d.label} – vendég`, group: g, x: rx + BOX / 2, y: cy + 0.3715 * u(40), runs: true, color: outline ? C.text : C.digit, ...(outline ? { outline: ol(3, '#000000', 1) } : {}), maxWidth: BOX - u(12), minScale: 0.5 }),
     );
   });
   const t = base(id, league, 'liveteam', 'Élő csapat-összevetés (saját)', 'Élő csapat-összevetés', { elements: els, background: null, reference: null, thumb: `templates/${id}/thumb.jpg` });
   t.panel = { box: [x, y, x + w, y + h], alpha: 0.965 };
   t.inner = { box: [x + 8, y + 8, x + w - 8, y + h - 8], r: 22 };
-  t.liveTeam = { keys, scale: S };
+  t.liveTeam = { keys, scale: S, look: outline ? 'outline' : 'fill' };
   return t;
 }
 // ───────────────────────── Élő három vezető (live three leaders) ─────────────────────────
@@ -766,7 +767,7 @@ function liveLeaderEntry(id, league) {
 }
 
 function liveTeamEntry(id, league) {
-  LIVE_TEAM_BUILDERS[id] = keys => liveTeamTpl(id, league, keys);
+  LIVE_TEAM_BUILDERS[id] = (keys, look) => liveTeamTpl(id, league, keys, look);
   return LIVE_TEAM_BUILDERS[id](LIVE_TEAM_DEFAULT);
 }
 

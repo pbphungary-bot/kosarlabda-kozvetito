@@ -3,13 +3,14 @@
 import { gameCode, decodeFeed, parseGame, playedPlayers, applyOfficialNames, needsOfficialNames } from './live.js';
 import { LIVE_STATS, LIVE_TEAM_STATS, LIVE_VARIANTS, LIVE_CORNERS, liveKeys, liveTeamKeys } from './templates.js';
 import { OVERLAY_GRAPHICS, fixedLinkQuery, normOnAir, gameLeague } from './overlay-params.js';
+import { LEADER_COLOR_DEFAULTS, LEADER_SHADOW_DEFAULT } from './binders.js';
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ls = { get: k => { try { return localStorage.getItem(k) || ''; } catch { return ''; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } } };
 const GRAPHICS = { ...OVERLAY_GRAPHICS, off: 'Nincs adásban' };
 // the choice of this game; every graphic keeps its own ticks while the commentator switches between them
-const S = { game: null, graphic: 'off', players: [], teams: null, side: 'home', player: '', corner: '', variant: '', stats: [], teamStats: [], leaderStats: [] };
+const S = { game: null, graphic: 'off', players: [], teams: null, side: 'home', player: '', corner: '', variant: '', stats: [], teamStats: [], leaderStats: [], leaderColors: {}, leaderOutlineOn: true, leaderShadowOn: true, leaderShadowSize: LEADER_SHADOW_DEFAULT, teamLook: 'fill' };
 let pushTimer = null, loadSeq = 0, touchSeq = 0, lastGame = null; // touchSeq rises with every click of the user: a slower reload of the saved state must never overwrite it
 
 { const qt = new URLSearchParams(location.search).get('token'); if (qt) ls.set('nbia.live.token', qt); } // the launcher prints a link that already carries the key
@@ -25,8 +26,14 @@ function onAirHtml() {
 }
 function optionsHtml() {
   const g = S.graphic;
-  if (g === 'liveteam') return `<small class="hint">Pipáld be, mely statisztikák látsszanak (a kipipáltak jelennek meg; alapból egy kész csomag van kipipálva):</small><div class="ticks">${tick('tStat', LIVE_TEAM_STATS, liveTeamKeys(S.teamStats))}</div>`;
-  if (g === 'liveleaders') return `<small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa (alap: PTS, REB, AST). Pipáld be, mely statisztikák látsszanak:</small><div class="ticks">${tick('lStat', LIVE_STATS, liveKeys(S.leaderStats))}</div>`;
+  if (g === 'liveteam') return `<small class="hint">Pipáld be, mely statisztikák látsszanak (a kipipáltak jelennek meg; alapból egy kész csomag van kipipálva):</small><div class="ticks">${tick('tStat', LIVE_TEAM_STATS, liveTeamKeys(S.teamStats))}</div>
+    <label>A jobb / rosszabb érték jelölése<select id="teamLook"><option value="fill" ${S.teamLook !== 'outline' ? 'selected' : ''}>Zöld / piros kitöltött doboz (jelenlegi)</option><option value="outline" ${S.teamLook === 'outline' ? 'selected' : ''}>Zöld / piros körvonal, a számok a pályán (kipróbálás)</option></select></label>`;
+  if (g === 'liveleaders') return `<small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa (alap: PTS, REB, AST). Pipáld be, mely statisztikák látsszanak:</small><div class="ticks">${tick('lStat', LIVE_STATS, liveKeys(S.leaderStats))}</div>
+    <small class="hint">Megjelenés (mindenhol egyformán, nem játékosonként):</small>
+    <div class="grid">${[['name', 'Nevek'], ['label', 'Statisztika-nevek (PTS, REB…)'], ['value', 'Számok'], ['outline', 'Fotók körvonala']].map(([k, lab]) => `<label>${lab}<input type="color" class="lColor" data-k="${k}" value="${S.leaderColors[k] || LEADER_COLOR_DEFAULTS[k]}" style="width:60px;padding:0"></label>`).join('')}</div>
+    <div class="ticks"><label><input type="checkbox" id="lOutlineOn" ${S.leaderOutlineOn !== false ? 'checked' : ''}> Körvonal a fotók körül</label> <label><input type="checkbox" id="lShadowOn" ${S.leaderShadowOn !== false ? 'checked' : ''}> Árnyék</label>
+      <label>Árnyék mérete <input type="range" id="lShadowSize" min="0" max="40" step="1" value="${S.leaderShadowSize}" style="width:140px"> <output id="lShadowOut">${S.leaderShadowSize}</output> px</label>
+      <button type="button" id="lReset" class="ghost">Színek visszaállítása (fehér)</button></div>`;
   if (g === 'livestat') {
     const pl = S.players.filter(p => p.side === S.side);
     return `<div class="grid"><label>Csapat<select id="side"><option value="home" ${S.side === 'home' ? 'selected' : ''}>Hazai${S.teams ? ' – ' + esc(S.teams.home) : ''}</option><option value="away" ${S.side === 'away' ? 'selected' : ''}>Vendég${S.teams ? ' – ' + esc(S.teams.away) : ''}</option></select></label>
@@ -38,14 +45,19 @@ function optionsHtml() {
   return '<small class="hint">Most semmi nincs adásban: az OBS-forrás átlátszó marad. Kattints a fenti gombok egyikére.</small>';
 }
 function readOptions() {
-  if (S.graphic === 'liveteam') S.teamStats = ticked('tStat');
-  if (S.graphic === 'liveleaders') S.leaderStats = ticked('lStat');
+  if (S.graphic === 'liveteam') { S.teamStats = ticked('tStat'); S.teamLook = $('teamLook')?.value === 'outline' ? 'outline' : 'fill'; }
+  if (S.graphic === 'liveleaders') {
+    S.leaderStats = ticked('lStat');
+    const c = {}; for (const e of document.querySelectorAll('.lColor')) if (e.value && e.value.toLowerCase() !== LEADER_COLOR_DEFAULTS[e.dataset.k]) c[e.dataset.k] = e.value.toLowerCase();
+    S.leaderColors = { ...S.leaderColors, ...c }; for (const e of document.querySelectorAll('.lColor')) if (e.value.toLowerCase() === LEADER_COLOR_DEFAULTS[e.dataset.k]) delete S.leaderColors[e.dataset.k];
+    S.leaderOutlineOn = !!$('lOutlineOn')?.checked; S.leaderShadowOn = !!$('lShadowOn')?.checked; S.leaderShadowSize = Number($('lShadowSize')?.value ?? S.leaderShadowSize);
+  }
   if (S.graphic === 'livestat') {
     S.side = $('side')?.value || S.side; S.player = $('player')?.value || S.player; S.corner = $('corner')?.value || S.corner;
     const v = $('variant')?.value; S.stats = v ? liveKeys(v) : ticked('pStat');
   }
 }
-const payload = () => ({ graphic: S.graphic, side: S.side, player: S.player || undefined, corner: S.corner || undefined, stats: S.stats, teamStats: S.teamStats, leaderStats: S.leaderStats });
+const payload = () => ({ graphic: S.graphic, side: S.side, player: S.player || undefined, corner: S.corner || undefined, stats: S.stats, teamStats: S.teamStats, leaderStats: S.leaderStats, leaderColors: S.leaderColors, leaderOutlineOn: S.leaderOutlineOn, leaderShadowOn: S.leaderShadowOn, leaderShadowSize: S.leaderShadowSize, teamLook: S.teamLook });
 
 /** The choice goes to the server (a moment after the last click); the OBS overlay and the preview below pick it up by themselves. */
 function pushSoon() { clearTimeout(pushTimer); pushTimer = setTimeout(push, 250); }
@@ -84,11 +96,12 @@ async function loadState(game) {
     if (t0 !== touchSeq) return;
     S.graphic = n.graphic; S.side = n.live.side; S.player = n.live.player || ''; S.corner = n.live.corner || '';
     S.stats = n.live.stats || []; S.teamStats = n.live.teamStats || []; S.leaderStats = n.live.leaderStats || [];
+    S.leaderColors = n.live.leaderColors || {}; S.leaderOutlineOn = n.live.leaderOutlineOn !== false; S.leaderShadowOn = n.live.leaderShadowOn !== false; S.leaderShadowSize = n.live.leaderShadowSize ?? LEADER_SHADOW_DEFAULT; S.teamLook = n.live.teamLook === 'outline' ? 'outline' : 'fill';
   } catch { /* offline: start from nothing */ }
 }
 async function loadGame() {
   const game = gameCode($('game').value), seq = ++loadSeq;
-  S.players = []; S.teams = null; S.game = game; if (S.game !== lastGame) { S.graphic = 'off'; S.side = 'home'; S.player = ''; S.corner = ''; S.stats = []; S.teamStats = []; S.leaderStats = []; lastGame = game; }
+  S.players = []; S.teams = null; S.game = game; if (S.game !== lastGame) { S.graphic = 'off'; S.side = 'home'; S.player = ''; S.corner = ''; S.stats = []; S.teamStats = []; S.leaderStats = []; S.leaderColors = {}; S.leaderOutlineOn = true; S.leaderShadowOn = true; S.leaderShadowSize = LEADER_SHADOW_DEFAULT; S.teamLook = 'fill'; lastGame = game; }
   ls.set('nbia.live.game', $('game').value); ls.set('nbia.live.token', $('token').value.trim());
   if (!game) { $('gameInfo').textContent = ''; S.graphic = 'off'; return refreshView(); }
   $('gameInfo').textContent = 'Betöltés…';
@@ -119,6 +132,11 @@ $('opts').addEventListener('change', e => {
   if (e.target.id === 'side') { S.side = e.target.value; S.player = S.players.find(p => p.side === S.side)?.code || ''; $('opts').innerHTML = optionsHtml(); }
   readOptions(); pushSoon();
 });
+$('opts').addEventListener('input', e => { // the slider and the colour pickers act while they are moved (pushes are debounced)
+  if (e.target.id === 'lShadowSize') $('lShadowOut').textContent = e.target.value;
+  if (e.target.id === 'lShadowSize' || e.target.classList.contains('lColor')) { touchSeq++; readOptions(); pushSoon(); }
+});
+$('opts').addEventListener('click', e => { if (e.target.id === 'lReset') { touchSeq++; S.leaderColors = {}; $('opts').innerHTML = optionsHtml(); pushSoon(); } });
 $('game').onchange = loadGame;
 $('token').onchange = loadGame;
 $('copy').onclick = async () => { try { await navigator.clipboard.writeText($('link').value); $('copied').textContent = 'Kimásolva.'; } catch { $('link').select(); $('copied').textContent = 'Jelöld ki és másold (Ctrl+C).'; } };
