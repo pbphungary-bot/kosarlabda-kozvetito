@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-26T15:02:46.609743+00:00",
+  "checked_at": "2026-11-26T16:01:02.178176+00:00",
   "statistics": {
-    "total": 1306,
-    "fresh": 615,
-    "fresh_with_summary": 421,
+    "total": 1312,
+    "fresh": 621,
+    "fresh_with_summary": 426,
     "missing_dates": 292,
-    "headline_only": 571,
-    "untagged": 544,
-    "sources_ok": 21,
-    "sources_partial": 1,
+    "headline_only": 572,
+    "untagged": 549,
+    "sources_ok": 22,
+    "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 6,
+    "new_articles": 11,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 3,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -309,8 +309,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -405,7 +405,7 @@
       "source_coverage": false,
       "fallback": [
         "wp-json:HTTPError",
-        "sitemap:HTTPError",
+        "sitemap:URLError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:0"
@@ -480,6 +480,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -560,22 +561,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 29,
       "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 26,
-      "article_errors": 3,
-      "listing_errors": [
-        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/a-cimvedo-ellen-jatsszuk-az-ev-utolso-hazai-bajnokijat/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/negyven-lott-golnal-sem-alltak-meg-ferfi-keziseink/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 26,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],

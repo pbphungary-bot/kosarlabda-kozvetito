@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-26T15:02:46.609743+00:00",
+  "checked_at": "2026-11-26T16:01:02.178176+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 3,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -294,8 +294,8 @@
       "listing_pages_failed": 0,
       "candidates": 13,
       "attempted": 13,
-      "already_saved": 10,
-      "added": 0,
+      "already_saved": 9,
+      "added": 1,
       "repaired": 3,
       "article_errors": 0,
       "listing_errors": [],
@@ -390,7 +390,7 @@
       "source_coverage": false,
       "fallback": [
         "wp-json:HTTPError",
-        "sitemap:HTTPError",
+        "sitemap:URLError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:0"
@@ -465,6 +465,7 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -545,26 +546,70 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 29,
       "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 26,
-      "article_errors": 3,
-      "listing_errors": [
-        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/a-cimvedo-ellen-jatsszuk-az-ev-utolso-hazai-bajnokijat/: TimeoutError: The read operation timed out",
-        "article https://tfse.hu/negyven-lott-golnal-sem-alltak-meg-ferfi-keziseink/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 26,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Kifizetődnek az A-csoportos percek – interjú Kendelényi Lucával",
+      "summary": "Bár nem indult jól az évad a számszerű eredményeket tekintve a Vasas Akadémia élvonalbeli csapata számára, a fiatal játékosok így is hétről hétre, hónapról hónapra fejlődnek a klubnál.",
+      "url": "https://wbasket.hu/kifizetodnek-az-a-csoportos-percek-interju-kendelenyi-lucaval/",
+      "published_at": "2026.11.26. 16:46",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Örömhír Körmenden: Bartik Zalán ismét edzésbe állt",
+      "summary": "A teljes visszatérésig ugyan még hosszú út áll előtte, de a körmendiek bíznak benne, hogy minél hamarabb ismét a pályán láthatják a játékost.",
+      "url": "https://bball1.hu/oromhir-kormenden-bartik-zalan-ismet-edzesbe-allt/",
+      "published_at": "2026-11-26T16:22:41+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Videó: Hunbasket „Hét Csapata” kisfilm a magyar válogatottról",
+      "summary": "A Hunbasket „Hét Csapata” sorozatának aktuális epizódjában a női válogatottat kísérték el a szerkesztők Hamburgba, majd tartottak az együttessel Miskolcra az Eb-selejtező keretein belül.",
+      "url": "https://wbasket.hu/video-hunbasket-het-csapata-kisfilm-a-magyar-valogatottrol/",
+      "published_at": "2026.11.26. 16:16",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Már csak egy hely kiadó az Euroliga középdöntőjében",
+      "summary": "Szerdán teljes fordulót rendeztek a női kosárlabda Euroligában.",
+      "url": "https://wbasket.hu/mar-csak-egy-hely-kiado-az-euroliga-kozepdontojeben/",
+      "published_at": "2026.11.26. 16:03",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Európában fejlesztene sportcsarnokokat az NBA",
+      "summary": "Európában fejlesztene sportcsarnokokat az NBA",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/europaban-fejlesztene-sportcsarnokokat-az-nba/",
+      "published_at": "2026-11-26T16:00:12+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
     {
       "source": "WBasket.hu",
       "title": "Lelik Réka dupla-duplája és az Emlak Konut továbbjutása",
@@ -574,6 +619,19 @@
       "summary_method": "article_body",
       "teams": [],
       "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Letáborozunk Pasaréten, zsinórban három hazai bajnoki vár ránk",
+      "summary": "NBI/A-s csapatunk múltheti győzelmét követően hosszú időn keresztül élvezheti a hazai pálya előnyét, ugyanis zsinórban három mérkőzést fogunk játszani a Pasaréti Sportcentrumban.",
+      "url": "https://vasasbasket.hu/index.php/letaborozunk-pasareten-zsinorban-harom-hazai-bajnoki-var-rank/",
+      "published_at": "2026-11-26T15:01:37+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
     },
     {
       "source": "WBasket.hu",
