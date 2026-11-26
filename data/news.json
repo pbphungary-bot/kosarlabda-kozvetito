@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-26T09:27:19.836819+00:00",
+  "checked_at": "2026-11-26T10:32:40.059392+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -465,8 +465,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -547,20 +545,18 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
       "candidates": 29,
       "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 28,
-      "article_errors": 1,
-      "listing_errors": [
-        "article https://tfse.hu/eros-mav-elore-ellen-maradtunk-alul/: TimeoutError: The read operation timed out"
-      ],
-      "usable_articles": 28,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
