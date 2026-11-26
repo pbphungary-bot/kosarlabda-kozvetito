@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-25T18:18:38.130Z",
+ "updated_at": "2026-11-26T06:28:24.201Z",
  "source": "FIBA / Basketball Champions League (hivatalos játéklista)",
  "games": [
   {
@@ -194,8 +194,8 @@
    "awayId": null,
    "status": "finished",
    "score": {
-    "home": 50,
-    "away": 44
+    "home": 79,
+    "away": 69
    },
    "venue": "DVTK Arena",
    "round": "Regular Season 2"
@@ -212,8 +212,8 @@
    "awayId": null,
    "status": "finished",
    "score": {
-    "home": 47,
-    "away": 34
+    "home": 80,
+    "away": 55
    },
    "venue": "Arena Sopron",
    "round": "Regular Season 2"
