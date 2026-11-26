@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-26T12:38:14.794532+00:00",
+  "checked_at": "2026-11-26T13:59:21.299153+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -546,30 +546,52 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "status": "error",
+      "reason": "listing_unreachable",
+      "listing_pages_ok": 0,
+      "listing_pages_failed": 2,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 2,
-      "article_errors": 6,
+      "repaired": 0,
+      "article_errors": 0,
       "listing_errors": [
         "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/: HTTPError: HTTP Error 507: Insufficient Storage"
+        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 2,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:TimeoutError",
+        "sitemap:TimeoutError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:0"
+      ]
     }
   ],
   "articles": [
+    {
+      "source": "WBasket.hu",
+      "title": "Fontos győzelmet arattak Takács-Kiss Virágék Franciaországban",
+      "summary": "Az Euroliga 5. fordulójában a Valencia 75-57-es sikert aratott a Carolo Basket otthonában.",
+      "url": "https://wbasket.hu/fontos-gyozelmet-arattak-takacs-kiss-viragek-franciaorszagban/",
+      "published_at": "2026.11.26. 14:10",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A végére bedarálták ellenfelüket Juhász Dorkáék",
+      "summary": "Az Euroliga 5. fordulójában a Galatasaray 80-59-re múlta felül a Kangoeroes Basket Mechelen csapatát.",
+      "url": "https://wbasket.hu/a-vegere-bedaraltak-ellenfeluket-juhasz-dorkaek/",
+      "published_at": "2026.11.26. 13:47",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "Törölték a válogatott járatát, késő este ér Stockholmba a csapat",
