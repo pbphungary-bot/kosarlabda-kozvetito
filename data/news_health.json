@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-26T13:59:21.299153+00:00",
+  "checked_at": "2026-11-26T15:02:46.609743+00:00",
   "statistics": {
-    "total": 1305,
-    "fresh": 614,
-    "fresh_with_summary": 420,
+    "total": 1306,
+    "fresh": 615,
+    "fresh_with_summary": 421,
     "missing_dates": 292,
     "headline_only": 571,
-    "untagged": 543,
+    "untagged": 544,
     "sources_ok": 21,
-    "sources_partial": 0,
-    "sources_failed": 10,
-    "new_articles": 7,
+    "sources_partial": 1,
+    "sources_failed": 9,
+    "new_articles": 6,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 16,
+    "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
   },
   "sources": [
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 2,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -480,7 +480,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -561,29 +560,23 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "error",
-      "reason": "listing_unreachable",
-      "listing_pages_ok": 0,
-      "listing_pages_failed": 2,
-      "candidates": 0,
-      "attempted": 0,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
-      "article_errors": 0,
+      "repaired": 26,
+      "article_errors": 3,
       "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
-        "https://tfse.hu/szakosztaly/kosarlabda-nb1-noi/: TimeoutError: The read operation timed out"
+        "article https://tfse.hu/a-labdaeladasok-es-a-pontatlan-befejezesek-dontottek-a-vasarhely-ellen/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/a-cimvedo-ellen-jatsszuk-az-ev-utolso-hazai-bajnokijat/: TimeoutError: The read operation timed out",
+        "article https://tfse.hu/negyven-lott-golnal-sem-alltak-meg-ferfi-keziseink/: TimeoutError: The read operation timed out"
       ],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:TimeoutError",
-        "sitemap:TimeoutError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:0"
-      ]
+      "usable_articles": 26,
+      "source_coverage": true
     }
   ],
   "failed_sources": [
@@ -595,8 +588,7 @@
     "Klub: OSE Lions",
     "Klub: ELTE BEAC Újbuda",
     "Klub: KSC Szekszárd",
-    "Klub: Sopron Basket",
-    "Klub: TFSE"
+    "Klub: Sopron Basket"
   ],
   "status": "partial"
 }
