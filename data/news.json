@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-26T05:49:32.156136+00:00",
+  "checked_at": "2026-11-26T06:46:46.643550+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -465,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -833,6 +835,16 @@
       "teams": [
         "women|DVTK HUNTHERM"
       ]
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Női Európa Kupa: A Sopron és a DVTK is nyert",
+      "summary": "<div><strong>Az odavágónál szorosabb küzdelemben, de végig vezetve nyert a DVTK</strong></div> <div> </div> <div><em>Az Európa Kupa 5. fordulójában a DVTK HUNTHEM 79-69-re múlta felül a ZKK Brod Na Savi csapatát.</em></div> <div> </div> <div>A két gárda horvátországi mérkőzését 89-56-ra nyerte a DVTK.",
+      "url": "https://hunbasket.hu/hir/77759/noi-europa-kupa-a-sopron-es-a-dvtk-is-nyert/",
+      "published_at": "2026. 11. 25.",
+      "summary_method": "source_description",
+      "teams": [],
+      "league": "women"
     },
     {
       "source": "BB1.hu",

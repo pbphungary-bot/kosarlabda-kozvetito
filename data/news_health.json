@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-26T05:49:32.156136+00:00",
+  "checked_at": "2026-11-26T06:46:46.643550+00:00",
   "statistics": {
-    "total": 1297,
-    "fresh": 607,
-    "fresh_with_summary": 413,
+    "total": 1298,
+    "fresh": 608,
+    "fresh_with_summary": 414,
     "missing_dates": 292,
     "headline_only": 570,
-    "untagged": 537,
+    "untagged": 538,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 5,
+    "new_articles": 6,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -38,8 +38,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -480,6 +480,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
