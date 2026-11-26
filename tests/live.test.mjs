@@ -312,3 +312,28 @@ test('names with ő / ű: the feed writes "?", the mkosz.hu names are applied by
   const v = bindLiveStat(store, 'women', g, { side: 'home', player: by('Halasy').code, stats: ['pts'] }, new Set());
   assert.equal(v.name.text, 'HALASY Enikő');
 });
+
+test('team comparison, optional looks (owner 2026-11-26): soft dark backing in both; "outline" = thick green / red outline, "numbers" = green / red / white numbers; the default look is unchanged', async () => {
+  const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563');
+  const keys = ['fg', 'reb', 'tov'], BACK = '#121215';
+  const fillTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys), outTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'outline'), numTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'numbers');
+  const box = (t, id) => t.elements.find(e => e.id === id);
+  assert.equal(box(fillTpl, 'r0.h.box').fill, '#f4f4f4'); assert.equal(box(fillTpl, 'r0.h.box').sw, 0, 'default look: filled box, no outline');
+  assert.equal(box(outTpl, 'r0.h.box').fill, BACK); assert.ok(box(outTpl, 'r0.h.box').sw > 0, 'outline look: dark backing + an outline');
+  assert.equal(box(numTpl, 'r0.h.box').fill, BACK); assert.equal(box(numTpl, 'r0.h.box').sw, 0, 'numbers look: dark backing, no outline');
+  assert.equal(box(fillTpl, 'r0.label.box'), undefined, 'default look: no box behind the stat name'); assert.equal(box(fillTpl, 'r0.label').color, '#ffffff');
+  for (const t of [outTpl, numTpl]) { assert.equal(box(t, 'r0.label.box').fill, BACK, 'the stat name sits on its own dark box'); assert.equal(box(t, 'r0.label.box').opacity, box(fillTpl, 'r0.h.box').opacity, 'as opaque as the usual stat boxes'); assert.ok(box(t, 'r0.label.box').box[2] < box(t, 'r0.h.box').box[2] / 2, 'the label box is small, fitted to the text'); assert.equal(box(t, 'r0.label').color, '#c9cbd1', '…in light grey'); }
+  assert.equal(box(fillTpl, 'scoreH.box').fill, '#f4f4f4'); assert.equal(box(fillTpl, 'scoreH').color, '#0b0b0c', 'default look: the white score boxes with dark digits are unchanged');
+  for (const t of [outTpl, numTpl]) { for (const id of ['scoreH.box', 'scoreA.box']) { assert.equal(box(t, id).fill, '#17171a'); assert.equal(box(t, id).opacity, 0.965); assert.equal(box(t, id).stroke, '#7d8088'); assert.ok(box(t, id).sw > 0 && box(t, id).sw < 6, 'a very thin grey outline'); } assert.equal(box(t, 'scoreH').color, '#ffc929'); assert.equal(box(t, 'scoreA').color, '#ffc929', 'optional looks: near-black score boxes at 96.5 % with gold digits (the big white blocks looked odd)'); }
+  assert.equal(fillTpl.liveTeam.look, 'fill'); assert.equal(outTpl.liveTeam.look, 'outline'); assert.equal(numTpl.liveTeam.look, 'numbers');
+  const dflt = bindLiveTeam(store, 'women', g, { teamStats: keys }), out = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'outline' }), num = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'numbers' });
+  assert.equal(dflt['r1.h.box'].fill, '#0b9444'); assert.equal(dflt['r1.a.box'].fill, '#ec4036', 'default: filled green / red (REB 42 vs 31)');
+  assert.equal(out['r1.h.box'].stroke, '#0b9444'); assert.equal(out['r1.a.box'].stroke, '#ec4036'); assert.equal(out['r1.h.color'], undefined); assert.equal(out['r1.h'].color, '#ffffff', 'outline look: white numbers');
+  assert.equal(num['r1.h'].color, '#27d64a'); assert.equal(num['r1.a'].color, '#ff4d42', 'numbers look: better green, worse red');
+  assert.equal(num['r1.h.box'].fill, undefined); assert.equal(num['r1.h.box'].stroke, undefined, 'numbers look: the backing comes from the template, no outline');
+  // equal values: nobody is marked, white numbers
+  const g2 = structuredClone(g); g2.teams.home.team.tov = g2.teams.away.team.tov;
+  const tie = bindLiveTeam(store, 'women', g2, { teamStats: keys, teamLook: 'numbers' });
+  assert.equal(tie['r2.h'].color, '#ffffff'); assert.equal(tie['r2.a'].color, '#ffffff', 'equal: white numbers');
+  assert.equal(bindLiveTeam(store, 'women', g2, { teamStats: keys, teamLook: 'outline' })['r2.h.box'].stroke, 'rgba(255,255,255,0.55)', 'equal: faint white outline');
+});

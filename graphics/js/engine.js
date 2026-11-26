@@ -239,8 +239,8 @@ function roundRectPath(g, [x0, y0, x1, y1], r) {
 function drawFramed(ctx, el, v, assets, report) {
   const [cx, cy, w, h] = el.box, x0 = cx - w / 2, y0 = cy - h / 2, x1 = x0 + w, y1 = y0 + h;
   report.boxes[el.id] = [x0, y0, w, h];
-  const sw = el.sw ?? 6, r = Math.min(el.r ?? 18, w / 2, h / 2);
-  const fill = v.fill !== undefined ? v.fill : el.fill;
+  const sw = v.sw ?? el.sw ?? 6, r = Math.min(el.r ?? 18, w / 2, h / 2); // v.sw / v.stroke: a binder may colour the outline (live team comparison, outline look)
+  const fill = v.fill !== undefined ? v.fill : el.fill, stroke = v.stroke !== undefined ? v.stroke : el.stroke;
   const tex = el.texture && assets.images['tex/' + el.texture];
   ctx.save();
   ctx.globalAlpha = (el.useBase && assets.baseOpacity != null ? assets.baseOpacity : el.opacity) ?? 1; // panels follow the "base opacity" slider
@@ -265,9 +265,9 @@ function drawFramed(ctx, el, v, assets, report) {
       ctx.restore();
     }
   }
-  if (sw > 0 && el.stroke) {
+  if (sw > 0 && stroke) {
     ctx.beginPath(); roundRectPath(ctx, [x0 + sw / 2, y0 + sw / 2, x1 - sw / 2, y1 - sw / 2], Math.max(r - sw / 2, 0));
-    ctx.lineWidth = sw; ctx.strokeStyle = el.stroke; ctx.stroke();
+    ctx.lineWidth = sw; ctx.strokeStyle = stroke; ctx.stroke();
   }
   ctx.restore();
 }

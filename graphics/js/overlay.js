@@ -13,7 +13,7 @@ import { imageUrl } from './image-urls.js';
 const P = parseOverlay(location.search);
 const canvas = document.getElementById('c'), dbg = document.getElementById('dbg');
 const images = {};
-let store = null, outlines = {}, photoIds = new Set(), lastText = null, dirty = false, status = 'indul…', officialNames = null, namesTried = 0;
+let drawnKey = '', drawCount = 0, store = null, outlines = {}, photoIds = new Set(), lastText = null, dirty = false, status = 'indul…', officialNames = null, namesTried = 0;
 // What is on air: a link with &g=… shows that one graphic (old direct links); the fixed link of a game (no &g) follows what the builder put on air on the server (/live-state).
 let onAir = P.fixed ? { graphic: P.graphic, live: P.live } : { graphic: 'off', live: {} }, stateRev = -1;
 const say = s => { status = s; if (P.debug) { dbg.style.display = 'block'; dbg.textContent = `${P.game || '—'} · ${onAir.graphic} · ${s}`; } };
@@ -41,7 +41,7 @@ async function ensureImages(t, values) {
 function buildTemplate(game) {
   const t = templateById(`${onAir.graphic}-${P.league}`), L = onAir.live;
   if (onAir.graphic === 'liveleaders') return LIVE_LEADER_BUILDERS[t.id](liveKeys(L.leaderStats));
-  if (onAir.graphic === 'liveteam') return LIVE_TEAM_BUILDERS[t.id](liveTeamKeys(L.teamStats));
+  if (onAir.graphic === 'liveteam') return LIVE_TEAM_BUILDERS[t.id](liveTeamKeys(L.teamStats), L.teamLook);
   const h = game.teams.home, homeId = clubIdStrict(P.league, h.short) || clubIdStrict(P.league, h.name); // which score bug the broadcast carries (the host club decides)
   return LIVE_BUILDERS[t.id](liveKeys(Array.isArray(L.stats) && L.stats.length ? L.stats : L.variant), liveCorner(L.corner), homeId ? bugSizeOf(P.league, homeId) : 'large');
 }
@@ -67,6 +67,7 @@ async function draw(text) {
   }
   await ensureImages(t, values);
   render(canvas, t, values, { background: null, images, outlines, baseOpacity: null, safeZone: null });
+  drawnKey = `${onAir.graphic}|${onAir.live.teamLook || ''}`; drawCount++; // what is on the canvas now (test hook)
   say(`${game.teams.home.short} ${game.score.home}–${game.score.away} ${game.teams.away.short}`);
 }
 
@@ -117,4 +118,4 @@ async function main() {
   setInterval(tickFeed, P.refresh * 1000);
 }
 main();
-window.__overlay = { params: P, status: () => status, onAir: () => onAir, names: () => ({ Halasy: officialNames?.['201536'] }) }; // names(): test hook
+window.__overlay = { params: P, status: () => status, onAir: () => onAir, drawn: () => drawnKey, draws: () => drawCount, names: () => ({ Halasy: officialNames?.['201536'] }) }; // names(): test hook

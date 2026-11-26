@@ -49,3 +49,13 @@ test('on-air state from the server: unknown or broken values are safe', () => {
   assert.deepEqual(n.live.teamStats, ['fg3', 'reb'], 'only plain stat keys pass'); assert.equal(n.live.leaderStats, undefined); assert.equal(n.live.stats, undefined);
   assert.equal(normOnAir({ graphic: 'livestat', player: '<img onerror>' }).live.player, undefined);
 });
+
+test('on-air look options: hex colours, outline / shadow switches and the shadow size are whitelisted', () => {
+  const n = normOnAir({ graphic: 'liveleaders', leaderColors: { name: '#FF8800', label: 'red', value: '#12345', outline: '#00ff00', evil: '#000000' }, leaderOutlineOn: false, leaderShadowOn: false, leaderShadowSize: 99, teamLook: 'outline' });
+  assert.deepEqual(n.live.leaderColors, { name: '#ff8800', outline: '#00ff00' }, 'only valid #rrggbb, only the four known keys');
+  assert.equal(n.live.leaderOutlineOn, false); assert.equal(n.live.leaderShadowOn, false); assert.equal(n.live.leaderShadowSize, 40, 'clamped to 0–40');
+  assert.equal(n.live.teamLook, 'outline'); assert.equal(normOnAir({ graphic: 'liveteam', teamLook: 'numbers' }).live.teamLook, 'numbers');
+  const d = normOnAir({ graphic: 'liveleaders', leaderOutlineOn: true, leaderShadowSize: -5, teamLook: 'weird', leaderColors: {} });
+  assert.equal(d.live.leaderOutlineOn, undefined, 'defaults stay out'); assert.equal(d.live.leaderShadowSize, 0); assert.equal(d.live.teamLook, undefined); assert.equal(d.live.leaderColors, undefined);
+  assert.equal(normOnAir({ graphic: 'liveleaders', leaderShadowSize: 'abc' }).live.leaderShadowSize, undefined);
+});
