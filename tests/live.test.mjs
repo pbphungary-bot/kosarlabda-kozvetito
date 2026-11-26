@@ -313,16 +313,23 @@ test('names with ő / ű: the feed writes "?", the mkosz.hu names are applied by
   assert.equal(v.name.text, 'HALASY Enikő');
 });
 
-test('team comparison, outline look (owner 2026-11-26): no filled boxes, the numbers stand on the court, better = green and worse = red OUTLINE; the default look is unchanged', async () => {
+test('team comparison, optional looks (owner 2026-11-26): soft dark backing in both; "outline" = thick green / red outline, "numbers" = green / red / white numbers; the default look is unchanged', async () => {
   const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563');
-  const keys = ['fg', 'reb'];
-  const fillTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys), outTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'outline');
+  const keys = ['fg', 'reb', 'tov'], BACK = 'rgba(8,8,10,0.55)';
+  const fillTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys), outTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'outline'), numTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'numbers');
   const box = (t, id) => t.elements.find(e => e.id === id);
   assert.equal(box(fillTpl, 'r0.h.box').fill, '#f4f4f4'); assert.equal(box(fillTpl, 'r0.h.box').sw, 0, 'default look: filled box, no outline');
-  assert.equal(box(outTpl, 'r0.h.box').fill, ''); assert.ok(box(outTpl, 'r0.h.box').sw > 0, 'outline look: no fill, an outline');
-  assert.equal(box(outTpl, 'r0.h').color, '#ffffff'); assert.ok(box(outTpl, 'r0.h').outline, 'white numbers with a black outline so they read on the court');
-  const dflt = bindLiveTeam(store, 'women', g, { teamStats: keys }), out = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'outline' });
+  assert.equal(box(outTpl, 'r0.h.box').fill, BACK); assert.ok(box(outTpl, 'r0.h.box').sw > 0, 'outline look: dark backing + an outline');
+  assert.equal(box(numTpl, 'r0.h.box').fill, BACK); assert.equal(box(numTpl, 'r0.h.box').sw, 0, 'numbers look: dark backing, no outline');
+  assert.equal(fillTpl.liveTeam.look, 'fill'); assert.equal(outTpl.liveTeam.look, 'outline'); assert.equal(numTpl.liveTeam.look, 'numbers');
+  const dflt = bindLiveTeam(store, 'women', g, { teamStats: keys }), out = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'outline' }), num = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'numbers' });
   assert.equal(dflt['r1.h.box'].fill, '#0b9444'); assert.equal(dflt['r1.a.box'].fill, '#ec4036', 'default: filled green / red (REB 42 vs 31)');
-  assert.equal(out['r1.h.box'].fill, ''); assert.equal(out['r1.h.box'].stroke, '#0b9444'); assert.equal(out['r1.a.box'].stroke, '#ec4036', 'outline: the same judgement as outline colours');
-  assert.equal(out['r1.h'].color, '#ffffff');
+  assert.equal(out['r1.h.box'].stroke, '#0b9444'); assert.equal(out['r1.a.box'].stroke, '#ec4036'); assert.equal(out['r1.h.color'], undefined); assert.equal(out['r1.h'].color, '#ffffff', 'outline look: white numbers');
+  assert.equal(num['r1.h'].color, '#27d64a'); assert.equal(num['r1.a'].color, '#ff4d42', 'numbers look: better green, worse red');
+  assert.equal(num['r1.h.box'].fill, undefined); assert.equal(num['r1.h.box'].stroke, undefined, 'numbers look: the backing comes from the template, no outline');
+  // equal values: nobody is marked, white numbers
+  const g2 = structuredClone(g); g2.teams.home.team.tov = g2.teams.away.team.tov;
+  const tie = bindLiveTeam(store, 'women', g2, { teamStats: keys, teamLook: 'numbers' });
+  assert.equal(tie['r2.h'].color, '#ffffff'); assert.equal(tie['r2.a'].color, '#ffffff', 'equal: white numbers');
+  assert.equal(bindLiveTeam(store, 'women', g2, { teamStats: keys, teamLook: 'outline' })['r2.h.box'].stroke, 'rgba(255,255,255,0.55)', 'equal: faint white outline');
 });

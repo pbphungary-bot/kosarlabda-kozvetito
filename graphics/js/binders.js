@@ -693,9 +693,10 @@ export function bindLiveTeam(store, lg, game, sel = {}) {
     const better = ka === null || kb === null || ka === kb ? null : ((ka > kb) !== !!d.low ? 'home' : 'away'); // equal or no attempts: nobody is marked
     v[`r${i}.label`] = { text: d.label, source: 'Fix felirat (átírható)' };
     for (const [side, x, id] of [['home', a, `r${i}.h`], ['away', b, `r${i}.a`]]) {
-      const outline = sel.teamLook === 'outline'; // experiment (owner 2026-11-26): the numbers stand on the court, the better value gets a green and the worse a red OUTLINE instead of a filled box
-      const o = outline || better !== null ? { color: '#ffffff' } : { color: C.digit }, fill = better === null ? C.box : better === side ? C.better : C.worse; // better = green box, worse = red box (white digits), tie / nothing to compare = white box
-      v[`${id}.box`] = outline ? { fill: '', stroke: better === null ? 'rgba(255,255,255,0.55)' : better === side ? C.better : C.worse, source: 'Jelölés: a jobb érték zöld, a rosszabb piros körvonal' } : { fill, source: 'Jelölés: a jobb érték zöld, a rosszabb piros' };
+      const look = sel.teamLook === 'outline' || sel.teamLook === 'numbers' ? sel.teamLook : 'fill'; // optional looks (owner 2026-11-26): 'outline' = soft dark backing + thick green / red outline, white numbers; 'numbers' = soft dark backing, the numbers are green (better) / red (worse) / white (equal)
+      const o = look === 'fill' ? (better === null ? { color: C.digit } : { color: '#ffffff' }) : look === 'numbers' ? { color: better === null ? '#ffffff' : better === side ? C.goodText : C.badText } : { color: '#ffffff' };
+      const fill = better === null ? C.box : better === side ? C.better : C.worse; // default look: better = green box, worse = red box (white digits), tie / nothing to compare = white box
+      v[`${id}.box`] = look === 'outline' ? { stroke: better === null ? 'rgba(255,255,255,0.55)' : better === side ? C.better : C.worse, source: 'Jelölés: a jobb érték zöld, a rosszabb piros körvonal' } : look === 'numbers' ? { source: 'Jelölés: a jobb érték zöld, a rosszabb piros szám (egyenlőnél fehér)' } : { fill, source: 'Jelölés: a jobb érték zöld, a rosszabb piros' };
       if (d.shoot) {
         const main = `${x.m}/${x.a}`, pc = x.pct === null ? null : ` (${Math.round(100 * x.pct)}%)`;
         v[id] = { ...o, text: main + (pc || ''), runs: [{ text: main }, ...(pc ? [{ text: pc, size: small, dy: -(big - small) * 0.3715 }] : [])], source: `${src} – ${d.label}${pc ? '' : ': nincs kísérlet, nincs százalék'}` };

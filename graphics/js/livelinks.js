@@ -27,7 +27,7 @@ function onAirHtml() {
 function optionsHtml() {
   const g = S.graphic;
   if (g === 'liveteam') return `<small class="hint">Pipáld be, mely statisztikák látsszanak (a kipipáltak jelennek meg; alapból egy kész csomag van kipipálva):</small><div class="ticks">${tick('tStat', LIVE_TEAM_STATS, liveTeamKeys(S.teamStats))}</div>
-    <label>A jobb / rosszabb érték jelölése<select id="teamLook"><option value="fill" ${S.teamLook !== 'outline' ? 'selected' : ''}>Zöld / piros kitöltött doboz (jelenlegi)</option><option value="outline" ${S.teamLook === 'outline' ? 'selected' : ''}>Zöld / piros körvonal, a számok a pályán (kipróbálás)</option></select></label>`;
+    <label>A jobb / rosszabb érték jelölése<select id="teamLook"><option value="fill" ${S.teamLook !== 'outline' ? 'selected' : ''}>Zöld / piros kitöltött doboz (jelenlegi)</option><option value="outline" ${S.teamLook === 'outline' ? 'selected' : ''}>Sötét háttér, vastag zöld / piros körvonal (kipróbálás)</option><option value="numbers" ${S.teamLook === 'numbers' ? 'selected' : ''}>Sötét háttér, zöld / piros számok (kipróbálás)</option></select></label>`;
   if (g === 'liveleaders') return `<small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa (alap: PTS, REB, AST). Pipáld be, mely statisztikák látsszanak:</small><div class="ticks">${tick('lStat', LIVE_STATS, liveKeys(S.leaderStats))}</div>
     <small class="hint">Megjelenés (mindenhol egyformán, nem játékosonként):</small>
     <div class="grid">${[['name', 'Nevek'], ['label', 'Statisztika-nevek (PTS, REB…)'], ['value', 'Számok'], ['outline', 'Fotók körvonala']].map(([k, lab]) => `<label>${lab}<input type="color" class="lColor" data-k="${k}" value="${S.leaderColors[k] || LEADER_COLOR_DEFAULTS[k]}" style="width:60px;padding:0"></label>`).join('')}</div>
@@ -45,7 +45,7 @@ function optionsHtml() {
   return '<small class="hint">Most semmi nincs adásban: az OBS-forrás átlátszó marad. Kattints a fenti gombok egyikére.</small>';
 }
 function readOptions() {
-  if (S.graphic === 'liveteam') { S.teamStats = ticked('tStat'); S.teamLook = $('teamLook')?.value === 'outline' ? 'outline' : 'fill'; }
+  if (S.graphic === 'liveteam') { S.teamStats = ticked('tStat'); S.teamLook = ['outline', 'numbers'].includes($('teamLook')?.value) ? $('teamLook').value : 'fill'; }
   if (S.graphic === 'liveleaders') {
     S.leaderStats = ticked('lStat');
     const c = {}; for (const e of document.querySelectorAll('.lColor')) if (e.value && e.value.toLowerCase() !== LEADER_COLOR_DEFAULTS[e.dataset.k]) c[e.dataset.k] = e.value.toLowerCase();
@@ -96,7 +96,7 @@ async function loadState(game) {
     if (t0 !== touchSeq) return;
     S.graphic = n.graphic; S.side = n.live.side; S.player = n.live.player || ''; S.corner = n.live.corner || '';
     S.stats = n.live.stats || []; S.teamStats = n.live.teamStats || []; S.leaderStats = n.live.leaderStats || [];
-    S.leaderColors = n.live.leaderColors || {}; S.leaderOutlineOn = n.live.leaderOutlineOn !== false; S.leaderShadowOn = n.live.leaderShadowOn !== false; S.leaderShadowSize = n.live.leaderShadowSize ?? LEADER_SHADOW_DEFAULT; S.teamLook = n.live.teamLook === 'outline' ? 'outline' : 'fill';
+    S.leaderColors = n.live.leaderColors || {}; S.leaderOutlineOn = n.live.leaderOutlineOn !== false; S.leaderShadowOn = n.live.leaderShadowOn !== false; S.leaderShadowSize = n.live.leaderShadowSize ?? LEADER_SHADOW_DEFAULT; S.teamLook = n.live.teamLook || 'fill';
   } catch { /* offline: start from nothing */ }
 }
 async function loadGame() {

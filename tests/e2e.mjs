@@ -1607,7 +1607,8 @@ try {
     await ov.waitForFunction(() => window.__overlay.onAir().live.teamLook === 'outline', null, { timeout: 15000 });
     await new Promise(r => setTimeout(r, 1500));
     const outlined = await greens();
-    assert.ok(filled > 20000, `filled look: big green boxes (${filled})`); assert.ok(outlined > 500 && outlined < filled / 3, `outline look: only thin green outlines (${outlined} vs ${filled})`);
+    assert.ok(filled > 20000, `filled look: big green boxes (${filled})`); assert.ok(outlined > 500 && outlined < filled * 0.6, `outline look: only green outlines, no filled boxes (${outlined} vs ${filled})`);
+    await lp.selectOption('#teamLook', 'numbers'); await ov.waitForFunction(() => window.__overlay.onAir().live.teamLook === 'numbers', null, { timeout: 15000 });
     await lp.selectOption('#teamLook', 'fill'); await lp.click('.onairBtn[data-g="off"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off', null, { timeout: 15000 });
     // a reload of the overlay (OBS cache refresh) keeps the choice: it is on the server
     await lp.click('.onairBtn[data-g="liveleaders"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'liveleaders', null, { timeout: 15000 });
