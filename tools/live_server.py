@@ -1,7 +1,7 @@
 """One command for the central computer of the broadcast: starts the studio / relay server AND a public tunnel, prints the links.
 
     python3 tools/live_server.py                      # quick tunnel: free, no account, but the public address is NEW at every start
-    python3 tools/live_server.py --tunnel-token XYZ --public-url https://live.pelda.hu   # your own fixed address (Cloudflare account + domain)
+    python3 tools/live_server.py --tunnel-token XYZ --public-url https://live.pelda.hu   # your own fixed address (Cloudflare account + domain); typed once, remembered in .live-server.json
     python3 tools/live_server.py --no-tunnel          # only the local server (same network)
 
 The access key (token) is generated once and kept in .live-server.json (not committed), so links made earlier keep working after a restart.
@@ -11,14 +11,27 @@ import argparse, json, os, re, secrets, shutil, subprocess, sys, threading, time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE = os.path.join(ROOT, '.live-server.json')
 
+def load_state():
+    try: return json.load(open(STATE, encoding='utf-8'))
+    except Exception: return {}
+
+def save_state(st):
+    try: json.dump(st, open(STATE, 'w', encoding='utf-8'))
+    except Exception: pass
+
 def load_token(given):
-    try: saved = json.load(open(STATE, encoding='utf-8'))
-    except Exception: saved = {}
-    token = given or saved.get('token') or secrets.token_urlsafe(9)
-    if saved.get('token') != token:
-        try: json.dump({'token': token}, open(STATE, 'w', encoding='utf-8'))
-        except Exception: pass
+    st = load_state()
+    token = given or st.get('token') or secrets.token_urlsafe(9)
+    if st.get('token') != token: st['token'] = token; save_state(st)
     return token
+
+def remember_tunnel(tunnel_token, public_url):
+    """A fixed Cloudflare address is typed once: it is kept in the same private file as the access key (not committed), later starts need no options."""
+    st = load_state()
+    if tunnel_token: st['tunnel_token'] = tunnel_token
+    if public_url: st['public_url'] = public_url.rstrip('/')
+    save_state(st)
+    return st.get('tunnel_token', ''), st.get('public_url', '')
 
 def update_repo():
     """If this folder is a git clone (not an unzipped download), fetch the newest version before starting; a failure never stops the server."""
@@ -44,11 +57,12 @@ def main():
     ap.add_argument('--token', default=os.environ.get('LIVE_TOKEN', ''))
     ap.add_argument('--no-tunnel', action='store_true')
     ap.add_argument('--no-update', action='store_true', help='do not run git pull before starting')
-    ap.add_argument('--tunnel-token', default='', help='token of a named Cloudflare tunnel (fixed address)')
-    ap.add_argument('--public-url', default='', help='the fixed address of the named tunnel, e.g. https://live.pelda.hu')
+    ap.add_argument('--tunnel-token', default='', help='token of a named Cloudflare tunnel (fixed address); remembered after the first start')
+    ap.add_argument('--public-url', default='', help='the fixed address of the named tunnel, e.g. https://live.playbyplay.hu; remembered after the first start')
     a = ap.parse_args()
     if not a.no_update: update_repo()
     token = load_token(a.token)
+    a.tunnel_token, a.public_url = remember_tunnel(a.tunnel_token, a.public_url)  # given now, or remembered from an earlier start
     server = subprocess.Popen([sys.executable, os.path.join(ROOT, 'tools', 'serve.py'), str(a.port), '--token', token])
     procs = [server]
     try:
