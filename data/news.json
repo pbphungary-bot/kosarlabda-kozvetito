@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-26T11:31:34.201649+00:00",
+  "checked_at": "2026-11-26T12:38:14.794532+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 0,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -13,7 +13,7 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 35,
+      "candidates": 34,
       "added": 1,
       "repaired": 0,
       "article_errors": 0,
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "added": 1,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -466,7 +466,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -547,22 +546,59 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "ok",
-      "reason": "articles_available",
-      "listing_pages_ok": 2,
-      "listing_pages_failed": 0,
-      "candidates": 26,
-      "attempted": 26,
+      "status": "partial",
+      "reason": "partial_extraction_or_listing_failure",
+      "listing_pages_ok": 1,
+      "listing_pages_failed": 1,
+      "candidates": 8,
+      "attempted": 8,
       "already_saved": 0,
       "added": 0,
-      "repaired": 26,
-      "article_errors": 0,
-      "listing_errors": [],
-      "usable_articles": 26,
+      "repaired": 2,
+      "article_errors": 6,
+      "listing_errors": [
+        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
+        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage",
+        "article https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/: HTTPError: HTTP Error 507: Insufficient Storage"
+      ],
+      "usable_articles": 2,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Törölték a válogatott járatát, késő este ér Stockholmba a csapat",
+      "summary": "A magyar válogatott menetrend szerint 12:20-kor szállt volna fel Bécsből a Stockholmba, időjárás miatt viszont törölték a járatot.",
+      "url": "https://bball1.hu/toroltek-a-valogatott-jaratat-keso-este-er-stockholmba-a-csapat/",
+      "published_at": "2026-11-26T12:50:17+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "FÉRFI KOSÁRLABDA VB-SELEJTEZŐ NYEREMÉNYJÁTÉK JÁTÉKSZABÁLYZATA",
+      "summary": "FÉRFI KOSÁRLABDA VB-SELEJTEZŐ NYEREMÉNYJÁTÉK JÁTÉKSZABÁLYZATA",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ferfi-kosarlabda-vb-selejtezo-nyeremenyjatek-jatekszabalyzata/",
+      "published_at": "2026-11-26T12:40:34+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Sitku-Varga Alízék őrzik veretlenségüket az Európa Kupában",
+      "summary": "Az Európa Kupa 5. fordulójában az olasz Autosped BCC Castelnuovo Scrivia 77-70-es sikert aratott az ENEA AZS Politechnika Poznan otthonában.",
+      "url": "https://wbasket.hu/sitku-varga-alizek-orzik-veretlenseguket-az-europa-kupaban/",
+      "published_at": "2026.11.26. 08:20",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "WBasket.hu",
       "title": "Villámértékelések a magyar csapatok Európa Kupa mérkőzései után",
