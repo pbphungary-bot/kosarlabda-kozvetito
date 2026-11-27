@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-27T10:28:07.730608+00:00",
+  "checked_at": "2026-11-27T19:46:37.645926+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 4,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -46,9 +46,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "candidates": 50,
+      "added": 2,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -81,22 +81,15 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 4,
-      "attempted": 4,
+      "candidates": 5,
+      "attempted": 5,
       "already_saved": 0,
-      "added": 4,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 4,
-      "source_coverage": true,
-      "fallback": [
-        "wp-json:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:0"
-      ]
+      "usable_articles": 5,
+      "source_coverage": true
     },
     {
       "source": "Klub: DEAC",
@@ -254,8 +247,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -473,6 +466,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -560,8 +554,8 @@
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
-      "added": 2,
-      "repaired": 28,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -569,6 +563,105 @@
     }
   ],
   "articles": [
+    {
+      "source": "Nemzeti Sport",
+      "title": "Női kosár NB I: a második félidőre felpörgött a Pécs, és nyert a fővárosban",
+      "summary": "Női kosár NB I: a második félidőre felpörgött a Pécs, és nyert a fővárosban",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-nb-i-a-masodik-felidore-felporgott-a-pecs-es-nyert-a-fovarosban/",
+      "published_at": "2026-11-27T20:02:16+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Élő közvetítés",
+      "summary": "A 19 órakor kezdődő Svédország – Magyarország mérkőzésről elő statisztikáért, klikk ide .",
+      "url": "https://bball1.hu/elo-kozvetites-172/",
+      "published_at": "2026-11-27T18:55:10+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: Csata TKK",
+      "title": "Újabb hazai kihívás előtt a Csata: szombaton a Cegléd érkezik az E.ON Sportcsarnokba",
+      "summary": "Alig ért véget a DVTK Huntherm elleni emlékezetes rangadó, csapatunk előtt máris újabb fontos bajnoki […]",
+      "url": "https://csatatkk.hu/2026/11/27/ujabb-hazai-kihivas-elott-a-csata-szombaton-a-cegled-erkezik-az-e-on-sportcsarnokba/",
+      "published_at": "2026-11-27T18:49:50+00:00",
+      "summary_method": "source_description",
+      "publisher_club": "Csata TKK",
+      "league": "women",
+      "teams": [
+        "women|Csata TTK"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Bejelentette új vezetőedzőjét a Kaposvár",
+      "summary": "A 39 éves bosnyák szakember veszi át a Kometa-KVGY Kaposvári KK irányítását.",
+      "url": "https://bball1.hu/bejelentette-uj-vezetoedzojet-a-kaposvar-2/",
+      "published_at": "2026-11-27T17:59:50+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Kaposvár"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "ÉLŐ: TFSE – Pécs mérkőzés az élvonalban",
+      "summary": "Pénteken 18 órától TFSE – NKA Universitas Pécs mérkőzést rendeznek az élvonalban.",
+      "url": "https://wbasket.hu/elo-tfse-pecs-merkozes-az-elvonalban/",
+      "published_at": "2026.11.27. 17:55",
+      "summary_method": "article_body",
+      "teams": [
+        "women|TFSE",
+        "women|NKA Universitas Pécs"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Svédországban folytatja pályafutását a DEAC-tól távozó légiós",
+      "summary": "A Norrköping Dolphins csapatában folytatja pályafutását, így távozik a DEAC-tól Brandon Horvath.",
+      "url": "https://bball1.hu/svedorszagban-folytatja-palyafutasat-a-deac-tol-tavozo-legios/",
+      "published_at": "2026-11-27T17:50:57+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Jegyek a Sopron Basket - DVTK HUNTHERM mérkőzésre",
+      "summary": "2026. november 28., szombat 14:00 (Sopron, Novomatic Aréna ) Sopron Basket - DVTK HUNTHERM",
+      "url": "http://dvtk.eu/37726-Jegyek_a_Sopron_Basket_DVTK_HUNTHERM_merkozesre-cikk-kosarlabda/",
+      "published_at": "2026-11-27T14:58:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Megérkezett a válogatott Stockholmba",
+      "summary": "A csütörtöki utazási nehézségeket követően pénteken kora délután megérkezett Stockholmba a magyar férfi kosárlabda-válogatott.",
+      "url": "https://bball1.hu/megerkezett-a-valogatott-stockholmba/",
+      "published_at": "2026-11-27T14:12:14+01:00",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Viszontagságok után megérkezett Stockholmba a férfi kosárlabda-válogatott",
+      "summary": "Viszontagságok után megérkezett Stockholmba a férfi kosárlabda-válogatott",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/a-hohelyzet-utan-elindult-stockholmba-a-ferfi-kosarlabda-valogatott/",
+      "published_at": "2026-11-27T14:04:13+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
     {
       "source": "BB1.hu",
       "title": "Tiszaújvárosi Termálfürdő Phoenix KK – Vasas Akadémia",
@@ -590,6 +683,18 @@
       "teams": [
         "women|DVTK HUNTHERM"
       ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Pénteken TFSE – Pécs mérkőzés az élvonalban",
+      "summary": "Pénteken egy mérkőzést rendeznek a hazai élvonalban.",
+      "url": "https://wbasket.hu/penteken-tfse-pecs-merkozes-az-elvonalban/",
+      "published_at": "2026.11.27. 07:09",
+      "summary_method": "article_body",
+      "teams": [
+        "women|TFSE"
+      ],
+      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -12323,6 +12428,19 @@
       "title": "Történelmet írt Perl Zoltán! Egyedülálló rekordot állított fel a kosárlabda Bajnokok Ligájában",
       "summary": "Történelmet írt Perl Zoltán! Egyedülálló rekordot állított fel a kosárlabda Bajnokok Ligájában",
       "url": "https://falcokc.com/tortenelmet-irt-perl-zoltan-egyedulallo-rekordot-allitott-fel-a-kosarlabda-bajnokok-ligajaban/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Több mint kosárlabda – Csapatunk a pályán kívül is Szombathelyért dolgozik",
+      "summary": "Több mint kosárlabda – Csapatunk a pályán kívül is Szombathelyért dolgozik",
+      "url": "https://falcokc.com/tobb-mint-kosarlabda-csapatunk-a-palyan-kivul-is-szombathelyert-dolgozik/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",

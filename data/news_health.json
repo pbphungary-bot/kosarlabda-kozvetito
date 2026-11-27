@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-11-27T10:28:07.730608+00:00",
+  "checked_at": "2026-11-27T19:46:37.645926+00:00",
   "statistics": {
-    "total": 1324,
-    "fresh": 624,
-    "fresh_with_summary": 429,
-    "missing_dates": 297,
-    "headline_only": 576,
-    "untagged": 553,
+    "total": 1335,
+    "fresh": 634,
+    "fresh_with_summary": 436,
+    "missing_dates": 298,
+    "headline_only": 580,
+    "untagged": 558,
     "sources_ok": 22,
     "sources_partial": 0,
     "sources_failed": 9,
-    "new_articles": 8,
+    "new_articles": 15,
     "sources_total": 31,
     "clubs_with_direct_source_coverage": 17,
     "clubs_configured": 25
@@ -20,7 +20,7 @@
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 4,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 0,
+      "added": 2,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -61,9 +61,9 @@
     {
       "source": "Nemzeti Sport",
       "status": "ok",
-      "candidates": 49,
-      "added": 0,
-      "repaired": 49,
+      "candidates": 50,
+      "added": 2,
+      "repaired": 48,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -96,22 +96,15 @@
       "reason": "articles_available",
       "listing_pages_ok": 3,
       "listing_pages_failed": 0,
-      "candidates": 4,
-      "attempted": 4,
+      "candidates": 5,
+      "attempted": 5,
       "already_saved": 0,
-      "added": 4,
+      "added": 5,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 4,
-      "source_coverage": true,
-      "fallback": [
-        "wp-json:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:0"
-      ]
+      "usable_articles": 5,
+      "source_coverage": true
     },
     {
       "source": "Klub: DEAC",
@@ -269,8 +262,8 @@
       "candidates": 10,
       "attempted": 10,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 10,
+      "added": 1,
+      "repaired": 9,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 10,
@@ -488,6 +481,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -575,8 +569,8 @@
       "candidates": 30,
       "attempted": 30,
       "already_saved": 0,
-      "added": 2,
-      "repaired": 28,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
