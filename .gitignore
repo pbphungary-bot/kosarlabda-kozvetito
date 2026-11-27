@@ -6,3 +6,4 @@ node_modules/
 .playwright-mcp/
 .live-server.json
 .live-state.json*
+.live-server.log
