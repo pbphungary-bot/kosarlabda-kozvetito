@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-26T12:38:14.794532+00:00",
+  "checked_at": "2026-11-26T18:44:30.954829+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -173,19 +173,23 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 16,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 16,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 16,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -195,9 +199,9 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 12,
+      "already_saved": 11,
       "added": 0,
-      "repaired": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 12,
@@ -219,40 +223,29 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:0",
-        "sitemap:HTTPError",
+        "wp-json:JSONDecodeError",
         "sitemap:0"
-      ],
-      "sample_links": [
-        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
-        "Kezdőlap -> https://megyeritigrisek.hu/",
-        "Hírek -> https://megyeritigrisek.hu/news/",
-        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
-        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
-        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
-        "Média -> #",
-        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
-        "Magazin -> https://megyeritigrisek.hu/magazin/",
-        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
-        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
-        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
       ]
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -276,15 +269,18 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 19,
-      "attempted": 19,
+      "candidates": 30,
+      "attempted": 30,
       "already_saved": 19,
       "added": 0,
-      "repaired": 0,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 19,
-      "source_coverage": true
+      "usable_articles": 30,
+      "source_coverage": true,
+      "fallback": [
+        "wp-json:30"
+      ]
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -334,25 +330,8 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
+        "wp-json:JSONDecodeError",
         "sitemap:0"
-      ],
-      "sample_links": [
-        "Kezdőlap -> https://kosarlabda.ase.hu",
-        "Aktuális -> #",
-        "Hírek -> https://kosarlabda.ase.hu/hirek",
-        "Események -> https://kosarlabda.ase.hu/esemenyek",
-        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
-        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
-        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
-        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
-        "Média -> #",
-        "Galéria -> https://kosarlabda.ase.hu/galeria",
-        "Videók -> https://kosarlabda.ase.hu/videok",
-        "Élő közvetítés -> /"
       ]
     },
     {
@@ -465,7 +444,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -546,30 +524,153 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 2,
-      "article_errors": 6,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/: HTTPError: HTTP Error 507: Insufficient Storage"
-      ],
-      "usable_articles": 2,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Bécsben éjszakázik a válogatott, holnap indul a csapat Stockholmba",
+      "summary": "Továbbra sem alakul jó a magyar válogatott útja Svédországba, a csapat újabb járatát törölték.",
+      "url": "https://bball1.hu/becsben-ejszakazik-a-valogatott-holnap-indul-a-csapat-stockholmba/",
+      "published_at": "2026-11-26T19:17:43+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Bécsben ragadt a magyar férfi kosárlabda-válogatott",
+      "summary": "Bécsben ragadt a magyar férfi kosárlabda-válogatott",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/becsben-ragadt-a-magyar-ferfi-kosarlabda-valogatott/",
+      "published_at": "2026-11-26T17:48:13+01:00",
+      "summary_method": "headline_fallback",
+      "teams": [],
+      "league": "men"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Edzőmeccset nyert a Fót a MEAFC ellen",
+      "summary": "A PHOENIX Fóti Tigrisek edzőmérkőzésen nyert a MEAFC ellen csütörtök délután.",
+      "url": "https://bball1.hu/edzomeccset-nyert-a-fot-a-meafc-ellen/",
+      "published_at": "2026-11-26T17:35:23+01:00",
+      "summary_method": "article_body",
+      "teams": [
+        "men|Fót"
+      ],
+      "league": "men"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Kifizetődnek az A-csoportos percek – interjú Kendelényi Lucával",
+      "summary": "Bár nem indult jól az évad a számszerű eredményeket tekintve a Vasas Akadémia élvonalbeli csapata számára, a fiatal játékosok így is hétről hétre, hónapról hónapra fejlődnek a klubnál.",
+      "url": "https://wbasket.hu/kifizetodnek-az-a-csoportos-percek-interju-kendelenyi-lucaval/",
+      "published_at": "2026.11.26. 16:46",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Örömhír Körmenden: Bartik Zalán ismét edzésbe állt",
+      "summary": "A teljes visszatérésig ugyan még hosszú út áll előtte, de a körmendiek bíznak benne, hogy minél hamarabb ismét a pályán láthatják a játékost.",
+      "url": "https://bball1.hu/oromhir-kormenden-bartik-zalan-ismet-edzesbe-allt/",
+      "published_at": "2026-11-26T16:22:41+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Videó: Hunbasket „Hét Csapata” kisfilm a magyar válogatottról",
+      "summary": "A Hunbasket „Hét Csapata” sorozatának aktuális epizódjában a női válogatottat kísérték el a szerkesztők Hamburgba, majd tartottak az együttessel Miskolcra az Eb-selejtező keretein belül.",
+      "url": "https://wbasket.hu/video-hunbasket-het-csapata-kisfilm-a-magyar-valogatottrol/",
+      "published_at": "2026.11.26. 16:16",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Már csak egy hely kiadó az Euroliga középdöntőjében",
+      "summary": "Szerdán teljes fordulót rendeztek a női kosárlabda Euroligában.",
+      "url": "https://wbasket.hu/mar-csak-egy-hely-kiado-az-euroliga-kozepdontojeben/",
+      "published_at": "2026.11.26. 16:03",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Európában fejlesztene sportcsarnokokat az NBA",
+      "summary": "Európában fejlesztene sportcsarnokokat az NBA",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/europaban-fejlesztene-sportcsarnokokat-az-nba/",
+      "published_at": "2026-11-26T16:00:12+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
+      "title": "Valerio-Bodon Vincent: Nem lehet más a cél, csak a világbajnokság!",
+      "summary": "Valerio-Bodon Vincent: Nem lehet más a cél, csak a világbajnokság!",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/valerio-bodon-vincent-nem-lehet-mas-a-cel-csak-a-vilagbajnoksag/",
+      "published_at": "2026-11-26T15:39:11+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Lelik Réka dupla-duplája és az Emlak Konut továbbjutása",
+      "summary": "Az Euroliga 5. fordulójában az Emlak Konut 98-62-re kiütötte a Bourges gárdáját és ezzel biztosította helyét a következő körben.",
+      "url": "https://wbasket.hu/lelik-reka-dupla-duplaja-es-az-emlak-konut-tovabbjutasa/",
+      "published_at": "2026.11.26. 15:23",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "Klub: Vasas Akadémia",
+      "title": "Letáborozunk Pasaréten, zsinórban három hazai bajnoki vár ránk",
+      "summary": "NBI/A-s csapatunk múltheti győzelmét követően hosszú időn keresztül élvezheti a hazai pálya előnyét, ugyanis zsinórban három mérkőzést fogunk játszani a Pasaréti Sportcentrumban.",
+      "url": "https://vasasbasket.hu/index.php/letaborozunk-pasareten-zsinorban-harom-hazai-bajnoki-var-rank/",
+      "published_at": "2026-11-26T15:01:37+00:00",
+      "summary_method": "article_body",
+      "publisher_club": "Vasas Akadémia",
+      "league": "women",
+      "teams": [
+        "women|Vasas Akadémia"
+      ]
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Fontos győzelmet arattak Takács-Kiss Virágék Franciaországban",
+      "summary": "Az Euroliga 5. fordulójában a Valencia 75-57-es sikert aratott a Carolo Basket otthonában.",
+      "url": "https://wbasket.hu/fontos-gyozelmet-arattak-takacs-kiss-viragek-franciaorszagban/",
+      "published_at": "2026.11.26. 14:10",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A végére bedarálták ellenfelüket Juhász Dorkáék",
+      "summary": "Az Euroliga 5. fordulójában a Galatasaray 80-59-re múlta felül a Kangoeroes Basket Mechelen csapatát.",
+      "url": "https://wbasket.hu/a-vegere-bedaraltak-ellenfeluket-juhasz-dorkaek/",
+      "published_at": "2026.11.26. 13:47",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
     {
       "source": "BB1.hu",
       "title": "Törölték a válogatott járatát, késő este ér Stockholmba a csapat",
@@ -13525,6 +13626,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
+      "title": "Kettős terhelés: a pályán és az egyetemen is helytáll Kertli Ádám",
+      "summary": "A válogatott szünetben is készül a Duna Aszfalt-DTKH Kecskemét.",
+      "url": "https://ktekosar.hu/hirek/kettos-terheles-a-palyan-es-az-egyetemen-is-helytall-kertli-adam/",
+      "published_at": null,
+      "summary_method": "article_body",
+      "publisher_club": "Duna Aszfalt-DTKH Kecskemét",
+      "league": "men",
+      "teams": [
+        "men|Kecskemét"
       ]
     },
     {

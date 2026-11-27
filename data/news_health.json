@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-26T12:38:14.794532+00:00",
+  "checked_at": "2026-11-26T18:44:30.954829+00:00",
   "statistics": {
-    "total": 1303,
-    "fresh": 612,
-    "fresh_with_summary": 418,
-    "missing_dates": 292,
-    "headline_only": 571,
-    "untagged": 541,
-    "sources_ok": 21,
-    "sources_partial": 1,
-    "sources_failed": 9,
-    "new_articles": 8,
+    "total": 1317,
+    "fresh": 624,
+    "fresh_with_summary": 428,
+    "missing_dates": 293,
+    "headline_only": 574,
+    "untagged": 552,
+    "sources_ok": 20,
+    "sources_partial": 0,
+    "sources_failed": 11,
+    "new_articles": 6,
     "sources_total": 31,
-    "clubs_with_direct_source_coverage": 17,
+    "clubs_with_direct_source_coverage": 15,
     "clubs_configured": 25
   },
   "sources": [
@@ -29,7 +29,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 1,
+      "added": 0,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -62,8 +62,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 49,
-      "added": 1,
-      "repaired": 48,
+      "added": 0,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -188,19 +188,23 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 16,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 16,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 16,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -210,9 +214,9 @@
       "listing_pages_failed": 0,
       "candidates": 12,
       "attempted": 12,
-      "already_saved": 12,
+      "already_saved": 11,
       "added": 0,
-      "repaired": 0,
+      "repaired": 1,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 12,
@@ -234,40 +238,29 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:0",
-        "sitemap:HTTPError",
+        "wp-json:JSONDecodeError",
         "sitemap:0"
-      ],
-      "sample_links": [
-        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
-        "Kezdőlap -> https://megyeritigrisek.hu/",
-        "Hírek -> https://megyeritigrisek.hu/news/",
-        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
-        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
-        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
-        "Média -> #",
-        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
-        "Magazin -> https://megyeritigrisek.hu/magazin/",
-        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
-        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
-        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
       ]
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 10,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -291,15 +284,18 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 19,
-      "attempted": 19,
+      "candidates": 30,
+      "attempted": 30,
       "already_saved": 19,
       "added": 0,
-      "repaired": 0,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 19,
-      "source_coverage": true
+      "usable_articles": 30,
+      "source_coverage": true,
+      "fallback": [
+        "wp-json:30"
+      ]
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -349,25 +345,8 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
+        "wp-json:JSONDecodeError",
         "sitemap:0"
-      ],
-      "sample_links": [
-        "Kezdőlap -> https://kosarlabda.ase.hu",
-        "Aktuális -> #",
-        "Hírek -> https://kosarlabda.ase.hu/hirek",
-        "Események -> https://kosarlabda.ase.hu/esemenyek",
-        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
-        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
-        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
-        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
-        "Média -> #",
-        "Galéria -> https://kosarlabda.ase.hu/galeria",
-        "Videók -> https://kosarlabda.ase.hu/videok",
-        "Élő közvetítés -> /"
       ]
     },
     {
@@ -480,7 +459,6 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -561,32 +539,26 @@
     },
     {
       "source": "Klub: TFSE",
-      "status": "partial",
-      "reason": "partial_extraction_or_listing_failure",
-      "listing_pages_ok": 1,
-      "listing_pages_failed": 1,
-      "candidates": 8,
-      "attempted": 8,
+      "status": "ok",
+      "reason": "articles_available",
+      "listing_pages_ok": 2,
+      "listing_pages_failed": 0,
+      "candidates": 29,
+      "attempted": 29,
       "already_saved": 0,
       "added": 0,
-      "repaired": 2,
-      "article_errors": 6,
-      "listing_errors": [
-        "https://tfse.hu/szakosztaly/kosarlabda/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/dokumentumok/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/elerhetosegek/: HTTPError: HTTP Error 508: Loop Detected",
-        "article https://tfse.hu/jo-kezdes-utan-forditott-a-csata-a-koltaiban/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/ujabb-fovarosi-parharc-a-csata-erkezik-a-koltaiba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/negy-jatekosunk-kapott-meghivot-az-u20-as-valogatott-elso-edzotaboraba/: HTTPError: HTTP Error 507: Insufficient Storage",
-        "article https://tfse.hu/jo-kezdes-es-eredmenyes-hajra-fontos-gyozelmet-arattunk-a-beac-otthonaban/: HTTPError: HTTP Error 507: Insufficient Storage"
-      ],
-      "usable_articles": 2,
+      "repaired": 29,
+      "article_errors": 0,
+      "listing_errors": [],
+      "usable_articles": 29,
       "source_coverage": true
     }
   ],
   "failed_sources": [
     "Kezdő5.hu",
+    "Klub: Sopron KC",
     "Klub: PHOENIX Fóti Tigrisek",
+    "Klub: Csata TKK",
     "Klub: Atomerőmű SE",
     "Klub: Endo Plus Service-Honvéd",
     "Klub: Kometa-KVGY Kaposvári KK",
