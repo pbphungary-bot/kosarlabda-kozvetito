@@ -90,11 +90,19 @@ export function bindComparison(store, lg, homeId, awayId, srcColor) {
 
 // ───────────────────────── team stats ─────────────────────────
 /** Players in display order and which ones fit the design's rows. */
-export function teamstatPlayers(store, lg, teamId, rows, selected) {
+/** Rows of the player table, sorted by jersey number: the operator's own numbers (`numOv`: {playerKey: text}, typed in the player list) win; a data number shared by several
+ *  players of the team (the feed lists many as 0) is unknown and sorts last, so typing the missing numbers in puts the squad in number order. */
+export function teamstatPlayers(store, lg, teamId, rows, selected, numOv = {}) {
   const P = store.players(lg, teamId);
   if (!P) return { all: [], shown: [] };
-  const all = P.players.map((p, i) => ({ key: `${p['#']}|${p['Játékos']}`, idx: i, p }))
-    .sort((a, b) => (num(a.p['#']) ?? 999) - (num(b.p['#']) ?? 999) || a.p['Játékos'].localeCompare(b.p['Játékos'], 'hu'));
+  const count = {};
+  for (const p of P.players) count[p['#']] = (count[p['#']] || 0) + 1;
+  const all = P.players.map((p, i) => {
+    const key = `${p['#']}|${p['Játékos']}`, ov = String(numOv?.[key] ?? '').trim();
+    const own = ov !== '', unique = count[p['#']] === 1;
+    const text = own ? ov : unique ? String(p['#']) : null; // what the table shows (null = missing, flagged)
+    return { key, idx: i, p, numText: text, numOwn: own, numShared: !own && !unique, sortNum: text === null ? null : num(text) };
+  }).sort((a, b) => (a.sortNum ?? 999) - (b.sortNum ?? 999) || a.p['Játékos'].localeCompare(b.p['Játékos'], 'hu'));
   let shown;
   if (selected) shown = all.filter(x => selected.includes(x.key));
   else if (all.length <= rows) shown = all;
@@ -115,11 +123,11 @@ export function teamstatName(roster, statName) {
   return m && isForeign(m) ? displayName(m) : statName;
 }
 
-export function bindTeamstats(store, lg, teamId, tpl, measure, selected) {
+export function bindTeamstats(store, lg, teamId, tpl, measure, selected, numOv = {}) {
   const c = club(lg, teamId);
   const cols = TEAMSTAT_COLS[lg];
   const g = tpl.geometry;
-  const { all, shown } = teamstatPlayers(store, lg, teamId, tpl.rows, selected);
+  const { all, shown } = teamstatPlayers(store, lg, teamId, tpl.rows, selected, numOv);
   const tc = titleColors(c);
   const v = { 'team.logo': logo(lg, teamId) };
   v['team.name'] = { text: c.official, source: 'Hivatalos csapatnév (Hunbasket)', color: tc.color, outline: tc.outline };
@@ -143,11 +151,9 @@ export function bindTeamstats(store, lg, teamId, tpl, measure, selected) {
   // jersey numbers: the feed repeats numbers (many players listed as 0) – a
   // number shared by several players of the team is not shown as fact
   const rosterList = rosterPlayers(store, lg, teamId);
-  const numCount = {};
-  for (const x of all) numCount[x.p['#']] = (numCount[x.p['#']] || 0) + 1;
   shown.forEach((x, r) => {
-    const unique = numCount[x.p['#']] === 1;
-    v[`r${r}.num`] = field(unique ? x.p['#'] : null, src, unique ? {} : { note: `A mezszám („${x.p['#']}”) az adatokban több játékosnál is szerepel – kézzel add meg.` });
+    v[`r${r}.num`] = x.numOwn ? { text: x.numText, source: 'Kézzel megadott mezszám' }
+      : field(x.numText, src, x.numShared ? { note: `A mezszám („${x.p['#']}”) az adatokban több játékosnál is szerepel – add meg a játékos-listában (a sorrend is ez alapján áll össze).` } : {});
     v[`r${r}.name`] = field(teamstatName(rosterList, x.p['Játékos']), src);
     for (const col of cols) {
       const n = num(x.p[col.key]);
