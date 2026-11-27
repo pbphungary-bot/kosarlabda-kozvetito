@@ -10,7 +10,7 @@ import { ROOT, DATA_DIR, FIXED_NOW } from './helpers.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
-const out = process.argv[2] || path.join(ROOT, 'tests/output/e2e');
+const out = process.argv[2] && !process.argv[2].startsWith('--') ? process.argv[2] : path.join(ROOT, 'tests/output/e2e');
 mkdirSync(out, { recursive: true });
 const port = 8890 + Math.floor(Math.random() * 100);
 const server = spawn('python3', [path.join(ROOT, 'tools/serve.py'), String(port)], { stdio: 'ignore', env: { ...process.env, LIVE_STATE_FILE: path.join(os.tmpdir(), `nbia-live-state-${process.pid}.json`) } }); // the builder's on-air choices go to a temp file, never to the real one
@@ -42,7 +42,16 @@ async function selectPanel(page) {
 }
 
 const results = [];
-const check = (name, fn) => fn().then(() => results.push(['ok', name]), e => { results.push(['FAIL', name, e.message]); });
+// Filter: `node tests/e2e.mjs [outDir] --only "<regex>"` runs only the checks whose name matches (the shared setup still runs);
+// `--list` prints every check name and runs none. tests/e2e-parallel.mjs uses both to run the suite in several processes.
+const argv = process.argv.slice(2);
+const onlyIdx = argv.indexOf('--only'), only = onlyIdx >= 0 ? new RegExp(argv[onlyIdx + 1]) : null, listOnly = argv.includes('--list');
+const names = [];
+const check = (name, fn) => {
+  names.push(name);
+  if (listOnly || (only && !only.test(name))) return Promise.resolve();
+  return fn().then(() => results.push(['ok', name]), e => { results.push(['FAIL', name, e.message]); });
+};
 
 /** Frozen data + clock for every browser context (see helpers.mjs); the cup feed stays empty, the cup tests bring their own games. */
 async function hermetic(c) {
@@ -1623,6 +1632,7 @@ try {
   await browser.close();
   server.kill();
 }
+if (listOnly) { console.log(JSON.stringify(names)); process.exit(0); }
 for (const r of results) console.log(r.join(' | '));
 const failed = results.filter(r => r[0] !== 'ok').length;
 console.log(`${results.length - failed}/${results.length} passed`);
