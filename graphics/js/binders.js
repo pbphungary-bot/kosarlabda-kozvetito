@@ -101,7 +101,7 @@ export function teamstatPlayers(store, lg, teamId, rows, selected, numOv = {}) {
     const key = `${p['#']}|${p['Játékos']}`, ov = String(numOv?.[key] ?? '').trim();
     const own = ov !== '', unique = count[p['#']] === 1;
     const text = own ? ov : unique ? String(p['#']) : null; // what the table shows (null = missing, flagged)
-    return { key, idx: i, p, numText: text, numOwn: own, numShared: !own && !unique, sortNum: text === null ? null : num(text) };
+    return { key, idx: i, p, numText: text, numOwn: own, numShared: !own && !unique, sortNum: text === null || (!own && num(text) === 0) ? null : num(text) }; // a data number of 0 is the feed's "no number"
   }).sort((a, b) => (a.sortNum ?? 999) - (b.sortNum ?? 999) || a.p['Játékos'].localeCompare(b.p['Játékos'], 'hu'));
   let shown;
   if (selected) shown = all.filter(x => selected.includes(x.key));
