@@ -18,6 +18,8 @@
   if (v === 'desktop') document.querySelector('meta[name=viewport]').content = 'width=1280'; } catch (e) { /* storage unavailable */ } })();</script>
 </head>
 <body>
+<div class="topstack" id="topStack">
+<div class="pickbar" id="pickBar" aria-label="Mérkőzés és csapat kiválasztása"></div>
 <header class="topbar">
   <div class="brand">NB I/A <b>Grafika Stúdió</b></div>
   <div class="league-toggle" role="tablist" aria-label="Bajnokság">
@@ -29,6 +31,7 @@
   <button id="viewSwitch" class="view-switch" type="button" title="Nézet: automatikus / mobil / asztali. Ha a kijelzőn valami nem jó, válts nézetet.">Nézet: auto</button>
   <a class="dash-link" href="../index.html">← Közvetítőhub</a>
 </header>
+</div>
 
 <main class="layout">
   <section class="panel controls">

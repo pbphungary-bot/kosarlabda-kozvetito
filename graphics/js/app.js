@@ -414,20 +414,61 @@ async function renderCoachStatements(C) {
   draw();
 }
 
+/** The match and team pickers: two fixed lines at the very top of the page, the same for every graphic (owner 2026-11-27).
+ *  The one the current graphic does not use is dimmed, but still works (match and team are shared by all graphics of a league). */
+const MATCH_TYPES = ['intro', 'comparison', 'playercompare', 'nextmatch', 'formpair', 'h2h', 'referees'];
+function renderPickBar() {
+  const t = tpl(), s = sel(), lg = state.league, bar = $('pickBar');
+  if (!bar) return;
+  const isRef = t.type === 'referees', usesMatch = MATCH_TYPES.includes(t.type), usesTeam = !usesMatch && !isLiveType(t.type) && t.type !== 'extra';
+  const showPast = !!s.showPast;
+  const hasRefs = m => !!store.matchStaff(lg, m)?.referees?.length;
+  let games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
+  if (isRef && !s.showOpen) games = games.filter(hasRefs); // by default only games whose referees are already published
+  if (isRef && (!s.matchKey || !games.some(m => matchKey(m) === s.matchKey)) && games[0]) s.matchKey = matchKey(games[0]); // never wipe the choice: other templates share it
+  const custom = !isRef && s.custom;
+  const opts = games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey && !custom ? 'selected' : ''}>${esc(matchLabel(m))}${isRef ? (hasRefs(m) ? '' : ' – nincs kiírva') : (m.resultMissing ? ' – eredmény hiányzik az adatokból' : '')}</option>`).join('');
+  bar.innerHTML = `
+    <div class="pick-row ${usesMatch || isLiveType(t.type) || t.type === 'extra' ? '' : 'idle'}" title="${usesMatch ? '' : 'Ennél a grafikánál nem számít a mérkőzés, de átállítható.'}">
+      <b>Mérkőzés</b>
+      <select id="matchSel" class="pick-main" aria-label="Mérkőzés">${opts || '<option value="">Nincs ilyen mérkőzés</option>'}${isRef ? '' : `<option value="__custom" ${custom ? 'selected' : ''}>Egyéni párosítás…</option>`}</select>
+      <label><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott is</label>
+      ${custom ? `<label>Hazai <select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég <select id="customAway">${teamOptions(s.custom.awayId)}</select></label>` : ''}
+    </div>
+    <div class="pick-row ${usesTeam || t.type === 'extra' ? '' : 'idle'}" title="${usesTeam ? '' : 'Ennél a grafikánál nem számít a csapat, de átállítható.'}">
+      <b>Csapat</b>
+      <select id="teamSel" class="pick-main" aria-label="Csapat">${teamOptions(s.teamId)}</select>
+    </div>`;
+  $('matchSel').onchange = e => {
+    if (e.target.value === '__custom') { const m = currentMatch(); s.custom = { homeId: m?.homeId || Object.keys(CLUBS[lg])[0], awayId: m?.awayId || Object.keys(CLUBS[lg])[1] }; }
+    else { s.custom = null; s.matchKey = e.target.value; }
+    resetMatchOverrides(); update(true);
+  };
+  $('showPast').onchange = e => { s.showPast = e.target.checked; renderSelection(); update(true); };
+  if (custom) {
+    $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
+    $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
+  }
+  $('teamSel').onchange = e => { // a new team starts from a clean slate in every graphic that depends on it
+    s.teamId = e.target.value; s.ps = null; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null;
+    if (s.coach) { s.coach.oppId = undefined; if (s.coach.srcTitle) { s.coach.quote = ''; s.coach.name = null; s.coach.srcTitle = null; s.coach.srcUrl = null; } }
+    if (usesTeam) resetTemplateOverrides(); else resetMatchOverrides();
+    update(true);
+  };
+  const stack = $('topStack');
+  if (stack) document.documentElement.style.setProperty('--top-h', stack.offsetHeight + 'px');
+}
+
+window.addEventListener('resize', () => { const st = $('topStack'); if (st) document.documentElement.style.setProperty('--top-h', st.offsetHeight + 'px'); });
+
 function renderSelection(extra = {}) {
+  renderPickBar();
   const t = tpl(), s = sel(), lg = state.league;
   const box = $('selection');
   $('sizeBar').hidden = true; // only the roster templates show it (set below)
   if (t.type === 'intro' || t.type === 'comparison' || t.type === 'playercompare' || t.type === 'nextmatch' || t.type === 'formpair' || t.type === 'h2h') {
     $('selectTitle').textContent = '2. Mérkőzés';
-    const showPast = !!s.showPast;
-    const games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
-    box.innerHTML = `
-      <label>Mérkőzés (${showPast ? 'teljes menetrend' : 'következő mérkőzések'})
-        <select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey && !s.custom ? 'selected' : ''}>${esc(matchLabel(m))}${m.resultMissing ? ' – eredmény hiányzik az adatokból' : ''}</option>`).join('')}
-        <option value="__custom" ${s.custom ? 'selected' : ''}>Egyéni párosítás…</option></select></label>
-      <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
-      ${s.custom ? `<div class="row2"><label>Hazai<select id="customHome">${teamOptions(s.custom.homeId)}</select></label><label>Vendég<select id="customAway">${teamOptions(s.custom.awayId)}</select></label></div>` : ''}${t.type === 'playercompare' ? playerSelects() : ''}${t.type === 'comparison' || t.type === 'playercompare' ? cmpOptionsHtml(s, t) : ''}`;
+    box.innerHTML = `${t.type === 'playercompare' ? playerSelects() : ''}${t.type === 'comparison' || t.type === 'playercompare' ? cmpOptionsHtml(s, t) : ''}`;
     if (t.type === 'comparison' || t.type === 'playercompare') wireCmpOptions(s);
     if (t.type === 'playercompare') {
       document.querySelectorAll('.pcUp').forEach(inp => inp.onchange = e => {
@@ -444,16 +485,6 @@ function renderSelection(extra = {}) {
     if (t.type === 'playercompare') {
       for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetMatchOverrides(); update(true); };
     }
-    $('matchSel').onchange = e => {
-      if (e.target.value === '__custom') { const m = currentMatch(); s.custom = { homeId: m?.homeId || Object.keys(CLUBS[lg])[0], awayId: m?.awayId || Object.keys(CLUBS[lg])[1] }; }
-      else { s.custom = null; s.matchKey = e.target.value; }
-      resetMatchOverrides(); update(true);
-    };
-    $('showPast').onchange = e => { s.showPast = e.target.checked; renderSelection(); };
-    if (s.custom) {
-      $('customHome').onchange = e => { s.custom.homeId = e.target.value; resetMatchOverrides(); update(true); };
-      $('customAway').onchange = e => { s.custom.awayId = e.target.value; resetMatchOverrides(); update(true); };
-    }
   } else if (isLiveType(t.type)) {
     $('selectTitle').textContent = t.type === 'livestat' ? '2. Élő meccs és játékos' : '2. Élő meccs és statisztikák';
     box.innerHTML = livePanelHtml(s);
@@ -466,8 +497,7 @@ function renderSelection(extra = {}) {
   } else if (t.type === 'coach') {
     $('selectTitle').textContent = '2. Edző, nyilatkozat és fotó';
     const C = s.coach ||= {}, oppDefault = coachOpponent(store, lg, s.teamId);
-    box.innerHTML = `<div class="row2"><label>Csapat (az edzője)<select id="teamSel">${teamOptions(s.teamId)}</select></label>
-      <label>Ellenfél (az alcím javaslatához)<select id="coachOpp"><option value="">– nincs –</option>${teamOptions(C.oppId === undefined ? oppDefault : C.oppId)}</select></label></div>
+    box.innerHTML = `<div class="row2"><label>Ellenfél (az alcím javaslatához)<select id="coachOpp"><option value="">– nincs –</option>${teamOptions(C.oppId === undefined ? oppDefault : C.oppId)}</select></label></div>
       <div class="stmtbox"><b>Gyűjtött előzetes-nyilatkozatok (BB1.hu)</b> <span id="coachStmts" class="hint">betöltés…</span></div>
       ${C.name ? `<small class="hint">A név a kiválasztott nyilatkozat mondójától jön: <b>${esc(C.name)}</b> <button type="button" id="coachNameReset" class="ghost">Vissza a Hunbasket-névre</button></small>` : ''}
       <label>Nyilatkozat (a gyűjtöttek közül választva vagy kézzel beillesztve; új bekezdés = új sor)
@@ -478,7 +508,6 @@ function renderSelection(extra = {}) {
         <span class="import-row"><input type="file" id="coachPhoto" accept="image/png,image/webp,image/jpeg"> <button id="coachPhotoClear" type="button" class="ghost" ${images['upload/coachPhoto'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
       ${bgHtml('coachPhoto')}
       <small class="hint">A név és a klublogó az adatokból jön (Hunbasket vezetőedző), az alcím javaslat: átírható a Mezők között. A szöveg hosszától függően a betűméret automatikusan csökken, hogy elférjen; a fotó mozgatása / nagyítása az Elrendezés dobozban.</small>`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; C.oppId = undefined; if (C.srcTitle) { C.quote = ''; C.name = null; C.srcTitle = null; C.srcUrl = null; } resetMatchOverrides(); renderSelection(); update(true); };
     if ($('coachNameReset')) $('coachNameReset').onclick = () => { C.name = null; renderSelection(); update(true); };
     renderCoachStatements(C);
     $('coachOpp').onchange = e => { C.oppId = e.target.value; update(true); };
@@ -501,14 +530,12 @@ function renderSelection(extra = {}) {
     $('selectTitle').textContent = '2. Csapat és játékos';
     const opts = playerOptions(store, lg, s.teamId);
     const cur = pickPlayer(store, lg, s.teamId, s.ps?.player);
-    box.innerHTML = `<div class="row2"><label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>
-      <label>Játékos<select id="psPlayer">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)}</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label></div>
+    box.innerHTML = `<div class="row2"><label>Játékos<select id="psPlayer">${opts.map(o => `<option value="${esc(o.key)}" ${o === cur ? 'selected' : ''}>${esc(o.name)}</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label></div>
       <label>Fotó (áttetsző PNG kivágás; csak a böngészőben marad)
         <span class="import-row"><input type="file" id="psPhoto" accept="image/png,image/webp,image/jpeg"> <button id="psPhotoClear" class="ghost" ${images['upload/photo'] ? '' : 'disabled'}>Fotó törlése</button></span></label>
       ${bgHtml('photo')}
       ${psConfigHtml(s)}
       <small class="hint">A név és az idei átlagok (az utolsó oszlop) az adatokból jönnek; a sztori, a többi oszlop és a fotó a tiéd. A fotó mozgatása/nagyítása: Elrendezés doboz.</small>`;
-    $('teamSel').onchange = e => { s.teamId = e.target.value; s.ps = null; resetMatchOverrides(); update(true); };
     $('psPlayer').onchange = e => { (s.ps ||= {}).player = e.target.value; resetMatchOverrides(); update(true); };
     $('psPhoto').onchange = e => {
       const f = e.target.files[0];
@@ -523,25 +550,16 @@ function renderSelection(extra = {}) {
     wirePsConfig(s);
   } else if (t.type === 'referees') {
     $('selectTitle').textContent = '2. Mérkőzés';
-    const showPast = !!s.showPast, showOpen = !!s.showOpen;
+    const showOpen = !!s.showOpen;
     const hasRefs = m => !!store.matchStaff(lg, m)?.referees?.length;
-    let games = showPast ? store.league(lg).fixtures : store.upcoming(lg);
-    const withRefs = games.filter(hasRefs);
-    // by default only games whose referees are already published: nothing to type, the names come from Hunbasket
-    if (!showOpen) games = withRefs;
-    if ((!s.matchKey || !games.some(m => matchKey(m) === s.matchKey)) && games[0]) s.matchKey = matchKey(games[0]); // never wipe the choice: other templates share it
     const last = store.upcoming(lg).filter(hasRefs).at(-1);
     const info = last ? `A játékvezetők ${fmtDate(last.date)}-ig vannak kiírva (${store.upcoming(lg).filter(hasRefs).length} következő meccsnél). A többi meccsé a Hunbaskeren még nem jelent meg; félóránként frissül.` : 'Egyik következő meccshez sincs még kiírva játékvezető a Hunbaskeren.';
-    box.innerHTML = `<label>Mérkőzés – csak ahol már ki vannak írva a játékvezetők${showOpen ? ' (a ✓ nélküliek kézi beírást igényelnek)' : ''}<select id="matchSel">${games.map(m => `<option value="${esc(matchKey(m))}" ${matchKey(m) === s.matchKey ? 'selected' : ''}>${esc(matchLabel(m))}${hasRefs(m) ? '' : ' – nincs kiírva'}</option>`).join('') || '<option value="">Nincs ilyen mérkőzés</option>'}</select></label>
-      <div class="hint">${esc(info)}</div>
-      <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showPast" ${showPast ? 'checked' : ''}> Lejátszott mérkőzések is</label>
+    box.innerHTML = `<div class="hint">${esc(info)}</div>
       <label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="showOpen" ${showOpen ? 'checked' : ''}> Kiírás nélküli meccsek is (kézi beírással)</label>`;
-    $('matchSel').onchange = e => { s.matchKey = e.target.value; s.custom = null; resetMatchOverrides(); update(true); };
-    $('showPast').onchange = e => { s.showPast = e.target.checked; renderSelection(); update(true); };
     $('showOpen').onchange = e => { s.showOpen = e.target.checked; renderSelection(); update(true); };
   } else {
-    $('selectTitle').textContent = '2. Csapat';
-    box.innerHTML = `<label>Csapat<select id="teamSel">${teamOptions(s.teamId)}</select></label>${extra.players || ''}${extra.games || ''}`;
+    $('selectTitle').textContent = '2. Beállítások';
+    box.innerHTML = `${extra.players || ''}${extra.games || ''}`;
     const bar = $('sizeBar'), isRoster = t.type === 'roster' || t.type === 'rostergrid';
     bar.hidden = !isRoster;
     bar.innerHTML = !isRoster ? '' : `<b>Méretek – az összes játékosra egyszerre:</b> <label>Mezszámok (%) <input type="number" id="numScale" min="50" max="250" step="5" value="${s.numScale || 100}"></label>${t.type === 'rostergrid' ? `<label>Zászlók (%) <input type="number" id="flagScale" min="50" max="250" step="5" value="${s.flagScale || 100}"></label>` : ''}${t.type === 'rostergrid' ? rowOffHtml(s, rosterDims(rosterPlayers(store, lg, s.teamId).length || t.rosterN).rows) : ''}`;
@@ -549,7 +567,6 @@ function renderSelection(extra = {}) {
     document.querySelectorAll('.rowOff').forEach(el => el.onchange = () => { const o = [...(s.rowOff || [])]; const i = +el.dataset.r; o[i] = [...(o[i] || [0, 0])]; o[i][+el.dataset.a] = Math.max(-300, Math.min(300, +el.value || 0)); s.rowOff = o; update(true); });
     if ($('numScale')) $('numScale').onchange = e => { s.numScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
     if ($('flagScale')) $('flagScale').onchange = e => { s.flagScale = Math.max(50, Math.min(250, +e.target.value || 100)); update(true); };
-    $('teamSel').onchange = e => { s.teamId = e.target.value; s.players = null; s.games = null; s.customRows = null; s.gameFilter = null; resetTemplateOverrides(); update(true); };
     if (extra.games) {
       const group = t.type === 'schedule' ? 'schedule' : 'results';
       $('gameFilter').onchange = e => { s.gameFilter = e.target.value; update(true); };
