@@ -1,6 +1,6 @@
 # DESIGN SYSTEM – NB I/A graphics (and dashboard branding)
 
-The source of truth for look & feel is the owner's PSDs (kept privately by the owner, no longer stored in the repository; see `PSD_DIR` in CLAUDE.md). This file lists the rules that were agreed. **LOCKED** rules are not reworked unless the owner asks. Update this file whenever a design decision is made.
+The source of truth for look & feel is the owner's PSDs (`BROADCAST GRAPHICS/`). This file lists the rules that were agreed. **LOCKED** rules are not reworked unless the owner asks. Update this file whenever a design decision is made.
 
 ## Typography (LOCKED)
 - **League Gothic Regular + Italic only, in every graphic** (`graphics/fonts`) – no exceptions, not even where a PSD uses another font (men's referee graphic: Satoshi in the PSD, League Gothic in the studio). Italic for labels/names in the roster and player-special designs, as in the PSDs.

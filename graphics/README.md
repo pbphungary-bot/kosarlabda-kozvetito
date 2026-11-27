@@ -149,7 +149,7 @@ node tests/visual.mjs               # minden sablon a PSD saját mintaszövegév
 node tests/e2e.mjs                  # böngészős végigpróbálás: export, felülírás, presetek, Excel-feltöltés
 ```
 
-Az eredeti PSD-ket a tulajdonos privátan őrzi (a tárolóban már nincsenek); ha egy sablont újra kell generálni, a `BROADCAST GRAPHICS/` mappába (a Git ezt figyelmen kívül hagyja) vagy a `PSD_DIR` környezeti változóval megadott mappába kell tenni őket. A stúdió sosem módosítja őket.
+Az eredeti PSD-k a `BROADCAST GRAPHICS/` mappában vannak, ezeket a stúdió sosem módosítja.
 Betűtípus: League Gothic Regular + Italic (SIL OFL, `fonts/`).
 
 **Mezszámok mérete (Keret):** a kép feletti *Méretek* sávban a *Mezszámok (%)* mező az összes játékos mezszámát egyszerre méretezi (50–250%).
