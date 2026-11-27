@@ -822,7 +822,7 @@ function pcEntry(id, league, psd, g) {
   return PC_BUILDERS[id](null);
 }
 
-export const TEMPLATES = [
+const TEMPLATE_LIST = [
   comparison('comparison-men', 'men', 'Falco - Alba statösszevetés 1111 előtt.psd', {
     subX: 602.2, hv: 342, av: 852.8, hr: 112, ar: 1086, rankY: 256.5, rankTracking: 25, hl: [348, 590], al: [853.5, 589],
     sample: comparisonSample('FULLFIELD.INFO',
@@ -932,6 +932,11 @@ export const TEMPLATES = [
     sample: { ref1: { text: 'Györfy Rúben' }, ref2: { text: 'Major Ádám' }, ref3: { text: 'Gombos Márk Bálint' }, controller: { text: 'Szabó Anita' } },
   }),
 ];
+
+/** The order of the graphics in the studio's template list (owner 2026-11-27), the same for men and women; a type not listed here would come last. */
+export const TEMPLATE_ORDER = ['intro', 'nextmatch', 'referees', 'roster', 'rostergrid', 'comparison', 'teamstats', 'results', 'resultrows', 'schedule', 'form', 'formpair', 'h2h', 'playercompare', 'playerspecial', 'coach', 'extra', 'livestat', 'liveteam', 'liveleaders'];
+const orderOf = t => { const i = TEMPLATE_ORDER.indexOf(t.type); return i < 0 ? TEMPLATE_ORDER.length : i; };
+export const TEMPLATES = TEMPLATE_LIST.map((t, i) => [t, i]).sort((a, b) => orderOf(a[0]) - orderOf(b[0]) || a[1] - b[1]).map(x => x[0]); // stable: the same type keeps its registry order
 
 export const TEMPLATE_TYPES = {
   nextmatch: 'Következik',

@@ -43,6 +43,7 @@ Megnyitás: <http://localhost:8000/graphics/> (a repó gyökeréből indítsd; G
 ## Használat adás előtt
 
 1. Válaszd a **Férfi / Női** bajnokságot, majd a **sablont**.
+1a. A sablonok **sorrendje** (férfi és női ugyanaz): Intro, Következik, Játékvezetők, Keret (tábla), Keret (fotókkal), Csapatok összevetése, Csapatstatisztika, Eredmények, Eredmények (színes sorok), Menetrend, Forma, Forma (két csapat), Egymás ellen, Kulcsjátékosok, Játékos-különleges, Vezetőedző nyilatkozata, Extra (MKOSZ), majd a három élő grafika. A teljes csomag (ZIP) fájljai ugyanebben a sorrendben vannak megszámozva.
 2. Válaszd ki a **mérkőzést** (összevetés, intro, játékvezetők) vagy a **csapatot** (eredmények, menetrend, játékos-táblázat).
 3. A mezők automatikusan kitöltődnek. A hiányzó adat piros, a képen „—” jelenik meg – írd be kézzel.
 4. **Betűméret és eltolás:** az intro csapatneveinél, a helyezés/mérleg soroknál (és a Következik, Játékvezetők, helyszín mezőknél) a „Betűméret (px)”
