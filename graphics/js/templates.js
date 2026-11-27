@@ -681,8 +681,11 @@ function liveHeader(S, x, y, w, op, { scores = true, dark = false } = {}) { // d
   );
   return els;
 }
-function liveTeamTpl(id, league, keysIn, look) {
-  const outline = look === 'outline', numbers = look === 'numbers', backed = outline || numbers, keys = liveTeamKeys(keysIn), { w, h, scale: S } = liveTeamSize(keys), ROW = ltRow(keys.length) * S, x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
+/** The look of the live team comparison: 'outline' is the default (owner 2026-11-27: "way much better"); 'fill' = the old white boxes with green / red fill, 'numbers' = an unapproved experiment. */
+export const TEAM_LOOKS = ['outline', 'fill', 'numbers'];
+export const teamLook = look => (TEAM_LOOKS.includes(look) ? look : 'outline');
+function liveTeamTpl(id, league, keysIn, lookIn) {
+  const look = teamLook(lookIn), outline = look === 'outline', numbers = look === 'numbers', backed = outline || numbers, keys = liveTeamKeys(keysIn), { w, h, scale: S } = liveTeamSize(keys), ROW = ltRow(keys.length) * S, x = 60, y = 2, C = LIVE_TEAM_COLORS, op = 0.9882; // x / y: the same place as Csapatok összevetése (top-left, owner 2026-11-24)
   const u = v => v * S, W = u(LT.w), HEAD = u(LT.head), PAD = u(LT.pad), BOX = u(LT.box);
   const txt = (size, extra) => ({ type: 'text', size: u(size), tracking: 20, color: C.text, opacity: op, adjust: true, align: 'center', ...extra });
   // optional looks (experiments, owner 2026-11-26), both with a soft dark backing behind the numbers so they read on the court: 'outline' = the better / worse value gets a thick green / red OUTLINE (white numbers); 'numbers' = no outline, the numbers themselves are green / red (white when equal); the colours come from the binder

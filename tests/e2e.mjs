@@ -1601,6 +1601,8 @@ try {
     await ov.waitForFunction(() => window.__overlay.onAir().live.leaderOutlineOn === false, null, { timeout: 15000 });
     await pick('liveteam');
     const greens = () => countPx('a > 200 && r < 40 && g > 120 && g < 170 && b < 90');
+    assert.equal(await lp.inputValue('#teamLook'), 'outline', 'the builder starts with the outline look (the default since 2026-11-27)');
+    await lp.selectOption('#teamLook', 'fill'); await ov.waitForFunction(() => window.__overlay.drawn() === 'liveteam|fill', null, { timeout: 15000 });
     const filled = await greens();
     await lp.selectOption('#teamLook', 'outline');
     await ov.waitForFunction(() => window.__overlay.drawn() === 'liveteam|outline', null, { timeout: 15000 });
