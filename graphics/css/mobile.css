@@ -8,6 +8,11 @@
   input, select, textarea { font-size: 16px; } /* no zoom-on-focus on iOS */
   button { padding: 8px 14px; }
 
+  .topstack { position: static; }
+  .pickbar { grid-template-columns: minmax(0, 1fr); padding: 6px 12px; }
+  .pickbar .pick-row { min-width: 0; gap: 6px; }
+  .pickbar .pick-row > b { min-width: 0; }
+  .pickbar .pick-main { flex: 1 1 100%; min-width: 0; }
   .topbar { position: static; gap: 8px 12px; padding: 8px 12px; padding-top: calc(8px + env(safe-area-inset-top)); }
   .brand { font-size: 15px; }
 

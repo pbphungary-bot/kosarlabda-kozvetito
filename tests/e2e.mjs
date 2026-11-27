@@ -289,11 +289,11 @@ try {
       }
       return { whiteRows };
     });
-    const nameRows = m.whiteRows.filter(y => y >= 662 && y < 850);
-    const inGap = m.whiteRows.filter(y => y >= 815 && y <= 858);
+    const nameRows = m.whiteRows.filter(y => y >= 650 && y < 850);
+    const inGap = m.whiteRows.filter(y => y >= 846 && y <= 862);
     assert.ok(nameRows.length > 100, 'name drawn');
-    assert.deepEqual(inGap, [], 'nothing between the name block (ends ≈809) and the rank line (starts ≈863)');
-    assert.ok(Math.min(...nameRows) >= 655, `name top ${Math.min(...nameRows)} must stay below the logo (≈650)`);
+    assert.deepEqual(inGap, [], 'nothing between the name block (ends ≈842) and the rank line (starts ≈865)');
+    assert.ok(Math.min(...nameRows) >= 650, `name top ${Math.min(...nameRows)} must stay below the logo (≈636)`);
     await page.screenshot({ path: path.join(out, 'ui-intro-rank-fixed.png') });
   });
   await check('base opacity: default 96.5 % inside the panel, slider and PSD value work, export keeps it', async () => {
@@ -528,7 +528,7 @@ try {
     await page.click('.league-toggle button[data-league="men"]');
     await page.click('#templateList button[data-id="nextmatch-men"]');
     await page.waitForTimeout(400);
-    assert.match(await page.locator('#selection').innerText(), /Mérkőzés/);
+    assert.match(await page.locator('#pickBar').innerText(), /Mérkőzés/);
   });
   await check('top button "+ Kupa-/európai meccs" opens the add form from any template', async () => {
     await page.click('.league-toggle button[data-league="women"]');

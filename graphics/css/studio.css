@@ -16,7 +16,15 @@ input, select { background: #0f1318; border: 1px solid var(--line); border-radiu
 h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 8px; }
 h2 small { text-transform: none; letter-spacing: 0; font-weight: 400; }
 
-.topbar { display: flex; align-items: center; gap: 18px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: #12161b; position: sticky; top: 0; z-index: 5; flex-wrap: wrap; }
+.topstack { position: sticky; top: 0; z-index: 5; }
+.topbar { display: flex; align-items: center; gap: 18px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: #12161b; flex-wrap: wrap; }
+.pickbar { background: #171c22; border-bottom: 1px solid var(--line); padding: 6px 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.pickbar .pick-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pickbar .pick-row > b { min-width: 86px; font-size: 13px; }
+.pickbar select { min-width: 0; max-width: 100%; }
+.pickbar .pick-main { flex: 1 1 420px; min-width: 0; }
+.pickbar .pick-row.idle { opacity: .55; }
+.pickbar .pick-row label { display: flex; align-items: center; gap: 6px; }
 .brand { font-size: 17px; }
 .league-toggle { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .league-toggle button { border: 0; border-radius: 0; padding: 8px 16px; background: transparent; }
@@ -28,12 +36,12 @@ body.women .league-toggle button.on { background: var(--accent-w); }
 .freshness span.err { border-color: var(--bad); color: var(--bad); }
 .dash-link { margin-left: auto; color: var(--muted); text-decoration: none; }
 
-.layout { --side-w: 480px; display: grid; grid-template-columns: var(--side-w) 10px minmax(0, 1fr); gap: 0; min-height: calc(100vh - 54px); }
+.layout { --side-w: 480px; display: grid; grid-template-columns: var(--side-w) 10px minmax(0, 1fr); gap: 0; min-height: calc(100vh - var(--top-h, 54px)); }
 .layout > .preview { min-width: 0; }
-.splitter { position: sticky; top: 54px; height: calc(100vh - 54px); cursor: col-resize; touch-action: none; background: linear-gradient(90deg, transparent 4px, var(--line) 4px 6px, transparent 6px); transition: background .15s; }
+.splitter { position: sticky; top: var(--top-h, 54px); height: calc(100vh - var(--top-h, 54px)); cursor: col-resize; touch-action: none; background: linear-gradient(90deg, transparent 4px, var(--line) 4px 6px, transparent 6px); transition: background .15s; }
 .splitter:hover, .splitter.drag, .splitter:focus-visible { background: linear-gradient(90deg, transparent 3px, var(--accent) 3px 7px, transparent 7px); outline: none; }
 .panel { padding: 8px 16px 24px; }
-.controls { min-width: 0; overflow-x: hidden; overflow-y: auto; max-height: calc(100vh - 54px); position: sticky; top: 54px; }
+.controls { min-width: 0; overflow-x: hidden; overflow-y: auto; max-height: calc(100vh - var(--top-h, 54px)); position: sticky; top: var(--top-h, 54px); }
 
 .template-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .template-list button { padding: 0; overflow: hidden; text-align: left; background: #11161b; }

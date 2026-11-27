@@ -165,15 +165,13 @@ function drawText(ctx, el, v, report) {
   if (overflow) report.overflow.push(el.id);
   if (scaled) report.scaled.push(el.id);
   const lh = el.lineHeight || el.size * 1.2;
-  // A two-line name with the rank line shown below it would collide with that line:
-  // the block is then set 15% smaller and grows upward from the single-line baseline.
-  const compact = !!el.rankOn && lines.length > 1 && !el.fitLocked; // a size chosen by hand is used as it is
-  const sz = compact ? size * 0.85 : size;
+  // Names are centred on one middle line: a one-line and a two-line name share the same vertical centre
+  // (owner 2026-11-27); size and line pitch are the same with or without the rank line.
+  const sz = size;
   report.sizes[el.id] = sz; // effective font size (px), shown in the editor and used by the equalize buttons
-  const lhs = compact ? sz * 0.9 : lh * (size / el.size);
+  const lhs = lh * (size / el.size);
   let y0 = el.y;
-  if (compact) y0 = el.y - (lines.length - 1) * lhs;
-  else if (el.wrap?.anchor === 'middle') y0 = el.y - ((lines.length - 1) * lhs) / 2;
+  if (el.wrap?.anchor === 'middle') y0 = el.y - ((lines.length - 1) * lhs) / 2;
   const style = { ...el, outline: v.outline === null ? null : (v.outline || el.outline) };
   const color = v.color || el.color;
   const placed = lines.map((line, i) => {
