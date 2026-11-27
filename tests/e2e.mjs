@@ -194,15 +194,32 @@ try {
     await page.click('#templateList button[data-id="teamstats-men"]');
     await page.waitForTimeout(300);
     await page.selectOption('#teamSel', 'kecskemet');
-    await page.waitForFunction(() => document.querySelectorAll('.players input').length > 0, null, { timeout: 15000 });
-    const total = await page.locator('.players input').count();
+    await page.waitForFunction(() => document.querySelectorAll('.players input[type=checkbox]').length > 0, null, { timeout: 15000 });
+    const total = await page.locator('.players input[type=checkbox]').count();
     assert.ok(total > 13, `Kecskemét has more players than the design's 13 rows (${total})`);
-    assert.equal(await page.locator('.players input:checked').count(), Math.min(total, 20), 'default: every player of the team is shown');
+    assert.equal(await page.locator('.players input[type=checkbox]:checked').count(), Math.min(total, 20), 'default: every player of the team is shown');
     await page.waitForFunction(() => window.__studio.current().values?.['r13.name']?.text, null, { timeout: 15000 }); // the 14th row exists and is filled
-    await page.uncheck('.players input >> nth=0'); // taking a player out works
-    await page.waitForFunction(n => document.querySelectorAll('.players input:checked').length === n, Math.min(total, 20) - 1, { timeout: 15000 });
-    await page.check('.players input >> nth=0');
+    await page.uncheck('.players input[type=checkbox] >> nth=0'); // taking a player out works
+    await page.waitForFunction(n => document.querySelectorAll('.players input[type=checkbox]:checked').length === n, Math.min(total, 20) - 1, { timeout: 15000 });
+    await page.check('.players input[type=checkbox] >> nth=0');
     await page.screenshot({ path: path.join(out, 'ui-teamstats-men.png') });
+  });
+  await check('teamstats: a typed jersey number puts the player into number order (and an empty box takes it back)', async () => {
+    await page.click('.league-toggle button[data-league="men"]');
+    await page.click('#templateList button[data-id="teamstats-men"]');
+    await page.selectOption('#teamSel', 'kecskemet');
+    await page.waitForFunction(() => document.querySelectorAll('.players input.pnum').length > 1, null, { timeout: 15000 });
+    const firstKey = () => page.locator('.players input.pnum').first().getAttribute('data-key');
+    const before = await firstKey();
+    const last = page.locator('.players input.pnum').last();
+    const lastKey = await last.getAttribute('data-key');
+    assert.notEqual(before, lastKey);
+    await last.fill('1'); await last.dispatchEvent('change');
+    await page.waitForFunction(k => document.querySelector('.players input.pnum')?.dataset.key === k, lastKey, { timeout: 15000 });
+    assert.equal(await page.locator('.players input.pnum').first().inputValue(), '1');
+    const pn = page.locator(`.players input.pnum[data-key="${lastKey}"]`);
+    await pn.fill(''); await pn.dispatchEvent('change');
+    await page.waitForFunction(k => document.querySelector('.players input.pnum')?.dataset.key !== k, lastKey, { timeout: 15000 });
   });
   await check('excel import: several files at once, league auto-detected, graphic uses Excel values, persists, can be switched off', async () => {
     await page.click('.league-toggle button[data-league="men"]'); // wrong league selected on purpose

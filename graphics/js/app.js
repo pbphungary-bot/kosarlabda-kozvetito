@@ -639,8 +639,13 @@ function renderSelection(extra = {}) {
       });
     }
     if (extra.players) {
-      box.querySelectorAll('.players input').forEach(cb => cb.onchange = () => {
-        const keys = [...box.querySelectorAll('.players input:checked')].map(x => x.value);
+      box.querySelectorAll('.players input.pnum').forEach(inp => inp.onchange = () => { // own jersey number: kept per team, the rows are re-sorted by number
+        const m = ((s.numOv ||= {})[s.teamId] ||= {}), v = inp.value.trim().replace(/^#/, '');
+        if (v === '') delete m[inp.dataset.key]; else m[inp.dataset.key] = v;
+        update(true);
+      });
+      box.querySelectorAll('.players input[type=checkbox]').forEach(cb => cb.onchange = () => {
+        const keys = [...box.querySelectorAll('.players input[type=checkbox]:checked')].map(x => x.value);
         if (keys.length > TEAMSTATS_MAX) { cb.checked = false; toast(`Legfeljebb ${TEAMSTATS_MAX} játékos fér el a táblán.`); return; }
         s.players = keys; update(false);
       });
@@ -735,7 +740,7 @@ function autoValues() {
     if (!images['upload/photo']) info.notices.push({ text: 'Nincs fotó feltöltve – a grafika fotó nélkül jelenik meg. Tölts fel egy áttetsző PNG kivágást a Fotó mezővel.' });
     info.notices.push({ text: 'Az alcím és az első oszlop(ok) (pl. karrier, utolsó meccsek) kézzel töltendők: az adatbázisban csak az idei átlag van meg. Az üres mezők nem jelennek meg a képen.' });
   } else if (t.type === 'teamstats') {
-    const r = bindTeamstats(store, lg, s.teamId, t, measureFn, s.players);
+    const r = bindTeamstats(store, lg, s.teamId, t, measureFn, s.players, s.numOv?.[s.teamId]);
     v = r.values;
     info.players = r.players; info.shown = r.shown;
     if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a táblán legfeljebb ${TEAMSTATS_MAX} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
@@ -916,7 +921,7 @@ async function update(full) {
     let playersHtml = '';
     if (t.type === 'teamstats' && info.players?.length) {
       const shownKeys = new Set(info.shown.map(x => x.key));
-      playersHtml = `<label>Megjelenő játékosok (max. ${TEAMSTATS_MAX}; 12 fölött a sorok összébb húzódnak)</label><div class="players">${info.players.map(x => `<label><input type="checkbox" value="${esc(x.key)}" ${shownKeys.has(x.key) ? 'checked' : ''}> #${esc(x.p['#'])} ${esc(x.p['Játékos'])} <small>(${esc(x.p['M.'])} m., ${esc(x.p['Idő'])} perc)</small></label>`).join('')}</div>`;
+      playersHtml = `<label>Megjelenő játékosok (max. ${TEAMSTATS_MAX}; 12 fölött a sorok összébb húzódnak)</label><div class="players">${info.players.map(x => `<label><input type="checkbox" value="${esc(x.key)}" ${shownKeys.has(x.key) ? 'checked' : ''}> <input type="text" class="pnum" data-key="${esc(x.key)}" value="${esc(x.numText ?? '')}" placeholder="?" inputmode="numeric" maxlength="3" title="Mezszám – ha beírod, a sor a mezszám szerinti helyre kerül" aria-label="Mezszám"> ${esc(x.p['Játékos'])} <small>(${esc(x.p['M.'])} m., ${esc(x.p['Idő'])} perc)</small></label>`).join('')}</div>`;
     }
     let gamesHtml = '';
     if (info.candidates) {

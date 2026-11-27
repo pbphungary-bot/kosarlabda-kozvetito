@@ -448,3 +448,24 @@ test('team stats table: more than the PSD rows – up to TEAMSTATS_MAX players, 
     assert.equal(big.elements.filter(e => /^r\d+\.name$/.test(e.id)).length, TEAMSTATS_MAX);
   }
 });
+
+test('team stats: own jersey numbers are shown and the rows are sorted by them; numbers shared in the data sort last', async () => {
+  const store = await loadStore();
+  const t = templateById('teamstats-men');
+  const base = teamstatPlayers(store, 'men', 'kecskemet', 20);
+  const last = base.all.at(-1);
+  // a player nobody numbered in the data (or the last one): an own number 1 puts the row first
+  const withOv = teamstatPlayers(store, 'men', 'kecskemet', 20, null, { [last.key]: '1' });
+  assert.equal(withOv.all[0].key, last.key);
+  const r = bindTeamstats(store, 'men', 'kecskemet', t, measure, null, { [last.key]: '1' });
+  const i = r.shown.findIndex(x => x.key === last.key);
+  assert.equal(i, 0);
+  assert.equal(r.values['r0.num'].text, '1');
+  assert.equal(r.values['r0.num'].source, 'Kézzel megadott mezszám');
+  // an empty own number is no override
+  assert.deepEqual(teamstatPlayers(store, 'men', 'kecskemet', 20, null, { [last.key]: '  ' }).all.map(x => x.key), base.all.map(x => x.key));
+  // data numbers shared by several players are unknown: they come after every numbered player
+  const nums = base.all.map(x => x.sortNum);
+  const firstNull = nums.findIndex(n => n === null);
+  if (firstNull >= 0) assert.ok(nums.slice(firstNull).every(n => n === null), 'unknown numbers sort last');
+});
