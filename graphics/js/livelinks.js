@@ -11,7 +11,7 @@ const ls = { get: k => { try { return localStorage.getItem(k) || ''; } catch { r
 const GRAPHICS = { ...OVERLAY_GRAPHICS, off: 'Nincs adásban' };
 // the choice of this game; every graphic keeps its own ticks while the commentator switches between them
 const S = { game: null, graphic: 'off', players: [], teams: null, side: 'home', player: '', corner: '', variant: '', stats: [], teamStats: [], leaderStats: [], leaderColors: {}, leaderOutlineOn: true, leaderShadowOn: true, leaderShadowSize: LEADER_SHADOW_DEFAULT, teamLook: 'outline' };
-let pushTimer = null, loadSeq = 0, touchSeq = 0, lastGame = null; // touchSeq rises with every click of the user: a slower reload of the saved state must never overwrite it
+let pushTimer = null, loadSeq = 0, touchSeq = 0, lastGame = null, firstPick = false; // touchSeq rises with every click of the user: a slower reload of the saved state must never overwrite it
 
 { const qt = new URLSearchParams(location.search).get('token'); if (qt) ls.set('nbia.live.token', qt); } // the launcher prints a link that already carries the key
 $('token').value = ls.get('nbia.live.token');
@@ -94,6 +94,7 @@ async function loadState(game) {
     if (!r.ok || t0 !== touchSeq) return;
     const j = await r.json(), n = normOnAir(j.state);
     if (t0 !== touchSeq) return;
+    if (!(j.rev > 0)) { S.graphic = 'liveteam'; firstPick = true; return; } // nothing was ever put on air for this game: the team comparison is the default (owner 2026-11-27)
     S.graphic = n.graphic; S.side = n.live.side; S.player = n.live.player || ''; S.corner = n.live.corner || '';
     S.stats = n.live.stats || []; S.teamStats = n.live.teamStats || []; S.leaderStats = n.live.leaderStats || [];
     S.leaderColors = n.live.leaderColors || {}; S.leaderOutlineOn = n.live.leaderOutlineOn !== false; S.leaderShadowOn = n.live.leaderShadowOn !== false; S.leaderShadowSize = n.live.leaderShadowSize ?? LEADER_SHADOW_DEFAULT; S.teamLook = n.live.teamLook || 'outline';
@@ -105,9 +106,11 @@ async function loadGame() {
   ls.set('nbia.live.game', $('game').value); ls.set('nbia.live.token', $('token').value.trim());
   if (!game) { $('gameInfo').textContent = ''; S.graphic = 'off'; return refreshView(); }
   $('gameInfo').textContent = 'Betöltés…';
+  firstPick = false;
   await loadState(game);
   if (seq !== loadSeq) return;
   refreshView();
+  if (firstPick) { firstPick = false; push(); } // the default (team comparison) goes on air right away; a saved choice, also "Nincs adásban", is never replaced
   try {
     const r = await fetch(`../live?game=${game}&kind=full${tokenQ()}`, { cache: 'no-store' });
     if (!r.ok) throw new Error(r.status === 403 ? 'hibás vagy hiányzó kulcs' : `a kiszolgáló ${r.status}`);
