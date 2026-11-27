@@ -4,7 +4,7 @@
 // until the operator types an override.
 import { club, clubIdStrict } from './clubs.js';
 import { playedPlayers, topByEff, mmss } from './live.js';
-import { liveDims, liveKeys, LIVE_LEADER_TITLE, liveLeaderCells, liveLeaderSize, liveTeamKeys, liveTeamSize, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
+import { liveDims, liveKeys, LIVE_LEADER_TITLE, liveLeaderCells, liveLeaderSize, liveTeamKeys, liveTeamSize, teamLook, LIVE_TEAM_STATS, LIVE_TEAM_COLORS, coachLook, H2H_PANEL, H2H_COMP_LIFT, STAT_ROWS, PS_STATS, PS_SMALL, TEAMSTAT_COLS, GREEN, RED, WIN, WHITE_TXT } from './templates.js';
 import { num, gameKey } from './data.js';
 
 export const MISSING = '—';
@@ -693,7 +693,7 @@ export function bindLiveTeam(store, lg, game, sel = {}) {
     const better = ka === null || kb === null || ka === kb ? null : ((ka > kb) !== !!d.low ? 'home' : 'away'); // equal or no attempts: nobody is marked
     v[`r${i}.label`] = { text: d.label, source: 'Fix felirat (átírható)' };
     for (const [side, x, id] of [['home', a, `r${i}.h`], ['away', b, `r${i}.a`]]) {
-      const look = sel.teamLook === 'outline' || sel.teamLook === 'numbers' ? sel.teamLook : 'fill'; // optional looks (owner 2026-11-26): 'outline' = soft dark backing + thick green / red outline, white numbers; 'numbers' = soft dark backing, the numbers are green (better) / red (worse) / white (equal)
+      const look = teamLook(sel.teamLook); // optional looks (owner 2026-11-26): 'outline' = soft dark backing + thick green / red outline, white numbers; 'numbers' = soft dark backing, the numbers are green (better) / red (worse) / white (equal)
       const o = look === 'fill' ? (better === null ? { color: C.digit } : { color: '#ffffff' }) : look === 'numbers' ? { color: better === null ? '#ffffff' : better === side ? C.goodText : C.badText } : { color: '#ffffff' };
       const fill = better === null ? C.box : better === side ? C.better : C.worse; // default look: better = green box, worse = red box (white digits), tie / nothing to compare = white box
       v[`${id}.box`] = look === 'outline' ? { stroke: better === null ? 'rgba(255,255,255,0.55)' : better === side ? C.better : C.worse, source: 'Jelölés: a jobb érték zöld, a rosszabb piros körvonal' } : look === 'numbers' ? { source: 'Jelölés: a jobb érték zöld, a rosszabb piros szám (egyenlőnél fehér)' } : { fill, source: 'Jelölés: a jobb érték zöld, a rosszabb piros' };

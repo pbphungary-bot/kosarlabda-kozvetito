@@ -10,7 +10,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const ls = { get: k => { try { return localStorage.getItem(k) || ''; } catch { return ''; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } } };
 const GRAPHICS = { ...OVERLAY_GRAPHICS, off: 'Nincs adásban' };
 // the choice of this game; every graphic keeps its own ticks while the commentator switches between them
-const S = { game: null, graphic: 'off', players: [], teams: null, side: 'home', player: '', corner: '', variant: '', stats: [], teamStats: [], leaderStats: [], leaderColors: {}, leaderOutlineOn: true, leaderShadowOn: true, leaderShadowSize: LEADER_SHADOW_DEFAULT, teamLook: 'fill' };
+const S = { game: null, graphic: 'off', players: [], teams: null, side: 'home', player: '', corner: '', variant: '', stats: [], teamStats: [], leaderStats: [], leaderColors: {}, leaderOutlineOn: true, leaderShadowOn: true, leaderShadowSize: LEADER_SHADOW_DEFAULT, teamLook: 'outline' };
 let pushTimer = null, loadSeq = 0, touchSeq = 0, lastGame = null; // touchSeq rises with every click of the user: a slower reload of the saved state must never overwrite it
 
 { const qt = new URLSearchParams(location.search).get('token'); if (qt) ls.set('nbia.live.token', qt); } // the launcher prints a link that already carries the key
@@ -27,7 +27,7 @@ function onAirHtml() {
 function optionsHtml() {
   const g = S.graphic;
   if (g === 'liveteam') return `<small class="hint">Pipáld be, mely statisztikák látsszanak (a kipipáltak jelennek meg; alapból egy kész csomag van kipipálva):</small><div class="ticks">${tick('tStat', LIVE_TEAM_STATS, liveTeamKeys(S.teamStats))}</div>
-    <label>A jobb / rosszabb érték jelölése<select id="teamLook"><option value="fill" ${S.teamLook !== 'outline' ? 'selected' : ''}>Zöld / piros kitöltött doboz (jelenlegi)</option><option value="outline" ${S.teamLook === 'outline' ? 'selected' : ''}>Sötét háttér, vastag zöld / piros körvonal (kipróbálás)</option><option value="numbers" ${S.teamLook === 'numbers' ? 'selected' : ''}>Sötét háttér, zöld / piros számok (kipróbálás)</option></select></label>`;
+    <label>A jobb / rosszabb érték jelölése<select id="teamLook"><option value="outline" ${S.teamLook === 'outline' ? 'selected' : ''}>Sötét háttér, vastag zöld / piros körvonal (alap)</option><option value="fill" ${S.teamLook === 'fill' ? 'selected' : ''}>Zöld / piros kitöltött doboz (régi)</option><option value="numbers" ${S.teamLook === 'numbers' ? 'selected' : ''}>Sötét háttér, zöld / piros számok (kipróbálás)</option></select></label>`;
   if (g === 'liveleaders') return `<small class="hint">Mindkét csapat három legjobb VAL-értékű játékosa (alap: PTS, REB, AST). Pipáld be, mely statisztikák látsszanak:</small><div class="ticks">${tick('lStat', LIVE_STATS, liveKeys(S.leaderStats))}</div>
     <small class="hint">Megjelenés (mindenhol egyformán, nem játékosonként):</small>
     <div class="grid">${[['name', 'Nevek'], ['label', 'Statisztika-nevek (PTS, REB…)'], ['value', 'Számok'], ['outline', 'Fotók körvonala']].map(([k, lab]) => `<label>${lab}<input type="color" class="lColor" data-k="${k}" value="${S.leaderColors[k] || LEADER_COLOR_DEFAULTS[k]}" style="width:60px;padding:0"></label>`).join('')}</div>
@@ -45,7 +45,7 @@ function optionsHtml() {
   return '<small class="hint">Most semmi nincs adásban: az OBS-forrás átlátszó marad. Kattints a fenti gombok egyikére.</small>';
 }
 function readOptions() {
-  if (S.graphic === 'liveteam') { S.teamStats = ticked('tStat'); S.teamLook = ['outline', 'numbers'].includes($('teamLook')?.value) ? $('teamLook').value : 'fill'; }
+  if (S.graphic === 'liveteam') { S.teamStats = ticked('tStat'); S.teamLook = ['outline', 'fill', 'numbers'].includes($('teamLook')?.value) ? $('teamLook').value : 'outline'; }
   if (S.graphic === 'liveleaders') {
     S.leaderStats = ticked('lStat');
     const c = {}; for (const e of document.querySelectorAll('.lColor')) if (e.value && e.value.toLowerCase() !== LEADER_COLOR_DEFAULTS[e.dataset.k]) c[e.dataset.k] = e.value.toLowerCase();
@@ -96,12 +96,12 @@ async function loadState(game) {
     if (t0 !== touchSeq) return;
     S.graphic = n.graphic; S.side = n.live.side; S.player = n.live.player || ''; S.corner = n.live.corner || '';
     S.stats = n.live.stats || []; S.teamStats = n.live.teamStats || []; S.leaderStats = n.live.leaderStats || [];
-    S.leaderColors = n.live.leaderColors || {}; S.leaderOutlineOn = n.live.leaderOutlineOn !== false; S.leaderShadowOn = n.live.leaderShadowOn !== false; S.leaderShadowSize = n.live.leaderShadowSize ?? LEADER_SHADOW_DEFAULT; S.teamLook = n.live.teamLook || 'fill';
+    S.leaderColors = n.live.leaderColors || {}; S.leaderOutlineOn = n.live.leaderOutlineOn !== false; S.leaderShadowOn = n.live.leaderShadowOn !== false; S.leaderShadowSize = n.live.leaderShadowSize ?? LEADER_SHADOW_DEFAULT; S.teamLook = n.live.teamLook || 'outline';
   } catch { /* offline: start from nothing */ }
 }
 async function loadGame() {
   const game = gameCode($('game').value), seq = ++loadSeq;
-  S.players = []; S.teams = null; S.game = game; if (S.game !== lastGame) { S.graphic = 'off'; S.side = 'home'; S.player = ''; S.corner = ''; S.stats = []; S.teamStats = []; S.leaderStats = []; S.leaderColors = {}; S.leaderOutlineOn = true; S.leaderShadowOn = true; S.leaderShadowSize = LEADER_SHADOW_DEFAULT; S.teamLook = 'fill'; lastGame = game; }
+  S.players = []; S.teams = null; S.game = game; if (S.game !== lastGame) { S.graphic = 'off'; S.side = 'home'; S.player = ''; S.corner = ''; S.stats = []; S.teamStats = []; S.leaderStats = []; S.leaderColors = {}; S.leaderOutlineOn = true; S.leaderShadowOn = true; S.leaderShadowSize = LEADER_SHADOW_DEFAULT; S.teamLook = 'outline'; lastGame = game; }
   ls.set('nbia.live.game', $('game').value); ls.set('nbia.live.token', $('token').value.trim());
   if (!game) { $('gameInfo').textContent = ''; S.graphic = 'off'; return refreshView(); }
   $('gameInfo').textContent = 'Betöltés…';

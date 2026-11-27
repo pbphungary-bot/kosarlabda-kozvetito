@@ -185,7 +185,7 @@ test('live team comparison: quarter points add up to the score, team totals, bet
   const mid = { finished: false, clock: gameClock(1234) }; // 34 s into the 3rd quarter
   assert.deepEqual([livePeriodLabel(mid), liveTimeLabel(mid)], ['3. NEGYED', '9:26'], 'live game: period + time left');
   assert.deepEqual([livePeriodLabel({ finished: false, clock: gameClock(2450) }), liveTimeLabel({ finished: false, clock: gameClock(2450) })], ['HOSSZABBÍTÁS', '4:10']);
-  const v = bindLiveTeam(store, 'women', g, { teamStats: ['fg3', 'reb', 'tov'], fetchedAt: '22:41:03' });
+  const v = bindLiveTeam(store, 'women', g, { teamStats: ['fg3', 'reb', 'tov'], fetchedAt: '22:41:03', teamLook: 'fill' }); // the legacy filled look is a choice now (the default is the outline look)
   assert.equal(v.scoreH.text, '90'); assert.equal(v.scoreA.text, '48');
   assert.equal(v.logoH.src, 'women/sercounigyor');
   assert.deepEqual([0, 1, 2].map(i => v[`r${i}.label`].text), ['3P', 'REB', 'TOV'], 'ticked stats in canonical order');
@@ -313,10 +313,10 @@ test('names with ő / ű: the feed writes "?", the mkosz.hu names are applied by
   assert.equal(v.name.text, 'HALASY Enikő');
 });
 
-test('team comparison, optional looks (owner 2026-11-26): soft dark backing in both; "outline" = thick green / red outline, "numbers" = green / red / white numbers; the default look is unchanged', async () => {
+test('team comparison, optional looks (owner 2026-11-26): soft dark backing in both; "outline" = thick green / red outline, "numbers" = green / red / white numbers; the old filled look stays available as an explicit choice, the default is the outline look', async () => {
   const store = await loadStore(), g = parseGame(decodeFeed(raw), 'whun_135563');
   const keys = ['fg', 'reb', 'tov'], BACK = '#121215';
-  const fillTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys), outTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'outline'), numTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'numbers');
+  const fillTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'fill'), dfltTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys), outTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'outline'), numTpl = LIVE_TEAM_BUILDERS['liveteam-women'](keys, 'numbers');
   const box = (t, id) => t.elements.find(e => e.id === id);
   assert.equal(box(fillTpl, 'r0.h.box').fill, '#f4f4f4'); assert.equal(box(fillTpl, 'r0.h.box').sw, 0, 'default look: filled box, no outline');
   assert.equal(box(outTpl, 'r0.h.box').fill, BACK); assert.ok(box(outTpl, 'r0.h.box').sw > 0, 'outline look: dark backing + an outline');
@@ -326,7 +326,8 @@ test('team comparison, optional looks (owner 2026-11-26): soft dark backing in b
   assert.equal(box(fillTpl, 'scoreH.box').fill, '#f4f4f4'); assert.equal(box(fillTpl, 'scoreH').color, '#0b0b0c', 'default look: the white score boxes with dark digits are unchanged');
   for (const t of [outTpl, numTpl]) { for (const id of ['scoreH.box', 'scoreA.box']) { assert.equal(box(t, id).fill, '#17171a'); assert.equal(box(t, id).opacity, 0.965); assert.equal(box(t, id).stroke, '#7d8088'); assert.ok(box(t, id).sw > 0 && box(t, id).sw < 6, 'a very thin grey outline'); } assert.equal(box(t, 'scoreH').color, '#ffc929'); assert.equal(box(t, 'scoreA').color, '#ffc929', 'optional looks: near-black score boxes at 96.5 % with gold digits (the big white blocks looked odd)'); }
   assert.equal(fillTpl.liveTeam.look, 'fill'); assert.equal(outTpl.liveTeam.look, 'outline'); assert.equal(numTpl.liveTeam.look, 'numbers');
-  const dflt = bindLiveTeam(store, 'women', g, { teamStats: keys }), out = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'outline' }), num = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'numbers' });
+  const dflt = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'fill' }), dfltOut = bindLiveTeam(store, 'women', g, { teamStats: keys }), out = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'outline' }), num = bindLiveTeam(store, 'women', g, { teamStats: keys, teamLook: 'numbers' });
+  assert.equal(dfltTpl.liveTeam.look, 'outline', 'owner 2026-11-27: the outline look is the default'); assert.equal(dfltOut['r1.h.box'].stroke, '#0b9444', 'no look given = outline');
   assert.equal(dflt['r1.h.box'].fill, '#0b9444'); assert.equal(dflt['r1.a.box'].fill, '#ec4036', 'default: filled green / red (REB 42 vs 31)');
   assert.equal(out['r1.h.box'].stroke, '#0b9444'); assert.equal(out['r1.a.box'].stroke, '#ec4036'); assert.equal(out['r1.h.color'], undefined); assert.equal(out['r1.h'].color, '#ffffff', 'outline look: white numbers');
   assert.equal(num['r1.h'].color, '#27d64a'); assert.equal(num['r1.a'].color, '#ff4d42', 'numbers look: better green, worse red');

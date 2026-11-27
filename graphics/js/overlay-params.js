@@ -21,7 +21,7 @@ export function parseOverlay(search) {
     stats: list(q.get('stats')).length ? list(q.get('stats')) : undefined,
     teamStats: list(q.get('teamStats')).length ? list(q.get('teamStats')) : undefined,
     leaderStats: list(q.get('leaderStats')).length ? list(q.get('leaderStats')) : undefined,
-    teamLook: ['outline', 'numbers'].includes(q.get('teamLook')) ? q.get('teamLook') : undefined,
+    teamLook: ['outline', 'fill', 'numbers'].includes(q.get('teamLook')) ? q.get('teamLook') : undefined,
   };
   for (const k of Object.keys(live)) if (live[k] === undefined) delete live[k];
   const refresh = Math.min(60, Math.max(2, Number(q.get('refresh')) || 5));
@@ -70,6 +70,6 @@ export function normOnAir(raw) {
   if (r.leaderOutlineOn === false) live.leaderOutlineOn = false;
   if (r.leaderShadowOn === false) live.leaderShadowOn = false;
   if (r.leaderShadowSize !== undefined && r.leaderShadowSize !== null && r.leaderShadowSize !== '' && Number.isFinite(Number(r.leaderShadowSize))) live.leaderShadowSize = Math.min(40, Math.max(0, Number(r.leaderShadowSize)));
-  if (r.teamLook === 'outline' || r.teamLook === 'numbers') live.teamLook = r.teamLook;
+  if (['outline', 'fill', 'numbers'].includes(r.teamLook)) live.teamLook = r.teamLook; // no value = the default look (outline)
   return { graphic: OVERLAY_GRAPHICS[r.graphic] ? r.graphic : 'off', live };
 }
