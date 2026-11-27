@@ -2,7 +2,7 @@
 // the ONE fixed link of the game in OBS follows it, so nothing has to be changed in OBS. The preview below is that very link (what the server sends).
 import { gameCode, decodeFeed, parseGame, playedPlayers, applyOfficialNames, needsOfficialNames } from './live.js';
 import { LIVE_STATS, LIVE_TEAM_STATS, LIVE_VARIANTS, LIVE_CORNERS, liveKeys, liveTeamKeys } from './templates.js';
-import { OVERLAY_GRAPHICS, fixedLinkQuery, normOnAir, gameLeague } from './overlay-params.js';
+import { OVERLAY_GRAPHICS, fixedLinkQuery, categoryLinkQuery, normOnAir, gameLeague } from './overlay-params.js';
 import { LEADER_COLOR_DEFAULTS, LEADER_SHADOW_DEFAULT } from './binders.js';
 
 const $ = id => document.getElementById(id);
@@ -75,8 +75,24 @@ function fixedLink() {
   const game = gameCode($('game').value);
   return game ? new URL(`overlay.html?${fixedLinkQuery({ game, token: $('token').value.trim() })}`, location.href).href : '';
 }
+/** The three links of the categories under the main link (each with its own copy button). */
+function categoryLinksHtml() {
+  const game = gameCode($('game').value), token = $('token').value.trim();
+  $('catLinks').innerHTML = Object.entries(OVERLAY_GRAPHICS).map(([g, label]) => {
+    const url = game ? new URL(`overlay.html?${categoryLinkQuery({ game, graphic: g, token })}`, location.href).href : '';
+    return `<label>${esc(label)}<input class="catLink" data-g="${g}" readonly value="${esc(url || 'Adj meg egy meccs-linket vagy kódot.')}"></label>
+      <div class="import-row"><button type="button" class="catCopy" data-g="${g}" ${url ? '' : 'disabled'}>Link másolása</button></div>`;
+  }).join('');
+}
+$('catLinks').addEventListener('click', async e => {
+  const b = e.target.closest('.catCopy'); if (!b) return;
+  const inp = $('catLinks').querySelector(`.catLink[data-g="${b.dataset.g}"]`);
+  try { await navigator.clipboard.writeText(inp.value); b.textContent = 'Kimásolva.'; } catch { inp.select(); b.textContent = 'Jelöld ki és másold (Ctrl+C).'; }
+  setTimeout(() => { b.textContent = 'Link másolása'; }, 2500);
+});
+
 function refreshView() {
-  onAirHtml(); $('opts').innerHTML = optionsHtml();
+  onAirHtml(); categoryLinksHtml(); $('opts').innerHTML = optionsHtml();
   const url = fixedLink(); $('link').value = url || 'Adj meg egy meccs-linket vagy kódot.'; $('copy').disabled = !url;
   const f = $('prev');
   if (url && f.dataset.url !== url) { f.dataset.url = url; f.style.width = '1920px'; f.style.height = '1080px'; f.src = url; } // the link never changes: the preview follows the server

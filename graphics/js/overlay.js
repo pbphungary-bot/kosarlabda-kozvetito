@@ -15,7 +15,8 @@ const canvas = document.getElementById('c'), dbg = document.getElementById('dbg'
 const images = {};
 let drawnKey = '', drawCount = 0, store = null, outlines = {}, photoIds = new Set(), lastText = null, dirty = false, status = 'indul…', officialNames = null, namesTried = 0;
 // What is on air: a link with &g=… shows that one graphic (old direct links); the fixed link of a game (no &g) follows what the builder put on air on the server (/live-state).
-let onAir = P.fixed ? { graphic: P.graphic, live: P.live } : { graphic: 'off', live: {} }, stateRev = -1;
+let onAir = P.fixed ? { graphic: P.graphic, live: P.live } : { graphic: P.show || 'off', live: {} }, stateRev = -1;
+const ownGraphic = a => (P.show ? { ...a, graphic: P.show } : a); // a category link ignores which graphic the builder has on air (the settings still follow it)
 const say = s => { status = s; if (P.debug) { dbg.style.display = 'block'; dbg.textContent = `${P.game || '—'} · ${onAir.graphic} · ${s}`; } };
 
 function loadImage(key, url) {
@@ -88,7 +89,7 @@ async function pollState() {
   const r = await fetch(new URL(`../live-state?game=${P.game}${P.token ? '&token=' + encodeURIComponent(P.token) : ''}`, location.href), { cache: 'no-store' });
   if (!r.ok) throw new Error(r.status === 403 ? 'hibás vagy hiányzó kulcs a linkben' : `a kiszolgáló ${r.status}`);
   const j = await r.json();
-  if (j.rev !== stateRev) { stateRev = j.rev; onAir = normOnAir(j.state); dirty = true; if (onAir.graphic === 'off') { clearCanvas(); say('nincs adásban (az átlátszó kép marad)'); } else await pollFeed(); }
+  if (j.rev !== stateRev) { stateRev = j.rev; onAir = ownGraphic(normOnAir(j.state)); dirty = true; if (onAir.graphic === 'off') { clearCanvas(); say('nincs adásban (az átlátszó kép marad)'); } else await pollFeed(); }
 }
 async function pollFeed() {
   if (onAir.graphic === 'off') return; // nothing on air: the feed is not even asked

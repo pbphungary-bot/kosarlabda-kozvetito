@@ -1577,6 +1577,35 @@ try {
 
   const isLive = u => u.pathname === '/live'; // exactly the relay: the glob '**/live?*' would also catch /live-state (the ? matches the dash)
   // OBS overlay: any game / graphic from a link alone, transparent, self-updating, survives a reload (the OBS "refresh cache" hotkey)
+  await check('Builder: a link per live graphic always shows its own graphic, whatever the builder has on air', async () => {
+    const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
+    const bctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1100 } }));
+    await bctx.route(isLive, route => route.fulfill({ status: 200, contentType: 'text/plain', body: feed }));
+    const lp = await bctx.newPage();
+    await lp.goto(`${URL}/graphics/live.html`);
+    await lp.fill('#game', 'https://netcasting4.webpont.com/?whun_135570'); await lp.dispatchEvent('#game', 'change');
+    await lp.waitForFunction(() => /90–48/.test(document.getElementById('gameInfo').textContent));
+    assert.equal(await lp.locator('.catLink').count(), 3, 'three category links under the main link');
+    const link = g => lp.locator(`.catLink[data-g="${g}"]`).inputValue();
+    assert.match(await link('liveleaders'), /\/graphics\/overlay\.html\?game=whun_135570&show=liveleaders$/);
+    await lp.click('.onairBtn[data-g="liveteam"]'); // the builder puts the team comparison on air
+    const leaders = await bctx.newPage(); await leaders.goto(await link('liveleaders'));
+    await leaders.waitForFunction(() => window.__overlay.drawn().startsWith('liveleaders|') && /90–48/.test(window.__overlay.status()), null, { timeout: 30000 });
+    const main = await bctx.newPage(); await main.goto(await lp.inputValue('#link'));
+    await main.waitForFunction(() => window.__overlay.drawn().startsWith('liveteam|'), null, { timeout: 30000 });
+    // the builder switches the main link to the player insert, then off: the leaders link stays what it is
+    await lp.click('.onairBtn[data-g="livestat"]'); await main.waitForFunction(() => window.__overlay.onAir().graphic === 'livestat', null, { timeout: 15000 });
+    await lp.click('.onairBtn[data-g="off"]'); await main.waitForFunction(() => window.__overlay.onAir().graphic === 'off', null, { timeout: 15000 });
+    assert.equal(await leaders.evaluate(() => window.__overlay.onAir().graphic), 'liveleaders', 'a category link ignores what is on air');
+    assert.ok(await leaders.evaluate(() => window.__overlay.drawn().startsWith('liveleaders|')), 'and keeps drawing its graphic');
+    // its settings still follow the builder: a ticked statistic of the three leaders reaches the link
+    await lp.click('.onairBtn[data-g="liveleaders"]');
+    await lp.waitForSelector('.lStat[value="stl"]'); await lp.check('.lStat[value="stl"]');
+    await leaders.waitForFunction(() => (window.__overlay.onAir().live.leaderStats || []).includes('stl'), null, { timeout: 15000 });
+    assert.equal(await leaders.evaluate(() => window.__overlay.onAir().graphic), 'liveleaders');
+    await bctx.close();
+  });
+
   await check('OBS overlay: three graphics of one game at once, from the link only, reload keeps working', async () => {
     const feed = readFileSync(path.join(ROOT, 'tests/fixtures/live/whun_135563.full.txt'), 'utf8');
     const octx = await hermetic(await browser.newContext({ viewport: { width: 1920, height: 1080 } }));
