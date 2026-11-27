@@ -26,7 +26,7 @@ warnings.filterwarnings('ignore')
 from psd_tools import PSDImage  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'BROADCAST GRAPHICS')
+SRC = os.environ.get('PSD_DIR') or os.path.join(ROOT, 'BROADCAST GRAPHICS')  # the owner's PSDs are not kept in the repository any more: point PSD_DIR at the folder that holds them
 OUT = os.path.join(ROOT, 'graphics')
 
 # Layers that are part of the fixed design (kept in the background).

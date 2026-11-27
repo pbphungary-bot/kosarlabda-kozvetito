@@ -21,7 +21,7 @@ warnings.filterwarnings('ignore')
 from psd_tools import PSDImage  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'BROADCAST GRAPHICS')
+SRC = os.environ.get('PSD_DIR') or os.path.join(ROOT, 'BROADCAST GRAPHICS')  # the owner's PSDs are not kept in the repository any more: point PSD_DIR at the folder that holds them
 FONTS = {'regular': os.path.join(ROOT, 'graphics/fonts/LeagueGothic-Regular.otf'),
          'italic': os.path.join(ROOT, 'graphics/fonts/LeagueGothic-Italic.otf')}
 
