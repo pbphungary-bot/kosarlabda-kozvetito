@@ -97,7 +97,7 @@ const psCache = new Map();
 const tpl = () => {
   const t = templateById(state.template[state.league]);
   if (t.type === 'roster' || t.type === 'rostergrid') { // rows / cards for the real number of players of the chosen team
-    const pl = rosterPlayers(store, t.league, state.sel[t.league]?.teamId);
+    const pl = rosterPlayers(store, t.league, state.sel[t.league]?.teamId, state.sel[t.league]?.numOv?.[state.sel[t.league]?.teamId]);
     const n = pl.length || t.rosterN, mask = pl.map(p => (isForeign(p) ? '1' : '0')).join(''); // foreign players: given name above the surname
     const ns = Math.max(0.5, Math.min(2.5, (state.sel[t.league]?.numScale || 100) / 100)); // jersey-number size, all players at once
     const fs = Math.max(0.5, Math.min(2.5, (state.sel[t.league]?.flagScale || 100) / 100)); // flag size, all players at once
@@ -687,8 +687,9 @@ function autoValues() {
     v = bindForm(store, lg, [s.teamId]);
     if (store.playedGames(lg, s.teamId).length < 5) info.notices.push({ text: 'Ennek a csapatnak 5-nél kevesebb lejátszott meccse van: az üres oszlopok nem jelennek meg.' });
   } else if (t.type === 'roster' || t.type === 'rostergrid') {
-    const r = bindRoster(store, lg, s.teamId, t, photoIds);
+    const r = bindRoster(store, lg, s.teamId, t, photoIds, s.numOv?.[s.teamId]);
     v = r.values;
+    info.rowKeys = r.players.map(x => x.key);
     if (r.missing) info.notices.push({ bad: true, text: 'Ehhez a csapathoz nincs Hunbasket keret-adat (data/team_pages_*.json). Töltsd ki kézzel.' });
     else {
       info.notices.push({ text: 'A keret a Hunbasket csapatoldaláról jön (mezszám szerint rendezve). A kapitány-jelölés (©) az adatokban nincs: kézzel írd a név mögé, ha kell. A nevek hosszú, több keresztnevesek lerövidülnek (3 szó).' });
@@ -742,7 +743,7 @@ function autoValues() {
   } else if (t.type === 'teamstats') {
     const r = bindTeamstats(store, lg, s.teamId, t, measureFn, s.players, s.numOv?.[s.teamId]);
     v = r.values;
-    info.players = r.players; info.shown = r.shown;
+    info.players = r.players; info.shown = r.shown; info.rowKeys = r.shown.map(x => x.key);
     if (r.hidden > 0) info.notices.push({ text: `${r.players.length} játékos van az adatokban, a táblán legfeljebb ${TEAMSTATS_MAX} sor fér el. ${r.hidden} játékos nem látszik (alapból a legkevesebb percet játszók) – a listában módosíthatod.` });
   } else if (t.type === 'results' || t.type === 'schedule' || t.type === 'resultrows') {
     const grp = t.type === 'schedule' ? 'schedule' : 'results';
@@ -849,12 +850,12 @@ function onFieldEvent(e) {
   const f = e.target.closest('.field');
   if (!f) return;
   const id = f.dataset.id, o = overrides();
-  // player table: a jersey number typed into a row's field becomes that PLAYER's own number (same as the box in the player list), so the rows are re-sorted by number
-  const numRow = tpl().type === 'teamstats' && e.type === 'change' && e.target.classList.contains('txt') ? /^r(\d+)\.num$/.exec(id) : null;
-  const numPlayer = numRow && current.shown?.[+numRow[1]];
-  if (numPlayer) {
+  // player table and both roster graphics: a jersey number typed into a row's field becomes that PLAYER's own number (the player table also has a box in its player list), so the rows are re-sorted by number
+  const numRow = ['teamstats', 'roster', 'rostergrid'].includes(tpl().type) && e.type === 'change' && e.target.classList.contains('txt') ? /^r(\d+)\.num$/.exec(id) : null;
+  const numKey = numRow && current.rowKeys?.[+numRow[1]];
+  if (numKey) {
     const m = ((sel().numOv ||= {})[sel().teamId] ||= {}), v = e.target.value.trim().replace(/^#/, '');
-    if (v === '') delete m[numPlayer.key]; else m[numPlayer.key] = v;
+    if (v === '') delete m[numKey]; else m[numKey] = v;
     delete o[id];
     update(true);
     return;
@@ -925,7 +926,7 @@ async function update(full) {
   document.body.classList.toggle('women', state.league === 'women');
   const { v: auto, info } = autoValues();
   const values = mergedValues(auto);
-  current = { values, auto, shown: info.shown };
+  current = { values, auto, rowKeys: info.rowKeys };
   if (info.candidates) lastCandidates = info.candidates;
   if (full) {
     let playersHtml = '';

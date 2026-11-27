@@ -511,15 +511,20 @@ export function displayName(p) {
 export function shortName(name) { return parseName(name).surname + ' ' + parseName(name).given.slice(0, 2).join(' '); }
 
 /** Players of a team page in shirt-number order (the order of the page for equal numbers). */
-export function rosterPlayers(store, lg, teamId) {
+/** The squad of a team page, sorted by jersey number. `numOv` ({playerKey: text}): the operator's own numbers (typed into a row's number field) win over the data and
+ *  decide the order; such a player carries `numOwn: true`. The key is the player's page URL (name if there is none). */
+export function rosterPlayers(store, lg, teamId, numOv = {}) {
   const page = store.teamPage(lg, teamId);
   if (!page) return [];
-  return page.roster.map((p, i) => ({ ...p, i })).sort((a, b) => (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0) || a.i - b.i);
+  return page.roster.map((p, i) => {
+    const key = `r|${p.url || p.name}`, ov = String(numOv?.[key] ?? '').trim();
+    return { ...p, i, key, ...(ov !== '' ? { number: ov, numOwn: true } : {}) };
+  }).sort((a, b) => (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0) || a.i - b.i);
 }
 
-export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
+export function bindRoster(store, lg, teamId, tpl, photoIds = new Set(), numOv = {}) {
   const page = store.teamPage(lg, teamId);
-  const players = rosterPlayers(store, lg, teamId);
+  const players = rosterPlayers(store, lg, teamId, numOv);
   const src = 'Hunbasket csapatoldal (keret)';
   const grid = tpl.type === 'rostergrid';
   const v = { logo: logo(lg, teamId) };
@@ -537,7 +542,7 @@ export function bindRoster(store, lg, teamId, tpl, photoIds = new Set()) {
   for (let i = 0; i < n; i++) {
     const p = players[i];
     if (!p) { for (const e of tpl.elements) if (e.id.startsWith(`r${i}.`)) v[e.id] = e.type === 'image' ? { src: '' } : { text: '', source: 'Üres sor' }; continue; }
-    v[`r${i}.num`] = field(p.number, src);
+    v[`r${i}.num`] = p.numOwn ? { text: p.number, source: 'Kézzel megadott mezszám' } : field(p.number, src);
     const foreign = isForeign(p);
     v[`r${i}.flag`] = { src: foreign ? flagKey(p.flag) : '', source: foreign ? `Zászló (${p.nationality})` : 'Magyar játékos: nincs zászló' };
     const h = p.height ? String(p.height).replace(/\s*cm/i, ' cm') : null;
