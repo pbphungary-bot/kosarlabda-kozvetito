@@ -1630,7 +1630,15 @@ try {
     const ov = await bctx.newPage(); await ov.goto(link);
     await ov.waitForFunction(() => document.body.dataset.ready === '1');
     const opaque = () => ov.evaluate(() => { const c = document.getElementById('c'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return n; });
-    await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off'); assert.equal(await opaque(), 0, 'nothing is on air until the builder picks a graphic: transparent');
+    // a game nobody has put on air before: the team comparison comes up by default (owner 2026-11-27), without any click
+    await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'liveteam' && window.__overlay.drawn().startsWith('liveteam|'), null, { timeout: 15000 });
+    assert.ok(await opaque() > 50000, 'team comparison drawn by default');
+    assert.equal(await lp.locator('.onairBtn.primary').getAttribute('data-g'), 'liveteam', 'the builder shows it as the one on air');
+    // an explicit "Nincs adásban" is a saved choice: it stays off after a reload of the builder
+    await lp.click('.onairBtn[data-g="off"]'); await ov.waitForFunction(() => window.__overlay.onAir().graphic === 'off', null, { timeout: 15000 });
+    assert.equal(await opaque(), 0, 'off = transparent');
+    await lp.reload(); await lp.waitForFunction(() => /90–48/.test(document.getElementById('gameInfo').textContent));
+    assert.equal(await lp.locator('.onairBtn.primary').getAttribute('data-g'), 'off', 'a saved off is not replaced by the default');
     const pick = async g => { await lp.click(`.onairBtn[data-g="${g}"]`); await ov.waitForFunction(x => window.__overlay.onAir().graphic === x && window.__overlay.drawn().startsWith(x + '|') && /90–48/.test(window.__overlay.status()), g, { timeout: 15000 }); }; // drawn(): the canvas really shows it (the status text alone is still the old graphic's)
     await pick('liveteam'); assert.ok(await opaque() > 50000, 'team comparison drawn');
     assert.equal(await lp.isChecked('.tStat[value="reb"]'), true, 'the default package is shown ticked'); assert.equal(await lp.isChecked('.tStat[value="fg2"]'), false);
