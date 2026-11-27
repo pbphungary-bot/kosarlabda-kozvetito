@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-26T18:44:30.954829+00:00",
+  "checked_at": "2026-11-27T02:05:38.193584+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 1,
+      "added": 0,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -173,23 +173,19 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 16,
+      "attempted": 16,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 16,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:JSONDecodeError",
-        "sitemap:0"
-      ]
+      "usable_articles": 16,
+      "source_coverage": true
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -223,29 +219,40 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:JSONDecodeError",
+        "wp-json:0",
+        "sitemap:HTTPError",
         "sitemap:0"
+      ],
+      "sample_links": [
+        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
+        "Kezdőlap -> https://megyeritigrisek.hu/",
+        "Hírek -> https://megyeritigrisek.hu/news/",
+        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
+        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
+        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
+        "Média -> #",
+        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
+        "Magazin -> https://megyeritigrisek.hu/magazin/",
+        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
+        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
+        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
       ]
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "empty",
-      "reason": "no_article_links",
+      "status": "ok",
+      "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 0,
-      "attempted": 0,
+      "candidates": 10,
+      "attempted": 10,
       "already_saved": 0,
       "added": 0,
-      "repaired": 0,
+      "repaired": 10,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 0,
-      "source_coverage": false,
-      "fallback": [
-        "wp-json:JSONDecodeError",
-        "sitemap:0"
-      ]
+      "usable_articles": 10,
+      "source_coverage": true
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -256,8 +263,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 15,
+      "added": 1,
+      "repaired": 14,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -269,18 +276,15 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 30,
+      "candidates": 19,
+      "attempted": 19,
       "already_saved": 19,
       "added": 0,
-      "repaired": 11,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 30,
-      "source_coverage": true,
-      "fallback": [
-        "wp-json:30"
-      ]
+      "usable_articles": 19,
+      "source_coverage": true
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -330,8 +334,25 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:JSONDecodeError",
+        "wp-json:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
+        "sitemap:HTTPError",
         "sitemap:0"
+      ],
+      "sample_links": [
+        "Kezdőlap -> https://kosarlabda.ase.hu",
+        "Aktuális -> #",
+        "Hírek -> https://kosarlabda.ase.hu/hirek",
+        "Események -> https://kosarlabda.ase.hu/esemenyek",
+        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
+        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
+        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
+        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
+        "Média -> #",
+        "Galéria -> https://kosarlabda.ase.hu/galeria",
+        "Videók -> https://kosarlabda.ase.hu/videok",
+        "Élő közvetítés -> /"
       ]
     },
     {
@@ -444,6 +465,8 @@
         "wp-json:HTTPError",
         "sitemap:HTTPError",
         "sitemap:HTTPError",
+        "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -469,8 +492,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 24,
-      "already_saved": 24,
-      "added": 0,
+      "already_saved": 23,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -8106,6 +8129,19 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Licitálj a meccslabdára, a befolyt összeget az Audi ETO-nak utaljuk át",
+      "summary": "Igazán különleges ereklye lehet a tiéd.",
+      "url": "https://etobasket.hu/hu/hirek/licitalj-a-meccslabdara-a-befolyt-osszeget-az-audi-eto-nak-utaljuk-at/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "Legyőztük a címvédőt",
       "summary": "ETO Basket–NKA Universitas Pécs 80–65 (23–14, 17–20, 22–12, 18–19)",
       "url": "https://etobasket.hu/hu/hirek/legyoztuk-a-cimvedot/",
@@ -12120,6 +12156,19 @@
       "title": "Zeljko Djokic: „Nem kell temetni minket”",
       "summary": "Harcos játékot és a héten elvégzett munka eredményét szeretné látni csapatától Zeljko Djokic a BKG-PRIMA Szigetszentmiklós ellen.",
       "url": "https://www.nkapecswomen.hu/tartalmak/Zeljko-Djokic-Nem-kell-temetni-minket/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Zeljko Djokic: „A következő feladat, hogy idegenben is nyerjünk”",
+      "summary": "A BEAC elleni hazai siker után pénteken 18 órakor a TFSE vendégeként folytatjuk a bajnokságot.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Zeljko-Djokic-A-kovetkezo-feladat--hogy-idegenben-is-nyerjunk/",
       "published_at": null,
       "summary_method": "source_description",
       "publisher_club": "NKA Universitas Pécs (női)",
