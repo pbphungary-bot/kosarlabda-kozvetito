@@ -25,7 +25,8 @@ export function parseOverlay(search) {
   };
   for (const k of Object.keys(live)) if (live[k] === undefined) delete live[k];
   const refresh = Math.min(60, Math.max(2, Number(q.get('refresh')) || 5));
-  return { game, graphic, fixed: q.has('g'), league: game ? gameLeague(game) : 'men', templateId: game ? `${graphic}-${gameLeague(game)}` : null, live, refresh, token: q.get('token') || '', debug: q.get('debug') === '1' };
+  const show = OVERLAY_GRAPHICS[q.get('show')] ? q.get('show') : null; // a link of one category: always this graphic, with the builder's settings (see categoryLinkQuery)
+  return { game, graphic, show, fixed: q.has('g'), league: game ? gameLeague(game) : 'men', templateId: game ? `${graphic}-${gameLeague(game)}` : null, live, refresh, token: q.get('token') || '', debug: q.get('debug') === '1' };
 }
 
 /** Settings → query string (the link maker). Only what differs from the defaults is written, so the links stay short. */
@@ -50,6 +51,16 @@ export function overlayQuery({ game, graphic, live = {}, token = '', refresh = 5
 export function fixedLinkQuery({ game, token = '' }) {
   const q = new URLSearchParams();
   q.set('game', gameCode(game) || '');
+  if (token) q.set('token', token);
+  return q.toString();
+}
+
+/** The fixed link of ONE live graphic of a game (owner 2026-11-27): it always shows that graphic, whatever the builder has on air, but follows the builder's saved settings of it
+ *  (ticked stats, player, colours…) like the game's main link. So several OBS sources can stay side by side and be switched with OBS's own visibility. */
+export function categoryLinkQuery({ game, graphic, token = '' }) {
+  const q = new URLSearchParams();
+  q.set('game', gameCode(game) || '');
+  q.set('show', OVERLAY_GRAPHICS[graphic] ? graphic : 'liveteam');
   if (token) q.set('token', token);
   return q.toString();
 }

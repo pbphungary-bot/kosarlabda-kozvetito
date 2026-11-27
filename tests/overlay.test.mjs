@@ -59,3 +59,16 @@ test('on-air look options: hex colours, outline / shadow switches and the shadow
   assert.equal(d.live.leaderOutlineOn, undefined, 'defaults stay out'); assert.equal(d.live.leaderShadowSize, 0); assert.equal(d.live.teamLook, undefined); assert.equal(d.live.leaderColors, undefined);
   assert.equal(normOnAir({ graphic: 'liveleaders', leaderShadowSize: 'abc' }).live.leaderShadowSize, undefined);
 });
+
+test('category links: one link per live graphic of a game (game + graphic + key only), parsed back as a "show" link', async () => {
+  const { categoryLinkQuery } = await import('../graphics/js/overlay-params.js');
+  for (const g of ['livestat', 'liveteam', 'liveleaders']) {
+    const q = categoryLinkQuery({ game: 'https://netcasting4.webpont.com/?whun_135563', graphic: g, token: 'k3y' });
+    assert.equal(q, `game=whun_135563&show=${g}&token=k3y`);
+    const p = parseOverlay('?' + q);
+    assert.equal(p.show, g); assert.equal(p.game, 'whun_135563'); assert.equal(p.fixed, false, 'it follows the server (settings), unlike the old direct links');
+  }
+  assert.equal(categoryLinkQuery({ game: 'whun_135563', graphic: 'bogus' }), 'game=whun_135563&show=liveteam', 'an unknown graphic falls back to the team comparison');
+  assert.equal(parseOverlay('?game=whun_135563&show=bogus').show, null, 'an unknown show value is ignored');
+  assert.equal(parseOverlay('?game=whun_135563').show, null, 'the main link has no show: it follows what is on air');
+});
