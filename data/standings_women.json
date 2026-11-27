@@ -1,8 +1,8 @@
 {
   "competition": "Női NB I/A",
   "source": "https://hunbasket.hu/tabella/noi",
-  "updated_at": "2026-11-22T19:27:42.349187+00:00",
-  "checked_at": "2026-11-27T11:59:32.969679+00:00",
+  "updated_at": "2026-11-27T21:02:52.773374+00:00",
+  "checked_at": "2026-11-27T21:02:52.773374+00:00",
   "standings": [
     {
       "rank": 1,
@@ -67,22 +67,22 @@
     {
       "rank": 7,
       "name": "NKA Universitas Pécs",
-      "played": 7,
-      "points": 10,
-      "wins": 3,
+      "played": 8,
+      "points": 12,
+      "wins": 4,
       "losses": 4,
-      "scored": 527,
-      "conceded": 471
+      "scored": 604,
+      "conceded": 527
     },
     {
       "rank": 8,
       "name": "TFSE",
-      "played": 7,
-      "points": 9,
+      "played": 8,
+      "points": 10,
       "wins": 2,
-      "losses": 5,
-      "scored": 479,
-      "conceded": 477
+      "losses": 6,
+      "scored": 535,
+      "conceded": 554
     },
     {
       "rank": 9,
