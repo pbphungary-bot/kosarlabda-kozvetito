@@ -26,6 +26,7 @@ Text outlines: 3–4 px (PSD stroke), club logos carry the white outline stored 
 - Photos/content stay inside the frame's inner edge.
 
 ## Components (LOCKED where marked)
+- **Intro (LOCKED, owner 2026-11-27):** club logos at y 460 (home) / 458.5 (away); team names size 100, centred on ONE shared middle line (a one-line and a two-line name have the same vertical centre, base line y 794.5), line pitch 94 → about 21 px visible gap between two lines (accent letters poke into it); the red position / W-L line ("(2. hely - 6-0)", `#ef4036` with a white 2 px outline) is size 60 at y 921.5. Values live in `intro()` in `templates.js`.
 - **Form badge (LOCKED):** circle with a dark rim, white 6 px ring, "GY" on green / "V" on red, League Gothic letters; opponent logo (or name) under it; own score first; **@** before the score for away games; latest game on the right; no text caption.
 - **Compact graphics (LOCKED):** top-left corner, at most ¼ of 1920×1080 (one team 960×263, two teams 960×478, head-to-head 680 × up to 564).
 - **Head to head (LOCKED look):** rows of date · home badge · score · away badge, newest first, up to 6 rows (regular season, playoff and cup meetings; playoff / cup rows carry **(Playoff)** / **(Magyar Kupa)** under the date (centred on the middle of the date), half its size, the date moves up 8 px; regular season rows have no label); the frame height follows the number of rows; the score is green (`#1fbf1b`) when the match's home team won that meeting, red (`#ec4036`) when it lost.
