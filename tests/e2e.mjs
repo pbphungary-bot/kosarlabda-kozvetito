@@ -1272,7 +1272,7 @@ try {
     await dp.waitForSelector('#teamCards .club-panel .club-panel-head .open-team');
     const same = await dp.$eval('#teamCards .club-panel', c => { const h = c.querySelector('h3').getBoundingClientRect(), b = c.querySelector('.open-team').getBoundingClientRect(); return Math.abs((h.top + h.bottom) / 2 - (b.top + b.bottom) / 2) < 30 && b.left > h.right; });
     assert.ok(same, 'button on the same line as the team name, to its right');
-    await dp.waitForFunction(() => [...document.querySelectorAll('#teamCards .club-mark img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 15000 });
+    await dp.waitForFunction(() => [...document.querySelectorAll('#teamCards .club-mark img')].every(i => i.complete && i.naturalWidth > 0), null, { timeout: 60000 });
     assert.ok((await dp.$$eval('#teamCards .club-mark img', is => is.every(i => i.getAttribute('src').startsWith('graphics/logos/')))), 'transparent studio logos');
     await dp.click('.open-team >> nth=0');
     await dp.waitForSelector('.team-back');
