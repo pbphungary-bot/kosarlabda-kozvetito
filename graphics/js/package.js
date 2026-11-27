@@ -2,31 +2,31 @@
 // layouts ("alap"), packed into one ZIP (RAR is a proprietary format that cannot be created in a browser; ZIP opens everywhere).
 import { zipSync, strToU8 } from '../vendor/fflate.js';
 
-/** [template type, whose data, label of the file] – the order of the numbers in the file names. */
+/** [template type, whose data, label of the file] – the order of the numbers in the file names (the same order as the studio's graphics list, owner 2026-11-27). */
 export const PACKAGE_ITEMS = [
   { id: 'intro', type: 'intro', who: 'match', label: 'Intro', defaultOn: false },
   { id: 'nextmatch', type: 'nextmatch', who: 'match', label: 'Kovetkezik' },
-  { id: 'comparison', type: 'comparison', who: 'match', label: 'Csapatok_osszevetese' },
-  { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Kulcsjatekosok', defaultOn: false },
   { id: 'referees', type: 'referees', who: 'match', label: 'Jatekvezetok' },
-  { id: 'formpair', type: 'formpair', who: 'match', label: 'Forma' },
-  { id: 'h2h', type: 'h2h', who: 'match', label: 'Egymas_ellen' },
-  { id: 'form-home', type: 'form', who: 'home', label: 'Forma' },
-  { id: 'form-away', type: 'form', who: 'away', label: 'Forma' },
-  { id: 'schedule-home', type: 'schedule', who: 'home', label: 'Menetrend' },
-  { id: 'schedule-away', type: 'schedule', who: 'away', label: 'Menetrend' },
-  { id: 'results-home', type: 'results', who: 'home', label: 'Eredmenyek' },
-  { id: 'results-away', type: 'results', who: 'away', label: 'Eredmenyek' },
   { id: 'roster-home', type: 'roster', who: 'home', label: 'Keret' },
   { id: 'roster-away', type: 'roster', who: 'away', label: 'Keret' },
   { id: 'rostergrid-home', type: 'rostergrid', who: 'home', label: 'Keret_fotokkal' },
   { id: 'rostergrid-away', type: 'rostergrid', who: 'away', label: 'Keret_fotokkal' },
+  { id: 'comparison', type: 'comparison', who: 'match', label: 'Csapatok_osszevetese' },
+  { id: 'teamstats-home', type: 'teamstats', who: 'home', label: 'Csapatstat' },
+  { id: 'teamstats-away', type: 'teamstats', who: 'away', label: 'Csapatstat' },
+  { id: 'results-home', type: 'results', who: 'home', label: 'Eredmenyek' },
+  { id: 'results-away', type: 'results', who: 'away', label: 'Eredmenyek' },
+  { id: 'schedule-home', type: 'schedule', who: 'home', label: 'Menetrend' },
+  { id: 'schedule-away', type: 'schedule', who: 'away', label: 'Menetrend' },
+  { id: 'form-home', type: 'form', who: 'home', label: 'Forma' },
+  { id: 'form-away', type: 'form', who: 'away', label: 'Forma' },
+  { id: 'formpair', type: 'formpair', who: 'match', label: 'Forma' },
+  { id: 'h2h', type: 'h2h', who: 'match', label: 'Egymas_ellen' },
+  { id: 'playercompare', type: 'playercompare', who: 'match', label: 'Kulcsjatekosok', defaultOn: false },
   { id: 'playerspecial-home', type: 'playerspecial', who: 'home', label: 'Jatekos_kulonleges', defaultOn: false },
   { id: 'playerspecial-away', type: 'playerspecial', who: 'away', label: 'Jatekos_kulonleges', defaultOn: false },
   { id: 'coach-home', type: 'coach', who: 'home', label: 'Vezetoedzo_nyilatkozata', defaultOn: false }, // needs a photo + text: unticked by default
   { id: 'coach-away', type: 'coach', who: 'away', label: 'Vezetoedzo_nyilatkozata', defaultOn: false },
-  { id: 'teamstats-home', type: 'teamstats', who: 'home', label: 'Csapatstat' },
-  { id: 'teamstats-away', type: 'teamstats', who: 'away', label: 'Csapatstat' },
 ];
 
 export const ascii = x => String(x ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9-]+/g, '_').replace(/^_+|_+$/g, '').replace(/_+/g, '_');

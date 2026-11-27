@@ -36,6 +36,8 @@ Basketball commentator tool for the Hungarian NB I/A (men + women, always separa
 | Flags (roster graphics) | one SVG per nationality in `graphics/assets/flags/`; Hungarian players get no flag by design; the team-pages job now downloads the flag of any new nationality automatically; Hunbasket lists no nationality (`-`) for one player (Sopron Basket, JANKOVIC Masa) → no flag |
 
 ## 3. Graphics Studio – templates (20 per league)
+**Order of the graphics in the template list (owner 2026-11-27, `TEMPLATE_ORDER` in templates.js, same for men and women; the ZIP package follows it, `PACKAGE_ITEMS` in package.js):** Intro · Következik · Játékvezetők · Keret (tábla) · Keret (fotókkal) · Csapatok összevetése · Csapatstatisztika · Eredmények · Eredmények (színes sorok) · Menetrend · Forma · Forma (két csapat) · Egymás ellen · Kulcsjátékosok · Játékos-különleges · Vezetőedző nyilatkozata · Extra (MKOSZ) · Élő (játékos) · Élő (csapat-összevetés) · Élő (három vezető). The table below is in the old, historic order.
+
 Status legend: **LOCKED** = agreed & finished · **REVIEW** = delivered, waiting for the owner's check · **OPEN** = not done.
 
 | Graphic | Status | Notes |
