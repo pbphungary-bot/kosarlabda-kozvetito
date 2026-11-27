@@ -10,6 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Platform: **desktop first** – design, polish and verify the desktop versions only; do not spend effort on phone layouts, mobile screenshots or real-phone tests unless the owner asks (just do not break the existing mobile code/tests).
 - Language: the UI texts, README and user guide are Hungarian; code, comments, commit messages and these project files are English. The owner chats in English.
 - Never run `tools/psd_extract.py` without `--only <template-id>` (it regenerates every template and logo).
+- **Repository size is settled (owner decision 2026-11-27, do not re-raise):** the repo stays as it is (PSDs stay in `BROADCAST GRAPHICS/`, no history rewrite, no force-push); see `MANIFEST.md`.
 - Session shortcuts live in `.claude/commands/`: `/start <task>`, `/finish`, `/check` (owner types these instead of long prompts).
 
 ## Playwright MCP
