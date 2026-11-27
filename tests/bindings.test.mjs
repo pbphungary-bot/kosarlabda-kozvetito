@@ -469,3 +469,24 @@ test('team stats: own jersey numbers are shown and the rows are sorted by them; 
   const firstNull = nums.findIndex(n => n === null);
   if (firstNull >= 0) assert.ok(nums.slice(firstNull).every(n => n === null), 'unknown numbers sort last');
 });
+
+test('roster (Keret / Keret fotókkal): an own jersey number is shown and moves the player into number order', async () => {
+  const store = await loadStore();
+  for (const [lg, id, tid] of [['men', 'falcokc', 'roster-men'], ['women', 'dvtkhuntherm', 'roster-women']]) {
+    const base = rosterPlayers(store, lg, id);
+    const last = base.at(-1), second = base[1];
+    // an own number below every other one for the player who is last: he / she becomes the first row and the number is flagged as typed by hand
+    const ov = { [last.key]: '-1' };
+    const players = rosterPlayers(store, lg, id, ov);
+    assert.equal(players[0].key, last.key);
+    assert.equal(players[0].numOwn, true);
+    const t = rosterBuild(tById(tid), players.length);
+    const v = bindRoster(store, lg, id, t, new Set(), ov).values;
+    assert.equal(v['r0.num'].text, '-1');
+    assert.equal(v['r0.num'].source, 'Kézzel megadott mezszám');
+    const g = rosterBuild(tById(tid.replace('roster', 'rostergrid')), players.length);
+    assert.equal(bindRoster(store, lg, id, g, new Set(), ov).values['r0.num'].text, '-1');
+    // no override (or an empty one): the data's order
+    assert.deepEqual(rosterPlayers(store, lg, id, { [second.key]: ' ' }).map(p => p.key), base.map(p => p.key));
+  }
+});

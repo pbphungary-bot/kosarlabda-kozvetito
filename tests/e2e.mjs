@@ -230,6 +230,24 @@ try {
     await pn.fill(''); await pn.dispatchEvent('change');
     await page.waitForFunction(k => document.querySelector('.players input.pnum')?.dataset.key !== k, lastKey, { timeout: 15000 });
   });
+  await check('roster graphics (Keret, Keret fotókkal): a jersey number typed into a row field puts the player into number order', async () => {
+    await page.click('.league-toggle button[data-league="women"]');
+    for (const id of ['roster-women', 'rostergrid-women']) {
+      await page.waitForSelector(`#templateList button[data-id="${id}"]`);
+      await page.click(`#templateList button[data-id="${id}"]`);
+      await page.selectOption('#teamSel', 'dvtkhuntherm');
+      await page.waitForSelector('.field[data-id="r0.num"] input.txt');
+      const ph = sel => page.locator(`.field[data-id="${sel}"] input.txt`).getAttribute('placeholder');
+      const lastRow = (await page.locator('.field').evaluateAll(els => els.filter(e => /^r\d+\.num$/.test(e.dataset.id)).length)) - 1;
+      assert.ok(lastRow >= 5, 'a full squad');
+      const before = await ph('r0.num');
+      const last = page.locator(`.field[data-id="r${lastRow}.num"] input.txt`);
+      await last.fill('-3'); await last.dispatchEvent('change'); // a number below every other one: the player moves to the top
+      await page.waitForFunction(([i, b]) => document.querySelector(`.field[data-id="r${i}.num"] input.txt`)?.getAttribute('placeholder') !== b || b === '-3', [0, before], { timeout: 15000 });
+      await page.waitForFunction(() => document.querySelector('.field[data-id="r0.num"] input.txt')?.getAttribute('placeholder') === '-3', null, { timeout: 15000 });
+      assert.equal(await page.locator(`.field[data-id="r${lastRow}.num"] input.txt`).inputValue(), '', 'the row field is back to automatic');
+    }
+  });
   await check('excel import: several files at once, league auto-detected, graphic uses Excel values, persists, can be switched off', async () => {
     await page.click('.league-toggle button[data-league="men"]'); // wrong league selected on purpose
     await page.click('#templateList button[data-id="comparison-men"]');
