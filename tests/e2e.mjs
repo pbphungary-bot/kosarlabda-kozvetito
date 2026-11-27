@@ -217,6 +217,15 @@ try {
     await last.fill('1'); await last.dispatchEvent('change');
     await page.waitForFunction(k => document.querySelector('.players input.pnum')?.dataset.key === k, lastKey, { timeout: 15000 });
     assert.equal(await page.locator('.players input.pnum').first().inputValue(), '1');
+    // typing the number into the row's own field (Mezők tab) does the same: the row moves to its place
+    const topKey = await firstKey();
+    await page.waitForSelector('.field[data-id="r5.num"] input.txt');
+    const row5 = page.locator('.field[data-id="r5.num"] input.txt');
+    await row5.fill('2'); await row5.dispatchEvent('change');
+    await page.waitForFunction(() => document.querySelectorAll('.players input.pnum').length > 1, null, { timeout: 15000 });
+    const nums = await page.locator('.players input.pnum').evaluateAll(els => els.map(e => e.value).filter(v => /^\d+$/.test(v)).map(Number));
+    assert.ok(nums.includes(2) && nums.every((n, i) => i === 0 || n >= nums[i - 1]), 'rows stay in number order: ' + nums.join(','));
+    assert.equal(await page.locator('.field[data-id="r5.num"] input.txt').first().inputValue(), '', 'the row field is back to automatic (the number belongs to the player now)');
     const pn = page.locator(`.players input.pnum[data-key="${lastKey}"]`);
     await pn.fill(''); await pn.dispatchEvent('change');
     await page.waitForFunction(k => document.querySelector('.players input.pnum')?.dataset.key !== k, lastKey, { timeout: 15000 });

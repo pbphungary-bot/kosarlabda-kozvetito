@@ -849,6 +849,16 @@ function onFieldEvent(e) {
   const f = e.target.closest('.field');
   if (!f) return;
   const id = f.dataset.id, o = overrides();
+  // player table: a jersey number typed into a row's field becomes that PLAYER's own number (same as the box in the player list), so the rows are re-sorted by number
+  const numRow = tpl().type === 'teamstats' && e.type === 'change' && e.target.classList.contains('txt') ? /^r(\d+)\.num$/.exec(id) : null;
+  const numPlayer = numRow && current.shown?.[+numRow[1]];
+  if (numPlayer) {
+    const m = ((sel().numOv ||= {})[sel().teamId] ||= {}), v = e.target.value.trim().replace(/^#/, '');
+    if (v === '') delete m[numPlayer.key]; else m[numPlayer.key] = v;
+    delete o[id];
+    update(true);
+    return;
+  }
   const cur = (o[id] ||= {});
   if (e.target.classList.contains('vis')) cur.visible = e.target.checked;
   else if (e.target.classList.contains('txt')) { if (e.target.value === '') delete cur.text; else cur.text = e.target.value; }
@@ -915,7 +925,7 @@ async function update(full) {
   document.body.classList.toggle('women', state.league === 'women');
   const { v: auto, info } = autoValues();
   const values = mergedValues(auto);
-  current = { values, auto };
+  current = { values, auto, shown: info.shown };
   if (info.candidates) lastCandidates = info.candidates;
   if (full) {
     let playersHtml = '';
