@@ -43,6 +43,39 @@ def update_repo():
     except Exception as e:
         print('Frissítés nem sikerült, a meglévő változattal indulok:', e)
 
+LOG = os.path.join(ROOT, '.live-server.log')  # private, not committed: what happened and when (a crash leaves its reason here)
+
+def log(msg):
+    line = time.strftime('%Y-%m-%d %H:%M:%S ') + msg
+    print(line, flush=True)
+    try:
+        with open(LOG, 'a', encoding='utf-8') as f: f.write(line + '\n')
+    except Exception: pass
+
+class Child:
+    """One supervised process (the server, the named tunnel): when it stops it is started again (3 s later; the waits grow to 60 s if it keeps dying right after a start),
+    and every stop is logged with its exit code, so a broadcast does not end with a silent crash."""
+    def __init__(self, name, argv, now=time.time, **popen_kw):
+        self.name, self.argv, self.kw, self.now = name, argv, popen_kw, now
+        self.p, self.started, self.fails, self.restart_at, self.restarts = None, 0, 0, None, 0
+    def start(self):
+        self.p = subprocess.Popen(self.argv, **self.kw); self.started = self.now(); self.restart_at = None
+    def alive(self): return self.p is not None and self.p.poll() is None
+    def check(self):
+        """Call about once a second: notices a stop, schedules and performs the restart. Returns True when it (re)started now."""
+        if self.alive(): return False
+        t = self.now()
+        if self.restart_at is None:
+            self.fails = self.fails + 1 if t - self.started < 20 else 1  # died right after a start: wait longer each time
+            delay = min(60, 3 * 2 ** (self.fails - 1))
+            self.restart_at = t + delay
+            log(f'FIGYELEM: {self.name} leállt (kilépési kód: {self.p.returncode if self.p else "?"}); újraindítom {delay} mp múlva.')
+        if t >= self.restart_at:
+            self.start(); self.restarts += 1
+            log(f'{self.name} újraindítva ({self.restarts}. alkalom).')
+            return True
+        return False
+
 def show(base, token):
     print('\n' + '=' * 70)
     print(' KÉSZ. Közvetítők, ezen az oldalon vezérlitek az élő grafikákat (egy meccs = egy állandó link az OBS-hez):')
@@ -63,11 +96,13 @@ def main():
     if not a.no_update: update_repo()
     token = load_token(a.token)
     a.tunnel_token, a.public_url = remember_tunnel(a.tunnel_token, a.public_url)  # given now, or remembered from an earlier start
-    server = subprocess.Popen([sys.executable, os.path.join(ROOT, 'tools', 'serve.py'), str(a.port), '--token', token])
-    procs = [server]
+    server = Child('a szerver', [sys.executable, os.path.join(ROOT, 'tools', 'serve.py'), str(a.port), '--token', token]); server.start()
+    kept = [server]   # restarted when they stop
+    procs = []        # the quick tunnel: its address changes with every start, so when it stops everything stops
     try:
         time.sleep(1)
-        if server.poll() is not None: sys.exit('A szerver nem indult el (foglalt a port? próbáld: --port 8001).')
+        if not server.alive(): sys.exit('A szerver nem indult el (foglalt a port? próbáld: --port 8001).')
+        log(f'Indítás kész (a naplófájl: {LOG}).')
         local = f'http://localhost:{a.port}'
         if a.no_tunnel:
             print(f'Csak helyi hálózat: {local}/graphics/live.html?token={token}'); show(local, token)
@@ -79,7 +114,7 @@ def main():
                       'https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/ – utána indítsd újra ezt a parancsot.')
                 show(local, token)
             elif a.tunnel_token:
-                procs.append(subprocess.Popen([cf, 'tunnel', '--no-autoupdate', 'run', '--token', a.tunnel_token]))
+                tun = Child('az alagút', [cf, 'tunnel', '--no-autoupdate', 'run', '--token', a.tunnel_token]); tun.start(); kept.append(tun)
                 show((a.public_url or '(a Cloudflare-ban beállított cím)').rstrip('/'), token)
             else:
                 t = subprocess.Popen([cf, 'tunnel', '--no-autoupdate', '--url', local], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -90,11 +125,13 @@ def main():
                         m = re.search(r'https://[a-z0-9-]+\.trycloudflare\.com', line)
                         if m and not shown: shown = True; show(m.group(0), token); print(' FIGYELEM: ez a cím minden újraindításnál MÁS lesz – ilyenkor új linkek kellenek.\n', flush=True)
                 threading.Thread(target=watch, daemon=True).start()
-        while all(p.poll() is None for p in procs): time.sleep(1)
+        while all(p.poll() is None for p in procs):
+            for c in kept: c.check()
+            time.sleep(1)
     except KeyboardInterrupt:
         pass
     finally:
-        for p in procs:
+        for p in procs + [c.p for c in kept if c.p]:
             if p.poll() is None: p.terminate()
 
 if __name__ == '__main__': main()
