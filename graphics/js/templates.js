@@ -211,13 +211,13 @@ function rowList(id, league, type, psd, label, g) {
 
 // ───────────────────────── Intro ─────────────────────────
 function intro(id, league, psd, g) {
-  const name = { type: 'text', adjust: true, y: 809.5, size: 100, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 440, lineHeight: 120, wrap: { maxLines: 2, anchor: 'middle' }, minScale: 0.5 };
-  const rank = { type: 'text', adjust: true, y: 909.5, size: 58.333, tracking: -20, color: '#ef4036', outline: ol(2, '#ffffff'), align: 'center', maxWidth: 420 }; // shown by default (the PSD has it hidden); the name wraps / shifts around it (compactWith)
+  const name = { type: 'text', adjust: true, y: 794.5, size: 100, tracking: 10, color: WHITE_TXT, caps: true, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 440, lineHeight: 120, wrap: { maxLines: 2, anchor: 'middle' }, minScale: 0.5 };
+  const rank = { type: 'text', adjust: true, y: 921.5, size: 72, tracking: -20, color: '#ef4036', outline: ol(2, '#ffffff'), align: 'center', maxWidth: 420 }; // shown by default (the PSD has it hidden); the name wraps / shifts around it (compactWith)
   const els = [
     { id: 'round', type: 'text', adjust: true, label: 'Forduló, dátum, időpont', group: 'Mérkőzés', x: g.roundX, y: g.roundY, font: g.roundFont, size: 50, tracking: 10, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 900 },
     { id: 'venue', type: 'text', adjust: true, label: 'Helyszín', group: 'Mérkőzés', x: 960.7, y: 244.5, size: g.venueSize, tracking: -20, color: WHITE_TXT, outline: ol(4, '#000000', 1), align: 'center', maxWidth: 560 },
-    { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [628, 475, 384, 350], fit: 'contain', logoOutline: true },
-    { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [1295, 473.5, 384, 350], fit: 'contain', logoOutline: true },
+    { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [628, 460, 384, 350], fit: 'contain', logoOutline: true },
+    { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [1295, 458.5, 384, 350], fit: 'contain', logoOutline: true },
     { id: 'home.name', label: 'Hazai csapatnév', group: 'Hazai', ...name, x: 625, compactWith: 'home.rank' },
     { id: 'away.name', label: 'Vendég csapatnév', group: 'Vendég', ...name, x: g.awayX, compactWith: 'away.rank' },
     { id: 'home.rank', label: 'Hazai helyezés / mérleg', group: 'Hazai', ...rank, x: 627.8 },

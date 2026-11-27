@@ -48,6 +48,7 @@ Megnyitás: <http://localhost:8000/graphics/> (a repó gyökeréből indítsd; G
 4. **Betűméret és eltolás:** az intro csapatneveinél, a helyezés/mérleg soroknál (és a Következik, Játékvezetők, helyszín mezőknél) a „Betűméret (px)”
    és a „Fel / le (px)” mezővel kézzel állítható a méret és a függőleges hely. A megadott méretet a stúdió pontosan használja (nem kicsinyíti tovább);
    ha kilóg a keretből, jelzi. A **„Csapatnevek egyforma méretre”** gomb a két nevet egy kattintással azonos méretre állítja.
+   Az **intro alapbeállítása** (2026-11-27): a klublogók 15 px-szel feljebb, a csapatnevek 100-as betűmérettel és 15 px-szel feljebb, a helyezés/mérleg sor 72-es mérettel és 12 px-szel lejjebb áll.
    A méret meccsenként érvényes: másik meccsnél újra automatikus.
 5. Bármelyik szöveg, szín, logó felülírható; a pipával elrejthető. A ↺ gomb visszaállítja az automatikus értéket.
 6. **PNG exportálása** – 1920×1080, átlátszó háttérrel (mint a PSD-k).
