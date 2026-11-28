@@ -1834,14 +1834,14 @@ try {
     assert.equal((await px(3, 430, 222))[3], 0, 'default plate: nothing at x 430');
     assert.equal((await px(3, 244, 310))[3], 255, 'default: the QR tile starts at y 298');
     await wp.fill('#sPlate', '120');
-    await wp.waitForFunction(() => window.__webshop.config().sPlate === 120, null, { timeout: 15000 });
+    await wp.waitForFunction(() => Math.abs(window.__webshop.config().plateW - 411.6) < 0.2, null, { timeout: 15000 });
     assert.equal((await px(3, 430, 222))[3], 255, 'a 120 % plate reaches x 430');
     assert.equal((await px(3, 244, 310))[3], 0, 'the QR tile moved down (the column re-stacks)');
     await wp.fill('#sPlate', '100'); await wp.fill('#sQr', '50'); await wp.fill('#sPhone', '50');
-    await wp.waitForFunction(() => window.__webshop.config().sPhone === 50, null, { timeout: 15000 });
+    await wp.waitForFunction(() => Math.round(window.__webshop.config().phoneW) === 119 && Math.round(window.__webshop.config().phoneH) === 238, null, { timeout: 15000 });
     // the settings and the video survive a reload (the video file is kept in the browser's IndexedDB)
     await wp.reload(); await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
-    await wp.waitForFunction(() => { const c = window.__webshop.config(); return c.photos.length === 2 && c.photos[1].kind === 'video' && window.__webshop.videoReady(c.photos[1].vid) && c.sPhone === 50; }, null, { timeout: 30000 });
+    await wp.waitForFunction(() => { const c = window.__webshop.config(); return c.photos.length === 2 && c.photos[1].kind === 'video' && window.__webshop.videoReady(c.photos[1].vid) && Math.round(c.phoneW) === 119; }, null, { timeout: 30000 });
     // deleting the video row removes the slide
     await wp.locator('.photo-row [data-a=del]').nth(1).click();
     await wp.waitForFunction(() => window.__webshop.config().photos.length === 1, null, { timeout: 15000 });
@@ -1874,33 +1874,84 @@ try {
     const red = () => wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return d[0] > 180 && d[1] < 80; }, [tShow, ...spot], { timeout: 15000 });
     const grey = () => wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return Math.abs(d[0] - 107) < 12 && Math.abs(d[2] - 120) < 12 && d[3] === 255; }, [tShow, ...spot], { timeout: 15000 });
     await red(); // a square picture 'covers' the tall screen
-    await wp.selectOption('.slide .fitSel', 'contain'); await grey(); // the whole picture: bars above and below
+    await wp.selectOption('.slide .fitSel', 'contain'); await red(); // the whole picture: the bars above and below take the picture's own edge colour (red)
+    await wp.uncheck('.slide .edgeIn'); await grey(); // …unless that is switched off: then the screen colour shows
     await wp.selectOption('.slide .fitSel', 'cover'); await red();
     await wp.fill('.slide .zoomIn', '40'); await grey(); // smaller than the screen
     await wp.fill('.slide .zoomIn', ''); await red();
     await wp.fill('.slide .oxIn', '100'); await grey(); // pushed aside by a whole screen width
     await wp.click('.slide .fitReset'); await red();
-    assert.deepEqual(await wp.evaluate(() => { const p = window.__webshop.config().photos[0]; return [p.fit, p.zoom, p.ox, p.oy]; }), [undefined, undefined, undefined, undefined], 'reset clears the settings');
+    assert.deepEqual(await wp.evaluate(() => { const p = window.__webshop.config().photos[0]; return [p.fit, p.zoom, p.ox, p.oy, p.edge]; }), [undefined, undefined, undefined, undefined, undefined], 'reset clears the settings');
     await wctx.close();
   });
 
-  await check('Webshop insert: element sizes can be typed in pixels as well as in percent', async () => {
+  await check('Webshop insert: every object has its own width AND height (px), the % scales both, the column re-stacks', async () => {
     const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 } }));
     const wp = await wctx.newPage(); await wp.goto(`${URL}/graphics/webshop.html`);
     await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
-    assert.deepEqual(await wp.evaluate(() => ['sPlatePx', 'sQrPx', 'sPhonePx'].map(i => +document.getElementById(i).value)), [343, 177, 476], 'the base sizes in px');
-    await wp.fill('#sPlatePx', '480');
-    await wp.waitForFunction(() => Math.abs(window.__webshop.config().sPlate - 480 / 343 * 100) < 0.01, null, { timeout: 15000 });
-    assert.equal(await wp.inputValue('#sPlate'), String(Math.round(480 / 343 * 1000) / 10), 'the % field follows');
-    await wp.fill('#sPhone', '50'); // the other way round: percent → pixels
-    await wp.waitForFunction(() => document.getElementById('sPhonePx').value === '238', null, { timeout: 15000 });
-    await wp.fill('#sQrPx', '354');
-    await wp.waitForFunction(() => Math.round(window.__webshop.config().sQr) === 200, null, { timeout: 15000 });
-    // the plate really is that wide on the picture: at 480 px (x 4 … 484) the pixel at x 470 is white, at 100 % (x 72 … 415) it is not
-    const px = (x) => wp.evaluate(([x]) => window.__webshop.draw(3, null).getContext('2d').getImageData(x, 222, 1, 1).data[3], [x]);
-    assert.equal(await px(470), 255);
-    await wp.fill('#sPlatePx', '343'); await wp.waitForFunction(() => Math.round(window.__webshop.config().sPlate) === 100, null, { timeout: 15000 });
-    assert.equal(await px(470), 0);
+    assert.deepEqual(await wp.evaluate(() => ['plateWPx', 'plateHPx', 'qrWPx', 'qrHPx', 'phoneWPx', 'phoneHPx'].map(i => +document.getElementById(i).value)), [343, 115, 177, 175, 238, 476], 'the default sizes in px');
+    const alpha = (x, y) => wp.evaluate(([x, y]) => window.__webshop.draw(3, null).getContext('2d').getImageData(x, y, 1, 1).data[3], [x, y]);
+    await wp.fill('#plateWPx', '480');
+    await wp.waitForFunction(() => window.__webshop.config().plateW === 480, null, { timeout: 15000 });
+    assert.equal(await wp.evaluate(() => window.__webshop.config().plateH), 115, 'the height did not move with the width');
+    assert.equal(await wp.inputValue('#sPlate'), String(Math.round(480 / 343 * 1000) / 10), 'the % field follows the width');
+    assert.equal(await alpha(470, 222), 255, 'the plate is 480 px wide now (x 4 … 484)');
+    await wp.fill('#plateHPx', '250'); // 200 x 250 style: the height on its own
+    await wp.waitForFunction(() => window.__webshop.config().plateH === 250, null, { timeout: 15000 });
+    assert.equal(await alpha(244, 310), 255, 'the plate is taller (y 165 … 415)'); assert.equal(await alpha(244, 425), 0, 'a gap under the plate');
+    assert.equal(await alpha(244, 440), 255, 'the QR tile moved down to y 433');
+    await wp.fill('#sPlate', '50'); // the % is relative to the default width (343 px) and scales width AND height together, keeping their ratio
+    await wp.waitForFunction(() => { const c = window.__webshop.config(); return Math.abs(c.plateW - 171.5) < 0.2 && Math.abs(c.plateH - 250 * 171.5 / 480) < 0.2; }, null, { timeout: 15000 });
+    await wp.fill('#sPhone', '50');
+    await wp.waitForFunction(() => document.getElementById('phoneWPx').value === '119' && document.getElementById('phoneHPx').value === '238', null, { timeout: 15000 });
+    await wp.fill('#qrWPx', '354');
+    await wp.waitForFunction(() => window.__webshop.config().qrW === 354 && window.__webshop.config().qrH === 175, null, { timeout: 15000 });
+    await wp.fill('#plateWPx', '343'); await wp.fill('#plateHPx', '115');
+    await wp.waitForFunction(() => window.__webshop.config().plateW === 343 && window.__webshop.config().plateH === 115, null, { timeout: 15000 });
+    assert.equal(await alpha(470, 222), 0);
+    await wctx.close();
+  });
+
+  await check('Webshop insert: box colours with opacity (also see-through), a box takes the proportions of its picture, edge-coloured strips', async () => {
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 } }));
+    const wp = await wctx.newPage(); wp.on('dialog', d => d.accept()); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    const pix = (x, y) => wp.evaluate(([x, y]) => Array.from(window.__webshop.draw(3, null).getContext('2d').getImageData(x, y, 1, 1).data), [x, y]);
+    assert.deepEqual(await pix(94, 175), [255, 255, 255, 255], 'the plate is white by default');
+    await wp.fill('#plateBg', '#ff0000');
+    await wp.waitForFunction(() => window.__webshop.config().plateBg === '#ff0000', null, { timeout: 15000 });
+    assert.deepEqual(await pix(94, 175), [255, 0, 0, 255], 'the plate takes the chosen colour');
+    await wp.fill('#plateBgA', '0'); await wp.waitForFunction(() => window.__webshop.config().plateBgA === 0, null, { timeout: 15000 });
+    assert.equal((await pix(94, 175))[3], 0, '0 % opacity: see-through');
+    await wp.uncheck('#plateBorder'); assert.equal((await pix(73.5, 222))[3], 0, 'no gold edge'); await wp.check('#plateBorder');
+    assert.equal((await pix(244, 768))[3], 255, 'the phone screen is grey by default');
+    await wp.fill('#screenBgA', '0'); await wp.waitForFunction(() => window.__webshop.config().screenBgA === 0, null, { timeout: 15000 });
+    assert.equal((await pix(244, 768))[3], 0, 'a 0 % screen is see-through (the body has a hole)');
+    assert.ok((await pix(244 - 118, 768))[3] > 0, 'the phone body itself stays');
+    // a box takes the proportions of its picture: the QR image is a square, the phone's first slide a landscape photo
+    await wp.setInputFiles('#qrFile', path.join(ROOT, 'tests/fixtures/img/solid-red.png'));
+    await wp.waitForFunction(() => !!window.__webshop.config().qr.image, null, { timeout: 15000 });
+    await wp.fill('#qrWPx', '300'); await wp.fill('#qrHPx', '100'); await wp.click('.fitPic[data-obj="qr"]');
+    await wp.waitForFunction(() => window.__webshop.config().qrH === 300, null, { timeout: 15000 }); // (300 - 24) / 1 + 24: a square picture, so the tile becomes square
+    await wp.click('.fitPic[data-obj="phone"]');
+    assert.match(await wp.textContent('#warn'), /Előbb tölts fel/, 'no slide yet: it says so instead of guessing');
+    await wp.setInputFiles('#photoFiles', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 1, null, { timeout: 15000 });
+    await wp.click('.fitPic[data-obj="phone"]');
+    await wp.waitForFunction(() => window.__webshop.config().phoneH !== 476, null, { timeout: 15000 });
+    // strips beside a picture shown whole take the colour of its edges; switchable per picture
+    await wp.setInputFiles('#photoFiles', path.join(ROOT, 'tests/fixtures/img/solid-red.png'));
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 2, null, { timeout: 15000 });
+    await wp.click('#reset'); // back to the defaults for a clean strip test
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 0 && window.__webshop.config().plateBg === '#ffffff', null, { timeout: 15000 });
+    await wp.setInputFiles('#photoFiles', path.join(ROOT, 'tests/fixtures/img/solid-red.png'));
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 1, null, { timeout: 15000 });
+    const tShow = 0.8 + 1.2 + 0.6, spot = [170, 950];
+    const at = () => wp.evaluate(([t, x, y]) => Array.from(window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data), [tShow, ...spot]);
+    await wp.selectOption('.slide .fitSel', 'contain');
+    await wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return d[0] > 180 && d[1] < 80; }, [tShow, ...spot], { timeout: 15000 });
+    await wp.uncheck('.slide .edgeIn');
+    await wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return Math.abs(d[0] - 107) < 12 && Math.abs(d[2] - 120) < 12; }, [tShow, ...spot], { timeout: 15000 });
     await wctx.close();
   });
 

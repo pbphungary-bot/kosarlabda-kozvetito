@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { WEBSHOP_DEFAULTS, stateAt, timeline, slots, T, OVERHEAD, columnLayout, baseSeconds } from '../graphics/js/webshop-anim.js';
+import { WEBSHOP_DEFAULTS, stateAt, timeline, slots, T, OVERHEAD, columnLayout, baseSeconds, objSize, migrateSizes, rgba, BASE } from '../graphics/js/webshop-anim.js';
 
 const cfg = (over = {}) => ({ ...JSON.parse(JSON.stringify(WEBSHOP_DEFAULTS)), ...over });
 const photos = n => Array.from({ length: n }, (_, i) => ({ src: 'x' + i }));
@@ -65,13 +65,30 @@ test('webshop: a fixed total length scales the slides so that the loop lasts exa
   assert.equal(timeline(cfg({ photos: [{ src: 'a' }], total: 0 })).total, timeline(cfg({ photos: [{ src: 'a' }] })).total, '0 = automatic');
   const tooShort = timeline(cfg({ photos: photos(8), total: 6 })); assert.equal(tooShort.fits, false); assert.ok(tooShort.total > 6 && tooShort.minTotal > 6);
 });
-test('webshop: plate, QR and phone each have their own size and the column re-stacks itself', () => {
+test('webshop: plate, QR and phone each have their own width AND height and the column re-stacks itself', () => {
   const d = columnLayout(cfg());
   assert.deepEqual([d.plateTop, d.qrTop, d.phoneCy], [165, 298, 768], 'default: the positions of the sample');
-  const big = columnLayout(cfg({ sPlate: 200 })); assert.equal(big.sp, 2); assert.ok(big.qrTop > d.qrTop + 100 && big.phoneCy > d.phoneCy + 100, 'a bigger plate pushes the rest down');
-  const small = columnLayout(cfg({ sQr: 50, sPhone: 50 })); assert.ok(small.phoneCy < d.phoneCy - 100);
-  assert.equal(columnLayout(cfg({ sPlate: 5, sQr: 999 })).sp, 0.2); assert.equal(columnLayout(cfg({ sQr: 999 })).sq, 3, 'sizes are clamped');
-  assert.equal(columnLayout(cfg({ sPlate: 0 })).sp, 1, 'no value = 100 %');
+  assert.deepEqual([d.plate.w, d.plate.h, d.qr.w, d.qr.h, d.phone.w, d.phone.h], [343, 115, 177, 175, 238, 476]);
+  const tall = columnLayout(cfg({ plateW: 200, plateH: 250 })); // "200 x 250"
+  assert.deepEqual([tall.plate.w, tall.plate.h], [200, 250], 'width and height are independent');
+  assert.equal(tall.qrTop, 165 + 250 + 18, 'a taller plate pushes the QR tile down');
+  assert.equal(tall.qr.w, 177, 'the other objects are untouched');
+  const wide = columnLayout(cfg({ phoneW: 400, phoneH: 300 })); assert.ok(wide.phone.w === 400 && wide.phone.h === 300 && wide.phoneCy === 298 + 175 + 57 + 150);
+  assert.deepEqual(objSize(cfg({ qrW: 0, qrH: 'x' }), 'qr'), { w: 177, h: 175 }, 'no / silly value = the default');
+  assert.equal(objSize(cfg({ plateW: 99999 }), 'plate').w, 1500); assert.equal(objSize(cfg({ plateH: 3 }), 'plate').h, 20, 'limited to 20–1500 px');
+});
+test('webshop: settings saved by the earlier version (one % per object) become the same sizes in px', () => {
+  const m = migrateSizes({ sPlate: 200, sQr: 50, sPhone: 100, hold: 3 });
+  assert.deepEqual([m.plateW, m.plateH, m.qrW, m.qrH, m.phoneW, m.phoneH], [686, 230, 89, 88, 238, 476]);
+  assert.ok(!('sPlate' in m) && m.hold === 3);
+  assert.equal(migrateSizes({ plateW: 300, sPlate: 200 }).plateW, 300, 'a px size already saved wins');
+  assert.equal(migrateSizes(null), null);
+});
+test('webshop: box colours with an opacity, a transparent box has 0 %', () => {
+  assert.equal(rgba('#ff0000', 50), 'rgba(255,0,0,0.5)'); assert.equal(rgba('#00ff00', 0), 'rgba(0,255,0,0)'); assert.equal(rgba('#0000ff'), 'rgba(0,0,255,1)');
+  assert.equal(rgba('nonsense', 100), 'rgba(255,255,255,1)', 'a silly colour counts as white'); assert.equal(rgba('#112233', 999), 'rgba(17,34,51,1)', 'opacity is limited to 0–100');
+  assert.deepEqual([WEBSHOP_DEFAULTS.plateBg, WEBSHOP_DEFAULTS.plateBgA, WEBSHOP_DEFAULTS.screenBg, WEBSHOP_DEFAULTS.screenBgA], ['#ffffff', 100, '#6b6f78', 100], 'the defaults are the sample\'s look');
+  assert.deepEqual(BASE, { plate: [343, 115], qr: [177, 175], phone: [238, 476] });
 });
 
 test('webshop: every picture can be fitted, zoomed and shifted on the phone screen', async () => {
