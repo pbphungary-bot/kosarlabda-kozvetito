@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27T05:30:15+00:00",
+  "updated_at": "2026-11-28T13:14:18+00:00",
   "note": "Only add independently verified official Facebook URLs. No post scraping without authorization.",
   "clubs": [
     {
@@ -13,7 +13,7 @@
         "https://www.facebook.com/guriserhazszombathely",
         "https://www.facebook.com/forumszombathely"
       ],
-      "checked_at": "2026-11-27T05:29:24+00:00"
+      "checked_at": "2026-11-28T13:13:47+00:00"
     },
     {
       "club": "DVTK HUNTHERM",
@@ -22,7 +22,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://dvtk.eu/2-kosarlabda-sportag",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:26+00:00"
+      "checked_at": "2026-11-28T13:13:49+00:00"
     },
     {
       "club": "DEAC",
@@ -38,7 +38,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://www.egiskormend.hu/",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:29+00:00"
+      "checked_at": "2026-11-28T13:13:51+00:00"
     },
     {
       "club": "NHSZ-Szolnoki Olajbányász",
@@ -47,7 +47,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://olajofficial.hu/",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:34+00:00"
+      "checked_at": "2026-11-28T13:13:55+00:00"
     },
     {
       "club": "Alba Fehérvár",
@@ -58,7 +58,7 @@
       "alternatives": [
         "https://www.facebook.com/albafehervarup"
       ],
-      "checked_at": "2026-11-27T05:29:36+00:00"
+      "checked_at": "2026-11-28T13:13:56+00:00"
     },
     {
       "club": "NKA Universitas Pécs (férfi)",
@@ -67,7 +67,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://www.nkapecs.hu/hirek",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:38+00:00"
+      "checked_at": "2026-11-28T13:13:58+00:00"
     },
     {
       "club": "Sopron KC",
@@ -90,7 +90,7 @@
         "https://www.facebook.com/veyronrendezveny",
         "https://www.facebook.com/profile.php?id=100063293702376"
       ],
-      "checked_at": "2026-11-27T05:29:42+00:00"
+      "checked_at": "2026-11-28T13:14:00+00:00"
     },
     {
       "club": "PHOENIX Fóti Tigrisek",
@@ -115,7 +115,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://www.nkapecswomen.hu/",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:51+00:00"
+      "checked_at": "2026-11-28T13:14:04+00:00"
     },
     {
       "club": "BKG-PRIMA Szigetszentmiklós",
@@ -131,7 +131,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://vasasbasket.hu/",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:53+00:00"
+      "checked_at": "2026-11-28T13:14:06+00:00"
     },
     {
       "club": "VBW CEKK Cegléd",
@@ -140,7 +140,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://www.cekk.hu/new/index.php",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:29:56+00:00"
+      "checked_at": "2026-11-28T13:14:09+00:00"
     },
     {
       "club": "Atomerőmű SE",
@@ -156,7 +156,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://szedeak.com/",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:30:00+00:00"
+      "checked_at": "2026-11-28T13:14:12+00:00"
     },
     {
       "club": "Endo Plus Service-Honvéd",
@@ -193,7 +193,7 @@
       "verified_by": "linked_from_official_site",
       "source_url": "https://etobasket.hu/hu/hirek/1",
       "alternatives": [],
-      "checked_at": "2026-11-27T05:30:03+00:00"
+      "checked_at": "2026-11-28T13:14:15+00:00"
     },
     {
       "club": "KSC Szekszárd",
@@ -218,7 +218,7 @@
       "alternatives": [
         "https://www.facebook.com/tfsekosarlabda"
       ],
-      "checked_at": "2026-11-27T05:30:15+00:00"
+      "checked_at": "2026-11-28T13:14:18+00:00"
     }
   ]
 }
