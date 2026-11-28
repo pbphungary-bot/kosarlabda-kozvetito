@@ -48,6 +48,8 @@ There is no build step and no root `package.json`: everything is static files (E
 
 **Live links (2026-11-27):** besides the game's main link (`?game=&token=`, follows the builder) the builder shows one link per live graphic (`?game=&show=livestat|liveteam|liveleaders`, `categoryLinkQuery`); `ownGraphic` in `overlay.js` forces that graphic but the settings still come from the server state. A game with no saved state (`rev` 0) gets the team comparison on air by default when it is picked in the builder (`firstPick` in `livelinks.js`); a saved choice, also *Nincs adásban*, is never replaced.
 
+**Webshop insert (2026-11-28):** the only time-based graphic, so it is NOT a studio template but its own page `graphics/webshop.html` (`js/webshop.js` editor / preview / export, `js/webshop-anim.js` = `timeline` / `stateAt`, pure functions of time, `drawFrame(target, t, cfg, bg)` is deterministic). Config + images (down-scaled data URLs) are in localStorage `nbia.webshop.v1`; phone motion `rotate | slide`. Test hooks: `window.__webshop` (`seek`, `draw`, `config`, `state`).
+
 **Template ids** are `<type>-<men|women>`; types and labels are in `TEMPLATE_TYPES`. Adding a graphic means: builder in `templates.js` + registry entry, a `bind*` in `binders.js`, a branch in `app.js` (`autoValues`, selection panel, filename), optionally `package.js`, and tests (the e2e template count assertion must be updated).
 
 **Tests** are hermetic: unit tests load `tests/fixtures/data` through `tests/helpers.mjs` (`loadStore`); e2e routes `/data/*.json` to the same fixtures. Update the fixtures (copy from `data/`) when a collector's output format changes. CI (`.github/workflows/tests.yml`) runs unit + Python + e2e on pull requests.

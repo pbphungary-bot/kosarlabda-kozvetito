@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webshop betét</title>
+<link rel="stylesheet" href="css/studio.css">
+<style>
+  body { max-width: 1500px; margin: 0 auto; padding: 18px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .layout { display: grid; grid-template-columns: 380px 1fr; gap: 16px; align-items: start; }
+  .box { background: var(--panel, #1b2129); border-radius: 8px; padding: 12px 14px; margin: 0 0 12px; }
+  .box h2 { font-size: 15px; margin: 0 0 8px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
+  .row label { display: inline-flex; flex-direction: row; gap: 6px; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  input[type=number] { width: 80px; }
+  input[type=text] { width: 100%; }
+  #stage { width: 100%; max-width: 960px; aspect-ratio: 16 / 9; position: relative; overflow: hidden; border-radius: 6px;
+    background: repeating-conic-gradient(#8a8f96 0% 25%, #6c7178 0% 50%) 0 0 / 24px 24px; }
+  #stage[data-bg=magenta] { background: #ff00ff; }
+  #stage[data-bg=green] { background: #00b140; }
+  #c { width: 100%; height: 100%; display: block; }
+  .photo-row { display: grid; grid-template-columns: 44px 1fr auto auto auto; gap: 6px; align-items: center; margin: 4px 0; }
+  .photo-row img { width: 44px; height: 44px; object-fit: cover; border-radius: 4px; }
+  .photo-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+  .warn { color: #ffb4a8; min-height: 1.2em; }
+  .status { color: #ffd479; min-height: 1.2em; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<h1>Webshop betét – cím, QR-kód és telefon fotókkal</h1>
+<p class="hint">Mindent cserélhetsz: a <b>címet</b> (szöveg vagy kép), a <b>QR-kódot</b> és a <b>telefonon pörgő fotókat</b>. A beállítások ebben a böngészőben megmaradnak. A kész animációt <b>videóként</b> (kulcsszínes háttérrel, mint a minta) vagy egy <b>PNG-kockaként</b> mentheted.</p>
+<div class="layout">
+  <div>
+    <div class="box">
+      <h2>Cím</h2>
+      <div class="row"><label><input type="radio" name="tMode" value="text"> Szöveg</label><label><input type="radio" name="tMode" value="image"> Kép</label></div>
+      <div id="titleText">
+        <div class="grid2"><label>1. sor<input type="text" id="line1"></label><label>2. sor<input type="text" id="line2"></label></div>
+        <div class="row"><label>1. sor színe <input type="color" id="c1"></label><label>2. sor színe <input type="color" id="c2"></label></div>
+        <div class="row"><label>Jel (logó) a szöveg előtt <input type="file" id="titleIcon" accept="image/*"></label><button id="clearIcon">Jel törlése</button></div>
+      </div>
+      <div id="titleImg" hidden>
+        <div class="row"><label>Címkép (a teljes tábla) <input type="file" id="titleImage" accept="image/*"></label><button id="clearTitleImg">Törlés</button></div>
+      </div>
+    </div>
+    <div class="box">
+      <h2>QR-kód</h2>
+      <div class="row"><label>QR-kód képe <input type="file" id="qrFile" accept="image/*"></label><button id="clearQr">Törlés</button></div>
+      <small class="hint">Mindig próbáld ki telefonnal a kész képet: a QR-kód élesen, a fehér keretében kell látszódjon.</small>
+    </div>
+    <div class="box">
+      <h2>Fotók a telefonon</h2>
+      <div class="row"><label>Fotók hozzáadása <input type="file" id="photoFiles" accept="image/*" multiple></label></div>
+      <div id="photoList"></div>
+    </div>
+    <div class="box">
+      <h2>Mozgás és időzítés</h2>
+      <div class="row"><label>A telefon érkezése és távozása
+        <select id="motion"><option value="rotate">Forgás oldalról (mint a mintában)</option><option value="slide">Felcsúszás alulról</option></select></label></div>
+      <div class="row"><label>Egy fotó ideje (mp) <input type="number" id="hold" step="0.5"></label><label>Átúszás (mp) <input type="number" id="fade" step="0.1"></label></div>
+      <div class="row"><label><input type="checkbox" id="tilt"> A telefon kissé ringatózik</label></div>
+      <div class="row"><label>X (közép) <input type="number" id="px"></label><label>Y (tábla teteje) <input type="number" id="py"></label><label>Méret % <input type="number" id="scale"></label></div>
+    </div>
+    <button id="reset">Mindent alaphelyzetbe</button>
+  </div>
+  <div>
+    <div id="stage" data-bg="checker"><canvas id="c" width="1920" height="1080"></canvas></div>
+    <div class="row">
+      <button id="play" class="primary">Szünet</button>
+      <input type="range" id="seek" min="0" max="20" step="0.04" value="0" style="flex:1; min-width:200px">
+      <span id="time" class="hint"></span>
+    </div>
+    <div class="row">
+      <label>Előnézet háttere <select id="bgView"><option value="checker">Átlátszó (sakktábla)</option><option value="magenta">Magenta</option><option value="green">Zöld</option></select></label>
+      <label>Videó háttere <select id="keyBg"><option value="magenta">Magenta</option><option value="green">Zöld</option></select></label>
+      <button id="video" class="primary">Videó mentése (1 kör)</button>
+      <button id="png">PNG-kocka (átlátszó)</button>
+    </div>
+    <div id="status" class="status"></div>
+    <div id="warn" class="warn"></div>
+  </div>
+</div>
+<script type="module" src="js/webshop.js"></script>
+</body>
+</html>

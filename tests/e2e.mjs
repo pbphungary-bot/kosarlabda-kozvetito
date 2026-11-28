@@ -2,6 +2,7 @@
 // Run: node tests/e2e.mjs [outDir]
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
+import zlib from 'node:zlib';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -1707,6 +1708,51 @@ try {
     const lp2 = await bctx.newPage(); await lp2.goto(`${URL}/graphics/live.html`);
     await lp2.waitForFunction(() => window.__builder && window.__builder.state().graphic === 'liveleaders', null, { timeout: 15000 });
     await bctx.close();
+  });
+
+  await check('Webshop insert: title, QR code and photos can be swapped; the phone can slide up instead of turning in', async () => {
+    const crcT = Array.from({ length: 256 }, (_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
+    const crc = b => { let c = 0xffffffff; for (const x of b) c = crcT[(c ^ x) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+    const chunk = (type, data) => { const b = Buffer.alloc(12 + data.length); b.writeUInt32BE(data.length, 0); b.write(type, 4); data.copy(b, 8); b.writeUInt32BE(crc(b.subarray(4, 8 + data.length)), 8 + data.length); return b; };
+    const solid = (r, g, b) => { const ihdr = Buffer.alloc(13); ihdr.writeUInt32BE(8, 0); ihdr.writeUInt32BE(8, 4); ihdr[8] = 8; ihdr[9] = 2; const raw = Buffer.alloc(8 * (1 + 24)); for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { const o = y * 25 + 1 + x * 3; raw[o] = r; raw[o + 1] = g; raw[o + 2] = b; }
+      return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]); };
+    const f = (name, c) => ({ name, mimeType: 'image/png', buffer: solid(...c) });
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 } }));
+    const wp = await wctx.newPage(); wp.on('dialog', d => d.accept()); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    const px = (t, x, y) => wp.evaluate(([t, x, y]) => Array.from(window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data), [t, x, y]);
+    const near = (a, b, tol = 12) => a.every((v, i) => Math.abs(v - b[i]) <= tol);
+    const total = await wp.evaluate(() => window.__webshop.total());
+    assert.ok(total > 3 && total < 7, `an empty slideshow still loops (${total} s)`);
+    // photos: two solid pictures show on the phone's screen, in the order of the list
+    await wp.setInputFiles('#photoFiles', [f('red.png', [220, 30, 30]), f('blue.png', [30, 60, 220])]);
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 2);
+    const tShow = 0.8 + 1.2 + 0.6; // the first photo is fully shown (no cross-fade yet)
+    await wp.waitForFunction(([t, c]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(244, 768, 1, 1).data; return Math.abs(d[0] - c[0]) < 12 && Math.abs(d[2] - c[2]) < 12 && d[3] === 255; }, [tShow, [220, 30, 30]], { timeout: 15000 });
+    await wp.locator('.photo-row [data-a=down]').first().click(); // swap the order
+    await wp.waitForFunction(([t]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(244, 768, 1, 1).data; return d[2] > 180 && d[0] < 80; }, [tShow], { timeout: 15000 });
+    // QR code: before the upload the tile is white with a grey "QR", afterwards the picture fills it
+    const qrXY = [244, 165 + 133 + 40];
+    assert.ok(near(await px(3, ...qrXY), [255, 255, 255, 255], 6), 'the empty QR tile is white');
+    await wp.setInputFiles('#qrFile', f('qr.png', [0, 0, 0]));
+    await wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return d[0] < 20 && d[3] === 255; }, [3, ...qrXY], { timeout: 15000 });
+    // title: a picture replaces the text plate
+    const plateXY = [244, 165 + 57];
+    await wp.check('input[name=tMode][value=image]');
+    await wp.setInputFiles('#titleImage', f('title.png', [0, 160, 0]));
+    await wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return d[1] > 140 && d[0] < 30; }, [3, ...plateXY], { timeout: 15000 });
+    // the phone slides up from below instead of turning in: at 1.0 s it is still below the picture edge, 'rotate' already shows its side
+    await wp.selectOption('#motion', 'slide');
+    assert.equal((await px(1.0, 244, 768))[3], 0, 'sliding phone: not yet in place at 1.0 s');
+    assert.equal((await px(tShow, 244, 768))[3], 255, 'sliding phone: in place while the photos run');
+    assert.ok(await wp.evaluate(() => window.__webshop.state().phone.ang === 0), 'sliding phone stays front-on');
+    await wp.selectOption('#motion', 'rotate');
+    // everything is remembered after a reload
+    await wp.reload(); await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    const kept = await wp.evaluate(() => { const c = window.__webshop.config(); return [c.photos.length, !!c.qr.image, c.title.mode, c.motion]; });
+    assert.deepEqual(kept, [2, true, 'image', 'rotate'], 'photos, QR and title survive a reload');
+    await wp.click('#reset'); // confirm dialog
+    await wctx.close();
   });
 
 } finally {

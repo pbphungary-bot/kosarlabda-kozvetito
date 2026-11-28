@@ -259,6 +259,14 @@ A közvetítők **nem a Stúdiót használják adás közben**. Minden meccsnek 
 * **Régi, grafikához kötött linkek** (`overlay.html?game=…&g=liveteam…`) tovább működnek, ha valaki egy konkrét grafikát akar rögzíteni.
 * A grafikák az élő grafikák **alapelrendezését** használják (a Stúdióban elmentett egyéni elrendezés még nem megy át), a kiválasztott statisztikák viszont igen.
 
+## Webshop betét (animált, 2026-11-28) – ÁTNÉZÉSRE VÁR
+Külön oldal: `graphics/webshop.html` (a Stúdió fejlécében: **Webshop betét**). Egy 1920×1080-as, hurkolt animáció a mintavideó alapján: balra fent a **cím-tábla** (alapból „HUNBASKET / WEBSHOP” League Gothic betűvel), alatta a **QR-kód**, alatta egy **telefon**, amelyen a **fotók** egymás után úsznak át.
+* **Mindent cserélhetsz:** *Cím* – szöveg (két sor, két szín, opcionális jel/logó előtte) **vagy** egy feltöltött kép; *QR-kód* – feltöltött kép (a kód mindig a te fájlod, nem generáljuk – próbáld ki telefonnal a kész képet); *Fotók* – több kép egyszerre tölthető fel, ↑ ↓ ✕ gombokkal rendezhető / törölhető.
+* **A telefon érkezése:** *Forgás oldalról* (mint a mintában: hátulról fordul be, oldalra fordulva távozik) **vagy** *Felcsúszás alulról*. Egy fotó ideje, az átúszás ideje, a ringatózás be/ki, a pozíció (X, Y) és a méret állítható. 8 fotó × 2 mp ≈ a minta 20 másodperce; a hossz a fotók számától függ.
+* **Mentés:** *Videó mentése (1 kör)* – valós időben rögzíti a hurkot kulcsszínes háttéren (magenta vagy zöld, mint a minta; MP4 vagy WebM, a böngészőtől függően; a vágóprogramban / OBS-ben kulcsolható), *PNG-kocka (átlátszó)* – az éppen látszó kocka átlátszó háttérrel. Az előnézet háttere (sakktábla / magenta / zöld) külön állítható.
+* A beállítások és a feltöltött képek **ebben a böngészőben** maradnak meg (localStorage; a képek kicsinyítve, hogy elférjenek). Nem készül hozzá OBS-link (az OBS böngészője nem látja ezt a tárhelyet) – ez a következő lépés lehet, ha kell.
+* Az animáció tiszta időfüggvény (`js/webshop-anim.js`), ugyanaz az idő mindig ugyanazt a képet adja; tesztek: `tests/webshop.test.mjs`, böngészős ellenőrzés az `e2e.mjs`-ben.
+
 ## Csapatstatisztika (játékos-táblázat) – KÉSZ (LOCKED)
 A táblázatban **legfeljebb 20 játékos** jeleníthető meg (nincs már a PSD 12 / 13 soros korlátja); alapból a csapat összes játékosa látszik, a listában (Megjelenő játékosok) kipipálhatod / kivehetsz játékosokat. A PSD sorainak száma fölött a sorok **összébb húzódnak és a szöveg kisebb lesz** (az első és az utolsó sor helye nem változik, a keret ugyanaz; a keretet kézzel nagyíthatod az Elrendezés dobozban). A **külföldi játékosok neve „Keresztnév VEZETÉKNÉV”** sorrendben jelenik meg (a nemzetiséget a csapatoldal kerete adja), a magyaroké és azoké, akik nincsenek a keretben, úgy, ahogy a statisztikában szerepel.
 
