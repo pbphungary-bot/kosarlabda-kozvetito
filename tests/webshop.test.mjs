@@ -73,3 +73,19 @@ test('webshop: plate, QR and phone each have their own size and the column re-st
   assert.equal(columnLayout(cfg({ sPlate: 5, sQr: 999 })).sp, 0.2); assert.equal(columnLayout(cfg({ sQr: 999 })).sq, 3, 'sizes are clamped');
   assert.equal(columnLayout(cfg({ sPlate: 0 })).sp, 1, 'no value = 100 %');
 });
+
+test('webshop: every picture can be fitted, zoomed and shifted on the phone screen', async () => {
+  const { slideFit } = await import('../graphics/js/webshop-anim.js');
+  const box = [0, 0, 220, 458]; // the phone's screen
+  const near = (a, b) => a.every((v, i) => Math.abs(v - b[i]) < 1e-6);
+  // a landscape photo: 'cover' fills the screen (the sides are cropped), 'contain' shows all of it
+  const cov = slideFit(1500, 1000, ...box, {}), con = slideFit(1500, 1000, ...box, { fit: 'contain' });
+  assert.ok(Math.abs(cov[3] - 458) < 1e-6 && cov[2] > 220, 'cover: as tall as the screen, wider than it');
+  assert.ok(Math.abs(con[2] - 220) < 1e-6 && con[3] < 458, 'contain: as wide as the screen, shorter than it');
+  assert.ok(near([cov[0] + cov[2] / 2, cov[1] + cov[3] / 2], [110, 229]), 'centred');
+  // zoom scales about the centre; shifts are percentages of the screen
+  const z = slideFit(1500, 1000, ...box, { zoom: 50 }); assert.ok(Math.abs(z[2] - cov[2] / 2) < 1e-6 && near([z[0] + z[2] / 2, z[1] + z[3] / 2], [110, 229]));
+  const s = slideFit(1500, 1000, ...box, { ox: 10, oy: -20 }); assert.ok(near([s[0] - cov[0], s[1] - cov[1]], [22, -91.6]));
+  assert.ok(near(slideFit(800, 600, ...box, { zoom: 0 }), slideFit(800, 600, ...box, {})), 'no / zero zoom = 100 %');
+  assert.ok(slideFit(800, 600, ...box, { zoom: 9999 })[2] <= slideFit(800, 600, ...box, {})[2] * 5.0001, 'zoom is limited');
+});

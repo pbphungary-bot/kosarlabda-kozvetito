@@ -96,3 +96,15 @@ export function columnLayout(cfg) {
   const qrTop = top + plateH + 18, phoneTop = qrTop + qrH + 57;
   return { sp, sq, sh, plateTop: top, qrTop, phoneCy: phoneTop + phoneH / 2 };
 }
+
+/**
+ * Where a photo / video of natural size nw × nh is drawn inside a screen box (x, y, w, h), by the slide's own settings:
+ * fit 'cover' (default: fills the screen, the overflow is cropped) or 'contain' (the whole picture, bars where it is narrower),
+ * zoom in % (100 = as fitted), ox / oy = shift in % of the screen's width / height. Returns [x, y, width, height].
+ */
+export function slideFit(nw, nh, x, y, w, h, p = {}) {
+  const z = (+p.zoom > 0 ? Math.max(10, Math.min(500, +p.zoom)) : 100) / 100;
+  const k = (p.fit === 'contain' ? Math.min : Math.max)(w / nw, h / nh) * z, iw = nw * k, ih = nh * k;
+  const cl = v => Math.max(-100, Math.min(100, +v || 0));
+  return [x + (w - iw) / 2 + cl(p.ox) / 100 * w, y + (h - ih) / 2 + cl(p.oy) / 100 * h, iw, ih];
+}

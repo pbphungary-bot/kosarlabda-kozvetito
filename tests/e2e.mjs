@@ -1864,6 +1864,46 @@ try {
     await wctx.close();
   });
 
+  await check('Webshop insert: every picture can be fitted, zoomed and shifted on the phone screen', async () => {
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 } }));
+    const wp = await wctx.newPage(); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    await wp.setInputFiles('#photoFiles', path.join(ROOT, 'tests/fixtures/img/solid-red.png'));
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 1, null, { timeout: 15000 });
+    const tShow = 0.8 + 1.2 + 0.6, spot = [170, 950]; // a point near the lower left corner of the phone's screen
+    const red = () => wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return d[0] > 180 && d[1] < 80; }, [tShow, ...spot], { timeout: 15000 });
+    const grey = () => wp.waitForFunction(([t, x, y]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data; return Math.abs(d[0] - 107) < 12 && Math.abs(d[2] - 120) < 12 && d[3] === 255; }, [tShow, ...spot], { timeout: 15000 });
+    await red(); // a square picture 'covers' the tall screen
+    await wp.selectOption('.slide .fitSel', 'contain'); await grey(); // the whole picture: bars above and below
+    await wp.selectOption('.slide .fitSel', 'cover'); await red();
+    await wp.fill('.slide .zoomIn', '40'); await grey(); // smaller than the screen
+    await wp.fill('.slide .zoomIn', ''); await red();
+    await wp.fill('.slide .oxIn', '100'); await grey(); // pushed aside by a whole screen width
+    await wp.click('.slide .fitReset'); await red();
+    assert.deepEqual(await wp.evaluate(() => { const p = window.__webshop.config().photos[0]; return [p.fit, p.zoom, p.ox, p.oy]; }), [undefined, undefined, undefined, undefined], 'reset clears the settings');
+    await wctx.close();
+  });
+
+  await check('Webshop insert: element sizes can be typed in pixels as well as in percent', async () => {
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 } }));
+    const wp = await wctx.newPage(); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    assert.deepEqual(await wp.evaluate(() => ['sPlatePx', 'sQrPx', 'sPhonePx'].map(i => +document.getElementById(i).value)), [343, 177, 476], 'the base sizes in px');
+    await wp.fill('#sPlatePx', '480');
+    await wp.waitForFunction(() => Math.abs(window.__webshop.config().sPlate - 480 / 343 * 100) < 0.01, null, { timeout: 15000 });
+    assert.equal(await wp.inputValue('#sPlate'), String(Math.round(480 / 343 * 1000) / 10), 'the % field follows');
+    await wp.fill('#sPhone', '50'); // the other way round: percent → pixels
+    await wp.waitForFunction(() => document.getElementById('sPhonePx').value === '238', null, { timeout: 15000 });
+    await wp.fill('#sQrPx', '354');
+    await wp.waitForFunction(() => Math.round(window.__webshop.config().sQr) === 200, null, { timeout: 15000 });
+    // the plate really is that wide on the picture: at 480 px (x 4 … 484) the pixel at x 470 is white, at 100 % (x 72 … 415) it is not
+    const px = (x) => wp.evaluate(([x]) => window.__webshop.draw(3, null).getContext('2d').getImageData(x, 222, 1, 1).data[3], [x]);
+    assert.equal(await px(470), 255);
+    await wp.fill('#sPlatePx', '343'); await wp.waitForFunction(() => Math.round(window.__webshop.config().sPlate) === 100, null, { timeout: 15000 });
+    assert.equal(await px(470), 0);
+    await wctx.close();
+  });
+
 } finally {
   await browser.close();
   server.kill();
