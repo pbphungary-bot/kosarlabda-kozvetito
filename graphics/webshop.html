@@ -26,6 +26,15 @@
   .photo-row .vthumb { display: grid; place-items: center; background: #2b3340; color: #cfd6e0; font-size: 18px; }
   .photo-row label.dur { display: inline-flex; flex-direction: row; align-items: center; gap: 3px; font-size: 12px; }
   .photo-row .durIn { width: 58px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .sizebox { display: grid; gap: 4px; font-size: 12px; }
+  .sizebox label { display: flex; flex-direction: row; align-items: center; gap: 4px; }
+  .sizebox input { width: 100%; min-width: 0; }
+  .slide { border-bottom: 1px solid #2b3340; padding-bottom: 4px; margin-bottom: 4px; }
+  .slide-adj { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; font-size: 12px; padding-left: 50px; }
+  .slide-adj label { display: inline-flex; flex-direction: row; align-items: center; gap: 4px; }
+  .slide-adj input { width: 62px; }
+  .slide-adj select { max-width: 170px; }
   .photo-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
   .warn { color: #ffb4a8; min-height: 1.2em; }
   .status { color: #ffd479; min-height: 1.2em; }
@@ -57,7 +66,7 @@
     <div class="box">
       <h2>Fotók a telefonon</h2>
       <div class="row"><label>Fotók és videók hozzáadása <input type="file" id="photoFiles" accept="image/*,video/*" multiple></label></div>
-      <small class="hint">Egy fotó / videó mellett a „mp” mezőbe megadhatod, meddig látszódjon (üresen: automatikus). A videók hang nélkül, a saját hosszukkal futnak (legfeljebb a „Videó legfeljebb” értékig); rövidebb videó ismétlődik. Legfeljebb 80 MB / videó; a videók a böngésző tárhelyében maradnak meg.</small>
+      <small class="hint">Minden fotó / videó alatt állítható, hogyan ül a telefon képernyőjén: <b>Illesztés</b> (kitölti a képernyőt, a túllógó rész levágódik / az egész kép látszik), <b>Nagyítás %</b> (kisebb / nagyobb), <b>↔ ↕ %</b> (eltolás). Egy fotó / videó mellett a „mp” mezőbe megadhatod, meddig látszódjon (üresen: automatikus). A videók hang nélkül, a saját hosszukkal futnak (legfeljebb a „Videó legfeljebb” értékig); rövidebb videó ismétlődik. Legfeljebb 80 MB / videó; a videók a böngésző tárhelyében maradnak meg.</small>
       <div id="photoList"></div>
     </div>
     <div class="box">
@@ -71,8 +80,12 @@
       <div class="row"><label><input type="checkbox" id="tilt"> A telefon kissé ringatózik</label></div>
       <div class="row"><label>X (közép) <input type="number" id="px"></label><label>Y (tábla teteje) <input type="number" id="py"></label><label>Az egész mérete % <input type="number" id="scale"></label></div>
       <div class="row"><b>Elemek külön mérete (%)</b></div>
-      <div class="row"><label>Cím-tábla <input type="number" id="sPlate" step="5"></label><label>QR-kód <input type="number" id="sQr" step="5"></label><label>Telefon <input type="number" id="sPhone" step="5"></label></div>
-      <small class="hint">Az elemek egymás alá rendeződnek, ezért ha az egyik nagyobb lesz, a többi lejjebb csúszik.</small>
+      <div class="grid3">
+        <div class="sizebox"><b>Cím-tábla</b><label>% <input type="number" id="sPlate" step="5"></label><label>szélesség px <input type="number" id="sPlatePx" step="10"></label></div>
+        <div class="sizebox"><b>QR-kód</b><label>% <input type="number" id="sQr" step="5"></label><label>szélesség px <input type="number" id="sQrPx" step="10"></label></div>
+        <div class="sizebox"><b>Telefon</b><label>% <input type="number" id="sPhone" step="5"></label><label>magasság px <input type="number" id="sPhonePx" step="10"></label></div>
+      </div>
+      <small class="hint">A % és a px ugyanazt az értéket állítja (az „Az egész mérete” 100 %-ánál számolt pixelben: tábla 343 px, QR 177 px széles, telefon 476 px magas az alapméret). Az elemek egymás alá rendeződnek, ezért ha az egyik nagyobb lesz, a többi lejjebb csúszik.</small>
     </div>
     <button id="reset">Mindent alaphelyzetbe</button>
   </div>

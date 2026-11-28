@@ -1,6 +1,6 @@
 // Webshop insert: editor + preview + export (page graphics/webshop.html). Everything on the picture can be swapped: the title plate (text or image),
 // the QR code (image) and the slides on the phone (photos AND short videos). The animation itself is graphics/js/webshop-anim.js (a pure function of time).
-import { WEBSHOP_DEFAULTS, stateAt, timeline, columnLayout, baseSeconds } from './webshop-anim.js';
+import { WEBSHOP_DEFAULTS, stateAt, timeline, columnLayout, baseSeconds, slideFit } from './webshop-anim.js';
 import { loadFonts, FONT_FAMILIES } from './engine.js';
 
 const W = 1920, H = 1080, KEY = { magenta: '#ff00ff', green: '#00b140' };
@@ -84,6 +84,8 @@ function fit(im, x, y, w, h, cover) {
   const [nw, nh] = dim(im), k = (cover ? Math.max : Math.min)(w / nw, h / nh), iw = nw * k, ih = nh * k;
   ctx.drawImage(im, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
 }
+/** A slide inside the phone's screen, by its own fit / zoom / shift (see slideFit). */
+function fitSlide(im, p, x, y, w, h) { const [nw, nh] = dim(im); ctx.drawImage(im, ...slideFit(nw, nh, x, y, w, h, p)); }
 function tile(x, y, w, h) { // white rounded tile with the thin gold edge of the broadcast design
   ctx.fillStyle = '#ffffff'; rr(x, y, w, h, 12); ctx.fill();
   ctx.lineWidth = 3; ctx.strokeStyle = '#c99a4b'; rr(x + 1.5, y + 1.5, w - 3, h - 3, 11); ctx.stroke();
@@ -129,8 +131,8 @@ function phone(cx, cy, s, c, st) {
     ctx.save(); rr(-sw / 2, -sh / 2, sw, sh, 30); ctx.clip();
     ctx.fillStyle = '#6b6f78'; ctx.fillRect(-sw / 2, -sh / 2, sw, sh);
     const ph = st.photo, a = slideImage(c.photos[ph.i], ph.li), b = ph.mix > 0 && ph.j !== ph.i ? slideImage(c.photos[ph.j], ph.lj) : null;
-    if (a) fit(a, -sw / 2, -sh / 2, sw, sh, true);
-    if (b) { ctx.globalAlpha = ph.mix; fit(b, -sw / 2, -sh / 2, sw, sh, true); ctx.globalAlpha = 1; }
+    if (a) fitSlide(a, c.photos[ph.i], -sw / 2, -sh / 2, sw, sh);
+    if (b) { ctx.globalAlpha = ph.mix; fitSlide(b, c.photos[ph.j], -sw / 2, -sh / 2, sw, sh); ctx.globalAlpha = 1; }
     ctx.restore();
     ctx.fillStyle = '#0b0c0e'; rr(-34, -h / 2 + 18, 68, 18, 9); ctx.fill(); // speaker slot
   }
@@ -185,7 +187,10 @@ async function addVideo(file) {
   if (!kept) $('warn').textContent = 'A videó csak erre a munkamenetre marad meg (a böngésző nem engedi tárolni): újratöltés után újra fel kell tölteni.';
   cfg.photos.push({ kind: 'video', vid: id, name: file.name, vdur: finiteDur(v.el) });
 }
-function changed() { save(); renderSlideList(); updateStatus(); paint(); }
+/** Element sizes also in pixels (at the overall size of 100 %): plate and QR by their width, the phone by its height. */
+const PX = [['sPlate', 'sPlatePx', 343], ['sQr', 'sQrPx', 177], ['sPhone', 'sPhonePx', 476]];
+function syncPx() { for (const [k, id, base] of PX) { const el = $(id), pc = $(k); if (el && document.activeElement !== el) el.value = Math.round(base * (+cfg[k] || 100) / 100); if (pc && document.activeElement !== pc) pc.value = Math.round((+cfg[k] || 100) * 10) / 10; } }
+function changed() { save(); renderSlideList(); updateStatus(); syncPx(); paint(); }
 function updateStatus() {
   const miss = [];
   if (!cfg.qr.image) miss.push('QR-kód');
@@ -202,7 +207,7 @@ function renderSlideList() {
   const box = $('photoList'); box.innerHTML = '';
   const tl = timeline(cfg);
   cfg.photos.forEach((p, i) => {
-    const isVid = p.kind === 'video', row = document.createElement('div'); row.className = 'photo-row';
+    const isVid = p.kind === 'video', wrap = document.createElement('div'), row = document.createElement('div'); row.className = 'photo-row'; wrap.className = 'slide'; wrap.appendChild(row);
     const thumb = isVid ? '<span class="vthumb" title="Videó">▶</span>' : `<img src="${p.src}" alt="">`;
     const auto = baseSeconds({ ...p, dur: 0 }, cfg), shown = tl.durs[i];
     row.innerHTML = `${thumb}<span>${i + 1}. ${String(p.name || 'kép').replace(/[<>&]/g, '')}${isVid ? ` <small>(videó, ${(+p.vdur || 0).toFixed(1)} mp)</small>` : ''}</span><label class="dur" title="Ennyi másodpercig látszik (üresen: ${auto.toFixed(1)} mp automatikusan; a teljes hossz megadásakor arányosan igazodik: most ${shown.toFixed(1)} mp)"><input type="number" class="durIn" min="0.5" step="0.5" placeholder="${auto.toFixed(1)}" value="${p.dur > 0 ? p.dur : ''}"> mp</label><button data-a="up" title="Feljebb">↑</button><button data-a="down" title="Lejjebb">↓</button><button data-a="del" title="Törlés">✕</button>`;
@@ -214,13 +219,23 @@ function renderSlideList() {
       else { const j = i + (a === 'up' ? -1 : 1); if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; }
       changed();
     };
-    box.appendChild(row);
+    const adj = document.createElement('div'); adj.className = 'slide-adj'; // how this picture sits on the phone's screen
+    adj.innerHTML = `<label>Illesztés <select class="fitSel"><option value="cover">Kitölti a képernyőt</option><option value="contain">Az egész kép látszik</option></select></label><label>Nagyítás % <input type="number" class="zoomIn" min="10" max="500" step="5" placeholder="100"></label><label>↔ % <input type="number" class="oxIn" min="-100" max="100" step="5" placeholder="0"></label><label>↕ % <input type="number" class="oyIn" min="-100" max="100" step="5" placeholder="0"></label><button type="button" class="ghost fitReset" title="Vissza az alap méretre">↺</button>`;
+    const sel = adj.querySelector('.fitSel'), zi = adj.querySelector('.zoomIn'), xi = adj.querySelector('.oxIn'), yi = adj.querySelector('.oyIn');
+    sel.value = p.fit === 'contain' ? 'contain' : 'cover'; zi.value = p.zoom > 0 && p.zoom !== 100 ? p.zoom : ''; xi.value = p.ox || ''; yi.value = p.oy || '';
+    const put = (key, el, min, max) => { el.oninput = () => { const n = parseFloat(el.value); if (Number.isFinite(n) && (key !== 'zoom' || n > 0)) p[key] = Math.max(min, Math.min(max, n)); else delete p[key]; save(); paint(); }; };
+    put('zoom', zi, 10, 500); put('ox', xi, -100, 100); put('oy', yi, -100, 100);
+    sel.onchange = () => { if (sel.value === 'contain') p.fit = 'contain'; else delete p.fit; save(); paint(); };
+    adj.querySelector('.fitReset').onclick = () => { delete p.fit; delete p.zoom; delete p.ox; delete p.oy; save(); renderSlideList(); paint(); };
+    wrap.appendChild(adj); box.appendChild(wrap);
   });
 }
 function bind() {
   const num = (id, key, min, max) => { const el = $(id); el.value = cfg[key] || (key === 'total' ? '' : cfg[key]); el.oninput = () => { const v = el.value === '' && key === 'total' ? 0 : +el.value; if (Number.isFinite(v)) { cfg[key] = v === 0 && key === 'total' ? 0 : Math.max(min, Math.min(max, v)); changed(); } }; };
   num('px', 'x', 0, W); num('py', 'y', 0, H); num('scale', 'scale', 20, 300); num('hold', 'hold', 0.5, 30); num('fade', 'fade', 0, 5);
   num('videoMax', 'videoMax', 1, 120); num('total', 'total', 3, 600); num('sPlate', 'sPlate', 20, 300); num('sQr', 'sQr', 20, 300); num('sPhone', 'sPhone', 20, 300);
+  for (const [k, id, base] of PX) { $(id).oninput = () => { const v = parseFloat($(id).value); if (Number.isFinite(v) && v > 0) { cfg[k] = Math.max(20, Math.min(300, v / base * 100)); changed(); } }; }
+  syncPx();
   $('motion').value = cfg.motion === 'slide' ? 'slide' : 'rotate'; $('motion').onchange = () => { cfg.motion = $('motion').value; changed(); };
   $('tilt').checked = cfg.tilt !== false; $('tilt').onchange = () => { cfg.tilt = $('tilt').checked; changed(); };
   for (const [id, k] of [['line1', 'line1'], ['line2', 'line2'], ['c1', 'c1'], ['c2', 'c2']]) { const el = $(id); el.value = cfg.title[k]; el.oninput = () => { cfg.title[k] = el.value; changed(); }; }
