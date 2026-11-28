@@ -1849,6 +1849,21 @@ try {
     await wctx.close();
   });
 
+  await check('Webshop insert: the video export with a transparent background is a VP9 WebM file', async () => {
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 }, acceptDownloads: true }));
+    const wp = await wctx.newPage(); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    assert.equal(await wp.inputValue('#keyBg'), 'transparent', 'transparent is the default background of the export');
+    const [dl] = await Promise.all([wp.waitForEvent('download', { timeout: 90000 }), wp.click('#video')]);
+    assert.equal(dl.suggestedFilename(), 'webshop.webm');
+    const file = path.join(out, 'webshop-transparent.webm'); await dl.saveAs(file);
+    const bytes = readFileSync(file);
+    assert.ok(bytes.length > 20000, `a real video (${bytes.length} bytes)`);
+    assert.deepEqual([...bytes.subarray(0, 4)], [0x1a, 0x45, 0xdf, 0xa3], 'a WebM (Matroska) file');
+    assert.ok(bytes.includes(Buffer.from('V_VP9')), 'VP9, the WebM codec that carries an alpha channel');
+    await wctx.close();
+  });
+
 } finally {
   await browser.close();
   server.kill();

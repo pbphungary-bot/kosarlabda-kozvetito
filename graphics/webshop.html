@@ -85,10 +85,11 @@
     </div>
     <div class="row">
       <label>Előnézet háttere <select id="bgView"><option value="checker">Átlátszó (sakktábla)</option><option value="magenta">Magenta</option><option value="green">Zöld</option></select></label>
-      <label>Videó háttere <select id="keyBg"><option value="magenta">Magenta</option><option value="green">Zöld</option></select></label>
+      <label>Videó háttere <select id="keyBg"><option value="transparent">Átlátszó (WebM, OBS-hez)</option><option value="magenta">Magenta (kulcsolható)</option><option value="green">Zöld (kulcsolható)</option></select></label>
       <button id="video" class="primary">Videó mentése (1 kör)</button>
       <button id="png">PNG-kocka (átlátszó)</button>
     </div>
+    <small class="hint">Az <b>átlátszó</b> videó VP9 WebM (60 kép/mp, hang nélkül): az OBS-ben Média forrásként vagy Böngésző forrásként teheted be, és a háttér átlátszó marad. Ezt csak a Chrome / Edge tudja menteni; a felvétel valós időben fut, ezért pont a videó hosszáig tart.</small>
     <div id="status" class="status"></div>
     <div id="warn" class="warn"></div>
   </div>

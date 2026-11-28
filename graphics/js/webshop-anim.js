@@ -16,7 +16,7 @@ export const WEBSHOP_DEFAULTS = {
   motion: 'rotate', // how the phone arrives / leaves: 'rotate' (turns in from the side, like the sample) | 'slide' (slides up from below the picture edge)
   x: 244, y: 165, scale: 100, // column centre x, top of the plate (px of 1920×1080), size of everything in %
   sPlate: 100, sQr: 100, sPhone: 100, // size of the title plate / the QR tile / the phone, each in % (the column re-stacks itself)
-  bg: 'magenta', // key colour of the video export: magenta | green
+  bg: 'transparent', // background of the video export: transparent (VP9 WebM with alpha, for OBS) | magenta | green (key colours)
 };
 
 export const SLIDE_DIST = 700; // px the phone travels below its place when it is off screen (motion 'slide')

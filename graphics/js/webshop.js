@@ -256,14 +256,15 @@ function canvasToBlobFrame(time) { drawFrame(off, time, cfg, null); return new P
 async function download(blobOrPromise, name) {
   const b = await blobOrPromise, a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
 }
-/** Records one loop in real time as a video on the chosen key colour (like the sample: magenta), 1920×1080, silent. Its length is the loop's length (cfg.total when set). */
+/** Records one loop in real time as a video, 1920×1080, 60 fps, silent: on the chosen key colour (like the sample: magenta) or with a TRANSPARENT background (VP9 WebM with alpha, for OBS). Its length is the loop's length (cfg.total when set). */
 async function recordVideo() {
   if (recording) return;
-  const key = KEY[cfg.bg] || KEY.magenta, total = timeline(cfg).total;
-  const types = ['video/mp4;codecs=avc1', 'video/webm;codecs=vp9', 'video/webm'], mime = types.find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m));
-  if (!mime) { $('warn').textContent = 'Ez a böngésző nem tud videót rögzíteni – használd a PNG-képet vagy egy Chrome / Edge böngészőt.'; return; }
+  const clear = cfg.bg === 'transparent', key = clear ? null : (KEY[cfg.bg] || KEY.magenta), total = timeline(cfg).total;
+  // transparent: VP9 WebM keeps the alpha channel (Chrome / Edge); a key-colour video can be MP4 or WebM
+  const types = clear ? ['video/webm;codecs=vp9'] : ['video/mp4;codecs=avc1', 'video/webm;codecs=vp9', 'video/webm'], mime = types.find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m));
+  if (!mime) { $('warn').textContent = clear ? 'Az átlátszó videót csak Chrome / Edge tudja menteni (VP9 WebM) – vagy válassz magenta / zöld hátteret.' : 'Ez a böngésző nem tud videót rögzíteni – használd a PNG-képet vagy egy Chrome / Edge böngészőt.'; return; }
   recording = true; driving = true; $('video').disabled = true;
-  const rec = new MediaRecorder(off.captureStream(25), { mimeType: mime, videoBitsPerSecond: 12e6 }), chunks = [];
+  const rec = new MediaRecorder(off.captureStream(60), { mimeType: mime, videoBitsPerSecond: 12e6 }), chunks = [];
   rec.ondataavailable = e => e.data.size && chunks.push(e.data);
   const done = new Promise(res => { rec.onstop = res; });
   rec.start(); const t0 = performance.now();
