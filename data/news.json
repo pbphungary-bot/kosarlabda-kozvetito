@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-27T19:46:37.645926+00:00",
+  "checked_at": "2026-11-28T02:20:03.547917+00:00",
   "sources": [
     {
       "source": "BB1.hu",
       "status": "ok",
       "candidates": 31,
-      "added": 4,
+      "added": 1,
       "repaired": 4,
       "article_errors": 0,
       "listing_errors": []
@@ -14,7 +14,7 @@
       "source": "WBasket.hu",
       "status": "ok",
       "candidates": 34,
-      "added": 2,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -23,8 +23,8 @@
       "source": "Hunbasket",
       "status": "ok",
       "candidates": 12,
-      "added": 0,
-      "repaired": 12,
+      "added": 1,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 2,
-      "repaired": 48,
+      "added": 1,
+      "repaired": 49,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 29,
+      "added": 0,
+      "repaired": 30,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -173,19 +173,23 @@
     },
     {
       "source": "Klub: Sopron KC",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 1,
       "listing_pages_failed": 0,
-      "candidates": 16,
-      "attempted": 16,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
       "added": 0,
-      "repaired": 16,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 16,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: Duna Aszfalt-DTKH Kecskemét",
@@ -219,40 +223,29 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:0",
-        "sitemap:HTTPError",
+        "wp-json:JSONDecodeError",
         "sitemap:0"
-      ],
-      "sample_links": [
-        "MEGYERI TIGRISEK SPORT EGYESÜLET -> https://megyeritigrisek.hu/",
-        "Kezdőlap -> https://megyeritigrisek.hu/",
-        "Hírek -> https://megyeritigrisek.hu/news/",
-        "Eseménynaptár -> https://megyeritigrisek.hu/esemenynaptar/",
-        "Koronavírus információk -> https://megyeritigrisek.hu/koronavirus-informaciok/",
-        "Hírlevél -> https://megyeritigrisek.hu/hirlevel/",
-        "Média -> #",
-        "MT Plus – TV -> https://megyeritigrisek.hu/mt-plus/",
-        "Magazin -> https://megyeritigrisek.hu/magazin/",
-        "Kosárlabda tanoda -> https://megyeritigrisek.hu/kosarlabda-tanoda/",
-        "Egyéni edzéshez -> https://megyeritigrisek.hu/egyeni-edzeshez/",
-        "Táborozás -> https://megyeritigrisek.hu/taborozas/"
       ]
     },
     {
       "source": "Klub: Csata TKK",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 10,
-      "attempted": 10,
+      "candidates": 0,
+      "attempted": 0,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 9,
+      "added": 0,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 10,
-      "source_coverage": true
+      "usable_articles": 0,
+      "source_coverage": false,
+      "fallback": [
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
+      ]
     },
     {
       "source": "Klub: NKA Universitas Pécs (női)",
@@ -263,8 +256,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 15,
+      "added": 1,
+      "repaired": 14,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -276,15 +269,18 @@
       "reason": "articles_available",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 19,
-      "attempted": 19,
+      "candidates": 30,
+      "attempted": 30,
       "already_saved": 19,
       "added": 0,
-      "repaired": 0,
+      "repaired": 11,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 19,
-      "source_coverage": true
+      "usable_articles": 30,
+      "source_coverage": true,
+      "fallback": [
+        "wp-json:30"
+      ]
     },
     {
       "source": "Klub: Vasas Akadémia",
@@ -334,25 +330,8 @@
       "usable_articles": 0,
       "source_coverage": false,
       "fallback": [
-        "wp-json:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
-        "sitemap:HTTPError",
+        "wp-json:JSONDecodeError",
         "sitemap:0"
-      ],
-      "sample_links": [
-        "Kezdőlap -> https://kosarlabda.ase.hu",
-        "Aktuális -> #",
-        "Hírek -> https://kosarlabda.ase.hu/hirek",
-        "Események -> https://kosarlabda.ase.hu/esemenyek",
-        "Bemutatkozás -> https://kosarlabda.ase.hu/bemutatkozas",
-        "Szakosztályok -> https://kosarlabda.ase.hu/kozerdeku/szakosztalyok",
-        "Szakmai stáb -> https://kosarlabda.ase.hu/kosarlabda-szakmai-stab",
-        "Játékosok -> https://kosarlabda.ase.hu/kosarlabda-jatekosok",
-        "Média -> #",
-        "Galéria -> https://kosarlabda.ase.hu/galeria",
-        "Videók -> https://kosarlabda.ase.hu/videok",
-        "Élő közvetítés -> /"
       ]
     },
     {
@@ -466,7 +445,6 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
-        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -565,12 +543,42 @@
   "articles": [
     {
       "source": "Nemzeti Sport",
+      "title": "Két őrületes svéd tripla a végén – kikaptak kosarasaink a stockholmi vb-selejtezőn",
+      "summary": "Két őrületes svéd tripla a végén – kikaptak kosarasaink a stockholmi vb-selejtezőn",
+      "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/ket-oruletes-sved-tripla-a-vegen-kikaptak-kosarasaink-a-stockholmi-vb-selejtezon/",
+      "published_at": "2026-11-27T21:11:03+01:00",
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
+      "source": "BB1.hu",
+      "title": "Fájó vereséget szenvedett a magyar válogatott Stockholmban",
+      "summary": "Világbajnoki-selejtező, 2. csoportkör, 3. forduló.",
+      "url": "https://bball1.hu/fajo-vereseget-szenvedett-a-magyar-valogatott-stockholmban/",
+      "published_at": "2026-11-27T21:08:03+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "Nemzeti Sport",
       "title": "Női kosár NB I: a második félidőre felpörgött a Pécs, és nyert a fővárosban",
       "summary": "Női kosár NB I: a második félidőre felpörgött a Pécs, és nyert a fővárosban",
       "url": "https://www.nemzetisport.hu/kosarlabda/2026/11/noi-kosar-nb-i-a-masodik-felidore-felporgott-a-pecs-es-nyert-a-fovarosban/",
       "published_at": "2026-11-27T20:02:16+01:00",
       "summary_method": "headline_fallback",
       "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A negyedik negyedben hagyta állva a Pécs a TFSE-t",
+      "summary": "A-csoport, 9. forduló Budapest, Dr.",
+      "url": "https://wbasket.hu/a-negyedik-negyedben-hagyta-allva-a-pecs-a-tfse-t/",
+      "published_at": "2026.11.27. 19:48",
+      "summary_method": "article_body",
+      "teams": [
+        "women|TFSE"
+      ],
       "league": "women"
     },
     {
@@ -694,6 +702,16 @@
       "teams": [
         "women|TFSE"
       ],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
+      "title": "Női Európa Kupa: A Sopron és a DVTK is nyert",
+      "summary": "<div><strong>Az odavágónál szorosabb küzdelemben, de végig vezetve nyert a DVTK</strong></div> <div> </div> <div><em>Az Európa Kupa 5. fordulójában a DVTK HUNTHEM 79-69-re múlta felül a ZKK Brod Na Savi csapatát.</em></div> <div> </div> <div>A két gárda horvátországi mérkőzését 89-56-ra nyerte a DVTK.",
+      "url": "https://hunbasket.hu/hir/77759/noi-europa-kupa-a-sopron-es-a-dvtk-is-nyert/",
+      "published_at": "2026. 11. 27.",
+      "summary_method": "source_description",
+      "teams": [],
       "league": "women"
     },
     {
@@ -1154,16 +1172,6 @@
       "teams": [
         "women|DVTK HUNTHERM"
       ]
-    },
-    {
-      "source": "Hunbasket",
-      "title": "Női Európa Kupa: A Sopron és a DVTK is nyert",
-      "summary": "<div><strong>Az odavágónál szorosabb küzdelemben, de végig vezetve nyert a DVTK</strong></div> <div> </div> <div><em>Az Európa Kupa 5. fordulójában a DVTK HUNTHEM 79-69-re múlta felül a ZKK Brod Na Savi csapatát.</em></div> <div> </div> <div>A két gárda horvátországi mérkőzését 89-56-ra nyerte a DVTK.",
-      "url": "https://hunbasket.hu/hir/77759/noi-europa-kupa-a-sopron-es-a-dvtk-is-nyert/",
-      "published_at": "2026. 11. 25.",
-      "summary_method": "source_description",
-      "teams": [],
-      "league": "women"
     },
     {
       "source": "BB1.hu",
@@ -12350,6 +12358,15 @@
       ]
     },
     {
+      "source": "Hunbasket",
+      "title": "Vb-selejtező: Fájó vereséget szenvedett a magyar válogatott Stockholmban",
+      "summary": "Vb-selejtező: Fájó vereséget szenvedett a magyar válogatott Stockholmban",
+      "url": "https://hunbasket.hu/hir/77766/vb-selejtezo-fajo-vereseget-szenvedett-a-magyar-valogatott-stockholmban/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": []
+    },
+    {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
       "title": "Vasárnap már a Szigetszentmiklósi Városi Sportcsarnokba várunk benneteket! – KEZDŐDIK A DÖNTŐ!",
       "summary": "Vasárnap már a Szigetszentmiklósi Városi Sportcsarnokba várunk benneteket! – KEZDŐDIK A DÖNTŐ!",
@@ -13506,6 +13523,19 @@
       "league": "men",
       "teams": [
         "men|DEAC"
+      ]
+    },
+    {
+      "source": "Klub: NKA Universitas Pécs (női)",
+      "title": "Megtört a jég: idegenben is győztünk!",
+      "summary": "Három negyeden keresztül nagy küzdelmet hozott a TFSE elleni mérkőzésünk, az utolsó tíz percben azonban ellenállhatatlanul játszottunk.",
+      "url": "https://www.nkapecswomen.hu/tartalmak/Megtort-a-jeg-idegenben-is-gyoztunk/",
+      "published_at": null,
+      "summary_method": "source_description",
+      "publisher_club": "NKA Universitas Pécs (női)",
+      "league": "women",
+      "teams": [
+        "women|NKA Universitas Pécs"
       ]
     },
     {
