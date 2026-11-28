@@ -88,18 +88,18 @@ function comparison(id, league, psd, g, type = 'comparison', rowKeys = null) {
   const els = [
     { id: 'subtitle', type: 'text', label: 'Alcím (adatforrás)', group: 'Fejléc', x: g.subX, y: 163.2, align: 'center',
       font: 'italic', size: 48, tracking: 10, color: '#000000', outline: ol(3, '#ffffff'), runs: true, maxWidth: 1150 },
-    { id: 'home.logo', type: 'image', label: 'Hazai logó', group: 'Hazai', box: [g.hl[0], g.hl[1], 471, 400], fit: 'area', area: 152000, opacity: 0.702, logoOutline: true },
-    { id: 'away.logo', type: 'image', label: 'Vendég logó', group: 'Vendég', box: [g.al[0], g.al[1], 471, 400], fit: 'area', area: 152000, opacity: 0.702, logoOutline: true },
+    { id: 'home.logo', type: 'image', label: 'Hazai logó', group: pc ? 'Hazai fotó' : 'Hazai', box: [g.hl[0], g.hl[1], 471, 400], fit: 'area', area: 152000, opacity: 0.702, logoOutline: true },
+    { id: 'away.logo', type: 'image', label: 'Vendég logó', group: pc ? 'Vendég fotó' : 'Vendég', box: [g.al[0], g.al[1], 471, 400], fit: 'area', area: 152000, opacity: 0.702, logoOutline: true },
   ];
   rowList.forEach((s, i) => {
     const y = PC_ROW0 + i * PC_PITCH;
     const yr = g.level ? y : g.rankY + i * 89.6;
     const common = { size: 74.6667, tracking: 25, outline: ol(3, '#ffffff', 1), align: 'center', maxWidth: 170 };
     els.push(
-      { id: `home.rank.${s.key}`, type: 'text', label: `Hazai ${s.label} helyezés`, group: 'Hazai', x: g.hr, y: yr, ...common, tracking: g.rankTracking, color: '#383838', maxWidth: 110 },
-      { id: `home.${s.key}`, type: 'text', label: `Hazai ${s.label}`, group: 'Hazai', x: g.hv, y, ...common, color: GREEN },
-      { id: `away.${s.key}`, type: 'text', label: `Vendég ${s.label}`, group: 'Vendég', x: g.av, y, ...common, color: RED },
-      { id: `away.rank.${s.key}`, type: 'text', label: `Vendég ${s.label} helyezés`, group: 'Vendég', x: g.ar, y: yr, ...common, tracking: g.rankTracking, color: '#373737', maxWidth: 110 },
+      { id: `home.rank.${s.key}`, type: 'text', label: `Hazai ${s.label} helyezés`, group: pc ? 'Hazai helyezések' : 'Hazai', x: g.hr, y: yr, ...common, tracking: g.rankTracking, color: '#383838', maxWidth: 110 },
+      { id: `home.${s.key}`, type: 'text', label: `Hazai ${s.label}`, group: pc ? 'Hazai értékek' : 'Hazai', x: g.hv, y, ...common, color: GREEN },
+      { id: `away.${s.key}`, type: 'text', label: `Vendég ${s.label}`, group: pc ? 'Vendég értékek' : 'Vendég', x: g.av, y, ...common, color: RED },
+      { id: `away.rank.${s.key}`, type: 'text', label: `Vendég ${s.label} helyezés`, group: pc ? 'Vendég helyezések' : 'Vendég', x: g.ar, y: yr, ...common, tracking: g.rankTracking, color: '#373737', maxWidth: 110 },
     );
     if (pc) els.push({ id: `label.${s.key}`, type: 'text', label: `${s.label} – sor felirata`, group: 'Sorok', x: g.cx, y, ...common, color: '#000000', outline: ol(3, '#ffffff'), maxWidth: 190 });
   });

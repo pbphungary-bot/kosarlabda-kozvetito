@@ -490,3 +490,45 @@ test('roster (Keret / Keret fotókkal): an own jersey number is shown and moves 
     assert.deepEqual(rosterPlayers(store, lg, id, { [second.key]: ' ' }).map(p => p.key), base.map(p => p.key));
   }
 });
+
+test('key players: any team on either side, also the same team twice (second side starts with the next best player)', async () => {
+  const store = await loadStore();
+  const { pickPair, playerOptions } = await import('../graphics/js/binders.js');
+  const [h, a] = pickPair(store, 'men', 'kecskemet', 'kecskemet', {});
+  assert.ok(h && a && h.key !== a.key, 'two different players of the same team');
+  const [h2, a2] = pickPair(store, 'men', 'kecskemet', 'kecskemet', { away: h.key }); // an explicit choice is always kept, even the same player
+  assert.equal(a2.key, h2.key);
+  const opts = playerOptions(store, 'men', 'kecskemet');
+  const v = bindPlayerCompare(store, 'men', 'kecskemet', 'kecskemet', { home: opts[0].key, away: opts[1].key });
+  assert.ok(v.subtitle.text.startsWith(opts[0].name) && v.subtitle.text.includes(opts[1].name));
+  assert.equal(v['home.logo'].src, v['away.logo'].src, 'both logos are that team\'s');
+  const other = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', {});
+  assert.notEqual(other['away.logo'].src, other['home.logo'].src);
+});
+
+test('key players: a whole league-rank column can be switched off, uploaded photos can no longer cover the other side', async () => {
+  const store = await loadStore();
+  const { UPLOAD_PHOTO_W } = await import('../graphics/js/binders.js');
+  const on = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', {});
+  assert.ok(on['home.rank.ppg'].text && on['away.rank.ppg'].text);
+  const off = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', { ranks: { home: false } });
+  for (const r of STAT_ROWS) {
+    assert.equal(off[`home.rank.${r.key}`].visible, false); assert.equal(off[`home.rank.${r.key}`].text, ''); assert.ok(!off[`home.rank.${r.key}`].missing, 'no missing-data warning for a switched-off column');
+    assert.ok(off[`away.rank.${r.key}`].text, 'the other column stays');
+  }
+  assert.equal(off['home.ppg'].text, on['home.ppg'].text, 'the values are untouched');
+  const both = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', { ranks: { home: false, away: false } });
+  assert.equal(both['away.rank.ppg'].visible, false);
+  const up = bindPlayerCompare(store, 'men', 'kecskemet', 'nkapecs', { uploads: { home: true, away: true } });
+  assert.equal(up['home.logo'].geom.wide, UPLOAD_PHOTO_W); assert.equal(up['away.logo'].geom.wide, UPLOAD_PHOTO_W);
+  assert.ok(UPLOAD_PHOTO_W <= 620, 'about one half of the panel (two ordinary photos side by side must not hide each other)');
+});
+
+test('key players: every column is its own group (so a column can be moved as one)', () => {
+  const t = PC_BUILDERS['playercompare-men'](['ppg', 'reb']);
+  const grp = id => t.elements.find(e => e.id === id).group;
+  assert.equal(grp('home.rank.ppg'), grp('home.rank.reb'));
+  assert.equal(grp('home.ppg'), grp('home.reb'));
+  assert.equal(grp('label.ppg'), grp('label.reb'));
+  assert.equal(new Set(['home.rank.ppg', 'home.ppg', 'label.ppg', 'away.ppg', 'away.rank.ppg'].map(grp)).size, 5, 'five different columns');
+});

@@ -306,6 +306,8 @@ const ATTEMPTS = { fg2_pct: '2P K', fg3_pct: '3P K', ft_pct: 'BT K' }; // a perc
 
 /** Default height (px) of an uploaded key-players photo: it stands on the panel's bottom edge; resizable in the layout editor. */
 export const UPLOAD_PHOTO_H = 900;
+/** Widest an uploaded key-players photo may be by default (px): about one half of the panel, so an ordinary landscape photo on one side can no longer cover the other side's photo (2026-11-28). */
+export const UPLOAD_PHOTO_W = 600;
 
 const pKey = p => `${p['#']}|${p['Játékos']}`;
 
@@ -331,11 +333,21 @@ export function pickPlayer(store, lg, id, key, minM = rankPool(store, lg).minM) 
   return opts.find(o => o.key === key) || opts.find(o => (num(o.p['M.']) ?? 0) >= minM) || opts[0] || null;
 }
 
+/** The two players of the graphic. Both sides may be the SAME team (owner 2026-11-28): then the second side starts with the next best player instead of the same one (an explicit choice is always kept). */
+export function pickPair(store, lg, homeId, awayId, sel = {}, minM = rankPool(store, lg).minM) {
+  const hp = pickPlayer(store, lg, homeId, sel.home, minM);
+  let ap = pickPlayer(store, lg, awayId, sel.away, minM);
+  if (hp && ap && homeId === awayId && hp.key === ap.key && !sel.away) {
+    const opts = playerOptions(store, lg, awayId).filter(o => o.key !== hp.key);
+    ap = opts.find(o => (num(o.p['M.']) ?? 0) >= minM) || opts[0] || ap;
+  }
+  return [hp, ap];
+}
+
 export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
   const { pool, minM } = rankPool(store, lg);
   const site = (store.players(lg, homeId)?.source === 'excel' || store.players(lg, awayId)?.source === 'excel') ? 'FULLFIELD.INFO' : 'HUNBASKET.HU';
-  const pick = (id, key) => pickPlayer(store, lg, id, key, minM);
-  const hp = pick(homeId, sel.home), ap = pick(awayId, sel.away);
+  const [hp, ap] = pickPair(store, lg, homeId, awayId, sel, minM);
   const nm = x => (x ? x.name : '—');
   const v = {
     title: { text: 'KULCSJÁTÉKOSOK', source: 'Fix felirat (a PSD-ben „Csapatok összevetése” állt)' },
@@ -351,7 +363,7 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
   // photos of the two players instead of the club logos (Hunbasket photos; a player without a photo keeps his club's logo)
   const photoGeom = { fit: 'contain', area: undefined, anchor: 'bottom', logoOutline: false, opacity: sel.photoOpacity ?? 0.6 };
   for (const [side, p, tid] of [['home', hp, homeId], ['away', ap, awayId]]) {
-    if (sel.uploads?.[side]) { v[`${side}.logo`] = { src: `upload/pc${side === 'home' ? 'Home' : 'Away'}`, source: 'Feltöltött fotó', geom: { ...photoGeom, stand: UPLOAD_PHOTO_H, wide: 1000 } }; continue; } // the owner's own photo always wins
+    if (sel.uploads?.[side]) { v[`${side}.logo`] = { src: `upload/pc${side === 'home' ? 'Home' : 'Away'}`, source: 'Feltöltött fotó', geom: { ...photoGeom, stand: UPLOAD_PHOTO_H, wide: UPLOAD_PHOTO_W } }; continue; } // the owner's own photo always wins
     if (sel.mode === 'logo') continue;
     const pid = p ? playerIdFor(store, lg, tid, p.name) : null;
     if (pid && sel.photoIds?.has(pid)) v[`${side}.logo`] = { src: `photo/${pid}`, source: 'Hunbasket fotó (' + p.name + ')', geom: photoGeom };
@@ -385,8 +397,10 @@ export function bindPlayerCompare(store, lg, homeId, awayId, sel = {}) {
     const hr = rankOf(hp?.p, col, s), ar = rankOf(ap?.p, col, s);
     const src = `Helyezés a liga ${pool.length} játékosa közül (min. ${minM} meccs${ATTEMPTS[s.key] ? ', min. 1 kísérlet/meccs' : ''}${s.lowerIsBetter ? '; kevesebb = jobb' : ''})`;
     const srcFor = p => (few(p) ? `Kevés meccs (${num(p?.['M.']) ?? 0} < ${minM}): a helyezés az összes ${poolAll.length} pályára lépett játékos között értendő${ATTEMPTS[s.key] ? ' (min. 1 kísérlet/meccs)' : ''}` : src);
-    v[`home.rank.${s.key}`] = field(hr === null ? null : `(${hr}.)`, srcFor(hp?.p));
-    v[`away.rank.${s.key}`] = field(ar === null ? null : `(${ar}.)`, srcFor(ap?.p));
+    // a whole rank column can be switched off (owner 2026-11-28): nothing is drawn and no missing-data warning is raised for it
+    const off = { text: '', visible: false, source: 'A helyezés-oszlop ki van kapcsolva' };
+    v[`home.rank.${s.key}`] = sel.ranks?.home === false ? { ...off } : field(hr === null ? null : `(${hr}.)`, srcFor(hp?.p));
+    v[`away.rank.${s.key}`] = sel.ranks?.away === false ? { ...off } : field(ar === null ? null : `(${ar}.)`, srcFor(ap?.p));
   }
   return v;
 }
