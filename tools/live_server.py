@@ -91,7 +91,7 @@ def main():
     ap.add_argument('--no-tunnel', action='store_true')
     ap.add_argument('--no-update', action='store_true', help='do not run git pull before starting')
     ap.add_argument('--tunnel-token', default='', help='token of a named Cloudflare tunnel (fixed address); remembered after the first start')
-    ap.add_argument('--public-url', default='', help='the fixed address of the named tunnel, e.g. https://live.playbyplay.hu; remembered after the first start')
+    ap.add_argument('--public-url', default='', help='the fixed address of the named tunnel, e.g. https://live.livegolf.eu; remembered after the first start')
     a = ap.parse_args()
     if not a.no_update: update_repo()
     token = load_token(a.token)
