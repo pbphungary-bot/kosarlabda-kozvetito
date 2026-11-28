@@ -3,7 +3,7 @@
  "source": "hunbasket",
  "source_url": "https://hunbasket.hu/menetrend-teljes/noi/x2627/whun",
  "season": "x2627",
- "updated_at": "2026-11-27T20:03:40.146646+00:00",
+ "updated_at": "2026-11-28T10:57:12.360165+00:00",
  "matches": {
   "https://hunbasket.hu/merkozes/x2627/whun/whun_135471": {
    "home": "KSC Szekszárd",
@@ -532,8 +532,12 @@
    "home": "Vasas Akadémia",
    "away": "BKG-PRIMA Szigetszentmiklós",
    "venue": "Pasaréti Sportcentrum",
-   "referees": [],
-   "controller": ""
+   "referees": [
+    "Téczely Roland Balázs",
+    "Nagy Bence László",
+    "Szőts Dávid István"
+   ],
+   "controller": "Maár Gábor"
   },
   "https://hunbasket.hu/merkozes/x2627/whun/whun_135591": {
    "home": "DVTK HUNTHERM",
