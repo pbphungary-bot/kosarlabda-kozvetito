@@ -2,7 +2,7 @@ import { loadDashboard, LEAGUES, SOURCES, gameKey } from './data.js';
 import { readFile } from './xlsx.js';
 import * as LAY from './layout.js';
 import { importWorkbook, detectLeague, clubLabel, parseEredmenyekText, compKey } from './importer.js';
-import { club, CLUBS, clubIdStrict } from './clubs.js';
+import { club, CLUBS, clubIdStrict, FORMER_LOGOS } from './clubs.js';
 import { TEMPLATES, TEMPLATE_TYPES, templateById, rosterBuild, psBuild, psNormalize, rosterDims, STAT_ROWS, PC_BUILDERS, pcRowKeys, LIVE_BUILDERS, TEAMSTATS_BUILDERS, TEAMSTATS_MAX, LIVE_TEAM_BUILDERS, LIVE_LEADER_BUILDERS, LIVE_TEAM_STATS, liveTeamKeys, LIVE_VARIANTS, LIVE_STATS, liveKeys, liveVariant, LIVE_CORNERS, liveCorner, BUG, bugSizeOf, COACH_LOOKS, coachLook } from './templates.js';
 import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
@@ -88,6 +88,7 @@ function loadImage(key, url) {
 async function loadLeagueImages(lg) {
   await Promise.all([
     ...Object.keys(CLUBS[lg]).map(id => loadImage(`${lg}/${id}`, `logos/${lg}/${id}.png`)),
+    ...Object.values(FORMER_LOGOS[lg] || {}).flat().map(f => loadImage(`${lg}/${f.key}`, `logos/${lg}/${f.key}.png`)), // earlier crests (head to head)
     ...Object.keys(COMPETITIONS).filter(Boolean).map(k => loadImage(k, `assets/competitions/${k.split('/')[1]}.png`)),
     loadImage('nextmatch/frame', 'templates/nextmatch/frame.png'),
   ]);
