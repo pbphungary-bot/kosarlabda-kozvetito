@@ -21,8 +21,11 @@
   #stage[data-bg=magenta] { background: #ff00ff; }
   #stage[data-bg=green] { background: #00b140; }
   #c { width: 100%; height: 100%; display: block; }
-  .photo-row { display: grid; grid-template-columns: 44px 1fr auto auto auto; gap: 6px; align-items: center; margin: 4px 0; }
-  .photo-row img { width: 44px; height: 44px; object-fit: cover; border-radius: 4px; }
+  .photo-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto auto auto; gap: 6px; align-items: center; margin: 4px 0; }
+  .photo-row img, .photo-row .vthumb { width: 44px; height: 44px; object-fit: cover; border-radius: 4px; }
+  .photo-row .vthumb { display: grid; place-items: center; background: #2b3340; color: #cfd6e0; font-size: 18px; }
+  .photo-row label.dur { display: inline-flex; flex-direction: row; align-items: center; gap: 3px; font-size: 12px; }
+  .photo-row .durIn { width: 58px; }
   .photo-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
   .warn { color: #ffb4a8; min-height: 1.2em; }
   .status { color: #ffd479; min-height: 1.2em; }
@@ -31,7 +34,7 @@
 </head>
 <body>
 <h1>Webshop betét – cím, QR-kód és telefon fotókkal</h1>
-<p class="hint">Mindent cserélhetsz: a <b>címet</b> (szöveg vagy kép), a <b>QR-kódot</b> és a <b>telefonon pörgő fotókat</b>. A beállítások ebben a böngészőben megmaradnak. A kész animációt <b>videóként</b> (kulcsszínes háttérrel, mint a minta) vagy egy <b>PNG-kockaként</b> mentheted.</p>
+<p class="hint">Mindent cserélhetsz: a <b>címet</b> (szöveg vagy kép), a <b>QR-kódot</b> és a <b>telefonon pörgő fotókat</b>. A beállítások ebben a böngészőben megmaradnak. A telefonra <b>fotók és rövid videók</b> is mehetnek vegyesen. A kész animációt <b>videóként</b> (kulcsszínes háttérrel, mint a minta) vagy egy <b>PNG-kockaként</b> mentheted.</p>
 <div class="layout">
   <div>
     <div class="box">
@@ -53,16 +56,23 @@
     </div>
     <div class="box">
       <h2>Fotók a telefonon</h2>
-      <div class="row"><label>Fotók hozzáadása <input type="file" id="photoFiles" accept="image/*" multiple></label></div>
+      <div class="row"><label>Fotók és videók hozzáadása <input type="file" id="photoFiles" accept="image/*,video/*" multiple></label></div>
+      <small class="hint">Egy fotó / videó mellett a „mp” mezőbe megadhatod, meddig látszódjon (üresen: automatikus). A videók hang nélkül, a saját hosszukkal futnak (legfeljebb a „Videó legfeljebb” értékig); rövidebb videó ismétlődik. Legfeljebb 80 MB / videó; a videók a böngésző tárhelyében maradnak meg.</small>
       <div id="photoList"></div>
     </div>
     <div class="box">
       <h2>Mozgás és időzítés</h2>
       <div class="row"><label>A telefon érkezése és távozása
         <select id="motion"><option value="rotate">Forgás oldalról (mint a mintában)</option><option value="slide">Felcsúszás alulról</option></select></label></div>
-      <div class="row"><label>Egy fotó ideje (mp) <input type="number" id="hold" step="0.5"></label><label>Átúszás (mp) <input type="number" id="fade" step="0.1"></label></div>
+      <div class="row"><label>Egy fotó ideje (mp) <input type="number" id="hold" step="0.5"></label><label>Videó legfeljebb (mp) <input type="number" id="videoMax" step="1"></label><label>Átúszás (mp) <input type="number" id="fade" step="0.1"></label></div>
+      <div class="row"><label><b>A teljes videó hossza (mp)</b> <input type="number" id="total" step="1" min="3" placeholder="automatikus"></label></div>
+      <small class="hint" id="lenInfo"></small>
+      <small class="hint">Ha megadod, a fotók / videók ideje arányosan igazodik, hogy a kész videó pontosan ennyi ideig tartson (a telefon érkezése és távozása kb. 4 mp-et visz el).</small>
       <div class="row"><label><input type="checkbox" id="tilt"> A telefon kissé ringatózik</label></div>
-      <div class="row"><label>X (közép) <input type="number" id="px"></label><label>Y (tábla teteje) <input type="number" id="py"></label><label>Méret % <input type="number" id="scale"></label></div>
+      <div class="row"><label>X (közép) <input type="number" id="px"></label><label>Y (tábla teteje) <input type="number" id="py"></label><label>Az egész mérete % <input type="number" id="scale"></label></div>
+      <div class="row"><b>Elemek külön mérete (%)</b></div>
+      <div class="row"><label>Cím-tábla <input type="number" id="sPlate" step="5"></label><label>QR-kód <input type="number" id="sQr" step="5"></label><label>Telefon <input type="number" id="sPhone" step="5"></label></div>
+      <small class="hint">Az elemek egymás alá rendeződnek, ezért ha az egyik nagyobb lesz, a többi lejjebb csúszik.</small>
     </div>
     <button id="reset">Mindent alaphelyzetbe</button>
   </div>
@@ -75,10 +85,11 @@
     </div>
     <div class="row">
       <label>Előnézet háttere <select id="bgView"><option value="checker">Átlátszó (sakktábla)</option><option value="magenta">Magenta</option><option value="green">Zöld</option></select></label>
-      <label>Videó háttere <select id="keyBg"><option value="magenta">Magenta</option><option value="green">Zöld</option></select></label>
+      <label>Videó háttere <select id="keyBg"><option value="transparent">Átlátszó (WebM, OBS-hez)</option><option value="magenta">Magenta (kulcsolható)</option><option value="green">Zöld (kulcsolható)</option></select></label>
       <button id="video" class="primary">Videó mentése (1 kör)</button>
       <button id="png">PNG-kocka (átlátszó)</button>
     </div>
+    <small class="hint">Az <b>átlátszó</b> videó VP9 WebM (60 kép/mp, hang nélkül): az OBS-ben Média forrásként vagy Böngésző forrásként teheted be, és a háttér átlátszó marad. Ezt csak a Chrome / Edge tudja menteni; a felvétel valós időben fut, ezért pont a videó hosszáig tart.</small>
     <div id="status" class="status"></div>
     <div id="warn" class="warn"></div>
   </div>

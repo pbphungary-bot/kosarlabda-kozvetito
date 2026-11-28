@@ -1806,6 +1806,64 @@ try {
     await kctx.close();
   });
 
+  await check('Webshop insert: a short video among the photos, a size per element, a fixed total length', async () => {
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 } }));
+    const wp = await wctx.newPage(); wp.on('dialog', d => d.accept()); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    const px = (t, x, y) => wp.evaluate(([t, x, y]) => Array.from(window.__webshop.draw(t, null).getContext('2d').getImageData(x, y, 1, 1).data), [t, x, y]);
+    // a photo and a video in one box, in the order chosen
+    await wp.setInputFiles('#photoFiles', [path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'), path.join(ROOT, 'tests/fixtures/img/clip.webm')]);
+    await wp.waitForFunction(() => { const c = window.__webshop.config(); return c.photos.length === 2 && c.photos[1].kind === 'video' && window.__webshop.videoReady(c.photos[1].vid); }, null, { timeout: 30000 });
+    assert.equal(await wp.locator('.photo-row .vthumb').count(), 1, 'the video row has its own marker');
+    const vdur = await wp.evaluate(() => window.__webshop.config().photos[1].vdur);
+    assert.ok(vdur > 1.2 && vdur < 1.8, `the video's own length is known (${vdur} s)`);
+    assert.ok(Math.abs(await wp.evaluate(() => window.__webshop.timeline().durs[1]) - vdur) < 0.01, 'a video slide runs for its own length');
+    // the loop gets a fixed total length: the slides share what is left
+    await wp.fill('#total', '20');
+    await wp.waitForFunction(() => Math.abs(window.__webshop.total() - 20) < 0.01, null, { timeout: 15000 });
+    assert.match(await wp.textContent('#lenInfo'), /pontosan 20\.0 mp/);
+    // the video's frame (solid green) shows on the phone's screen in its own slide
+    const at = await wp.evaluate(() => { const tl = window.__webshop.timeline(); return tl.showStart + tl.starts[1] + 1; });
+    await wp.waitForFunction(([t]) => { const d = window.__webshop.draw(t, null).getContext('2d').getImageData(244, 768, 1, 1).data; return d[1] > 150 && d[0] < 70 && d[2] < 70 && d[3] === 255; }, [at], { timeout: 30000 });
+    await wp.fill('#total', '4'); // 2 slides do not fit into 4 s together with the phone's coming and going
+    await wp.waitForFunction(() => /nem fér el/.test(document.getElementById('lenInfo').textContent), null, { timeout: 15000 });
+    await wp.fill('#total', '');
+    await wp.waitForFunction(() => window.__webshop.config().total === 0 && /Automatikus hossz/.test(document.getElementById('lenInfo').textContent), null, { timeout: 15000 });
+    // sizes: the plate alone gets bigger (wider, and the QR tile below it moves down)
+    await wp.evaluate(() => window.__webshop.seek(3));
+    assert.equal((await px(3, 430, 222))[3], 0, 'default plate: nothing at x 430');
+    assert.equal((await px(3, 244, 310))[3], 255, 'default: the QR tile starts at y 298');
+    await wp.fill('#sPlate', '120');
+    await wp.waitForFunction(() => window.__webshop.config().sPlate === 120, null, { timeout: 15000 });
+    assert.equal((await px(3, 430, 222))[3], 255, 'a 120 % plate reaches x 430');
+    assert.equal((await px(3, 244, 310))[3], 0, 'the QR tile moved down (the column re-stacks)');
+    await wp.fill('#sPlate', '100'); await wp.fill('#sQr', '50'); await wp.fill('#sPhone', '50');
+    await wp.waitForFunction(() => window.__webshop.config().sPhone === 50, null, { timeout: 15000 });
+    // the settings and the video survive a reload (the video file is kept in the browser's IndexedDB)
+    await wp.reload(); await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    await wp.waitForFunction(() => { const c = window.__webshop.config(); return c.photos.length === 2 && c.photos[1].kind === 'video' && window.__webshop.videoReady(c.photos[1].vid) && c.sPhone === 50; }, null, { timeout: 30000 });
+    // deleting the video row removes the slide
+    await wp.locator('.photo-row [data-a=del]').nth(1).click();
+    await wp.waitForFunction(() => window.__webshop.config().photos.length === 1, null, { timeout: 15000 });
+    await wp.click('#reset');
+    await wctx.close();
+  });
+
+  await check('Webshop insert: the video export with a transparent background is a VP9 WebM file', async () => {
+    const wctx = await hermetic(await browser.newContext({ viewport: { width: 1500, height: 1000 }, acceptDownloads: true }));
+    const wp = await wctx.newPage(); await wp.goto(`${URL}/graphics/webshop.html`);
+    await wp.waitForFunction(() => window.__webshop && window.__webshop.ready, null, { timeout: 30000 });
+    assert.equal(await wp.inputValue('#keyBg'), 'transparent', 'transparent is the default background of the export');
+    const [dl] = await Promise.all([wp.waitForEvent('download', { timeout: 90000 }), wp.click('#video')]);
+    assert.equal(dl.suggestedFilename(), 'webshop.webm');
+    const file = path.join(out, 'webshop-transparent.webm'); await dl.saveAs(file);
+    const bytes = readFileSync(file);
+    assert.ok(bytes.length > 20000, `a real video (${bytes.length} bytes)`);
+    assert.deepEqual([...bytes.subarray(0, 4)], [0x1a, 0x45, 0xdf, 0xa3], 'a WebM (Matroska) file');
+    assert.ok(bytes.includes(Buffer.from('V_VP9')), 'VP9, the WebM codec that carries an alpha channel');
+    await wctx.close();
+  });
+
 } finally {
   await browser.close();
   server.kill();
