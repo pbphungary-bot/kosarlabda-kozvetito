@@ -1755,6 +1755,57 @@ try {
     await wctx.close();
   });
 
+  await check('key players: a team per side (also the same team twice), the rank columns switch off, columns move as one, the subtitle line is free, both photo boxes are reachable', async () => {
+    const kctx = await hermetic(await browser.newContext({ viewport: { width: 1600, height: 1100 } }));
+    const kp = await kctx.newPage(); await kp.goto(`${URL}/graphics/`);
+    await kp.waitForSelector('#templateList button', { timeout: 30000 });
+    await kp.click('.league-toggle button[data-league="men"]'); await kp.click('#templateList button[data-id="playercompare-men"]');
+    await kp.waitForSelector('#pc_home', { timeout: 30000 });
+    // nothing of the options is clipped by the sidebar: the away photo box and the away selects lie inside it (they were pushed out of sight)
+    const inside = await kp.evaluate(() => { const c = document.querySelector('.controls').getBoundingClientRect(); return ['#pc_away', '#pcTeam_away', '.pcUp[data-side="away"]', '.pcRank[data-side="away"]'].map(q => document.querySelector(q).getBoundingClientRect().right <= c.right + 1); });
+    assert.deepEqual(inside, [true, true, true, true], 'the Vendég controls are inside the sidebar');
+    // both photo boxes: two ordinary landscape photos must not cover each other
+    await kp.setInputFiles('.pcUp[data-side="home"]', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await kp.waitForSelector('.pcUpClear[data-side="home"]:not([disabled])', { timeout: 15000 });
+    await kp.setInputFiles('.pcUp[data-side="away"]', path.join(ROOT, 'tests/fixtures/img/extra-photo.jpg'));
+    await kp.waitForSelector('.pcUpClear[data-side="away"]:not([disabled])', { timeout: 15000 });
+    await kp.waitForFunction(() => { const b = window.__studio.report().boxes; return b['home.logo'] && b['away.logo']; }, null, { timeout: 15000 });
+    const pb = await kp.evaluate(() => { const b = window.__studio.report().boxes; return [b['home.logo'], b['away.logo']]; });
+    assert.ok(pb[0][2] <= 601 && pb[1][2] <= 601, `uploaded photos are at most about half the panel wide (${pb[0][2]}, ${pb[1][2]})`);
+    assert.ok(pb[0][0] + pb[0][2] - pb[1][0] < 120, 'the two photos hardly overlap');
+    await kp.click('.pcUpClear[data-side="home"]'); await kp.click('.pcUpClear[data-side="away"]');
+    // a team per side, also the same team twice
+    const homeTeam = await kp.$eval('#pcTeam_home', e => e.value);
+    await kp.selectOption('#pcTeam_away', homeTeam);
+    await kp.waitForFunction(() => document.querySelector('#pcTeam_away').value === document.querySelector('#pcTeam_home').value && document.querySelector('#pcTeamsReset'), null, { timeout: 15000 });
+    const names = await kp.evaluate(() => [document.querySelector('#pc_home').selectedOptions[0].textContent, document.querySelector('#pc_away').selectedOptions[0].textContent]);
+    assert.notEqual(names[0], names[1], `two different players of the same team (${names})`);
+    const sub = () => kp.evaluate(() => window.__studio.current().values.subtitle.text);
+    assert.ok((await sub()).includes(names[0].split(' (')[0]) && (await sub()).includes(names[1].split(' (')[0]), 'the subtitle names both');
+    await kp.click('#pcTeamsReset'); await kp.waitForSelector('#pcTeamsReset', { state: 'detached', timeout: 15000 });
+    // the whole league-rank column of one side switches off
+    const has = id => kp.evaluate(i => !!window.__studio.report().boxes[i], id);
+    assert.ok(await has('home.rank.ppg') && await has('away.rank.ppg'));
+    await kp.uncheck('.pcRank[data-side="home"]'); await kp.waitForFunction(() => !window.__studio.report().boxes['home.rank.ppg'], null, { timeout: 15000 });
+    assert.ok(!(await has('home.rank.val')) && await has('away.rank.ppg') && await has('home.ppg'), 'only that side\'s ranks disappear');
+    await kp.uncheck('.pcRank[data-side="away"]'); await kp.waitForFunction(() => !window.__studio.report().boxes['away.rank.ppg'], null, { timeout: 15000 });
+    await kp.check('.pcRank[data-side="home"]'); await kp.check('.pcRank[data-side="away"]');
+    await kp.waitForFunction(() => window.__studio.report().boxes['home.rank.ppg'] && window.__studio.report().boxes['away.rank.ppg'], null, { timeout: 15000 });
+    // one number moves a whole column
+    const x = id => kp.evaluate(i => window.__studio.report().boxes[i][0], id);
+    const [a0, b0, c0] = [await x('home.ppg'), await x('home.val'), await x('away.ppg')];
+    await kp.fill('.pcCol[data-col="home"][data-a="dx"]', '-40');
+    await kp.waitForFunction(v => Math.abs(window.__studio.report().boxes['home.ppg'][0] - (v - 40)) < 1.5, a0, { timeout: 15000 });
+    assert.ok(Math.abs(await x('home.val') - (b0 - 40)) < 1.5, 'every row of the column moved');
+    assert.ok(Math.abs(await x('away.ppg') - c0) < 1.5, 'the other columns stayed');
+    await kp.click('#pcColReset'); await kp.waitForFunction(v => Math.abs(window.__studio.report().boxes['home.ppg'][0] - v) < 1.5, a0, { timeout: 15000 });
+    // the subtitle: a typed text replaces the WHOLE line (not only the source name at its end)
+    await kp.click('button[data-tab="fields"]').catch(() => {});
+    await kp.fill('#fields .field[data-id="subtitle"] input.txt', 'Saját alcím – két kulcsjátékos');
+    await kp.waitForFunction(() => window.__studio.current().values.subtitle.text === 'Saját alcím – két kulcsjátékos' && window.__studio.current().values.subtitle.runs.length === 1, null, { timeout: 15000 });
+    await kctx.close();
+  });
+
 } finally {
   await browser.close();
   server.kill();

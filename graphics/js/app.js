@@ -8,7 +8,7 @@ import { render, loadFonts, measure, logoOutlines } from './engine.js';
 import { createPanels } from './panels.js';
 import { PACKAGE_ITEMS, fileNameFor, zipName, readmeText, buildZip } from './package.js';
 import {
-  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, LEADER_SHADOW_DEFAULT, liveChoice, bindCoach, coachOpponent
+  bindComparison, bindPlayerCompare, bindPlayerSpecial, bindRoster, rosterPlayers, isForeign, bindForm, bindH2H, SRC_COLOR, playerOptions, pickPlayer, pickPair, bindTeamstats, bindRowList, bindIntro, bindNextMatch, bindReferees, COMPETITIONS, MISSING, fmtDate, bindLiveStat, bindLiveTeam, bindLiveLeaders, normHex, leaderColors, LEADER_SHADOW_DEFAULT, liveChoice, bindCoach, coachOpponent
 } from './binders.js';
 import { decodeFeed, parseGame, gameCode, feedUrl, feedProblem, applyOfficialNames, needsOfficialNames } from './live.js';
 import { imageUrl } from './image-urls.js';
@@ -219,8 +219,17 @@ function cmpOptionsHtml(s, t) {
   const col = s.srcColor || SRC_COLOR;
   const photo = t.type === 'playercompare' ? `<div class="row2"><label>Középen: <select id="pcMode"><option value="auto" ${s.pc?.mode !== 'logo' ? 'selected' : ''}>a játékosok fotója (ha van)</option><option value="logo" ${s.pc?.mode === 'logo' ? 'selected' : ''}>a klubok logója</option></select></label>
       <label>Fotó átlátszatlansága (%)<input type="number" id="pcOpacity" min="10" max="100" step="5" value="${Math.round((s.pc?.photoOpacity ?? 0.6) * 100)}"></label></div>
-    <fieldset class="xbox"><legend>Statisztikai kategóriák (a háttér a sorok számához igazodik)</legend><div class="pcRows">${STAT_ROWS.map(r => `<label class="chk"><input type="checkbox" class="pcRow" data-k="${r.key}" ${pcRowKeys(s.pc?.rows).includes(r.key) ? 'checked' : ''}> ${r.label}</label>`).join(' ')}</div></fieldset>` : '';
+    <fieldset class="xbox"><legend>Statisztikai kategóriák (a háttér a sorok számához igazodik)</legend><div class="pcRows">${STAT_ROWS.map(r => `<label class="chk"><input type="checkbox" class="pcRow" data-k="${r.key}" ${pcRowKeys(s.pc?.rows).includes(r.key) ? 'checked' : ''}> ${r.label}</label>`).join(' ')}</div>
+      <div class="pcRows"><b>Liga-helyezés oszlopai (a zárójeles számok):</b> <label class="chk"><input type="checkbox" class="pcRank" data-side="home" ${s.pc?.ranks?.home === false ? '' : 'checked'}> Hazai oszlop</label> <label class="chk"><input type="checkbox" class="pcRank" data-side="away" ${s.pc?.ranks?.away === false ? '' : 'checked'}> Vendég oszlop</label></div></fieldset>
+    <fieldset class="xbox"><legend>Oszlopok eltolása (az egész oszlop együtt mozog)</legend>${pcColsHtml()}<small class="hint">Pixelben: ↔ jobbra (+) / balra (−), ↕ lefelé (+) / felfelé (−). Egyes elemet az Elrendezés fülön, húzással is mozgathatsz; ott a „Csoport együtt mozog” jelölőnégyzettel egy oszlopot egyben húzhatsz.</small></fieldset>` : '';
   return `<div class="row2"><label>Forrás-felirat színe (FULLFIELD.INFO / HUNBASKET.HU)<span class="import-row"><input type="color" id="srcColor" value="${col}"> <button type="button" id="srcColorReset" class="ghost">Alap</button></span></label></div>${photo}`;
+}
+/** Columns of the key players graphic that move as one (every row's element of that column; element ids are `<prefix>.<row key>`). */
+const PC_COLS = [['home.rank', 'Hazai helyezések'], ['home', 'Hazai értékek'], ['label', 'Sor-feliratok (középen)'], ['away', 'Vendég értékek'], ['away.rank', 'Vendég helyezések']];
+const pcColIds = prefix => (tpl().pcRows || []).map(k => `${prefix}.${k}`);
+function pcColsHtml() {
+  return PC_COLS.map(([pre, name]) => { const first = pcColIds(pre)[0], e = first ? effOf(first) : {};
+    return `<span class="rowoff"><b>${name}</b> <label>↔ <input type="number" class="pcCol" data-col="${pre}" data-a="dx" step="2" min="-600" max="600" value="${e.dx || 0}"></label><label>↕ <input type="number" class="pcCol" data-col="${pre}" data-a="dy" step="2" min="-600" max="600" value="${e.dy || 0}"></label></span>`; }).join('') + '<button type="button" id="pcColReset" class="ghost">Oszlopok alaphelyzet</button>';
 }
 function wireCmpOptions(s) {
   $('srcColor').oninput = e => { s.srcColor = e.target.value; update(false); };
@@ -233,19 +242,39 @@ function wireCmpOptions(s) {
       (s.pc ||= {}).rows = on; update(true);
     });
     $('pcOpacity').onchange = e => { (s.pc ||= {}).photoOpacity = Math.max(0.1, Math.min(1, (+e.target.value || 60) / 100)); update(true); };
+    document.querySelectorAll('.pcRank').forEach(cb => cb.onchange = () => { ((s.pc ||= {}).ranks ||= {})[cb.dataset.side] = cb.checked; update(true); });
+    document.querySelectorAll('.pcCol').forEach(inp => inp.oninput = () => { // one number moves the whole column: it is written into the layout of every element of that column
+      const n = parseFloat(inp.value), has = inp.value !== '' && Number.isFinite(n);
+      for (const id of pcColIds(inp.dataset.col)) { const o = ovFor(id); if (has) o[inp.dataset.a] = n; else delete o[inp.dataset.a]; if (!Object.keys(o).length) delete overrides()[id]; }
+      update(false); saveState();
+    });
+    $('pcColReset').onclick = () => { for (const [pre] of PC_COLS) for (const id of pcColIds(pre)) { const o = overrides()[id]; if (o) { delete o.dx; delete o.dy; if (!Object.keys(o).length) delete overrides()[id]; } } renderSelection(); update(true); saveState(); };
   }
 }
 
+/** Teams of the key players graphic: by default the two teams of the chosen match; the operator may pick any team for either side, also the same team twice (owner 2026-11-28). The choice belongs to the chosen match: another match starts from its own teams again. */
+const pcKey = () => (sel().custom ? '__custom' : sel().matchKey);
+function pcTeams(m) {
+  const p = sel().pc || {}, on = p.teamsFor === pcKey();
+  return { homeId: (on && p.homeTeam) || m.homeId, awayId: (on && p.awayTeam) || m.awayId, own: on && !!(p.homeTeam || p.awayTeam) };
+}
+/** Changing a team / player of this graphic drops the typed texts (they belong to the old players) but keeps the operator's layout moves. */
+function resetDataOverrides() {
+  const o = overrides();
+  for (const k of Object.keys(o)) { const keep = {}; for (const key of ['visible', ...LAY.KEYS]) if (o[k][key] !== undefined) keep[key] = o[k][key]; if (Object.keys(keep).length) o[k] = keep; else delete o[k]; }
+}
 function playerSelects() {
   const m = currentMatch(), s = sel(), lg = state.league;
   if (!m) return '';
+  const T = pcTeams(m), pair = pickPair(store, lg, T.homeId, T.awayId, s.pc || {});
+  const team = (side, id, label) => `<label>${label} csapata<select id="pcTeam_${side}">${teamOptions(id)}</select></label>`;
   const one = (side, id, label) => {
     const opts = playerOptions(store, lg, id);
-    const cur = pickPlayer(store, lg, id, s.pc?.[side]);
+    const cur = pair[side === 'home' ? 0 : 1];
     return `<label>${label}<select id="pc_${side}">${opts.map(o => `<option value="${esc(o.key)}" ${o.key === cur?.key ? 'selected' : ''}>${esc(o.name)} (${esc(o.p['P.'] ?? '?')} pont/meccs · ${esc(o.p['M.'] ?? '?')} meccs)</option>`).join('') || '<option>nincs játékosstatisztika</option>'}</select></label>`;
   };
   const up = (side, label) => `<fieldset class="xbox"><legend>${label} – saját fotó</legend><span class="import-row"><input type="file" class="pcUp" data-side="${side}" accept="image/png,image/webp,image/jpeg"> <button type="button" class="pcUpClear ghost" data-side="${side}" ${images['upload/pc' + (side === 'home' ? 'Home' : 'Away')] ? '' : 'disabled'}>Fotó törlése</button></span>${bgHtml('pc' + (side === 'home' ? 'Home' : 'Away'))}</fieldset>`;
-  return `<div class="row2">${one('home', m.homeId, 'Hazai játékos')}${one('away', m.awayId, 'Vendég játékos')}</div><div class="row2">${up('home', 'Hazai')}${up('away', 'Vendég')}</div><small class="hint">A feltöltött fotó mindig előnyt élvez a Hunbasket-fotóval és a logóval szemben (átlátszó PNG a legjobb, vagy használd a háttéreltávolítót). Alapból a legjobb pontszerző; a helyezés a liga játékosai között értendő.</small>`;
+  return `<div class="row2">${team('home', T.homeId, 'Hazai')}${team('away', T.awayId, 'Vendég')}</div>${T.own ? '<small class="hint">Egyéni csapatválasztás: a két csapat nem a kiválasztott meccsé. <button type="button" id="pcTeamsReset" class="ghost">Vissza a meccs csapataihoz</button></small>' : ''}<div class="row2">${one('home', T.homeId, 'Hazai játékos')}${one('away', T.awayId, 'Vendég játékos')}</div><div class="row2">${up('home', 'Hazai')}${up('away', 'Vendég')}</div><small class="hint">A feltöltött fotó mindig előnyt élvez a Hunbasket-fotóval és a logóval szemben (átlátszó PNG a legjobb, vagy használd a háttéreltávolítót). Alapból a legjobb pontszerző; a helyezés a liga játékosai között értendő.</small>`;
 }
 
 
@@ -483,7 +512,13 @@ function renderSelection(extra = {}) {
       wireBg('pcHome'); wireBg('pcAway');
     }
     if (t.type === 'playercompare') {
-      for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetMatchOverrides(); update(true); };
+      for (const side of ['home', 'away']) $('pc_' + side).onchange = e => { (s.pc ||= {})[side] = e.target.value; resetDataOverrides(); update(true); };
+      for (const side of ['home', 'away']) $('pcTeam_' + side).onchange = e => { // any team on either side, also the same one twice; the players start from that team's best scorers again
+        const p = (s.pc ||= {}), T = pcTeams(currentMatch());
+        p.teamsFor = pcKey(); p.homeTeam = T.homeId; p.awayTeam = T.awayId; p[side + 'Team'] = e.target.value; p.home = p.away = null;
+        resetDataOverrides(); renderSelection(); update(true);
+      };
+      if ($('pcTeamsReset')) $('pcTeamsReset').onclick = () => { const p = (s.pc ||= {}); p.teamsFor = p.homeTeam = p.awayTeam = null; p.home = p.away = null; resetDataOverrides(); renderSelection(); update(true); };
     }
   } else if (isLiveType(t.type)) {
     $('selectTitle').textContent = t.type === 'livestat' ? '2. Élő meccs és játékos' : '2. Élő meccs és statisztikák';
@@ -680,7 +715,7 @@ function autoValues() {
     else if (t.type === 'h2h') { v = bindH2H(store, lg, m.homeId, m.awayId); if (!store.h2hGames(lg, m.homeId, m.awayId).length) info.notices.push({ text: 'Ennek a két csapatnak nincs korábbi egymás elleni meccse az adatokban (Hunbasket 2020/21-től).' }); }
     else if (t.type === 'nextmatch') v = bindNextMatch(store, lg, m);
     else if (t.type === 'comparison') v = bindComparison(store, lg, m.homeId, m.awayId, s.srcColor);
-    else if (t.type === 'playercompare') v = bindPlayerCompare(store, lg, m.homeId, m.awayId, { ...(s.pc || {}), photoIds, srcColor: s.srcColor, uploads: { home: !!images['upload/pcHome'], away: !!images['upload/pcAway'] } });
+    else if (t.type === 'playercompare') { const T = pcTeams(m); v = bindPlayerCompare(store, lg, T.homeId, T.awayId, { ...(s.pc || {}), photoIds, srcColor: s.srcColor, uploads: { home: !!images['upload/pcHome'], away: !!images['upload/pcAway'] } }); }
     else v = bindIntro(store, lg, m, lsGet(LS.venues, {}));
     if (m.custom && t.type === 'intro') info.notices.push({ text: 'Egyéni párosítás: a forduló és az időpont nem az adatokból jön – írd be kézzel.' });
   } else if (t.type === 'form') {
@@ -774,7 +809,7 @@ function mergedValues(auto) {
     const x = { ...a };
     const ov = o[el.id] || {};
     if (ov.text !== undefined) {
-      if (el.runs && a.runs && tpl().type === 'playerspecial') x.runs = [{ text: ov.text }]; // the typed text replaces the whole line
+      if (el.runs && a.runs && (tpl().type === 'playerspecial' || tpl().type === 'playercompare')) x.runs = [{ text: ov.text }]; // the typed text replaces the whole line (key players: owner 2026-11-28)
       else if (el.runs && a.runs) x.runs = [...a.runs.slice(0, -1), { ...a.runs[a.runs.length - 1], text: ov.text }];
       x.text = ov.text; x.missing = false; x.overridden = true;
     }
@@ -809,7 +844,7 @@ function renderFields(values, auto) {
     if (only && !missing && !isOv) continue;
     if (el.group !== group) { group = el.group; html += `<div class="group-title">${esc(group)}</div>`; }
     const visible = v.visible ?? el.visible ?? true;
-    const autoTxt = el.type === 'image' ? (a.src ? (a.src.startsWith('comp/') ? COMPETITIONS[a.src] : club(state.league, a.src.split('/')[1])?.official || a.src) : 'nincs') : (el.runs && a.runs ? a.runs.at(-1).text : a.text ?? '');
+    const autoTxt = el.type === 'image' ? (a.src ? (a.src.startsWith('comp/') ? COMPETITIONS[a.src] : club(state.league, a.src.split('/')[1])?.official || a.src) : 'nincs') : (el.runs && a.runs && t.type !== 'playercompare' ? a.runs.at(-1).text : a.text ?? '');
     html += `<div class="field ${missing ? 'missing' : ''} ${isOv ? 'overridden' : ''}" data-id="${esc(el.id)}">
       <input type="checkbox" class="vis" title="Látható" ${visible ? 'checked' : ''}>
       <div class="lbl"><span>${esc(el.label || el.id)}</span><em title="${esc(a.source || '')}">${esc(a.source || '')}</em></div>`;
@@ -1254,7 +1289,7 @@ function renderLayoutPanel() {
     <label class="chk"><input type="checkbox" id="editMode" ${state.editMode ? 'checked' : ''}> Szerkesztés: elemek húzása az előnézeten (kijelölt elem: nyilak 1 px, Shift+nyíl 10 px, Esc)</label>
     <div class="lay-row">
       <label class="chk"><input type="checkbox" id="snapOn" ${state.snap ? 'checked' : ''}> Rögzítés a PSD / az alap helyéhez (Alt húzás közben: ki)</label>
-      <label class="chk"><input type="checkbox" id="groupMove" ${state.groupMove ? 'checked' : ''}> Csoport együtt mozog (egy sor; hazai / vendég) – Shift húzás közben: fordítva</label>
+      <label class="chk"><input type="checkbox" id="groupMove" ${state.groupMove ? 'checked' : ''}> Csoport együtt mozog (egy sor, egy oszlop vagy a hazai / vendég oldal – grafikánként más) – Shift húzás közben: fordítva</label>
     </div>
     <div class="lay-row"><b>Teljes grafika:</b> Balra/jobbra <input type="number" id="gX" step="1" placeholder="${gb.dx || 0}" value="${g.dx ?? ''}">
       Fel/le <input type="number" id="gY" step="1" placeholder="${gb.dy || 0}" value="${g.dy ?? ''}">
