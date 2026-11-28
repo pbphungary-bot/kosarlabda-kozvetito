@@ -2,7 +2,7 @@
   "league": "women",
   "source": "hunbasket",
   "source_url": "https://hunbasket.hu/csapatok",
-  "updated_at": "2026-11-28T01:28:33.952209+00:00",
+  "updated_at": "2026-11-28T15:34:18.289170+00:00",
   "teams": [
     {
       "name": "BKG-PRIMA Szigetszentmiklós",
@@ -51,18 +51,18 @@
       "aliases": [],
       "periods": {
         "season": {
-          "ppg": 77.4,
-          "fg2_pct": 48.9,
-          "fg3_pct": 32.6,
-          "ft_pct": 63.8,
-          "dreb": 33.0,
-          "oreb": 14.6,
-          "reb": 47.6,
-          "ast": 21.4,
-          "stl": 10.1,
+          "ppg": 75.5,
+          "fg2_pct": 47.3,
+          "fg3_pct": 33.6,
+          "ft_pct": 63.1,
+          "dreb": 31.6,
+          "oreb": 13.9,
+          "reb": 45.5,
+          "ast": 20.5,
+          "stl": 10.8,
           "tov": 16.0,
-          "blk": 3.6,
-          "val": 119.9
+          "blk": 3.4,
+          "val": 114.6
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/10005"
@@ -156,18 +156,18 @@
       "aliases": [],
       "periods": {
         "season": {
-          "ppg": 84.9,
-          "fg2_pct": 51.9,
-          "fg3_pct": 35.2,
-          "ft_pct": 66.7,
-          "dreb": 26.3,
-          "oreb": 20.3,
-          "reb": 46.6,
-          "ast": 19.0,
+          "ppg": 84.1,
+          "fg2_pct": 52.6,
+          "fg3_pct": 35.5,
+          "ft_pct": 64.3,
+          "dreb": 26.6,
+          "oreb": 19.3,
+          "reb": 45.9,
+          "ast": 19.3,
           "stl": 12.3,
-          "tov": 14.0,
-          "blk": 3.0,
-          "val": 125.4
+          "tov": 15.0,
+          "blk": 3.1,
+          "val": 124.6
         }
       },
       "source_url": "https://hunbasket.hu/csapatstatisztika/x2627/whun/51001"
