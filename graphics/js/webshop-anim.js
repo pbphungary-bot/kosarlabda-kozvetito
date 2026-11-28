@@ -15,7 +15,11 @@ export const WEBSHOP_DEFAULTS = {
   tilt: true, // the phone sways a little while it shows a slide
   motion: 'rotate', // how the phone arrives / leaves: 'rotate' (turns in from the side, like the sample) | 'slide' (slides up from below the picture edge)
   x: 244, y: 165, scale: 100, // column centre x, top of the plate (px of 1920×1080), size of everything in %
-  sPlate: 100, sQr: 100, sPhone: 100, // size of the title plate / the QR tile / the phone, each in % (the column re-stacks itself)
+  // size of each object in px, width and height SEPARATELY (the column re-stacks itself); the defaults are the sample's sizes
+  plateW: 343, plateH: 115, qrW: 177, qrH: 175, phoneW: 238, phoneH: 476,
+  // inside colour of the boxes (hex) and its opacity in % (0 = transparent)
+  plateBg: '#ffffff', plateBgA: 100, qrBg: '#ffffff', qrBgA: 100, screenBg: '#6b6f78', screenBgA: 100,
+  plateBorder: true, qrBorder: true, // the thin gold edge of the plate / QR tile
   bg: 'transparent', // background of the video export: transparent (VP9 WebM with alpha, for OBS) | magenta | green (key colours)
 };
 
@@ -88,13 +92,32 @@ export function stateAt(tRaw, cfg) {
   };
 }
 
-/** Where the three parts of the column sit (px, before the overall scale): each has its own size, the column stacks itself with the gaps of the sample. */
+/** The default size (px) of each object: the sample's. */
+export const BASE = { plate: [343, 115], qr: [177, 175], phone: [238, 476] };
+/** Size of an object in px, width and height each on its own (a missing / silly number = the default, limited to 20–1500 px). */
+export function objSize(cfg, name) {
+  const [bw, bh] = BASE[name], f = (v, d) => Math.max(20, Math.min(1500, +v > 0 ? +v : d));
+  return { w: f(cfg[name + 'W'], bw), h: f(cfg[name + 'H'], bh) };
+}
+/** Where the three parts of the column sit (px, before the overall scale): each has its own width and height, the column stacks itself with the gaps of the sample. */
 export function columnLayout(cfg) {
-  const k = v => Math.max(0.2, Math.min(3, (+v || 100) / 100));
-  const sp = k(cfg.sPlate), sq = k(cfg.sQr), sh = k(cfg.sPhone), top = +cfg.y;
-  const plateH = 115 * sp, qrH = 175 * sq, phoneH = 476 * sh;
-  const qrTop = top + plateH + 18, phoneTop = qrTop + qrH + 57;
-  return { sp, sq, sh, plateTop: top, qrTop, phoneCy: phoneTop + phoneH / 2 };
+  const pl = objSize(cfg, 'plate'), qr = objSize(cfg, 'qr'), ph = objSize(cfg, 'phone'), top = +cfg.y;
+  const qrTop = top + pl.h + 18, phoneTop = qrTop + qr.h + 57;
+  return { plate: pl, qr, phone: ph, plateTop: top, qrTop, phoneCy: phoneTop + ph.h / 2 };
+}
+/** Settings saved by an earlier version (one % per object) → the same sizes in px. */
+export function migrateSizes(s) {
+  if (!s || typeof s !== 'object') return s;
+  for (const [name, key] of [['plate', 'sPlate'], ['qr', 'sQr'], ['phone', 'sPhone']]) {
+    if (s[key] !== undefined) { const k = Math.max(0.2, Math.min(3, (+s[key] || 100) / 100)); if (s[name + 'W'] === undefined) { s[name + 'W'] = Math.round(BASE[name][0] * k); s[name + 'H'] = Math.round(BASE[name][1] * k); } delete s[key]; }
+  }
+  return s;
+}
+/** Hex colour + opacity in % → css rgba(); a silly colour counts as white. */
+export function rgba(hex, pct) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim()), n = m ? parseInt(m[1], 16) : 0xffffff;
+  const a = Math.max(0, Math.min(100, pct === undefined || pct === '' || !Number.isFinite(+pct) ? 100 : +pct)) / 100;
+  return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`;
 }
 
 /**

@@ -1,6 +1,6 @@
 // Webshop insert: editor + preview + export (page graphics/webshop.html). Everything on the picture can be swapped: the title plate (text or image),
 // the QR code (image) and the slides on the phone (photos AND short videos). The animation itself is graphics/js/webshop-anim.js (a pure function of time).
-import { WEBSHOP_DEFAULTS, stateAt, timeline, columnLayout, baseSeconds, slideFit } from './webshop-anim.js';
+import { WEBSHOP_DEFAULTS, stateAt, timeline, columnLayout, baseSeconds, slideFit, migrateSizes, rgba, objSize, BASE } from './webshop-anim.js';
 import { loadFonts, FONT_FAMILIES } from './engine.js';
 
 const W = 1920, H = 1080, KEY = { magenta: '#ff00ff', green: '#00b140' };
@@ -16,7 +16,7 @@ const vids = new Map(); // video id → { el: <video>, url } (the video files th
 function load() {
   const d = clone(WEBSHOP_DEFAULTS);
   try {
-    const s = JSON.parse(localStorage.getItem(STORE) || 'null');
+    const s = migrateSizes(JSON.parse(localStorage.getItem(STORE) || 'null'));
     if (s && typeof s === 'object') return { ...d, ...s, title: { ...d.title, ...(s.title || {}) }, qr: { ...d.qr, ...(s.qr || {}) }, photos: Array.isArray(s.photos) ? s.photos.filter(p => p && (p.src || (p.kind === 'video' && p.vid))) : [] };
   } catch (e) { /* private mode / bad data: defaults */ }
   return d;
@@ -84,57 +84,101 @@ function fit(im, x, y, w, h, cover) {
   const [nw, nh] = dim(im), k = (cover ? Math.max : Math.min)(w / nw, h / nh), iw = nw * k, ih = nh * k;
   ctx.drawImage(im, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
 }
-/** A slide inside the phone's screen, by its own fit / zoom / shift (see slideFit). */
-function fitSlide(im, p, x, y, w, h) { const [nw, nh] = dim(im); ctx.drawImage(im, ...slideFit(nw, nh, x, y, w, h, p)); }
-function tile(x, y, w, h) { // white rounded tile with the thin gold edge of the broadcast design
-  ctx.fillStyle = '#ffffff'; rr(x, y, w, h, 12); ctx.fill();
-  ctx.lineWidth = 3; ctx.strokeStyle = '#c99a4b'; rr(x + 1.5, y + 1.5, w - 3, h - 3, 11); ctx.stroke();
+/** A rounded box: the inside colour with its own opacity, and (optional) the thin gold edge of the broadcast design. */
+function tile(x, y, w, h, fill, alpha, border) {
+  const r = Math.min(12, w / 4, h / 4);
+  if (+alpha !== 0) { ctx.fillStyle = rgba(fill, alpha); rr(x, y, w, h, r); ctx.fill(); }
+  if (border) { ctx.lineWidth = 3; ctx.strokeStyle = '#c99a4b'; rr(x + 1.5, y + 1.5, w - 3, h - 3, Math.max(0, r - 1)); ctx.stroke(); }
 }
-/** The title plate, drawn with its top-centre at the origin (the caller has moved / scaled the context). */
-function plate(c) {
-  const w = 343, h = 115, x = -w / 2; tile(x, 0, w, h);
+/** The title plate (w × h), drawn with its top-centre at the origin. The text follows the plate's height and is squeezed to its width. */
+function plate(c, w, h) {
+  const x = -w / 2, k = h / 115; tile(x, 0, w, h, c.plateBg, c.plateBgA, c.plateBorder !== false);
   const ti = c.title;
   if (ti.mode === 'image') { const im = pic(ti.image); if (im) fit(im, x + 8, 8, w - 16, h - 16, false); return; }
-  const ic = pic(ti.icon), tx = ic ? x + 118 : x + 20, tw = w - (tx - x) - 14;
-  if (ic) fit(ic, x + 12, 10, 98, h - 20, false);
+  const ic = pic(ti.icon), iw = Math.min(98 * k, w * 0.3), tx = ic ? x + 12 + iw + 8 : x + 20, tw = Math.max(10, w - (tx - x) - 14);
+  if (ic) fit(ic, x + 12, 10 * k, iw, h - 20 * k, false);
   ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'center';
   const line = (s, y, col) => {
     s = String(s || '').toLocaleUpperCase('hu-HU'); if (!s) return;
-    const fam = `"${FONT_FAMILIES.regular}"`; let px = 58; ctx.font = `${px}px ${fam}`;
+    const fam = `"${FONT_FAMILIES.regular}"`; let px = 58 * k; ctx.font = `${px}px ${fam}`;
     const m = ctx.measureText(s).width; if (m > tw) { px = px * tw / m; ctx.font = `${px}px ${fam}`; }
     ctx.fillStyle = col; ctx.fillText(s, tx + tw / 2, y);
   };
-  line(ti.line1, 60, ti.c1); line(ti.line2, 106, ti.c2);
+  line(ti.line1, 60 * k, ti.c1); line(ti.line2, 106 * k, ti.c2);
 }
-/** The QR tile, top-centre at the origin. */
-function qr(c) {
-  const w = 177, h = 175, x = -w / 2; tile(x, 0, w, h);
+/** The QR tile (w × h), top-centre at the origin. */
+function qr(c, w, h) {
+  const x = -w / 2; tile(x, 0, w, h, c.qrBg, c.qrBgA, c.qrBorder !== false);
   const im = pic(c.qr.image);
   if (im) fit(im, x + 12, 12, w - 24, h - 24, false);
-  else { ctx.fillStyle = '#b8b8b8'; ctx.font = `64px "${FONT_FAMILIES.regular}"`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('QR', 0, h / 2); }
+  else { ctx.fillStyle = '#b8b8b8'; ctx.font = `${64 * Math.min(w / 177, h / 175)}px "${FONT_FAMILIES.regular}"`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('QR', 0, h / 2); }
 }
-function phone(cx, cy, s, c, st) {
+
+// ── the colour of a picture's own edges, for the strips beside / above a picture that does not fill the screen ──
+const mid = document.createElement('canvas'), small = document.createElement('canvas'); small.width = small.height = 32;
+const gm = mid.getContext('2d', { willReadFrequently: true }), gs = small.getContext('2d', { willReadFrequently: true });
+gm.imageSmoothingQuality = gs.imageSmoothingQuality = 'high';
+const edgeCache = new WeakMap(); // image / video element → { at, colours } (a video is sampled again every 0.3 s)
+/** The average colour of a part of the picture (alpha-weighted; null where it is transparent). A big picture is first shrunk to ≤ 256 px, then to 32 × 32, and averaged by hand:
+ *  one drawImage straight down to 1 × 1 only picks a few pixels of a large picture and gives a wrong colour. */
+function sampleAvg(im, sx, sy, sw, sh) {
+  const k = Math.min(1, 256 / Math.max(sw, sh)), mw = Math.max(1, Math.round(sw * k)), mh = Math.max(1, Math.round(sh * k));
+  mid.width = mw; mid.height = mh; gm.imageSmoothingQuality = 'high'; gm.drawImage(im, sx, sy, sw, sh, 0, 0, mw, mh);
+  gs.clearRect(0, 0, 32, 32); gs.drawImage(mid, 0, 0, mw, mh, 0, 0, 32, 32);
+  const d = gs.getImageData(0, 0, 32, 32).data; let r = 0, g = 0, b = 0, a = 0;
+  for (let i = 0; i < d.length; i += 4) { const w = d[i + 3]; r += d[i] * w; g += d[i + 1] * w; b += d[i + 2] * w; a += w; }
+  return a < 32 * 32 * 255 * 0.15 ? null : [Math.round(r / a), Math.round(g / a), Math.round(b / a)];
+}
+function edgeColours(im) {
+  const now = performance.now(), hit = edgeCache.get(im), isVid = !!im.videoWidth;
+  if (hit && (!isVid || now - hit.at < 300)) return hit.c;
+  const [nw, nh] = dim(im), bw = Math.max(1, Math.round(nw * 0.02)), bh = Math.max(1, Math.round(nh * 0.02));
+  const c = { l: sampleAvg(im, 0, 0, bw, nh), r: sampleAvg(im, nw - bw, 0, bw, nh), t: sampleAvg(im, 0, 0, nw, bh), b: sampleAvg(im, 0, nh - bh, nw, bh) };
+  edgeCache.set(im, { at: now, c }); return c;
+}
+const css = c => (c ? `rgb(${c[0]},${c[1]},${c[2]})` : null);
+/** Fills the part of the screen box (bx, by, bw, bh) that the picture (rect) leaves empty with the colour of the picture's nearest edge, so it blends in. */
+function drawBars(im, p, rect, bx, by, bw, bh) {
+  if (p && p.edge === false) return;
+  const [x, y, iw, ih] = rect, e = edgeColours(im);
+  if (x <= bx + 0.5 && y <= by + 0.5 && x + iw >= bx + bw - 0.5 && y + ih >= by + bh - 0.5) return; // it fills the screen
+  const known = [e.l, e.r, e.t, e.b].filter(Boolean);
+  if (known.length) { const m = [0, 1, 2].map(i => Math.round(known.reduce((a, c) => a + c[i], 0) / known.length)); ctx.fillStyle = css(m); ctx.fillRect(bx, by, bw, bh); } // the corners: the mean of the edges
+  const y0 = Math.max(by, y), y1 = Math.min(by + bh, y + ih), x0 = Math.max(bx, x), x1 = Math.min(bx + bw, x + iw);
+  const bar = (col, rx, ry, rw, rh) => { if (col && rw > 0 && rh > 0) { ctx.fillStyle = css(col); ctx.fillRect(rx, ry, rw, rh); } };
+  bar(e.l, bx, y0, x - bx, y1 - y0); bar(e.r, x + iw, y0, bx + bw - (x + iw), y1 - y0);
+  bar(e.t, x0, by, x1 - x0, y - by); bar(e.b, x0, y + ih, x1 - x0, by + bh - (y + ih));
+}
+function phone(cx, cy, c, st) {
   const p = st.phone; if (!p.a) return;
-  const w = 238, h = 476, cs = Math.cos(p.ang), back = cs < 0, sx = Math.abs(cs) < 0.035 ? 0.035 : Math.abs(cs);
-  ctx.save(); ctx.translate(cx + p.dx, cy + p.dy); ctx.scale(s, s); ctx.rotate(p.sway);
+  const L = columnLayout(c).phone, w = L.w, h = L.h, rs = Math.min(w / 238, h / 476); // rs: the corners, the inset and the speaker follow the smaller side
+  const cs = Math.cos(p.ang), back = cs < 0, sx = Math.abs(cs) < 0.035 ? 0.035 : Math.abs(cs);
+  ctx.save(); ctx.translate(cx + p.dx, cy + p.dy); ctx.rotate(p.sway);
   ctx.transform(sx, Math.sin(p.ang) * 0.09, 0, 1, 0, 0); // a cheap turn about the vertical axis: squeeze + a little perspective shear
-  ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
-  ctx.fillStyle = '#16181c'; rr(-w / 2, -h / 2, w, h, 38); ctx.fill();
+  const m = 9 * rs, sw = w - 2 * m, sh = h - 2 * m, R = 38 * rs;
+  ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 24 * rs; ctx.shadowOffsetY = 8 * rs;
+  ctx.fillStyle = '#16181c';
+  if (back) { rr(-w / 2, -h / 2, w, h, R); ctx.fill(); }
+  else { ctx.beginPath(); ctx.roundRect(-w / 2, -h / 2, w, h, R); ctx.roundRect(-sw / 2, -sh / 2, sw, sh, 30 * rs); ctx.fill('evenodd'); } // the body with a hole where the screen is, so a transparent screen is see-through
   ctx.shadowColor = 'transparent';
-  ctx.lineWidth = 3; ctx.strokeStyle = '#3a3e46'; rr(-w / 2 + 1.5, -h / 2 + 1.5, w - 3, h - 3, 37); ctx.stroke();
+  ctx.lineWidth = 3; ctx.strokeStyle = '#3a3e46'; rr(-w / 2 + 1.5, -h / 2 + 1.5, w - 3, h - 3, Math.max(0, R - 1)); ctx.stroke();
   if (back) { // the back of the phone: camera block
-    ctx.fillStyle = '#23262c'; rr(-w / 2 + 22, -h / 2 + 22, 88, 88, 20); ctx.fill();
+    ctx.fillStyle = '#23262c'; rr(-w / 2 + 22 * rs, -h / 2 + 22 * rs, 88 * rs, 88 * rs, 20 * rs); ctx.fill();
     ctx.fillStyle = '#0b0c0e';
-    for (const [x, y] of [[48, 48], [84, 48], [66, 84]]) { ctx.beginPath(); ctx.arc(-w / 2 + x, -h / 2 + y, 15, 0, 7); ctx.fill(); }
+    for (const [x, y] of [[48, 48], [84, 48], [66, 84]]) { ctx.beginPath(); ctx.arc(-w / 2 + x * rs, -h / 2 + y * rs, 15 * rs, 0, 7); ctx.fill(); }
   } else { // the screen with the slideshow
-    const m = 9, sw = w - 2 * m, sh = h - 2 * m;
-    ctx.save(); rr(-sw / 2, -sh / 2, sw, sh, 30); ctx.clip();
-    ctx.fillStyle = '#6b6f78'; ctx.fillRect(-sw / 2, -sh / 2, sw, sh);
-    const ph = st.photo, a = slideImage(c.photos[ph.i], ph.li), b = ph.mix > 0 && ph.j !== ph.i ? slideImage(c.photos[ph.j], ph.lj) : null;
-    if (a) fitSlide(a, c.photos[ph.i], -sw / 2, -sh / 2, sw, sh);
-    if (b) { ctx.globalAlpha = ph.mix; fitSlide(b, c.photos[ph.j], -sw / 2, -sh / 2, sw, sh); ctx.globalAlpha = 1; }
+    ctx.save(); rr(-sw / 2, -sh / 2, sw, sh, 30 * rs); ctx.clip();
+    if (+c.screenBgA !== 0) { ctx.fillStyle = rgba(c.screenBg, c.screenBgA); ctx.fillRect(-sw / 2, -sh / 2, sw, sh); }
+    const ph = st.photo;
+    const show = (idx, local, alpha) => {
+      const sl = c.photos[idx], im = slideImage(sl, local); if (!im) return;
+      const [nw, nh] = dim(im), rect = slideFit(nw, nh, -sw / 2, -sh / 2, sw, sh, sl || {});
+      ctx.globalAlpha = alpha; drawBars(im, sl, rect, -sw / 2, -sh / 2, sw, sh); ctx.drawImage(im, ...rect); ctx.globalAlpha = 1;
+    };
+    show(ph.i, ph.li, 1);
+    if (ph.mix > 0 && ph.j !== ph.i) show(ph.j, ph.lj, ph.mix);
     ctx.restore();
-    ctx.fillStyle = '#0b0c0e'; rr(-34, -h / 2 + 18, 68, 18, 9); ctx.fill(); // speaker slot
+    ctx.fillStyle = '#0b0c0e'; rr(-34 * rs, -h / 2 + 18 * rs, 68 * rs, 18 * rs, 9 * rs); ctx.fill(); // speaker slot
   }
   ctx.restore();
 }
@@ -146,9 +190,9 @@ export function drawFrame(target, time, c, bg) {
     if (bg) { ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H); }
     const st = stateAt(time, c), s = (+c.scale || 100) / 100, cx = +c.x, top = +c.y, L = columnLayout(c);
     ctx.save(); ctx.translate(cx, top); ctx.scale(s, s); ctx.translate(-cx, -top); // the whole column is scaled about its top-centre point
-    ctx.save(); ctx.translate(cx + st.plate.dx, L.plateTop); ctx.scale(L.sp, L.sp); ctx.globalAlpha = st.plate.a; plate(c); ctx.restore();
-    ctx.save(); ctx.translate(cx, L.qrTop + st.qr.dy); ctx.scale(L.sq, L.sq); ctx.globalAlpha = st.qr.a; qr(c); ctx.restore();
-    phone(cx, L.phoneCy, L.sh, c, st);
+    ctx.save(); ctx.translate(cx + st.plate.dx, L.plateTop); ctx.globalAlpha = st.plate.a; plate(c, L.plate.w, L.plate.h); ctx.restore();
+    ctx.save(); ctx.translate(cx, L.qrTop + st.qr.dy); ctx.globalAlpha = st.qr.a; qr(c, L.qr.w, L.qr.h); ctx.restore();
+    phone(cx, L.phoneCy, c, st);
     ctx.restore();
     for (const [id, v] of vids) if (!used.has(id) && !v.el.paused) v.el.pause(); // a video that is not on screen does not keep playing
     return st;
@@ -187,9 +231,33 @@ async function addVideo(file) {
   if (!kept) $('warn').textContent = 'A videó csak erre a munkamenetre marad meg (a böngésző nem engedi tárolni): újratöltés után újra fel kell tölteni.';
   cfg.photos.push({ kind: 'video', vid: id, name: file.name, vdur: finiteDur(v.el) });
 }
-/** Element sizes also in pixels (at the overall size of 100 %): plate and QR by their width, the phone by its height. */
-const PX = [['sPlate', 'sPlatePx', 343], ['sQr', 'sQrPx', 177], ['sPhone', 'sPhonePx', 476]];
-function syncPx() { for (const [k, id, base] of PX) { const el = $(id), pc = $(k); if (el && document.activeElement !== el) el.value = Math.round(base * (+cfg[k] || 100) / 100); if (pc && document.activeElement !== pc) pc.value = Math.round((+cfg[k] || 100) * 10) / 10; } }
+/** The three objects: their size fields (in % of the default, width px, height px), inside colour + opacity, optional gold edge. */
+const OBJ = [
+  { k: 'plate', pct: 'sPlate', w: 'plateWPx', h: 'plateHPx', bg: 'plateBg', a: 'plateBgA', border: 'plateBorder' },
+  { k: 'qr', pct: 'sQr', w: 'qrWPx', h: 'qrHPx', bg: 'qrBg', a: 'qrBgA', border: 'qrBorder' },
+  { k: 'phone', pct: 'sPhone', w: 'phoneWPx', h: 'phoneHPx', bg: 'screenBg', a: 'screenBgA' },
+];
+const lim = v => Math.max(20, Math.min(1500, v));
+function syncPx() {
+  for (const o of OBJ) {
+    const sz = objSize(cfg, o.k), set = (id, v) => { const el = $(id); if (el && document.activeElement !== el) el.value = v; };
+    set(o.w, Math.round(sz.w)); set(o.h, Math.round(sz.h)); set(o.pct, Math.round(sz.w / BASE[o.k][0] * 1000) / 10);
+  }
+}
+/** The natural width / height of the picture that sits inside an object (plate: the title image; QR: the QR image; phone: the first slide); null when there is none. */
+function insidePicture(k) {
+  const im = k === 'plate' ? (cfg.title.mode === 'image' ? pic(cfg.title.image) : null) : k === 'qr' ? pic(cfg.qr.image) : (() => { const f = cfg.photos[0]; return f ? (f.kind === 'video' ? (vids.get(f.vid) || {}).el : pic(f.src)) : null; })();
+  if (!im) return null; const [nw, nh] = dim(im); return nw > 0 && nh > 0 ? [nw, nh] : null;
+}
+/** The box takes the proportions of its picture: the width stays, the height follows (so the picture fills it without bars or cropping). */
+function fitToPicture(k) {
+  const d = insidePicture(k);
+  if (!d) { $('warn').textContent = k === 'plate' ? 'A cím-táblának nincs képe (a „Kép” módban tölts fel címképet).' : k === 'qr' ? 'Előbb tölts fel QR-kódot.' : 'Előbb tölts fel egy fotót vagy videót a telefonra.'; return; }
+  const sz = objSize(cfg, k), aspect = d[0] / d[1];
+  if (k === 'phone') { let h = sz.h; for (let n = 0; n < 3; n++) { const m = 9 * Math.min(sz.w / 238, h / 476); h = (sz.w - 2 * m) / aspect + 2 * m; } cfg.phoneH = Math.round(lim(h)); }
+  else { const pad = k === 'plate' ? 16 : 24; cfg[k + 'H'] = Math.round(lim((sz.w - pad) / aspect + pad)); }
+  $('warn').textContent = ''; changed();
+}
 function changed() { save(); renderSlideList(); updateStatus(); syncPx(); paint(); }
 function updateStatus() {
   const miss = [];
@@ -220,21 +288,31 @@ function renderSlideList() {
       changed();
     };
     const adj = document.createElement('div'); adj.className = 'slide-adj'; // how this picture sits on the phone's screen
-    adj.innerHTML = `<label>Illesztés <select class="fitSel"><option value="cover">Kitölti a képernyőt</option><option value="contain">Az egész kép látszik</option></select></label><label>Nagyítás % <input type="number" class="zoomIn" min="10" max="500" step="5" placeholder="100"></label><label>↔ % <input type="number" class="oxIn" min="-100" max="100" step="5" placeholder="0"></label><label>↕ % <input type="number" class="oyIn" min="-100" max="100" step="5" placeholder="0"></label><button type="button" class="ghost fitReset" title="Vissza az alap méretre">↺</button>`;
+    adj.innerHTML = `<label>Illesztés <select class="fitSel"><option value="cover">Kitölti a képernyőt</option><option value="contain">Az egész kép látszik</option></select></label><label>Nagyítás % <input type="number" class="zoomIn" min="10" max="500" step="5" placeholder="100"></label><label>↔ % <input type="number" class="oxIn" min="-100" max="100" step="5" placeholder="0"></label><label>↕ % <input type="number" class="oyIn" min="-100" max="100" step="5" placeholder="0"></label><label class="edgeLbl" title="Ha a kép nem tölti ki a képernyőt, az üres sávok a kép szélének színét kapják"><input type="checkbox" class="edgeIn"> Sávok a kép széle színével</label><button type="button" class="ghost fitReset" title="Vissza az alap méretre">↺</button>`;
     const sel = adj.querySelector('.fitSel'), zi = adj.querySelector('.zoomIn'), xi = adj.querySelector('.oxIn'), yi = adj.querySelector('.oyIn');
     sel.value = p.fit === 'contain' ? 'contain' : 'cover'; zi.value = p.zoom > 0 && p.zoom !== 100 ? p.zoom : ''; xi.value = p.ox || ''; yi.value = p.oy || '';
     const put = (key, el, min, max) => { el.oninput = () => { const n = parseFloat(el.value); if (Number.isFinite(n) && (key !== 'zoom' || n > 0)) p[key] = Math.max(min, Math.min(max, n)); else delete p[key]; save(); paint(); }; };
     put('zoom', zi, 10, 500); put('ox', xi, -100, 100); put('oy', yi, -100, 100);
+    const ei = adj.querySelector('.edgeIn'); ei.checked = p.edge !== false; ei.onchange = () => { if (ei.checked) delete p.edge; else p.edge = false; save(); paint(); };
     sel.onchange = () => { if (sel.value === 'contain') p.fit = 'contain'; else delete p.fit; save(); paint(); };
-    adj.querySelector('.fitReset').onclick = () => { delete p.fit; delete p.zoom; delete p.ox; delete p.oy; save(); renderSlideList(); paint(); };
+    adj.querySelector('.fitReset').onclick = () => { delete p.fit; delete p.zoom; delete p.ox; delete p.oy; delete p.edge; save(); renderSlideList(); paint(); };
     wrap.appendChild(adj); box.appendChild(wrap);
   });
 }
 function bind() {
   const num = (id, key, min, max) => { const el = $(id); el.value = cfg[key] || (key === 'total' ? '' : cfg[key]); el.oninput = () => { const v = el.value === '' && key === 'total' ? 0 : +el.value; if (Number.isFinite(v)) { cfg[key] = v === 0 && key === 'total' ? 0 : Math.max(min, Math.min(max, v)); changed(); } }; };
   num('px', 'x', 0, W); num('py', 'y', 0, H); num('scale', 'scale', 20, 300); num('hold', 'hold', 0.5, 30); num('fade', 'fade', 0, 5);
-  num('videoMax', 'videoMax', 1, 120); num('total', 'total', 3, 600); num('sPlate', 'sPlate', 20, 300); num('sQr', 'sQr', 20, 300); num('sPhone', 'sPhone', 20, 300);
-  for (const [k, id, base] of PX) { $(id).oninput = () => { const v = parseFloat($(id).value); if (Number.isFinite(v) && v > 0) { cfg[k] = Math.max(20, Math.min(300, v / base * 100)); changed(); } }; }
+  num('videoMax', 'videoMax', 1, 120); num('total', 'total', 3, 600);
+  for (const o of OBJ) {
+    const size = () => objSize(cfg, o.k), put = (key, v) => { cfg[key] = Math.round(lim(v) * 10) / 10; };
+    $(o.w).oninput = () => { const v = parseFloat($(o.w).value); if (v > 0) { put(o.k + 'W', v); changed(); } };
+    $(o.h).oninput = () => { const v = parseFloat($(o.h).value); if (v > 0) { put(o.k + 'H', v); changed(); } };
+    $(o.pct).oninput = () => { const p = parseFloat($(o.pct).value); if (!(p > 0)) return; const f = p / (size().w / BASE[o.k][0] * 100); put(o.k + 'W', size().w * f); put(o.k + 'H', size().h * f); changed(); }; // % scales width and height together
+    $(o.bg).value = cfg[o.bg]; $(o.bg).oninput = () => { cfg[o.bg] = $(o.bg).value; save(); paint(); };
+    $(o.a).value = cfg[o.a]; $(o.a).oninput = () => { const v = parseFloat($(o.a).value); cfg[o.a] = Number.isFinite(v) ? Math.max(0, Math.min(100, v)) : 100; save(); paint(); };
+    if (o.border) { $(o.border).checked = cfg[o.border] !== false; $(o.border).onchange = () => { cfg[o.border] = $(o.border).checked; save(); paint(); }; }
+  }
+  document.querySelectorAll('.fitPic').forEach(btn => { btn.onclick = () => fitToPicture(btn.dataset.obj); });
   syncPx();
   $('motion').value = cfg.motion === 'slide' ? 'slide' : 'rotate'; $('motion').onchange = () => { cfg.motion = $('motion').value; changed(); };
   $('tilt').checked = cfg.tilt !== false; $('tilt').onchange = () => { cfg.tilt = $('tilt').checked; changed(); };

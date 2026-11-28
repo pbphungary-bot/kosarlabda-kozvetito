@@ -26,10 +26,12 @@
   .photo-row .vthumb { display: grid; place-items: center; background: #2b3340; color: #cfd6e0; font-size: 18px; }
   .photo-row label.dur { display: inline-flex; flex-direction: row; align-items: center; gap: 3px; font-size: 12px; }
   .photo-row .durIn { width: 58px; }
-  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .sizebox { display: grid; gap: 4px; font-size: 12px; }
-  .sizebox label { display: flex; flex-direction: row; align-items: center; gap: 4px; }
-  .sizebox input { width: 100%; min-width: 0; }
+  .sizes { display: grid; gap: 8px; }
+  .sizebox { display: grid; gap: 4px; font-size: 12px; border: 1px solid #2b3340; border-radius: 6px; padding: 6px 8px; }
+  .sizebox .srow { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+  .sizebox label { display: inline-flex; flex-direction: row; align-items: center; gap: 4px; }
+  .sizebox input[type=number] { width: 66px; }
+  .sizebox input[type=color] { width: 40px; height: 26px; padding: 0; }
   .slide { border-bottom: 1px solid #2b3340; padding-bottom: 4px; margin-bottom: 4px; }
   .slide-adj { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; font-size: 12px; padding-left: 50px; }
   .slide-adj label { display: inline-flex; flex-direction: row; align-items: center; gap: 4px; }
@@ -79,13 +81,22 @@
       <small class="hint">Ha megadod, a fotók / videók ideje arányosan igazodik, hogy a kész videó pontosan ennyi ideig tartson (a telefon érkezése és távozása kb. 4 mp-et visz el).</small>
       <div class="row"><label><input type="checkbox" id="tilt"> A telefon kissé ringatózik</label></div>
       <div class="row"><label>X (közép) <input type="number" id="px"></label><label>Y (tábla teteje) <input type="number" id="py"></label><label>Az egész mérete % <input type="number" id="scale"></label></div>
-      <div class="row"><b>Elemek külön mérete (%)</b></div>
-      <div class="grid3">
-        <div class="sizebox"><b>Cím-tábla</b><label>% <input type="number" id="sPlate" step="5"></label><label>szélesség px <input type="number" id="sPlatePx" step="10"></label></div>
-        <div class="sizebox"><b>QR-kód</b><label>% <input type="number" id="sQr" step="5"></label><label>szélesség px <input type="number" id="sQrPx" step="10"></label></div>
-        <div class="sizebox"><b>Telefon</b><label>% <input type="number" id="sPhone" step="5"></label><label>magasság px <input type="number" id="sPhonePx" step="10"></label></div>
+      <div class="row"><b>Elemek mérete és színe</b></div>
+      <div class="sizes">
+        <div class="sizebox"><b>Cím-tábla</b>
+          <div class="srow"><label>% (együtt) <input type="number" id="sPlate" step="5"></label><label>szélesség px <input type="number" id="plateWPx" step="10"></label><label>magasság px <input type="number" id="plateHPx" step="10"></label></div>
+          <div class="srow"><label>belső szín <input type="color" id="plateBg"></label><label>átlátszatlanság % <input type="number" id="plateBgA" min="0" max="100" step="10"></label><label class="chk"><input type="checkbox" id="plateBorder"> arany keret</label><button type="button" class="ghost fitPic" data-obj="plate">A kép arányához</button></div>
+        </div>
+        <div class="sizebox"><b>QR-kód</b>
+          <div class="srow"><label>% (együtt) <input type="number" id="sQr" step="5"></label><label>szélesség px <input type="number" id="qrWPx" step="10"></label><label>magasság px <input type="number" id="qrHPx" step="10"></label></div>
+          <div class="srow"><label>belső szín <input type="color" id="qrBg"></label><label>átlátszatlanság % <input type="number" id="qrBgA" min="0" max="100" step="10"></label><label class="chk"><input type="checkbox" id="qrBorder"> arany keret</label><button type="button" class="ghost fitPic" data-obj="qr">A kép arányához</button></div>
+        </div>
+        <div class="sizebox"><b>Telefon</b>
+          <div class="srow"><label>% (együtt) <input type="number" id="sPhone" step="5"></label><label>szélesség px <input type="number" id="phoneWPx" step="10"></label><label>magasság px <input type="number" id="phoneHPx" step="10"></label></div>
+          <div class="srow"><label>képernyő színe <input type="color" id="screenBg"></label><label>átlátszatlanság % <input type="number" id="screenBgA" min="0" max="100" step="10"></label><button type="button" class="ghost fitPic" data-obj="phone">A 1. kép arányához</button></div>
+        </div>
       </div>
-      <small class="hint">A % és a px ugyanazt az értéket állítja (az „Az egész mérete” 100 %-ánál számolt pixelben: tábla 343 px, QR 177 px széles, telefon 476 px magas az alapméret). Az elemek egymás alá rendeződnek, ezért ha az egyik nagyobb lesz, a többi lejjebb csúszik.</small>
+      <small class="hint">A szélesség és a magasság külön állítható (a % mindkettőt együtt méretezi). A belső szín 0 % átlátszatlansággal teljesen átlátszó. Az „arányához” gomb a doboz magasságát a benne lévő kép arányához igazítja (a szélesség marad). Az alapméret: tábla 343 × 115, QR 177 × 175, telefon 238 × 476 px. Az elemek egymás alá rendeződnek, ezért ha az egyik nagyobb lesz, a többi lejjebb csúszik.</small>
     </div>
     <button id="reset">Mindent alaphelyzetbe</button>
   </div>
