@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-28T02:20:03.547917+00:00",
+  "checked_at": "2026-11-28T10:28:33.102242+00:00",
   "sources": [
     {
       "source": "BB1.hu",
@@ -13,8 +13,8 @@
     {
       "source": "WBasket.hu",
       "status": "ok",
-      "candidates": 34,
-      "added": 1,
+      "candidates": 35,
+      "added": 4,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": []
@@ -47,8 +47,8 @@
       "source": "Nemzeti Sport",
       "status": "ok",
       "candidates": 50,
-      "added": 1,
-      "repaired": 49,
+      "added": 0,
+      "repaired": 50,
       "article_errors": 0,
       "listing_errors": []
     },
@@ -68,8 +68,8 @@
       "candidates": 35,
       "attempted": 30,
       "already_saved": 0,
-      "added": 0,
-      "repaired": 30,
+      "added": 2,
+      "repaired": 28,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 30,
@@ -256,8 +256,8 @@
       "candidates": 15,
       "attempted": 15,
       "already_saved": 0,
-      "added": 1,
-      "repaired": 14,
+      "added": 0,
+      "repaired": 15,
       "article_errors": 0,
       "listing_errors": [],
       "usable_articles": 15,
@@ -265,21 +265,22 @@
     },
     {
       "source": "Klub: BKG-PRIMA Szigetszentmiklós",
-      "status": "ok",
-      "reason": "articles_available",
+      "status": "empty",
+      "reason": "no_article_links",
       "listing_pages_ok": 2,
       "listing_pages_failed": 0,
-      "candidates": 30,
-      "attempted": 30,
-      "already_saved": 19,
+      "candidates": 0,
+      "attempted": 0,
+      "already_saved": 0,
       "added": 0,
-      "repaired": 11,
+      "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
-      "usable_articles": 30,
-      "source_coverage": true,
+      "usable_articles": 0,
+      "source_coverage": false,
       "fallback": [
-        "wp-json:30"
+        "wp-json:JSONDecodeError",
+        "sitemap:0"
       ]
     },
     {
@@ -445,6 +446,7 @@
         "sitemap:HTTPError",
         "sitemap:HTTPError",
         "sitemap:TimeoutError",
+        "sitemap:TimeoutError",
         "sitemap:0"
       ],
       "sample_links": [
@@ -470,8 +472,8 @@
       "listing_pages_failed": 0,
       "candidates": 24,
       "attempted": 24,
-      "already_saved": 24,
-      "added": 0,
+      "already_saved": 23,
+      "added": 1,
       "repaired": 0,
       "article_errors": 0,
       "listing_errors": [],
@@ -541,6 +543,73 @@
     }
   ],
   "articles": [
+    {
+      "source": "BB1.hu",
+      "title": "Gasper Okorn: Az elmúlt két nap eseményeit figyelembe véve azt gondolom, a maximumot nyújtottuk",
+      "summary": "Mikko Riipinen: Nagyon büszke vagyok, gratulálok a közel 11 ezer kilátogató szurkolónak és azoknak is, akik a tv-készülékek előtt szurkoltak nekünk!",
+      "url": "https://bball1.hu/gasper-okorn-az-elmult-ket-nap-esemenyeit-figyelembe-veve-azt-gondolom-a-maximumot-nyujtottuk/",
+      "published_at": "2026-11-28T10:01:37+01:00",
+      "summary_method": "article_body",
+      "teams": []
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Két teljesen eltérő közegben is kiválóan teljesít Lelik Réka – interjú a novemberi Eb-selejtezőkről és az Emlak Konut-ról",
+      "summary": "A magyar válogatott veretlenül teljesítette a 2027-es Európa-bajnokság novemberi selejtező-ablakát.",
+      "url": "https://wbasket.hu/ket-teljesen-eltero-kozegben-is-kivaloan-teljesit-lelik-reka-interju-a-novemberi-eb-selejtezokrol-es-az-emlak-konut-rol/",
+      "published_at": "2026.11.28. 09:27",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Nyilatkozatcsokor a szombati bajnoki mérkőzések előtt",
+      "summary": "Szombaton négy mérkőzést rendeznek a bajnokság 9. fordulójában.",
+      "url": "https://wbasket.hu/nyilatkozatcsokor-a-szombati-bajnoki-merkozesek-elott-42/",
+      "published_at": "2026.11.28. 08:44",
+      "summary_method": "article_body",
+      "teams": [],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "A sérültjei visszatérése után tovább fejlődne a Sopron",
+      "summary": "Szombaton 14 órától a Sopron Basket a DVTK HUNTHERM gárdáját fogadja a bajnokság csúcsrangadóján.",
+      "url": "https://wbasket.hu/a-serultjei-visszaterese-utan-tovabb-fejlodne-a-sopron/",
+      "published_at": "2026.11.28. 08:30",
+      "summary_method": "article_body",
+      "teams": [
+        "women|Sopron Basket",
+        "women|DVTK HUNTHERM"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "WBasket.hu",
+      "title": "Nyilatkozatcsokor a TFSE – Pécs mérkőzés után",
+      "summary": "Pénteken egy mérkőzést rendeztek a női élvonalba.",
+      "url": "https://wbasket.hu/nyilatkozatcsokor-a-tfse-pecs-merkozes-utan/",
+      "published_at": "2026.11.28. 08:20",
+      "summary_method": "article_body",
+      "teams": [
+        "women|TFSE"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "Klub: DVTK HUNTHERM",
+      "title": "Ma idegenben játszik a DVTK HUNTHERM",
+      "summary": "Magyar Gergely: - Sajnos legutóbb bármennyire is szerettük volna, nem sikerült megőriznünk a veretlenségünket a magyar bajnokságban.",
+      "url": "http://dvtk.eu/37711-Ma_idegenben_jatszik_a_DVTK_HUNTHERM-cikk-kosarlabda/",
+      "published_at": "2026-11-28T06:00:00+01:00",
+      "summary_method": "article_body",
+      "publisher_club": "DVTK HUNTHERM",
+      "league": "women",
+      "teams": [
+        "women|DVTK HUNTHERM"
+      ]
+    },
     {
       "source": "Nemzeti Sport",
       "title": "Két őrületes svéd tripla a végén – kikaptak kosarasaink a stockholmi vb-selejtezőn",
@@ -8400,6 +8469,19 @@
     },
     {
       "source": "Klub: ETO Basket",
+      "title": "Az újabb két pont megszerzése a cél",
+      "summary": "Szombaton 18 órakor a Vasas Akadémia otthonában folytatjuk a bajnokságot.",
+      "url": "https://etobasket.hu/hu/hirek/az-ujabb-ket-pont-megszerzese-a-cel/",
+      "published_at": "2026.09.24. 18:00",
+      "summary_method": "article_body",
+      "publisher_club": "ETO Basket",
+      "league": "women",
+      "teams": [
+        "women|SERCO UNI Győr"
+      ]
+    },
+    {
+      "source": "Klub: ETO Basket",
       "title": "A még hibátlan DVTK otthonában folytatjuk a bajnokságot",
       "summary": "Vasárnap 17 órakor a válogatott szünet előtti utolsó bajnoki mérkőzésünkön a DVTK-hoz látogatunk.",
       "url": "https://etobasket.hu/hu/hirek/a-meg-hibatlan-dvtk-otthonaban-folytatjuk-a-bajnoksagot-/",
@@ -12998,6 +13080,19 @@
     },
     {
       "source": "Hunbasket",
+      "title": "Női NB I: Győzött a TFSE otthonában az NKA Pécs",
+      "summary": "Női NB I: Győzött a TFSE otthonában az NKA Pécs",
+      "url": "https://hunbasket.hu/hir/77767/noi-nb-i-gyozott-a-tfse-otthonaban-az-nka-pecs/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "teams": [
+        "women|NKA Universitas Pécs",
+        "women|TFSE"
+      ],
+      "league": "women"
+    },
+    {
+      "source": "Hunbasket",
       "title": "Női NB I: A Sopron nyerte a Szekszárd elleni rangadót",
       "summary": "Női NB I: A Sopron nyerte a Szekszárd elleni rangadót",
       "url": "https://hunbasket.hu/hir/77745/noi-nb-i-a-sopron-nyerte-a-szekszard-elleni-rangadot/",
@@ -13084,6 +13179,19 @@
       "title": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
       "summary": "NÉZD VISSZA A TEGNAP, AEK ATHÉN ELLENI BL MÉRKŐZÉSÜNK ÖSSZEFOGLALÓJÁT!",
       "url": "https://falcokc.com/nezd-vissza-a-tegnap-aek-athen-elleni-bl-merkozesunk-osszefoglalojat/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "NÉZD VISSZA A MAGYAR VÁLOGATOTT SVÉDEK ELLENI MÉRKŐZÉSÉT!",
+      "summary": "NÉZD VISSZA A MAGYAR VÁLOGATOTT SVÉDEK ELLENI MÉRKŐZÉSÉT!",
+      "url": "https://falcokc.com/nezd-vissza-a-magyar-valogatott-svedek-elleni-merkozeset/",
       "published_at": null,
       "summary_method": "headline_fallback",
       "publisher_club": "Falco KC Szombathely",
@@ -13233,6 +13341,19 @@
       "league": "men",
       "teams": [
         "men|NKA Pécs"
+      ]
+    },
+    {
+      "source": "Klub: Falco KC Szombathely",
+      "title": "Nem csak jelen vagyunk. Egyre többen figyelnek ránk! – A FALCO social media eredményei számokban",
+      "summary": "Nem csak jelen vagyunk. Egyre többen figyelnek ránk! – A FALCO social media eredményei számokban",
+      "url": "https://falcokc.com/nem-csak-jelen-vagyunk-egyre-tobben-figyelnek-rank-a-falco-social-media-eredmenyei-szamokban/",
+      "published_at": null,
+      "summary_method": "headline_fallback",
+      "publisher_club": "Falco KC Szombathely",
+      "league": "men",
+      "teams": [
+        "men|Falco KC"
       ]
     },
     {
