@@ -111,6 +111,17 @@ export function clubIdStrict(league, name) {
 // its games must never be counted as Cegléd's (the club id `davidkornelka` and the older alias `dkka` stay as they are for the other data sources).
 const HISTORY_OTHER = { women: new Set(['davidkornelka', 'davidkornelkosarlabdaakademia', 'dkka']) };
 /** Club of a name in the Hunbasket head-to-head history (clubIdStrict minus the names that denote another, former club there). */
+/**
+ * Earlier crests of a club (owner 2026-11-28): CSATA TKK played as "Ludovika-FCSM Csata" / "Ludovika Csata" until the summer of 2025 (the head-to-head
+ * data shows the last Ludovika game in 2023-03 and the first "Csata TKK" game on 2025-09-27) and then had another crest. A game played BEFORE `before`
+ * shows the old crest (graphics/logos/<league>/<key>.png, outline in logos.json) in the head-to-head graphic; the club itself is still one club.
+ */
+export const FORMER_LOGOS = { women: { csatattk: [{ before: '2025-07-01', key: 'csatattk-ludovika', label: 'CSATA Ludovika' }] } };
+/** Image key of a club's crest for a game on `date` (YYYY-MM-DD): an earlier crest when there is one for that time, else the current one. */
+export function logoKeyFor(league, id, date) {
+  const f = (FORMER_LOGOS[league]?.[id] || []).find(x => date && String(date).slice(0, 10) < x.before);
+  return `${league}/${f ? f.key : id}`;
+}
 export function historyClubId(league, name) {
   if (HISTORY_OTHER[league]?.has(normalizeTeamName(name))) return null;
   return clubIdStrict(league, name);

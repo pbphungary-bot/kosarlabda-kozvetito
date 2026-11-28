@@ -226,5 +226,17 @@
    "useGlobalAngle": false,
    "color": "#ffc905"
   }
+ },
+ "women/csatattk-ludovika": {
+  "outline": {
+   "type": "DropShadow",
+   "size": 7.0,
+   "spread": 100.0,
+   "distance": 0.0,
+   "opacity": 100.0,
+   "angle": 90.0,
+   "useGlobalAngle": false,
+   "color": "#ffffff"
+  }
  }
 }

@@ -532,3 +532,28 @@ test('key players: every column is its own group (so a column can be moved as on
   assert.equal(grp('label.ppg'), grp('label.reb'));
   assert.equal(new Set(['home.rank.ppg', 'home.ppg', 'label.ppg', 'away.ppg', 'away.rank.ppg'].map(grp)).size, 5, 'five different columns');
 });
+
+test('head to head: CSATA shows its earlier "Ludovika" crest for games before the summer of 2025, the current crest after', async () => {
+  const store = await loadStore();
+  const { existsSync } = await import('node:fs');
+  const { logoKeyFor, FORMER_LOGOS, CLUBS } = await import('../graphics/js/clubs.js');
+  assert.equal(logoKeyFor('women', 'csatattk', '2023-03-25'), 'women/csatattk-ludovika');
+  assert.equal(logoKeyFor('women', 'csatattk', '2025-06-30'), 'women/csatattk-ludovika');
+  assert.equal(logoKeyFor('women', 'csatattk', '2025-09-27'), 'women/csatattk');
+  assert.equal(logoKeyFor('women', 'csatattk', '2020-10-03'), 'women/csatattk-ludovika');
+  assert.equal(logoKeyFor('women', 'dvtkhuntherm', '2020-10-03'), 'women/dvtkhuntherm', 'other clubs never change');
+  assert.equal(logoKeyFor('men', 'csatattk', '2020-10-03'), 'men/csatattk', 'women only');
+  for (const f of FORMER_LOGOS.women.csatattk) assert.ok(existsSync(new URL(`../graphics/logos/women/${f.key}.png`, import.meta.url)), 'the crest file exists');
+  const logos = await readJson('graphics/logos/logos.json'); assert.ok(logos['women/csatattk-ludovika']?.outline, 'it has the white outline like the other crests');
+  // the frozen data only holds Csata's newest games: add older ones under the names the Hunbasket history really uses
+  const L = store.league('women'), mk = (date, home, away, score, season) => ({ league: 'women', season, home, away, date, score, url: 'https://hunbasket.hu/merkozes/x/whun/whun_1', competition: 'rs', source: 'Hunbasket' });
+  L.h2h = [...(L.h2h || []), mk('2021-02-06', 'Ludovika-FCSM Csata', 'DVTK HUNTHERM', '70–60', '2020/2021'), mk('2023-03-25', 'DVTK HUNTHERM', 'Ludovika Csata', '66–72', '2022/2023'), mk('2025-09-27', 'Csata TKK', 'DVTK HUNTHERM', '80–61', '2025/2026')];
+  const games = store.h2hGames('women', 'csatattk', 'dvtkhuntherm'), v = bindH2H(store, 'women', 'csatattk', 'dvtkhuntherm');
+  assert.deepEqual(games.map(g => g.date), ['2025-09-27', '2023-03-25', '2021-02-06'], 'old names resolve to the same club');
+  games.forEach((g, r) => {
+    const side = g.homeId === 'csatattk' ? `h${r}.home` : `h${r}.away`, other = g.homeId === 'csatattk' ? `h${r}.away` : `h${r}.home`, old = g.date < '2025-07-01';
+    assert.equal(v[side].src, old ? 'women/csatattk-ludovika' : 'women/csatattk', g.date);
+    assert.equal(v[other].src, 'women/dvtkhuntherm', 'the opponent keeps its crest');
+    if (old) assert.match(v[side].source, /CSATA Ludovika logó/);
+  });
+});
